@@ -1,0 +1,16 @@
+$stanford-cardinal: #8c1515;
+$primary: $stanford-cardinal;
+
+@import 'bootstrap/scss/bootstrap';
+
+.stanford-navbar {
+  background-color: var(--bs-primary);
+  .nav-link {
+    color: rgba(255,255,255,0.85);
+  }
+}
+
+.stanford-masthead {
+  padding: 5rem 0;
+  background: linear-gradient(165deg, #f7f5fb 50%, #fff 50%);
+}
