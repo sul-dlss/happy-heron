@@ -1,0 +1,16 @@
+<div id="editor">
+  <h1>Deposit your work</h1>
+
+  <%= render AddFilesComponent.new %>
+
+  Parent <%= data[:title] %>
+  <%= render TitleComponent.new(update: bind(:update_model)) %>
+  <%= render ContributorsComponent.new %>
+  <%= render DatesComponent.new %>
+  <%= render CollectionComponent.new %>
+  <%= render DescriptionComponent.new %>
+  <%= render EmbargoComponent.new %>
+  <%= render LicenseComponent.new %>
+  <%= render AgreementComponent.new %>
+  <%= render ButtonsComponent.new %>
+</div>
