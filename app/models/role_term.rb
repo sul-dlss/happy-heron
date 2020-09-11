@@ -1,0 +1,2 @@
+class RoleTerm < ApplicationRecord
+end
