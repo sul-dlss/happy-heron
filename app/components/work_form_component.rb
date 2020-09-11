@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WorkFormComponent < ViewComponent::Base
   include Motion::Component
 

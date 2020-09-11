@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TitleComponent < ViewComponent::Base
   include Motion::Component
 
