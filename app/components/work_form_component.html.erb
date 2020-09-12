@@ -1,6 +1,8 @@
 <div id="editor">
-  <h1>Deposit your work</h1>
-  <%= form_with model: @work do |f| %>
+  <h1 class="row">Deposit your work</h1>
+
+  <%= render DepositProgressComponent.new(work: work) %>
+  <%= form_with model: @work, html: { class: 'needs-validation row', novalidate: true } do |f| %>
     <%= render AddFilesComponent.new(form: f) %>
     <%= render WorkTypeComponent.new(form: f) %>
     <%= render TitleComponent.new(form: f, update: bind(:update_model)) %>

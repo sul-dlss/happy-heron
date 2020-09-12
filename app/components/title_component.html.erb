@@ -3,7 +3,8 @@
    <div class="mb-3 row">
      <%= form.label :title, 'Title of deposit', class: 'col-sm-2 col-form-label' %>
      <div class="col-sm-10">
-       <%= form.text_field :title, class: "form-control", required: true %>
+       <%= form.text_field :title, class: "form-control", required: true, data: { motion: 'add' } %>
+       <div class="invalid-feedback">You must provide a title</div>
      </div>
    </div>
 
@@ -11,6 +12,7 @@
      <%= form.label :contact_email, 'Contact e-mail', class: 'col-sm-2 col-form-label' %>
      <div class="col-sm-10">
        <%= form.email_field :contact_email, class: "form-control", required: true %>
+       <div class="invalid-feedback">You must provide a valid email address</div>
      </div>
    </div>
  </section>
