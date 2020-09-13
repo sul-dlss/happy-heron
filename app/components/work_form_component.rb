@@ -1,14 +1,14 @@
 class WorkFormComponent < ViewComponent::Base
   include Motion::Component
 
-  attr_reader :data
+  attr_reader :work
 
-  def initialize
-    @data = {}.with_indifferent_access
+  def initialize(work:)
+    @work = work
   end
 
   def update_model(opts)
-    @data.merge! opts
+    @work.attributes = opts
     true
   end
 end

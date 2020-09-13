@@ -1,16 +1,16 @@
 <div id="editor">
   <h1>Deposit your work</h1>
-
-  <%= render AddFilesComponent.new %>
-
-  Parent <%= data[:title] %>
-  <%= render TitleComponent.new(update: bind(:update_model)) %>
-  <%= render ContributorsComponent.new %>
-  <%= render DatesComponent.new %>
-  <%= render CollectionComponent.new %>
-  <%= render DescriptionComponent.new %>
-  <%= render EmbargoComponent.new %>
-  <%= render LicenseComponent.new %>
-  <%= render AgreementComponent.new %>
-  <%= render ButtonsComponent.new %>
+  <%= form_with model: @work do |f| %>
+    <%= render AddFilesComponent.new(form: f) %>
+    <%= render WorkTypeComponent.new(form: f) %>
+    <%= render TitleComponent.new(form: f, update: bind(:update_model)) %>
+    <%= render ContributorsComponent.new %>
+    <%= render DatesComponent.new(form: f) %>
+    <%= render CollectionComponent.new %>
+    <%= render DescriptionComponent.new(form: f) %>
+    <%= render EmbargoComponent.new(form: f) %>
+    <%= render LicenseComponent.new(form: f) %>
+    <%= render AgreementComponent.new(form: f) %>
+    <%= render ButtonsComponent.new(form: f) %>
+  <% end %>
 </div>
