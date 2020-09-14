@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   root to: 'welcome#show'
   resource 'welcome', only: 'show'
 
-  resources :works, only: :new
+  resources :works, only: [:new, :create, :show]
 end

@@ -4,7 +4,7 @@ class CreateWorks < ActiveRecord::Migration[6.0]
       t.string :druid
       t.integer :version
       t.string :title, null: false
-      t.string :type, null: false
+      t.string :work_type, null: false
       t.string :subtype, null: false
       t.string :contact_email, null: false
       t.string :created_etdf, null: false
