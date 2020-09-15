@@ -51,5 +51,5 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'motion', '~> 0.4.2'
+gem 'motion', github: 'unabridged/motion' #'~> 0.4.2'
 gem 'view_component', '~> 2.18'
