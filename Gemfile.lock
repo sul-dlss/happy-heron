@@ -214,7 +214,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3 (~> 1.4)
   turbolinks (~> 5)
-  tzinfo-data
   view_component (~> 2.18)
   web-console (>= 3.3.0)
   webdrivers
