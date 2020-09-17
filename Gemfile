@@ -28,6 +28,10 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+gem 'motion', github: 'unabridged/motion' #'~> 0.4.2'
+gem 'pg'
+gem 'view_component', '~> 2.18'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
@@ -51,8 +55,9 @@ group :test do
   gem 'webdrivers'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
-gem 'motion', github: 'unabridged/motion' #'~> 0.4.2'
-gem 'view_component', '~> 2.18'
+group :deployment do
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'dlss-capistrano', '~> 3.6', require: false
+end

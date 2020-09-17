@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2020_09_13_005756) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,10 +37,10 @@ ActiveRecord::Schema.define(version: 2020_09_13_005756) do
   end
 
   create_table "contributors", force: :cascade do |t|
-    t.integer "work_id", null: false
+    t.bigint "work_id", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.integer "role_term_id", null: false
+    t.bigint "role_term_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["role_term_id"], name: "index_contributors_on_role_term_id"
@@ -45,7 +48,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_005756) do
   end
 
   create_table "related_links", force: :cascade do |t|
-    t.integer "work_id", null: false
+    t.bigint "work_id", null: false
     t.string "link_title"
     t.string "url", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -54,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_005756) do
   end
 
   create_table "related_works", force: :cascade do |t|
-    t.integer "work_id", null: false
+    t.bigint "work_id", null: false
     t.string "citation", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
