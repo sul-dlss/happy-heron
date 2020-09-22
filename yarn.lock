@@ -850,7 +850,7 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@rails/actioncable@>= 6.0", "@rails/actioncable@^6.0.0":
+"@rails/actioncable@^6.0.0":
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.3.tgz#722b4b639936129307ddbab3a390f6bcacf3e7bc"
   integrity sha512-I01hgqxxnOgOtJTGlq0ZsGJYiTEEiSGVEGQn3vimZSqEP1HqzyFNbzGTq14Xdyeow2yGJjygjoFF1pmtE+SQaw==
@@ -967,14 +967,6 @@
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
-
-"@unabridged/motion@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@unabridged/motion/-/motion-0.4.2.tgz#018db58019565a5ec0dd6468ddd28a4a87b6852a"
-  integrity sha512-KyTR8DdeFe+V7c3/SGMWs1DwNDPzV7FcE7vj4BTyy0jph2DEJj0VCnYuF9feC0v92JXGYP0u9GVsvMShJcc0Ig==
-  dependencies:
-    "@rails/actioncable" ">= 6.0"
-    morphdom "^2.6.1"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -4568,11 +4560,6 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
-
-morphdom@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/morphdom/-/morphdom-2.6.1.tgz#e868e24f989fa3183004b159aed643e628b4306e"
-  integrity sha512-Y8YRbAEP3eKykroIBWrjcfMw7mmwJfjhqdpSvoqinu8Y702nAwikpXcNFDiIkyvfCLxLM9Wu95RZqo4a9jFBaA==
 
 move-concurrently@^1.0.1:
   version "1.0.1"

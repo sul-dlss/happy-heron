@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/unabridged/motion.git
-  revision: 9b6835135933026d5fd1c2cfc5b8e85162d1a774
-  specs:
-    motion (0.4.2)
-      lz4-ruby (>= 0.3.3)
-      nokogiri
-      rails (>= 5.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,9 +58,9 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    ast (2.4.1)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
+    ast (2.4.1)
     bindex (0.8.1)
     bootsnap (1.4.8)
       msgpack (~> 1.0)
@@ -131,7 +122,6 @@ GEM
     loofah (2.7.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    lz4-ruby (0.3.3)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (0.3.3)
@@ -286,7 +276,6 @@ DEPENDENCIES
   dlss-capistrano (~> 3.6)
   jbuilder (~> 2.7)
   listen (~> 3.2)
-  motion!
   pg
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
