@@ -25,6 +25,11 @@ export default class extends Controller {
     this.inputTarget.style.display = "none";
   }
 
+  // Tell the ProgressController to update
+  informProgress() {
+    this.inputTarget.dispatchEvent(new Event('change'))
+  }
+
   bindEvents() {
     this.dropZone.on("addedfile", file => {
       setTimeout(() => {
@@ -34,11 +39,16 @@ export default class extends Controller {
 
     this.dropZone.on("removedfile", file => {
       file.controller && removeElement(file.controller.hiddenInput);
+      this.informProgress()
     });
 
     this.dropZone.on("canceled", file => {
       file.controller && file.controller.xhr.abort();
     });
+
+    this.dropZone.on("complete", () => {
+      this.informProgress()
+    })
   }
 
   get headers() {
@@ -131,6 +141,7 @@ class DirectUploadController {
     this.file.status = Dropzone.SUCCESS;
     this.source.dropZone.emit("success", this.file);
     this.source.dropZone.emit("complete", this.file);
+
   }
 }
 
