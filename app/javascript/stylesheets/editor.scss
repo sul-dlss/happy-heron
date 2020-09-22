@@ -14,3 +14,18 @@
   }
 }
 @import 'depositProgress';
+
+@import "dropzone/dist/min/dropzone.min.css";
+@import "dropzone/dist/min/basic.min.css";
+
+.dropzone {
+  border: 1px dashed gray;
+
+  &.dz-drag-hover {
+    background-color: red;
+
+    .dz-message {
+      opacity: 0.9;
+    }
+  }
+}
