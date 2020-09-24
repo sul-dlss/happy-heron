@@ -11,6 +11,7 @@ class WorksController < ApplicationController
   def create
     @work = Work.new(work_params)
     if @work.save
+      DepositJob.perform_later(@work) if params[:commit] == 'Deposit'
       redirect_to @work
     else
       render :new
@@ -22,9 +23,10 @@ class WorksController < ApplicationController
   end
 
   private
-    def work_params
-      params.require(:work).permit(:title, :work_type, :subtype, :contact_email,
-        :created_etdf, :abstract, :citation, :access, :license, :agree_to_terms,
-        files: [])
-    end
+
+  def work_params
+    params.require(:work).permit(:title, :work_type, :subtype, :contact_email,
+                                 :created_etdf, :abstract, :citation, :access, :license, :agree_to_terms,
+                                 files: [])
+  end
 end

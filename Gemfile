@@ -27,9 +27,12 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'config', '~> 2.2'
 gem 'pg'
 gem 'view_component', '~> 2.18'
 gem 'sorbet-runtime'
+
+gem 'dor-services-client'
 
 group :development, :test do
   gem 'byebug'
