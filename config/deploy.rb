@@ -1,3 +1,4 @@
+# typed: false
 set :application, "happy-heron"
 set :repo_url, 'ssh://git@github.com/sul-dlss/happy-heron.git'
 
