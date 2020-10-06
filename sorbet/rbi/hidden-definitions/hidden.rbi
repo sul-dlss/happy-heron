@@ -15456,6 +15456,7 @@ end
 
 class ActiveRecord::ExplainRegistry
   extend ::ActiveSupport::PerThreadRegistry
+  def self.collect?(*_, &_1); end
 end
 
 class ActiveRecord::ExplainSubscriber
@@ -15525,6 +15526,191 @@ module ActiveRecord::FinderMethods
 end
 
 module ActiveRecord::FinderMethods
+end
+
+class ActiveRecord::Fixture
+  include ::Enumerable
+  def [](key); end
+
+  def class_name(); end
+
+  def each(&blk); end
+
+  def find(); end
+
+  def fixture(); end
+
+  def initialize(fixture, model_class); end
+
+  def model_class(); end
+
+  def to_hash(); end
+end
+
+class ActiveRecord::Fixture::FixtureError
+end
+
+class ActiveRecord::Fixture::FixtureError
+end
+
+class ActiveRecord::Fixture::FormatError
+end
+
+class ActiveRecord::Fixture::FormatError
+end
+
+class ActiveRecord::Fixture
+end
+
+class ActiveRecord::FixtureSet
+  def [](x); end
+
+  def []=(k, v); end
+
+  def all_loaded_fixtures(); end
+
+  def all_loaded_fixtures=(obj); end
+
+  def config(); end
+
+  def each(&block); end
+
+  def fixtures(); end
+
+  def initialize(_, name, class_name, path, config=T.unsafe(nil)); end
+
+  def model_class(); end
+
+  def name(); end
+
+  def size(); end
+
+  def table_name(); end
+
+  def table_rows(); end
+  MAX_ID = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::FixtureSet::ClassCache
+  def [](fs_name); end
+
+  def initialize(class_names, config); end
+end
+
+class ActiveRecord::FixtureSet::ClassCache
+end
+
+class ActiveRecord::FixtureSet::File
+  include ::Enumerable
+  def each(&block); end
+
+  def initialize(file); end
+
+  def model_class(); end
+end
+
+class ActiveRecord::FixtureSet::File
+  def self.open(file); end
+end
+
+class ActiveRecord::FixtureSet::ModelMetadata
+  def has_primary_key_column?(); end
+
+  def inheritance_column_name(); end
+
+  def initialize(model_class); end
+
+  def primary_key_name(); end
+
+  def primary_key_type(); end
+
+  def timestamp_column_names(); end
+end
+
+class ActiveRecord::FixtureSet::ModelMetadata
+end
+
+class ActiveRecord::FixtureSet::RenderContext
+end
+
+class ActiveRecord::FixtureSet::RenderContext
+  def self.create_subclass(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow
+  def initialize(fixture, table_rows:, label:, now:); end
+
+  def to_hash(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy
+  def lhs_key(); end
+
+  def rhs_key(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy
+end
+
+class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
+  def initialize(association); end
+
+  def join_table(); end
+
+  def name(); end
+
+  def primary_key_type(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
+end
+
+class ActiveRecord::FixtureSet::TableRow
+end
+
+class ActiveRecord::FixtureSet::TableRows
+  def initialize(table_name, model_class:, fixtures:, config:); end
+
+  def model_class(); end
+
+  def model_metadata(); end
+
+  def tables(); end
+
+  def to_hash(); end
+end
+
+class ActiveRecord::FixtureSet::TableRows
+end
+
+class ActiveRecord::FixtureSet
+  def self.all_loaded_fixtures(); end
+
+  def self.all_loaded_fixtures=(obj); end
+
+  def self.cache_fixtures(connection, fixtures_map); end
+
+  def self.cache_for_connection(connection); end
+
+  def self.cached_fixtures(connection, keys_to_fetch=T.unsafe(nil)); end
+
+  def self.context_class(); end
+
+  def self.create_fixtures(fixtures_directory, fixture_set_names, class_names=T.unsafe(nil), config=T.unsafe(nil), &block); end
+
+  def self.default_fixture_model_name(fixture_set_name, config=T.unsafe(nil)); end
+
+  def self.default_fixture_table_name(fixture_set_name, config=T.unsafe(nil)); end
+
+  def self.fixture_is_cached?(connection, table_name); end
+
+  def self.identify(label, column_type=T.unsafe(nil)); end
+
+  def self.instantiate_all_loaded_fixtures(object, load_instances=T.unsafe(nil)); end
+
+  def self.instantiate_fixtures(object, fixture_set, load_instances=T.unsafe(nil)); end
+
+  def self.reset_cache(); end
 end
 
 class ActiveRecord::HasManyThroughAssociationNotFoundError
@@ -17915,21 +18101,6 @@ module ActiveRecord::TestFixtures
   def setup_fixtures(config=T.unsafe(nil)); end
 
   def teardown_fixtures(); end
-end
-
-module ActiveRecord::TestFixtures::ClassMethods
-  def fixtures(*fixture_set_names); end
-
-  def set_fixture_class(class_names=T.unsafe(nil)); end
-
-  def setup_fixture_accessors(fixture_set_names=T.unsafe(nil)); end
-
-  def uses_transaction(*methods); end
-
-  def uses_transaction?(method); end
-end
-
-module ActiveRecord::TestFixtures::ClassMethods
 end
 
 module ActiveRecord::TestFixtures
@@ -21585,6 +21756,9 @@ class ActiveSupport::TestCase
   include ::ActiveSupport::Testing::Deprecation
   include ::ActiveSupport::Testing::TimeHelpers
   include ::ActiveSupport::Testing::FileFixtures
+  include ::ActiveRecord::TestDatabases
+  include ::ActiveRecord::TestFixtures
+  include ::Minitest::Parallel::Test
   include ::ActiveSupport::Testing::SetupAndTeardown
   def __callbacks(); end
 
@@ -21626,11 +21800,57 @@ class ActiveSupport::TestCase
 
   def assert_raise(*exp); end
 
+  def config(); end
+
+  def config=(val); end
+
+  def config?(); end
+
   def file_fixture_path(); end
 
   def file_fixture_path?(); end
 
+  def fixture_class_names(); end
+
+  def fixture_class_names=(val); end
+
+  def fixture_class_names?(); end
+
+  def fixture_path(); end
+
+  def fixture_path?(); end
+
+  def fixture_table_names(); end
+
+  def fixture_table_names=(val); end
+
+  def fixture_table_names?(); end
+
+  def lock_threads(); end
+
+  def lock_threads=(val); end
+
+  def lock_threads?(); end
+
   def method_name(); end
+
+  def pre_loaded_fixtures(); end
+
+  def pre_loaded_fixtures=(val); end
+
+  def pre_loaded_fixtures?(); end
+
+  def use_instantiated_fixtures(); end
+
+  def use_instantiated_fixtures=(val); end
+
+  def use_instantiated_fixtures?(); end
+
+  def use_transactional_tests(); end
+
+  def use_transactional_tests=(val); end
+
+  def use_transactional_tests?(); end
 end
 
 class ActiveSupport::TestCase
@@ -21651,11 +21871,41 @@ class ActiveSupport::TestCase
 
   def self._teardown_callbacks=(value); end
 
+  def self.config(); end
+
+  def self.config=(val); end
+
+  def self.config?(); end
+
   def self.file_fixture_path(); end
 
   def self.file_fixture_path=(val); end
 
   def self.file_fixture_path?(); end
+
+  def self.fixture_class_names(); end
+
+  def self.fixture_class_names=(val); end
+
+  def self.fixture_class_names?(); end
+
+  def self.fixture_path(); end
+
+  def self.fixture_path=(val); end
+
+  def self.fixture_path?(); end
+
+  def self.fixture_table_names(); end
+
+  def self.fixture_table_names=(val); end
+
+  def self.fixture_table_names?(); end
+
+  def self.lock_threads(); end
+
+  def self.lock_threads=(val); end
+
+  def self.lock_threads?(); end
 
   def self.parallelize(workers: T.unsafe(nil), with: T.unsafe(nil)); end
 
@@ -21663,7 +21913,25 @@ class ActiveSupport::TestCase
 
   def self.parallelize_teardown(&block); end
 
+  def self.pre_loaded_fixtures(); end
+
+  def self.pre_loaded_fixtures=(val); end
+
+  def self.pre_loaded_fixtures?(); end
+
   def self.test_order=(new_order); end
+
+  def self.use_instantiated_fixtures(); end
+
+  def self.use_instantiated_fixtures=(val); end
+
+  def self.use_instantiated_fixtures?(); end
+
+  def self.use_transactional_tests(); end
+
+  def self.use_transactional_tests=(val); end
+
+  def self.use_transactional_tests?(); end
 end
 
 module ActiveSupport::Testing
@@ -22242,6 +22510,25 @@ class ApplicationCable::Channel
 end
 
 class ApplicationCable::Connection
+end
+
+class ApplicationComponent
+  include ::ActionView::RoutingUrlFor
+  include ::ActionDispatch::Routing::UrlFor
+  include ::ActionDispatch::Routing::PolymorphicRoutes
+  def default_url_options(); end
+
+  def default_url_options=(val); end
+
+  def default_url_options?(); end
+end
+
+class ApplicationComponent
+  def self.default_url_options(); end
+
+  def self.default_url_options=(val); end
+
+  def self.default_url_options?(); end
 end
 
 class ApplicationJob
@@ -29294,6 +29581,993 @@ class Class
   def subclasses(); end
 end
 
+module Cocina::Generator
+end
+
+class Cocina::Generator::Datatype
+  def generate(); end
+end
+
+class Cocina::Generator::Datatype
+end
+
+class Cocina::Generator::Generator
+  include ::Thor::Actions
+  def generate(); end
+
+  def generate_schema(schema_name); end
+
+  def generate_vocab(); end
+end
+
+class Cocina::Generator::Generator
+  def self.source_root(); end
+end
+
+class Cocina::Generator::Schema
+  def generate(); end
+
+  def schema_properties(); end
+end
+
+class Cocina::Generator::Schema
+end
+
+class Cocina::Generator::SchemaArray
+  def array_of_type(); end
+
+  def generate(); end
+end
+
+class Cocina::Generator::SchemaArray
+end
+
+class Cocina::Generator::SchemaBase
+  def description(); end
+
+  def dry_datatype(doc); end
+
+  def example(); end
+
+  def filename(); end
+
+  def initialize(schema_doc, key: T.unsafe(nil), required: T.unsafe(nil), parent: T.unsafe(nil)); end
+
+  def key(); end
+
+  def name(); end
+
+  def omittable(); end
+
+  def parent(); end
+
+  def quote(item); end
+
+  def required(); end
+
+  def schema_doc(); end
+
+  def string_dry_datatype(doc); end
+end
+
+class Cocina::Generator::SchemaBase
+end
+
+class Cocina::Generator::SchemaRef
+  def generate(); end
+end
+
+class Cocina::Generator::SchemaRef
+end
+
+class Cocina::Generator::SchemaValue
+  def generate(); end
+end
+
+class Cocina::Generator::SchemaValue
+end
+
+class Cocina::Generator::Vocab
+  def filename(); end
+
+  def generate(); end
+
+  def initialize(schemas); end
+end
+
+class Cocina::Generator::Vocab
+end
+
+module Cocina::Generator
+end
+
+module Cocina::Models
+  Druid = ::T.let(nil, ::T.untyped)
+  SourceId = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::Access
+  def access(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::Access
+end
+
+class Cocina::Models::AdminPolicy
+  include ::Cocina::Models::Checkable
+  def administrative(); end
+
+  def description(); end
+
+  def externalIdentifier(); end
+
+  def label(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::AdminPolicy
+  def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::AdminPolicyAdministrative
+  def defaultObjectRights(); end
+
+  def hasAdminPolicy(); end
+
+  def registrationWorkflow(); end
+end
+
+class Cocina::Models::AdminPolicyAdministrative
+end
+
+class Cocina::Models::Administrative
+  def hasAdminPolicy(); end
+
+  def partOfProject(); end
+
+  def releaseTags(); end
+end
+
+class Cocina::Models::Administrative
+end
+
+class Cocina::Models::AppliesTo
+  def appliesTo(); end
+end
+
+class Cocina::Models::AppliesTo
+end
+
+class Cocina::Models::CatalogLink
+  def catalog(); end
+
+  def catalogRecordId(); end
+end
+
+class Cocina::Models::CatalogLink
+end
+
+module Cocina::Models::Checkable
+  def admin_policy?(); end
+
+  def collection?(); end
+
+  def dro?(); end
+
+  def file?(); end
+
+  def file_set?(); end
+end
+
+module Cocina::Models::Checkable
+end
+
+class Cocina::Models::Collection
+  include ::Cocina::Models::Checkable
+  def access(); end
+
+  def administrative(); end
+
+  def description(); end
+
+  def externalIdentifier(); end
+
+  def identification(); end
+
+  def label(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::Collection
+  def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::CollectionIdentification
+  def catalogLinks(); end
+end
+
+class Cocina::Models::CollectionIdentification
+end
+
+class Cocina::Models::Contributor
+  def identifier(); end
+
+  def name(); end
+
+  def note(); end
+
+  def role(); end
+
+  def status(); end
+
+  def type(); end
+end
+
+class Cocina::Models::Contributor
+end
+
+class Cocina::Models::DRO
+  include ::Cocina::Models::Checkable
+  def access(); end
+
+  def administrative(); end
+
+  def description(); end
+
+  def externalIdentifier(); end
+
+  def geographic(); end
+
+  def identification(); end
+
+  def label(); end
+
+  def structural(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::DRO
+  def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::DROAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def copyright(); end
+
+  def download(); end
+
+  def embargo(); end
+
+  def readLocation(); end
+
+  def useAndReproductionStatement(); end
+end
+
+class Cocina::Models::DROAccess
+end
+
+class Cocina::Models::DROStructural
+  def contains(); end
+
+  def hasAgreement(); end
+
+  def hasMemberOrders(); end
+
+  def isMemberOf(); end
+end
+
+class Cocina::Models::DROStructural
+end
+
+class Cocina::Models::Description
+  def access(); end
+
+  def adminMetadata(); end
+
+  def contributor(); end
+
+  def event(); end
+
+  def form(); end
+
+  def identifier(); end
+
+  def language(); end
+
+  def marcEncodedData(); end
+
+  def note(); end
+
+  def purl(); end
+
+  def relatedResource(); end
+
+  def subject(); end
+
+  def title(); end
+end
+
+class Cocina::Models::Description
+  def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::DescriptiveAccessMetadata
+  def accessContact(); end
+
+  def digitalRepository(); end
+
+  def note(); end
+
+  def physicalLocation(); end
+
+  def url(); end
+end
+
+class Cocina::Models::DescriptiveAccessMetadata
+end
+
+class Cocina::Models::DescriptiveAdminMetadata
+  def contributor(); end
+
+  def event(); end
+
+  def identifier(); end
+
+  def language(); end
+
+  def note(); end
+
+  def standard(); end
+end
+
+class Cocina::Models::DescriptiveAdminMetadata
+end
+
+class Cocina::Models::DescriptiveBasicValue
+  def code(); end
+
+  def displayLabel(); end
+
+  def encoding(); end
+
+  def note(); end
+
+  def parallelValue(); end
+
+  def qualifier(); end
+
+  def source(); end
+
+  def standard(); end
+
+  def status(); end
+
+  def structuredValue(); end
+
+  def type(); end
+
+  def uri(); end
+
+  def value(); end
+
+  def valueLanguage(); end
+end
+
+class Cocina::Models::DescriptiveBasicValue
+end
+
+class Cocina::Models::DescriptiveParallelValue
+  def parallelValue(); end
+end
+
+class Cocina::Models::DescriptiveParallelValue
+end
+
+class Cocina::Models::DescriptiveStructuredValue
+  def structuredValue(); end
+end
+
+class Cocina::Models::DescriptiveStructuredValue
+end
+
+class Cocina::Models::DescriptiveValue
+  def appliesTo(); end
+
+  def code(); end
+
+  def displayLabel(); end
+
+  def encoding(); end
+
+  def note(); end
+
+  def parallelValue(); end
+
+  def qualifier(); end
+
+  def source(); end
+
+  def standard(); end
+
+  def status(); end
+
+  def structuredValue(); end
+
+  def type(); end
+
+  def uri(); end
+
+  def value(); end
+
+  def valueLanguage(); end
+end
+
+class Cocina::Models::DescriptiveValue
+end
+
+class Cocina::Models::DescriptiveValueLanguage
+  def code(); end
+
+  def note(); end
+
+  def source(); end
+
+  def uri(); end
+
+  def value(); end
+
+  def valueScript(); end
+end
+
+class Cocina::Models::DescriptiveValueLanguage
+end
+
+class Cocina::Models::DescriptiveValueRequired
+  def appliesTo(); end
+
+  def code(); end
+
+  def displayLabel(); end
+
+  def encoding(); end
+
+  def note(); end
+
+  def parallelValue(); end
+
+  def qualifier(); end
+
+  def source(); end
+
+  def standard(); end
+
+  def status(); end
+
+  def structuredValue(); end
+
+  def type(); end
+
+  def uri(); end
+
+  def value(); end
+
+  def valueLanguage(); end
+end
+
+class Cocina::Models::DescriptiveValueRequired
+end
+
+class Cocina::Models::Embargo
+  def access(); end
+
+  def releaseDate(); end
+
+  def useAndReproductionStatement(); end
+end
+
+class Cocina::Models::Embargo
+end
+
+class Cocina::Models::Event
+  def contributor(); end
+
+  def date(); end
+
+  def location(); end
+
+  def note(); end
+
+  def structuredValue(); end
+
+  def type(); end
+end
+
+class Cocina::Models::Event
+end
+
+class Cocina::Models::File
+  include ::Cocina::Models::Checkable
+  def access(); end
+
+  def administrative(); end
+
+  def externalIdentifier(); end
+
+  def filename(); end
+
+  def hasMessageDigests(); end
+
+  def hasMimeType(); end
+
+  def label(); end
+
+  def presentation(); end
+
+  def size(); end
+
+  def type(); end
+
+  def use(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::File
+end
+
+class Cocina::Models::FileAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::FileAccess
+end
+
+class Cocina::Models::FileAdministrative
+  def sdrPreserve(); end
+
+  def shelve(); end
+end
+
+class Cocina::Models::FileAdministrative
+end
+
+class Cocina::Models::FileSet
+  include ::Cocina::Models::Checkable
+  def externalIdentifier(); end
+
+  def label(); end
+
+  def structural(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::FileSet
+end
+
+class Cocina::Models::FileSetStructural
+  def contains(); end
+end
+
+class Cocina::Models::FileSetStructural
+end
+
+class Cocina::Models::Geographic
+  def iso19139(); end
+end
+
+class Cocina::Models::Geographic
+end
+
+class Cocina::Models::Identification
+  def catalogLinks(); end
+
+  def sourceId(); end
+end
+
+class Cocina::Models::Identification
+end
+
+class Cocina::Models::Language
+  def appliesTo(); end
+
+  def code(); end
+
+  def displayLabel(); end
+
+  def encoding(); end
+
+  def note(); end
+
+  def parallelValue(); end
+
+  def qualifier(); end
+
+  def script(); end
+
+  def source(); end
+
+  def standard(); end
+
+  def status(); end
+
+  def structuredValue(); end
+
+  def type(); end
+
+  def uri(); end
+
+  def value(); end
+
+  def valueLanguage(); end
+end
+
+class Cocina::Models::Language
+end
+
+class Cocina::Models::MessageDigest
+  include ::Cocina::Models::Checkable
+  def digest(); end
+
+  def type(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::MessageDigest
+end
+
+class Cocina::Models::Presentation
+  def height(); end
+
+  def width(); end
+end
+
+class Cocina::Models::Presentation
+end
+
+class Cocina::Models::RelatedResource
+  def access(); end
+
+  def contributor(); end
+
+  def event(); end
+
+  def form(); end
+
+  def identifier(); end
+
+  def language(); end
+
+  def note(); end
+
+  def purl(); end
+
+  def subject(); end
+
+  def title(); end
+
+  def type(); end
+end
+
+class Cocina::Models::RelatedResource
+end
+
+class Cocina::Models::ReleaseTag
+  def date(); end
+
+  def release(); end
+
+  def to(); end
+
+  def what(); end
+
+  def who(); end
+end
+
+class Cocina::Models::ReleaseTag
+end
+
+class Cocina::Models::RequestAdminPolicy
+  include ::Cocina::Models::Checkable
+  def administrative(); end
+
+  def description(); end
+
+  def label(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::RequestAdminPolicy
+  def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::RequestCollection
+  include ::Cocina::Models::Checkable
+  def access(); end
+
+  def administrative(); end
+
+  def description(); end
+
+  def identification(); end
+
+  def label(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::RequestCollection
+  def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::RequestDRO
+  include ::Cocina::Models::Checkable
+  def access(); end
+
+  def administrative(); end
+
+  def description(); end
+
+  def geographic(); end
+
+  def identification(); end
+
+  def label(); end
+
+  def structural(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::RequestDRO
+  def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::RequestDROStructural
+  def contains(); end
+
+  def hasAgreement(); end
+
+  def hasMemberOrders(); end
+
+  def isMemberOf(); end
+end
+
+class Cocina::Models::RequestDROStructural
+end
+
+class Cocina::Models::RequestFile
+  include ::Cocina::Models::Checkable
+  def access(); end
+
+  def administrative(); end
+
+  def externalIdentifier(); end
+
+  def filename(); end
+
+  def hasMessageDigests(); end
+
+  def hasMimeType(); end
+
+  def label(); end
+
+  def presentation(); end
+
+  def size(); end
+
+  def type(); end
+
+  def use(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::RequestFile
+end
+
+class Cocina::Models::RequestFileSet
+  include ::Cocina::Models::Checkable
+  def label(); end
+
+  def structural(); end
+
+  def type(); end
+
+  def version(); end
+  TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Cocina::Models::RequestFileSet
+end
+
+class Cocina::Models::RequestFileSetStructural
+  def contains(); end
+end
+
+class Cocina::Models::RequestFileSetStructural
+end
+
+class Cocina::Models::RequestIdentification
+  def catalogLinks(); end
+
+  def sourceId(); end
+end
+
+class Cocina::Models::RequestIdentification
+end
+
+class Cocina::Models::Sequence
+  def members(); end
+
+  def viewingDirection(); end
+end
+
+class Cocina::Models::Sequence
+end
+
+class Cocina::Models::Source
+  def code(); end
+
+  def note(); end
+
+  def uri(); end
+
+  def value(); end
+end
+
+class Cocina::Models::Source
+end
+
+class Cocina::Models::Standard
+  def code(); end
+
+  def note(); end
+
+  def source(); end
+
+  def uri(); end
+
+  def value(); end
+end
+
+class Cocina::Models::Standard
+end
+
+class Cocina::Models::Validator
+end
+
+class Cocina::Models::Validator
+  def self.validate(clazz, attributes); end
+end
+
+class Cocina::Models::Vocab
+end
+
+class Cocina::Models::Vocab
+  def self.admin_policy(); end
+
+  def self.agreement(); end
+
+  def self.book(); end
+
+  def self.collection(); end
+
+  def self.curated_collection(); end
+
+  def self.document(); end
+
+  def self.exhibit(); end
+
+  def self.file(); end
+
+  def self.fileset(); end
+
+  def self.geo(); end
+
+  def self.image(); end
+
+  def self.manuscript(); end
+
+  def self.map(); end
+
+  def self.media(); end
+
+  def self.object(); end
+
+  def self.page(); end
+
+  def self.photograph(); end
+
+  def self.series(); end
+
+  def self.three_dimensional(); end
+
+  def self.track(); end
+
+  def self.user_collection(); end
+
+  def self.webarchive_binary(); end
+
+  def self.webarchive_seed(); end
+end
+
+module CommonMarker
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class CommonMarker::Config::Parse
+  DEFAULT = ::T.let(nil, ::T.untyped)
+  FOOTNOTES = ::T.let(nil, ::T.untyped)
+  LIBERAL_HTML_TAG = ::T.let(nil, ::T.untyped)
+  SMART = ::T.let(nil, ::T.untyped)
+  STRIKETHROUGH_DOUBLE_TILDE = ::T.let(nil, ::T.untyped)
+  UNSAFE = ::T.let(nil, ::T.untyped)
+  VALIDATE_UTF8 = ::T.let(nil, ::T.untyped)
+end
+
+class CommonMarker::Config::Render
+  DEFAULT = ::T.let(nil, ::T.untyped)
+  FULL_INFO_STRING = ::T.let(nil, ::T.untyped)
+  GITHUB_PRE_LANG = ::T.let(nil, ::T.untyped)
+  HARDBREAKS = ::T.let(nil, ::T.untyped)
+  NOBREAKS = ::T.let(nil, ::T.untyped)
+  SOURCEPOS = ::T.let(nil, ::T.untyped)
+  TABLE_PREFER_STYLE_ATTRIBUTES = ::T.let(nil, ::T.untyped)
+  UNSAFE = ::T.let(nil, ::T.untyped)
+end
+
+module CommonMarker::Node::Inspect
+  PP_INDENT_SIZE = ::T.let(nil, ::T.untyped)
+end
+
+class CommonMarker::NodeError
+end
+
+class CommonMarker::NodeError
+end
+
 module Concurrent
   NULL = ::T.let(nil, ::T.untyped)
   NULL_LOGGER = ::T.let(nil, ::T.untyped)
@@ -29978,6 +31252,10 @@ class DatesComponent
   def self.default_url_options?(); end
 end
 
+module DeepMerge
+  DEFAULT_FIELD_KNOCKOUT_PREFIX = ::T.let(nil, ::T.untyped)
+end
+
 class Delegator
   include ::ActiveSupport::Tryable
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
@@ -30000,6 +31278,15 @@ class DepositProgressComponent
   def self.default_url_options=(val); end
 
   def self.default_url_options?(); end
+end
+
+module Deprecation
+  ACTIVESUPPORT_CONCERN_REGEX = ::T.let(nil, ::T.untyped)
+  IGNORE_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+module Deprecation
+  extend ::ActiveSupport::Concern
 end
 
 class DescriptionComponent
@@ -30195,6 +31482,685 @@ end
 
 class Dir
   def self.exists?(_); end
+end
+
+module Dor
+end
+
+module Dor::Services
+end
+
+class Dor::Services::Client
+  include ::Singleton
+  def administrative_tags(); end
+
+  def background_job_results(); end
+
+  def connection=(connection); end
+
+  def enable_get_retries=(enable_get_retries); end
+
+  def marcxml(); end
+
+  def object(object_identifier); end
+
+  def objects(); end
+
+  def token=(token); end
+
+  def url=(url); end
+
+  def virtual_objects(); end
+  DEFAULT_VERSION = ::T.let(nil, ::T.untyped)
+  TOKEN_HEADER = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Dor::Services::Client::Accession
+  def initialize(connection:, version:, object_identifier:); end
+
+  def start(params=T.unsafe(nil)); end
+end
+
+class Dor::Services::Client::Accession
+end
+
+class Dor::Services::Client::AdministrativeTagSearch
+  def search(q:); end
+end
+
+class Dor::Services::Client::AdministrativeTagSearch
+end
+
+class Dor::Services::Client::AdministrativeTags
+  def create(tags:); end
+
+  def destroy(tag:); end
+
+  def initialize(connection:, version:, object_identifier:); end
+
+  def list(); end
+
+  def replace(tags:); end
+
+  def update(current:, new:); end
+end
+
+class Dor::Services::Client::AdministrativeTags
+end
+
+class Dor::Services::Client::AsyncResult
+  def complete?(); end
+
+  def errors(); end
+
+  def initialize(url:); end
+
+  def url(); end
+
+  def wait_until_complete(seconds_between_requests: T.unsafe(nil), timeout_in_seconds: T.unsafe(nil), backoff_factor: T.unsafe(nil), max_seconds_between_requests: T.unsafe(nil)); end
+end
+
+class Dor::Services::Client::AsyncResult
+end
+
+class Dor::Services::Client::BackgroundJobResults
+  def show(job_id:); end
+end
+
+class Dor::Services::Client::BackgroundJobResults
+end
+
+class Dor::Services::Client::Collections
+  def collections(); end
+
+  def initialize(connection:, version:, object_identifier:); end
+end
+
+class Dor::Services::Client::Collections
+end
+
+class Dor::Services::Client::ConflictResponse
+end
+
+class Dor::Services::Client::ConflictResponse
+end
+
+class Dor::Services::Client::ConnectionFailed
+end
+
+class Dor::Services::Client::ConnectionFailed
+end
+
+class Dor::Services::Client::ConnectionWrapper
+  def delete(*_, &_1); end
+
+  def get(*_, &_1); end
+
+  def initialize(connection:, get_connection:); end
+
+  def patch(*_, &_1); end
+
+  def post(*_, &_1); end
+
+  def put(*_, &_1); end
+end
+
+class Dor::Services::Client::ConnectionWrapper
+end
+
+class Dor::Services::Client::Embargo
+  def initialize(connection:, version:, object_identifier:); end
+
+  def update(embargo_date:, requesting_user:); end
+end
+
+class Dor::Services::Client::Embargo
+end
+
+class Dor::Services::Client::Error
+end
+
+class Dor::Services::Client::Error
+end
+
+class Dor::Services::Client::ErrorFaradayMiddleware
+end
+
+class Dor::Services::Client::ErrorFaradayMiddleware
+end
+
+class Dor::Services::Client::Events
+  def create(type:, data:); end
+
+  def initialize(connection:, version:, object_identifier:); end
+
+  def list(); end
+end
+
+class Dor::Services::Client::Events::Event
+  def data(); end
+
+  def data=(_); end
+
+  def event_type(); end
+
+  def event_type=(_); end
+
+  def timestamp(); end
+
+  def timestamp=(_); end
+end
+
+class Dor::Services::Client::Events::Event
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+class Dor::Services::Client::Events
+end
+
+class Dor::Services::Client::MalformedResponse
+end
+
+class Dor::Services::Client::MalformedResponse
+end
+
+class Dor::Services::Client::Marcxml
+  def catkey(barcode:); end
+
+  def marcxml(barcode: T.unsafe(nil), catkey: T.unsafe(nil)); end
+end
+
+class Dor::Services::Client::Marcxml
+end
+
+class Dor::Services::Client::Members
+  def initialize(connection:, version:, object_identifier:); end
+
+  def members(); end
+end
+
+class Dor::Services::Client::Members::Member
+  def externalIdentifier(); end
+
+  def externalIdentifier=(_); end
+
+  def type(); end
+
+  def type=(_); end
+end
+
+class Dor::Services::Client::Members::Member
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+class Dor::Services::Client::Members
+end
+
+class Dor::Services::Client::Metadata
+  def descriptive(); end
+
+  def dublin_core(); end
+
+  def initialize(connection:, version:, object_identifier:); end
+
+  def legacy_update(opts); end
+end
+
+class Dor::Services::Client::Metadata
+end
+
+class Dor::Services::Client::NotFoundResponse
+end
+
+class Dor::Services::Client::NotFoundResponse
+end
+
+class Dor::Services::Client::Object
+  def accession(params=T.unsafe(nil)); end
+
+  def administrative_tags(); end
+
+  def collections(); end
+
+  def embargo(); end
+
+  def events(); end
+
+  def find(); end
+
+  def initialize(connection:, version:, object_identifier:); end
+
+  def members(); end
+
+  def metadata(); end
+
+  def notify_goobi(); end
+
+  def object_identifier(); end
+
+  def preserve(lane_id: T.unsafe(nil)); end
+
+  def publish(workflow: T.unsafe(nil), lane_id: T.unsafe(nil)); end
+
+  def refresh_metadata(); end
+
+  def release_tags(); end
+
+  def shelve(lane_id: T.unsafe(nil)); end
+
+  def update(params:); end
+
+  def update_marc_record(); end
+
+  def version(); end
+
+  def workspace(); end
+end
+
+class Dor::Services::Client::Object
+end
+
+class Dor::Services::Client::ObjectVersion
+  def close(**params); end
+
+  def current(); end
+
+  def initialize(connection:, version:, object_identifier:); end
+
+  def open(**params); end
+
+  def openable?(**params); end
+end
+
+class Dor::Services::Client::ObjectVersion
+end
+
+class Dor::Services::Client::Objects
+  def register(params:); end
+end
+
+class Dor::Services::Client::Objects
+end
+
+class Dor::Services::Client::ReleaseTags
+  def create(release:, what:, to:, who:); end
+
+  def initialize(connection:, version:, object_identifier:); end
+
+  def list(); end
+end
+
+class Dor::Services::Client::ReleaseTags
+end
+
+class Dor::Services::Client::ResponseErrorFormatter
+  def body(); end
+
+  def format(); end
+
+  def initialize(response:, object_identifier: T.unsafe(nil)); end
+
+  def object_identifier(); end
+
+  def reason_phrase(); end
+
+  def status(); end
+  DEFAULT_BODY = ::T.let(nil, ::T.untyped)
+end
+
+class Dor::Services::Client::ResponseErrorFormatter
+  def self.format(response:, object_identifier: T.unsafe(nil)); end
+end
+
+class Dor::Services::Client::UnauthorizedResponse
+end
+
+class Dor::Services::Client::UnauthorizedResponse
+end
+
+class Dor::Services::Client::UnexpectedResponse
+end
+
+class Dor::Services::Client::UnexpectedResponse
+end
+
+class Dor::Services::Client::VersionedService
+  def async_result(url:); end
+
+  def initialize(connection:, version:); end
+end
+
+class Dor::Services::Client::VersionedService
+end
+
+class Dor::Services::Client::VirtualObjects
+  def create(virtual_objects:); end
+end
+
+class Dor::Services::Client::VirtualObjects
+end
+
+class Dor::Services::Client::Workspace
+  def cleanup(); end
+
+  def create(source:); end
+
+  def initialize(connection:, version:, object_identifier:); end
+
+  def reset(); end
+end
+
+class Dor::Services::Client::Workspace
+end
+
+class Dor::Services::Client
+  extend ::Singleton::SingletonClassMethods
+  def self.administrative_tags(*_, &_1); end
+
+  def self.background_job_results(*_, &_1); end
+
+  def self.configure(url:, token:, enable_get_retries: T.unsafe(nil)); end
+
+  def self.marcxml(*_, &_1); end
+
+  def self.object(*_, &_1); end
+
+  def self.objects(*_, &_1); end
+
+  def self.virtual_objects(*_, &_1); end
+end
+
+module Dor::Services
+end
+
+module Dor
+end
+
+module Dry::Configurable
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Configurable::DSL
+  VALID_NAME = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Configurable::Setting
+  CLONABLE_VALUE_TYPES = ::T.let(nil, ::T.untyped)
+  DEFAULT_CONSTRUCTOR = ::T.let(nil, ::T.untyped)
+  OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Configurable::Setting::Nested
+  CONSTRUCTOR = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Container
+  include ::Dry::Container::Mixin::Initializer
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  PREFIX_NAMESPACE = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Container::NamespaceDSL
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Core::ClassAttributes
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Core::Constants
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Core::Deprecations
+  STACK = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Core::Inflector
+  BACKENDS = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Inflector
+  DEFAULT_SEPARATOR = ::T.let(nil, ::T.untyped)
+  ORDINALIZE_TH = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Initializer::Dispatchers::PrepareTarget
+  RESERVED = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Logic::Operations::Abstract
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Logic::Result
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  SUCCESS = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Logic::Rule
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Logic::RuleCompiler
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Schema
+  DEFAULT_MESSAGES_PATH = ::T.let(nil, ::T.untyped)
+  DEFAULT_MESSAGES_ROOT = ::T.let(nil, ::T.untyped)
+  DOT = ::T.let(nil, ::T.untyped)
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  LIST_SEPARATOR = ::T.let(nil, ::T.untyped)
+  QUESTION_MARK = ::T.let(nil, ::T.untyped)
+  STEPS_IN_ORDER = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+Dry::Schema::DSL::Types = Dry::Schema::Types
+
+class Dry::Schema::Key
+  DEFAULT_COERCER = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::KeyCoercer
+  TO_SYM = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::KeyValidator
+  BRACKETS = ::T.let(nil, ::T.untyped)
+  DIGIT_REGEX = ::T.let(nil, ::T.untyped)
+  INDEX_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::MessageCompiler
+  DEFAULT_PREDICATE_RESOLVERS = ::T.let(nil, ::T.untyped)
+  EMPTY_MESSAGE_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  FULL_MESSAGE_WHITESPACE = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Schema::Messages
+  BACKENDS = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::Messages::YAML
+  EMPTY_CONTEXT = ::T.let(nil, ::T.untyped)
+  LOCALE_TOKEN = ::T.let(nil, ::T.untyped)
+  TOKEN_REGEXP = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::Trace
+  INVALID_PREDICATES = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::TypeContainer
+  include ::Dry::Container::Mixin::Initializer
+end
+
+class Dry::Struct
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Types
+  ALL_PRIMITIVES = ::T.let(nil, ::T.untyped)
+  Any = ::T.let(nil, ::T.untyped)
+  COERCIBLE = ::T.let(nil, ::T.untyped)
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Inflector = ::T.let(nil, ::T.untyped)
+  KERNEL_COERCIBLE = ::T.let(nil, ::T.untyped)
+  METHOD_COERCIBLE = ::T.let(nil, ::T.untyped)
+  METHOD_COERCIBLE_METHODS = ::T.let(nil, ::T.untyped)
+  NON_COERCIBLE = ::T.let(nil, ::T.untyped)
+  NON_NIL = ::T.let(nil, ::T.untyped)
+  PRINTER = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  TYPE_SPEC_REGEX = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Types::Builder
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Types::Coercions
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Types::Coercions::Params
+  BOOLEAN_MAP = ::T.let(nil, ::T.untyped)
+  FALSE_VALUES = ::T.let(nil, ::T.untyped)
+  TRUE_VALUES = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Types::Container
+  include ::Dry::Container::Mixin::Initializer
+end
+
+class Dry::Types::Hash
+  NOT_REQUIRED = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Types::Nominal
+  ALWAYS = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Types::PredicateInferrer
+  ARRAY = ::T.let(nil, ::T.untyped)
+  HASH = ::T.let(nil, ::T.untyped)
+  NIL = ::T.let(nil, ::T.untyped)
+  REDUCED_TYPES = ::T.let(nil, ::T.untyped)
+  TYPE_TO_PREDICATE = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Types::Printer
+  MAPPING = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Types::Schema
+  NO_TRANSFORM = ::T.let(nil, ::T.untyped)
+  SYMBOLIZE_KEY = ::T.let(nil, ::T.untyped)
+end
+
+module Dry::Validation
+  BLOCK_OPTIONS_MAPPINGS = ::T.let(nil, ::T.untyped)
+  DEFAULT_ERRORS_NAMESPACE = ::T.let(nil, ::T.untyped)
+  DEFAULT_ERRORS_PATH = ::T.let(nil, ::T.untyped)
+  DOT = ::T.let(nil, ::T.untyped)
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  ROOT_PATH = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Validation::Macros::Container
+  include ::Dry::Container::Mixin::Initializer
+end
+
+module Dry::Validation::Messages
+  FULL_MESSAGE_WHITESPACE = ::T.let(nil, ::T.untyped)
 end
 
 class ERB
@@ -30813,6 +32779,364 @@ end
 
 class FalseClass
   include ::JSON::Ext::Generator::GeneratorMethods::FalseClass
+end
+
+module Faraday
+  METHODS_WITH_BODY = ::T.let(nil, ::T.untyped)
+  METHODS_WITH_QUERY = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter
+  CONTENT_LENGTH = ::T.let(nil, ::T.untyped)
+  TIMEOUT_KEYS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::EMHttp
+  include ::Faraday::Adapter::EMHttp::Options
+  def create_request(env); end
+
+  def error_message(client); end
+
+  def parallel?(env); end
+
+  def perform_request(env); end
+
+  def perform_single_request(env); end
+
+  def raise_error(msg); end
+
+  def timeout_message?(msg); end
+end
+
+class Faraday::Adapter::EMHttp::Manager
+  def add(&block); end
+
+  def check_finished(); end
+
+  def perform_request(); end
+
+  def reset(); end
+
+  def run(); end
+
+  def running?(); end
+end
+
+class Faraday::Adapter::EMHttp::Manager
+end
+
+module Faraday::Adapter::EMHttp::Options
+  def configure_compression(options, env); end
+
+  def configure_proxy(options, env); end
+
+  def configure_socket(options, env); end
+
+  def configure_ssl(options, env); end
+
+  def configure_timeout(options, env); end
+
+  def connection_config(env); end
+
+  def read_body(env); end
+
+  def request_config(env); end
+
+  def request_options(env); end
+end
+
+module Faraday::Adapter::EMHttp::Options
+end
+
+class Faraday::Adapter::EMHttp
+  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
+end
+
+class Faraday::Adapter::EMSynchrony
+  include ::Faraday::Adapter::EMHttp::Options
+  def create_request(env); end
+end
+
+class Faraday::Adapter::EMSynchrony::ParallelManager
+  def add(request, method, *args, &block); end
+
+  def run(); end
+end
+
+class Faraday::Adapter::EMSynchrony::ParallelManager
+end
+
+class Faraday::Adapter::EMSynchrony
+  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
+end
+
+class Faraday::Adapter::Excon
+  def build_connection(env); end
+
+  def read_body(env); end
+  OPTS_KEYS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::Excon
+end
+
+class Faraday::Adapter::HTTPClient
+  def build_connection(env); end
+
+  def configure_client(client); end
+
+  def configure_proxy(client, proxy); end
+
+  def configure_socket(client, bind); end
+
+  def configure_ssl(client, ssl); end
+
+  def configure_timeouts(client, req); end
+
+  def ssl_cert_store(ssl); end
+
+  def ssl_verify_mode(ssl); end
+end
+
+class Faraday::Adapter::HTTPClient
+end
+
+class Faraday::Adapter::NetHttp
+  def build_connection(env); end
+
+  def initialize(app=T.unsafe(nil), opts=T.unsafe(nil), &block); end
+
+  def net_http_connection(env); end
+  NET_HTTP_EXCEPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::NetHttp
+end
+
+class Faraday::Adapter::NetHttpPersistent
+  SSL_CONFIGURATIONS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::NetHttpPersistent
+end
+
+class Faraday::Adapter::Patron
+  def build_connection(env); end
+
+  def configure_proxy(session, proxy); end
+
+  def configure_ssl(session, ssl); end
+
+  def configure_timeouts(session, req); end
+  CURL_TIMEOUT_MESSAGES = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::Patron
+end
+
+class Faraday::Adapter::Rack
+  def initialize(faraday_app, rack_app); end
+  SPECIAL_HEADERS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Adapter::Rack
+end
+
+class Faraday::Adapter::Test
+  def configure(); end
+
+  def initialize(app, stubs=T.unsafe(nil), &block); end
+
+  def stubs(); end
+
+  def stubs=(stubs); end
+end
+
+class Faraday::Adapter::Test::Stub
+  def headers_match?(request_headers); end
+
+  def initialize(host, full, headers, body, block); end
+
+  def matches?(request_host, request_uri, request_headers, request_body); end
+
+  def params_match?(request_params); end
+
+  def path_match?(request_path, meta); end
+end
+
+class Faraday::Adapter::Test::Stub
+end
+
+class Faraday::Adapter::Test::Stubs
+  def delete(path, headers=T.unsafe(nil), &block); end
+
+  def empty?(); end
+
+  def get(path, headers=T.unsafe(nil), &block); end
+
+  def head(path, headers=T.unsafe(nil), &block); end
+
+  def match(request_method, host, path, headers, body); end
+
+  def matches?(stack, host, path, headers, body); end
+
+  def new_stub(request_method, path, headers=T.unsafe(nil), body=T.unsafe(nil), &block); end
+
+  def options(path, headers=T.unsafe(nil), &block); end
+
+  def patch(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
+
+  def post(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
+
+  def put(path, body=T.unsafe(nil), headers=T.unsafe(nil), &block); end
+
+  def verify_stubbed_calls(); end
+end
+
+class Faraday::Adapter::Test::Stubs::NotFound
+end
+
+class Faraday::Adapter::Test::Stubs::NotFound
+end
+
+class Faraday::Adapter::Test::Stubs
+end
+
+class Faraday::Adapter::Test
+end
+
+class Faraday::Adapter::Typhoeus
+  def call(); end
+end
+
+class Faraday::Adapter::Typhoeus
+end
+
+class Faraday::Connection
+  METHODS = ::T.let(nil, ::T.untyped)
+end
+
+module Faraday::DecodeMethods
+  SUBKEYS_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Env
+  ContentLength = ::T.let(nil, ::T.untyped)
+  MethodsWithBodies = ::T.let(nil, ::T.untyped)
+  StatusesWithoutBody = ::T.let(nil, ::T.untyped)
+  SuccessfulStatuses = ::T.let(nil, ::T.untyped)
+end
+
+Faraday::FilePart = UploadIO
+
+Faraday::Parts = Parts
+
+class Faraday::RackBuilder
+  LOCK_ERR = ::T.let(nil, ::T.untyped)
+  NO_ARGUMENT = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::RackBuilder::Handler
+  REGISTRY = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Authorization
+  def call(env); end
+
+  def initialize(app, type, token); end
+  KEY = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Authorization
+  def self.build_hash(type, hash); end
+
+  def self.header(type, token); end
+end
+
+class Faraday::Request::BasicAuthentication
+end
+
+class Faraday::Request::BasicAuthentication
+  def self.header(login, pass); end
+end
+
+class Faraday::Request::Instrumentation
+  def call(env); end
+
+  def initialize(app, options=T.unsafe(nil)); end
+end
+
+class Faraday::Request::Instrumentation::Options
+end
+
+class Faraday::Request::Instrumentation::Options
+end
+
+class Faraday::Request::Instrumentation
+end
+
+class Faraday::Request::Multipart
+  DEFAULT_BOUNDARY_PREFIX = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Retry
+  def build_exception_matcher(exceptions); end
+
+  def calculate_sleep_amount(retries, env); end
+
+  def call(env); end
+
+  def initialize(app, options=T.unsafe(nil)); end
+  DEFAULT_EXCEPTIONS = ::T.let(nil, ::T.untyped)
+  IDEMPOTENT_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Retry::Options
+  DEFAULT_CHECK = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Request::Retry::Options
+end
+
+class Faraday::Request::Retry
+end
+
+class Faraday::Request::TokenAuthentication
+  def initialize(app, token, options=T.unsafe(nil)); end
+end
+
+class Faraday::Request::TokenAuthentication
+  def self.header(token, options=T.unsafe(nil)); end
+end
+
+class Faraday::Request::UrlEncoded
+  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Response::Logger
+  def initialize(app, logger=T.unsafe(nil), options=T.unsafe(nil)); end
+end
+
+class Faraday::Response::Logger
+end
+
+class Faraday::Response::RaiseError
+  ClientErrorStatuses = ::T.let(nil, ::T.untyped)
+  ServerErrorStatuses = ::T.let(nil, ::T.untyped)
+end
+
+Faraday::Timer = Timeout
+
+Faraday::UploadIO = UploadIO
+
+module Faraday::Utils
+  DEFAULT_SEP = ::T.let(nil, ::T.untyped)
+  ESCAPE_RE = ::T.let(nil, ::T.untyped)
+end
+
+class Faraday::Utils::Headers
+  KeyMap = ::T.let(nil, ::T.untyped)
 end
 
 class Fiber
@@ -34616,8 +36940,6 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
-
-  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -34634,11 +36956,17 @@ class Object
   STDERR = ::T.let(nil, ::T.untyped)
   STDIN = ::T.let(nil, ::T.untyped)
   STDOUT = ::T.let(nil, ::T.untyped)
+  Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
 end
 
-class Object
-  def self.yaml_tag(url); end
+module OpenAPIParser
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class OpenAPIParser::SchemaValidator::BooleanValidator
+  FALSE_VALUES = ::T.let(nil, ::T.untyped)
+  TRUE_VALUES = ::T.let(nil, ::T.untyped)
 end
 
 class OpenSSL::ASN1::ASN1Data
@@ -34749,6 +37077,91 @@ end
 
 class OpenStruct
   VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class OpenURI::Buffer
+  def <<(str); end
+
+  def io(); end
+
+  def size(); end
+  StringMax = ::T.let(nil, ::T.untyped)
+end
+
+class OpenURI::Buffer
+end
+
+class OpenURI::HTTPError
+  def initialize(message, io); end
+end
+
+class OpenURI::HTTPRedirect
+  def initialize(message, io, uri); end
+end
+
+module OpenURI::Meta
+  def content_type_parse(); end
+
+  def meta_add_field(name, value); end
+
+  def meta_add_field2(name, values); end
+
+  def meta_setup_encoding(); end
+  RE_LWS = ::T.let(nil, ::T.untyped)
+  RE_PARAMETERS = ::T.let(nil, ::T.untyped)
+  RE_QUOTED_STRING = ::T.let(nil, ::T.untyped)
+  RE_TOKEN = ::T.let(nil, ::T.untyped)
+end
+
+module OpenURI::Meta
+  def self.init(obj, src=T.unsafe(nil)); end
+end
+
+module OpenURI
+  def self.check_options(options); end
+
+  def self.open_http(buf, target, proxy, options); end
+
+  def self.open_loop(uri, options); end
+
+  def self.open_uri(name, *rest); end
+
+  def self.redirectable?(uri1, uri2); end
+
+  def self.scan_open_optional_arguments(*rest); end
+end
+
+module Openapi3Parser
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Openapi3Parser::Document
+  DEFAULT_OPENAPI_VERSION = ::T.let(nil, ::T.untyped)
+  SUPPORTED_OPENAPI_VERSIONS = ::T.let(nil, ::T.untyped)
+end
+
+module Openapi3Parser::NodeFactory
+  EXTENSION_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Openapi3Parser::NodeFactory::Paths
+  PATH_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Openapi3Parser::NodeFactory::Responses
+  KEY_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Openapi3Parser::Validators::ComponentKeys
+  REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Openapi3Parser::Validators::Email
+  REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class Openapi3Parser::Validators::MediaType
+  REGEX = ::T.let(nil, ::T.untyped)
 end
 
 class OptionParser
@@ -36824,30 +39237,6 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Psych
-  def self.add_builtin_type(type_tag, &block); end
-
-  def self.add_domain_type(domain, type_tag, &block); end
-
-  def self.add_tag(tag, klass); end
-
-  def self.domain_types(); end
-
-  def self.domain_types=(domain_types); end
-
-  def self.dump_tags(); end
-
-  def self.dump_tags=(dump_tags); end
-
-  def self.libyaml_version(); end
-
-  def self.load_tags(); end
-
-  def self.load_tags=(load_tags); end
-
-  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -42087,6 +44476,10 @@ RuboCop::ProcessedSource = RuboCop::AST::ProcessedSource
 
 RuboCop::Token = RuboCop::AST::Token
 
+module Ruby::Enum
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 class RubyLex
   def check_code_block(code); end
 
@@ -43870,6 +46263,10 @@ module URI
 end
 
 class URI::FTP
+  def buffer_open(buf, proxy, options); end
+end
+
+class URI::FTP
   def self.new2(user, password, host, port, path, typecode=T.unsafe(nil), arg_check=T.unsafe(nil)); end
 end
 
@@ -43920,6 +46317,10 @@ class URI::GID
   def self.parse(uri); end
 
   def self.validate_app(app); end
+end
+
+class URI::HTTP
+  def buffer_open(buf, proxy, options); end
 end
 
 class URI::LDAP
@@ -43986,6 +46387,8 @@ end
 module URI
   extend ::URI::Escape
   def self.get_encoding(label); end
+
+  def self.open(name, *rest, &block); end
 
   def self.parser(); end
 end
@@ -45441,22 +47844,8 @@ class Work
 end
 
 class WorkFormComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class WorkFormComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class WorkTypeComponent

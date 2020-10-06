@@ -648,6 +648,7 @@ module RSpec::Core::HashImitatable
   def key(*args, &block); end
   def key?(*args, &block); end
   def keys(*args, &block); end
+  def ko_deep_merge!(*args, &block); end
   def lazy(*args, &block); end
   def length(*args, &block); end
   def many?(*args, &block); end

@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 # Deposits a Work into dor-services-app

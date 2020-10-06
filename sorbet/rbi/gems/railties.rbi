@@ -403,7 +403,7 @@ class Rails::SourceAnnotationExtractor
   def self.enumerate(tag = nil, options = nil); end
   def tag; end
 end
-class Anonymous_Struct_1 < Struct
+class Anonymous_Struct_2 < Struct
   def line; end
   def line=(_); end
   def self.[](*arg0); end
@@ -415,7 +415,7 @@ class Anonymous_Struct_1 < Struct
   def text; end
   def text=(_); end
 end
-class Rails::SourceAnnotationExtractor::Annotation < Anonymous_Struct_1
+class Rails::SourceAnnotationExtractor::Annotation < Anonymous_Struct_2
   def self.directories; end
   def self.extensions; end
   def self.notes_task_deprecation_warning; end
@@ -595,9 +595,9 @@ class Rails::ApplicationController < ActionController::Base
   def self.helpers_path; end
   def self.middleware_stack; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_2
+  include Anonymous_Module_3
 end
-module Anonymous_Module_2
+module Anonymous_Module_3
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -609,11 +609,11 @@ module Anonymous_Module_2
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_3
   extend Anonymous_Module_4
+  extend Anonymous_Module_5
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_3
   include Anonymous_Module_4
+  include Anonymous_Module_5
 end
 module Rails::Command
   def self.command_type; end
@@ -735,4 +735,72 @@ class Rails::Generators::TestCase < ActiveSupport::TestCase
   include Rails::Generators::Testing::Assertions
   include Rails::Generators::Testing::Behaviour
   include Rails::Generators::Testing::SetupAndTeardown
+end
+class ActiveRecord::ExplainRegistry
+  def self.collect?(**, &&); end
+end
+class ActiveRecord::Scoping::ScopeRegistry
+  def self.value_for(**, &&); end
+end
+class ActiveRecord::InternalMetadata < ActiveRecord::Base
+  def self.default_scope_override; end
+end
+class ActiveSupport::TestCase < Minitest::Test
+  def config; end
+  def config=(val); end
+  def config?; end
+  def fixture_class_names; end
+  def fixture_class_names=(val); end
+  def fixture_class_names?; end
+  def fixture_path; end
+  def fixture_path?; end
+  def fixture_table_names; end
+  def fixture_table_names=(val); end
+  def fixture_table_names?; end
+  def lock_threads; end
+  def lock_threads=(val); end
+  def lock_threads?; end
+  def pre_loaded_fixtures; end
+  def pre_loaded_fixtures=(val); end
+  def pre_loaded_fixtures?; end
+  def self.config; end
+  def self.config=(val); end
+  def self.config?; end
+  def self.fixture_class_names; end
+  def self.fixture_class_names=(val); end
+  def self.fixture_class_names?; end
+  def self.fixture_path; end
+  def self.fixture_path=(val); end
+  def self.fixture_path?; end
+  def self.fixture_table_names; end
+  def self.fixture_table_names=(val); end
+  def self.fixture_table_names?; end
+  def self.lock_threads; end
+  def self.lock_threads=(val); end
+  def self.lock_threads?; end
+  def self.pre_loaded_fixtures; end
+  def self.pre_loaded_fixtures=(val); end
+  def self.pre_loaded_fixtures?; end
+  def self.use_instantiated_fixtures; end
+  def self.use_instantiated_fixtures=(val); end
+  def self.use_instantiated_fixtures?; end
+  def self.use_transactional_tests; end
+  def self.use_transactional_tests=(val); end
+  def self.use_transactional_tests?; end
+  def use_instantiated_fixtures; end
+  def use_instantiated_fixtures=(val); end
+  def use_instantiated_fixtures?; end
+  def use_transactional_tests; end
+  def use_transactional_tests=(val); end
+  def use_transactional_tests?; end
+  extend ActiveRecord::TestFixtures::ClassMethods
+  include ActiveRecord::TestDatabases
+  include ActiveRecord::TestFixtures
+end
+class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
+  def before_setup; end
+  def self.fixture_path; end
+end
+class ActionController::TestCase < ActiveSupport::TestCase
+  def before_setup; end
 end

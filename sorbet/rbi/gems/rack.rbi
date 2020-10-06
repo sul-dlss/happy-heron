@@ -386,7 +386,7 @@ class Rack::Session::Cookie::Identity
   def decode(str); end
   def encode(str); end
 end
-class Rack::Session::Cookie::SessionId < Anonymous_Delegator_10
+class Rack::Session::Cookie::SessionId < Anonymous_Delegator_11
   def cookie_value; end
   def initialize(session_id, cookie_value); end
 end
@@ -651,7 +651,7 @@ class Rack::Directory
   def root; end
   def stat(path); end
 end
-class Anonymous_Struct_11 < Struct
+class Anonymous_Struct_12 < Struct
   def files; end
   def files=(_); end
   def path; end
@@ -663,7 +663,7 @@ class Anonymous_Struct_11 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Rack::Directory::DirectoryBody < Anonymous_Struct_11
+class Rack::Directory::DirectoryBody < Anonymous_Struct_12
   def DIR_FILE_escape(htmls); end
   def each; end
 end
@@ -917,7 +917,7 @@ class Rack::Multipart::Parser::Collector
   def on_mime_head(mime_index, head, filename, content_type, name); end
   include Enumerable
 end
-class Anonymous_Struct_12 < Struct
+class Anonymous_Struct_13 < Struct
   def body; end
   def body=(_); end
   def content_type; end
@@ -933,7 +933,7 @@ class Anonymous_Struct_12 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Rack::Multipart::Parser::Collector::MimePart < Anonymous_Struct_12
+class Rack::Multipart::Parser::Collector::MimePart < Anonymous_Struct_13
   def get_data; end
 end
 class Rack::Multipart::Parser::Collector::BufferPart < Rack::Multipart::Parser::Collector::MimePart
