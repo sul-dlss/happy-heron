@@ -1,0 +1,44 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7.1-node
+        environment:
+          BUNDLER_VERSION: 2.1.2
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          PGPASSWORD: sekret
+          RAILS_ENV: test
+          NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+      - image: circleci/postgres:11
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+          POSTGRES_PASSWORD: sekret
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
+      - run:
+          name: Lint using rubocop
+          command: bundle exec rubocop
+      - run:
+          name: Run static type checking
+          command: bundle exec srb tc --ignore=vendor/
+      - run:
+          name: Wait for database
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bin/rails db:setup
+      - run:
+          name: rspec
+          command: bundle exec rspec
