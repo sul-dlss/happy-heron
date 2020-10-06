@@ -1,3 +1,4 @@
+# typed: false
 # frozen_string_literal: true
 
 begin
@@ -6,6 +7,7 @@ begin
     task.requires << 'rubocop-performance'
     task.requires << 'rubocop-rails'
     task.requires << 'rubocop-rspec'
+    task.requires << 'rubocop-sorbet'
   end
 rescue LoadError
   task rubocop: :environment do

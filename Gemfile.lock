@@ -303,6 +303,8 @@ GEM
       rubocop (>= 0.87.0)
     rubocop-rspec (1.43.2)
       rubocop (~> 0.87)
+    rubocop-sorbet (0.5.0)
+      rubocop
     ruby-enum (0.8.0)
       i18n
     ruby-progressbar (1.10.1)
@@ -382,6 +384,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  rubocop-sorbet
   selenium-webdriver
   sorbet
   sorbet-runtime
