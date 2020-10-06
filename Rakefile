@@ -6,3 +6,12 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+desc 'Run Continuous Integration Suite (linter and tests)'
+task ci: %i[rubocop spec]
+
+# clear the default task injected by rspec
+task(:default).clear
+
+# and replace it with our own
+task default: :ci

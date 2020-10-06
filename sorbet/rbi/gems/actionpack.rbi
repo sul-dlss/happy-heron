@@ -1448,10 +1448,6 @@ class ActionDispatch::Callbacks
   extend ActiveSupport::DescendantsTracker
   include ActiveSupport::Callbacks
 end
-module ActionController::ApiRendering
-  def render_to_body(options = nil); end
-  extend ActiveSupport::Concern
-end
 class ActionDispatch::Routing::RouteWrapper < SimpleDelegator
   def action; end
   def constraints; end
@@ -2784,143 +2780,6 @@ module ActionDispatch::Assertions::RoutingAssertions
   def setup; end
   def with_routing; end
 end
-class ActionController::API < ActionController::Metal
-  def __callbacks; end
-  def __callbacks?; end
-  def _helper_methods; end
-  def _helper_methods=(val); end
-  def _helper_methods?; end
-  def _helpers; end
-  def _helpers=(val); end
-  def _helpers?; end
-  def _process_action_callbacks; end
-  def _renderers; end
-  def _renderers=(val); end
-  def _renderers?; end
-  def _run_process_action_callbacks(&block); end
-  def _wrapper_options; end
-  def _wrapper_options=(val); end
-  def _wrapper_options?; end
-  def default_url_options; end
-  def default_url_options=(val); end
-  def default_url_options?; end
-  def etaggers; end
-  def etaggers=(val); end
-  def etaggers?; end
-  def helpers_path; end
-  def helpers_path=(val); end
-  def helpers_path?; end
-  def include_all_helpers; end
-  def include_all_helpers=(val); end
-  def include_all_helpers?; end
-  def logger; end
-  def logger=(value); end
-  def rescue_handlers; end
-  def rescue_handlers=(val); end
-  def rescue_handlers?; end
-  def self.__callbacks; end
-  def self.__callbacks=(val); end
-  def self.__callbacks?; end
-  def self._helper_methods; end
-  def self._helper_methods=(val); end
-  def self._helper_methods?; end
-  def self._helpers; end
-  def self._helpers=(val); end
-  def self._helpers?; end
-  def self._process_action_callbacks; end
-  def self._process_action_callbacks=(value); end
-  def self._renderers; end
-  def self._renderers=(val); end
-  def self._renderers?; end
-  def self._wrapper_options; end
-  def self._wrapper_options=(val); end
-  def self._wrapper_options?; end
-  def self.default_url_options; end
-  def self.default_url_options=(val); end
-  def self.default_url_options?; end
-  def self.etaggers; end
-  def self.etaggers=(val); end
-  def self.etaggers?; end
-  def self.helpers_path; end
-  def self.helpers_path=(val); end
-  def self.helpers_path?; end
-  def self.include_all_helpers; end
-  def self.include_all_helpers=(val); end
-  def self.include_all_helpers?; end
-  def self.logger; end
-  def self.logger=(value); end
-  def self.middleware_stack; end
-  def self.rescue_handlers; end
-  def self.rescue_handlers=(val); end
-  def self.rescue_handlers?; end
-  def self.without_modules(*modules); end
-  extend AbstractController::Callbacks::ClassMethods
-  extend AbstractController::Helpers::ClassMethods
-  extend AbstractController::UrlFor::ClassMethods
-  extend ActionController::ConditionalGet::ClassMethods
-  extend ActionController::DefaultHeaders::ClassMethods
-  extend ActionController::ForceSSL::ClassMethods
-  extend ActionController::Helpers::ClassMethods
-  extend ActionController::Instrumentation::ClassMethods
-  extend ActionController::ParamsWrapper::ClassMethods
-  extend ActionController::Railties::Helpers
-  extend ActionController::Renderers::ClassMethods
-  extend ActionController::Rendering::ClassMethods
-  extend ActionView::Rendering::ClassMethods
-  extend ActionView::ViewPaths::ClassMethods
-  extend ActiveRecord::Railties::ControllerRuntime::ClassMethods
-  extend ActiveSupport::Callbacks::ClassMethods
-  extend ActiveSupport::DescendantsTracker
-  extend ActiveSupport::Rescuable::ClassMethods
-  extend Anonymous_Module_9
-  include AbstractController::Callbacks
-  include AbstractController::Callbacks
-  include AbstractController::Helpers
-  include AbstractController::Logger
-  include AbstractController::Logger
-  include AbstractController::Rendering
-  include AbstractController::UrlFor
-  include ActionController::ApiRendering
-  include ActionController::BasicImplicitRender
-  include ActionController::ConditionalGet
-  include ActionController::DataStreaming
-  include ActionController::DefaultHeaders
-  include ActionController::ForceSSL
-  include ActionController::Helpers
-  include ActionController::ImplicitRender
-  include ActionController::Instrumentation
-  include ActionController::ParamsWrapper
-  include ActionController::Redirecting
-  include ActionController::Renderers
-  include ActionController::Renderers::All
-  include ActionController::Rendering
-  include ActionController::Rendering
-  include ActionController::Rescue
-  include ActionController::StrongParameters
-  include ActionController::UrlFor
-  include ActionController::UrlFor
-  include ActionDispatch::Routing::RouteSet::MountedHelpers
-  include ActionDispatch::Routing::UrlFor
-  include ActionDispatch::Routing::UrlFor
-  include ActionView::Rendering
-  include ActionView::ViewPaths
-  include ActionView::ViewPaths
-  include ActiveRecord::Railties::ControllerRuntime
-  include ActiveSupport::Benchmarkable
-  include ActiveSupport::Callbacks
-  include ActiveSupport::Rescuable
-  include Turbolinks::Controller
-  include Turbolinks::Redirection
-end
-module Anonymous_Module_9
-  def inherited(klass); end
-end
-module ActionView::RoutingUrlFor
-  def default_url_options=(obj); end
-  def self.default_url_options=(obj); end
-  include ActionDispatch::Routing::UrlFor
-  include ActionDispatch::Routing::UrlFor
-end
 class ActionController::Base < ActionController::Metal
   def __callbacks; end
   def __callbacks?; end
@@ -3118,7 +2977,7 @@ class ActionController::Base < ActionController::Metal
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
-  extend Anonymous_Module_10
+  extend Anonymous_Module_9
   include AbstractController::AssetPaths
   include AbstractController::Caching
   include AbstractController::Caching::Fragments
@@ -3185,8 +3044,14 @@ class ActionController::Base < ActionController::Metal
   include ViewComponent::RenderingComponentHelper
   include ViewComponent::RenderingComponentHelper
 end
-module Anonymous_Module_10
+module Anonymous_Module_9
   def inherited(klass); end
+end
+module ActionView::RoutingUrlFor
+  def default_url_options=(obj); end
+  def self.default_url_options=(obj); end
+  include ActionDispatch::Routing::UrlFor
+  include ActionDispatch::Routing::UrlFor
 end
 class ActionDispatch::TestRequest < ActionDispatch::Request
   def accept=(mime_types); end
@@ -3202,6 +3067,109 @@ class ActionDispatch::TestRequest < ActionDispatch::Request
   def self.create(env = nil); end
   def self.default_env; end
   def user_agent=(user_agent); end
+end
+module ActionController::ApiRendering
+  def render_to_body(options = nil); end
+  extend ActiveSupport::Concern
+end
+class ActionController::API < ActionController::Metal
+  def __callbacks; end
+  def __callbacks?; end
+  def _process_action_callbacks; end
+  def _renderers; end
+  def _renderers=(val); end
+  def _renderers?; end
+  def _run_process_action_callbacks(&block); end
+  def _wrapper_options; end
+  def _wrapper_options=(val); end
+  def _wrapper_options?; end
+  def default_url_options; end
+  def default_url_options=(val); end
+  def default_url_options?; end
+  def etaggers; end
+  def etaggers=(val); end
+  def etaggers?; end
+  def logger; end
+  def logger=(value); end
+  def rescue_handlers; end
+  def rescue_handlers=(val); end
+  def rescue_handlers?; end
+  def self.__callbacks; end
+  def self.__callbacks=(val); end
+  def self.__callbacks?; end
+  def self._process_action_callbacks; end
+  def self._process_action_callbacks=(value); end
+  def self._renderers; end
+  def self._renderers=(val); end
+  def self._renderers?; end
+  def self._wrapper_options; end
+  def self._wrapper_options=(val); end
+  def self._wrapper_options?; end
+  def self.default_url_options; end
+  def self.default_url_options=(val); end
+  def self.default_url_options?; end
+  def self.etaggers; end
+  def self.etaggers=(val); end
+  def self.etaggers?; end
+  def self.logger; end
+  def self.logger=(value); end
+  def self.middleware_stack; end
+  def self.rescue_handlers; end
+  def self.rescue_handlers=(val); end
+  def self.rescue_handlers?; end
+  def self.without_modules(*modules); end
+  extend AbstractController::Callbacks::ClassMethods
+  extend AbstractController::UrlFor::ClassMethods
+  extend ActionController::ConditionalGet::ClassMethods
+  extend ActionController::DefaultHeaders::ClassMethods
+  extend ActionController::ForceSSL::ClassMethods
+  extend ActionController::Instrumentation::ClassMethods
+  extend ActionController::ParamsWrapper::ClassMethods
+  extend ActionController::Railties::Helpers
+  extend ActionController::Renderers::ClassMethods
+  extend ActionController::Rendering::ClassMethods
+  extend ActionView::ViewPaths::ClassMethods
+  extend ActiveRecord::Railties::ControllerRuntime::ClassMethods
+  extend ActiveSupport::Callbacks::ClassMethods
+  extend ActiveSupport::DescendantsTracker
+  extend ActiveSupport::Rescuable::ClassMethods
+  extend Anonymous_Module_10
+  include AbstractController::Callbacks
+  include AbstractController::Callbacks
+  include AbstractController::Logger
+  include AbstractController::Logger
+  include AbstractController::Rendering
+  include AbstractController::UrlFor
+  include ActionController::ApiRendering
+  include ActionController::BasicImplicitRender
+  include ActionController::ConditionalGet
+  include ActionController::DataStreaming
+  include ActionController::DefaultHeaders
+  include ActionController::ForceSSL
+  include ActionController::Instrumentation
+  include ActionController::ParamsWrapper
+  include ActionController::Redirecting
+  include ActionController::Renderers
+  include ActionController::Renderers::All
+  include ActionController::Rendering
+  include ActionController::Rendering
+  include ActionController::Rescue
+  include ActionController::StrongParameters
+  include ActionController::UrlFor
+  include ActionController::UrlFor
+  include ActionDispatch::Routing::RouteSet::MountedHelpers
+  include ActionDispatch::Routing::UrlFor
+  include ActionDispatch::Routing::UrlFor
+  include ActionView::ViewPaths
+  include ActiveRecord::Railties::ControllerRuntime
+  include ActiveSupport::Benchmarkable
+  include ActiveSupport::Callbacks
+  include ActiveSupport::Rescuable
+  include Turbolinks::Controller
+  include Turbolinks::Redirection
+end
+module Anonymous_Module_10
+  def inherited(klass); end
 end
 module ActionController::TemplateAssertions
   def assert_template(options = nil, message = nil); end

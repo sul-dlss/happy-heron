@@ -1936,80 +1936,6 @@ module ActiveSupport::TaggedLogging::Formatter
   def tagged(*tags); end
   def tags_text; end
 end
-class ActiveSupport::ProxyObject < BasicObject
-  def raise(*args); end
-end
-class ActiveSupport::ArrayInquirer < Array
-  def any?(*candidates); end
-  def method_missing(name, *args); end
-  def respond_to_missing?(name, include_private = nil); end
-end
-module ActiveSupport::Cache
-  def self.expand_cache_key(key, namespace = nil); end
-  def self.lookup_store(store = nil, *parameters); end
-  def self.retrieve_cache_key(key); end
-  def self.retrieve_store_class(store); end
-end
-module ActiveSupport::Cache::Strategy
-end
-class ActiveSupport::Cache::Store
-  def cleanup(options = nil); end
-  def clear(options = nil); end
-  def decrement(name, amount = nil, options = nil); end
-  def delete(name, options = nil); end
-  def delete_entry(key, **options); end
-  def delete_matched(matcher, options = nil); end
-  def exist?(name, options = nil); end
-  def expanded_key(key); end
-  def expanded_version(key); end
-  def fetch(name, options = nil); end
-  def fetch_multi(*names); end
-  def get_entry_value(entry, name, options); end
-  def handle_expired_entry(entry, key, options); end
-  def increment(name, amount = nil, options = nil); end
-  def initialize(options = nil); end
-  def instrument(operation, key, options = nil); end
-  def key_matcher(pattern, options); end
-  def log; end
-  def logger; end
-  def logger=(obj); end
-  def merged_options(call_options); end
-  def mute; end
-  def namespace_key(key, options = nil); end
-  def normalize_key(key, options = nil); end
-  def normalize_version(key, options = nil); end
-  def options; end
-  def read(name, options = nil); end
-  def read_entry(key, **options); end
-  def read_multi(*names); end
-  def read_multi_entries(names, **options); end
-  def save_block_result_to_cache(name, **options); end
-  def self.ensure_connection_pool_added!; end
-  def self.logger; end
-  def self.logger=(obj); end
-  def self.retrieve_pool_options(options); end
-  def silence!; end
-  def silence; end
-  def silence?; end
-  def write(name, value, options = nil); end
-  def write_entry(key, entry, **options); end
-  def write_multi(hash, options = nil); end
-  def write_multi_entries(hash, **options); end
-end
-class ActiveSupport::Cache::Entry
-  def compress!(compress_threshold); end
-  def compressed?; end
-  def dup_value!; end
-  def expired?; end
-  def expires_at; end
-  def expires_at=(value); end
-  def initialize(value, compress: nil, compress_threshold: nil, version: nil, expires_in: nil, **arg5); end
-  def mismatched?(version); end
-  def size; end
-  def uncompress(value); end
-  def value; end
-  def version; end
-end
 class ActiveSupport::ExecutionWrapper
   def __callbacks; end
   def __callbacks?; end
@@ -2137,6 +2063,11 @@ module ActiveSupport::EachTimeWithZone
   def ensure_iteration_allowed; end
   def step(n = nil, &block); end
 end
+class ActiveSupport::ArrayInquirer < Array
+  def any?(*candidates); end
+  def method_missing(name, *args); end
+  def respond_to_missing?(name, include_private = nil); end
+end
 module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
 end
@@ -2158,6 +2089,72 @@ module Digest::UUID
   def self.uuid_v3(uuid_namespace, name); end
   def self.uuid_v4; end
   def self.uuid_v5(uuid_namespace, name); end
+end
+module ActiveSupport::Cache
+  def self.expand_cache_key(key, namespace = nil); end
+  def self.lookup_store(store = nil, *parameters); end
+  def self.retrieve_cache_key(key); end
+  def self.retrieve_store_class(store); end
+end
+module ActiveSupport::Cache::Strategy
+end
+class ActiveSupport::Cache::Store
+  def cleanup(options = nil); end
+  def clear(options = nil); end
+  def decrement(name, amount = nil, options = nil); end
+  def delete(name, options = nil); end
+  def delete_entry(key, **options); end
+  def delete_matched(matcher, options = nil); end
+  def exist?(name, options = nil); end
+  def expanded_key(key); end
+  def expanded_version(key); end
+  def fetch(name, options = nil); end
+  def fetch_multi(*names); end
+  def get_entry_value(entry, name, options); end
+  def handle_expired_entry(entry, key, options); end
+  def increment(name, amount = nil, options = nil); end
+  def initialize(options = nil); end
+  def instrument(operation, key, options = nil); end
+  def key_matcher(pattern, options); end
+  def log; end
+  def logger; end
+  def logger=(obj); end
+  def merged_options(call_options); end
+  def mute; end
+  def namespace_key(key, options = nil); end
+  def normalize_key(key, options = nil); end
+  def normalize_version(key, options = nil); end
+  def options; end
+  def read(name, options = nil); end
+  def read_entry(key, **options); end
+  def read_multi(*names); end
+  def read_multi_entries(names, **options); end
+  def save_block_result_to_cache(name, **options); end
+  def self.ensure_connection_pool_added!; end
+  def self.logger; end
+  def self.logger=(obj); end
+  def self.retrieve_pool_options(options); end
+  def silence!; end
+  def silence; end
+  def silence?; end
+  def write(name, value, options = nil); end
+  def write_entry(key, entry, **options); end
+  def write_multi(hash, options = nil); end
+  def write_multi_entries(hash, **options); end
+end
+class ActiveSupport::Cache::Entry
+  def compress!(compress_threshold); end
+  def compressed?; end
+  def dup_value!; end
+  def expired?; end
+  def expires_at; end
+  def expires_at=(value); end
+  def initialize(value, compress: nil, compress_threshold: nil, version: nil, expires_in: nil, **arg5); end
+  def mismatched?(version); end
+  def size; end
+  def uncompress(value); end
+  def value; end
+  def version; end
 end
 module ActiveSupport::Cache::Strategy::LocalCache
   def bypass_local_cache; end
@@ -2491,6 +2488,9 @@ class ActiveSupport::TestCase < Minitest::Test
   include ActiveSupport::Testing::FileFixtures
   include ActiveSupport::Testing::TaggedLogging
   include ActiveSupport::Testing::TimeHelpers
+end
+class ActiveSupport::ProxyObject < BasicObject
+  def raise(*args); end
 end
 class ActiveSupport::Cache::FileStore < ActiveSupport::Cache::Store
   def cache_path; end
