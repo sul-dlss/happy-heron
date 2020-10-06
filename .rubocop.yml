@@ -7,6 +7,10 @@ AllCops:
     - node_modules/**/*
     - bin/bundle
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
 Layout/EmptyLinesAroundAttributeAccessor: # (new in 0.83)
   Enabled: true
 Layout/SpaceAroundMethodCallOperator: # (new in 0.82)

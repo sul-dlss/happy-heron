@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   root to: 'welcome#show'
   resource 'welcome', only: 'show'
 
-  resources :works, only: [:new, :create, :show]
+  resources :works, only: %i[new create show]
 end
