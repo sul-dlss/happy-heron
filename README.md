@@ -1,24 +1,16 @@
-# README
+# H2 Self-deposit front end for the Stanford Digital Repository
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Install Dependencies
+Ruby dependencies can be installed with `bundle install`, Javascript dependencies are installed via `yarn install`.
 
-Things you may want to cover:
+## Testing
 
-* Ruby version
+Start up dependencies with `docker-compose up`, then run tests with `bundle exec rspec`.
 
-* System dependencies
+## Type checking
 
-* Configuration
+Sorbet is used for optional type checking.  Do a static type check via `srb tc`.  After adding a new gem to the Gemfile, build the new type definitions with `srb rbi update`. Then commit the changes in `sorbet/` to git.
 
-* Database creation
+## Architecture
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+At the end of the 2020 workcycle, H2 should use the sdr-api to do file and metadata deposits. 
