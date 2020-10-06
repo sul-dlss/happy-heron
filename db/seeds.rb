@@ -1,4 +1,4 @@
-# typed: false
+# typed: strict
 # frozen_string_literal: true
 
 # This file should contain all the record creation needed to seed the database with its default values.
@@ -9,4 +9,4 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-RoleTerm.create({ label: 'Author' }, { label: 'Contributor' })
+RoleTerm.create([{ label: 'Author' }, { label: 'Contributor' }])

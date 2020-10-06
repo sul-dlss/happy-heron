@@ -1,21 +1,36 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-sorbet
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:
   Exclude:
-    - db/migrate/**
-    - db/schema.rb
+    - db/**/*
     - node_modules/**/*
     - bin/bundle
+    - vendor/**/*
 
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
 
+Lint/MissingSuper: # (new in 0.89)
+  Enabled: true
+  Exclude:
+    - app/components/**
+
+Layout/BeginEndAlignment: # (new in 0.91)
+  Enabled: true
 Layout/EmptyLinesAroundAttributeAccessor: # (new in 0.83)
   Enabled: true
 Layout/SpaceAroundMethodCallOperator: # (new in 0.82)
   Enabled: true
 Lint/BinaryOperatorWithIdenticalOperands: # (new in 0.89)
+  Enabled: true
+Lint/ConstantDefinitionInBlock: # (new in 0.91)
   Enabled: true
 Lint/DeprecatedOpenSSLConstant: # (new in 0.84)
   Enabled: true
@@ -31,12 +46,8 @@ Lint/EmptyFile: # (new in 0.90)
   Enabled: true
 Lint/FloatComparison: # (new in 0.89)
   Enabled: true
-
-Lint/MissingSuper: # (new in 0.89)
+Lint/IdentityComparison: # (new in 0.91)
   Enabled: true
-  Exclude:
-    - app/components/**
-
 Lint/MixedRegexpCaptureTypes: # (new in 0.85)
   Enabled: true
 Lint/OutOfRangeRegexpRef: # (new in 0.89)
@@ -55,9 +66,9 @@ Lint/UnreachableLoop: # (new in 0.89)
   Enabled: true
 Lint/UselessMethodDefinition: # (new in 0.90)
   Enabled: true
-Style/AccessorGrouping: # (new in 0.87)
+Lint/UselessTimes: # (new in 0.91)
   Enabled: true
-Style/ArrayCoercion: # (new in 0.88)
+Style/AccessorGrouping: # (new in 0.87)
   Enabled: true
 Style/BisectedAttrAccessor: # (new in 0.87)
   Enabled: true
@@ -104,4 +115,52 @@ Style/SlicingWithRange: # (new in 0.83)
 Style/SoleNestedConditional: # (new in 0.89)
   Enabled: true
 Style/StringConcatenation: # (new in 0.89)
+  Enabled: true
+Performance/AncestorsInclude: # (new in 1.7)
+  Enabled: true
+Performance/BigDecimalWithNumericArgument: # (new in 1.7)
+  Enabled: true
+Performance/RedundantSortBlock: # (new in 1.7)
+  Enabled: true
+Performance/RedundantStringChars: # (new in 1.7)
+  Enabled: true
+Performance/ReverseFirst: # (new in 1.7)
+  Enabled: true
+Performance/SortReverse: # (new in 1.7)
+  Enabled: true
+Performance/Squeeze: # (new in 1.7)
+  Enabled: true
+Performance/StringInclude: # (new in 1.7)
+  Enabled: true
+Performance/Sum: # (new in 1.8)
+  Enabled: true
+Rails/ActiveRecordCallbacksOrder: # (new in 2.7)
+  Enabled: true
+Rails/AfterCommitOverride: # (new in 2.8)
+  Enabled: true
+Rails/FindById: # (new in 2.7)
+  Enabled: true
+Rails/Inquiry: # (new in 2.7)
+  Enabled: true
+Rails/MailerName: # (new in 2.7)
+  Enabled: true
+Rails/MatchRoute: # (new in 2.7)
+  Enabled: true
+Rails/NegateInclude: # (new in 2.7)
+  Enabled: true
+Rails/Pluck: # (new in 2.7)
+  Enabled: true
+Rails/PluckInWhere: # (new in 2.7)
+  Enabled: true
+Rails/RenderInline: # (new in 2.7)
+  Enabled: true
+Rails/RenderPlainText: # (new in 2.7)
+  Enabled: true
+Rails/ShortI18n: # (new in 2.7)
+  Enabled: true
+Rails/SquishedSQLHeredocs: # (new in 2.8)
+  Enabled: true
+Rails/WhereExists: # (new in 2.7)
+  Enabled: true
+Rails/WhereNot: # (new in 2.8)
   Enabled: true

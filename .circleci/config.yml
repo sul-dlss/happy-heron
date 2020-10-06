@@ -1,0 +1,117 @@
+version: 2.1
+references:
+  default_ruby_version: &default_ruby_version 2.7.1-node
+  default_postgres_version: &default_postgres_version 11-alpine
+  ruby_envs: &ruby_envs
+    environment:
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+      PGHOST: 127.0.0.1
+      PGPASSWORD: sekret
+      RAILS_ENV: test
+  postgres_envs: &postgres_envs
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_PASSWORD: sekret
+executors:
+  default:
+    parameters:
+      ruby_tag:
+        description: "The `circleci/ruby` Docker image version tag."
+        type: string
+        default: *default_ruby_version
+    docker:
+      - image: circleci/ruby:<< parameters.ruby_tag >>
+        <<: *ruby_envs
+  ruby_with_postgres:
+    parameters:
+      ruby_tag:
+        description: "The `circleci/ruby` Docker image version tag."
+        type: string
+        default: *default_ruby_version
+      postgres_tag:
+        description: "The `circleci/postgres` Docker image version tag."
+        type: string
+        default: *default_postgres_version
+    docker:
+      - image: circleci/ruby:<< parameters.ruby_tag >>
+        <<: *ruby_envs
+      - image: circleci/postgres:<< parameters.postgres_tag >>
+        <<: *postgres_envs
+jobs:
+  build:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Install bundler
+          command: gem install bundler
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - restore_cache:
+          keys:
+            - happy-heron-bundle-{{ checksum "Gemfile.lock" }}
+            - happy-heron-bundle-
+      - run:
+          name: Install dependencies
+          command: bundle check || bundle install
+      - save_cache:
+          key: happy-heron-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+  lint:
+    executor: default
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - happy-heron-bundle-{{ checksum "Gemfile.lock" }}
+            - happy-heron-bundle-
+      - run:
+          name: Lint using rubocop
+          command: bundle exec rubocop
+  typecheck:
+    executor: default
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - happy-heron-bundle-{{ checksum "Gemfile.lock" }}
+            - happy-heron-bundle-
+      - run:
+          name: Run static type checking
+          command: bundle exec srb tc --ignore=vendor/
+  test:
+    executor: ruby_with_postgres
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - happy-heron-bundle-{{ checksum "Gemfile.lock" }}
+            - happy-heron-bundle-
+      - run:
+          name: Wait for database
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bin/rails db:setup
+      - run:
+          name: Run RSpec tests
+          command: bundle exec rspec
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - lint:
+          requires:
+            - build
+      - typecheck:
+          requires:
+            - build
+      - test:
+          requires:
+            - build

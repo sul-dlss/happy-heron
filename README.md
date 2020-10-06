@@ -1,7 +1,8 @@
 # H2 Self-deposit front end for the Stanford Digital Repository
 
 ## Install Dependencies
-Ruby dependencies can be installed with `bundle install`, Javascript dependencies are installed via `yarn install`.
+
+Ruby dependencies can be installed with `bundle install`, JavaScript dependencies are installed via `yarn install`.
 
 ## Testing
 
@@ -9,8 +10,20 @@ Start up dependencies with `docker-compose up`, then run tests with `bundle exec
 
 ## Type checking
 
-Sorbet is used for optional type checking.  Do a static type check via `srb tc`.  After adding a new gem to the Gemfile, build the new type definitions with `srb rbi update`. Then commit the changes in `sorbet/` to git.
+H2 uses Sorbet optional Ruby type checking. Run a manual static type check via `srb tc`; note that CI for H2 will automate this. After adding a new gem to the Gemfile, or running `bundle update`, build the new type definitions with `srb rbi update`.
+
+If you would like to automate this step, consider using a git pre-commit hook. To do this, create a file named `.git/hooks/pre-commit` and add code like the following:
+
+```sh
+# .git/hooks/pre-commit
+if git diff --cached --name-only --diff-filter=ACM | grep --quiet 'Gemfile.lock'
+then
+    exec env SRB_YES=1 bundle exec srb rbi update
+fi
+```
+
+Then commit the changes in `sorbet/` to git.
 
 ## Architecture
 
-At the end of the 2020 workcycle, H2 should use the sdr-api to do file and metadata deposits. 
+At the end of the 2020 workcycle, H2 should use sdr-api to do file and metadata deposits.

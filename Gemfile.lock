@@ -185,8 +185,6 @@ GEM
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
-    jbuilder (2.10.0)
-      activesupport (>= 5.0.0)
     json (2.3.1)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -223,7 +221,7 @@ GEM
       psych (~> 3.1)
     openapi_parser (0.12.1)
     parallel (1.19.2)
-    parser (2.7.1.4)
+    parser (2.7.2.0)
       ast (~> 2.4.1)
     pg (1.2.3)
     psych (3.2.0)
@@ -266,7 +264,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    regexp_parser (1.7.1)
+    regexp_parser (1.8.1)
     rexml (3.2.4)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
@@ -285,17 +283,28 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.3)
-    rubocop (0.90.0)
+    rubocop (0.92.0)
       parallel (~> 1.10)
-      parser (>= 2.7.1.1)
+      parser (>= 2.7.1.5)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.7)
       rexml
-      rubocop-ast (>= 0.3.0, < 1.0)
+      rubocop-ast (>= 0.5.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (0.4.0)
-      parser (>= 2.7.1.4)
+    rubocop-ast (0.7.1)
+      parser (>= 2.7.1.5)
+    rubocop-performance (1.8.1)
+      rubocop (>= 0.87.0)
+      rubocop-ast (>= 0.4.0)
+    rubocop-rails (2.8.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 0.87.0)
+    rubocop-rspec (1.43.2)
+      rubocop (~> 0.87)
+    rubocop-sorbet (0.5.0)
+      rubocop
     ruby-enum (0.8.0)
       i18n
     ruby-progressbar (1.10.1)
@@ -319,7 +328,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -367,19 +375,21 @@ DEPENDENCIES
   config (~> 2.2)
   dlss-capistrano (~> 3.6)
   dor-services-client
-  jbuilder (~> 2.7)
   listen (~> 3.2)
   pg
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
   rspec-rails
   rubocop
+  rubocop-performance
+  rubocop-rails
+  rubocop-rspec
+  rubocop-sorbet
   selenium-webdriver
   sorbet
   sorbet-runtime
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqlite3 (~> 1.4)
   turbolinks (~> 5)
   view_component (~> 2.18)
   web-console (>= 3.3.0)
