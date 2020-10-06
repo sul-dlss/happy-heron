@@ -1,3 +1,4 @@
+# typed: true
 class WorkTypeComponent < ViewComponent::Base
   def initialize(form:)
     @form = form

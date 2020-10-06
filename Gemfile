@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'pg'
 gem 'view_component', '~> 2.18'
+gem 'sorbet-runtime'
 
 group :development, :test do
   gem 'byebug'
@@ -43,6 +44,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'sorbet'
 end
 
 group :test do
