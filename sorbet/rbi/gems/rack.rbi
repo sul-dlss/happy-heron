@@ -440,6 +440,26 @@ end
 class Rack::Files::Iterator < Rack::Files::BaseIterator
   def to_path; end
 end
+class Rack::ContentLength
+  def call(env); end
+  def initialize(app); end
+  include Rack::Utils
+end
+class Rack::Builder
+  def call(env); end
+  def freeze_app; end
+  def generate_map(default_app, mapping); end
+  def initialize(default_app = nil, &block); end
+  def map(path, &block); end
+  def run(app); end
+  def self.app(default_app = nil, &block); end
+  def self.load_file(path, opts = nil); end
+  def self.new_from_string(builder_script, file = nil); end
+  def self.parse_file(config, opts = nil); end
+  def to_app; end
+  def use(middleware, *args, &block); end
+  def warmup(prc = nil, &block); end
+end
 class Rack::Response
   def [](key); end
   def []=(key, v); end
@@ -588,11 +608,6 @@ end
 class Rack::Config
   def call(env); end
   def initialize(app, &block); end
-end
-class Rack::ContentLength
-  def call(env); end
-  def initialize(app); end
-  include Rack::Utils
 end
 class Rack::ContentType
   def call(env); end

@@ -248,6 +248,32 @@ class ActiveJob::QueueAdapters::AsyncAdapter::Scheduler
   def initialize(**options); end
   def shutdown(wait: nil); end
 end
+class ActiveJob::QueueAdapters::SidekiqAdapter
+  def enqueue(job); end
+  def enqueue_at(job, timestamp); end
+end
+class ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper
+  def perform(job_data); end
+  def self.__synchronized_sidekiq_options_hash; end
+  def self.__synchronized_sidekiq_retries_exhausted_block; end
+  def self.__synchronized_sidekiq_retry_in_block; end
+  def self.sidekiq_options_hash; end
+  def self.sidekiq_options_hash=(val); end
+  def self.sidekiq_retries_exhausted_block; end
+  def self.sidekiq_retries_exhausted_block=(val); end
+  def self.sidekiq_retry_in_block; end
+  def self.sidekiq_retry_in_block=(val); end
+  def sidekiq_options_hash; end
+  def sidekiq_options_hash=(arg0); end
+  def sidekiq_retries_exhausted_block; end
+  def sidekiq_retries_exhausted_block=(arg0); end
+  def sidekiq_retry_in_block; end
+  def sidekiq_retry_in_block=(arg0); end
+  extend Sidekiq::Worker::ClassMethods
+  extend Sidekiq::Worker::Options::ClassMethods
+  include Sidekiq::Worker
+  include Sidekiq::Worker::Options
+end
 class ActiveJob::Base
   def __callbacks; end
   def __callbacks?; end
@@ -263,6 +289,9 @@ class ActiveJob::Base
   def self.__callbacks; end
   def self.__callbacks=(val); end
   def self.__callbacks?; end
+  def self.__synchronized_sidekiq_options_hash; end
+  def self.__synchronized_sidekiq_retries_exhausted_block; end
+  def self.__synchronized_sidekiq_retry_in_block; end
   def self._enqueue_callbacks; end
   def self._enqueue_callbacks=(value); end
   def self._perform_callbacks; end
@@ -289,6 +318,18 @@ class ActiveJob::Base
   def self.rescue_handlers?; end
   def self.return_false_on_aborted_enqueue; end
   def self.return_false_on_aborted_enqueue=(val); end
+  def self.sidekiq_options_hash; end
+  def self.sidekiq_options_hash=(val); end
+  def self.sidekiq_retries_exhausted_block; end
+  def self.sidekiq_retries_exhausted_block=(val); end
+  def self.sidekiq_retry_in_block; end
+  def self.sidekiq_retry_in_block=(val); end
+  def sidekiq_options_hash; end
+  def sidekiq_options_hash=(arg0); end
+  def sidekiq_retries_exhausted_block; end
+  def sidekiq_retries_exhausted_block=(arg0); end
+  def sidekiq_retry_in_block; end
+  def sidekiq_retry_in_block=(arg0); end
   extend ActiveJob::Callbacks::ClassMethods
   extend ActiveJob::Core::ClassMethods
   extend ActiveJob::Enqueuing::ClassMethods
@@ -301,6 +342,7 @@ class ActiveJob::Base
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
+  extend Sidekiq::Worker::Options::ClassMethods
   include ActiveJob::Callbacks
   include ActiveJob::Core
   include ActiveJob::Enqueuing
@@ -315,6 +357,7 @@ class ActiveJob::Base
   include ActiveJob::Translation
   include ActiveSupport::Callbacks
   include ActiveSupport::Rescuable
+  include Sidekiq::Worker::Options
 end
 module ActiveJob::TestHelper
   def after_teardown; end

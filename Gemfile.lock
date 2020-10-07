@@ -114,6 +114,7 @@ GEM
     config (2.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
+    connection_pool (2.2.3)
     crass (1.0.6)
     deep_merge (1.2.1)
     deprecation (1.0.0)
@@ -264,6 +265,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.2.2)
     regexp_parser (1.8.1)
     rexml (3.2.4)
     rspec-core (3.9.2)
@@ -313,6 +315,10 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (2.3.0)
+    sidekiq (6.1.2)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     sorbet (0.5.5916)
       sorbet-static (= 0.5.5916)
     sorbet-runtime (0.5.5916)
@@ -386,6 +392,7 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-sorbet
   selenium-webdriver
+  sidekiq (~> 6.1)
   sorbet
   sorbet-runtime
   spring
