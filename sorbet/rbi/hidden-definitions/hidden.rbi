@@ -10536,6 +10536,7 @@ class ActiveJob::Base
   include ::ActiveJob::Logging
   include ::ActiveJob::Timezones
   include ::ActiveJob::Translation
+  include ::Sidekiq::Worker::Options
   include ::ActiveJob::TestHelper::TestQueueAdapter
   def __callbacks(); end
 
@@ -10558,6 +10559,18 @@ class ActiveJob::Base
   def rescue_handlers=(val); end
 
   def rescue_handlers?(); end
+
+  def sidekiq_options_hash(); end
+
+  def sidekiq_options_hash=(sidekiq_options_hash); end
+
+  def sidekiq_retries_exhausted_block(); end
+
+  def sidekiq_retries_exhausted_block=(sidekiq_retries_exhausted_block); end
+
+  def sidekiq_retry_in_block(); end
+
+  def sidekiq_retry_in_block=(sidekiq_retry_in_block); end
 end
 
 class ActiveJob::Base
@@ -10619,6 +10632,18 @@ class ActiveJob::Base
   def self.return_false_on_aborted_enqueue(); end
 
   def self.return_false_on_aborted_enqueue=(val); end
+
+  def self.sidekiq_options_hash(); end
+
+  def self.sidekiq_options_hash=(val); end
+
+  def self.sidekiq_retries_exhausted_block(); end
+
+  def self.sidekiq_retries_exhausted_block=(val); end
+
+  def self.sidekiq_retry_in_block(); end
+
+  def self.sidekiq_retry_in_block=(val); end
 end
 
 module ActiveJob::Callbacks
@@ -10802,6 +10827,47 @@ class ActiveJob::QueueAdapters::InlineAdapter
 end
 
 class ActiveJob::QueueAdapters::InlineAdapter
+end
+
+class ActiveJob::QueueAdapters::SidekiqAdapter
+  def enqueue(job); end
+
+  def enqueue_at(job, timestamp); end
+end
+
+class ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper
+  include ::Sidekiq::Worker
+  include ::Sidekiq::Worker::Options
+  def perform(job_data); end
+
+  def sidekiq_options_hash(); end
+
+  def sidekiq_options_hash=(sidekiq_options_hash); end
+
+  def sidekiq_retries_exhausted_block(); end
+
+  def sidekiq_retries_exhausted_block=(sidekiq_retries_exhausted_block); end
+
+  def sidekiq_retry_in_block(); end
+
+  def sidekiq_retry_in_block=(sidekiq_retry_in_block); end
+end
+
+class ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper
+  def self.sidekiq_options_hash(); end
+
+  def self.sidekiq_options_hash=(val); end
+
+  def self.sidekiq_retries_exhausted_block(); end
+
+  def self.sidekiq_retries_exhausted_block=(val); end
+
+  def self.sidekiq_retry_in_block(); end
+
+  def self.sidekiq_retry_in_block=(val); end
+end
+
+class ActiveJob::QueueAdapters::SidekiqAdapter
 end
 
 class ActiveJob::QueueAdapters::TestAdapter
@@ -19227,6 +19293,13 @@ module ActiveSupport::Cache
   UNIVERSAL_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
+module ActiveSupport::Cache::ConnectionPoolLike
+  def with(); end
+end
+
+module ActiveSupport::Cache::ConnectionPoolLike
+end
+
 class ActiveSupport::Cache::Entry
   def dup_value!(); end
 
@@ -19284,6 +19357,37 @@ class ActiveSupport::Cache::NullStore
 end
 
 class ActiveSupport::Cache::NullStore
+  def self.supports_cache_versioning?(); end
+end
+
+class ActiveSupport::Cache::RedisCacheStore
+  include ::ActiveSupport::Cache::Strategy::LocalCache
+  include ::ActiveSupport::Cache::RedisCacheStore::LocalCacheWithRaw
+  def initialize(namespace: T.unsafe(nil), compress: T.unsafe(nil), compress_threshold: T.unsafe(nil), expires_in: T.unsafe(nil), race_condition_ttl: T.unsafe(nil), error_handler: T.unsafe(nil), **redis_options); end
+
+  def max_key_bytesize(); end
+
+  def mget_capable?(); end
+
+  def mset_capable?(); end
+
+  def redis(); end
+
+  def redis_options(); end
+  DEFAULT_ERROR_HANDLER = ::T.let(nil, ::T.untyped)
+  DEFAULT_REDIS_OPTIONS = ::T.let(nil, ::T.untyped)
+  MAX_KEY_BYTESIZE = ::T.let(nil, ::T.untyped)
+end
+
+module ActiveSupport::Cache::RedisCacheStore::LocalCacheWithRaw
+end
+
+module ActiveSupport::Cache::RedisCacheStore::LocalCacheWithRaw
+end
+
+class ActiveSupport::Cache::RedisCacheStore
+  def self.build_redis(redis: T.unsafe(nil), url: T.unsafe(nil), **redis_options); end
+
   def self.supports_cache_versioning?(); end
 end
 
@@ -30344,6 +30448,15 @@ module Concurrent::Utility::NativeInteger
   MIN_VALUE = ::T.let(nil, ::T.untyped)
 end
 
+class ConnectionPool
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class ConnectionPool::Wrapper
+  METHODS = ::T.let(nil, ::T.untyped)
+end
+
 class Contributor
   include ::Contributor::GeneratedAttributeMethods
   include ::Contributor::GeneratedAssociationMethods
@@ -35916,8 +36029,6 @@ end
 class Net::HTTPAlreadyReported
 end
 
-Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
-
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
 class Net::HTTPEarlyHints
@@ -35929,9 +36040,13 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-Net::HTTPInformation::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPInformation
+end
 
-Net::HTTPInformationCode = Net::HTTPInformation
+Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPInformation
+end
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -35979,8 +36094,6 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
-Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
-
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -35989,15 +36102,17 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
-Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
-
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPSuccess
+end
 
-Net::HTTPSuccessCode = Net::HTTPSuccess
+Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPSuccess
+end
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -36639,6 +36754,12 @@ module OpenSSL::SSL
   TLS1_2_VERSION = ::T.let(nil, ::T.untyped)
   TLS1_3_VERSION = ::T.let(nil, ::T.untyped)
   TLS1_VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class OpenSSL::SSL::SSLSocket
+  def alpn_protocol(); end
+
+  def tmp_key(); end
 end
 
 module OpenSSL::X509
@@ -39863,32 +39984,7 @@ class Rack::Auth::Digest::Params
 end
 
 class Rack::Builder
-  def call(env); end
-
-  def freeze_app(); end
-
-  def initialize(default_app=T.unsafe(nil), &block); end
-
-  def map(path, &block); end
-
-  def run(app); end
-
-  def to_app(); end
-
-  def use(middleware, *args, &block); end
-
-  def warmup(prc=T.unsafe(nil), &block); end
   UTF_8_BOM = ::T.let(nil, ::T.untyped)
-end
-
-class Rack::Builder
-  def self.app(default_app=T.unsafe(nil), &block); end
-
-  def self.load_file(path, opts=T.unsafe(nil)); end
-
-  def self.new_from_string(builder_script, file=T.unsafe(nil)); end
-
-  def self.parse_file(config, opts=T.unsafe(nil)); end
 end
 
 class Rack::Cascade
@@ -41979,6 +42075,423 @@ end
 
 module Readline
   def self.completion_quote_character(); end
+end
+
+class Redis
+  include ::ActiveSupport::Cache::ConnectionPoolLike
+  Boolify = ::T.let(nil, ::T.untyped)
+  BoolifySet = ::T.let(nil, ::T.untyped)
+  Floatify = ::T.let(nil, ::T.untyped)
+  FloatifyPairs = ::T.let(nil, ::T.untyped)
+  Hashify = ::T.let(nil, ::T.untyped)
+  HashifyClusterNodeInfo = ::T.let(nil, ::T.untyped)
+  HashifyClusterNodes = ::T.let(nil, ::T.untyped)
+  HashifyClusterSlaves = ::T.let(nil, ::T.untyped)
+  HashifyClusterSlots = ::T.let(nil, ::T.untyped)
+  HashifyInfo = ::T.let(nil, ::T.untyped)
+  HashifyStreamEntries = ::T.let(nil, ::T.untyped)
+  HashifyStreamPendingDetails = ::T.let(nil, ::T.untyped)
+  HashifyStreamPendings = ::T.let(nil, ::T.untyped)
+  HashifyStreams = ::T.let(nil, ::T.untyped)
+  Noop = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::Client
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+module Redis::Cluster::KeySlotConverter
+  HASH_SLOTS = ::T.let(nil, ::T.untyped)
+  XMODEM_CRC16_LOOKUP = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::Cluster::Node
+  ROLE_SLAVE = ::T.let(nil, ::T.untyped)
+end
+
+module Redis::Cluster::NodeKey
+  DELIMITER = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::Cluster::Option
+  DEFAULT_SCHEME = ::T.let(nil, ::T.untyped)
+  SECURE_SCHEME = ::T.let(nil, ::T.untyped)
+  VALID_SCHEMES = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::Cluster::Slot
+  ROLE_SLAVE = ::T.let(nil, ::T.untyped)
+end
+
+module Redis::Connection::CommandHelper
+  COMMAND_DELIMITER = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::Connection::Ruby
+  ASTERISK = ::T.let(nil, ::T.untyped)
+  COLON = ::T.let(nil, ::T.untyped)
+  DOLLAR = ::T.let(nil, ::T.untyped)
+  MINUS = ::T.let(nil, ::T.untyped)
+  PLUS = ::T.let(nil, ::T.untyped)
+end
+
+module Redis::Connection::SocketMixin
+  CRLF = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::Distributed
+  include ::ActiveSupport::Cache::ConnectionPoolLike
+  def [](key); end
+
+  def []=(key, value); end
+
+  def _bpop(cmd, args); end
+
+  def _eval(cmd, args); end
+
+  def add_node(options); end
+
+  def append(key, value); end
+
+  def bgsave(); end
+
+  def bitcount(key, start=T.unsafe(nil), stop=T.unsafe(nil)); end
+
+  def bitop(operation, destkey, *keys); end
+
+  def bitpos(key, bit, start=T.unsafe(nil), stop=T.unsafe(nil)); end
+
+  def blpop(*args); end
+
+  def brpop(*args); end
+
+  def brpoplpush(source, destination, deprecated_timeout=T.unsafe(nil), **options); end
+
+  def dbsize(); end
+
+  def decr(key); end
+
+  def decrby(key, decrement); end
+
+  def del(*args); end
+
+  def discard(); end
+
+  def dump(key); end
+
+  def echo(value); end
+
+  def ensure_same_node(command, keys); end
+
+  def eval(*args); end
+
+  def evalsha(*args); end
+
+  def exec(); end
+
+  def exists(*args); end
+
+  def exists?(*args); end
+
+  def expire(key, seconds); end
+
+  def expireat(key, unix_time); end
+
+  def flushall(); end
+
+  def flushdb(); end
+
+  def get(key); end
+
+  def getbit(key, offset); end
+
+  def getrange(key, start, stop); end
+
+  def getset(key, value); end
+
+  def hdel(key, *fields); end
+
+  def hexists(key, field); end
+
+  def hget(key, field); end
+
+  def hgetall(key); end
+
+  def hincrby(key, field, increment); end
+
+  def hincrbyfloat(key, field, increment); end
+
+  def hkeys(key); end
+
+  def hlen(key); end
+
+  def hmget(key, *fields); end
+
+  def hmset(key, *attrs); end
+
+  def hset(key, *attrs); end
+
+  def hsetnx(key, field, value); end
+
+  def hvals(key); end
+
+  def incr(key); end
+
+  def incrby(key, increment); end
+
+  def incrbyfloat(key, increment); end
+
+  def info(cmd=T.unsafe(nil)); end
+
+  def initialize(node_configs, options=T.unsafe(nil)); end
+
+  def key_tag(key); end
+
+  def keys(glob=T.unsafe(nil)); end
+
+  def lastsave(); end
+
+  def lindex(key, index); end
+
+  def linsert(key, where, pivot, value); end
+
+  def llen(key); end
+
+  def lpop(key); end
+
+  def lpush(key, value); end
+
+  def lpushx(key, value); end
+
+  def lrange(key, start, stop); end
+
+  def lrem(key, count, value); end
+
+  def lset(key, index, value); end
+
+  def ltrim(key, start, stop); end
+
+  def mapped_hmget(key, *fields); end
+
+  def mapped_hmset(key, hash); end
+
+  def mapped_mget(*keys); end
+
+  def mapped_mset(_hash); end
+
+  def mapped_msetnx(_hash); end
+
+  def mget(*keys); end
+
+  def migrate(_key, _options); end
+
+  def monitor(); end
+
+  def move(key, db); end
+
+  def mset(*_args); end
+
+  def msetnx(*_args); end
+
+  def multi(&block); end
+
+  def node_for(key); end
+
+  def node_index_for(key); end
+
+  def nodes(); end
+
+  def on_each_node(command, *args); end
+
+  def persist(key); end
+
+  def pexpire(key, milliseconds); end
+
+  def pexpireat(key, ms_unix_time); end
+
+  def pfadd(key, member); end
+
+  def pfcount(*keys); end
+
+  def pfmerge(dest_key, *source_key); end
+
+  def ping(); end
+
+  def pipelined(); end
+
+  def psetex(key, ttl, value); end
+
+  def psubscribe(*channels, &block); end
+
+  def pttl(key); end
+
+  def publish(channel, message); end
+
+  def punsubscribe(*channels); end
+
+  def quit(); end
+
+  def randomkey(); end
+
+  def rename(old_name, new_name); end
+
+  def renamenx(old_name, new_name); end
+
+  def restore(key, ttl, serialized_value, **options); end
+
+  def ring(); end
+
+  def rpop(key); end
+
+  def rpoplpush(source, destination); end
+
+  def rpush(key, value); end
+
+  def rpushx(key, value); end
+
+  def sadd(key, member); end
+
+  def save(); end
+
+  def scard(key); end
+
+  def script(subcommand, *args); end
+
+  def sdiff(*keys); end
+
+  def sdiffstore(destination, *keys); end
+
+  def select(db); end
+
+  def set(key, value, **options); end
+
+  def setbit(key, offset, value); end
+
+  def setex(key, ttl, value); end
+
+  def setnx(key, value); end
+
+  def setrange(key, offset, value); end
+
+  def sinter(*keys); end
+
+  def sinterstore(destination, *keys); end
+
+  def sismember(key, member); end
+
+  def smembers(key); end
+
+  def smove(source, destination, member); end
+
+  def sort(key, **options); end
+
+  def spop(key, count=T.unsafe(nil)); end
+
+  def srandmember(key, count=T.unsafe(nil)); end
+
+  def srem(key, member); end
+
+  def sscan(key, cursor, **options); end
+
+  def sscan_each(key, **options, &block); end
+
+  def strlen(key); end
+
+  def subscribe(channel, *channels, &block); end
+
+  def subscribed?(); end
+
+  def sunion(*keys); end
+
+  def sunionstore(destination, *keys); end
+
+  def time(); end
+
+  def ttl(key); end
+
+  def type(key); end
+
+  def unlink(*args); end
+
+  def unsubscribe(*channels); end
+
+  def unwatch(); end
+
+  def watch(*keys, &block); end
+
+  def zadd(key, *args); end
+
+  def zcard(key); end
+
+  def zcount(key, min, max); end
+
+  def zincrby(key, increment, member); end
+
+  def zinterstore(destination, keys, **options); end
+
+  def zrange(key, start, stop, **options); end
+
+  def zrangebyscore(key, min, max, **options); end
+
+  def zrank(key, member); end
+
+  def zrem(key, member); end
+
+  def zremrangebyrank(key, start, stop); end
+
+  def zremrangebyscore(key, min, max); end
+
+  def zrevrange(key, start, stop, **options); end
+
+  def zrevrangebyscore(key, max, min, **options); end
+
+  def zrevrank(key, member); end
+
+  def zscore(key, member); end
+
+  def zunionstore(destination, keys, **options); end
+end
+
+class Redis::Distributed::CannotDistribute
+  def initialize(command); end
+end
+
+class Redis::Distributed::CannotDistribute
+end
+
+class Redis::Distributed
+end
+
+class Redis::Future
+  FutureNotReady = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::HashRing
+  def add_node(node); end
+
+  def get_node(key); end
+
+  def get_node_pos(key); end
+
+  def initialize(nodes=T.unsafe(nil), replicas=T.unsafe(nil)); end
+
+  def iter_nodes(key); end
+
+  def nodes(); end
+
+  def remove_node(node); end
+
+  def replicas(); end
+
+  def ring(); end
+
+  def sorted_keys(); end
+  POINTS_PER_SERVER = ::T.let(nil, ::T.untyped)
+end
+
+class Redis::HashRing
+  def self.binary_search(ary, value); end
 end
 
 class Regexp
@@ -45226,6 +45739,63 @@ class Set
 
   def reset(); end
   InspectKey = ::T.let(nil, ::T.untyped)
+end
+
+module Sidekiq
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+  DEFAULT_WORKER_OPTIONS = ::T.let(nil, ::T.untyped)
+  FAKE_INFO = ::T.let(nil, ::T.untyped)
+  LICENSE = ::T.let(nil, ::T.untyped)
+  NAME = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Sidekiq::LoggingUtils
+  LEVELS = ::T.let(nil, ::T.untyped)
+end
+
+class Sidekiq::Web
+  ASSETS = ::T.let(nil, ::T.untyped)
+  DEFAULT_TABS = ::T.let(nil, ::T.untyped)
+  LAYOUT = ::T.let(nil, ::T.untyped)
+  LOCALES = ::T.let(nil, ::T.untyped)
+  ROOT = ::T.let(nil, ::T.untyped)
+  VIEWS = ::T.let(nil, ::T.untyped)
+end
+
+class Sidekiq::Web::CsrfProtection
+  TOKEN_LENGTH = ::T.let(nil, ::T.untyped)
+end
+
+class Sidekiq::WebAction
+  RACK_SESSION = ::T.let(nil, ::T.untyped)
+end
+
+class Sidekiq::WebApplication
+  CONTENT_LENGTH = ::T.let(nil, ::T.untyped)
+  CSP_HEADER = ::T.let(nil, ::T.untyped)
+  REDIS_KEYS = ::T.let(nil, ::T.untyped)
+end
+
+module Sidekiq::WebHelpers
+  RETRY_JOB_KEYS = ::T.let(nil, ::T.untyped)
+  SAFE_QPARAMS = ::T.let(nil, ::T.untyped)
+end
+
+class Sidekiq::WebRoute
+  NAMED_SEGMENTS_PATTERN = ::T.let(nil, ::T.untyped)
+end
+
+module Sidekiq::WebRouter
+  DELETE = ::T.let(nil, ::T.untyped)
+  GET = ::T.let(nil, ::T.untyped)
+  HEAD = ::T.let(nil, ::T.untyped)
+  PATCH = ::T.let(nil, ::T.untyped)
+  PATH_INFO = ::T.let(nil, ::T.untyped)
+  POST = ::T.let(nil, ::T.untyped)
+  PUT = ::T.let(nil, ::T.untyped)
+  REQUEST_METHOD = ::T.let(nil, ::T.untyped)
+  ROUTE_PARAMS = ::T.let(nil, ::T.untyped)
 end
 
 class SignedGlobalID
