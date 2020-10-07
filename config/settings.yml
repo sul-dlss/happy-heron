@@ -1,3 +1,5 @@
 dor_services:
   url: ~
   token: ~
+
+redis_url: redis://localhost:6379/

@@ -41,8 +41,14 @@ append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/sockets', 'publi
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
+# Manage sidekiq via systemd (from dlss-capistrano gem)
+set :sidekiq_systemd_use_hooks, true
+
+# Use bundler 2-style configuration (from dlss-capistrano gem)
+set :bundler2_config_use_hook, true
+
 # Set Rails env to production in all Cap environments
 set :rails_env, 'production'
 
-# update shared_configs before restarting app
+# update shared_configs before restarting app (from dlss-capistrano gem)
 before 'deploy:restart', 'shared_configs:update'
