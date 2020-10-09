@@ -12,5 +12,6 @@ FactoryBot.define do
     citation { 'test citation' }
     access { 'stanford' }
     license { 'cc-0' }
+    collection
   end
 end

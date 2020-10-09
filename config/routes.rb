@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   root to: 'welcome#show'
   resource 'welcome', only: 'show'
 
-  resources :works, only: %i[new create show]
+  resources :collections, only: [] do
+    resources :works, shallow: true, only: %i[new create show]
+  end
 
   mount Sidekiq::Web => '/queues'
 end

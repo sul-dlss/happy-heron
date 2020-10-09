@@ -5,11 +5,13 @@ class WorksController < ApplicationController
   layout 'editor'
 
   def new
-    @work = Work.new(work_type: 'text')
+    @collection = Collection.find(params[:collection_id])
+    @work = Work.new(work_type: 'text', collection: @collection)
   end
 
   def create
-    @work = Work.new(work_params)
+    @collection = Collection.find(params[:collection_id])
+    @work = Work.new(work_params.merge(collection: @collection))
     if @work.save
       DepositJob.perform_later(@work) if params[:commit] == 'Deposit'
       redirect_to @work
