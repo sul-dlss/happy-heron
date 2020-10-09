@@ -1,5 +1,9 @@
 # H2 Self-deposit front end for the Stanford Digital Repository
 
+## Design
+* Comps: https://projects.invisionapp.com/share/EQXC9CLKCR2
+* Design Documentation: https://docs.google.com/document/d/1fcr2DYo7OrX-qTdeUOTWKSS1rlq_47sehESmbvgUsrk/edit
+
 ## Install Dependencies
 
 Ruby dependencies can be installed with `bundle install`, JavaScript dependencies are installed via `yarn install`.
