@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_005756) do
+ActiveRecord::Schema.define(version: 2020_10_09_042617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,9 @@ ActiveRecord::Schema.define(version: 2020_09_13_005756) do
     t.boolean "agree_to_terms", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "state", null: false
     t.index ["druid", "version"], name: "index_works_on_druid_and_version", unique: true
+    t.index ["state"], name: "index_works_on_state"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

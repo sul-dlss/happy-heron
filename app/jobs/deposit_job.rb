@@ -7,7 +7,8 @@ class DepositJob < ApplicationJob
 
   def perform(work)
     result = api_client.objects.register(params: create_model(work))
-    work.update(druid: result.externalIdentifier)
+    work.druid = result.externalIdentifier
+    work.deposit!
   end
 
   private

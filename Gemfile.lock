@@ -178,6 +178,11 @@ GEM
       dry-initializer (~> 3.0)
       dry-schema (~> 1.5, >= 1.5.2)
     erubi (1.9.0)
+    factory_bot (6.1.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.1.0)
+      factory_bot (~> 6.1.0)
+      railties (>= 5.0.0)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
@@ -319,10 +324,10 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sorbet (0.5.5916)
-      sorbet-static (= 0.5.5916)
+    sorbet (0.5.5939)
+      sorbet-static (= 0.5.5939)
     sorbet-runtime (0.5.5916)
-    sorbet-static (0.5.5916-universal-darwin-14)
+    sorbet-static (0.5.5939-universal-darwin-19)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -337,6 +342,13 @@ GEM
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    state_machines (0.5.0)
+    state_machines-activemodel (0.7.1)
+      activemodel (>= 4.1)
+      state_machines (>= 0.5.0)
+    state_machines-activerecord (0.6.0)
+      activerecord (>= 4.1)
+      state_machines-activemodel (>= 0.5.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     turbolinks (5.2.1)
@@ -381,6 +393,7 @@ DEPENDENCIES
   config (~> 2.2)
   dlss-capistrano (~> 3.6)
   dor-services-client
+  factory_bot_rails
   listen (~> 3.2)
   pg
   puma (~> 4.1)
@@ -397,14 +410,12 @@ DEPENDENCIES
   sorbet-runtime
   spring
   spring-watcher-listen (~> 2.0.0)
+  state_machines-activerecord
   turbolinks (~> 5)
   view_component (~> 2.18)
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 5.0)
-
-RUBY VERSION
-   ruby 2.7.1p83
 
 BUNDLED WITH
    2.1.4
