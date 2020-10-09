@@ -2045,6 +2045,18 @@ class ActiveSupport::EventedFileUpdateChecker::PathHelper
   def normalize_extension(ext); end
   def xpath(path); end
 end
+class ActiveSupport::ArrayInquirer < Array
+  def any?(*candidates); end
+  def method_missing(name, *args); end
+  def respond_to_missing?(name, include_private = nil); end
+end
+module ActiveSupport::NumericWithFormat
+  def to_s(format = nil, options = nil); end
+end
+class File < IO
+  def self.lchmod(*arg0); end
+  def self.lchown(*arg0); end
+end
 module ActiveSupport::RangeWithFormat
   def to_default_s(format = nil); end
   def to_formatted_s(format = nil); end
@@ -2063,25 +2075,6 @@ module ActiveSupport::EachTimeWithZone
   def ensure_iteration_allowed; end
   def step(n = nil, &block); end
 end
-class ActiveSupport::ArrayInquirer < Array
-  def any?(*candidates); end
-  def method_missing(name, *args); end
-  def respond_to_missing?(name, include_private = nil); end
-end
-module ActiveSupport::NumericWithFormat
-  def to_s(format = nil, options = nil); end
-end
-module ActiveSupport::MarshalWithAutoloading
-  def load(source, proc = nil); end
-end
-class File < IO
-  def self.lchmod; end
-  def self.lchown(*arg0); end
-end
-module SecureRandom
-  def self.base36(n = nil); end
-  def self.base58(n = nil); end
-end
 module Digest
 end
 module Digest::UUID
@@ -2089,6 +2082,13 @@ module Digest::UUID
   def self.uuid_v3(uuid_namespace, name); end
   def self.uuid_v4; end
   def self.uuid_v5(uuid_namespace, name); end
+end
+module ActiveSupport::MarshalWithAutoloading
+  def load(source, proc = nil); end
+end
+module SecureRandom
+  def self.base36(n = nil); end
+  def self.base58(n = nil); end
 end
 module ActiveSupport::Cache
   def self.expand_cache_key(key, namespace = nil); end

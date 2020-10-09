@@ -5646,6 +5646,199 @@ module ActiveRecord::Migration::Compatibility::V4_2::TableDefinition
   def references(*arg0, **options); end
   def timestamps(**options); end
 end
+class ActiveRecord::ConnectionAdapters::TransactionState
+  def add_child(state); end
+  def commit!; end
+  def committed?; end
+  def completed?; end
+  def finalized?; end
+  def full_commit!; end
+  def full_rollback!; end
+  def fully_committed?; end
+  def fully_completed?; end
+  def fully_rolledback?; end
+  def initialize(state = nil); end
+  def nullify!; end
+  def rollback!; end
+  def rolledback?; end
+end
+class ActiveRecord::ConnectionAdapters::NullTransaction
+  def add_record(record); end
+  def closed?; end
+  def initialize; end
+  def joinable?; end
+  def open?; end
+  def state; end
+end
+class ActiveRecord::ConnectionAdapters::Transaction
+  def add_record(record); end
+  def before_commit_records; end
+  def closed?; end
+  def commit_records; end
+  def connection; end
+  def full_rollback?; end
+  def initialize(connection, options, run_commit_callbacks: nil); end
+  def isolation_level; end
+  def joinable?; end
+  def materialize!; end
+  def materialized?; end
+  def open?; end
+  def records; end
+  def rollback_records; end
+  def savepoint_name; end
+  def state; end
+end
+class ActiveRecord::ConnectionAdapters::SavepointTransaction < ActiveRecord::ConnectionAdapters::Transaction
+  def commit; end
+  def full_rollback?; end
+  def initialize(connection, savepoint_name, parent_transaction, *args, **options); end
+  def materialize!; end
+  def rollback; end
+end
+class ActiveRecord::ConnectionAdapters::RealTransaction < ActiveRecord::ConnectionAdapters::Transaction
+  def commit; end
+  def materialize!; end
+  def rollback; end
+end
+class ActiveRecord::ConnectionAdapters::TransactionManager
+  def after_failure_actions(transaction, error); end
+  def begin_transaction(options = nil); end
+  def commit_transaction; end
+  def current_transaction; end
+  def disable_lazy_transactions!; end
+  def enable_lazy_transactions!; end
+  def initialize(connection); end
+  def lazy_transactions_enabled?; end
+  def materialize_transactions; end
+  def open_transactions; end
+  def rollback_transaction(transaction = nil); end
+  def within_new_transaction(options = nil); end
+end
+class ActiveRecord::RuntimeRegistry
+  def connection_handler; end
+  def connection_handler=(arg0); end
+  def self.connection_handler; end
+  def self.connection_handler=(x); end
+  def self.sql_runtime; end
+  def self.sql_runtime=(x); end
+  def sql_runtime; end
+  def sql_runtime=(arg0); end
+  extend ActiveSupport::PerThreadRegistry
+end
+class ActiveRecord::PredicateBuilder
+  def build(attribute, value); end
+  def build_bind_attribute(column_name, value); end
+  def build_from_hash(attributes); end
+  def convert_dot_notation_to_hash(attributes); end
+  def expand_from_hash(attributes); end
+  def handler_for(object); end
+  def initialize(table); end
+  def register_handler(klass, handler); end
+  def resolve_column_aliases(**, &&); end
+  def self.references(attributes); end
+  def table; end
+end
+class ActiveRecord::PredicateBuilder::ArrayHandler
+  def call(attribute, value); end
+  def initialize(predicate_builder); end
+  def predicate_builder; end
+end
+module ActiveRecord::PredicateBuilder::ArrayHandler::NullPredicate
+  def self.or(other); end
+end
+class ActiveRecord::PredicateBuilder::BaseHandler
+  def call(attribute, value); end
+  def initialize(predicate_builder); end
+  def predicate_builder; end
+end
+class ActiveRecord::PredicateBuilder::BasicObjectHandler
+  def call(attribute, value); end
+  def initialize(predicate_builder); end
+  def predicate_builder; end
+end
+class ActiveRecord::PredicateBuilder::RangeHandler
+  def call(attribute, value); end
+  def initialize(predicate_builder); end
+  def predicate_builder; end
+end
+class ActiveRecord::PredicateBuilder::RangeHandler::RangeWithBinds < Struct
+  def begin; end
+  def begin=(_); end
+  def end; end
+  def end=(_); end
+  def exclude_end?; end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+end
+class ActiveRecord::PredicateBuilder::RelationHandler
+  def call(attribute, value); end
+end
+class ActiveRecord::PredicateBuilder::AssociationQueryValue
+  def associated_table; end
+  def convert_to_id(value); end
+  def ids; end
+  def initialize(associated_table, value); end
+  def primary_key; end
+  def queries; end
+  def value; end
+end
+class ActiveRecord::PredicateBuilder::PolymorphicArrayValue
+  def associated_table; end
+  def convert_to_id(value); end
+  def initialize(associated_table, values); end
+  def klass(value); end
+  def primary_key(value); end
+  def queries; end
+  def type_to_ids_mapping; end
+  def values; end
+end
+class ActiveRecord::TableMetadata
+  def aggregated_with?(aggregation_name); end
+  def arel_attribute(column_name); end
+  def arel_table; end
+  def associated_predicate_builder(table_name); end
+  def associated_table(table_name); end
+  def associated_with?(association_name); end
+  def association; end
+  def association_foreign_key(**, &&); end
+  def association_foreign_type(**, &&); end
+  def association_join_foreign_key(**, &&); end
+  def association_join_primary_key(**, &&); end
+  def has_column?(column_name); end
+  def initialize(klass, arel_table, association = nil, types = nil); end
+  def klass; end
+  def polymorphic_association?; end
+  def predicate_builder; end
+  def reflect_on_aggregation(aggregation_name); end
+  def resolve_column_aliases(hash); end
+  def type(column_name); end
+  def types; end
+end
+class ActiveRecord::Result
+  def [](idx); end
+  def cast_values(type_overrides = nil); end
+  def collect!; end
+  def column_type(name, type_overrides = nil); end
+  def column_types; end
+  def columns; end
+  def each; end
+  def empty?; end
+  def first; end
+  def hash_rows; end
+  def includes_column?(name); end
+  def initialize(columns, rows, column_types = nil); end
+  def initialize_copy(other); end
+  def last; end
+  def length; end
+  def map!; end
+  def rows; end
+  def to_a; end
+  def to_ary; end
+  def to_hash; end
+  include Enumerable
+end
 class ActiveRecord::Tasks::DatabaseAlreadyExists < StandardError
 end
 class ActiveRecord::Tasks::DatabaseNotSupported < StandardError
@@ -5753,4 +5946,215 @@ class ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation < ActiveR
   extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
   include ActiveRecord::Delegation::ClassSpecificRelation
   include ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+class ActiveRecord::StatementCache
+  def bind_map; end
+  def execute(params, connection, &block); end
+  def initialize(query_builder, bind_map, klass); end
+  def klass; end
+  def query_builder; end
+  def self.create(connection, callable = nil, &block); end
+  def self.partial_query(values); end
+  def self.partial_query_collector; end
+  def self.query(sql); end
+  def self.unsupported_value?(value); end
+end
+class ActiveRecord::StatementCache::Substitute
+end
+class ActiveRecord::StatementCache::Query
+  def initialize(sql); end
+  def sql_for(binds, connection); end
+end
+class ActiveRecord::StatementCache::PartialQuery < ActiveRecord::StatementCache::Query
+  def initialize(values); end
+  def sql_for(binds, connection); end
+end
+class ActiveRecord::StatementCache::PartialQueryCollector
+  def <<(str); end
+  def add_bind(obj); end
+  def initialize; end
+  def value; end
+end
+class ActiveRecord::StatementCache::Params
+  def bind; end
+end
+class ActiveRecord::StatementCache::BindMap
+  def bind(values); end
+  def initialize(bound_attributes); end
+end
+module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
+end
+class ActiveRecord::SchemaMigration < ActiveRecord::Base
+  def self._internal?; end
+  def self._validators; end
+  def self.all_versions; end
+  def self.attribute_type_decorations; end
+  def self.create_table; end
+  def self.defined_enums; end
+  def self.drop_table; end
+  def self.normalize_migration_number(number); end
+  def self.normalized_versions; end
+  def self.primary_key; end
+  def self.table_exists?; end
+  def self.table_name; end
+  def version; end
+  include ActiveRecord::SchemaMigration::GeneratedAssociationMethods
+  include ActiveRecord::SchemaMigration::GeneratedAttributeMethods
+end
+module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
+end
+class ActiveRecord::SchemaMigration::ActiveRecord_Relation < ActiveRecord::Relation
+  extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+  include ActiveRecord::Delegation::ClassSpecificRelation
+  include ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+module ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+class ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+  extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+  include ActiveRecord::Delegation::ClassSpecificRelation
+  include ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+class ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
+  extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
+  include ActiveRecord::Delegation::ClassSpecificRelation
+  include ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+module ActiveRecord::TestDatabases
+  def self.create_and_load_schema(i, env_name:); end
+end
+class ActiveRecord::FixtureSet
+  def [](x); end
+  def []=(k, v); end
+  def all_loaded_fixtures; end
+  def all_loaded_fixtures=(obj); end
+  def config; end
+  def each(&block); end
+  def fixtures; end
+  def initialize(_, name, class_name, path, config = nil); end
+  def model_class; end
+  def model_class=(class_name); end
+  def name; end
+  def read_fixture_files(path); end
+  def self.all_loaded_fixtures; end
+  def self.all_loaded_fixtures=(obj); end
+  def self.cache_fixtures(connection, fixtures_map); end
+  def self.cache_for_connection(connection); end
+  def self.cached_fixtures(connection, keys_to_fetch = nil); end
+  def self.context_class; end
+  def self.create_fixtures(fixtures_directory, fixture_set_names, class_names = nil, config = nil, &block); end
+  def self.default_fixture_model_name(fixture_set_name, config = nil); end
+  def self.default_fixture_table_name(fixture_set_name, config = nil); end
+  def self.fixture_is_cached?(connection, table_name); end
+  def self.identify(label, column_type = nil); end
+  def self.insert(fixture_sets, connection); end
+  def self.instantiate_all_loaded_fixtures(object, load_instances = nil); end
+  def self.instantiate_fixtures(object, fixture_set, load_instances = nil); end
+  def self.read_and_insert(fixtures_directory, fixture_files, class_names, connection); end
+  def self.reset_cache; end
+  def self.update_all_loaded_fixtures(fixtures_map); end
+  def size; end
+  def table_name; end
+  def table_rows; end
+  def yaml_file_path(path); end
+end
+class ActiveRecord::FixtureSet::File
+  def config_row; end
+  def each(&block); end
+  def initialize(file); end
+  def model_class; end
+  def prepare_erb(content); end
+  def raw_rows; end
+  def render(content); end
+  def rows; end
+  def self.open(file); end
+  def validate(data); end
+  include Enumerable
+end
+class ActiveRecord::FixtureSet::RenderContext
+  def self.create_subclass; end
+end
+class ActiveRecord::FixtureSet::TableRow
+  def add_join_records(association); end
+  def fill_row_model_attributes; end
+  def fill_timestamps; end
+  def generate_primary_key; end
+  def initialize(fixture, table_rows:, label:, now:); end
+  def interpolate_label; end
+  def model_class; end
+  def model_metadata; end
+  def reflection_class; end
+  def resolve_enums; end
+  def resolve_sti_reflections; end
+  def to_hash; end
+end
+class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
+  def initialize(association); end
+  def join_table; end
+  def name; end
+  def primary_key_type; end
+end
+class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy < ActiveRecord::FixtureSet::TableRow::ReflectionProxy
+  def join_table; end
+  def lhs_key; end
+  def rhs_key; end
+end
+class ActiveRecord::FixtureSet::ModelMetadata
+  def has_primary_key_column?; end
+  def inheritance_column_name; end
+  def initialize(model_class); end
+  def primary_key_name; end
+  def primary_key_type; end
+  def timestamp_column_names; end
+end
+class ActiveRecord::FixtureSet::TableRows
+  def build_table_rows_from(table_name, fixtures, config); end
+  def initialize(table_name, model_class:, fixtures:, config:); end
+  def model_class; end
+  def model_metadata; end
+  def tables; end
+  def to_hash; end
+end
+module ActiveRecord::TestFixtures
+  def after_teardown; end
+  def before_setup; end
+  def enlist_fixture_connections; end
+  def instantiate_fixtures; end
+  def load_fixtures(config); end
+  def load_instances?; end
+  def run_in_transaction?; end
+  def setup_fixtures(config = nil); end
+  def setup_shared_connection_pool; end
+  def teardown_fixtures; end
+  extend ActiveSupport::Concern
+end
+module ActiveRecord::TestFixtures::ClassMethods
+  def fixtures(*fixture_set_names); end
+  def set_fixture_class(class_names = nil); end
+  def setup_fixture_accessors(fixture_set_names = nil); end
+  def uses_transaction(*methods); end
+  def uses_transaction?(method); end
+end
+class ActiveRecord::FixtureClassNotFound < ActiveRecord::ActiveRecordError
+end
+class ActiveRecord::FixtureSet::ClassCache
+  def [](fs_name); end
+  def default_fixture_model(fs_name, config); end
+  def initialize(class_names, config); end
+  def insert_class(class_names, name, klass); end
+end
+class ActiveRecord::Fixture
+  def [](key); end
+  def class_name; end
+  def each; end
+  def find; end
+  def fixture; end
+  def initialize(fixture, model_class); end
+  def model_class; end
+  def to_hash; end
+  include Enumerable
+end
+class ActiveRecord::Fixture::FixtureError < StandardError
+end
+class ActiveRecord::Fixture::FormatError < ActiveRecord::Fixture::FixtureError
 end

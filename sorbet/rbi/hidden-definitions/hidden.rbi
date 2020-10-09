@@ -15470,6 +15470,7 @@ end
 
 class ActiveRecord::ExplainRegistry
   extend ::ActiveSupport::PerThreadRegistry
+  def self.collect?(*_, &_1); end
 end
 
 class ActiveRecord::ExplainSubscriber
@@ -15539,6 +15540,191 @@ module ActiveRecord::FinderMethods
 end
 
 module ActiveRecord::FinderMethods
+end
+
+class ActiveRecord::Fixture
+  include ::Enumerable
+  def [](key); end
+
+  def class_name(); end
+
+  def each(&blk); end
+
+  def find(); end
+
+  def fixture(); end
+
+  def initialize(fixture, model_class); end
+
+  def model_class(); end
+
+  def to_hash(); end
+end
+
+class ActiveRecord::Fixture::FixtureError
+end
+
+class ActiveRecord::Fixture::FixtureError
+end
+
+class ActiveRecord::Fixture::FormatError
+end
+
+class ActiveRecord::Fixture::FormatError
+end
+
+class ActiveRecord::Fixture
+end
+
+class ActiveRecord::FixtureSet
+  def [](x); end
+
+  def []=(k, v); end
+
+  def all_loaded_fixtures(); end
+
+  def all_loaded_fixtures=(obj); end
+
+  def config(); end
+
+  def each(&block); end
+
+  def fixtures(); end
+
+  def initialize(_, name, class_name, path, config=T.unsafe(nil)); end
+
+  def model_class(); end
+
+  def name(); end
+
+  def size(); end
+
+  def table_name(); end
+
+  def table_rows(); end
+  MAX_ID = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::FixtureSet::ClassCache
+  def [](fs_name); end
+
+  def initialize(class_names, config); end
+end
+
+class ActiveRecord::FixtureSet::ClassCache
+end
+
+class ActiveRecord::FixtureSet::File
+  include ::Enumerable
+  def each(&block); end
+
+  def initialize(file); end
+
+  def model_class(); end
+end
+
+class ActiveRecord::FixtureSet::File
+  def self.open(file); end
+end
+
+class ActiveRecord::FixtureSet::ModelMetadata
+  def has_primary_key_column?(); end
+
+  def inheritance_column_name(); end
+
+  def initialize(model_class); end
+
+  def primary_key_name(); end
+
+  def primary_key_type(); end
+
+  def timestamp_column_names(); end
+end
+
+class ActiveRecord::FixtureSet::ModelMetadata
+end
+
+class ActiveRecord::FixtureSet::RenderContext
+end
+
+class ActiveRecord::FixtureSet::RenderContext
+  def self.create_subclass(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow
+  def initialize(fixture, table_rows:, label:, now:); end
+
+  def to_hash(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy
+  def lhs_key(); end
+
+  def rhs_key(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy
+end
+
+class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
+  def initialize(association); end
+
+  def join_table(); end
+
+  def name(); end
+
+  def primary_key_type(); end
+end
+
+class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
+end
+
+class ActiveRecord::FixtureSet::TableRow
+end
+
+class ActiveRecord::FixtureSet::TableRows
+  def initialize(table_name, model_class:, fixtures:, config:); end
+
+  def model_class(); end
+
+  def model_metadata(); end
+
+  def tables(); end
+
+  def to_hash(); end
+end
+
+class ActiveRecord::FixtureSet::TableRows
+end
+
+class ActiveRecord::FixtureSet
+  def self.all_loaded_fixtures(); end
+
+  def self.all_loaded_fixtures=(obj); end
+
+  def self.cache_fixtures(connection, fixtures_map); end
+
+  def self.cache_for_connection(connection); end
+
+  def self.cached_fixtures(connection, keys_to_fetch=T.unsafe(nil)); end
+
+  def self.context_class(); end
+
+  def self.create_fixtures(fixtures_directory, fixture_set_names, class_names=T.unsafe(nil), config=T.unsafe(nil), &block); end
+
+  def self.default_fixture_model_name(fixture_set_name, config=T.unsafe(nil)); end
+
+  def self.default_fixture_table_name(fixture_set_name, config=T.unsafe(nil)); end
+
+  def self.fixture_is_cached?(connection, table_name); end
+
+  def self.identify(label, column_type=T.unsafe(nil)); end
+
+  def self.instantiate_all_loaded_fixtures(object, load_instances=T.unsafe(nil)); end
+
+  def self.instantiate_fixtures(object, fixture_set, load_instances=T.unsafe(nil)); end
+
+  def self.reset_cache(); end
 end
 
 class ActiveRecord::HasManyThroughAssociationNotFoundError
@@ -17651,6 +17837,7 @@ end
 
 class ActiveRecord::SuppressorRegistry
   extend ::ActiveSupport::PerThreadRegistry
+  def self.suppressed(*_, &_1); end
 end
 
 class ActiveRecord::TableMetadata
@@ -17929,21 +18116,6 @@ module ActiveRecord::TestFixtures
   def setup_fixtures(config=T.unsafe(nil)); end
 
   def teardown_fixtures(); end
-end
-
-module ActiveRecord::TestFixtures::ClassMethods
-  def fixtures(*fixture_set_names); end
-
-  def set_fixture_class(class_names=T.unsafe(nil)); end
-
-  def setup_fixture_accessors(fixture_set_names=T.unsafe(nil)); end
-
-  def uses_transaction(*methods); end
-
-  def uses_transaction?(method); end
-end
-
-module ActiveRecord::TestFixtures::ClassMethods
 end
 
 module ActiveRecord::TestFixtures
@@ -21637,6 +21809,9 @@ class ActiveSupport::TestCase
   include ::ActiveSupport::Testing::Deprecation
   include ::ActiveSupport::Testing::TimeHelpers
   include ::ActiveSupport::Testing::FileFixtures
+  include ::ActiveRecord::TestDatabases
+  include ::ActiveRecord::TestFixtures
+  include ::Minitest::Parallel::Test
   include ::ActiveSupport::Testing::SetupAndTeardown
   def __callbacks(); end
 
@@ -21678,11 +21853,57 @@ class ActiveSupport::TestCase
 
   def assert_raise(*exp); end
 
+  def config(); end
+
+  def config=(val); end
+
+  def config?(); end
+
   def file_fixture_path(); end
 
   def file_fixture_path?(); end
 
+  def fixture_class_names(); end
+
+  def fixture_class_names=(val); end
+
+  def fixture_class_names?(); end
+
+  def fixture_path(); end
+
+  def fixture_path?(); end
+
+  def fixture_table_names(); end
+
+  def fixture_table_names=(val); end
+
+  def fixture_table_names?(); end
+
+  def lock_threads(); end
+
+  def lock_threads=(val); end
+
+  def lock_threads?(); end
+
   def method_name(); end
+
+  def pre_loaded_fixtures(); end
+
+  def pre_loaded_fixtures=(val); end
+
+  def pre_loaded_fixtures?(); end
+
+  def use_instantiated_fixtures(); end
+
+  def use_instantiated_fixtures=(val); end
+
+  def use_instantiated_fixtures?(); end
+
+  def use_transactional_tests(); end
+
+  def use_transactional_tests=(val); end
+
+  def use_transactional_tests?(); end
 end
 
 class ActiveSupport::TestCase
@@ -21703,11 +21924,41 @@ class ActiveSupport::TestCase
 
   def self._teardown_callbacks=(value); end
 
+  def self.config(); end
+
+  def self.config=(val); end
+
+  def self.config?(); end
+
   def self.file_fixture_path(); end
 
   def self.file_fixture_path=(val); end
 
   def self.file_fixture_path?(); end
+
+  def self.fixture_class_names(); end
+
+  def self.fixture_class_names=(val); end
+
+  def self.fixture_class_names?(); end
+
+  def self.fixture_path(); end
+
+  def self.fixture_path=(val); end
+
+  def self.fixture_path?(); end
+
+  def self.fixture_table_names(); end
+
+  def self.fixture_table_names=(val); end
+
+  def self.fixture_table_names?(); end
+
+  def self.lock_threads(); end
+
+  def self.lock_threads=(val); end
+
+  def self.lock_threads?(); end
 
   def self.parallelize(workers: T.unsafe(nil), with: T.unsafe(nil)); end
 
@@ -21715,7 +21966,25 @@ class ActiveSupport::TestCase
 
   def self.parallelize_teardown(&block); end
 
+  def self.pre_loaded_fixtures(); end
+
+  def self.pre_loaded_fixtures=(val); end
+
+  def self.pre_loaded_fixtures?(); end
+
   def self.test_order=(new_order); end
+
+  def self.use_instantiated_fixtures(); end
+
+  def self.use_instantiated_fixtures=(val); end
+
+  def self.use_instantiated_fixtures?(); end
+
+  def self.use_transactional_tests(); end
+
+  def self.use_transactional_tests=(val); end
+
+  def self.use_transactional_tests?(); end
 end
 
 module ActiveSupport::Testing
@@ -24090,10 +24359,6 @@ class Array
 end
 
 BasicObject::BasicObject = BasicObject
-
-class BasicSocket
-  def read_nonblock(len, str=T.unsafe(nil), exception: T.unsafe(nil)); end
-end
 
 class Benchmark::Job
   def initialize(width); end
@@ -32095,35 +32360,90 @@ class Enumerator
   def self.produce(*_); end
 end
 
-Errno::EAUTH = Errno::NOERROR
+class Errno::EAUTH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EBADARCH = Errno::NOERROR
+class Errno::EAUTH
+end
 
-Errno::EBADEXEC = Errno::NOERROR
+class Errno::EBADARCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EBADMACHO = Errno::NOERROR
+class Errno::EBADARCH
+end
 
-Errno::EBADRPC = Errno::NOERROR
+class Errno::EBADEXEC
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADEXEC
+end
+
+class Errno::EBADMACHO
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADMACHO
+end
+
+class Errno::EBADRPC
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADRPC
+end
 
 Errno::ECAPMODE = Errno::NOERROR
 
-Errno::EDEADLOCK = Errno::EDEADLK
+Errno::EDEADLOCK = Errno::NOERROR
 
-Errno::EDEVERR = Errno::NOERROR
+class Errno::EDEVERR
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EDEVERR
+end
 
 Errno::EDOOFUS = Errno::NOERROR
 
-Errno::EFTYPE = Errno::NOERROR
+class Errno::EFTYPE
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EFTYPE
+end
 
 Errno::EIPSEC = Errno::NOERROR
 
-Errno::ELAST = Errno::NOERROR
+class Errno::ELAST
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ENEEDAUTH = Errno::NOERROR
+class Errno::ELAST
+end
 
-Errno::ENOATTR = Errno::NOERROR
+class Errno::ENEEDAUTH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ENOPOLICY = Errno::NOERROR
+class Errno::ENEEDAUTH
+end
+
+class Errno::ENOATTR
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ENOATTR
+end
+
+class Errno::ENOPOLICY
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ENOPOLICY
+end
 
 Errno::ENOTCAPABLE = Errno::NOERROR
 
@@ -32134,21 +32454,56 @@ end
 class Errno::ENOTSUP
 end
 
-Errno::EPROCLIM = Errno::NOERROR
+class Errno::EPROCLIM
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EPROCUNAVAIL = Errno::NOERROR
+class Errno::EPROCLIM
+end
 
-Errno::EPROGMISMATCH = Errno::NOERROR
+class Errno::EPROCUNAVAIL
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EPROGUNAVAIL = Errno::NOERROR
+class Errno::EPROCUNAVAIL
+end
 
-Errno::EPWROFF = Errno::NOERROR
+class Errno::EPROGMISMATCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EQFULL = Errno::NOERROR
+class Errno::EPROGMISMATCH
+end
 
-Errno::ERPCMISMATCH = Errno::NOERROR
+class Errno::EPROGUNAVAIL
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ESHLIBVERS = Errno::NOERROR
+class Errno::EPROGUNAVAIL
+end
+
+class Errno::EPWROFF
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EPWROFF
+end
+
+Errno::EQFULL = Errno::ELAST
+
+class Errno::ERPCMISMATCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ERPCMISMATCH
+end
+
+class Errno::ESHLIBVERS
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ESHLIBVERS
+end
 
 module Erubi
   RANGE_ALL = ::T.let(nil, ::T.untyped)
@@ -32190,7 +32545,15 @@ class Etc::Group
 end
 
 class Etc::Passwd
+  def change(); end
+
+  def change=(_); end
+
   def dir=(_); end
+
+  def expire(); end
+
+  def expire=(_); end
 
   def gecos(); end
 
@@ -32203,6 +32566,10 @@ class Etc::Passwd
   def passwd=(_); end
 
   def shell=(_); end
+
+  def uclass(); end
+
+  def uclass=(_); end
 
   def uid=(_); end
 end
@@ -32361,7 +32728,6 @@ module FFI::Platform
   DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
   FLOAT_ALIGN = ::T.let(nil, ::T.untyped)
   FLOAT_SIZE = ::T.let(nil, ::T.untyped)
-  GNU_LIBC = ::T.let(nil, ::T.untyped)
   INT16_ALIGN = ::T.let(nil, ::T.untyped)
   INT16_SIZE = ::T.let(nil, ::T.untyped)
   INT32_ALIGN = ::T.let(nil, ::T.untyped)
@@ -32471,6 +32837,942 @@ FFI::Type::Struct = FFI::StructByValue
 
 class FSEvent
   VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module FactoryBot
+  Deprecation = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class FactoryBot::AssociationDefinitionError
+end
+
+class FactoryBot::AssociationDefinitionError
+end
+
+class FactoryBot::Attribute
+  def alias_for?(attr); end
+
+  def association?(); end
+
+  def ignored(); end
+
+  def initialize(name, ignored); end
+
+  def name(); end
+
+  def to_proc(); end
+end
+
+class FactoryBot::Attribute::Association
+  def factory(); end
+
+  def initialize(name, factory, overrides); end
+end
+
+class FactoryBot::Attribute::Association
+end
+
+class FactoryBot::Attribute::Dynamic
+  def initialize(name, ignored, block); end
+end
+
+class FactoryBot::Attribute::Dynamic
+end
+
+class FactoryBot::Attribute::Sequence
+  def initialize(name, sequence, ignored); end
+end
+
+class FactoryBot::Attribute::Sequence
+end
+
+class FactoryBot::Attribute
+end
+
+class FactoryBot::AttributeAssigner
+  def initialize(evaluator, build_class, &instance_builder); end
+
+  def object(); end
+end
+
+class FactoryBot::AttributeAssigner
+end
+
+class FactoryBot::AttributeDefinitionError
+end
+
+class FactoryBot::AttributeDefinitionError
+end
+
+class FactoryBot::AttributeList
+  include ::Enumerable
+  def apply_attributes(attributes_to_apply); end
+
+  def associations(); end
+
+  def define_attribute(attribute); end
+
+  def each(&block); end
+
+  def ignored(); end
+
+  def initialize(name=T.unsafe(nil), attributes=T.unsafe(nil)); end
+
+  def names(); end
+
+  def non_ignored(); end
+end
+
+class FactoryBot::AttributeList
+end
+
+class FactoryBot::Callback
+  def ==(other); end
+
+  def block(); end
+
+  def initialize(name, block); end
+
+  def name(); end
+
+  def run(instance, evaluator); end
+end
+
+class FactoryBot::Callback
+end
+
+class FactoryBot::CallbacksObserver
+  def initialize(callbacks, evaluator); end
+
+  def update(name, result_instance); end
+end
+
+class FactoryBot::CallbacksObserver
+end
+
+class FactoryBot::Configuration
+  def after(*_, &_1); end
+
+  def before(*_, &_1); end
+
+  def callback(*_, &_1); end
+
+  def callback_names(); end
+
+  def callbacks(*_, &_1); end
+
+  def constructor(*_, &_1); end
+
+  def factories(); end
+
+  def initialize_with(&block); end
+
+  def inline_sequences(); end
+
+  def sequences(); end
+
+  def skip_create(*_, &_1); end
+
+  def strategies(); end
+
+  def to_create(*_, &_1); end
+
+  def traits(); end
+end
+
+class FactoryBot::Configuration
+end
+
+class FactoryBot::Declaration
+  def ignored(); end
+
+  def initialize(name, ignored=T.unsafe(nil)); end
+
+  def name(); end
+
+  def to_attributes(); end
+end
+
+class FactoryBot::Declaration::Association
+  def ==(other); end
+
+  def initialize(name, *options); end
+
+  def options(); end
+end
+
+class FactoryBot::Declaration::Association
+end
+
+class FactoryBot::Declaration::Dynamic
+  def ==(other); end
+
+  def block(); end
+
+  def initialize(name, ignored=T.unsafe(nil), block=T.unsafe(nil)); end
+end
+
+class FactoryBot::Declaration::Dynamic
+end
+
+class FactoryBot::Declaration::Implicit
+  def ==(other); end
+
+  def factory(); end
+
+  def initialize(name, factory=T.unsafe(nil), ignored=T.unsafe(nil)); end
+end
+
+class FactoryBot::Declaration::Implicit
+end
+
+class FactoryBot::Declaration
+end
+
+class FactoryBot::DeclarationList
+  include ::Enumerable
+  def attributes(); end
+
+  def declare_attribute(declaration); end
+
+  def each(&block); end
+
+  def initialize(name=T.unsafe(nil)); end
+
+  def overridable(); end
+end
+
+class FactoryBot::DeclarationList
+end
+
+class FactoryBot::Decorator
+  def initialize(component); end
+
+  def method_missing(*_, &_1); end
+
+  def send(*_, &_1); end
+end
+
+class FactoryBot::Decorator::AttributeHash
+  def attributes(); end
+
+  def initialize(component, attributes=T.unsafe(nil)); end
+end
+
+class FactoryBot::Decorator::AttributeHash
+end
+
+class FactoryBot::Decorator::DisallowsDuplicatesRegistry
+  def register(name, item); end
+end
+
+class FactoryBot::Decorator::DisallowsDuplicatesRegistry
+end
+
+class FactoryBot::Decorator::InvocationTracker
+  def __invoked_methods__(); end
+
+  def method_missing(name, *args, **kwargs, &block); end
+end
+
+class FactoryBot::Decorator::InvocationTracker
+end
+
+class FactoryBot::Decorator::NewConstructor
+  def initialize(component, build_class); end
+
+  def new(*_, &_1); end
+end
+
+class FactoryBot::Decorator::NewConstructor
+end
+
+class FactoryBot::Decorator
+  def self.const_missing(name); end
+end
+
+class FactoryBot::Definition
+  def add_callback(callback); end
+
+  def after(*names, &block); end
+
+  def append_traits(new_traits); end
+
+  def attributes(); end
+
+  def before(*names, &block); end
+
+  def callback(*names, &block); end
+
+  def callbacks(); end
+
+  def compile(klass=T.unsafe(nil)); end
+
+  def constructor(); end
+
+  def declarations(); end
+
+  def declare_attribute(*_, &_1); end
+
+  def define_constructor(&block); end
+
+  def define_trait(trait); end
+
+  def defined_traits(); end
+
+  def inherit_traits(new_traits); end
+
+  def initialize(name, base_traits=T.unsafe(nil)); end
+
+  def name(); end
+
+  def overridable(); end
+
+  def register_enum(enum); end
+
+  def registered_enums(); end
+
+  def skip_create(); end
+
+  def to_create(&block); end
+end
+
+class FactoryBot::Definition
+end
+
+class FactoryBot::DefinitionHierarchy
+  def callbacks(*_, &_1); end
+
+  def constructor(*_, &_1); end
+
+  def to_create(*_, &_1); end
+end
+
+class FactoryBot::DefinitionHierarchy
+  def self.build_from_definition(definition); end
+end
+
+class FactoryBot::DefinitionProxy
+  def add_attribute(name, &block); end
+
+  def after(*_, &_1); end
+
+  def association(name, *options); end
+
+  def before(*_, &_1); end
+
+  def callback(*_, &_1); end
+
+  def child_factories(); end
+
+  def factory(name, options=T.unsafe(nil), &block); end
+
+  def initialize(definition, ignore=T.unsafe(nil)); end
+
+  def initialize_with(&block); end
+
+  def method_missing(name, *args, &block); end
+
+  def sequence(name, *args, &block); end
+
+  def singleton_method_added(name); end
+
+  def skip_create(); end
+
+  def to_create(&block); end
+
+  def trait(name, &block); end
+
+  def traits_for_enum(attribute_name, values=T.unsafe(nil)); end
+
+  def transient(&block); end
+  UNPROXIED_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+class FactoryBot::DefinitionProxy
+end
+
+class FactoryBot::DuplicateDefinitionError
+end
+
+class FactoryBot::DuplicateDefinitionError
+end
+
+class FactoryBot::Enum
+  def build_traits(klass); end
+
+  def initialize(attribute_name, values=T.unsafe(nil)); end
+end
+
+class FactoryBot::Enum
+end
+
+class FactoryBot::Evaluation
+  include ::Observable
+  def create(result_instance); end
+
+  def hash(*_, &_1); end
+
+  def initialize(evaluator, attribute_assigner, to_create); end
+
+  def notify(name, result_instance); end
+
+  def object(*_, &_1); end
+end
+
+class FactoryBot::Evaluation
+end
+
+class FactoryBot::Evaluator
+  def __override_names__(); end
+
+  def association(factory_name, *traits_and_overrides); end
+
+  def attribute_lists(); end
+
+  def attribute_lists=(val); end
+
+  def attribute_lists?(); end
+
+  def increment_sequence(sequence); end
+
+  def initialize(build_strategy, overrides=T.unsafe(nil)); end
+
+  def instance(); end
+
+  def instance=(instance); end
+
+  def method_missing(method_name, *args, **kwargs, &block); end
+end
+
+class FactoryBot::Evaluator
+  def self.attribute_list(); end
+
+  def self.attribute_lists(); end
+
+  def self.attribute_lists=(val); end
+
+  def self.attribute_lists?(); end
+
+  def self.define_attribute(name, &block); end
+end
+
+class FactoryBot::EvaluatorClassDefiner
+  def evaluator_class(); end
+
+  def initialize(attributes, parent_class); end
+end
+
+class FactoryBot::EvaluatorClassDefiner
+end
+
+class FactoryBot::Factory
+  def add_callback(*_, &_1); end
+
+  def append_traits(*_, &_1); end
+
+  def associations(); end
+
+  def attributes(); end
+
+  def build_class(); end
+
+  def build_hierarchy(); end
+
+  def callbacks(); end
+
+  def class_name(); end
+
+  def compile(); end
+
+  def compiled_constructor(); end
+
+  def compiled_to_create(); end
+
+  def constructor(*_, &_1); end
+
+  def declare_attribute(*_, &_1); end
+
+  def define_trait(*_, &_1); end
+
+  def defined_traits(*_, &_1); end
+
+  def definition(); end
+
+  def evaluator_class(); end
+
+  def hierarchy_class(); end
+
+  def hierarchy_instance(); end
+
+  def human_names(); end
+
+  def inherit_traits(*_, &_1); end
+
+  def initialize(name, options=T.unsafe(nil)); end
+
+  def name(); end
+
+  def names(); end
+
+  def run(build_strategy, overrides, &block); end
+
+  def to_create(*_, &_1); end
+
+  def with_traits(traits); end
+end
+
+class FactoryBot::Factory
+end
+
+class FactoryBot::FactoryRunner
+  def initialize(name, strategy, traits_and_overrides); end
+
+  def run(runner_strategy=T.unsafe(nil), &block); end
+end
+
+class FactoryBot::FactoryRunner
+end
+
+module FactoryBot::Internal
+end
+
+module FactoryBot::Internal
+  def self.after(*_, &_1); end
+
+  def self.before(*_, &_1); end
+
+  def self.callbacks(*_, &_1); end
+
+  def self.configuration(); end
+
+  def self.constructor(*_, &_1); end
+
+  def self.factories(*_, &_1); end
+
+  def self.factory_by_name(name); end
+
+  def self.initialize_with(*_, &_1); end
+
+  def self.inline_sequences(*_, &_1); end
+
+  def self.register_default_strategies(); end
+
+  def self.register_factory(factory); end
+
+  def self.register_inline_sequence(sequence); end
+
+  def self.register_sequence(sequence); end
+
+  def self.register_strategy(strategy_name, strategy_class); end
+
+  def self.register_trait(trait); end
+
+  def self.reset_configuration(); end
+
+  def self.rewind_inline_sequences(); end
+
+  def self.rewind_sequences(); end
+
+  def self.sequence_by_name(name); end
+
+  def self.sequences(*_, &_1); end
+
+  def self.skip_create(*_, &_1); end
+
+  def self.strategies(*_, &_1); end
+
+  def self.strategy_by_name(name); end
+
+  def self.to_create(*_, &_1); end
+
+  def self.trait_by_name(name); end
+
+  def self.traits(*_, &_1); end
+end
+
+class FactoryBot::InvalidCallbackNameError
+end
+
+class FactoryBot::InvalidCallbackNameError
+end
+
+class FactoryBot::InvalidFactoryError
+end
+
+class FactoryBot::InvalidFactoryError
+end
+
+class FactoryBot::Linter
+  def initialize(factories, strategy: T.unsafe(nil), traits: T.unsafe(nil), verbose: T.unsafe(nil)); end
+
+  def lint!(); end
+end
+
+class FactoryBot::Linter::FactoryError
+  def initialize(wrapped_error, factory); end
+
+  def location(); end
+
+  def message(); end
+
+  def verbose_message(); end
+end
+
+class FactoryBot::Linter::FactoryError
+end
+
+class FactoryBot::Linter::FactoryTraitError
+  def initialize(wrapped_error, factory, trait_name); end
+end
+
+class FactoryBot::Linter::FactoryTraitError
+end
+
+class FactoryBot::Linter
+end
+
+class FactoryBot::MethodDefinitionError
+end
+
+class FactoryBot::MethodDefinitionError
+end
+
+class FactoryBot::NullFactory
+  def attributes(*_, &_1); end
+
+  def callbacks(*_, &_1); end
+
+  def class_name(); end
+
+  def compile(); end
+
+  def constructor(*_, &_1); end
+
+  def defined_traits(*_, &_1); end
+
+  def definition(); end
+
+  def evaluator_class(); end
+
+  def hierarchy_class(); end
+
+  def to_create(*_, &_1); end
+end
+
+class FactoryBot::NullFactory
+end
+
+class FactoryBot::NullObject
+  def initialize(methods_to_respond_to); end
+
+  def method_missing(name, *args, &block); end
+
+  def respond_to?(method); end
+end
+
+class FactoryBot::NullObject
+end
+
+class FactoryBot::Registry
+  include ::Enumerable
+  def [](name); end
+
+  def clear(); end
+
+  def each(&block); end
+
+  def find(name); end
+
+  def initialize(name); end
+
+  def name(); end
+
+  def register(name, item); end
+
+  def registered?(name); end
+end
+
+class FactoryBot::Registry
+end
+
+class FactoryBot::Sequence
+  def initialize(name, *args, &proc); end
+
+  def name(); end
+
+  def names(); end
+
+  def next(scope=T.unsafe(nil)); end
+
+  def rewind(); end
+end
+
+class FactoryBot::Sequence::EnumeratorAdapter
+  def initialize(value); end
+
+  def next(); end
+
+  def peek(); end
+
+  def rewind(); end
+end
+
+class FactoryBot::Sequence::EnumeratorAdapter
+end
+
+class FactoryBot::Sequence
+end
+
+class FactoryBot::SequenceAbuseError
+end
+
+class FactoryBot::SequenceAbuseError
+end
+
+module FactoryBot::Strategy
+end
+
+class FactoryBot::Strategy::AttributesFor
+  def association(runner); end
+
+  def result(evaluation); end
+end
+
+class FactoryBot::Strategy::AttributesFor
+end
+
+class FactoryBot::Strategy::Build
+  def association(runner); end
+
+  def result(evaluation); end
+end
+
+class FactoryBot::Strategy::Build
+end
+
+class FactoryBot::Strategy::Create
+  def association(runner); end
+
+  def result(evaluation); end
+end
+
+class FactoryBot::Strategy::Create
+end
+
+class FactoryBot::Strategy::Null
+  def association(runner); end
+
+  def result(evaluation); end
+end
+
+class FactoryBot::Strategy::Null
+end
+
+class FactoryBot::Strategy::Stub
+  def association(runner); end
+
+  def result(evaluation); end
+  DISABLED_PERSISTENCE_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+class FactoryBot::Strategy::Stub
+  def self.next_id=(id); end
+end
+
+module FactoryBot::Strategy
+end
+
+class FactoryBot::StrategyCalculator
+  def initialize(name_or_object); end
+
+  def strategy(); end
+end
+
+class FactoryBot::StrategyCalculator
+end
+
+class FactoryBot::StrategySyntaxMethodRegistrar
+  def define_strategy_methods(); end
+
+  def initialize(strategy_name); end
+end
+
+class FactoryBot::StrategySyntaxMethodRegistrar
+  def self.with_index(block, index); end
+end
+
+module FactoryBot::Syntax
+end
+
+module FactoryBot::Syntax::Default
+  include ::FactoryBot::Syntax::Methods
+  def define(&block); end
+
+  def modify(&block); end
+end
+
+class FactoryBot::Syntax::Default::DSL
+  def after(*_, &_1); end
+
+  def before(*_, &_1); end
+
+  def callback(*_, &_1); end
+
+  def factory(name, options=T.unsafe(nil), &block); end
+
+  def initialize_with(*_, &_1); end
+
+  def sequence(name, *args, &block); end
+
+  def skip_create(*_, &_1); end
+
+  def to_create(*_, &_1); end
+
+  def trait(name, &block); end
+end
+
+class FactoryBot::Syntax::Default::DSL
+  def self.run(block); end
+end
+
+class FactoryBot::Syntax::Default::ModifyDSL
+  def factory(name, _options=T.unsafe(nil), &block); end
+end
+
+class FactoryBot::Syntax::Default::ModifyDSL
+  def self.run(block); end
+end
+
+module FactoryBot::Syntax::Default
+end
+
+module FactoryBot::Syntax::Methods
+  def attributes_for(name, *traits_and_overrides, &block); end
+
+  def attributes_for_list(name, amount, *traits_and_overrides, &block); end
+
+  def attributes_for_pair(name, *traits_and_overrides, &block); end
+
+  def build(name, *traits_and_overrides, &block); end
+
+  def build_list(name, amount, *traits_and_overrides, &block); end
+
+  def build_pair(name, *traits_and_overrides, &block); end
+
+  def build_stubbed(name, *traits_and_overrides, &block); end
+
+  def build_stubbed_list(name, amount, *traits_and_overrides, &block); end
+
+  def build_stubbed_pair(name, *traits_and_overrides, &block); end
+
+  def create(name, *traits_and_overrides, &block); end
+
+  def create_list(name, amount, *traits_and_overrides, &block); end
+
+  def create_pair(name, *traits_and_overrides, &block); end
+
+  def generate(name); end
+
+  def generate_list(name, count); end
+
+  def null(name, *traits_and_overrides, &block); end
+
+  def null_list(name, amount, *traits_and_overrides, &block); end
+
+  def null_pair(name, *traits_and_overrides, &block); end
+end
+
+module FactoryBot::Syntax::Methods
+end
+
+module FactoryBot::Syntax
+end
+
+class FactoryBot::SyntaxRunner
+  include ::FactoryBot::Syntax::Methods
+end
+
+class FactoryBot::SyntaxRunner
+end
+
+class FactoryBot::Trait
+  def ==(other); end
+
+  def add_callback(*_, &_1); end
+
+  def attributes(*_, &_1); end
+
+  def block(); end
+
+  def callbacks(*_, &_1); end
+
+  def constructor(*_, &_1); end
+
+  def declare_attribute(*_, &_1); end
+
+  def define_trait(*_, &_1); end
+
+  def definition(); end
+
+  def initialize(name, &block); end
+
+  def name(); end
+
+  def names(); end
+
+  def to_create(*_, &_1); end
+end
+
+class FactoryBot::Trait
+end
+
+class FactoryBot::TraitDefinitionError
+end
+
+class FactoryBot::TraitDefinitionError
+end
+
+module FactoryBot
+  extend ::FactoryBot::Syntax::Default
+  extend ::FactoryBot::Syntax::Methods
+  def self.aliases(); end
+
+  def self.aliases=(aliases); end
+
+  def self.aliases_for(attribute); end
+
+  def self.automatically_define_enum_traits(); end
+
+  def self.automatically_define_enum_traits=(obj); end
+
+  def self.build_stubbed_starting_id=(starting_id); end
+
+  def self.definition_file_paths(); end
+
+  def self.definition_file_paths=(definition_file_paths); end
+
+  def self.factories(*_, &_1); end
+
+  def self.find_definitions(); end
+
+  def self.lint(*args); end
+
+  def self.register_strategy(*_, &_1); end
+
+  def self.reload(); end
+
+  def self.rewind_sequences(*_, &_1); end
+
+  def self.strategy_by_name(*_, &_1); end
+
+  def self.use_parent_strategy(); end
+
+  def self.use_parent_strategy=(obj); end
+end
+
+class FactoryBotRails::Railtie
 end
 
 class FalseClass
@@ -33399,7 +34701,10 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
+  def removed_method_calls(); end
+
   def to_ruby(); end
+  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -34148,37 +35453,6 @@ module INotify
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module INotify::Native::Flags
-  IN_ACCESS = ::T.let(nil, ::T.untyped)
-  IN_ALL_EVENTS = ::T.let(nil, ::T.untyped)
-  IN_ATTRIB = ::T.let(nil, ::T.untyped)
-  IN_CLOSE = ::T.let(nil, ::T.untyped)
-  IN_CLOSE_NOWRITE = ::T.let(nil, ::T.untyped)
-  IN_CLOSE_WRITE = ::T.let(nil, ::T.untyped)
-  IN_CREATE = ::T.let(nil, ::T.untyped)
-  IN_DELETE = ::T.let(nil, ::T.untyped)
-  IN_DELETE_SELF = ::T.let(nil, ::T.untyped)
-  IN_DONT_FOLLOW = ::T.let(nil, ::T.untyped)
-  IN_IGNORED = ::T.let(nil, ::T.untyped)
-  IN_ISDIR = ::T.let(nil, ::T.untyped)
-  IN_MASK_ADD = ::T.let(nil, ::T.untyped)
-  IN_MODIFY = ::T.let(nil, ::T.untyped)
-  IN_MOVE = ::T.let(nil, ::T.untyped)
-  IN_MOVED_FROM = ::T.let(nil, ::T.untyped)
-  IN_MOVED_TO = ::T.let(nil, ::T.untyped)
-  IN_MOVE_SELF = ::T.let(nil, ::T.untyped)
-  IN_ONESHOT = ::T.let(nil, ::T.untyped)
-  IN_ONLYDIR = ::T.let(nil, ::T.untyped)
-  IN_OPEN = ::T.let(nil, ::T.untyped)
-  IN_Q_OVERFLOW = ::T.let(nil, ::T.untyped)
-  IN_UNMOUNT = ::T.let(nil, ::T.untyped)
-  PC_NAME_MAX = ::T.let(nil, ::T.untyped)
-end
-
-class INotify::Notifier
-  RECURSIVE_BLACKLIST = ::T.let(nil, ::T.untyped)
-end
-
 class IO
   def beep(); end
 
@@ -34351,6 +35625,12 @@ class IRB::Context
 
   def newline_before_multiline_output?(); end
 
+  def omit_on_assignment(); end
+
+  def omit_on_assignment=(omit_on_assignment); end
+
+  def omit_on_assignment?(); end
+
   def use_colorize(); end
 
   def use_colorize?(); end
@@ -34398,6 +35678,8 @@ module IRB::ExtendCommandBundle
 
   def irb_help(*opts, &b); end
 
+  def irb_info(*opts, &b); end
+
   def irb_jobs(*opts, &b); end
 
   def irb_kill(*opts, &b); end
@@ -34439,6 +35721,8 @@ end
 
 class IRB::InputMethod
   def initialize(file=T.unsafe(nil)); end
+
+  def winsize(); end
 end
 
 class IRB::Inspector
@@ -34452,7 +35736,7 @@ class IRB::Irb
 
   def initialize(workspace=T.unsafe(nil), input_method=T.unsafe(nil)); end
 
-  def output_value(); end
+  def output_value(omit=T.unsafe(nil)); end
 
   def prompt(prompt, ltype, indent, line_no); end
   ASSIGNMENT_NODE_TYPES = ::T.let(nil, ::T.untyped)
@@ -34501,6 +35785,10 @@ end
 
 class IRB::ReadlineInputMethod
   def initialize(); end
+end
+
+class IRB::ReadlineInputMethod
+  def self.initialize_readline(); end
 end
 
 class IRB::ReidlineInputMethod
@@ -34567,7 +35855,6 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
-  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -36019,8 +37306,6 @@ class Net::HTTP
   def write_timeout=(sec); end
   ENVIRONMENT_VARIABLE_IS_MULTIUSER_SAFE = ::T.let(nil, ::T.untyped)
 end
-
-Net::HTTP::ProxyMod = Net::HTTP::ProxyDelta
 
 class Net::HTTPAlreadyReported
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -38904,10 +40189,6 @@ class Proc
   def clone(); end
 end
 
-module Process
-  CLOCK_TAI = ::T.let(nil, ::T.untyped)
-end
-
 class ProgressBar::Components::Bar
   DEFAULT_PROGRESS_MARK = ::T.let(nil, ::T.untyped)
   DEFAULT_REMAINDER_MARK = ::T.let(nil, ::T.untyped)
@@ -39122,7 +40403,6 @@ end
 
 class Puma::Server
   ThreadLocalKey = ::T.let(nil, ::T.untyped)
-  UNPACK_TCP_STATE_FROM_TCP_INFO = ::T.let(nil, ::T.untyped)
 end
 
 class Puma::ThreadPool
@@ -42883,6 +44163,10 @@ class Reline::Config
 
   def editing_mode_is?(*val); end
 
+  def emacs_mode_string(); end
+
+  def emacs_mode_string=(emacs_mode_string); end
+
   def enable_keypad(); end
 
   def enable_keypad=(enable_keypad); end
@@ -42967,6 +44251,8 @@ class Reline::Config
 
   def reset_default_key_bindings(); end
 
+  def retrieve_string(str); end
+
   def show_all_if_ambiguous(); end
 
   def show_all_if_ambiguous=(show_all_if_ambiguous); end
@@ -42975,12 +44261,23 @@ class Reline::Config
 
   def show_all_if_unmodified=(show_all_if_unmodified); end
 
+  def show_mode_in_prompt(); end
+
+  def show_mode_in_prompt=(show_mode_in_prompt); end
+
   def test_mode(); end
+
+  def vi_cmd_mode_icon(); end
+
+  def vi_cmd_mode_icon=(vi_cmd_mode_icon); end
+
+  def vi_ins_mode_icon(); end
+
+  def vi_ins_mode_icon=(vi_ins_mode_icon); end
 
   def visible_stats(); end
 
   def visible_stats=(visible_stats); end
-  DEFAULT_PATH = ::T.let(nil, ::T.untyped)
   KEYSEQ_PATTERN = ::T.let(nil, ::T.untyped)
   VARIABLE_NAMES = ::T.let(nil, ::T.untyped)
   VARIABLE_NAME_SYMBOLS = ::T.let(nil, ::T.untyped)
@@ -43379,12 +44676,7 @@ class Reline::LineEditor
   def whole_buffer(); end
 
   def whole_lines(index: T.unsafe(nil), line: T.unsafe(nil)); end
-  CSI_REGEXP = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
-  OSC_REGEXP = ::T.let(nil, ::T.untyped)
   VI_MOTIONS = ::T.let(nil, ::T.untyped)
-  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 Reline::LineEditor::CompletionJourneyData = Struct::CompletionJourneyData
@@ -43407,8 +44699,13 @@ class Reline::LineEditor
 end
 
 class Reline::Unicode
+  CSI_REGEXP = ::T.let(nil, ::T.untyped)
   EscapedChars = ::T.let(nil, ::T.untyped)
   EscapedPairs = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
+  OSC_REGEXP = ::T.let(nil, ::T.untyped)
+  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 class Reline::Unicode::EastAsianWidth
@@ -43424,6 +44721,8 @@ class Reline::Unicode::EastAsianWidth
 end
 
 class Reline::Unicode
+  def self.calculate_width(str, allow_escape_code=T.unsafe(nil)); end
+
   def self.ed_transpose_words(line, byte_pointer); end
 
   def self.em_backward_word(line, byte_pointer); end
@@ -43443,6 +44742,8 @@ class Reline::Unicode
   def self.get_next_mbchar_size(line, byte_pointer); end
 
   def self.get_prev_mbchar_size(line, byte_pointer); end
+
+  def self.split_by_width(str, max_width, encoding=T.unsafe(nil)); end
 
   def self.vi_backward_word(line, byte_pointer); end
 
@@ -44206,6 +45507,137 @@ module RoleTerm::GeneratedAssociationMethods
 end
 
 module RoleTerm::GeneratedAttributeMethods
+  def created_at(); end
+
+  def created_at=(value); end
+
+  def created_at?(*args); end
+
+  def created_at_before_last_save(*args); end
+
+  def created_at_before_type_cast(*args); end
+
+  def created_at_came_from_user?(*args); end
+
+  def created_at_change(*args); end
+
+  def created_at_change_to_be_saved(*args); end
+
+  def created_at_changed?(*args); end
+
+  def created_at_in_database(*args); end
+
+  def created_at_previous_change(*args); end
+
+  def created_at_previously_changed?(*args); end
+
+  def created_at_was(*args); end
+
+  def created_at_will_change!(*args); end
+
+  def id_before_last_save(*args); end
+
+  def id_came_from_user?(*args); end
+
+  def id_change(*args); end
+
+  def id_change_to_be_saved(*args); end
+
+  def id_changed?(*args); end
+
+  def id_previous_change(*args); end
+
+  def id_previously_changed?(*args); end
+
+  def id_will_change!(*args); end
+
+  def label(); end
+
+  def label=(value); end
+
+  def label?(*args); end
+
+  def label_before_last_save(*args); end
+
+  def label_before_type_cast(*args); end
+
+  def label_came_from_user?(*args); end
+
+  def label_change(*args); end
+
+  def label_change_to_be_saved(*args); end
+
+  def label_changed?(*args); end
+
+  def label_in_database(*args); end
+
+  def label_previous_change(*args); end
+
+  def label_previously_changed?(*args); end
+
+  def label_was(*args); end
+
+  def label_will_change!(*args); end
+
+  def restore_created_at!(*args); end
+
+  def restore_id!(*args); end
+
+  def restore_label!(*args); end
+
+  def restore_updated_at!(*args); end
+
+  def saved_change_to_created_at(*args); end
+
+  def saved_change_to_created_at?(*args); end
+
+  def saved_change_to_id(*args); end
+
+  def saved_change_to_id?(*args); end
+
+  def saved_change_to_label(*args); end
+
+  def saved_change_to_label?(*args); end
+
+  def saved_change_to_updated_at(*args); end
+
+  def saved_change_to_updated_at?(*args); end
+
+  def updated_at(); end
+
+  def updated_at=(value); end
+
+  def updated_at?(*args); end
+
+  def updated_at_before_last_save(*args); end
+
+  def updated_at_before_type_cast(*args); end
+
+  def updated_at_came_from_user?(*args); end
+
+  def updated_at_change(*args); end
+
+  def updated_at_change_to_be_saved(*args); end
+
+  def updated_at_changed?(*args); end
+
+  def updated_at_in_database(*args); end
+
+  def updated_at_previous_change(*args); end
+
+  def updated_at_previously_changed?(*args); end
+
+  def updated_at_was(*args); end
+
+  def updated_at_will_change!(*args); end
+
+  def will_save_change_to_created_at?(*args); end
+
+  def will_save_change_to_id?(*args); end
+
+  def will_save_change_to_label?(*args); end
+
+  def will_save_change_to_updated_at?(*args); end
 end
 
 module RoleTerm::GeneratedAttributeMethods
@@ -45383,36 +46815,11 @@ class RubyLex::TerminateLineInput
 end
 
 class RubyLex
-end
-
-module RubyVM::AbstractSyntaxTree
+  def self.compile_with_errors_suppressed(code); end
 end
 
 class RubyVM::AbstractSyntaxTree::Node
-  def children(); end
-
-  def first_column(); end
-
-  def first_lineno(); end
-
-  def last_column(); end
-
-  def last_lineno(); end
-
   def pretty_print_children(q, names=T.unsafe(nil)); end
-
-  def type(); end
-end
-
-class RubyVM::AbstractSyntaxTree::Node
-end
-
-module RubyVM::AbstractSyntaxTree
-  def self.of(body); end
-
-  def self.parse(string); end
-
-  def self.parse_file(pathname); end
 end
 
 class RubyVM::InstructionSequence
@@ -45859,17 +47266,185 @@ module Skiptrace
 end
 
 class Socket
+  AF_CCITT = ::T.let(nil, ::T.untyped)
+  AF_CHAOS = ::T.let(nil, ::T.untyped)
+  AF_CNT = ::T.let(nil, ::T.untyped)
+  AF_COIP = ::T.let(nil, ::T.untyped)
+  AF_DATAKIT = ::T.let(nil, ::T.untyped)
+  AF_DLI = ::T.let(nil, ::T.untyped)
+  AF_E164 = ::T.let(nil, ::T.untyped)
+  AF_ECMA = ::T.let(nil, ::T.untyped)
+  AF_HYLINK = ::T.let(nil, ::T.untyped)
+  AF_IMPLINK = ::T.let(nil, ::T.untyped)
+  AF_ISO = ::T.let(nil, ::T.untyped)
+  AF_LAT = ::T.let(nil, ::T.untyped)
+  AF_LINK = ::T.let(nil, ::T.untyped)
+  AF_NATM = ::T.let(nil, ::T.untyped)
+  AF_NDRV = ::T.let(nil, ::T.untyped)
+  AF_NETBIOS = ::T.let(nil, ::T.untyped)
+  AF_NS = ::T.let(nil, ::T.untyped)
+  AF_OSI = ::T.let(nil, ::T.untyped)
+  AF_PPP = ::T.let(nil, ::T.untyped)
+  AF_PUP = ::T.let(nil, ::T.untyped)
+  AF_SIP = ::T.let(nil, ::T.untyped)
+  AF_SYSTEM = ::T.let(nil, ::T.untyped)
+  AI_DEFAULT = ::T.let(nil, ::T.untyped)
+  AI_MASK = ::T.let(nil, ::T.untyped)
+  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
+  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
+  EAI_MAX = ::T.let(nil, ::T.untyped)
+  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
+  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
+  IFF_LINK0 = ::T.let(nil, ::T.untyped)
+  IFF_LINK1 = ::T.let(nil, ::T.untyped)
+  IFF_LINK2 = ::T.let(nil, ::T.untyped)
+  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
+  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
+  IPPROTO_EON = ::T.let(nil, ::T.untyped)
+  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
+  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
+  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
+  IPPROTO_ND = ::T.let(nil, ::T.untyped)
+  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
+  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
+  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
+  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
+  IP_RECVIF = ::T.let(nil, ::T.untyped)
+  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
+  MSG_EOF = ::T.let(nil, ::T.untyped)
+  MSG_FLUSH = ::T.let(nil, ::T.untyped)
+  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
+  MSG_HOLD = ::T.let(nil, ::T.untyped)
+  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
+  MSG_SEND = ::T.let(nil, ::T.untyped)
+  PF_CCITT = ::T.let(nil, ::T.untyped)
+  PF_CHAOS = ::T.let(nil, ::T.untyped)
+  PF_CNT = ::T.let(nil, ::T.untyped)
+  PF_COIP = ::T.let(nil, ::T.untyped)
+  PF_DATAKIT = ::T.let(nil, ::T.untyped)
+  PF_DLI = ::T.let(nil, ::T.untyped)
+  PF_ECMA = ::T.let(nil, ::T.untyped)
+  PF_HYLINK = ::T.let(nil, ::T.untyped)
+  PF_IMPLINK = ::T.let(nil, ::T.untyped)
+  PF_ISO = ::T.let(nil, ::T.untyped)
+  PF_LAT = ::T.let(nil, ::T.untyped)
+  PF_LINK = ::T.let(nil, ::T.untyped)
+  PF_NATM = ::T.let(nil, ::T.untyped)
+  PF_NDRV = ::T.let(nil, ::T.untyped)
+  PF_NETBIOS = ::T.let(nil, ::T.untyped)
+  PF_NS = ::T.let(nil, ::T.untyped)
+  PF_OSI = ::T.let(nil, ::T.untyped)
+  PF_PIP = ::T.let(nil, ::T.untyped)
+  PF_PPP = ::T.let(nil, ::T.untyped)
+  PF_PUP = ::T.let(nil, ::T.untyped)
+  PF_RTIP = ::T.let(nil, ::T.untyped)
+  PF_SIP = ::T.let(nil, ::T.untyped)
+  PF_SYSTEM = ::T.let(nil, ::T.untyped)
+  PF_XTP = ::T.let(nil, ::T.untyped)
+  SCM_CREDS = ::T.let(nil, ::T.untyped)
+  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
+  SO_NKE = ::T.let(nil, ::T.untyped)
+  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
+  SO_NREAD = ::T.let(nil, ::T.untyped)
+  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
+  SO_WANTMORE = ::T.let(nil, ::T.untyped)
+  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
+  TCP_NOOPT = ::T.let(nil, ::T.untyped)
+  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
 end
 
 module Socket::Constants
+  AF_CCITT = ::T.let(nil, ::T.untyped)
+  AF_CHAOS = ::T.let(nil, ::T.untyped)
+  AF_CNT = ::T.let(nil, ::T.untyped)
+  AF_COIP = ::T.let(nil, ::T.untyped)
+  AF_DATAKIT = ::T.let(nil, ::T.untyped)
+  AF_DLI = ::T.let(nil, ::T.untyped)
+  AF_E164 = ::T.let(nil, ::T.untyped)
+  AF_ECMA = ::T.let(nil, ::T.untyped)
+  AF_HYLINK = ::T.let(nil, ::T.untyped)
+  AF_IMPLINK = ::T.let(nil, ::T.untyped)
+  AF_ISO = ::T.let(nil, ::T.untyped)
+  AF_LAT = ::T.let(nil, ::T.untyped)
+  AF_LINK = ::T.let(nil, ::T.untyped)
+  AF_NATM = ::T.let(nil, ::T.untyped)
+  AF_NDRV = ::T.let(nil, ::T.untyped)
+  AF_NETBIOS = ::T.let(nil, ::T.untyped)
+  AF_NS = ::T.let(nil, ::T.untyped)
+  AF_OSI = ::T.let(nil, ::T.untyped)
+  AF_PPP = ::T.let(nil, ::T.untyped)
+  AF_PUP = ::T.let(nil, ::T.untyped)
+  AF_SIP = ::T.let(nil, ::T.untyped)
+  AF_SYSTEM = ::T.let(nil, ::T.untyped)
+  AI_DEFAULT = ::T.let(nil, ::T.untyped)
+  AI_MASK = ::T.let(nil, ::T.untyped)
+  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
+  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
+  EAI_MAX = ::T.let(nil, ::T.untyped)
+  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
+  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
+  IFF_LINK0 = ::T.let(nil, ::T.untyped)
+  IFF_LINK1 = ::T.let(nil, ::T.untyped)
+  IFF_LINK2 = ::T.let(nil, ::T.untyped)
+  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
+  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
+  IPPROTO_EON = ::T.let(nil, ::T.untyped)
+  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
+  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
+  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
+  IPPROTO_ND = ::T.let(nil, ::T.untyped)
+  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
+  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
+  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
+  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
+  IP_RECVIF = ::T.let(nil, ::T.untyped)
+  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
+  MSG_EOF = ::T.let(nil, ::T.untyped)
+  MSG_FLUSH = ::T.let(nil, ::T.untyped)
+  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
+  MSG_HOLD = ::T.let(nil, ::T.untyped)
+  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
+  MSG_SEND = ::T.let(nil, ::T.untyped)
+  PF_CCITT = ::T.let(nil, ::T.untyped)
+  PF_CHAOS = ::T.let(nil, ::T.untyped)
+  PF_CNT = ::T.let(nil, ::T.untyped)
+  PF_COIP = ::T.let(nil, ::T.untyped)
+  PF_DATAKIT = ::T.let(nil, ::T.untyped)
+  PF_DLI = ::T.let(nil, ::T.untyped)
+  PF_ECMA = ::T.let(nil, ::T.untyped)
+  PF_HYLINK = ::T.let(nil, ::T.untyped)
+  PF_IMPLINK = ::T.let(nil, ::T.untyped)
+  PF_ISO = ::T.let(nil, ::T.untyped)
+  PF_LAT = ::T.let(nil, ::T.untyped)
+  PF_LINK = ::T.let(nil, ::T.untyped)
+  PF_NATM = ::T.let(nil, ::T.untyped)
+  PF_NDRV = ::T.let(nil, ::T.untyped)
+  PF_NETBIOS = ::T.let(nil, ::T.untyped)
+  PF_NS = ::T.let(nil, ::T.untyped)
+  PF_OSI = ::T.let(nil, ::T.untyped)
+  PF_PIP = ::T.let(nil, ::T.untyped)
+  PF_PPP = ::T.let(nil, ::T.untyped)
+  PF_PUP = ::T.let(nil, ::T.untyped)
+  PF_RTIP = ::T.let(nil, ::T.untyped)
+  PF_SIP = ::T.let(nil, ::T.untyped)
+  PF_SYSTEM = ::T.let(nil, ::T.untyped)
+  PF_XTP = ::T.let(nil, ::T.untyped)
+  SCM_CREDS = ::T.let(nil, ::T.untyped)
+  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
+  SO_NKE = ::T.let(nil, ::T.untyped)
+  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
+  SO_NREAD = ::T.let(nil, ::T.untyped)
+  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
+  SO_WANTMORE = ::T.let(nil, ::T.untyped)
+  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
+  TCP_NOOPT = ::T.let(nil, ::T.untyped)
+  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
 end
 
 class SortedSet
@@ -46131,6 +47706,18 @@ module Sprockets
   extend ::Sprockets::PathDigestUtils
   extend ::Sprockets::HTTPUtils
   extend ::Sprockets::DigestUtils
+end
+
+module StateMachines
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module StateMachines::Integrations::ActiveModel
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module StateMachines::Integrations::ActiveRecord
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class String
@@ -48156,6 +49743,7 @@ end
 class Work
   include ::Work::GeneratedAttributeMethods
   include ::Work::GeneratedAssociationMethods
+  include ::StateMachines::InstanceMethods
   def after_add_for_contributors(); end
 
   def after_add_for_contributors=(val); end
@@ -48363,6 +49951,7 @@ module Work::GeneratedAttributeMethods
 end
 
 class Work
+  extend ::StateMachines::ClassMethods
   def self.after_add_for_contributors(); end
 
   def self.after_add_for_contributors=(val); end

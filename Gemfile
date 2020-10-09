@@ -3,8 +3,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.1'
-
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'config', '~> 2.2'
 gem 'dor-services-client'
@@ -12,12 +10,14 @@ gem 'pg'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 gem 'sidekiq', '~> 6.1'
 gem 'sorbet-runtime'
+gem 'state_machines-activerecord'
 gem 'turbolinks', '~> 5'
 gem 'view_component', '~> 2.18'
 gem 'webpacker', '~> 5.0'
 
 group :development, :test do
   gem 'byebug'
+  gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
