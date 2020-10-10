@@ -1,7 +1,7 @@
 <div id="editor">
   <h1 class="row">Deposit your work</h1>
 
-  <%= form_with model: @work, data: { controller: 'progress' },
+  <%= form_with model: work, url: [work.collection, work], data: { controller: 'progress' },
       html: { class: 'needs-validation row', novalidate: true, multipart: true } do |f| %>
     <%= render DepositProgressComponent.new %>
 

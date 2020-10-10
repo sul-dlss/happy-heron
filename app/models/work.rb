@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class Work < ApplicationRecord
+  belongs_to :collection
+
   has_many :contributors, dependent: :destroy
   has_many :related_links, dependent: :destroy
   has_many :related_works, dependent: :destroy

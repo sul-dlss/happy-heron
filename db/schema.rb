@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_09_042617) do
+ActiveRecord::Schema.define(version: 2020_10_09_194443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,24 @@ ActiveRecord::Schema.define(version: 2020_10_09_042617) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", null: false
+    t.string "contact_email", null: false
+    t.string "release_option"
+    t.string "release_duration"
+    t.date "release_date"
+    t.string "visibility", null: false
+    t.string "required_license"
+    t.string "default_license"
+    t.boolean "email_when_participants_changed"
+    t.string "managers", null: false
+    t.string "depositors"
+    t.string "reviewers"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "contributors", force: :cascade do |t|
@@ -88,6 +106,8 @@ ActiveRecord::Schema.define(version: 2020_10_09_042617) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "state", null: false
+    t.bigint "collection_id", null: false
+    t.index ["collection_id"], name: "index_works_on_collection_id"
     t.index ["druid", "version"], name: "index_works_on_druid_and_version", unique: true
     t.index ["state"], name: "index_works_on_state"
   end
@@ -97,4 +117,5 @@ ActiveRecord::Schema.define(version: 2020_10_09_042617) do
   add_foreign_key "contributors", "works"
   add_foreign_key "related_links", "works"
   add_foreign_key "related_works", "works"
+  add_foreign_key "works", "collections"
 end

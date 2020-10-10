@@ -10,3 +10,6 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 RoleTerm.create([{ label: 'Author' }, { label: 'Contributor' }])
+
+# Don't load this in production:
+FactoryBot.create(:collection)
