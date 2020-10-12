@@ -41,10 +41,15 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Mount Action Cable outside main process or domain.
-  # config.action_cable.mount_path = nil
-  # config.action_cable.url = 'wss://example.com/cable'
-  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+  # Allow ActionCable connections from Hydrus/H2 URLs in all deployed environments
+  #
+  # NOTE: We don't have access to the config gem at this point in Rails'
+  # initialization order, so we can't supply more specific URLs in
+  # shared_configs here.
+  config.action_cable.allowed_request_origins = [
+    %r{https://sul-h2.*\.stanford\.edu'},
+    %r{https://sdr.*\.stanford\.edu'}
+  ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
