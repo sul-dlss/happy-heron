@@ -182,9 +182,9 @@ module ActiveStorage::Reflection::ActiveRecordExtensions::ClassMethods
 end
 class ActiveStorage::Engine < Rails::Engine
 end
-module Anonymous_Module_27
-end
 module Anonymous_Module_28
+end
+module Anonymous_Module_29
 end
 module ActiveStorage::Attached::Model
   def attachment_changes; end
@@ -239,37 +239,6 @@ class ActiveStorage::BaseController < ActionController::Base
   def self.middleware_stack; end
   include ActionDispatch::Routing::UrlFor
   include ActiveStorage::SetCurrent
-  include Anonymous_Module_29
-end
-module Anonymous_Module_29
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_27
-  extend Anonymous_Module_28
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_27
-  include Anonymous_Module_28
-end
-class ActiveStorage::DirectUploadsController < ActiveStorage::BaseController
-  def _layout(lookup_context, formats); end
-  def blob_args; end
-  def create; end
-  def direct_upload_json(blob); end
-  def self._helpers; end
-  def self._routes; end
-  def self._wrapper_options; end
-  def self.helpers_path; end
-  def self.middleware_stack; end
-  include ActionDispatch::Routing::UrlFor
   include Anonymous_Module_30
 end
 module Anonymous_Module_30
@@ -284,27 +253,23 @@ module Anonymous_Module_30
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_27
   extend Anonymous_Module_28
+  extend Anonymous_Module_29
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_27
   include Anonymous_Module_28
+  include Anonymous_Module_29
 end
-module ActiveStorage::SetBlob
-  def set_blob; end
-  extend ActiveSupport::Concern
-end
-class ActiveStorage::BlobsController < ActiveStorage::BaseController
+class ActiveStorage::DirectUploadsController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
-  def self.__callbacks; end
+  def blob_args; end
+  def create; end
+  def direct_upload_json(blob); end
   def self._helpers; end
   def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
-  def show; end
   include ActionDispatch::Routing::UrlFor
-  include ActiveStorage::SetBlob
   include Anonymous_Module_31
 end
 module Anonymous_Module_31
@@ -319,11 +284,15 @@ module Anonymous_Module_31
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_27
   extend Anonymous_Module_28
+  extend Anonymous_Module_29
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_27
   include Anonymous_Module_28
+  include Anonymous_Module_29
+end
+module ActiveStorage::SetBlob
+  def set_blob; end
+  extend ActiveSupport::Concern
 end
 class ActiveStorage::RepresentationsController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
@@ -350,11 +319,42 @@ module Anonymous_Module_32
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_27
   extend Anonymous_Module_28
+  extend Anonymous_Module_29
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_27
   include Anonymous_Module_28
+  include Anonymous_Module_29
+end
+class ActiveStorage::BlobsController < ActiveStorage::BaseController
+  def _layout(lookup_context, formats); end
+  def self.__callbacks; end
+  def self._helpers; end
+  def self._routes; end
+  def self._wrapper_options; end
+  def self.helpers_path; end
+  def self.middleware_stack; end
+  def show; end
+  include ActionDispatch::Routing::UrlFor
+  include ActiveStorage::SetBlob
+  include Anonymous_Module_33
+end
+module Anonymous_Module_33
+  def _generate_paths_by_default; end
+  def _routes; end
+  def self._routes; end
+  def self.full_url_for(options); end
+  def self.optimize_routes_generation?; end
+  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
+  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
+  def self.route_for(name, *args); end
+  def self.url_for(options); end
+  def self.url_options; end
+  extend ActiveSupport::Concern
+  extend Anonymous_Module_28
+  extend Anonymous_Module_29
+  include ActionDispatch::Routing::UrlFor
+  include Anonymous_Module_28
+  include Anonymous_Module_29
 end
 class ActiveStorage::DiskController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
@@ -372,9 +372,9 @@ class ActiveStorage::DiskController < ActiveStorage::BaseController
   def show; end
   def update; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_33
+  include Anonymous_Module_34
 end
-module Anonymous_Module_33
+module Anonymous_Module_34
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -386,11 +386,11 @@ module Anonymous_Module_33
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_27
   extend Anonymous_Module_28
+  extend Anonymous_Module_29
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_27
   include Anonymous_Module_28
+  include Anonymous_Module_29
 end
 class ActiveStorage::BaseJob < ActiveJob::Base
 end
@@ -404,25 +404,15 @@ class ActiveStorage::PurgeJob < ActiveStorage::BaseJob
   def self.queue_name; end
   def self.rescue_handlers; end
 end
-class ActiveStorage::Variant
-  def blob; end
-  def content_type(**, &&); end
-  def filename(**, &&); end
-  def format(**, &&); end
-  def image; end
-  def initialize(blob, variation_or_variation_key); end
+class ActiveStorage::Variation
+  def initialize(transformations); end
   def key; end
-  def process; end
-  def processed; end
-  def processed?; end
-  def service(**, &&); end
-  def service_url(expires_in: nil, disposition: nil); end
-  def specification; end
-  def transform(image, &block); end
-  def upload(file); end
-  def variation; end
-end
-class ActiveStorage::Variant::Specification < OpenStruct
+  def self.decode(key); end
+  def self.encode(transformations); end
+  def self.wrap(variator); end
+  def transform(file, format: nil, &block); end
+  def transformations; end
+  def transformer; end
 end
 class ActiveStorage::Downloader
   def download(key, file); end
@@ -519,7 +509,6 @@ class ActiveStorage::Blob < ActiveRecord::Base
   def after_remove_for_attachments=(val); end
   def after_remove_for_attachments?; end
   def allowed_inline?; end
-  def attachable_plain_text_representation(caption = nil); end
   def audio?; end
   def autosave_associated_records_for_attachments(*args); end
   def autosave_associated_records_for_preview_image_attachment; end
@@ -541,7 +530,6 @@ class ActiveStorage::Blob < ActiveRecord::Base
   def image?; end
   def key; end
   def open(tmpdir: nil, &block); end
-  def previewable_attachable?; end
   def purge; end
   def purge_later; end
   def regenerate_key; end
@@ -585,20 +573,17 @@ class ActiveStorage::Blob < ActiveRecord::Base
   def service_url_for_direct_upload(expires_in: nil); end
   def signed_id; end
   def text?; end
-  def to_trix_content_attachment_partial_path; end
   def unfurl(io, identify: nil); end
   def upload(io, identify: nil); end
   def upload_without_unfurling(io); end
   def validate_associated_records_for_attachments(*args); end
   def video?; end
-  extend ActionText::Attachable::ClassMethods
-  include ActionText::Attachable
   include ActiveStorage::Blob::Analyzable
   include ActiveStorage::Blob::GeneratedAssociationMethods
   include ActiveStorage::Blob::GeneratedAttributeMethods
   include ActiveStorage::Blob::Identifiable
   include ActiveStorage::Blob::Representable
-  include Anonymous_Module_34
+  include Anonymous_Module_35
 end
 module ActiveStorage::Blob::GeneratedAssociationMethods
   def attachment_ids; end
@@ -636,7 +621,7 @@ class ActiveStorage::Blob::ActiveRecord_AssociationRelation < ActiveRecord::Asso
   include ActiveRecord::Delegation::ClassSpecificRelation
   include ActiveStorage::Blob::GeneratedRelationMethods
 end
-module Anonymous_Module_34
+module Anonymous_Module_35
   def analyzed; end
   def analyzed=(value); end
   def analyzed_before_last_save; end
@@ -654,29 +639,25 @@ module Anonymous_Module_34
   def saved_change_to_identified; end
   def saved_change_to_identified?; end
 end
-class ActiveStorage::Filename
-  def <=>(other); end
-  def as_json(*arg0); end
-  def base; end
-  def extension; end
-  def extension_with_delimiter; end
-  def extension_without_delimiter; end
-  def initialize(filename); end
-  def sanitized; end
-  def self.wrap(filename); end
-  def to_json; end
-  def to_s; end
-  include Comparable
-end
-class ActiveStorage::Variation
-  def initialize(transformations); end
+class ActiveStorage::Variant
+  def blob; end
+  def content_type(**, &&); end
+  def filename(**, &&); end
+  def format(**, &&); end
+  def image; end
+  def initialize(blob, variation_or_variation_key); end
   def key; end
-  def self.decode(key); end
-  def self.encode(transformations); end
-  def self.wrap(variator); end
-  def transform(file, format: nil, &block); end
-  def transformations; end
-  def transformer; end
+  def process; end
+  def processed; end
+  def processed?; end
+  def service(**, &&); end
+  def service_url(expires_in: nil, disposition: nil); end
+  def specification; end
+  def transform(image, &block); end
+  def upload(file); end
+  def variation; end
+end
+class ActiveStorage::Variant::Specification < OpenStruct
 end
 module ActiveStorage::Attachment::GeneratedAttributeMethods
 end
@@ -727,14 +708,19 @@ class ActiveStorage::Attachment::ActiveRecord_AssociationRelation < ActiveRecord
   include ActiveRecord::Delegation::ClassSpecificRelation
   include ActiveStorage::Attachment::GeneratedRelationMethods
 end
-class ActiveStorage::Current < ActiveSupport::CurrentAttributes
-  def self.host; end
-  def self.host=(attribute); end
-  include Anonymous_Module_35
-end
-module Anonymous_Module_35
-  def host; end
-  def host=(attribute); end
+class ActiveStorage::Filename
+  def <=>(other); end
+  def as_json(*arg0); end
+  def base; end
+  def extension; end
+  def extension_with_delimiter; end
+  def extension_without_delimiter; end
+  def initialize(filename); end
+  def sanitized; end
+  def self.wrap(filename); end
+  def to_json; end
+  def to_s; end
+  include Comparable
 end
 class ActiveStorage::Preview
   def blob; end
@@ -750,6 +736,15 @@ class ActiveStorage::Preview
   def variation; end
 end
 class ActiveStorage::Preview::UnprocessedError < StandardError
+end
+class ActiveStorage::Current < ActiveSupport::CurrentAttributes
+  def self.host; end
+  def self.host=(attribute); end
+  include Anonymous_Module_36
+end
+module Anonymous_Module_36
+  def host; end
+  def host=(attribute); end
 end
 class ActiveStorage::Attached::Changes::CreateOne
   def attachable; end

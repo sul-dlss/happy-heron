@@ -364,36 +364,6 @@ class Rails::Engine::Configuration < Rails::Railtie::Configuration
   def root; end
   def root=(value); end
 end
-module Rails::TestUnit
-end
-class Rails::TestUnit::Runner
-  def filters; end
-  def self.attach_before_load_options(opts); end
-  def self.compose_filter(runnable, filter); end
-  def self.extract_filters(argv); end
-  def self.filters; end
-  def self.load_tests(argv); end
-  def self.parse_options(argv); end
-  def self.rake_run(argv = nil); end
-  def self.run(argv = nil); end
-end
-class Rails::TestUnit::CompositeFilter
-  def ===(method); end
-  def derive_line_filters(patterns); end
-  def derive_named_filter(filter); end
-  def initialize(runnable, filter, patterns); end
-  def named_filter; end
-end
-class Rails::TestUnit::Filter
-  def ===(method); end
-  def definition_for(method); end
-  def initialize(runnable, file, line); end
-end
-module Rails::LineFiltering
-  def run(reporter, options = nil); end
-end
-class Rails::TestUnitRailtie < Rails::Railtie
-end
 class Rails::SourceAnnotationExtractor
   def display(results, options = nil); end
   def extract_annotations_from(file, pattern); end
@@ -735,66 +705,4 @@ class Rails::Generators::TestCase < ActiveSupport::TestCase
   include Rails::Generators::Testing::Assertions
   include Rails::Generators::Testing::Behaviour
   include Rails::Generators::Testing::SetupAndTeardown
-end
-class ActiveRecord::InternalMetadata < ActiveRecord::Base
-  def self.default_scope_override; end
-end
-class ActiveSupport::TestCase < Minitest::Test
-  def config; end
-  def config=(val); end
-  def config?; end
-  def fixture_class_names; end
-  def fixture_class_names=(val); end
-  def fixture_class_names?; end
-  def fixture_path; end
-  def fixture_path?; end
-  def fixture_table_names; end
-  def fixture_table_names=(val); end
-  def fixture_table_names?; end
-  def lock_threads; end
-  def lock_threads=(val); end
-  def lock_threads?; end
-  def pre_loaded_fixtures; end
-  def pre_loaded_fixtures=(val); end
-  def pre_loaded_fixtures?; end
-  def self.config; end
-  def self.config=(val); end
-  def self.config?; end
-  def self.fixture_class_names; end
-  def self.fixture_class_names=(val); end
-  def self.fixture_class_names?; end
-  def self.fixture_path; end
-  def self.fixture_path=(val); end
-  def self.fixture_path?; end
-  def self.fixture_table_names; end
-  def self.fixture_table_names=(val); end
-  def self.fixture_table_names?; end
-  def self.lock_threads; end
-  def self.lock_threads=(val); end
-  def self.lock_threads?; end
-  def self.pre_loaded_fixtures; end
-  def self.pre_loaded_fixtures=(val); end
-  def self.pre_loaded_fixtures?; end
-  def self.use_instantiated_fixtures; end
-  def self.use_instantiated_fixtures=(val); end
-  def self.use_instantiated_fixtures?; end
-  def self.use_transactional_tests; end
-  def self.use_transactional_tests=(val); end
-  def self.use_transactional_tests?; end
-  def use_instantiated_fixtures; end
-  def use_instantiated_fixtures=(val); end
-  def use_instantiated_fixtures?; end
-  def use_transactional_tests; end
-  def use_transactional_tests=(val); end
-  def use_transactional_tests?; end
-  extend ActiveRecord::TestFixtures::ClassMethods
-  include ActiveRecord::TestDatabases
-  include ActiveRecord::TestFixtures
-end
-class ActionDispatch::IntegrationTest < ActiveSupport::TestCase
-  def before_setup; end
-  def self.fixture_path; end
-end
-class ActionController::TestCase < ActiveSupport::TestCase
-  def before_setup; end
 end

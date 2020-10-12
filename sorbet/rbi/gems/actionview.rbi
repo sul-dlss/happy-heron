@@ -687,7 +687,7 @@ class ActionView::Template::Handlers::Builder
   def self.default_format=(val); end
   def self.default_format?; end
 end
-class ActionView::Template::LegacyTemplate < Anonymous_Delegator_25
+class ActionView::Template::LegacyTemplate < Anonymous_Delegator_14
   def initialize(template, source); end
   def source; end
 end
@@ -1145,43 +1145,6 @@ class ActionView::PathSet
   def unshift(*args); end
   include Enumerable
 end
-module ActionView::Helpers::Tags
-  extend ActiveSupport::Autoload
-end
-module ActionView::Helpers::Tags::Placeholderable
-  def initialize(*arg0); end
-end
-class ActionView::Helpers::Tags::Base
-  def add_default_name_and_id(options); end
-  def add_default_name_and_id_for_value(tag_value, options); end
-  def add_options(option_tags, options, value = nil); end
-  def generate_ids?; end
-  def initialize(object_name, method_name, template_object, options = nil); end
-  def name_and_id_index(options); end
-  def object; end
-  def placeholder_required?(html_options); end
-  def render; end
-  def retrieve_autoindex(pre_match); end
-  def retrieve_object(object); end
-  def sanitized_method_name; end
-  def sanitized_object_name; end
-  def sanitized_value(value); end
-  def select_content_tag(option_tags, options, html_options); end
-  def tag_id(index = nil); end
-  def tag_name(multiple = nil, index = nil); end
-  def value; end
-  def value_before_type_cast; end
-  def value_came_from_user?; end
-  extend ActionView::Helpers::SanitizeHelper::ClassMethods
-  extend ActionView::Helpers::UrlHelper::ClassMethods
-  include ActionView::Helpers::ActiveModelInstanceTag
-  include ActionView::Helpers::FormOptionsHelper
-  include ActionView::Helpers::SanitizeHelper
-  include ActionView::Helpers::TagHelper
-  include ActionView::Helpers::TagHelper
-  include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::UrlHelper
-end
 class ActionView::DependencyTracker
   def self.find_dependencies(name, template, view_paths = nil); end
   def self.register_tracker(extension, tracker); end
@@ -1370,9 +1333,9 @@ class ActionView::TestCase::TestController < ActionController::Base
   def self.middleware_stack; end
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::TestProcess
-  include Anonymous_Module_26
+  include Anonymous_Module_15
 end
-module Anonymous_Module_26
+module Anonymous_Module_15
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end

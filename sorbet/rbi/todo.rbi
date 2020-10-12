@@ -3,9 +3,8 @@
 
 # typed: strong
 module ::Anonymous_Delegator_11; end
-module ::Anonymous_Delegator_161; end
-module ::Anonymous_Delegator_37; end
+module ::Anonymous_Delegator_156; end
+module ::Anonymous_Delegator_95; end
 module ::Capistrano::OneTimeKey; end
-module Rails::Engine::Configuration; end
 module T::Private::Methods::MethodHooks; end
 module T::Private::Methods::SingletonMethodHooks; end

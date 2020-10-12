@@ -16,7 +16,7 @@ module Config
   def self.reload!; end
   def self.setting_files(config_root, env); end
   def self.setup; end
-  extend Anonymous_Config_Configuration_56
+  extend Anonymous_Config_Configuration_38
   extend Config::Validation::Schema
 end
 module Config::Validation
@@ -91,7 +91,7 @@ end
 class Config::Integrations::Rails::Railtie < Rails::Railtie
   def preload; end
 end
-module Anonymous_Config_Configuration_56
+module Anonymous_Config_Configuration_38
   def const_name; end
   def const_name=(value); end
   def env_converter; end
