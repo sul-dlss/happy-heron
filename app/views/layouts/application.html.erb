@@ -12,6 +12,38 @@
   </head>
 
   <body>
+    <div class="overflow-hidden">
+      <div class="container-xl">
+        <a class="visually-hidden-focusable d-inline-flex p-2 m-1" href="#content">Skip to main content</a>
+      </div>
+    </div>
+
+    <header class="navbar navbar-expand navbar-dark stanford-navbar">
+      <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
+        <a class="navbar-brand p-0 mr-2" href="/" aria-label="Stanford Digital Repository">
+          <%= image_pack_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
+        </a>
+
+        <div id="notifications"></div>
+
+        <div id="login" class="nav-link">
+          <% if current_user %>
+            <%= link_to('Logout', destroy_user_session_path, class: 'nav-link') %>
+          <% else %>
+            <%= link_to('Login', new_user_session_path, class: 'nav-link') %>
+          <% end %>
+        </div>
+
+        <a class="nav-link" href="#">Help</a>
+      </nav>
+    </header>
+
     <%= yield %>
+
+    <footer class="stanford-footer p-3 p-md-5 mt-5 bg-light text-center text-sm-left">
+      <div class="container">
+        Stanford | Libraries
+      </div>
+    </footer>
   </body>
 </html>

@@ -4,8 +4,6 @@
 class WorksController < ApplicationController
   before_action :authenticate_user!
 
-  layout 'editor'
-
   def new
     @collection = Collection.find(params[:collection_id])
     @work = Work.new(work_type: 'text', collection: @collection)
