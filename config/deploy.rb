@@ -50,5 +50,9 @@ set :bundler2_config_use_hook, true
 # Set Rails env to production in all Cap environments
 set :rails_env, 'production'
 
+# Deploy passenger-standalone via systemd service
+set :passenger_restart_command, 'sudo systemctl restart passenger'
+set :passenger_restart_options, -> { '' }
+
 # update shared_configs before restarting app (from dlss-capistrano gem)
 before 'deploy:restart', 'shared_configs:update'
