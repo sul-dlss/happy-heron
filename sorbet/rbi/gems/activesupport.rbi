@@ -1574,6 +1574,104 @@ class ActiveSupport::Messages::RotationConfiguration
   def rotate(kind, *args); end
   def signed; end
 end
+module URI
+  def self.parser; end
+end
+module ActiveSupport::Multibyte::Unicode
+  def compose(codepoints); end
+  def decompose(type, codepoints); end
+  def default_normalization_form; end
+  def default_normalization_form=(arg0); end
+  def downcase(string); end
+  def normalize(string, form = nil); end
+  def pack_graphemes(unpacked); end
+  def recode_windows1252_chars(string); end
+  def swapcase(string); end
+  def tidy_bytes(string, force = nil); end
+  def unpack_graphemes(string); end
+  def upcase(string); end
+  extend ActiveSupport::Multibyte::Unicode
+end
+class ERB
+end
+module ERB::Util
+  def html_escape_once(s); end
+  def json_escape(s); end
+  def self.html_escape_once(s); end
+  def self.json_escape(s); end
+  def self.unwrapped_html_escape(s); end
+  def unwrapped_html_escape(s); end
+end
+class ActiveSupport::SafeBuffer < String
+  def %(args); end
+  def *(*arg0); end
+  def +(other); end
+  def <<(value); end
+  def [](*args); end
+  def []=(*args); end
+  def capitalize!(*args); end
+  def capitalize(*args, &block); end
+  def chomp!(*args); end
+  def chomp(*args, &block); end
+  def chop!(*args); end
+  def chop(*args, &block); end
+  def clone_empty; end
+  def concat(value); end
+  def delete!(*args); end
+  def delete(*args, &block); end
+  def delete_prefix!(*args); end
+  def delete_prefix(*args, &block); end
+  def delete_suffix!(*args); end
+  def delete_suffix(*args, &block); end
+  def downcase!(*args); end
+  def downcase(*args, &block); end
+  def encode_with(coder); end
+  def gsub!(*args, &block); end
+  def gsub(*args, &block); end
+  def html_escape_interpolated_argument(arg); end
+  def html_safe?; end
+  def initialize(str = nil); end
+  def initialize_copy(other); end
+  def insert(index, value); end
+  def lstrip!(*args); end
+  def lstrip(*args, &block); end
+  def next!(*args); end
+  def next(*args, &block); end
+  def original_concat(*arg0); end
+  def prepend(value); end
+  def replace(value); end
+  def reverse!(*args); end
+  def reverse(*args, &block); end
+  def rstrip!(*args); end
+  def rstrip(*args, &block); end
+  def safe_concat(value); end
+  def set_block_back_references(block, match_data); end
+  def slice!(*args); end
+  def slice(*args, &block); end
+  def squeeze!(*args); end
+  def squeeze(*args, &block); end
+  def strip!(*args); end
+  def strip(*args, &block); end
+  def sub!(*args, &block); end
+  def sub(*args, &block); end
+  def succ!(*args); end
+  def succ(*args, &block); end
+  def swapcase!(*args); end
+  def swapcase(*args, &block); end
+  def to_param; end
+  def to_s; end
+  def tr!(*args); end
+  def tr(*args, &block); end
+  def tr_s!(*args); end
+  def tr_s(*args, &block); end
+  def unicode_normalize!(*args); end
+  def unicode_normalize(*args, &block); end
+  def upcase!(*args); end
+  def upcase(*args, &block); end
+end
+class ActiveSupport::SafeBuffer::SafeConcatError < StandardError
+  def initialize; end
+end
 class ActiveSupport::Concurrency::LoadInterlockAwareMonitor < Monitor
   def mon_enter; end
   def synchronize; end
@@ -1769,104 +1867,6 @@ end
 module ActiveSupport::ActionableError::ClassMethods
   def action(name, &block); end
 end
-module URI
-  def self.parser; end
-end
-module ActiveSupport::Multibyte::Unicode
-  def compose(codepoints); end
-  def decompose(type, codepoints); end
-  def default_normalization_form; end
-  def default_normalization_form=(arg0); end
-  def downcase(string); end
-  def normalize(string, form = nil); end
-  def pack_graphemes(unpacked); end
-  def recode_windows1252_chars(string); end
-  def swapcase(string); end
-  def tidy_bytes(string, force = nil); end
-  def unpack_graphemes(string); end
-  def upcase(string); end
-  extend ActiveSupport::Multibyte::Unicode
-end
-class ERB
-end
-module ERB::Util
-  def html_escape_once(s); end
-  def json_escape(s); end
-  def self.html_escape_once(s); end
-  def self.json_escape(s); end
-  def self.unwrapped_html_escape(s); end
-  def unwrapped_html_escape(s); end
-end
-class ActiveSupport::SafeBuffer < String
-  def %(args); end
-  def *(*arg0); end
-  def +(other); end
-  def <<(value); end
-  def [](*args); end
-  def []=(*args); end
-  def capitalize!(*args); end
-  def capitalize(*args, &block); end
-  def chomp!(*args); end
-  def chomp(*args, &block); end
-  def chop!(*args); end
-  def chop(*args, &block); end
-  def clone_empty; end
-  def concat(value); end
-  def delete!(*args); end
-  def delete(*args, &block); end
-  def delete_prefix!(*args); end
-  def delete_prefix(*args, &block); end
-  def delete_suffix!(*args); end
-  def delete_suffix(*args, &block); end
-  def downcase!(*args); end
-  def downcase(*args, &block); end
-  def encode_with(coder); end
-  def gsub!(*args, &block); end
-  def gsub(*args, &block); end
-  def html_escape_interpolated_argument(arg); end
-  def html_safe?; end
-  def initialize(str = nil); end
-  def initialize_copy(other); end
-  def insert(index, value); end
-  def lstrip!(*args); end
-  def lstrip(*args, &block); end
-  def next!(*args); end
-  def next(*args, &block); end
-  def original_concat(*arg0); end
-  def prepend(value); end
-  def replace(value); end
-  def reverse!(*args); end
-  def reverse(*args, &block); end
-  def rstrip!(*args); end
-  def rstrip(*args, &block); end
-  def safe_concat(value); end
-  def set_block_back_references(block, match_data); end
-  def slice!(*args); end
-  def slice(*args, &block); end
-  def squeeze!(*args); end
-  def squeeze(*args, &block); end
-  def strip!(*args); end
-  def strip(*args, &block); end
-  def sub!(*args, &block); end
-  def sub(*args, &block); end
-  def succ!(*args); end
-  def succ(*args, &block); end
-  def swapcase!(*args); end
-  def swapcase(*args, &block); end
-  def to_param; end
-  def to_s; end
-  def tr!(*args); end
-  def tr(*args, &block); end
-  def tr_s!(*args); end
-  def tr_s(*args, &block); end
-  def unicode_normalize!(*args); end
-  def unicode_normalize(*args, &block); end
-  def upcase!(*args); end
-  def upcase(*args, &block); end
-end
-class ActiveSupport::SafeBuffer::SafeConcatError < StandardError
-  def initialize; end
-end
 class ActiveSupport::ParameterFilter
   def compiled_filter; end
   def filter(params); end
@@ -1881,39 +1881,6 @@ class ActiveSupport::ParameterFilter::CompiledFilter
   def regexps; end
   def self.compile(filters, mask:); end
   def value_for_key(key, value, parents = nil, original_params = nil); end
-end
-module Benchmark
-  def self.ms; end
-end
-module ActiveSupport::Benchmarkable
-  def benchmark(message = nil, options = nil); end
-end
-module Module::Concerning
-  def concern(topic, &module_definition); end
-  def concerning(topic, &block); end
-end
-module ActiveSupport::NumberHelper
-  def number_to_currency(number, options = nil); end
-  def number_to_delimited(number, options = nil); end
-  def number_to_human(number, options = nil); end
-  def number_to_human_size(number, options = nil); end
-  def number_to_percentage(number, options = nil); end
-  def number_to_phone(number, options = nil); end
-  def number_to_rounded(number, options = nil); end
-  extend ActiveSupport::Autoload
-  extend ActiveSupport::NumberHelper
-end
-class ActiveSupport::FileUpdateChecker
-  def compile_ext(array); end
-  def compile_glob(hash); end
-  def escape(key); end
-  def execute; end
-  def execute_if_updated; end
-  def initialize(files, dirs = nil, &block); end
-  def max_mtime(paths); end
-  def updated?; end
-  def updated_at(paths); end
-  def watched; end
 end
 class ActiveSupport::StringInquirer < String
   def method_missing(method_name, *arguments); end
@@ -2025,6 +1992,18 @@ class ActiveSupport::Reloader < ActiveSupport::ExecutionWrapper
   def self.to_prepare(*args, &block); end
   def self.wrap; end
 end
+class ActiveSupport::FileUpdateChecker
+  def compile_ext(array); end
+  def compile_glob(hash); end
+  def escape(key); end
+  def execute; end
+  def execute_if_updated; end
+  def initialize(files, dirs = nil, &block); end
+  def max_mtime(paths); end
+  def updated?; end
+  def updated_at(paths); end
+  def watched; end
+end
 class ActiveSupport::EventedFileUpdateChecker
   def boot!; end
   def changed(modified, added, removed); end
@@ -2045,18 +2024,6 @@ class ActiveSupport::EventedFileUpdateChecker::PathHelper
   def normalize_extension(ext); end
   def xpath(path); end
 end
-class ActiveSupport::ArrayInquirer < Array
-  def any?(*candidates); end
-  def method_missing(name, *args); end
-  def respond_to_missing?(name, include_private = nil); end
-end
-module ActiveSupport::NumericWithFormat
-  def to_s(format = nil, options = nil); end
-end
-class File < IO
-  def self.lchmod(*arg0); end
-  def self.lchown(*arg0); end
-end
 module ActiveSupport::RangeWithFormat
   def to_default_s(format = nil); end
   def to_formatted_s(format = nil); end
@@ -2075,6 +2042,39 @@ module ActiveSupport::EachTimeWithZone
   def ensure_iteration_allowed; end
   def step(n = nil, &block); end
 end
+class ActiveSupport::ArrayInquirer < Array
+  def any?(*candidates); end
+  def method_missing(name, *args); end
+  def respond_to_missing?(name, include_private = nil); end
+end
+module ActiveSupport::NumberHelper
+  def number_to_currency(number, options = nil); end
+  def number_to_delimited(number, options = nil); end
+  def number_to_human(number, options = nil); end
+  def number_to_human_size(number, options = nil); end
+  def number_to_percentage(number, options = nil); end
+  def number_to_phone(number, options = nil); end
+  def number_to_rounded(number, options = nil); end
+  extend ActiveSupport::Autoload
+  extend ActiveSupport::NumberHelper
+end
+module ActiveSupport::NumericWithFormat
+  def to_s(format = nil, options = nil); end
+end
+module ActiveSupport::MarshalWithAutoloading
+  def load(source, proc = nil); end
+end
+class File < IO
+  def self.lchmod; end
+  def self.lchown(*arg0); end
+end
+module SecureRandom
+  def self.base36(n = nil); end
+  def self.base58(n = nil); end
+end
+module Benchmark
+  def self.ms; end
+end
 module Digest
 end
 module Digest::UUID
@@ -2083,12 +2083,9 @@ module Digest::UUID
   def self.uuid_v4; end
   def self.uuid_v5(uuid_namespace, name); end
 end
-module ActiveSupport::MarshalWithAutoloading
-  def load(source, proc = nil); end
-end
-module SecureRandom
-  def self.base36(n = nil); end
-  def self.base58(n = nil); end
+module Module::Concerning
+  def concern(topic, &module_definition); end
+  def concerning(topic, &block); end
 end
 module ActiveSupport::Cache
   def self.expand_cache_key(key, namespace = nil); end
@@ -2251,6 +2248,9 @@ class ActiveSupport::BacktraceCleaner
   def remove_filters!; end
   def remove_silencers!; end
   def silence(backtrace); end
+end
+module ActiveSupport::Benchmarkable
+  def benchmark(message = nil, options = nil); end
 end
 class ActiveSupport::Cache::MemoryStore < ActiveSupport::Cache::Store
   def cached_size(key, entry); end
@@ -2481,7 +2481,6 @@ class ActiveSupport::TestCase < Minitest::Test
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Testing::Declarative
   extend ActiveSupport::Testing::SetupAndTeardown::ClassMethods
-  extend Rails::LineFiltering
   include ActiveSupport::Callbacks
   include ActiveSupport::Testing::Assertions
   include ActiveSupport::Testing::Deprecation

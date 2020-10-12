@@ -1370,8 +1370,13 @@ class ActionController::API
   include ::ActionController::Rescue
   include ::ActionController::Instrumentation
   include ::ActionController::ParamsWrapper
+  include ::ActionController::RespondWith
   include ::ActionDispatch::Routing::RouteSet::MountedHelpers
   include ::ActiveRecord::Railties::ControllerRuntime
+  include ::Devise::Controllers::Helpers
+  include ::Devise::Controllers::SignInOut
+  include ::Devise::Controllers::StoreLocation
+  include ::Devise::Controllers::UrlHelpers
   include ::Turbolinks::Controller
   include ::Turbolinks::Redirection
   def __callbacks(); end
@@ -1410,11 +1415,23 @@ class ActionController::API
 
   def logger=(value); end
 
+  def mimes_for_respond_to(); end
+
+  def mimes_for_respond_to=(val); end
+
+  def mimes_for_respond_to?(); end
+
   def rescue_handlers(); end
 
   def rescue_handlers=(val); end
 
   def rescue_handlers?(); end
+
+  def responder(); end
+
+  def responder=(val); end
+
+  def responder?(); end
   MODULES = ::T.let(nil, ::T.untyped)
 end
 
@@ -1428,6 +1445,7 @@ class ActionController::API
   extend ::ActionController::DefaultHeaders::ClassMethods
   extend ::ActionController::Instrumentation::ClassMethods
   extend ::ActionController::ParamsWrapper::ClassMethods
+  extend ::ActionController::RespondWith::ClassMethods
   extend ::ActionController::Railties::Helpers
   def self.__callbacks(); end
 
@@ -1467,11 +1485,23 @@ class ActionController::API
 
   def self.logger=(value); end
 
+  def self.mimes_for_respond_to(); end
+
+  def self.mimes_for_respond_to=(val); end
+
+  def self.mimes_for_respond_to?(); end
+
   def self.rescue_handlers(); end
 
   def self.rescue_handlers=(val); end
 
   def self.rescue_handlers?(); end
+
+  def self.responder(); end
+
+  def self.responder=(val); end
+
+  def self.responder?(); end
 
   def self.without_modules(*modules); end
 end
@@ -1547,10 +1577,15 @@ class ActionController::Base
   include ::ActionController::Rescue
   include ::ActionController::Instrumentation
   include ::ActionController::ParamsWrapper
+  include ::ActionController::RespondWith
   include ::ActionDispatch::Routing::RouteSet::MountedHelpers
   include ::ActiveRecord::Railties::ControllerRuntime
   include ::ViewComponent::RenderingComponentHelper
   include ::ViewComponent::RenderComponentToStringHelper
+  include ::Devise::Controllers::Helpers
+  include ::Devise::Controllers::SignInOut
+  include ::Devise::Controllers::StoreLocation
+  include ::Devise::Controllers::UrlHelpers
   include ::Turbolinks::Controller
   include ::Turbolinks::Redirection
   include ::ViewComponent::RenderingMonkeyPatch
@@ -1681,6 +1716,12 @@ class ActionController::Base
 
   def logger=(value); end
 
+  def mimes_for_respond_to(); end
+
+  def mimes_for_respond_to=(val); end
+
+  def mimes_for_respond_to?(); end
+
   def notice(); end
 
   def per_form_csrf_tokens(); end
@@ -1704,6 +1745,12 @@ class ActionController::Base
   def rescue_handlers=(val); end
 
   def rescue_handlers?(); end
+
+  def responder(); end
+
+  def responder=(val); end
+
+  def responder?(); end
 
   def stylesheets_dir(); end
 
@@ -1732,6 +1779,8 @@ class ActionController::Base
   extend ::ActionController::DefaultHeaders::ClassMethods
   extend ::ActionController::Instrumentation::ClassMethods
   extend ::ActionController::ParamsWrapper::ClassMethods
+  extend ::Responders::ControllerMethod
+  extend ::ActionController::RespondWith::ClassMethods
   extend ::ActionController::Railties::Helpers
   def self.__callbacks(); end
 
@@ -1879,6 +1928,12 @@ class ActionController::Base
 
   def self.logger=(value); end
 
+  def self.mimes_for_respond_to(); end
+
+  def self.mimes_for_respond_to=(val); end
+
+  def self.mimes_for_respond_to?(); end
+
   def self.per_form_csrf_tokens(); end
 
   def self.per_form_csrf_tokens=(value); end
@@ -1900,6 +1955,12 @@ class ActionController::Base
   def self.rescue_handlers=(val); end
 
   def self.rescue_handlers?(); end
+
+  def self.responder(); end
+
+  def self.responder=(val); end
+
+  def self.responder?(); end
 
   def self.stylesheets_dir(); end
 
@@ -2800,6 +2861,106 @@ class ActionController::RespondToMismatchError
 end
 
 class ActionController::RespondToMismatchError
+end
+
+module ActionController::RespondWith
+  def collect_mimes_from_class_level(); end
+
+  def respond_with(*resources, &block); end
+
+  def verify_request_format!(); end
+
+  def verify_requested_format!(); end
+end
+
+module ActionController::RespondWith::ClassMethods
+  def clear_respond_to(); end
+
+  def respond_to(*mimes); end
+end
+
+module ActionController::RespondWith::ClassMethods
+end
+
+module ActionController::RespondWith
+  extend ::ActiveSupport::Concern
+end
+
+class ActionController::Responder
+  def api_behavior(); end
+
+  def api_location(); end
+
+  def controller(); end
+
+  def default_action(); end
+
+  def default_render(); end
+
+  def delete?(*_, &_1); end
+
+  def display(resource, given_options=T.unsafe(nil)); end
+
+  def display_errors(); end
+
+  def format(); end
+
+  def get?(*_, &_1); end
+
+  def has_errors?(); end
+
+  def has_renderer?(); end
+
+  def has_view_rendering?(); end
+
+  def head(*_, &_1); end
+
+  def initialize(controller, resources, options=T.unsafe(nil)); end
+
+  def json_resource_errors(); end
+
+  def navigation_behavior(error); end
+
+  def navigation_location(); end
+
+  def options(); end
+
+  def patch?(*_, &_1); end
+
+  def post?(*_, &_1); end
+
+  def put?(*_, &_1); end
+
+  def redirect_to(*_, &_1); end
+
+  def render(*_, &_1); end
+
+  def rendering_options(); end
+
+  def request(); end
+
+  def resource(); end
+
+  def resource_errors(); end
+
+  def resource_location(); end
+
+  def resources(); end
+
+  def respond(); end
+
+  def response_overridden?(); end
+
+  def to_format(); end
+
+  def to_html(); end
+
+  def to_js(); end
+  DEFAULT_ACTIONS_FOR_VERBS = ::T.let(nil, ::T.untyped)
+end
+
+class ActionController::Responder
+  def self.call(*args); end
 end
 
 class ActionController::RoutingError
@@ -5556,7 +5717,41 @@ class ActionDispatch::Routing::Mapper
   include ::ActionDispatch::Routing::Mapper::Concerns
   include ::ActionDispatch::Routing::Mapper::Resources
   include ::ActionDispatch::Routing::Mapper::CustomUrls
+  def as(scope); end
+
+  def authenticate(scope=T.unsafe(nil), block=T.unsafe(nil)); end
+
+  def authenticated(scope=T.unsafe(nil), block=T.unsafe(nil)); end
+
+  def constraints_for(method_to_apply, scope=T.unsafe(nil), block=T.unsafe(nil)); end
+
+  def devise_confirmation(mapping, controllers); end
+
+  def devise_for(*resources); end
+
+  def devise_omniauth_callback(mapping, controllers); end
+
+  def devise_password(mapping, controllers); end
+
+  def devise_registration(mapping, controllers); end
+
+  def devise_scope(scope); end
+
+  def devise_session(mapping, controllers); end
+
+  def devise_unlock(mapping, controllers); end
+
   def initialize(set); end
+
+  def raise_no_devise_method_error!(klass); end
+
+  def raise_no_secret_key(); end
+
+  def set_omniauth_path_prefix!(path_prefix); end
+
+  def unauthenticated(scope=T.unsafe(nil)); end
+
+  def with_devise_exclusive_scope(new_path, new_as, options); end
   URL_OPTIONS = ::T.let(nil, ::T.untyped)
 end
 
@@ -5834,6 +6029,7 @@ module ActionDispatch::Routing::Redirection
 end
 
 class ActionDispatch::Routing::RouteSet
+  include ::Devise::RouteSet
   def add_polymorphic_mapping(klass, options, &block); end
 
   def add_route(mapping, name); end
@@ -5869,8 +6065,6 @@ class ActionDispatch::Routing::RouteSet
   def env_key(); end
 
   def extra_keys(options, recall=T.unsafe(nil)); end
-
-  def finalize!(); end
 
   def find_relative_url_root(options); end
 
@@ -6088,14 +6282,7 @@ class ActionDispatch::Routing::RouteSet
 end
 
 class ActionDispatch::Routing::RouteWrapper
-  include ::Sprockets::Rails::RouteWrapper
   def action(); end
-
-  def assets_prefix(); end
-
-  def assets_prefix=(val); end
-
-  def assets_prefix?(); end
 
   def constraints(); end
 
@@ -6104,6 +6291,8 @@ class ActionDispatch::Routing::RouteWrapper
   def endpoint(); end
 
   def engine?(); end
+
+  def internal?(); end
 
   def name(); end
 
@@ -6116,11 +6305,6 @@ class ActionDispatch::Routing::RouteWrapper
 end
 
 class ActionDispatch::Routing::RouteWrapper
-  def self.assets_prefix(); end
-
-  def self.assets_prefix=(val); end
-
-  def self.assets_prefix?(); end
 end
 
 class ActionDispatch::Routing::RoutesInspector
@@ -6510,12 +6694,6 @@ class ActionMailbox::Base
   def self.router=(obj); end
 end
 
-class ActionMailbox::BaseController
-end
-
-class ActionMailbox::BaseController
-end
-
 module ActionMailbox::Callbacks
   TERMINATOR = ::T.let(nil, ::T.untyped)
 end
@@ -6539,238 +6717,6 @@ class ActionMailbox::Engine
 end
 
 class ActionMailbox::Engine
-end
-
-class ActionMailbox::InboundEmail
-  include ::ActionMailbox::InboundEmail::GeneratedAttributeMethods
-  include ::ActionMailbox::InboundEmail::GeneratedAssociationMethods
-  include ::ActionMailbox::InboundEmail::Routable
-  include ::ActionMailbox::InboundEmail::MessageId
-  include ::ActionMailbox::InboundEmail::Incineratable
-  def autosave_associated_records_for_raw_email_attachment(); end
-
-  def autosave_associated_records_for_raw_email_blob(); end
-
-  def mail(); end
-
-  def processed?(); end
-
-  def source(); end
-end
-
-module ActionMailbox::InboundEmail::GeneratedAssociationMethods
-  def build_raw_email_attachment(*args, &block); end
-
-  def create_raw_email_attachment(*args, &block); end
-
-  def create_raw_email_attachment!(*args, &block); end
-
-  def raw_email(); end
-
-  def raw_email=(attachable); end
-
-  def raw_email_attachment(); end
-
-  def raw_email_attachment=(value); end
-
-  def raw_email_blob(); end
-
-  def raw_email_blob=(value); end
-
-  def reload_raw_email_attachment(); end
-
-  def reload_raw_email_blob(); end
-end
-
-module ActionMailbox::InboundEmail::GeneratedAssociationMethods
-end
-
-module ActionMailbox::InboundEmail::GeneratedAttributeMethods
-end
-
-module ActionMailbox::InboundEmail::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-module ActionMailbox::InboundEmail::Incineratable
-  def incinerate(); end
-
-  def incinerate_later(); end
-end
-
-class ActionMailbox::InboundEmail::Incineratable::Incineration
-  def initialize(inbound_email); end
-
-  def run(); end
-end
-
-class ActionMailbox::InboundEmail::Incineratable::Incineration
-end
-
-module ActionMailbox::InboundEmail::Incineratable
-  extend ::ActiveSupport::Concern
-end
-
-module ActionMailbox::InboundEmail::MessageId
-end
-
-module ActionMailbox::InboundEmail::MessageId::ClassMethods
-  def create_and_extract_message_id!(source, **options); end
-end
-
-module ActionMailbox::InboundEmail::MessageId::ClassMethods
-end
-
-module ActionMailbox::InboundEmail::MessageId
-  extend ::ActiveSupport::Concern
-end
-
-module ActionMailbox::InboundEmail::Routable
-  def route(); end
-
-  def route_later(); end
-end
-
-module ActionMailbox::InboundEmail::Routable
-  extend ::ActiveSupport::Concern
-end
-
-class ActionMailbox::InboundEmail
-  extend ::ActionMailbox::InboundEmail::MessageId::ClassMethods
-  def self.bounced(*args); end
-
-  def self.delivered(*args); end
-
-  def self.failed(*args); end
-
-  def self.not_bounced(*args); end
-
-  def self.not_delivered(*args); end
-
-  def self.not_failed(*args); end
-
-  def self.not_pending(*args); end
-
-  def self.not_processing(*args); end
-
-  def self.pending(*args); end
-
-  def self.processing(*args); end
-
-  def self.statuses(); end
-
-  def self.with_attached_raw_email(*args); end
-end
-
-class ActionMailbox::IncinerationJob
-  def perform(inbound_email); end
-end
-
-class ActionMailbox::IncinerationJob
-  def self.schedule(inbound_email); end
-end
-
-module ActionMailbox::Ingresses
-end
-
-module ActionMailbox::Ingresses::Mailgun
-end
-
-class ActionMailbox::Ingresses::Mailgun::InboundEmailsController
-  def create(); end
-end
-
-class ActionMailbox::Ingresses::Mailgun::InboundEmailsController::Authenticator
-  def authenticated?(); end
-
-  def initialize(key:, timestamp:, token:, signature:); end
-
-  def key(); end
-
-  def signature(); end
-
-  def timestamp(); end
-
-  def token(); end
-end
-
-class ActionMailbox::Ingresses::Mailgun::InboundEmailsController::Authenticator
-end
-
-class ActionMailbox::Ingresses::Mailgun::InboundEmailsController
-end
-
-module ActionMailbox::Ingresses::Mailgun
-end
-
-module ActionMailbox::Ingresses::Mandrill
-end
-
-class ActionMailbox::Ingresses::Mandrill::InboundEmailsController
-  def create(); end
-
-  def health_check(); end
-end
-
-class ActionMailbox::Ingresses::Mandrill::InboundEmailsController::Authenticator
-  def authenticated?(); end
-
-  def initialize(request, key); end
-
-  def key(); end
-
-  def request(); end
-end
-
-class ActionMailbox::Ingresses::Mandrill::InboundEmailsController::Authenticator
-end
-
-class ActionMailbox::Ingresses::Mandrill::InboundEmailsController
-end
-
-module ActionMailbox::Ingresses::Mandrill
-end
-
-module ActionMailbox::Ingresses::Postmark
-end
-
-class ActionMailbox::Ingresses::Postmark::InboundEmailsController
-  def create(); end
-end
-
-class ActionMailbox::Ingresses::Postmark::InboundEmailsController
-end
-
-module ActionMailbox::Ingresses::Postmark
-end
-
-module ActionMailbox::Ingresses::Relay
-end
-
-class ActionMailbox::Ingresses::Relay::InboundEmailsController
-  def create(); end
-end
-
-class ActionMailbox::Ingresses::Relay::InboundEmailsController
-end
-
-module ActionMailbox::Ingresses::Relay
-end
-
-module ActionMailbox::Ingresses::Sendgrid
-end
-
-class ActionMailbox::Ingresses::Sendgrid::InboundEmailsController
-  def create(); end
-end
-
-class ActionMailbox::Ingresses::Sendgrid::InboundEmailsController
-end
-
-module ActionMailbox::Ingresses::Sendgrid
-end
-
-module ActionMailbox::Ingresses
 end
 
 class ActionMailbox::Router
@@ -6819,13 +6765,6 @@ end
 
 module ActionMailbox::Routing
   extend ::ActiveSupport::Concern
-end
-
-class ActionMailbox::RoutingJob
-  def perform(inbound_email); end
-end
-
-class ActionMailbox::RoutingJob
 end
 
 class ActionMailbox::TestCase
@@ -7907,6 +7846,13 @@ end
 module ActionText::Attribute
 end
 
+module ActionText::Attribute::ClassMethods
+  def has_rich_text(name); end
+end
+
+module ActionText::Attribute::ClassMethods
+end
+
 module ActionText::Attribute
   extend ::ActiveSupport::Concern
 end
@@ -7967,48 +7913,6 @@ class ActionText::Content
   def self.renderer=(obj); end
 end
 
-module ActionText::ContentHelper
-  def allowed_attributes(); end
-
-  def allowed_attributes=(obj); end
-
-  def allowed_tags(); end
-
-  def allowed_tags=(obj); end
-
-  def render_action_text_attachments(content); end
-
-  def render_action_text_content(content); end
-
-  def sanitize_action_text_content(content); end
-
-  def sanitizer(); end
-
-  def sanitizer=(obj); end
-
-  def scrubber(); end
-
-  def scrubber=(obj); end
-end
-
-module ActionText::ContentHelper
-  def self.allowed_attributes(); end
-
-  def self.allowed_attributes=(obj); end
-
-  def self.allowed_tags(); end
-
-  def self.allowed_tags=(obj); end
-
-  def self.sanitizer(); end
-
-  def self.sanitizer=(obj); end
-
-  def self.scrubber(); end
-
-  def self.scrubber=(obj); end
-end
-
 class ActionText::Engine
 end
 
@@ -8057,179 +7961,6 @@ module ActionText::PlainTextConversion
   extend ::ActionText::PlainTextConversion
 end
 
-class ActionText::RichText
-  include ::ActionText::RichText::GeneratedAttributeMethods
-  include ::ActionText::RichText::GeneratedAssociationMethods
-  def after_add_for_embeds_attachments(); end
-
-  def after_add_for_embeds_attachments=(val); end
-
-  def after_add_for_embeds_attachments?(); end
-
-  def after_add_for_embeds_blobs(); end
-
-  def after_add_for_embeds_blobs=(val); end
-
-  def after_add_for_embeds_blobs?(); end
-
-  def after_remove_for_embeds_attachments(); end
-
-  def after_remove_for_embeds_attachments=(val); end
-
-  def after_remove_for_embeds_attachments?(); end
-
-  def after_remove_for_embeds_blobs(); end
-
-  def after_remove_for_embeds_blobs=(val); end
-
-  def after_remove_for_embeds_blobs?(); end
-
-  def autosave_associated_records_for_embeds_attachments(*args); end
-
-  def autosave_associated_records_for_embeds_blobs(*args); end
-
-  def autosave_associated_records_for_record(*args); end
-
-  def before_add_for_embeds_attachments(); end
-
-  def before_add_for_embeds_attachments=(val); end
-
-  def before_add_for_embeds_attachments?(); end
-
-  def before_add_for_embeds_blobs(); end
-
-  def before_add_for_embeds_blobs=(val); end
-
-  def before_add_for_embeds_blobs?(); end
-
-  def before_remove_for_embeds_attachments(); end
-
-  def before_remove_for_embeds_attachments=(val); end
-
-  def before_remove_for_embeds_attachments?(); end
-
-  def before_remove_for_embeds_blobs(); end
-
-  def before_remove_for_embeds_blobs=(val); end
-
-  def before_remove_for_embeds_blobs?(); end
-
-  def blank?(*_, &_1); end
-
-  def empty?(*_, &_1); end
-
-  def nil?(*_, &_1); end
-
-  def present?(*_, &_1); end
-
-  def to_plain_text(); end
-
-  def to_s(*_, &_1); end
-
-  def validate_associated_records_for_embeds_attachments(*args); end
-
-  def validate_associated_records_for_embeds_blobs(*args); end
-end
-
-module ActionText::RichText::EmbedsAttachmentsAssociationExtension
-  def purge(); end
-
-  def purge_later(); end
-end
-
-module ActionText::RichText::EmbedsAttachmentsAssociationExtension
-end
-
-module ActionText::RichText::GeneratedAssociationMethods
-  def embeds(); end
-
-  def embeds=(attachables); end
-
-  def embeds_attachment_ids(); end
-
-  def embeds_attachment_ids=(ids); end
-
-  def embeds_attachments(); end
-
-  def embeds_attachments=(value); end
-
-  def embeds_blob_ids(); end
-
-  def embeds_blob_ids=(ids); end
-
-  def embeds_blobs(); end
-
-  def embeds_blobs=(value); end
-
-  def record(); end
-
-  def record=(value); end
-
-  def reload_record(); end
-end
-
-module ActionText::RichText::GeneratedAssociationMethods
-end
-
-module ActionText::RichText::GeneratedAttributeMethods
-end
-
-module ActionText::RichText::GeneratedAttributeMethods
-  extend ::Mutex_m
-end
-
-class ActionText::RichText
-  def self.after_add_for_embeds_attachments(); end
-
-  def self.after_add_for_embeds_attachments=(val); end
-
-  def self.after_add_for_embeds_attachments?(); end
-
-  def self.after_add_for_embeds_blobs(); end
-
-  def self.after_add_for_embeds_blobs=(val); end
-
-  def self.after_add_for_embeds_blobs?(); end
-
-  def self.after_remove_for_embeds_attachments(); end
-
-  def self.after_remove_for_embeds_attachments=(val); end
-
-  def self.after_remove_for_embeds_attachments?(); end
-
-  def self.after_remove_for_embeds_blobs(); end
-
-  def self.after_remove_for_embeds_blobs=(val); end
-
-  def self.after_remove_for_embeds_blobs?(); end
-
-  def self.before_add_for_embeds_attachments(); end
-
-  def self.before_add_for_embeds_attachments=(val); end
-
-  def self.before_add_for_embeds_attachments?(); end
-
-  def self.before_add_for_embeds_blobs(); end
-
-  def self.before_add_for_embeds_blobs=(val); end
-
-  def self.before_add_for_embeds_blobs?(); end
-
-  def self.before_remove_for_embeds_attachments(); end
-
-  def self.before_remove_for_embeds_attachments=(val); end
-
-  def self.before_remove_for_embeds_attachments?(); end
-
-  def self.before_remove_for_embeds_blobs(); end
-
-  def self.before_remove_for_embeds_blobs=(val); end
-
-  def self.before_remove_for_embeds_blobs?(); end
-
-  def self.with_attached_embeds(*args); end
-end
-
 module ActionText::Serialization
   def _dump(*_); end
 end
@@ -8247,16 +7978,6 @@ end
 
 module ActionText::Serialization
   extend ::ActiveSupport::Concern
-end
-
-module ActionText::TagHelper
-  def rich_text_area_tag(name, value=T.unsafe(nil), options=T.unsafe(nil)); end
-end
-
-module ActionText::TagHelper
-  def self.id(); end
-
-  def self.id=(obj); end
 end
 
 class ActionText::TrixAttachment
@@ -8354,6 +8075,7 @@ end
 class ActionView::Base
   include ::ActionView::Context
   include ::ERB::Util
+  include ::ActionView::Helpers::AssetTagHelper
   include ::ActionView::Helpers::UrlHelper
   include ::ActionView::Helpers::FormTagHelper
   include ::ActionView::Helpers::FormHelper
@@ -8363,14 +8085,6 @@ class ActionView::Base
   include ::ActionView::Helpers
   include ::ActiveSupport::Benchmarkable
   include ::ActionView::Helpers::ActiveModelHelper
-  include ::ActionCable::Helpers::ActionCableHelper
-  include ::ViewComponent::RenderComponentHelper
-  include ::Webpacker::Helper
-  include ::Sprockets::Rails::Helper
-  include ::ActionView::Helpers::TagHelper
-  include ::ActionView::Helpers::CaptureHelper
-  include ::ActionView::Helpers::OutputSafetyHelper
-  include ::ActionView::Helpers::AssetTagHelper
   include ::ActionView::Helpers::AssetUrlHelper
   include ::ActionView::Helpers::AtomFeedHelper
   include ::ActionView::Helpers::CacheHelper
@@ -8381,11 +8095,17 @@ class ActionView::Base
   include ::ActionView::Helpers::DebugHelper
   include ::ActionView::Helpers::FormOptionsHelper
   include ::ActionView::Helpers::SanitizeHelper
+  include ::ActionView::Helpers::TagHelper
+  include ::ActionView::Helpers::CaptureHelper
   include ::ActionView::Helpers::TextHelper
+  include ::ActionView::Helpers::OutputSafetyHelper
   include ::ActionView::Helpers::JavaScriptHelper
   include ::ActionView::Helpers::NumberHelper
   include ::ActionView::Helpers::RenderingHelper
-  include ::Sprockets::Rails::Utils
+  include ::ActionCable::Helpers::ActionCableHelper
+  include ::ViewComponent::RenderComponentHelper
+  include ::Devise::Controllers::UrlHelpers
+  include ::Webpacker::Helper
   include ::ViewComponent::RenderMonkeyPatch
   def _routes(); end
 
@@ -8394,30 +8114,6 @@ class ActionView::Base
   def _routes?(); end
 
   def _run(method, template, locals, buffer, &block); end
-
-  def assets_environment(); end
-
-  def assets_environment=(val); end
-
-  def assets_environment?(); end
-
-  def assets_manifest(); end
-
-  def assets_manifest=(val); end
-
-  def assets_manifest?(); end
-
-  def assets_precompile(); end
-
-  def assets_precompile=(val); end
-
-  def assets_precompile?(); end
-
-  def assets_prefix(); end
-
-  def assets_prefix=(val); end
-
-  def assets_prefix?(); end
 
   def assign(new_assigns); end
 
@@ -8429,23 +8125,11 @@ class ActionView::Base
 
   def automatically_disable_submit_tag=(obj); end
 
-  def check_precompiled_asset(); end
-
-  def check_precompiled_asset=(val); end
-
-  def check_precompiled_asset?(); end
-
   def compiled_method_container(); end
 
   def config(); end
 
   def config=(config); end
-
-  def debug_assets(); end
-
-  def debug_assets=(val); end
-
-  def debug_assets?(); end
 
   def debug_missing_translation(); end
 
@@ -8454,12 +8138,6 @@ class ActionView::Base
   def default_formats(); end
 
   def default_formats=(obj); end
-
-  def digest_assets(); end
-
-  def digest_assets=(val); end
-
-  def digest_assets?(); end
 
   def field_error_proc(); end
 
@@ -8483,12 +8161,6 @@ class ActionView::Base
 
   def lookup_context(); end
 
-  def precompiled_asset_checker(); end
-
-  def precompiled_asset_checker=(val); end
-
-  def precompiled_asset_checker?(); end
-
   def prefix_partial_path_with_controller_namespace(); end
 
   def prefix_partial_path_with_controller_namespace=(obj); end
@@ -8497,21 +8169,9 @@ class ActionView::Base
 
   def raise_on_missing_translations=(obj); end
 
-  def resolve_assets_with(); end
-
-  def resolve_assets_with=(val); end
-
-  def resolve_assets_with?(); end
-
   def streaming_completion_on_exception(); end
 
   def streaming_completion_on_exception=(obj); end
-
-  def unknown_asset_fallback(); end
-
-  def unknown_asset_fallback=(val); end
-
-  def unknown_asset_fallback?(); end
 
   def view_paths(*_, &_1); end
 
@@ -8528,30 +8188,6 @@ class ActionView::Base
 
   def self._routes?(); end
 
-  def self.assets_environment(); end
-
-  def self.assets_environment=(val); end
-
-  def self.assets_environment?(); end
-
-  def self.assets_manifest(); end
-
-  def self.assets_manifest=(val); end
-
-  def self.assets_manifest?(); end
-
-  def self.assets_precompile(); end
-
-  def self.assets_precompile=(val); end
-
-  def self.assets_precompile?(); end
-
-  def self.assets_prefix(); end
-
-  def self.assets_prefix=(val); end
-
-  def self.assets_prefix?(); end
-
   def self.automatically_disable_submit_tag(); end
 
   def self.automatically_disable_submit_tag=(obj); end
@@ -8564,18 +8200,6 @@ class ActionView::Base
 
   def self.changed?(other); end
 
-  def self.check_precompiled_asset(); end
-
-  def self.check_precompiled_asset=(val); end
-
-  def self.check_precompiled_asset?(); end
-
-  def self.debug_assets(); end
-
-  def self.debug_assets=(val); end
-
-  def self.debug_assets?(); end
-
   def self.debug_missing_translation(); end
 
   def self.debug_missing_translation=(obj); end
@@ -8587,12 +8211,6 @@ class ActionView::Base
   def self.default_formats(); end
 
   def self.default_formats=(obj); end
-
-  def self.digest_assets(); end
-
-  def self.digest_assets=(val); end
-
-  def self.digest_assets?(); end
 
   def self.empty(); end
 
@@ -8608,12 +8226,6 @@ class ActionView::Base
 
   def self.logger?(); end
 
-  def self.precompiled_asset_checker(); end
-
-  def self.precompiled_asset_checker=(val); end
-
-  def self.precompiled_asset_checker?(); end
-
   def self.prefix_partial_path_with_controller_namespace(); end
 
   def self.prefix_partial_path_with_controller_namespace=(obj); end
@@ -8622,21 +8234,9 @@ class ActionView::Base
 
   def self.raise_on_missing_translations=(obj); end
 
-  def self.resolve_assets_with(); end
-
-  def self.resolve_assets_with=(val); end
-
-  def self.resolve_assets_with?(); end
-
   def self.streaming_completion_on_exception(); end
 
   def self.streaming_completion_on_exception=(obj); end
-
-  def self.unknown_asset_fallback(); end
-
-  def self.unknown_asset_fallback=(val); end
-
-  def self.unknown_asset_fallback?(); end
 
   def self.with_context(context, assigns=T.unsafe(nil), controller=T.unsafe(nil)); end
 
@@ -9125,8 +8725,6 @@ module ActionView::Helpers::FormHelper
   def radio_button(object_name, method, tag_value, options=T.unsafe(nil)); end
 
   def range_field(object_name, method, options=T.unsafe(nil)); end
-
-  def rich_text_area(object_name, method, options=T.unsafe(nil)); end
 
   def search_field(object_name, method, options=T.unsafe(nil)); end
 
@@ -11214,6 +10812,72 @@ module ActiveModel::AttributeMethods
   NAME_COMPILABLE_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
+module ActiveModel::AttributeMethods::AttrNames
+  DEF_SAFE_NAME = ::T.let(nil, ::T.untyped)
+end
+
+module ActiveModel::AttributeMethods::AttrNames
+  def self.define_attribute_accessor_method(mod, attr_name, writer: T.unsafe(nil)); end
+end
+
+module ActiveModel::AttributeMethods::ClassMethods
+  def alias_attribute(new_name, old_name); end
+
+  def attribute_alias(name); end
+
+  def attribute_alias?(new_name); end
+
+  def attribute_method_affix(*affixes); end
+
+  def attribute_method_prefix(*prefixes); end
+
+  def attribute_method_suffix(*suffixes); end
+
+  def define_attribute_method(attr_name); end
+
+  def define_attribute_methods(*attr_names); end
+
+  def undefine_attribute_methods(); end
+end
+
+class ActiveModel::AttributeMethods::ClassMethods::AttributeMethodMatcher
+  def initialize(options=T.unsafe(nil)); end
+
+  def match(method_name); end
+
+  def method_name(attr_name); end
+
+  def plain?(); end
+
+  def prefix(); end
+
+  def suffix(); end
+
+  def target(); end
+end
+
+class ActiveModel::AttributeMethods::ClassMethods::AttributeMethodMatcher::AttributeMethodMatch
+  def attr_name(); end
+
+  def attr_name=(_); end
+
+  def target(); end
+
+  def target=(_); end
+end
+
+class ActiveModel::AttributeMethods::ClassMethods::AttributeMethodMatcher::AttributeMethodMatch
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+class ActiveModel::AttributeMethods::ClassMethods::AttributeMethodMatcher
+end
+
+module ActiveModel::AttributeMethods::ClassMethods
+end
+
 module ActiveModel::AttributeMethods
   extend ::ActiveSupport::Concern
 end
@@ -11667,6 +11331,20 @@ module ActiveModel::SecurePassword
   MAX_PASSWORD_LENGTH_ALLOWED = ::T.let(nil, ::T.untyped)
 end
 
+module ActiveModel::SecurePassword::ClassMethods
+  def has_secure_password(attribute=T.unsafe(nil), validations: T.unsafe(nil)); end
+end
+
+module ActiveModel::SecurePassword::ClassMethods
+end
+
+class ActiveModel::SecurePassword::InstanceMethodsOnActivation
+  def initialize(attribute); end
+end
+
+class ActiveModel::SecurePassword::InstanceMethodsOnActivation
+end
+
 module ActiveModel::SecurePassword
   extend ::ActiveSupport::Concern
   def self.min_cost(); end
@@ -11964,6 +11642,13 @@ module ActiveModel::Validations
   def validates_with(*args, &block); end
 end
 
+class ActiveModel::Validations::AbsenceValidator
+  def validate_each(record, attr_name, value); end
+end
+
+class ActiveModel::Validations::AbsenceValidator
+end
+
 module ActiveModel::Validations::Callbacks
 end
 
@@ -11991,6 +11676,22 @@ module ActiveModel::Validations::HelperMethods
   def validates_presence_of(*attr_names); end
 
   def validates_size_of(*attr_names); end
+end
+
+class ActiveModel::Validations::LengthValidator
+  CHECKS = ::T.let(nil, ::T.untyped)
+  MESSAGES = ::T.let(nil, ::T.untyped)
+  RESERVED_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveModel::Validations::LengthValidator
+end
+
+class ActiveModel::Validations::PresenceValidator
+  def validate_each(record, attr_name, value); end
+end
+
+class ActiveModel::Validations::PresenceValidator
 end
 
 module ActiveModel::Validations
@@ -12078,6 +11779,749 @@ module ActiveRecord::Associations
   def reload(*_); end
 end
 
+class ActiveRecord::Associations::AliasTracker
+  def aliased_table_for(table_name, aliased_name, type_caster); end
+
+  def aliases(); end
+
+  def initialize(connection, aliases); end
+end
+
+class ActiveRecord::Associations::AliasTracker
+  def self.create(connection, initial_table, joins); end
+
+  def self.initial_count_for(connection, name, table_joins); end
+end
+
+class ActiveRecord::Associations::Association
+  def create(attributes=T.unsafe(nil), &block); end
+
+  def create!(attributes=T.unsafe(nil), &block); end
+
+  def extensions(); end
+
+  def initialize(owner, reflection); end
+
+  def initialize_attributes(record, except_from_scope_attributes=T.unsafe(nil)); end
+
+  def inversed_from(record); end
+
+  def inversed_from_queries(record); end
+
+  def klass(); end
+
+  def load_target(); end
+
+  def loaded!(); end
+
+  def loaded?(); end
+
+  def marshal_dump(); end
+
+  def marshal_load(data); end
+
+  def options(*_, &_1); end
+
+  def owner(); end
+
+  def reflection(); end
+
+  def reload(force=T.unsafe(nil)); end
+
+  def remove_inverse_instance(record); end
+
+  def reset(); end
+
+  def reset_scope(); end
+
+  def scope(); end
+
+  def set_inverse_instance(record); end
+
+  def set_inverse_instance_from_queries(record); end
+
+  def stale_target?(); end
+
+  def target(); end
+
+  def target=(target); end
+end
+
+class ActiveRecord::Associations::Association
+end
+
+class ActiveRecord::Associations::AssociationScope
+  def initialize(value_transformation); end
+
+  def scope(association); end
+  INSTANCE = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Associations::AssociationScope::ReflectionProxy
+  def aliased_table(); end
+
+  def all_includes(); end
+
+  def initialize(reflection, aliased_table); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Associations::AssociationScope::ReflectionProxy
+end
+
+class ActiveRecord::Associations::AssociationScope
+  def self.create(&block); end
+
+  def self.get_bind_values(owner, chain); end
+
+  def self.scope(association); end
+end
+
+class ActiveRecord::Associations::BelongsToAssociation
+  def decrement_counters(); end
+
+  def decrement_counters_before_last_save(); end
+
+  def default(&block); end
+
+  def handle_dependency(); end
+
+  def increment_counters(); end
+
+  def target_changed?(); end
+
+  def updated?(); end
+end
+
+class ActiveRecord::Associations::BelongsToAssociation
+end
+
+class ActiveRecord::Associations::BelongsToPolymorphicAssociation
+end
+
+class ActiveRecord::Associations::BelongsToPolymorphicAssociation
+end
+
+module ActiveRecord::Associations::Builder
+end
+
+class ActiveRecord::Associations::Builder::Association
+  VALID_OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Associations::Builder::Association
+  def self.build(model, name, scope, options, &block); end
+
+  def self.create_reflection(model, name, scope, options, &block); end
+
+  def self.extensions(); end
+
+  def self.extensions=(extensions); end
+end
+
+class ActiveRecord::Associations::Builder::BelongsTo
+end
+
+class ActiveRecord::Associations::Builder::BelongsTo
+  def self.touch_record(o, changes, foreign_key, name, touch, touch_method); end
+end
+
+class ActiveRecord::Associations::Builder::CollectionAssociation
+  CALLBACKS = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Associations::Builder::CollectionAssociation
+end
+
+class ActiveRecord::Associations::Builder::HasAndBelongsToMany
+  def association_name(); end
+
+  def initialize(association_name, lhs_model, options); end
+
+  def lhs_model(); end
+
+  def middle_reflection(join_model); end
+
+  def options(); end
+
+  def through_model(); end
+end
+
+class ActiveRecord::Associations::Builder::HasAndBelongsToMany
+end
+
+class ActiveRecord::Associations::Builder::HasMany
+end
+
+class ActiveRecord::Associations::Builder::HasMany
+end
+
+class ActiveRecord::Associations::Builder::HasOne
+end
+
+class ActiveRecord::Associations::Builder::HasOne
+  def self.touch_record(o, name, touch); end
+end
+
+class ActiveRecord::Associations::Builder::SingularAssociation
+end
+
+class ActiveRecord::Associations::Builder::SingularAssociation
+end
+
+module ActiveRecord::Associations::Builder
+end
+
+class ActiveRecord::Associations::CollectionAssociation
+  def add_to_target(record, skip_callbacks=T.unsafe(nil), &block); end
+
+  def build(attributes=T.unsafe(nil), &block); end
+
+  def concat(*records); end
+
+  def delete(*records); end
+
+  def delete_all(dependent=T.unsafe(nil)); end
+
+  def destroy(*records); end
+
+  def destroy_all(); end
+
+  def empty?(); end
+
+  def find(*args); end
+
+  def find_from_target?(); end
+
+  def ids_reader(); end
+
+  def ids_writer(ids); end
+
+  def include?(record); end
+
+  def null_scope?(); end
+
+  def reader(); end
+
+  def replace(other_array); end
+
+  def size(); end
+
+  def transaction(*args); end
+
+  def writer(records); end
+end
+
+class ActiveRecord::Associations::CollectionAssociation
+end
+
+class ActiveRecord::Associations::CollectionProxy
+  def <<(*records); end
+
+  def _select!(*_, &_1); end
+
+  def annotate(*_, &_1); end
+
+  def annotate!(*_, &_1); end
+
+  def annotate_values(*_, &_1); end
+
+  def annotate_values=(arg); end
+
+  def append(*records); end
+
+  def arel(*_, &_1); end
+
+  def clear(); end
+
+  def concat(*records); end
+
+  def construct_join_dependency(*_, &_1); end
+
+  def create_with(*_, &_1); end
+
+  def create_with!(*_, &_1); end
+
+  def create_with_value(*_, &_1); end
+
+  def create_with_value=(arg); end
+
+  def delete(*records); end
+
+  def delete_all(dependent=T.unsafe(nil)); end
+
+  def destroy(*records); end
+
+  def distinct(*_, &_1); end
+
+  def distinct!(*_, &_1); end
+
+  def distinct_value(*_, &_1); end
+
+  def distinct_value=(arg); end
+
+  def eager_load(*_, &_1); end
+
+  def eager_load!(*_, &_1); end
+
+  def eager_load_values(*_, &_1); end
+
+  def eager_load_values=(arg); end
+
+  def except(*_, &_1); end
+
+  def extending(*_, &_1); end
+
+  def extending!(*_, &_1); end
+
+  def extending_values(*_, &_1); end
+
+  def extending_values=(arg); end
+
+  def extensions(*_, &_1); end
+
+  def extract_associated(*_, &_1); end
+
+  def from(*_, &_1); end
+
+  def from!(*_, &_1); end
+
+  def from_clause(*_, &_1); end
+
+  def from_clause=(arg); end
+
+  def group(*_, &_1); end
+
+  def group!(*_, &_1); end
+
+  def group_values(*_, &_1); end
+
+  def group_values=(arg); end
+
+  def having(*_, &_1); end
+
+  def having!(*_, &_1); end
+
+  def having_clause(*_, &_1); end
+
+  def having_clause=(arg); end
+
+  def include?(record); end
+
+  def includes(*_, &_1); end
+
+  def includes!(*_, &_1); end
+
+  def includes_values(*_, &_1); end
+
+  def includes_values=(arg); end
+
+  def initialize(klass, association, **_); end
+
+  def joins(*_, &_1); end
+
+  def joins!(*_, &_1); end
+
+  def joins_values(*_, &_1); end
+
+  def joins_values=(arg); end
+
+  def left_joins(*_, &_1); end
+
+  def left_outer_joins(*_, &_1); end
+
+  def left_outer_joins!(*_, &_1); end
+
+  def left_outer_joins_values(*_, &_1); end
+
+  def left_outer_joins_values=(arg); end
+
+  def limit(*_, &_1); end
+
+  def limit!(*_, &_1); end
+
+  def limit_value(*_, &_1); end
+
+  def limit_value=(arg); end
+
+  def load_target(); end
+
+  def lock(*_, &_1); end
+
+  def lock!(*_, &_1); end
+
+  def lock_value(*_, &_1); end
+
+  def lock_value=(arg); end
+
+  def merge(*_, &_1); end
+
+  def merge!(*_, &_1); end
+
+  def none(*_, &_1); end
+
+  def none!(*_, &_1); end
+
+  def offset(*_, &_1); end
+
+  def offset!(*_, &_1); end
+
+  def offset_value(*_, &_1); end
+
+  def offset_value=(arg); end
+
+  def only(*_, &_1); end
+
+  def optimizer_hints(*_, &_1); end
+
+  def optimizer_hints!(*_, &_1); end
+
+  def optimizer_hints_values(*_, &_1); end
+
+  def optimizer_hints_values=(arg); end
+
+  def or(*_, &_1); end
+
+  def or!(*_, &_1); end
+
+  def order(*_, &_1); end
+
+  def order!(*_, &_1); end
+
+  def order_values(*_, &_1); end
+
+  def order_values=(arg); end
+
+  def preload(*_, &_1); end
+
+  def preload!(*_, &_1); end
+
+  def preload_values(*_, &_1); end
+
+  def preload_values=(arg); end
+
+  def prepend(*args); end
+
+  def proxy_association(); end
+
+  def push(*records); end
+
+  def readonly(*_, &_1); end
+
+  def readonly!(*_, &_1); end
+
+  def readonly_value(*_, &_1); end
+
+  def readonly_value=(arg); end
+
+  def references(*_, &_1); end
+
+  def references!(*_, &_1); end
+
+  def references_values(*_, &_1); end
+
+  def references_values=(arg); end
+
+  def reorder(*_, &_1); end
+
+  def reorder!(*_, &_1); end
+
+  def reordering_value(*_, &_1); end
+
+  def reordering_value=(arg); end
+
+  def replace(other_array); end
+
+  def reselect(*_, &_1); end
+
+  def reselect!(*_, &_1); end
+
+  def reset_scope(); end
+
+  def reverse_order(*_, &_1); end
+
+  def reverse_order!(*_, &_1); end
+
+  def reverse_order_value(*_, &_1); end
+
+  def reverse_order_value=(arg); end
+
+  def rewhere(*_, &_1); end
+
+  def scope(); end
+
+  def scoping(*_, &_1); end
+
+  def select_values(*_, &_1); end
+
+  def select_values=(arg); end
+
+  def skip_preloading!(*_, &_1); end
+
+  def skip_query_cache!(*_, &_1); end
+
+  def skip_query_cache_value(*_, &_1); end
+
+  def skip_query_cache_value=(arg); end
+
+  def spawn(*_, &_1); end
+
+  def target(); end
+
+  def unscope(*_, &_1); end
+
+  def unscope!(*_, &_1); end
+
+  def unscope_values(*_, &_1); end
+
+  def unscope_values=(arg); end
+
+  def values(*_, &_1); end
+
+  def where(*_, &_1); end
+
+  def where!(*_, &_1); end
+
+  def where_clause(*_, &_1); end
+
+  def where_clause=(arg); end
+end
+
+class ActiveRecord::Associations::CollectionProxy
+end
+
+module ActiveRecord::Associations::ForeignAssociation
+  def foreign_key_present?(); end
+
+  def nullified_owner_attributes(); end
+end
+
+module ActiveRecord::Associations::ForeignAssociation
+end
+
+class ActiveRecord::Associations::HasManyAssociation
+  include ::ActiveRecord::Associations::ForeignAssociation
+  def handle_dependency(); end
+
+  def insert_record(record, validate=T.unsafe(nil), raise=T.unsafe(nil)); end
+end
+
+class ActiveRecord::Associations::HasManyAssociation
+end
+
+class ActiveRecord::Associations::HasManyThroughAssociation
+  include ::ActiveRecord::Associations::ThroughAssociation
+end
+
+class ActiveRecord::Associations::HasManyThroughAssociation
+end
+
+class ActiveRecord::Associations::HasOneAssociation
+  include ::ActiveRecord::Associations::ForeignAssociation
+  def delete(method=T.unsafe(nil)); end
+
+  def handle_dependency(); end
+end
+
+class ActiveRecord::Associations::HasOneAssociation
+end
+
+class ActiveRecord::Associations::HasOneThroughAssociation
+  include ::ActiveRecord::Associations::ThroughAssociation
+end
+
+class ActiveRecord::Associations::HasOneThroughAssociation
+end
+
+class ActiveRecord::Associations::JoinDependency
+  def apply_column_aliases(relation); end
+
+  def base_klass(); end
+
+  def initialize(base, table, associations, join_type); end
+
+  def instantiate(result_set, &block); end
+
+  def join_constraints(joins_to_add, alias_tracker); end
+
+  def join_root(); end
+
+  def join_type(); end
+
+  def reflections(); end
+end
+
+class ActiveRecord::Associations::JoinDependency::Aliases
+  def column_alias(node, column); end
+
+  def column_aliases(node); end
+
+  def columns(); end
+
+  def initialize(tables); end
+end
+
+class ActiveRecord::Associations::JoinDependency::Aliases::Column
+  def alias(); end
+
+  def alias=(_); end
+
+  def name(); end
+
+  def name=(_); end
+end
+
+class ActiveRecord::Associations::JoinDependency::Aliases::Column
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+class ActiveRecord::Associations::JoinDependency::Aliases::Table
+  def column_aliases(); end
+
+  def columns(); end
+
+  def columns=(_); end
+
+  def node(); end
+
+  def node=(_); end
+end
+
+class ActiveRecord::Associations::JoinDependency::Aliases::Table
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+class ActiveRecord::Associations::JoinDependency::Aliases
+end
+
+class ActiveRecord::Associations::JoinDependency::JoinAssociation
+  def initialize(reflection, children); end
+
+  def join_constraints(foreign_table, foreign_klass, join_type, alias_tracker); end
+
+  def readonly?(); end
+
+  def reflection(); end
+
+  def table=(table); end
+
+  def tables(); end
+
+  def tables=(tables); end
+end
+
+class ActiveRecord::Associations::JoinDependency::JoinAssociation
+end
+
+class ActiveRecord::Associations::JoinDependency::JoinBase
+  def initialize(base_klass, table, children); end
+end
+
+class ActiveRecord::Associations::JoinDependency::JoinBase
+end
+
+class ActiveRecord::Associations::JoinDependency::JoinPart
+  include ::Enumerable
+  def base_klass(); end
+
+  def children(); end
+
+  def column_names(*_, &_1); end
+
+  def each(&block); end
+
+  def each_children(&block); end
+
+  def extract_record(row, column_names_with_alias); end
+
+  def initialize(base_klass, children); end
+
+  def instantiate(row, aliases, &block); end
+
+  def match?(other); end
+
+  def primary_key(*_, &_1); end
+
+  def table(); end
+
+  def table_name(*_, &_1); end
+end
+
+class ActiveRecord::Associations::JoinDependency::JoinPart
+end
+
+class ActiveRecord::Associations::JoinDependency
+  def self.make_tree(associations); end
+
+  def self.walk_tree(associations, hash); end
+end
+
+class ActiveRecord::Associations::Preloader
+  def preload(records, associations, preload_scope=T.unsafe(nil)); end
+end
+
+class ActiveRecord::Associations::Preloader::AlreadyLoaded
+  def initialize(klass, owners, reflection, preload_scope); end
+
+  def preloaded_records(); end
+
+  def records_by_owner(); end
+
+  def run(); end
+end
+
+class ActiveRecord::Associations::Preloader::AlreadyLoaded
+end
+
+class ActiveRecord::Associations::Preloader::Association
+  def initialize(klass, owners, reflection, preload_scope); end
+
+  def preloaded_records(); end
+
+  def records_by_owner(); end
+
+  def run(); end
+end
+
+class ActiveRecord::Associations::Preloader::Association
+end
+
+class ActiveRecord::Associations::Preloader::ThroughAssociation
+  def initialize(*_); end
+  PRELOADER = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Associations::Preloader::ThroughAssociation
+end
+
+class ActiveRecord::Associations::Preloader
+  extend ::ActiveSupport::Autoload
+end
+
+class ActiveRecord::Associations::SingularAssociation
+  def build(attributes=T.unsafe(nil), &block); end
+
+  def force_reload_reader(); end
+
+  def reader(); end
+
+  def writer(record); end
+end
+
+class ActiveRecord::Associations::SingularAssociation
+end
+
+module ActiveRecord::Associations::ThroughAssociation
+  def source_reflection(*_, &_1); end
+end
+
+module ActiveRecord::Associations::ThroughAssociation
+end
+
 module ActiveRecord::Associations
   extend ::ActiveSupport::Autoload
   extend ::ActiveSupport::Concern
@@ -12100,6 +12544,28 @@ class ActiveRecord::AttributeAssignmentError
 end
 
 module ActiveRecord::AttributeDecorators
+end
+
+module ActiveRecord::AttributeDecorators::ClassMethods
+  def decorate_attribute_type(column_name, decorator_name, &block); end
+
+  def decorate_matching_attribute_types(matcher, decorator_name, &block); end
+end
+
+module ActiveRecord::AttributeDecorators::ClassMethods
+end
+
+class ActiveRecord::AttributeDecorators::TypeDecorator
+  def apply(name, type); end
+
+  def clear(*_, &_1); end
+
+  def initialize(decorations=T.unsafe(nil)); end
+
+  def merge(*args); end
+end
+
+class ActiveRecord::AttributeDecorators::TypeDecorator
 end
 
 module ActiveRecord::AttributeDecorators
@@ -12137,6 +12603,37 @@ module ActiveRecord::AttributeMethods::BeforeTypeCast
   extend ::ActiveSupport::Concern
 end
 
+module ActiveRecord::AttributeMethods::ClassMethods
+  def attribute_method?(attribute); end
+
+  def attribute_names(); end
+
+  def class_method_defined_within?(name, klass, superklass=T.unsafe(nil)); end
+
+  def column_for_attribute(name); end
+
+  def dangerous_attribute_method?(name); end
+
+  def dangerous_class_method?(method_name); end
+
+  def define_attribute_methods(); end
+
+  def has_attribute?(attr_name); end
+
+  def inherited(child_class); end
+
+  def initialize_generated_modules(); end
+
+  def instance_method_already_implemented?(method_name); end
+
+  def method_defined_within?(name, klass, superklass=T.unsafe(nil)); end
+
+  def undefine_attribute_methods(); end
+end
+
+module ActiveRecord::AttributeMethods::ClassMethods
+end
+
 module ActiveRecord::AttributeMethods::Dirty
   def attribute_before_last_save(attr_name); end
 
@@ -12165,6 +12662,22 @@ end
 
 module ActiveRecord::AttributeMethods::Dirty
   extend ::ActiveSupport::Concern
+end
+
+class ActiveRecord::AttributeMethods::GeneratedAttributeMethods
+  include ::Mutex_m
+  def lock(); end
+
+  def locked?(); end
+
+  def synchronize(&block); end
+
+  def try_lock(); end
+
+  def unlock(); end
+end
+
+class ActiveRecord::AttributeMethods::GeneratedAttributeMethods
 end
 
 module ActiveRecord::AttributeMethods::PrimaryKey
@@ -12234,6 +12747,17 @@ end
 module ActiveRecord::Attributes
 end
 
+module ActiveRecord::Attributes::ClassMethods
+  def attribute(name, cast_type=T.unsafe(nil), **options); end
+
+  def define_attribute(name, cast_type, default: T.unsafe(nil), user_provided_default: T.unsafe(nil)); end
+
+  def load_schema!(); end
+end
+
+module ActiveRecord::Attributes::ClassMethods
+end
+
 module ActiveRecord::Attributes
   extend ::ActiveSupport::Concern
 end
@@ -12250,6 +12774,21 @@ module ActiveRecord::AutosaveAssociation
   def marked_for_destruction?(); end
 
   def reload(options=T.unsafe(nil)); end
+end
+
+module ActiveRecord::AutosaveAssociation::AssociationBuilderExtension
+end
+
+module ActiveRecord::AutosaveAssociation::AssociationBuilderExtension
+  def self.build(model, reflection); end
+
+  def self.valid_options(); end
+end
+
+module ActiveRecord::AutosaveAssociation::ClassMethods
+end
+
+module ActiveRecord::AutosaveAssociation::ClassMethods
 end
 
 module ActiveRecord::AutosaveAssociation
@@ -12297,7 +12836,6 @@ class ActiveRecord::Base
   include ::GlobalID::Identification
   include ::ActiveStorage::Attached::Model
   include ::ActiveStorage::Reflection::ActiveRecordExtensions
-  include ::ActionText::Attribute
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -12504,6 +13042,8 @@ module ActiveRecord::Base::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
+ActiveRecord::Base::OrmAdapter = OrmAdapter::ActiveRecord
+
 class ActiveRecord::Base
   extend ::ActiveSupport::Benchmarkable
   extend ::ActiveSupport::DescendantsTracker
@@ -12518,8 +13058,29 @@ class ActiveRecord::Base
   extend ::ActiveRecord::Enum
   extend ::ActiveRecord::Delegation::DelegateCache
   extend ::ActiveRecord::Aggregations::ClassMethods
-  extend ::ActiveModel::Callbacks
+  extend ::ActiveRecord::Core::ClassMethods
+  extend ::ActiveRecord::ReadonlyAttributes::ClassMethods
+  extend ::ActiveRecord::Scoping::ClassMethods
+  extend ::ActiveRecord::Integration::ClassMethods
   extend ::ActiveModel::Validations::HelperMethods
+  extend ::ActiveRecord::Validations::ClassMethods
+  extend ::ActiveRecord::CounterCache::ClassMethods
+  extend ::ActiveRecord::Attributes::ClassMethods
+  extend ::ActiveRecord::AttributeDecorators::ClassMethods
+  extend ::ActiveRecord::DefineCallbacks::ClassMethods
+  extend ::ActiveModel::Callbacks
+  extend ::ActiveModel::AttributeMethods::ClassMethods
+  extend ::ActiveRecord::AttributeMethods::ClassMethods
+  extend ::ActiveRecord::Timestamp::ClassMethods
+  extend ::ActiveModel::SecurePassword::ClassMethods
+  extend ::ActiveRecord::AutosaveAssociation::ClassMethods
+  extend ::ActiveRecord::NoTouching::ClassMethods
+  extend ::ActiveRecord::Reflection::ClassMethods
+  extend ::ActiveRecord::Store::ClassMethods
+  extend ::ActiveRecord::SecureToken::ClassMethods
+  extend ::ActiveRecord::Suppressor::ClassMethods
+  extend ::OrmAdapter::ToAdapter
+  extend ::Devise::Models
   def self.__callbacks(); end
 
   def self.__callbacks=(val); end
@@ -15174,11 +15735,61 @@ module ActiveRecord::Core
   def slice(*methods); end
 end
 
+module ActiveRecord::Core::ClassMethods
+  def ===(object); end
+
+  def _internal?(); end
+
+  def arel_attribute(name, table=T.unsafe(nil)); end
+
+  def arel_table(); end
+
+  def filter_attributes(); end
+
+  def filter_attributes=(filter_attributes); end
+
+  def find(*ids); end
+
+  def find_by(*args); end
+
+  def find_by!(*args); end
+
+  def generated_association_methods(); end
+
+  def inherited(child_class); end
+
+  def initialize_find_by_cache(); end
+
+  def initialize_generated_modules(); end
+
+  def inspect(); end
+
+  def predicate_builder(); end
+
+  def type_caster(); end
+end
+
+module ActiveRecord::Core::ClassMethods
+end
+
 module ActiveRecord::Core
   extend ::ActiveSupport::Concern
 end
 
 module ActiveRecord::CounterCache
+end
+
+module ActiveRecord::CounterCache::ClassMethods
+  def decrement_counter(counter_name, id, touch: T.unsafe(nil)); end
+
+  def increment_counter(counter_name, id, touch: T.unsafe(nil)); end
+
+  def reset_counters(id, *counters, touch: T.unsafe(nil)); end
+
+  def update_counters(id, counters); end
+end
+
+module ActiveRecord::CounterCache::ClassMethods
 end
 
 module ActiveRecord::CounterCache
@@ -15260,6 +15871,13 @@ class ActiveRecord::DatabaseConfigurations
 end
 
 module ActiveRecord::DefineCallbacks
+end
+
+module ActiveRecord::DefineCallbacks::ClassMethods
+  include ::ActiveModel::Callbacks
+end
+
+module ActiveRecord::DefineCallbacks::ClassMethods
 end
 
 module ActiveRecord::DefineCallbacks
@@ -15542,191 +16160,6 @@ end
 module ActiveRecord::FinderMethods
 end
 
-class ActiveRecord::Fixture
-  include ::Enumerable
-  def [](key); end
-
-  def class_name(); end
-
-  def each(&blk); end
-
-  def find(); end
-
-  def fixture(); end
-
-  def initialize(fixture, model_class); end
-
-  def model_class(); end
-
-  def to_hash(); end
-end
-
-class ActiveRecord::Fixture::FixtureError
-end
-
-class ActiveRecord::Fixture::FixtureError
-end
-
-class ActiveRecord::Fixture::FormatError
-end
-
-class ActiveRecord::Fixture::FormatError
-end
-
-class ActiveRecord::Fixture
-end
-
-class ActiveRecord::FixtureSet
-  def [](x); end
-
-  def []=(k, v); end
-
-  def all_loaded_fixtures(); end
-
-  def all_loaded_fixtures=(obj); end
-
-  def config(); end
-
-  def each(&block); end
-
-  def fixtures(); end
-
-  def initialize(_, name, class_name, path, config=T.unsafe(nil)); end
-
-  def model_class(); end
-
-  def name(); end
-
-  def size(); end
-
-  def table_name(); end
-
-  def table_rows(); end
-  MAX_ID = ::T.let(nil, ::T.untyped)
-end
-
-class ActiveRecord::FixtureSet::ClassCache
-  def [](fs_name); end
-
-  def initialize(class_names, config); end
-end
-
-class ActiveRecord::FixtureSet::ClassCache
-end
-
-class ActiveRecord::FixtureSet::File
-  include ::Enumerable
-  def each(&block); end
-
-  def initialize(file); end
-
-  def model_class(); end
-end
-
-class ActiveRecord::FixtureSet::File
-  def self.open(file); end
-end
-
-class ActiveRecord::FixtureSet::ModelMetadata
-  def has_primary_key_column?(); end
-
-  def inheritance_column_name(); end
-
-  def initialize(model_class); end
-
-  def primary_key_name(); end
-
-  def primary_key_type(); end
-
-  def timestamp_column_names(); end
-end
-
-class ActiveRecord::FixtureSet::ModelMetadata
-end
-
-class ActiveRecord::FixtureSet::RenderContext
-end
-
-class ActiveRecord::FixtureSet::RenderContext
-  def self.create_subclass(); end
-end
-
-class ActiveRecord::FixtureSet::TableRow
-  def initialize(fixture, table_rows:, label:, now:); end
-
-  def to_hash(); end
-end
-
-class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy
-  def lhs_key(); end
-
-  def rhs_key(); end
-end
-
-class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy
-end
-
-class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
-  def initialize(association); end
-
-  def join_table(); end
-
-  def name(); end
-
-  def primary_key_type(); end
-end
-
-class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
-end
-
-class ActiveRecord::FixtureSet::TableRow
-end
-
-class ActiveRecord::FixtureSet::TableRows
-  def initialize(table_name, model_class:, fixtures:, config:); end
-
-  def model_class(); end
-
-  def model_metadata(); end
-
-  def tables(); end
-
-  def to_hash(); end
-end
-
-class ActiveRecord::FixtureSet::TableRows
-end
-
-class ActiveRecord::FixtureSet
-  def self.all_loaded_fixtures(); end
-
-  def self.all_loaded_fixtures=(obj); end
-
-  def self.cache_fixtures(connection, fixtures_map); end
-
-  def self.cache_for_connection(connection); end
-
-  def self.cached_fixtures(connection, keys_to_fetch=T.unsafe(nil)); end
-
-  def self.context_class(); end
-
-  def self.create_fixtures(fixtures_directory, fixture_set_names, class_names=T.unsafe(nil), config=T.unsafe(nil), &block); end
-
-  def self.default_fixture_model_name(fixture_set_name, config=T.unsafe(nil)); end
-
-  def self.default_fixture_table_name(fixture_set_name, config=T.unsafe(nil)); end
-
-  def self.fixture_is_cached?(connection, table_name); end
-
-  def self.identify(label, column_type=T.unsafe(nil)); end
-
-  def self.instantiate_all_loaded_fixtures(object, load_instances=T.unsafe(nil)); end
-
-  def self.instantiate_fixtures(object, fixture_set, load_instances=T.unsafe(nil)); end
-
-  def self.reset_cache(); end
-end
-
 class ActiveRecord::HasManyThroughAssociationNotFoundError
   def initialize(owner_class_name=T.unsafe(nil), reflection=T.unsafe(nil)); end
 end
@@ -15761,6 +16194,28 @@ end
 
 class ActiveRecord::IllegalMigrationNameError
   def initialize(name=T.unsafe(nil)); end
+end
+
+module ActiveRecord::Inheritance::ClassMethods
+  def abstract_class?(); end
+
+  def base_class(); end
+
+  def base_class?(); end
+
+  def compute_type(type_name); end
+
+  def descends_from_active_record?(); end
+
+  def finder_needs_type_condition?(); end
+
+  def inherited(subclass); end
+
+  def new(attributes=T.unsafe(nil), &block); end
+
+  def polymorphic_name(); end
+
+  def sti_name(); end
 end
 
 module ActiveRecord::Inheritance
@@ -15833,6 +16288,15 @@ module ActiveRecord::Integration
   def cache_version(); end
 
   def to_param(); end
+end
+
+module ActiveRecord::Integration::ClassMethods
+  def collection_cache_key(collection=T.unsafe(nil), timestamp_column=T.unsafe(nil)); end
+
+  def to_param(method_name=T.unsafe(nil)); end
+end
+
+module ActiveRecord::Integration::ClassMethods
 end
 
 module ActiveRecord::Integration
@@ -16463,6 +16927,36 @@ class ActiveRecord::MismatchedForeignKey
   def initialize(message: T.unsafe(nil), sql: T.unsafe(nil), binds: T.unsafe(nil), table: T.unsafe(nil), foreign_key: T.unsafe(nil), target_table: T.unsafe(nil), primary_key: T.unsafe(nil), primary_key_column: T.unsafe(nil)); end
 end
 
+module ActiveRecord::ModelSchema::ClassMethods
+  def _default_attributes(); end
+
+  def attribute_types(); end
+
+  def attributes_builder(); end
+
+  def column_names(); end
+
+  def full_table_name_prefix(); end
+
+  def full_table_name_suffix(); end
+
+  def initialize_load_schema_monitor(); end
+
+  def next_sequence_value(); end
+
+  def reset_column_information(); end
+
+  def reset_sequence_name(); end
+
+  def reset_table_name(); end
+
+  def symbol_column_to_string(name_symbol); end
+
+  def type_for_attribute(attr_name, &block); end
+
+  def yaml_encoder(); end
+end
+
 module ActiveRecord::ModelSchema
   extend ::ActiveSupport::Concern
   def self.derive_join_table_name(first_table, second_table); end
@@ -16479,6 +16973,16 @@ module ActiveRecord::NestedAttributes
   UNASSIGNABLE_KEYS = ::T.let(nil, ::T.untyped)
 end
 
+module ActiveRecord::NestedAttributes::ClassMethods
+  REJECT_ALL_BLANK_PROC = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::NestedAttributes::TooManyRecords
+end
+
+class ActiveRecord::NestedAttributes::TooManyRecords
+end
+
 module ActiveRecord::NestedAttributes
   extend ::ActiveSupport::Concern
 end
@@ -16493,6 +16997,13 @@ module ActiveRecord::NoTouching
   def touch(*_, **_1); end
 
   def touch_later(*_, **_1); end
+end
+
+module ActiveRecord::NoTouching::ClassMethods
+  def no_touching(&block); end
+end
+
+module ActiveRecord::NoTouching::ClassMethods
 end
 
 module ActiveRecord::NoTouching
@@ -16563,6 +17074,14 @@ module ActiveRecord::Persistence
   def destroy(); end
 
   def destroy!(); end
+end
+
+module ActiveRecord::Persistence::ClassMethods
+  def _delete_record(constraints); end
+
+  def _insert_record(values); end
+
+  def _update_record(values, constraints); end
 end
 
 module ActiveRecord::Persistence
@@ -17190,6 +17709,15 @@ end
 module ActiveRecord::ReadonlyAttributes
 end
 
+module ActiveRecord::ReadonlyAttributes::ClassMethods
+  def attr_readonly(*attributes); end
+
+  def readonly_attributes(); end
+end
+
+module ActiveRecord::ReadonlyAttributes::ClassMethods
+end
+
 module ActiveRecord::ReadonlyAttributes
   extend ::ActiveSupport::Concern
 end
@@ -17277,7 +17805,151 @@ class ActiveRecord::Reflection::AbstractReflection
   def through_reflection?(); end
 end
 
+class ActiveRecord::Reflection::AbstractReflection::JoinKeys
+  def foreign_key(); end
+
+  def foreign_key=(_); end
+
+  def key(); end
+
+  def key=(_); end
+end
+
+class ActiveRecord::Reflection::AbstractReflection::JoinKeys
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
 class ActiveRecord::Reflection::AbstractReflection
+end
+
+class ActiveRecord::Reflection::AggregateReflection
+  def mapping(); end
+end
+
+class ActiveRecord::Reflection::AggregateReflection
+end
+
+class ActiveRecord::Reflection::AssociationReflection
+  def active_record_primary_key(); end
+
+  def add_as_polymorphic_through(reflection, seed); end
+
+  def add_as_source(seed); end
+
+  def add_as_through(seed); end
+
+  def association_class(); end
+
+  def association_foreign_key(); end
+
+  def association_primary_key(klass=T.unsafe(nil)); end
+
+  def association_scope_cache(conn, owner, &block); end
+
+  def belongs_to?(); end
+
+  def check_eager_loadable!(); end
+
+  def check_preloadable!(); end
+
+  def check_validity!(); end
+
+  def clear_association_scope_cache(); end
+
+  def collect_join_chain(); end
+
+  def collection?(); end
+
+  def constructable?(); end
+
+  def extensions(); end
+
+  def foreign_key(); end
+
+  def foreign_type(); end
+
+  def has_inverse?(); end
+
+  def has_one?(); end
+
+  def has_scope?(); end
+
+  def join_id_for(owner); end
+
+  def join_table(); end
+
+  def macro(); end
+
+  def nested?(); end
+
+  def parent_reflection(); end
+
+  def parent_reflection=(parent_reflection); end
+
+  def polymorphic?(); end
+
+  def polymorphic_inverse_of(associated_class); end
+
+  def source_reflection(); end
+
+  def through_reflection(); end
+
+  def type(); end
+
+  def validate?(); end
+  INVALID_AUTOMATIC_INVERSE_OPTIONS = ::T.let(nil, ::T.untyped)
+  VALID_AUTOMATIC_INVERSE_MACROS = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Reflection::AssociationReflection
+end
+
+class ActiveRecord::Reflection::BelongsToReflection
+  def join_primary_key(klass=T.unsafe(nil)); end
+end
+
+class ActiveRecord::Reflection::BelongsToReflection
+end
+
+module ActiveRecord::Reflection::ClassMethods
+  def _reflect_on_association(association); end
+
+  def clear_reflections_cache(); end
+
+  def reflect_on_aggregation(aggregation); end
+
+  def reflect_on_all_aggregations(); end
+
+  def reflect_on_all_associations(macro=T.unsafe(nil)); end
+
+  def reflect_on_all_autosave_associations(); end
+
+  def reflect_on_association(association); end
+
+  def reflections(); end
+end
+
+module ActiveRecord::Reflection::ClassMethods
+end
+
+class ActiveRecord::Reflection::HasAndBelongsToManyReflection
+end
+
+class ActiveRecord::Reflection::HasAndBelongsToManyReflection
+end
+
+class ActiveRecord::Reflection::HasManyReflection
+end
+
+class ActiveRecord::Reflection::HasManyReflection
+end
+
+class ActiveRecord::Reflection::HasOneReflection
+end
+
+class ActiveRecord::Reflection::HasOneReflection
 end
 
 class ActiveRecord::Reflection::MacroReflection
@@ -17305,6 +17977,149 @@ class ActiveRecord::Reflection::MacroReflection
 end
 
 class ActiveRecord::Reflection::MacroReflection
+end
+
+class ActiveRecord::Reflection::PolymorphicReflection
+  def get_join_keys(*_, &_1); end
+
+  def initialize(reflection, previous_reflection); end
+
+  def klass(*_, &_1); end
+
+  def plural_name(*_, &_1); end
+
+  def scope(*_, &_1); end
+
+  def scope_for(*_, &_1); end
+
+  def type(*_, &_1); end
+end
+
+class ActiveRecord::Reflection::PolymorphicReflection
+end
+
+class ActiveRecord::Reflection::RuntimeReflection
+  def aliased_table(); end
+
+  def all_includes(); end
+
+  def constraints(*_, &_1); end
+
+  def get_join_keys(*_, &_1); end
+
+  def initialize(reflection, association); end
+
+  def klass(); end
+
+  def scope(*_, &_1); end
+
+  def type(*_, &_1); end
+end
+
+class ActiveRecord::Reflection::RuntimeReflection
+end
+
+class ActiveRecord::Reflection::ThroughReflection
+  def active_record(*_, &_1); end
+
+  def active_record_primary_key(*_, &_1); end
+
+  def add_as_polymorphic_through(reflection, seed); end
+
+  def add_as_source(seed); end
+
+  def add_as_through(seed); end
+
+  def association_class(*_, &_1); end
+
+  def association_foreign_key(*_, &_1); end
+
+  def association_primary_key(klass=T.unsafe(nil)); end
+
+  def association_scope_cache(*_, &_1); end
+
+  def autosave=(arg); end
+
+  def belongs_to?(*_, &_1); end
+
+  def check_eager_loadable!(*_, &_1); end
+
+  def check_preloadable!(*_, &_1); end
+
+  def check_validity!(); end
+
+  def clear_association_scope_cache(); end
+
+  def collect_join_chain(); end
+
+  def collection?(*_, &_1); end
+
+  def compute_class(*_, &_1); end
+
+  def constructable?(*_, &_1); end
+
+  def extensions(*_, &_1); end
+
+  def foreign_key(*_, &_1); end
+
+  def foreign_type(*_, &_1); end
+
+  def get_join_keys(*_, &_1); end
+
+  def has_inverse?(*_, &_1); end
+
+  def has_one?(*_, &_1); end
+
+  def has_scope?(); end
+
+  def initialize(delegate_reflection); end
+
+  def join_id_for(*_, &_1); end
+
+  def join_table(*_, &_1); end
+
+  def klass(); end
+
+  def macro(*_, &_1); end
+
+  def name(*_, &_1); end
+
+  def nested?(); end
+
+  def options(*_, &_1); end
+
+  def parent_reflection(*_, &_1); end
+
+  def parent_reflection=(arg); end
+
+  def plural_name(*_, &_1); end
+
+  def polymorphic?(*_, &_1); end
+
+  def polymorphic_inverse_of(*_, &_1); end
+
+  def scope(*_, &_1); end
+
+  def scope_for(*_, &_1); end
+
+  def source_options(); end
+
+  def source_reflection(); end
+
+  def source_reflection_name(); end
+
+  def source_reflection_names(); end
+
+  def through_options(); end
+
+  def through_reflection(); end
+
+  def type(*_, &_1); end
+
+  def validate?(*_, &_1); end
+end
+
+class ActiveRecord::Reflection::ThroughReflection
 end
 
 module ActiveRecord::Reflection
@@ -17617,6 +18432,10 @@ class ActiveRecord::RuntimeRegistry
   def self.sql_runtime=(x); end
 end
 
+module ActiveRecord::Sanitization::ClassMethods
+  def disallow_raw_sql!(args, permit: T.unsafe(nil)); end
+end
+
 module ActiveRecord::Sanitization
   extend ::ActiveSupport::Concern
 end
@@ -17688,6 +18507,19 @@ module ActiveRecord::Scoping
   def populate_with_current_scope_attributes(); end
 end
 
+module ActiveRecord::Scoping::ClassMethods
+  def current_scope(skip_inherited_scope=T.unsafe(nil)); end
+
+  def current_scope=(scope); end
+
+  def scope_attributes(); end
+
+  def scope_attributes?(); end
+end
+
+module ActiveRecord::Scoping::ClassMethods
+end
+
 module ActiveRecord::Scoping::Default
   extend ::ActiveSupport::Concern
 end
@@ -17696,12 +18528,33 @@ module ActiveRecord::Scoping::Named
   extend ::ActiveSupport::Concern
 end
 
+class ActiveRecord::Scoping::ScopeRegistry
+  def set_value_for(scope_type, model, value); end
+
+  def value_for(scope_type, model, skip_inherited_scope=T.unsafe(nil)); end
+  VALID_SCOPE_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::Scoping::ScopeRegistry
+  extend ::ActiveSupport::PerThreadRegistry
+  def self.value_for(*_, &_1); end
+end
+
 module ActiveRecord::Scoping
   extend ::ActiveSupport::Concern
   extend ::ActiveSupport::Autoload
 end
 
 module ActiveRecord::SecureToken
+end
+
+module ActiveRecord::SecureToken::ClassMethods
+  def generate_unique_secure_token(); end
+
+  def has_secure_token(attribute=T.unsafe(nil)); end
+end
+
+module ActiveRecord::SecureToken::ClassMethods
 end
 
 module ActiveRecord::SecureToken
@@ -17817,6 +18670,55 @@ end
 module ActiveRecord::Store
 end
 
+module ActiveRecord::Store::ClassMethods
+  def _store_accessors_module(); end
+
+  def store(store_attribute, options=T.unsafe(nil)); end
+
+  def store_accessor(store_attribute, *keys, prefix: T.unsafe(nil), suffix: T.unsafe(nil)); end
+
+  def stored_attributes(); end
+end
+
+module ActiveRecord::Store::ClassMethods
+end
+
+class ActiveRecord::Store::HashAccessor
+end
+
+class ActiveRecord::Store::HashAccessor
+  def self.prepare(object, attribute); end
+
+  def self.read(object, attribute, key); end
+
+  def self.write(object, attribute, key, value); end
+end
+
+class ActiveRecord::Store::IndifferentCoder
+  def dump(obj); end
+
+  def initialize(attr_name, coder_or_class_name); end
+
+  def load(yaml); end
+end
+
+class ActiveRecord::Store::IndifferentCoder
+  def self.as_indifferent_hash(obj); end
+end
+
+class ActiveRecord::Store::IndifferentHashAccessor
+end
+
+class ActiveRecord::Store::IndifferentHashAccessor
+  def self.prepare(object, store_attribute); end
+end
+
+class ActiveRecord::Store::StringKeyedHashAccessor
+end
+
+class ActiveRecord::Store::StringKeyedHashAccessor
+end
+
 module ActiveRecord::Store
   extend ::ActiveSupport::Concern
 end
@@ -17825,6 +18727,13 @@ module ActiveRecord::Suppressor
   def save(*_, **_1); end
 
   def save!(*_, **_1); end
+end
+
+module ActiveRecord::Suppressor::ClassMethods
+  def suppress(&block); end
+end
+
+module ActiveRecord::Suppressor::ClassMethods
 end
 
 module ActiveRecord::Suppressor
@@ -18118,6 +19027,21 @@ module ActiveRecord::TestFixtures
   def teardown_fixtures(); end
 end
 
+module ActiveRecord::TestFixtures::ClassMethods
+  def fixtures(*fixture_set_names); end
+
+  def set_fixture_class(class_names=T.unsafe(nil)); end
+
+  def setup_fixture_accessors(fixture_set_names=T.unsafe(nil)); end
+
+  def uses_transaction(*methods); end
+
+  def uses_transaction?(method); end
+end
+
+module ActiveRecord::TestFixtures::ClassMethods
+end
+
 module ActiveRecord::TestFixtures
   extend ::ActiveSupport::Concern
 end
@@ -18131,6 +19055,21 @@ class ActiveRecord::ThroughNestedAssociationsAreReadonly
 end
 
 module ActiveRecord::Timestamp
+end
+
+module ActiveRecord::Timestamp::ClassMethods
+  def all_timestamp_attributes_in_model(); end
+
+  def current_time_from_proper_timezone(); end
+
+  def timestamp_attributes_for_create_in_model(); end
+
+  def timestamp_attributes_for_update_in_model(); end
+
+  def touch_attributes_with_time(*names, time: T.unsafe(nil)); end
+end
+
+module ActiveRecord::Timestamp::ClassMethods
 end
 
 module ActiveRecord::Timestamp
@@ -18168,6 +19107,28 @@ module ActiveRecord::Transactions
 
   def with_transaction_returning_status(); end
   ACTIONS = ::T.let(nil, ::T.untyped)
+end
+
+module ActiveRecord::Transactions::ClassMethods
+  def after_commit(*args, &block); end
+
+  def after_commit_without_transaction_enrollment(*args, &block); end
+
+  def after_create_commit(*args, &block); end
+
+  def after_destroy_commit(*args, &block); end
+
+  def after_rollback(*args, &block); end
+
+  def after_rollback_without_transaction_enrollment(*args, &block); end
+
+  def after_save_commit(*args, &block); end
+
+  def after_update_commit(*args, &block); end
+
+  def before_commit(*args, &block); end
+
+  def before_commit_without_transaction_enrollment(*args, &block); end
 end
 
 module ActiveRecord::Transactions
@@ -18427,6 +19388,56 @@ module ActiveRecord::Validations
   def valid?(context=T.unsafe(nil)); end
 
   def validate(context=T.unsafe(nil)); end
+end
+
+class ActiveRecord::Validations::AbsenceValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+
+class ActiveRecord::Validations::AbsenceValidator
+end
+
+class ActiveRecord::Validations::AssociatedValidator
+end
+
+class ActiveRecord::Validations::AssociatedValidator
+end
+
+module ActiveRecord::Validations::ClassMethods
+  def validates_absence_of(*attr_names); end
+
+  def validates_associated(*attr_names); end
+
+  def validates_length_of(*attr_names); end
+
+  def validates_presence_of(*attr_names); end
+
+  def validates_size_of(*attr_names); end
+
+  def validates_uniqueness_of(*attr_names); end
+end
+
+module ActiveRecord::Validations::ClassMethods
+end
+
+class ActiveRecord::Validations::LengthValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+
+class ActiveRecord::Validations::LengthValidator
+end
+
+class ActiveRecord::Validations::PresenceValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+
+class ActiveRecord::Validations::PresenceValidator
+end
+
+class ActiveRecord::Validations::UniquenessValidator
+end
+
+class ActiveRecord::Validations::UniquenessValidator
 end
 
 module ActiveRecord::Validations
@@ -18712,7 +19723,6 @@ class ActiveStorage::Blob
   include ::ActiveStorage::Blob::GeneratedAssociationMethods
   include ::ActiveStorage::Blob::Analyzable
   include ::ActiveStorage::Blob::Identifiable
-  include ::ActionText::Attachable
   def after_add_for_attachments(); end
 
   def after_add_for_attachments=(val); end
@@ -18724,8 +19734,6 @@ class ActiveStorage::Blob
   def after_remove_for_attachments=(val); end
 
   def after_remove_for_attachments?(); end
-
-  def attachable_plain_text_representation(caption=T.unsafe(nil)); end
 
   def audio?(); end
 
@@ -18869,7 +19877,6 @@ module ActiveStorage::Blob::Representable
 end
 
 class ActiveStorage::Blob
-  extend ::ActionText::Attachable::ClassMethods
   def self.after_add_for_attachments(); end
 
   def self.after_add_for_attachments=(val); end
@@ -21809,9 +22816,6 @@ class ActiveSupport::TestCase
   include ::ActiveSupport::Testing::Deprecation
   include ::ActiveSupport::Testing::TimeHelpers
   include ::ActiveSupport::Testing::FileFixtures
-  include ::ActiveRecord::TestDatabases
-  include ::ActiveRecord::TestFixtures
-  include ::Minitest::Parallel::Test
   include ::ActiveSupport::Testing::SetupAndTeardown
   def __callbacks(); end
 
@@ -21853,63 +22857,16 @@ class ActiveSupport::TestCase
 
   def assert_raise(*exp); end
 
-  def config(); end
-
-  def config=(val); end
-
-  def config?(); end
-
   def file_fixture_path(); end
 
   def file_fixture_path?(); end
 
-  def fixture_class_names(); end
-
-  def fixture_class_names=(val); end
-
-  def fixture_class_names?(); end
-
-  def fixture_path(); end
-
-  def fixture_path?(); end
-
-  def fixture_table_names(); end
-
-  def fixture_table_names=(val); end
-
-  def fixture_table_names?(); end
-
-  def lock_threads(); end
-
-  def lock_threads=(val); end
-
-  def lock_threads?(); end
-
   def method_name(); end
-
-  def pre_loaded_fixtures(); end
-
-  def pre_loaded_fixtures=(val); end
-
-  def pre_loaded_fixtures?(); end
-
-  def use_instantiated_fixtures(); end
-
-  def use_instantiated_fixtures=(val); end
-
-  def use_instantiated_fixtures?(); end
-
-  def use_transactional_tests(); end
-
-  def use_transactional_tests=(val); end
-
-  def use_transactional_tests?(); end
 end
 
 class ActiveSupport::TestCase
   extend ::ActiveSupport::DescendantsTracker
   extend ::ActiveSupport::Testing::Declarative
-  extend ::Rails::LineFiltering
   def self.__callbacks(); end
 
   def self.__callbacks=(val); end
@@ -21924,41 +22881,11 @@ class ActiveSupport::TestCase
 
   def self._teardown_callbacks=(value); end
 
-  def self.config(); end
-
-  def self.config=(val); end
-
-  def self.config?(); end
-
   def self.file_fixture_path(); end
 
   def self.file_fixture_path=(val); end
 
   def self.file_fixture_path?(); end
-
-  def self.fixture_class_names(); end
-
-  def self.fixture_class_names=(val); end
-
-  def self.fixture_class_names?(); end
-
-  def self.fixture_path(); end
-
-  def self.fixture_path=(val); end
-
-  def self.fixture_path?(); end
-
-  def self.fixture_table_names(); end
-
-  def self.fixture_table_names=(val); end
-
-  def self.fixture_table_names?(); end
-
-  def self.lock_threads(); end
-
-  def self.lock_threads=(val); end
-
-  def self.lock_threads?(); end
 
   def self.parallelize(workers: T.unsafe(nil), with: T.unsafe(nil)); end
 
@@ -21966,25 +22893,7 @@ class ActiveSupport::TestCase
 
   def self.parallelize_teardown(&block); end
 
-  def self.pre_loaded_fixtures(); end
-
-  def self.pre_loaded_fixtures=(val); end
-
-  def self.pre_loaded_fixtures?(); end
-
   def self.test_order=(new_order); end
-
-  def self.use_instantiated_fixtures(); end
-
-  def self.use_instantiated_fixtures=(val); end
-
-  def self.use_instantiated_fixtures?(); end
-
-  def self.use_transactional_tests(); end
-
-  def self.use_transactional_tests=(val); end
-
-  def self.use_transactional_tests?(); end
 end
 
 module ActiveSupport::Testing
@@ -22563,6 +23472,9 @@ class ApplicationCable::Channel
 end
 
 class ApplicationCable::Connection
+  def current_user(); end
+
+  def current_user=(current_user); end
 end
 
 class ApplicationComponent
@@ -24358,7 +25270,18 @@ class Array
   def self.wrap(object); end
 end
 
+class BCrypt::Engine
+  DEFAULT_COST = ::T.let(nil, ::T.untyped)
+  MAX_COST = ::T.let(nil, ::T.untyped)
+  MAX_SALT_LENGTH = ::T.let(nil, ::T.untyped)
+  MIN_COST = ::T.let(nil, ::T.untyped)
+end
+
 BasicObject::BasicObject = BasicObject
+
+class BasicSocket
+  def read_nonblock(len, str=T.unsafe(nil), exception: T.unsafe(nil)); end
+end
 
 class Benchmark::Job
   def initialize(width); end
@@ -30586,6 +31509,24 @@ class Cocina::Models::Vocab
   def self.webarchive_seed(); end
 end
 
+class Collection
+  include ::Collection::GeneratedAttributeMethods
+  include ::Collection::GeneratedAssociationMethods
+end
+
+module Collection::GeneratedAssociationMethods
+end
+
+module Collection::GeneratedAssociationMethods
+end
+
+module Collection::GeneratedAttributeMethods
+end
+
+module Collection::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
 module CommonMarker
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -31368,6 +32309,1718 @@ class DescriptionComponent
   def self.default_url_options=(val); end
 
   def self.default_url_options?(); end
+end
+
+module Devise
+  def allow_unconfirmed_access_for(); end
+
+  def allow_unconfirmed_access_for=(obj); end
+
+  def authentication_keys(); end
+
+  def authentication_keys=(obj); end
+
+  def case_insensitive_keys(); end
+
+  def case_insensitive_keys=(obj); end
+
+  def clean_up_csrf_token_on_authentication(); end
+
+  def clean_up_csrf_token_on_authentication=(obj); end
+
+  def confirm_within(); end
+
+  def confirm_within=(obj); end
+
+  def confirmation_keys(); end
+
+  def confirmation_keys=(obj); end
+
+  def default_scope(); end
+
+  def default_scope=(obj); end
+
+  def email_regexp(); end
+
+  def email_regexp=(obj); end
+
+  def expire_all_remember_me_on_sign_out(); end
+
+  def expire_all_remember_me_on_sign_out=(obj); end
+
+  def extend_remember_period(); end
+
+  def extend_remember_period=(obj); end
+
+  def helpers(); end
+
+  def http_authenticatable(); end
+
+  def http_authenticatable=(obj); end
+
+  def http_authenticatable_on_xhr(); end
+
+  def http_authenticatable_on_xhr=(obj); end
+
+  def http_authentication_key(); end
+
+  def http_authentication_key=(obj); end
+
+  def http_authentication_realm(); end
+
+  def http_authentication_realm=(obj); end
+
+  def last_attempt_warning(); end
+
+  def last_attempt_warning=(obj); end
+
+  def lock_strategy(); end
+
+  def lock_strategy=(obj); end
+
+  def mailer_sender(); end
+
+  def mailer_sender=(obj); end
+
+  def mappings(); end
+
+  def maximum_attempts(); end
+
+  def maximum_attempts=(obj); end
+
+  def navigational_formats(); end
+
+  def navigational_formats=(obj); end
+
+  def omniauth_configs(); end
+
+  def omniauth_path_prefix(); end
+
+  def omniauth_path_prefix=(obj); end
+
+  def params_authenticatable(); end
+
+  def params_authenticatable=(obj); end
+
+  def paranoid(); end
+
+  def paranoid=(obj); end
+
+  def parent_controller(); end
+
+  def parent_controller=(obj); end
+
+  def parent_mailer(); end
+
+  def parent_mailer=(obj); end
+
+  def password_length(); end
+
+  def password_length=(obj); end
+
+  def pepper(); end
+
+  def pepper=(obj); end
+
+  def reconfirmable(); end
+
+  def reconfirmable=(obj); end
+
+  def reload_routes(); end
+
+  def reload_routes=(obj); end
+
+  def remember_for(); end
+
+  def remember_for=(obj); end
+
+  def rememberable_options(); end
+
+  def rememberable_options=(obj); end
+
+  def request_keys(); end
+
+  def request_keys=(obj); end
+
+  def reset_password_keys(); end
+
+  def reset_password_keys=(obj); end
+
+  def reset_password_within(); end
+
+  def reset_password_within=(obj); end
+
+  def router_name(); end
+
+  def router_name=(obj); end
+
+  def scoped_views(); end
+
+  def scoped_views=(obj); end
+
+  def secret_key(); end
+
+  def secret_key=(obj); end
+
+  def send_email_changed_notification(); end
+
+  def send_email_changed_notification=(obj); end
+
+  def send_password_change_notification(); end
+
+  def send_password_change_notification=(obj); end
+
+  def sign_in_after_change_password(); end
+
+  def sign_in_after_change_password=(obj); end
+
+  def sign_in_after_reset_password(); end
+
+  def sign_in_after_reset_password=(obj); end
+
+  def sign_out_all_scopes(); end
+
+  def sign_out_all_scopes=(obj); end
+
+  def sign_out_via(); end
+
+  def sign_out_via=(obj); end
+
+  def skip_session_storage(); end
+
+  def skip_session_storage=(obj); end
+
+  def stretches(); end
+
+  def stretches=(obj); end
+
+  def strip_whitespace_keys(); end
+
+  def strip_whitespace_keys=(obj); end
+
+  def timeout_in(); end
+
+  def timeout_in=(obj); end
+
+  def token_generator(); end
+
+  def token_generator=(obj); end
+
+  def unlock_in(); end
+
+  def unlock_in=(obj); end
+
+  def unlock_keys(); end
+
+  def unlock_keys=(obj); end
+
+  def unlock_strategy(); end
+
+  def unlock_strategy=(obj); end
+
+  def warden_config(); end
+
+  def warden_config=(obj); end
+  ALL = ::T.let(nil, ::T.untyped)
+  CONTROLLERS = ::T.let(nil, ::T.untyped)
+  NO_INPUT = ::T.let(nil, ::T.untyped)
+  ROUTES = ::T.let(nil, ::T.untyped)
+  STRATEGIES = ::T.let(nil, ::T.untyped)
+  TRUE_VALUES = ::T.let(nil, ::T.untyped)
+  URL_HELPERS = ::T.let(nil, ::T.untyped)
+end
+
+class Devise::ConfirmationsController
+  def after_confirmation_path_for(resource_name, resource); end
+
+  def after_resending_confirmation_instructions_path_for(resource_name); end
+
+  def create(); end
+
+  def new(); end
+
+  def show(); end
+end
+
+class Devise::ConfirmationsController
+end
+
+module Devise::Controllers
+end
+
+module Devise::Controllers::Helpers
+  include ::Devise::Controllers::SignInOut
+  include ::Devise::Controllers::StoreLocation
+  def after_sign_in_path_for(resource_or_scope); end
+
+  def after_sign_out_path_for(resource_or_scope); end
+
+  def allow_params_authentication!(); end
+
+  def authenticate_user!(opts=T.unsafe(nil)); end
+
+  def current_user(); end
+
+  def devise_controller?(); end
+
+  def devise_parameter_sanitizer(); end
+
+  def handle_unverified_request(); end
+
+  def is_flashing_format?(); end
+
+  def is_navigational_format?(); end
+
+  def request_format(); end
+
+  def sign_in_and_redirect(resource_or_scope, *args); end
+
+  def sign_out_and_redirect(resource_or_scope); end
+
+  def signed_in_root_path(resource_or_scope); end
+
+  def user_session(); end
+
+  def user_signed_in?(); end
+
+  def warden(); end
+end
+
+module Devise::Controllers::Helpers
+  extend ::ActiveSupport::Concern
+  def self.define_helpers(mapping); end
+end
+
+module Devise::Controllers::Rememberable
+  def forget_cookie_values(resource); end
+
+  def forget_me(resource); end
+
+  def remember_cookie_values(resource); end
+
+  def remember_key(resource, scope); end
+
+  def remember_me(resource); end
+
+  def remember_me_is_active?(resource); end
+end
+
+module Devise::Controllers::Rememberable
+  def self.cookie_values(); end
+end
+
+module Devise::Controllers::ScopedViews
+end
+
+module Devise::Controllers::ScopedViews
+  extend ::ActiveSupport::Concern
+end
+
+module Devise::Controllers::SignInOut
+  def bypass_sign_in(resource, scope: T.unsafe(nil)); end
+
+  def sign_in(resource_or_scope, *args); end
+
+  def sign_out(resource_or_scope=T.unsafe(nil)); end
+
+  def sign_out_all_scopes(lock=T.unsafe(nil)); end
+
+  def signed_in?(scope=T.unsafe(nil)); end
+end
+
+module Devise::Controllers::SignInOut
+end
+
+module Devise::Controllers::StoreLocation
+  def store_location_for(resource_or_scope, location); end
+
+  def stored_location_for(resource_or_scope); end
+end
+
+module Devise::Controllers::StoreLocation
+end
+
+module Devise::Controllers::UrlHelpers
+end
+
+module Devise::Controllers::UrlHelpers
+  def self.generate_helpers!(routes=T.unsafe(nil)); end
+
+  def self.remove_helpers!(); end
+end
+
+module Devise::Controllers
+end
+
+class Devise::Delegator
+  def call(env); end
+
+  def failure_app(env); end
+end
+
+class Devise::Delegator
+end
+
+module Devise::Encryptor
+end
+
+module Devise::Encryptor
+  def self.compare(klass, hashed_password, password); end
+
+  def self.digest(klass, password); end
+end
+
+class Devise::Engine
+end
+
+class Devise::Engine
+end
+
+class Devise::FailureApp
+  include ::ActionDispatch::Routing::UrlFor
+  include ::ActionDispatch::Routing::PolymorphicRoutes
+  include ::AbstractController::UrlFor
+  include ::ActionController::UrlFor
+  include ::AbstractController::Logger
+  include ::ActiveSupport::Benchmarkable
+  include ::ActionController::Redirecting
+  include ::ActionDispatch::Routing::RouteSet::MountedHelpers
+  include ::Devise::Controllers::StoreLocation
+  def attempted_path(); end
+
+  def default_url_options(); end
+
+  def default_url_options=(val); end
+
+  def default_url_options?(); end
+
+  def flash(*_, &_1); end
+
+  def http_auth(); end
+
+  def http_auth?(); end
+
+  def http_auth_body(); end
+
+  def http_auth_header?(); end
+
+  def i18n_message(default=T.unsafe(nil)); end
+
+  def i18n_options(options); end
+
+  def is_flashing_format?(); end
+
+  def is_navigational_format?(); end
+
+  def logger(); end
+
+  def logger=(value); end
+
+  def recall(); end
+
+  def recall_app(app); end
+
+  def redirect(); end
+
+  def redirect_url(); end
+
+  def relative_url_root(); end
+
+  def relative_url_root?(); end
+
+  def request_format(); end
+
+  def respond(); end
+
+  def route(scope); end
+
+  def scope(); end
+
+  def scope_class(); end
+
+  def scope_url(); end
+
+  def skip_format?(); end
+
+  def store_location!(); end
+
+  def warden(); end
+
+  def warden_message(); end
+
+  def warden_options(); end
+end
+
+class Devise::FailureApp
+  extend ::AbstractController::UrlFor::ClassMethods
+  def self.call(env); end
+
+  def self.default_url_options(*args); end
+
+  def self.default_url_options=(val); end
+
+  def self.default_url_options?(); end
+
+  def self.logger(); end
+
+  def self.logger=(value); end
+end
+
+class Devise::Getter
+  def get(); end
+
+  def initialize(name); end
+end
+
+class Devise::Getter
+end
+
+module Devise::Hooks
+end
+
+class Devise::Hooks::Proxy
+  include ::Devise::Controllers::Rememberable
+  include ::Devise::Controllers::SignInOut
+  def cookies(*_, &_1); end
+
+  def initialize(warden); end
+
+  def request(*_, &_1); end
+
+  def session(); end
+
+  def warden(); end
+end
+
+class Devise::Hooks::Proxy
+end
+
+module Devise::Hooks
+end
+
+class Devise::Mailer
+  include ::Devise::Mailers::Helpers
+  include ::Devise::Controllers::ScopedViews
+  def confirmation_instructions(record, token, opts=T.unsafe(nil)); end
+
+  def email_changed(record, opts=T.unsafe(nil)); end
+
+  def password_change(record, opts=T.unsafe(nil)); end
+
+  def reset_password_instructions(record, token, opts=T.unsafe(nil)); end
+
+  def unlock_instructions(record, token, opts=T.unsafe(nil)); end
+end
+
+class Devise::Mailer
+end
+
+module Devise::Mailers
+end
+
+module Devise::Mailers::Helpers
+  def devise_mail(record, action, opts=T.unsafe(nil), &block); end
+
+  def devise_mapping(); end
+
+  def headers_for(action, opts); end
+
+  def initialize_from_record(record); end
+
+  def mailer_from(mapping); end
+
+  def mailer_reply_to(mapping); end
+
+  def mailer_sender(mapping, sender=T.unsafe(nil)); end
+
+  def resource(); end
+
+  def scope_name(); end
+
+  def subject_for(key); end
+
+  def template_paths(); end
+end
+
+module Devise::Mailers::Helpers
+  extend ::ActiveSupport::Concern
+end
+
+module Devise::Mailers
+end
+
+class Devise::Mapping
+  def authenticatable?(); end
+
+  def class_name(); end
+
+  def confirmable?(); end
+
+  def controllers(); end
+
+  def database_authenticatable?(); end
+
+  def failure_app(); end
+
+  def format(); end
+
+  def fullpath(); end
+
+  def initialize(name, options); end
+
+  def lockable?(); end
+
+  def modules(); end
+
+  def name(); end
+
+  def no_input_strategies(); end
+
+  def omniauthable?(); end
+
+  def path(); end
+
+  def path_names(); end
+
+  def recoverable?(); end
+
+  def registerable?(); end
+
+  def rememberable?(); end
+
+  def router_name(); end
+
+  def routes(); end
+
+  def scoped_path(); end
+
+  def sign_out_via(); end
+
+  def singular(); end
+
+  def strategies(); end
+
+  def timeoutable?(); end
+
+  def to(); end
+
+  def trackable?(); end
+
+  def used_helpers(); end
+
+  def used_routes(); end
+
+  def validatable?(); end
+end
+
+class Devise::Mapping
+  def self.add_module(m); end
+
+  def self.find_by_path!(path, path_type=T.unsafe(nil)); end
+
+  def self.find_scope!(obj); end
+end
+
+class Devise::MissingWarden
+  def initialize(); end
+end
+
+class Devise::MissingWarden
+end
+
+module Devise::Models
+  def devise(*modules); end
+
+  def devise_modules_hook!(); end
+end
+
+module Devise::Models::Authenticatable
+  def active_for_authentication?(); end
+
+  def apply_to_attribute_or_variable(attr, method); end
+
+  def authenticatable_salt(); end
+
+  def devise_mailer(); end
+
+  def downcase_keys(); end
+
+  def inactive_message(); end
+
+  def inspect(); end
+
+  def send_devise_notification(notification, *args); end
+
+  def serializable_hash(options=T.unsafe(nil)); end
+
+  def strip_whitespace(); end
+
+  def unauthenticated_message(); end
+
+  def valid_for_authentication?(); end
+  BLACKLIST_FOR_SERIALIZATION = ::T.let(nil, ::T.untyped)
+end
+
+module Devise::Models::Authenticatable::ClassMethods
+  def authentication_keys(); end
+
+  def authentication_keys=(value); end
+
+  def case_insensitive_keys(); end
+
+  def case_insensitive_keys=(value); end
+
+  def devise_parameter_filter(); end
+
+  def find_first_by_auth_conditions(tainted_conditions, opts=T.unsafe(nil)); end
+
+  def find_for_authentication(tainted_conditions); end
+
+  def find_or_initialize_with_error_by(attribute, value, error=T.unsafe(nil)); end
+
+  def find_or_initialize_with_errors(required_attributes, attributes, error=T.unsafe(nil)); end
+
+  def http_authenticatable(); end
+
+  def http_authenticatable=(value); end
+
+  def http_authenticatable?(strategy); end
+
+  def http_authentication_key(); end
+
+  def http_authentication_key=(value); end
+
+  def params_authenticatable(); end
+
+  def params_authenticatable=(value); end
+
+  def params_authenticatable?(strategy); end
+
+  def request_keys(); end
+
+  def request_keys=(value); end
+
+  def serialize_from_session(key, salt); end
+
+  def serialize_into_session(record); end
+
+  def skip_session_storage(); end
+
+  def skip_session_storage=(value); end
+
+  def strip_whitespace_keys(); end
+
+  def strip_whitespace_keys=(value); end
+end
+
+module Devise::Models::Authenticatable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Authenticatable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::Confirmable
+  def active_for_authentication?(); end
+
+  def after_confirmation(); end
+
+  def confirm(args=T.unsafe(nil)); end
+
+  def confirmation_period_expired?(); end
+
+  def confirmation_period_valid?(); end
+
+  def confirmation_required?(); end
+
+  def confirmed?(); end
+
+  def generate_confirmation_token(); end
+
+  def generate_confirmation_token!(); end
+
+  def inactive_message(); end
+
+  def initialize(*args, &block); end
+
+  def pending_any_confirmation(); end
+
+  def pending_reconfirmation?(); end
+
+  def postpone_email_change?(); end
+
+  def postpone_email_change_until_confirmation_and_regenerate_confirmation_token(); end
+
+  def reconfirmation_required?(); end
+
+  def resend_confirmation_instructions(); end
+
+  def send_confirmation_instructions(); end
+
+  def send_confirmation_notification?(); end
+
+  def send_email_changed_notification?(); end
+
+  def send_on_create_confirmation_instructions(); end
+
+  def send_reconfirmation_instructions(); end
+
+  def skip_confirmation!(); end
+
+  def skip_confirmation_notification!(); end
+
+  def skip_reconfirmation!(); end
+
+  def skip_reconfirmation_in_callback!(); end
+end
+
+module Devise::Models::Confirmable::ClassMethods
+  def allow_unconfirmed_access_for(); end
+
+  def allow_unconfirmed_access_for=(value); end
+
+  def confirm_by_token(confirmation_token); end
+
+  def confirm_within(); end
+
+  def confirm_within=(value); end
+
+  def confirmation_keys(); end
+
+  def confirmation_keys=(value); end
+
+  def find_by_unconfirmed_email_with_errors(attributes=T.unsafe(nil)); end
+
+  def reconfirmable(); end
+
+  def reconfirmable=(value); end
+
+  def send_confirmation_instructions(attributes=T.unsafe(nil)); end
+end
+
+module Devise::Models::Confirmable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Confirmable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::DatabaseAuthenticatable
+  def after_database_authentication(); end
+
+  def authenticatable_salt(); end
+
+  def clean_up_passwords(); end
+
+  def destroy_with_password(current_password); end
+
+  def initialize(*args, &block); end
+
+  def password=(new_password); end
+
+  def password_digest(password); end
+
+  def send_email_changed_notification(); end
+
+  def send_email_changed_notification?(); end
+
+  def send_password_change_notification(); end
+
+  def send_password_change_notification?(); end
+
+  def skip_email_changed_notification!(); end
+
+  def skip_password_change_notification!(); end
+
+  def update_with_password(params, *options); end
+
+  def update_without_password(params, *options); end
+
+  def valid_password?(password); end
+end
+
+module Devise::Models::DatabaseAuthenticatable::ClassMethods
+  def find_for_database_authentication(conditions); end
+
+  def pepper(); end
+
+  def pepper=(value); end
+
+  def send_email_changed_notification(); end
+
+  def send_email_changed_notification=(value); end
+
+  def send_password_change_notification(); end
+
+  def send_password_change_notification=(value); end
+
+  def stretches(); end
+
+  def stretches=(value); end
+end
+
+module Devise::Models::DatabaseAuthenticatable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::DatabaseAuthenticatable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::Lockable
+  def access_locked?(); end
+
+  def active_for_authentication?(); end
+
+  def attempts_exceeded?(); end
+
+  def if_access_locked(); end
+
+  def inactive_message(); end
+
+  def increment_failed_attempts(); end
+
+  def last_attempt?(); end
+
+  def lock_access!(opts=T.unsafe(nil)); end
+
+  def lock_expired?(); end
+
+  def lock_strategy_enabled?(*_, &_1); end
+
+  def resend_unlock_instructions(); end
+
+  def send_unlock_instructions(); end
+
+  def unauthenticated_message(); end
+
+  def unlock_access!(); end
+
+  def unlock_strategy_enabled?(*_, &_1); end
+
+  def valid_for_authentication?(); end
+end
+
+module Devise::Models::Lockable::ClassMethods
+  def last_attempt_warning(); end
+
+  def last_attempt_warning=(value); end
+
+  def lock_strategy(); end
+
+  def lock_strategy=(value); end
+
+  def lock_strategy_enabled?(strategy); end
+
+  def maximum_attempts(); end
+
+  def maximum_attempts=(value); end
+
+  def send_unlock_instructions(attributes=T.unsafe(nil)); end
+
+  def unlock_access_by_token(unlock_token); end
+
+  def unlock_in(); end
+
+  def unlock_in=(value); end
+
+  def unlock_keys(); end
+
+  def unlock_keys=(value); end
+
+  def unlock_strategy(); end
+
+  def unlock_strategy=(value); end
+
+  def unlock_strategy_enabled?(strategy); end
+  BOTH_STRATEGIES = ::T.let(nil, ::T.untyped)
+end
+
+module Devise::Models::Lockable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Lockable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+class Devise::Models::MissingAttribute
+  def initialize(attributes); end
+end
+
+class Devise::Models::MissingAttribute
+end
+
+module Devise::Models::Recoverable
+  def clear_reset_password_token(); end
+
+  def clear_reset_password_token?(); end
+
+  def reset_password(new_password, new_password_confirmation); end
+
+  def reset_password_period_valid?(); end
+
+  def send_reset_password_instructions(); end
+
+  def send_reset_password_instructions_notification(token); end
+
+  def set_reset_password_token(); end
+end
+
+module Devise::Models::Recoverable::ClassMethods
+  def reset_password_by_token(attributes=T.unsafe(nil)); end
+
+  def reset_password_keys(); end
+
+  def reset_password_keys=(value); end
+
+  def reset_password_within(); end
+
+  def reset_password_within=(value); end
+
+  def send_reset_password_instructions(attributes=T.unsafe(nil)); end
+
+  def sign_in_after_reset_password(); end
+
+  def sign_in_after_reset_password=(value); end
+
+  def with_reset_password_token(token); end
+end
+
+module Devise::Models::Recoverable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Recoverable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::Registerable
+end
+
+module Devise::Models::Registerable::ClassMethods
+  def new_with_session(params, session); end
+
+  def sign_in_after_change_password(); end
+
+  def sign_in_after_change_password=(value); end
+end
+
+module Devise::Models::Registerable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Registerable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::Rememberable
+  def after_remembered(); end
+
+  def extend_remember_period(); end
+
+  def forget_me!(); end
+
+  def remember_expires_at(); end
+
+  def remember_me(); end
+
+  def remember_me!(); end
+
+  def remember_me=(remember_me); end
+
+  def remember_me?(token, generated_at); end
+
+  def rememberable_options(); end
+
+  def rememberable_value(); end
+end
+
+module Devise::Models::Rememberable::ClassMethods
+  def expire_all_remember_me_on_sign_out(); end
+
+  def expire_all_remember_me_on_sign_out=(value); end
+
+  def extend_remember_period(); end
+
+  def extend_remember_period=(value); end
+
+  def remember_for(); end
+
+  def remember_for=(value); end
+
+  def remember_token(); end
+
+  def rememberable_options(); end
+
+  def rememberable_options=(value); end
+
+  def serialize_from_cookie(*args); end
+
+  def serialize_into_cookie(record); end
+end
+
+module Devise::Models::Rememberable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Rememberable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::RemoteUserAuthenticatable
+  extend ::ActiveSupport::Concern
+end
+
+module Devise::Models::Timeoutable
+  def timedout?(last_access); end
+
+  def timeout_in(); end
+end
+
+module Devise::Models::Timeoutable::ClassMethods
+  def timeout_in(); end
+
+  def timeout_in=(value); end
+end
+
+module Devise::Models::Timeoutable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Timeoutable
+  extend ::ActiveSupport::Concern
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::Trackable
+  def extract_ip_from(request); end
+
+  def update_tracked_fields(request); end
+
+  def update_tracked_fields!(request); end
+end
+
+module Devise::Models::Trackable
+  def self.required_fields(klass); end
+end
+
+module Devise::Models::Validatable
+  def email_required?(); end
+
+  def password_required?(); end
+  VALIDATIONS = ::T.let(nil, ::T.untyped)
+end
+
+module Devise::Models::Validatable::ClassMethods
+  def email_regexp(); end
+
+  def email_regexp=(value); end
+
+  def password_length(); end
+
+  def password_length=(value); end
+end
+
+module Devise::Models::Validatable::ClassMethods
+  def self.available_configs(); end
+
+  def self.available_configs=(available_configs); end
+end
+
+module Devise::Models::Validatable
+  def self.assert_validations_api!(base); end
+
+  def self.included(base); end
+
+  def self.required_fields(klass); end
+end
+
+module Devise::Models
+  def self.check_fields!(klass); end
+
+  def self.config(mod, *accessors); end
+end
+
+class Devise::OmniauthCallbacksController
+  def after_omniauth_failure_path_for(scope); end
+
+  def failed_strategy(); end
+
+  def failure(); end
+
+  def failure_message(); end
+
+  def passthru(); end
+end
+
+class Devise::OmniauthCallbacksController
+end
+
+class Devise::ParameterFilter
+  def filter(conditions); end
+
+  def filtered_hash_by_method_for_given_keys(conditions, method, condition_keys); end
+
+  def initialize(case_insensitive_keys, strip_whitespace_keys); end
+
+  def stringify_params(conditions); end
+end
+
+class Devise::ParameterFilter
+end
+
+class Devise::ParameterSanitizer
+  def initialize(resource_class, resource_name, params); end
+
+  def permit(action, keys: T.unsafe(nil), except: T.unsafe(nil), &block); end
+
+  def sanitize(action); end
+  DEFAULT_PERMITTED_ATTRIBUTES = ::T.let(nil, ::T.untyped)
+end
+
+class Devise::ParameterSanitizer
+end
+
+class Devise::PasswordsController
+  def after_resetting_password_path_for(resource); end
+
+  def after_sending_reset_password_instructions_path_for(resource_name); end
+
+  def assert_reset_token_passed(); end
+
+  def create(); end
+
+  def edit(); end
+
+  def new(); end
+
+  def unlockable?(resource); end
+
+  def update(); end
+end
+
+class Devise::PasswordsController
+end
+
+class Devise::RegistrationsController
+  def account_update_params(); end
+
+  def after_inactive_sign_up_path_for(resource); end
+
+  def after_sign_up_path_for(resource); end
+
+  def after_update_path_for(resource); end
+
+  def authenticate_scope!(); end
+
+  def build_resource(hash=T.unsafe(nil)); end
+
+  def cancel(); end
+
+  def create(); end
+
+  def destroy(); end
+
+  def edit(); end
+
+  def new(); end
+
+  def sign_up(resource_name, resource); end
+
+  def sign_up_params(); end
+
+  def update(); end
+
+  def update_needs_confirmation?(resource, previous); end
+
+  def update_resource(resource, params); end
+end
+
+class Devise::RegistrationsController
+end
+
+module Devise::RouteSet
+  def finalize!(); end
+end
+
+module Devise::RouteSet
+end
+
+class Devise::SecretKeyFinder
+  def find(); end
+
+  def initialize(application); end
+end
+
+class Devise::SecretKeyFinder
+end
+
+class Devise::SessionsController
+  def auth_options(); end
+
+  def create(); end
+
+  def destroy(); end
+
+  def new(); end
+
+  def serialize_options(resource); end
+
+  def sign_in_params(); end
+end
+
+class Devise::SessionsController
+end
+
+class Devise::Strategies::Authenticatable
+  def authentication_hash(); end
+
+  def authentication_hash=(authentication_hash); end
+
+  def authentication_type(); end
+
+  def authentication_type=(authentication_type); end
+
+  def clean_up_csrf?(); end
+
+  def password(); end
+
+  def password=(password); end
+end
+
+class Devise::Strategies::Authenticatable
+end
+
+class Devise::Strategies::Base
+  def mapping(); end
+end
+
+class Devise::Strategies::Base
+end
+
+class Devise::Strategies::DatabaseAuthenticatable
+  def authenticate!(); end
+end
+
+class Devise::Strategies::DatabaseAuthenticatable
+end
+
+class Devise::Strategies::Rememberable
+  def authenticate!(); end
+end
+
+class Devise::Strategies::Rememberable
+end
+
+class Devise::Strategies::RemoteUserAuthenticatable
+end
+
+module Devise::Test
+end
+
+module Devise::Test::ControllerHelpers
+  def _catch_warden(&block); end
+
+  def _process_unauthenticated(env, options=T.unsafe(nil)); end
+
+  def process(*_); end
+
+  def setup_controller_for_warden(); end
+
+  def sign_in(resource, deprecated=T.unsafe(nil), scope: T.unsafe(nil)); end
+
+  def sign_out(resource_or_scope); end
+
+  def warden(); end
+end
+
+module Devise::Test::ControllerHelpers
+  extend ::ActiveSupport::Concern
+end
+
+module Devise::Test::IntegrationHelpers
+  def setup_integration_for_devise(); end
+
+  def sign_in(resource, scope: T.unsafe(nil)); end
+
+  def sign_out(resource_or_scope); end
+
+  def teardown_integration_for_devise(); end
+end
+
+module Devise::Test::IntegrationHelpers
+  def self.included(base); end
+end
+
+module Devise::Test
+end
+
+module Devise::TestHelpers
+end
+
+module Devise::TestHelpers
+  def self.included(base); end
+end
+
+class Devise::TimeInflector
+  include ::ActionView::Helpers::DateHelper
+end
+
+class Devise::TimeInflector
+  def self.instance(); end
+
+  def self.time_ago_in_words(*_, &_1); end
+end
+
+class Devise::TokenGenerator
+  def digest(klass, column, value); end
+
+  def generate(klass, column); end
+
+  def initialize(key_generator, digest=T.unsafe(nil)); end
+end
+
+class Devise::TokenGenerator
+end
+
+class Devise::UnlocksController
+  def after_sending_unlock_instructions_path_for(resource); end
+
+  def after_unlock_path_for(resource); end
+
+  def create(); end
+
+  def new(); end
+
+  def show(); end
+end
+
+class Devise::UnlocksController
+end
+
+module Devise
+  def self.activerecord51?(); end
+
+  def self.add_mapping(resource, options); end
+
+  def self.add_module(module_name, options=T.unsafe(nil)); end
+
+  def self.allow_unconfirmed_access_for(); end
+
+  def self.allow_unconfirmed_access_for=(obj); end
+
+  def self.authentication_keys(); end
+
+  def self.authentication_keys=(obj); end
+
+  def self.available_router_name(); end
+
+  def self.case_insensitive_keys(); end
+
+  def self.case_insensitive_keys=(obj); end
+
+  def self.clean_up_csrf_token_on_authentication(); end
+
+  def self.clean_up_csrf_token_on_authentication=(obj); end
+
+  def self.configure_warden!(); end
+
+  def self.confirm_within(); end
+
+  def self.confirm_within=(obj); end
+
+  def self.confirmation_keys(); end
+
+  def self.confirmation_keys=(obj); end
+
+  def self.default_scope(); end
+
+  def self.default_scope=(obj); end
+
+  def self.email_regexp(); end
+
+  def self.email_regexp=(obj); end
+
+  def self.expire_all_remember_me_on_sign_out(); end
+
+  def self.expire_all_remember_me_on_sign_out=(obj); end
+
+  def self.extend_remember_period(); end
+
+  def self.extend_remember_period=(obj); end
+
+  def self.friendly_token(length=T.unsafe(nil)); end
+
+  def self.helpers(); end
+
+  def self.http_authenticatable(); end
+
+  def self.http_authenticatable=(obj); end
+
+  def self.http_authenticatable_on_xhr(); end
+
+  def self.http_authenticatable_on_xhr=(obj); end
+
+  def self.http_authentication_key(); end
+
+  def self.http_authentication_key=(obj); end
+
+  def self.http_authentication_realm(); end
+
+  def self.http_authentication_realm=(obj); end
+
+  def self.include_helpers(scope); end
+
+  def self.last_attempt_warning(); end
+
+  def self.last_attempt_warning=(obj); end
+
+  def self.lock_strategy(); end
+
+  def self.lock_strategy=(obj); end
+
+  def self.mailer(); end
+
+  def self.mailer=(class_name); end
+
+  def self.mailer_sender(); end
+
+  def self.mailer_sender=(obj); end
+
+  def self.mappings(); end
+
+  def self.maximum_attempts(); end
+
+  def self.maximum_attempts=(obj); end
+
+  def self.navigational_formats(); end
+
+  def self.navigational_formats=(obj); end
+
+  def self.omniauth(provider, *args); end
+
+  def self.omniauth_configs(); end
+
+  def self.omniauth_path_prefix(); end
+
+  def self.omniauth_path_prefix=(obj); end
+
+  def self.omniauth_providers(); end
+
+  def self.params_authenticatable(); end
+
+  def self.params_authenticatable=(obj); end
+
+  def self.paranoid(); end
+
+  def self.paranoid=(obj); end
+
+  def self.parent_controller(); end
+
+  def self.parent_controller=(obj); end
+
+  def self.parent_mailer(); end
+
+  def self.parent_mailer=(obj); end
+
+  def self.password_length(); end
+
+  def self.password_length=(obj); end
+
+  def self.pepper(); end
+
+  def self.pepper=(obj); end
+
+  def self.reconfirmable(); end
+
+  def self.reconfirmable=(obj); end
+
+  def self.ref(arg); end
+
+  def self.regenerate_helpers!(); end
+
+  def self.reload_routes(); end
+
+  def self.reload_routes=(obj); end
+
+  def self.remember_for(); end
+
+  def self.remember_for=(obj); end
+
+  def self.rememberable_options(); end
+
+  def self.rememberable_options=(obj); end
+
+  def self.request_keys(); end
+
+  def self.request_keys=(obj); end
+
+  def self.reset_password_keys(); end
+
+  def self.reset_password_keys=(obj); end
+
+  def self.reset_password_within(); end
+
+  def self.reset_password_within=(obj); end
+
+  def self.router_name(); end
+
+  def self.router_name=(obj); end
+
+  def self.scoped_views(); end
+
+  def self.scoped_views=(obj); end
+
+  def self.secret_key(); end
+
+  def self.secret_key=(obj); end
+
+  def self.secure_compare(a, b); end
+
+  def self.send_email_changed_notification(); end
+
+  def self.send_email_changed_notification=(obj); end
+
+  def self.send_password_change_notification(); end
+
+  def self.send_password_change_notification=(obj); end
+
+  def self.setup(); end
+
+  def self.sign_in_after_change_password(); end
+
+  def self.sign_in_after_change_password=(obj); end
+
+  def self.sign_in_after_reset_password(); end
+
+  def self.sign_in_after_reset_password=(obj); end
+
+  def self.sign_out_all_scopes(); end
+
+  def self.sign_out_all_scopes=(obj); end
+
+  def self.sign_out_via(); end
+
+  def self.sign_out_via=(obj); end
+
+  def self.skip_session_storage(); end
+
+  def self.skip_session_storage=(obj); end
+
+  def self.stretches(); end
+
+  def self.stretches=(obj); end
+
+  def self.strip_whitespace_keys(); end
+
+  def self.strip_whitespace_keys=(obj); end
+
+  def self.timeout_in(); end
+
+  def self.timeout_in=(obj); end
+
+  def self.token_generator(); end
+
+  def self.token_generator=(obj); end
+
+  def self.unlock_in(); end
+
+  def self.unlock_in=(obj); end
+
+  def self.unlock_keys(); end
+
+  def self.unlock_keys=(obj); end
+
+  def self.unlock_strategy(); end
+
+  def self.unlock_strategy=(obj); end
+
+  def self.warden(&block); end
+
+  def self.warden_config(); end
+
+  def self.warden_config=(obj); end
+end
+
+class DeviseController
+  include ::Devise::Controllers::ScopedViews
+  def assert_is_devise_resource!(); end
+
+  def clean_up_passwords(object); end
+
+  def devise_i18n_options(options); end
+
+  def devise_mapping(); end
+
+  def find_message(kind, options=T.unsafe(nil)); end
+
+  def navigational_formats(); end
+
+  def require_no_authentication(); end
+
+  def resource(); end
+
+  def resource=(new_resource); end
+
+  def resource_class(); end
+
+  def resource_name(); end
+
+  def resource_params(); end
+
+  def respond_with_navigational(*args, &block); end
+
+  def scope_name(); end
+
+  def set_flash_message(key, kind, options=T.unsafe(nil)); end
+
+  def set_flash_message!(key, kind, options=T.unsafe(nil)); end
+
+  def set_minimum_password_length(); end
+
+  def signed_in_resource(); end
+
+  def successfully_sent?(resource); end
+
+  def translation_scope(); end
+
+  def unknown_action!(msg); end
+end
+
+class DeviseController
+end
+
+module DeviseHelper
+  def devise_error_messages!(); end
+end
+
+module DeviseHelper
 end
 
 class DidYouMean::ClassNameChecker
@@ -32360,90 +35013,35 @@ class Enumerator
   def self.produce(*_); end
 end
 
-class Errno::EAUTH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EAUTH = Errno::NOERROR
 
-class Errno::EAUTH
-end
+Errno::EBADARCH = Errno::NOERROR
 
-class Errno::EBADARCH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EBADEXEC = Errno::NOERROR
 
-class Errno::EBADARCH
-end
+Errno::EBADMACHO = Errno::NOERROR
 
-class Errno::EBADEXEC
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EBADEXEC
-end
-
-class Errno::EBADMACHO
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EBADMACHO
-end
-
-class Errno::EBADRPC
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EBADRPC
-end
+Errno::EBADRPC = Errno::NOERROR
 
 Errno::ECAPMODE = Errno::NOERROR
 
-Errno::EDEADLOCK = Errno::NOERROR
+Errno::EDEADLOCK = Errno::EDEADLK
 
-class Errno::EDEVERR
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EDEVERR
-end
+Errno::EDEVERR = Errno::NOERROR
 
 Errno::EDOOFUS = Errno::NOERROR
 
-class Errno::EFTYPE
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EFTYPE
-end
+Errno::EFTYPE = Errno::NOERROR
 
 Errno::EIPSEC = Errno::NOERROR
 
-class Errno::ELAST
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::ELAST = Errno::NOERROR
 
-class Errno::ELAST
-end
+Errno::ENEEDAUTH = Errno::NOERROR
 
-class Errno::ENEEDAUTH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::ENOATTR = Errno::NOERROR
 
-class Errno::ENEEDAUTH
-end
-
-class Errno::ENOATTR
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ENOATTR
-end
-
-class Errno::ENOPOLICY
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ENOPOLICY
-end
+Errno::ENOPOLICY = Errno::NOERROR
 
 Errno::ENOTCAPABLE = Errno::NOERROR
 
@@ -32454,56 +35052,21 @@ end
 class Errno::ENOTSUP
 end
 
-class Errno::EPROCLIM
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EPROCLIM = Errno::NOERROR
 
-class Errno::EPROCLIM
-end
+Errno::EPROCUNAVAIL = Errno::NOERROR
 
-class Errno::EPROCUNAVAIL
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EPROGMISMATCH = Errno::NOERROR
 
-class Errno::EPROCUNAVAIL
-end
+Errno::EPROGUNAVAIL = Errno::NOERROR
 
-class Errno::EPROGMISMATCH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EPWROFF = Errno::NOERROR
 
-class Errno::EPROGMISMATCH
-end
+Errno::EQFULL = Errno::NOERROR
 
-class Errno::EPROGUNAVAIL
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::ERPCMISMATCH = Errno::NOERROR
 
-class Errno::EPROGUNAVAIL
-end
-
-class Errno::EPWROFF
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EPWROFF
-end
-
-Errno::EQFULL = Errno::ELAST
-
-class Errno::ERPCMISMATCH
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ERPCMISMATCH
-end
-
-class Errno::ESHLIBVERS
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ESHLIBVERS
-end
+Errno::ESHLIBVERS = Errno::NOERROR
 
 module Erubi
   RANGE_ALL = ::T.let(nil, ::T.untyped)
@@ -32545,15 +35108,7 @@ class Etc::Group
 end
 
 class Etc::Passwd
-  def change(); end
-
-  def change=(_); end
-
   def dir=(_); end
-
-  def expire(); end
-
-  def expire=(_); end
 
   def gecos(); end
 
@@ -32566,10 +35121,6 @@ class Etc::Passwd
   def passwd=(_); end
 
   def shell=(_); end
-
-  def uclass(); end
-
-  def uclass=(_); end
 
   def uid=(_); end
 end
@@ -32728,6 +35279,7 @@ module FFI::Platform
   DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
   FLOAT_ALIGN = ::T.let(nil, ::T.untyped)
   FLOAT_SIZE = ::T.let(nil, ::T.untyped)
+  GNU_LIBC = ::T.let(nil, ::T.untyped)
   INT16_ALIGN = ::T.let(nil, ::T.untyped)
   INT16_SIZE = ::T.let(nil, ::T.untyped)
   INT32_ALIGN = ::T.let(nil, ::T.untyped)
@@ -34159,6 +36711,13 @@ end
 
 module FileUtils
   include ::FileUtils::StreamUtils_
+  def ruby(*args, **options, &block); end
+
+  def safe_ln(*args, **options); end
+
+  def sh(*cmd, &block); end
+
+  def split_all(path); end
   LN_SUPPORTED = ::T.let(nil, ::T.untyped)
   RUBY = ::T.let(nil, ::T.untyped)
 end
@@ -34701,10 +37260,7 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
-  def removed_method_calls(); end
-
   def to_ruby(); end
-  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -35453,6 +38009,37 @@ module INotify
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module INotify::Native::Flags
+  IN_ACCESS = ::T.let(nil, ::T.untyped)
+  IN_ALL_EVENTS = ::T.let(nil, ::T.untyped)
+  IN_ATTRIB = ::T.let(nil, ::T.untyped)
+  IN_CLOSE = ::T.let(nil, ::T.untyped)
+  IN_CLOSE_NOWRITE = ::T.let(nil, ::T.untyped)
+  IN_CLOSE_WRITE = ::T.let(nil, ::T.untyped)
+  IN_CREATE = ::T.let(nil, ::T.untyped)
+  IN_DELETE = ::T.let(nil, ::T.untyped)
+  IN_DELETE_SELF = ::T.let(nil, ::T.untyped)
+  IN_DONT_FOLLOW = ::T.let(nil, ::T.untyped)
+  IN_IGNORED = ::T.let(nil, ::T.untyped)
+  IN_ISDIR = ::T.let(nil, ::T.untyped)
+  IN_MASK_ADD = ::T.let(nil, ::T.untyped)
+  IN_MODIFY = ::T.let(nil, ::T.untyped)
+  IN_MOVE = ::T.let(nil, ::T.untyped)
+  IN_MOVED_FROM = ::T.let(nil, ::T.untyped)
+  IN_MOVED_TO = ::T.let(nil, ::T.untyped)
+  IN_MOVE_SELF = ::T.let(nil, ::T.untyped)
+  IN_ONESHOT = ::T.let(nil, ::T.untyped)
+  IN_ONLYDIR = ::T.let(nil, ::T.untyped)
+  IN_OPEN = ::T.let(nil, ::T.untyped)
+  IN_Q_OVERFLOW = ::T.let(nil, ::T.untyped)
+  IN_UNMOUNT = ::T.let(nil, ::T.untyped)
+  PC_NAME_MAX = ::T.let(nil, ::T.untyped)
+end
+
+class INotify::Notifier
+  RECURSIVE_BLACKLIST = ::T.let(nil, ::T.untyped)
+end
+
 class IO
   def beep(); end
 
@@ -35625,12 +38212,6 @@ class IRB::Context
 
   def newline_before_multiline_output?(); end
 
-  def omit_on_assignment(); end
-
-  def omit_on_assignment=(omit_on_assignment); end
-
-  def omit_on_assignment?(); end
-
   def use_colorize(); end
 
   def use_colorize?(); end
@@ -35678,8 +38259,6 @@ module IRB::ExtendCommandBundle
 
   def irb_help(*opts, &b); end
 
-  def irb_info(*opts, &b); end
-
   def irb_jobs(*opts, &b); end
 
   def irb_kill(*opts, &b); end
@@ -35721,8 +38300,6 @@ end
 
 class IRB::InputMethod
   def initialize(file=T.unsafe(nil)); end
-
-  def winsize(); end
 end
 
 class IRB::Inspector
@@ -35736,7 +38313,7 @@ class IRB::Irb
 
   def initialize(workspace=T.unsafe(nil), input_method=T.unsafe(nil)); end
 
-  def output_value(omit=T.unsafe(nil)); end
+  def output_value(); end
 
   def prompt(prompt, ltype, indent, line_no); end
   ASSIGNMENT_NODE_TYPES = ::T.let(nil, ::T.untyped)
@@ -35785,10 +38362,6 @@ end
 
 class IRB::ReadlineInputMethod
   def initialize(); end
-end
-
-class IRB::ReadlineInputMethod
-  def self.initialize_readline(); end
 end
 
 class IRB::ReidlineInputMethod
@@ -35855,6 +38428,7 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
+  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -36912,15 +39486,6 @@ class MessagePack::Timestamp
   TYPE = ::T.let(nil, ::T.untyped)
 end
 
-module MethodSource
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module MethodSource::CodeHelpers::IncompleteExpression
-  GENERIC_REGEXPS = ::T.let(nil, ::T.untyped)
-  RBX_ONLY_REGEXPS = ::T.let(nil, ::T.untyped)
-end
-
 module Mime
   ALL = ::T.let(nil, ::T.untyped)
   EXTENSION_LOOKUP = ::T.let(nil, ::T.untyped)
@@ -37147,6 +39712,8 @@ class Module
 
   def parents(); end
 
+  def rake_extension(method); end
+
   def redefine_method(method, &block); end
 
   def redefine_singleton_method(method, &block); end
@@ -37307,12 +39874,16 @@ class Net::HTTP
   ENVIRONMENT_VARIABLE_IS_MULTIUSER_SAFE = ::T.let(nil, ::T.untyped)
 end
 
+Net::HTTP::ProxyMod = Net::HTTP::ProxyDelta
+
 class Net::HTTPAlreadyReported
   HAS_BODY = ::T.let(nil, ::T.untyped)
 end
 
 class Net::HTTPAlreadyReported
 end
+
+Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
 
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
@@ -37325,13 +39896,7 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-class Net::HTTPInformation
-end
-
-Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
-
-class Net::HTTPInformation
-end
+Net::HTTPInformationCode = Net::HTTPInformation
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -37379,6 +39944,8 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
+Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
+
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -37387,17 +39954,13 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
+Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
+
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-class Net::HTTPSuccess
-end
-
-Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
-
-class Net::HTTPSuccess
-end
+Net::HTTPSuccessCode = Net::HTTPSuccess
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -37929,6 +40492,58 @@ module Nokogiri::XML::Searchable
   LOOKS_LIKE_XPATH = ::T.let(nil, ::T.untyped)
 end
 
+class Notification
+  include ::Notification::GeneratedAttributeMethods
+  include ::Notification::GeneratedAssociationMethods
+  def autosave_associated_records_for_notifiable(*args); end
+
+  def autosave_associated_records_for_recipient(*args); end
+
+  def autosave_associated_records_for_user(*args); end
+end
+
+module Notification::GeneratedAssociationMethods
+  def build_recipient(*args, &block); end
+
+  def build_user(*args, &block); end
+
+  def create_recipient(*args, &block); end
+
+  def create_recipient!(*args, &block); end
+
+  def create_user(*args, &block); end
+
+  def create_user!(*args, &block); end
+
+  def notifiable(); end
+
+  def notifiable=(value); end
+
+  def recipient(); end
+
+  def recipient=(value); end
+
+  def reload_notifiable(); end
+
+  def reload_recipient(); end
+
+  def reload_user(); end
+
+  def user(); end
+
+  def user=(value); end
+end
+
+module Notification::GeneratedAssociationMethods
+end
+
+module Notification::GeneratedAttributeMethods
+end
+
+module Notification::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
 class Object
   include ::JSON::Ext::Generator::GeneratorMethods::Object
   include ::ActiveSupport::Dependencies::Loadable
@@ -38183,6 +40798,10 @@ class OptionParser::ParseError
   def additional(); end
 
   def additional=(additional); end
+end
+
+module OrmAdapter
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 module PG
@@ -40189,6 +42808,10 @@ class Proc
   def clone(); end
 end
 
+module Process
+  CLOCK_TAI = ::T.let(nil, ::T.untyped)
+end
+
 class ProgressBar::Components::Bar
   DEFAULT_PROGRESS_MARK = ::T.let(nil, ::T.untyped)
   DEFAULT_REMAINDER_MARK = ::T.let(nil, ::T.untyped)
@@ -40403,6 +43026,7 @@ end
 
 class Puma::Server
   ThreadLocalKey = ::T.let(nil, ::T.untyped)
+  UNPACK_TCP_STATE_FROM_TCP_INFO = ::T.let(nil, ::T.untyped)
 end
 
 class Puma::ThreadPool
@@ -41734,44 +44358,6 @@ module Rails::Command
   def self.root(); end
 end
 
-module Rails::Conductor
-end
-
-module Rails::Conductor::ActionMailbox
-end
-
-class Rails::Conductor::ActionMailbox::InboundEmailsController
-  def create(); end
-
-  def index(); end
-
-  def new(); end
-
-  def show(); end
-end
-
-class Rails::Conductor::ActionMailbox::InboundEmailsController
-end
-
-class Rails::Conductor::ActionMailbox::ReroutesController
-  def create(); end
-end
-
-class Rails::Conductor::ActionMailbox::ReroutesController
-end
-
-module Rails::Conductor::ActionMailbox
-end
-
-class Rails::Conductor::BaseController
-end
-
-class Rails::Conductor::BaseController
-end
-
-module Rails::Conductor
-end
-
 module Rails::Configuration
 end
 
@@ -42316,13 +44902,6 @@ module Rails::Initializable
   def self.included(base); end
 end
 
-module Rails::LineFiltering
-  def run(reporter, options=T.unsafe(nil)); end
-end
-
-module Rails::LineFiltering
-end
-
 class Rails::MailersController
   def index(); end
 
@@ -42560,58 +45139,6 @@ class Rails::SourceAnnotationExtractor
   def self.enumerate(tag=T.unsafe(nil), options=T.unsafe(nil)); end
 end
 
-module Rails::TestUnit
-end
-
-class Rails::TestUnit::CompositeFilter
-  def ===(method); end
-
-  def initialize(runnable, filter, patterns); end
-
-  def named_filter(); end
-end
-
-class Rails::TestUnit::CompositeFilter
-end
-
-class Rails::TestUnit::Filter
-  def ===(method); end
-
-  def initialize(runnable, file, line); end
-end
-
-class Rails::TestUnit::Filter
-end
-
-class Rails::TestUnit::Runner
-  def filters(); end
-end
-
-class Rails::TestUnit::Runner
-  def self.attach_before_load_options(opts); end
-
-  def self.compose_filter(runnable, filter); end
-
-  def self.filters(); end
-
-  def self.load_tests(argv); end
-
-  def self.parse_options(argv); end
-
-  def self.rake_run(argv=T.unsafe(nil)); end
-
-  def self.run(argv=T.unsafe(nil)); end
-end
-
-module Rails::TestUnit
-end
-
-class Rails::TestUnitRailtie
-end
-
-class Rails::TestUnitRailtie
-end
-
 module Rails::VERSION
   MAJOR = ::T.let(nil, ::T.untyped)
   MINOR = ::T.let(nil, ::T.untyped)
@@ -42669,153 +45196,10 @@ module Rails
   def self.version(); end
 end
 
-module Rake
-  EARLY = ::T.let(nil, ::T.untyped)
-  EMPTY_TASK_ARGS = ::T.let(nil, ::T.untyped)
-  LATE = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
+module Rake::Cloneable
 end
 
-class Rake::Application
-  include ::Rake::TaskManager
-  include ::Rake::TraceOutput
-  def add_import(fn); end
-
-  def add_loader(ext, loader); end
-
-  def collect_command_line_tasks(args); end
-
-  def default_task_name(); end
-
-  def deprecate(old_usage, new_usage, call_site); end
-
-  def display_cause_details(ex); end
-
-  def display_error_message(ex); end
-
-  def display_exception_backtrace(ex); end
-
-  def display_exception_details(ex); end
-
-  def display_exception_details_seen(); end
-
-  def display_exception_message_details(ex); end
-
-  def display_prerequisites(); end
-
-  def display_tasks_and_comments(); end
-
-  def dynamic_width(); end
-
-  def dynamic_width_stty(); end
-
-  def dynamic_width_tput(); end
-
-  def exit_because_of_exception(ex); end
-
-  def find_rakefile_location(); end
-
-  def handle_options(argv); end
-
-  def has_cause?(ex); end
-
-  def have_rakefile(); end
-
-  def init(app_name=T.unsafe(nil), argv=T.unsafe(nil)); end
-
-  def invoke_task(task_string); end
-
-  def load_imports(); end
-
-  def load_rakefile(); end
-
-  def name(); end
-
-  def options(); end
-
-  def original_dir(); end
-
-  def parse_task_string(string); end
-
-  def print_rakefile_directory(location); end
-
-  def rake_require(file_name, paths=T.unsafe(nil), loaded=T.unsafe(nil)); end
-
-  def rakefile(); end
-
-  def rakefile_location(backtrace=T.unsafe(nil)); end
-
-  def raw_load_rakefile(); end
-
-  def run(argv=T.unsafe(nil)); end
-
-  def run_with_threads(); end
-
-  def set_default_options(); end
-
-  def standard_exception_handling(); end
-
-  def standard_rake_options(); end
-
-  def system_dir(); end
-
-  def terminal_columns(); end
-
-  def terminal_columns=(terminal_columns); end
-
-  def terminal_width(); end
-
-  def thread_pool(); end
-
-  def top_level(); end
-
-  def top_level_tasks(); end
-
-  def trace(*strings); end
-
-  def truncate(string, width); end
-
-  def truncate_output?(); end
-
-  def tty_output=(tty_output); end
-
-  def tty_output?(); end
-
-  def unix?(); end
-
-  def windows?(); end
-  DEFAULT_RAKEFILES = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::Application
-end
-
-module Rake::Backtrace
-  SUPPRESSED_PATHS = ::T.let(nil, ::T.untyped)
-  SUPPRESSED_PATHS_RE = ::T.let(nil, ::T.untyped)
-  SUPPRESS_PATTERN = ::T.let(nil, ::T.untyped)
-  SYS_KEYS = ::T.let(nil, ::T.untyped)
-  SYS_PATHS = ::T.let(nil, ::T.untyped)
-end
-
-module Rake::Backtrace
-  def self.collapse(backtrace); end
-end
-
-class Rake::CommandLineOptionError
-end
-
-class Rake::CommandLineOptionError
-end
-
-class Rake::CpuCounter
-  def count(); end
-
-  def count_with_default(default=T.unsafe(nil)); end
-end
-
-class Rake::CpuCounter
-  def self.count(); end
+module Rake::Cloneable
 end
 
 module Rake::DSL
@@ -42827,365 +45211,94 @@ end
 module Rake::DSL
 end
 
-class Rake::DefaultLoader
-  def load(fn); end
-end
-
-class Rake::DefaultLoader
-end
-
-class Rake::EarlyTime
-  include ::Comparable
-  include ::Singleton
-end
-
-class Rake::EarlyTime
-  extend ::Singleton::SingletonClassMethods
-end
-
-class Rake::FileCreationTask
-end
-
-class Rake::FileCreationTask
-end
-
-class Rake::FileList
-  ARRAY_METHODS = ::T.let(nil, ::T.untyped)
-  DEFAULT_IGNORE_PATTERNS = ::T.let(nil, ::T.untyped)
-  DEFAULT_IGNORE_PROCS = ::T.let(nil, ::T.untyped)
-  DELEGATING_METHODS = ::T.let(nil, ::T.untyped)
-  GLOB_PATTERN = ::T.let(nil, ::T.untyped)
-  MUST_DEFINE = ::T.let(nil, ::T.untyped)
-  MUST_NOT_DEFINE = ::T.let(nil, ::T.untyped)
-  SPECIAL_RETURN = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::FileTask
-end
-
-class Rake::FileTask
-end
-
 module Rake::FileUtilsExt
+  include ::FileUtils
   include ::FileUtils::StreamUtils_
+  def cd(*args, **options, &block); end
+
+  def chdir(*args, **options, &block); end
+
+  def chmod(*args, **options, &block); end
+
+  def chmod_R(*args, **options, &block); end
+
+  def chown(*args, **options, &block); end
+
+  def chown_R(*args, **options, &block); end
+
+  def copy(*args, **options, &block); end
+
+  def cp(*args, **options, &block); end
+
+  def cp_lr(*args, **options, &block); end
+
+  def cp_r(*args, **options, &block); end
+
+  def install(*args, **options, &block); end
+
+  def link(*args, **options, &block); end
+
+  def ln(*args, **options, &block); end
+
+  def ln_s(*args, **options, &block); end
+
+  def ln_sf(*args, **options, &block); end
+
+  def makedirs(*args, **options, &block); end
+
+  def mkdir(*args, **options, &block); end
+
+  def mkdir_p(*args, **options, &block); end
+
+  def mkpath(*args, **options, &block); end
+
+  def move(*args, **options, &block); end
+
+  def mv(*args, **options, &block); end
+
+  def nowrite(value=T.unsafe(nil)); end
+
+  def rake_check_options(options, *optdecl); end
+
+  def rake_output_message(message); end
+
+  def remove(*args, **options, &block); end
+
+  def rm(*args, **options, &block); end
+
+  def rm_f(*args, **options, &block); end
+
+  def rm_r(*args, **options, &block); end
+
+  def rm_rf(*args, **options, &block); end
+
+  def rmdir(*args, **options, &block); end
+
+  def rmtree(*args, **options, &block); end
+
+  def safe_unlink(*args, **options, &block); end
+
+  def symlink(*args, **options, &block); end
+
+  def touch(*args, **options, &block); end
+
+  def verbose(value=T.unsafe(nil)); end
+
+  def when_writing(msg=T.unsafe(nil)); end
   DEFAULT = ::T.let(nil, ::T.untyped)
 end
 
 module Rake::FileUtilsExt
+  extend ::Rake::FileUtilsExt
+  extend ::FileUtils
   extend ::FileUtils::StreamUtils_
-end
+  def self.nowrite_flag(); end
 
-class Rake::InvocationChain
-  def append(invocation); end
+  def self.nowrite_flag=(nowrite_flag); end
 
-  def member?(invocation); end
-  EMPTY = ::T.let(nil, ::T.untyped)
-end
+  def self.verbose_flag(); end
 
-class Rake::InvocationChain::EmptyInvocationChain
-  def append(invocation); end
-
-  def member?(obj); end
-end
-
-class Rake::InvocationChain::EmptyInvocationChain
-end
-
-class Rake::InvocationChain
-  def self.append(invocation, chain); end
-end
-
-module Rake::InvocationExceptionMixin
-  def chain(); end
-
-  def chain=(value); end
-end
-
-module Rake::InvocationExceptionMixin
-end
-
-class Rake::LateTime
-  include ::Comparable
-  include ::Singleton
-end
-
-class Rake::LateTime
-  extend ::Singleton::SingletonClassMethods
-end
-
-class Rake::LinkedList
-  include ::Enumerable
-  def ==(other); end
-
-  def conj(item); end
-
-  def each(&blk); end
-
-  def empty?(); end
-
-  def head(); end
-
-  def initialize(head, tail=T.unsafe(nil)); end
-
-  def tail(); end
-  EMPTY = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::LinkedList::EmptyLinkedList
-  def initialize(); end
-end
-
-class Rake::LinkedList::EmptyLinkedList
-end
-
-class Rake::LinkedList
-  def self.cons(head, tail); end
-
-  def self.empty(); end
-
-  def self.make(*args); end
-end
-
-class Rake::MultiTask
-end
-
-class Rake::MultiTask
-end
-
-class Rake::NameSpace
-  def [](name); end
-
-  def initialize(task_manager, scope_list); end
-
-  def scope(); end
-
-  def tasks(); end
-end
-
-class Rake::NameSpace
-end
-
-module Rake::PrivateReader
-end
-
-module Rake::PrivateReader::ClassMethods
-  def private_reader(*names); end
-end
-
-module Rake::PrivateReader::ClassMethods
-end
-
-module Rake::PrivateReader
-  def self.included(base); end
-end
-
-class Rake::Promise
-  def initialize(args, &block); end
-
-  def recorder(); end
-
-  def recorder=(recorder); end
-
-  def value(); end
-
-  def work(); end
-  NOT_SET = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::Promise
-end
-
-class Rake::PseudoStatus
-  def >>(n); end
-
-  def exited?(); end
-
-  def exitstatus(); end
-
-  def initialize(code=T.unsafe(nil)); end
-
-  def stopped?(); end
-
-  def to_i(); end
-end
-
-class Rake::PseudoStatus
-end
-
-Rake::RDocTask = RDoc::Task
-
-class Rake::RuleRecursionOverflowError
-  def add_target(target); end
-
-  def initialize(*args); end
-end
-
-class Rake::RuleRecursionOverflowError
-end
-
-class Rake::Scope
-  def path(); end
-
-  def path_with_task_name(task_name); end
-
-  def trim(n); end
-  EMPTY = ::T.let(nil, ::T.untyped)
-end
-
-class Rake::Scope::EmptyScope
-  def path(); end
-
-  def path_with_task_name(task_name); end
-end
-
-class Rake::Scope::EmptyScope
-end
-
-class Rake::Scope
-end
-
-class Rake::Task
-  def actions(); end
-
-  def add_description(description); end
-
-  def all_prerequisite_tasks(); end
-
-  def already_invoked(); end
-
-  def application(); end
-
-  def application=(application); end
-
-  def arg_description(); end
-
-  def arg_names(); end
-
-  def clear(); end
-
-  def clear_actions(); end
-
-  def clear_args(); end
-
-  def clear_comments(); end
-
-  def clear_prerequisites(); end
-
-  def collect_prerequisites(seen); end
-
-  def comment(); end
-
-  def comment=(comment); end
-
-  def enhance(deps=T.unsafe(nil), &block); end
-
-  def execute(args=T.unsafe(nil)); end
-
-  def full_comment(); end
-
-  def initialize(task_name, app); end
-
-  def investigation(); end
-
-  def invoke(*args); end
-
-  def invoke_prerequisites(task_args, invocation_chain); end
-
-  def invoke_prerequisites_concurrently(task_args, invocation_chain); end
-
-  def invoke_with_call_chain(task_args, invocation_chain); end
-
-  def locations(); end
-
-  def name(); end
-
-  def name_with_args(); end
-
-  def needed?(); end
-
-  def order_only_prerequisites(); end
-
-  def prereqs(); end
-
-  def prerequisite_tasks(); end
-
-  def prerequisites(); end
-
-  def reenable(); end
-
-  def scope(); end
-
-  def set_arg_names(args); end
-
-  def source(); end
-
-  def sources(); end
-
-  def sources=(sources); end
-
-  def timestamp(); end
-
-  def |(deps); end
-end
-
-class Rake::Task
-  def self.[](task_name); end
-
-  def self.clear(); end
-
-  def self.create_rule(*args, &block); end
-
-  def self.define_task(*args, &block); end
-
-  def self.format_deps(deps); end
-
-  def self.scope_name(scope, task_name); end
-
-  def self.task_defined?(task_name); end
-
-  def self.tasks(); end
-end
-
-class Rake::TaskArgumentError
-end
-
-class Rake::TaskArgumentError
-end
-
-class Rake::TaskArguments
-  include ::Enumerable
-  def [](index); end
-
-  def each(&block); end
-
-  def extras(); end
-
-  def fetch(*args, &block); end
-
-  def has_key?(key); end
-
-  def initialize(names, values, parent=T.unsafe(nil)); end
-
-  def key?(key); end
-
-  def lookup(name); end
-
-  def method_missing(sym, *args); end
-
-  def names(); end
-
-  def new_scope(names); end
-
-  def to_a(); end
-
-  def to_hash(); end
-
-  def values_at(*keys); end
-
-  def with_defaults(defaults); end
-end
-
-class Rake::TaskArguments
+  def self.verbose_flag=(verbose_flag); end
 end
 
 class Rake::TaskLib
@@ -43197,132 +45310,6 @@ class Rake::TaskLib
 end
 
 class Rake::TaskLib
-end
-
-module Rake::TaskManager
-  def [](task_name, scopes=T.unsafe(nil)); end
-
-  def clear(); end
-
-  def create_rule(*args, &block); end
-
-  def current_scope(); end
-
-  def define_task(task_class, *args, &block); end
-
-  def enhance_with_matching_rule(task_name, level=T.unsafe(nil)); end
-
-  def generate_did_you_mean_suggestions(task_name); end
-
-  def generate_message_for_undefined_task(task_name); end
-
-  def in_namespace(name); end
-
-  def initialize(); end
-
-  def intern(task_class, task_name); end
-
-  def last_description(); end
-
-  def last_description=(last_description); end
-
-  def lookup(task_name, initial_scope=T.unsafe(nil)); end
-
-  def resolve_args(args); end
-
-  def synthesize_file_task(task_name); end
-
-  def tasks(); end
-
-  def tasks_in_scope(scope); end
-end
-
-module Rake::TaskManager
-  def self.record_task_metadata(); end
-
-  def self.record_task_metadata=(record_task_metadata); end
-end
-
-class Rake::ThreadHistoryDisplay
-  include ::Rake::PrivateReader
-  def initialize(stats); end
-
-  def show(); end
-end
-
-class Rake::ThreadHistoryDisplay
-  extend ::Rake::PrivateReader::ClassMethods
-end
-
-class Rake::ThreadPool
-  def future(*args, &block); end
-
-  def gather_history(); end
-
-  def history(); end
-
-  def initialize(thread_count); end
-
-  def join(); end
-
-  def statistics(); end
-end
-
-class Rake::ThreadPool
-end
-
-module Rake::TraceOutput
-  def trace_on(out, *strings); end
-end
-
-module Rake::TraceOutput
-end
-
-module Rake::Version
-  BUILD = ::T.let(nil, ::T.untyped)
-  MAJOR = ::T.let(nil, ::T.untyped)
-  MINOR = ::T.let(nil, ::T.untyped)
-  NUMBERS = ::T.let(nil, ::T.untyped)
-  OTHER = ::T.let(nil, ::T.untyped)
-end
-
-module Rake::Version
-end
-
-module Rake::Win32
-end
-
-class Rake::Win32::Win32HomeError
-end
-
-class Rake::Win32::Win32HomeError
-end
-
-module Rake::Win32
-  def self.normalize(path); end
-
-  def self.win32_system_dir(); end
-
-  def self.windows?(); end
-end
-
-module Rake
-  extend ::Rake::FileUtilsExt
-  extend ::FileUtils
-  extend ::FileUtils::StreamUtils_
-  def self.add_rakelib(*files); end
-
-  def self.application(); end
-
-  def self.application=(app); end
-
-  def self.load_rakefile(path); end
-
-  def self.original_dir(); end
-
-  def self.suggested_thread_count(); end
-
-  def self.with_application(block_application=T.unsafe(nil)); end
 end
 
 class Random
@@ -44163,10 +46150,6 @@ class Reline::Config
 
   def editing_mode_is?(*val); end
 
-  def emacs_mode_string(); end
-
-  def emacs_mode_string=(emacs_mode_string); end
-
   def enable_keypad(); end
 
   def enable_keypad=(enable_keypad); end
@@ -44251,8 +46234,6 @@ class Reline::Config
 
   def reset_default_key_bindings(); end
 
-  def retrieve_string(str); end
-
   def show_all_if_ambiguous(); end
 
   def show_all_if_ambiguous=(show_all_if_ambiguous); end
@@ -44261,23 +46242,12 @@ class Reline::Config
 
   def show_all_if_unmodified=(show_all_if_unmodified); end
 
-  def show_mode_in_prompt(); end
-
-  def show_mode_in_prompt=(show_mode_in_prompt); end
-
   def test_mode(); end
-
-  def vi_cmd_mode_icon(); end
-
-  def vi_cmd_mode_icon=(vi_cmd_mode_icon); end
-
-  def vi_ins_mode_icon(); end
-
-  def vi_ins_mode_icon=(vi_ins_mode_icon); end
 
   def visible_stats(); end
 
   def visible_stats=(visible_stats); end
+  DEFAULT_PATH = ::T.let(nil, ::T.untyped)
   KEYSEQ_PATTERN = ::T.let(nil, ::T.untyped)
   VARIABLE_NAMES = ::T.let(nil, ::T.untyped)
   VARIABLE_NAME_SYMBOLS = ::T.let(nil, ::T.untyped)
@@ -44676,7 +46646,12 @@ class Reline::LineEditor
   def whole_buffer(); end
 
   def whole_lines(index: T.unsafe(nil), line: T.unsafe(nil)); end
+  CSI_REGEXP = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
+  OSC_REGEXP = ::T.let(nil, ::T.untyped)
   VI_MOTIONS = ::T.let(nil, ::T.untyped)
+  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 Reline::LineEditor::CompletionJourneyData = Struct::CompletionJourneyData
@@ -44699,13 +46674,8 @@ class Reline::LineEditor
 end
 
 class Reline::Unicode
-  CSI_REGEXP = ::T.let(nil, ::T.untyped)
   EscapedChars = ::T.let(nil, ::T.untyped)
   EscapedPairs = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
-  OSC_REGEXP = ::T.let(nil, ::T.untyped)
-  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 class Reline::Unicode::EastAsianWidth
@@ -44721,8 +46691,6 @@ class Reline::Unicode::EastAsianWidth
 end
 
 class Reline::Unicode
-  def self.calculate_width(str, allow_escape_code=T.unsafe(nil)); end
-
   def self.ed_transpose_words(line, byte_pointer); end
 
   def self.em_backward_word(line, byte_pointer); end
@@ -44742,8 +46710,6 @@ class Reline::Unicode
   def self.get_next_mbchar_size(line, byte_pointer); end
 
   def self.get_prev_mbchar_size(line, byte_pointer); end
-
-  def self.split_by_width(str, max_width, encoding=T.unsafe(nil)); end
 
   def self.vi_backward_word(line, byte_pointer); end
 
@@ -44930,6 +46896,92 @@ class Resolv::DNS
   def self.free_request_id(host, port, id); end
 
   def self.random(arg); end
+end
+
+module Responders
+end
+
+module Responders::CollectionResponder
+  def navigation_location(); end
+end
+
+module Responders::CollectionResponder
+end
+
+module Responders::ControllerMethod
+  def responders(*responders); end
+end
+
+module Responders::ControllerMethod
+end
+
+module Responders::FlashResponder
+  def controller_interpolation_options(); end
+
+  def flash_defaults_by_namespace(status); end
+
+  def initialize(controller, resources, options=T.unsafe(nil)); end
+
+  def mount_i18n_options(status); end
+
+  def resource_name(); end
+
+  def set_flash(key, value); end
+
+  def set_flash_message!(); end
+
+  def set_flash_message?(); end
+
+  def set_flash_now?(); end
+
+  def to_html(); end
+
+  def to_js(); end
+end
+
+module Responders::FlashResponder
+  def self.flash_keys(); end
+
+  def self.flash_keys=(flash_keys); end
+
+  def self.helper(); end
+
+  def self.helper=(helper); end
+
+  def self.namespace_lookup(); end
+
+  def self.namespace_lookup=(namespace_lookup); end
+end
+
+module Responders::HttpCacheResponder
+  def do_http_cache!(); end
+
+  def do_http_cache?(); end
+
+  def initialize(controller, resources, options=T.unsafe(nil)); end
+
+  def persisted?(); end
+
+  def to_format(); end
+end
+
+module Responders::HttpCacheResponder
+end
+
+module Responders::LocationResponder
+end
+
+module Responders::LocationResponder
+  def self.included(_base); end
+end
+
+class Responders::Railtie
+end
+
+class Responders::Railtie
+end
+
+module Responders
 end
 
 class Ripper
@@ -46815,7 +48867,6 @@ class RubyLex::TerminateLineInput
 end
 
 class RubyLex
-  def self.compile_with_errors_suppressed(code); end
 end
 
 class RubyVM::AbstractSyntaxTree::Node
@@ -47266,185 +49317,17 @@ module Skiptrace
 end
 
 class Socket
-  AF_CCITT = ::T.let(nil, ::T.untyped)
-  AF_CHAOS = ::T.let(nil, ::T.untyped)
-  AF_CNT = ::T.let(nil, ::T.untyped)
-  AF_COIP = ::T.let(nil, ::T.untyped)
-  AF_DATAKIT = ::T.let(nil, ::T.untyped)
-  AF_DLI = ::T.let(nil, ::T.untyped)
-  AF_E164 = ::T.let(nil, ::T.untyped)
-  AF_ECMA = ::T.let(nil, ::T.untyped)
-  AF_HYLINK = ::T.let(nil, ::T.untyped)
-  AF_IMPLINK = ::T.let(nil, ::T.untyped)
-  AF_ISO = ::T.let(nil, ::T.untyped)
-  AF_LAT = ::T.let(nil, ::T.untyped)
-  AF_LINK = ::T.let(nil, ::T.untyped)
-  AF_NATM = ::T.let(nil, ::T.untyped)
-  AF_NDRV = ::T.let(nil, ::T.untyped)
-  AF_NETBIOS = ::T.let(nil, ::T.untyped)
-  AF_NS = ::T.let(nil, ::T.untyped)
-  AF_OSI = ::T.let(nil, ::T.untyped)
-  AF_PPP = ::T.let(nil, ::T.untyped)
-  AF_PUP = ::T.let(nil, ::T.untyped)
-  AF_SIP = ::T.let(nil, ::T.untyped)
-  AF_SYSTEM = ::T.let(nil, ::T.untyped)
-  AI_DEFAULT = ::T.let(nil, ::T.untyped)
-  AI_MASK = ::T.let(nil, ::T.untyped)
-  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
-  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
-  EAI_MAX = ::T.let(nil, ::T.untyped)
-  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
-  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
-  IFF_LINK0 = ::T.let(nil, ::T.untyped)
-  IFF_LINK1 = ::T.let(nil, ::T.untyped)
-  IFF_LINK2 = ::T.let(nil, ::T.untyped)
-  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
-  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
-  IPPROTO_EON = ::T.let(nil, ::T.untyped)
-  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
-  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
-  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
-  IPPROTO_ND = ::T.let(nil, ::T.untyped)
-  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
-  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
-  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
-  IP_RECVIF = ::T.let(nil, ::T.untyped)
-  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
-  MSG_EOF = ::T.let(nil, ::T.untyped)
-  MSG_FLUSH = ::T.let(nil, ::T.untyped)
-  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
-  MSG_HOLD = ::T.let(nil, ::T.untyped)
-  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
-  MSG_SEND = ::T.let(nil, ::T.untyped)
-  PF_CCITT = ::T.let(nil, ::T.untyped)
-  PF_CHAOS = ::T.let(nil, ::T.untyped)
-  PF_CNT = ::T.let(nil, ::T.untyped)
-  PF_COIP = ::T.let(nil, ::T.untyped)
-  PF_DATAKIT = ::T.let(nil, ::T.untyped)
-  PF_DLI = ::T.let(nil, ::T.untyped)
-  PF_ECMA = ::T.let(nil, ::T.untyped)
-  PF_HYLINK = ::T.let(nil, ::T.untyped)
-  PF_IMPLINK = ::T.let(nil, ::T.untyped)
-  PF_ISO = ::T.let(nil, ::T.untyped)
-  PF_LAT = ::T.let(nil, ::T.untyped)
-  PF_LINK = ::T.let(nil, ::T.untyped)
-  PF_NATM = ::T.let(nil, ::T.untyped)
-  PF_NDRV = ::T.let(nil, ::T.untyped)
-  PF_NETBIOS = ::T.let(nil, ::T.untyped)
-  PF_NS = ::T.let(nil, ::T.untyped)
-  PF_OSI = ::T.let(nil, ::T.untyped)
-  PF_PIP = ::T.let(nil, ::T.untyped)
-  PF_PPP = ::T.let(nil, ::T.untyped)
-  PF_PUP = ::T.let(nil, ::T.untyped)
-  PF_RTIP = ::T.let(nil, ::T.untyped)
-  PF_SIP = ::T.let(nil, ::T.untyped)
-  PF_SYSTEM = ::T.let(nil, ::T.untyped)
-  PF_XTP = ::T.let(nil, ::T.untyped)
-  SCM_CREDS = ::T.let(nil, ::T.untyped)
-  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
-  SO_NKE = ::T.let(nil, ::T.untyped)
-  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
-  SO_NREAD = ::T.let(nil, ::T.untyped)
-  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
-  SO_WANTMORE = ::T.let(nil, ::T.untyped)
-  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
-  TCP_NOOPT = ::T.let(nil, ::T.untyped)
-  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
+  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
 end
 
 module Socket::Constants
-  AF_CCITT = ::T.let(nil, ::T.untyped)
-  AF_CHAOS = ::T.let(nil, ::T.untyped)
-  AF_CNT = ::T.let(nil, ::T.untyped)
-  AF_COIP = ::T.let(nil, ::T.untyped)
-  AF_DATAKIT = ::T.let(nil, ::T.untyped)
-  AF_DLI = ::T.let(nil, ::T.untyped)
-  AF_E164 = ::T.let(nil, ::T.untyped)
-  AF_ECMA = ::T.let(nil, ::T.untyped)
-  AF_HYLINK = ::T.let(nil, ::T.untyped)
-  AF_IMPLINK = ::T.let(nil, ::T.untyped)
-  AF_ISO = ::T.let(nil, ::T.untyped)
-  AF_LAT = ::T.let(nil, ::T.untyped)
-  AF_LINK = ::T.let(nil, ::T.untyped)
-  AF_NATM = ::T.let(nil, ::T.untyped)
-  AF_NDRV = ::T.let(nil, ::T.untyped)
-  AF_NETBIOS = ::T.let(nil, ::T.untyped)
-  AF_NS = ::T.let(nil, ::T.untyped)
-  AF_OSI = ::T.let(nil, ::T.untyped)
-  AF_PPP = ::T.let(nil, ::T.untyped)
-  AF_PUP = ::T.let(nil, ::T.untyped)
-  AF_SIP = ::T.let(nil, ::T.untyped)
-  AF_SYSTEM = ::T.let(nil, ::T.untyped)
-  AI_DEFAULT = ::T.let(nil, ::T.untyped)
-  AI_MASK = ::T.let(nil, ::T.untyped)
-  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
-  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
-  EAI_MAX = ::T.let(nil, ::T.untyped)
-  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
-  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
-  IFF_LINK0 = ::T.let(nil, ::T.untyped)
-  IFF_LINK1 = ::T.let(nil, ::T.untyped)
-  IFF_LINK2 = ::T.let(nil, ::T.untyped)
-  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
-  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
-  IPPROTO_EON = ::T.let(nil, ::T.untyped)
-  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
-  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
-  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
-  IPPROTO_ND = ::T.let(nil, ::T.untyped)
-  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
-  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
-  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
-  IP_RECVIF = ::T.let(nil, ::T.untyped)
-  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
-  MSG_EOF = ::T.let(nil, ::T.untyped)
-  MSG_FLUSH = ::T.let(nil, ::T.untyped)
-  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
-  MSG_HOLD = ::T.let(nil, ::T.untyped)
-  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
-  MSG_SEND = ::T.let(nil, ::T.untyped)
-  PF_CCITT = ::T.let(nil, ::T.untyped)
-  PF_CHAOS = ::T.let(nil, ::T.untyped)
-  PF_CNT = ::T.let(nil, ::T.untyped)
-  PF_COIP = ::T.let(nil, ::T.untyped)
-  PF_DATAKIT = ::T.let(nil, ::T.untyped)
-  PF_DLI = ::T.let(nil, ::T.untyped)
-  PF_ECMA = ::T.let(nil, ::T.untyped)
-  PF_HYLINK = ::T.let(nil, ::T.untyped)
-  PF_IMPLINK = ::T.let(nil, ::T.untyped)
-  PF_ISO = ::T.let(nil, ::T.untyped)
-  PF_LAT = ::T.let(nil, ::T.untyped)
-  PF_LINK = ::T.let(nil, ::T.untyped)
-  PF_NATM = ::T.let(nil, ::T.untyped)
-  PF_NDRV = ::T.let(nil, ::T.untyped)
-  PF_NETBIOS = ::T.let(nil, ::T.untyped)
-  PF_NS = ::T.let(nil, ::T.untyped)
-  PF_OSI = ::T.let(nil, ::T.untyped)
-  PF_PIP = ::T.let(nil, ::T.untyped)
-  PF_PPP = ::T.let(nil, ::T.untyped)
-  PF_PUP = ::T.let(nil, ::T.untyped)
-  PF_RTIP = ::T.let(nil, ::T.untyped)
-  PF_SIP = ::T.let(nil, ::T.untyped)
-  PF_SYSTEM = ::T.let(nil, ::T.untyped)
-  PF_XTP = ::T.let(nil, ::T.untyped)
-  SCM_CREDS = ::T.let(nil, ::T.untyped)
-  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
-  SO_NKE = ::T.let(nil, ::T.untyped)
-  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
-  SO_NREAD = ::T.let(nil, ::T.untyped)
-  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
-  SO_WANTMORE = ::T.let(nil, ::T.untyped)
-  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
-  TCP_NOOPT = ::T.let(nil, ::T.untyped)
-  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
+  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
 end
 
 class SortedSet
@@ -47461,253 +49344,6 @@ end
 module SourceAnnotationExtractor
 end
 
-module Sprockets
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::BabelProcessor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Base
-  include ::Sprockets::SourceMapUtils
-  include ::Sprockets::Dependencies
-  include ::Sprockets::Compressing
-  include ::Sprockets::Exporting
-  include ::Sprockets::Loader
-  include ::Sprockets::DigestUtils
-  include ::Sprockets::Transformers
-  include ::Sprockets::PathDependencyUtils
-  include ::Sprockets::Processing
-  include ::Sprockets::Mime
-  include ::Sprockets::Utils
-  include ::Sprockets::URIUtils
-  include ::Sprockets::PathDigestUtils
-  include ::Sprockets::ProcessorUtils
-end
-
-module Sprockets::Bower
-  POSSIBLE_BOWER_JSONS = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Cache
-  PEEK_SIZE = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Cache::FileStore
-  DEFAULT_MAX_SIZE = ::T.let(nil, ::T.untyped)
-  EXCLUDED_DIRS = ::T.let(nil, ::T.untyped)
-  GITKEEP_FILES = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Cache::MemoryStore
-  DEFAULT_MAX_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Cache::NullStore
-  def clear(options=T.unsafe(nil)); end
-
-  def get(key); end
-
-  def set(key, value); end
-end
-
-class Sprockets::Cache::NullStore
-end
-
-class Sprockets::ClosureCompressor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::CoffeeScriptProcessor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Configuration
-  include ::Sprockets::Dependencies
-  include ::Sprockets::Compressing
-  include ::Sprockets::Exporting
-  include ::Sprockets::Processing
-  include ::Sprockets::Transformers
-  include ::Sprockets::Mime
-  include ::Sprockets::Utils
-  include ::Sprockets::URIUtils
-  include ::Sprockets::PathDigestUtils
-  include ::Sprockets::ProcessorUtils
-  include ::Sprockets::HTTPUtils
-  include ::Sprockets::DigestUtils
-end
-
-class Sprockets::Context::ENVProxy
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Dependencies
-  include ::Sprockets::URIUtils
-  include ::Sprockets::PathDigestUtils
-  include ::Sprockets::PathUtils
-end
-
-module Sprockets::DigestUtils
-  DIGEST_SIZES = ::T.let(nil, ::T.untyped)
-  HASH_ALGORITHMS = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::DirectiveProcessor
-  DIRECTIVE_PATTERN = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::EcoProcessor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::EjsProcessor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::EncodingUtils
-  BOM = ::T.let(nil, ::T.untyped)
-  CHARSET_DETECT = ::T.let(nil, ::T.untyped)
-  CHARSET_SIZE = ::T.let(nil, ::T.untyped)
-  CHARSET_START = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::JSMincCompressor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Loader
-  include ::Sprockets::Transformers
-  include ::Sprockets::Resolve
-  include ::Sprockets::PathDependencyUtils
-  include ::Sprockets::PathUtils
-  include ::Sprockets::Processing
-  include ::Sprockets::Utils
-  include ::Sprockets::URIUtils
-  include ::Sprockets::ProcessorUtils
-end
-
-module Sprockets::ManifestUtils
-  MANIFEST_RE = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Mime
-  include ::Sprockets::Utils
-end
-
-module Sprockets::PathDigestUtils
-  include ::Sprockets::PathUtils
-end
-
-module Sprockets::PathUtils
-  SEPARATOR_PATTERN = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Paths
-  include ::Sprockets::Utils
-end
-
-module Sprockets::Processing
-  include ::Sprockets::Utils
-  include ::Sprockets::URIUtils
-end
-
-module Sprockets::ProcessorUtils
-  VALID_METADATA_COMPOUND_TYPES = ::T.let(nil, ::T.untyped)
-  VALID_METADATA_COMPOUND_TYPES_HASH = ::T.let(nil, ::T.untyped)
-  VALID_METADATA_TYPES = ::T.let(nil, ::T.untyped)
-  VALID_METADATA_VALUE_TYPES = ::T.let(nil, ::T.untyped)
-  VALID_METADATA_VALUE_TYPES_HASH = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::ProcessorUtils::CompositeProcessor
-  PLURAL = ::T.let(nil, ::T.untyped)
-  SINGULAR = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Rails
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Rails::Context
-  include ::ActionView::Helpers::TagHelper
-  include ::ActionView::Helpers::CaptureHelper
-  include ::ActionView::Helpers::OutputSafetyHelper
-  include ::ActionView::Helpers::AssetTagHelper
-  include ::ActionView::Helpers::AssetUrlHelper
-end
-
-module Sprockets::Rails::Helper
-  include ::ActionView::Helpers::TagHelper
-  include ::ActionView::Helpers::CaptureHelper
-  include ::ActionView::Helpers::OutputSafetyHelper
-  include ::ActionView::Helpers::AssetTagHelper
-  include ::ActionView::Helpers::AssetUrlHelper
-  VIEW_ACCESSORS = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Railtie
-  LOOSE_APP_ASSETS = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Railtie::OrderedOptions
-end
-
-module Sprockets::Resolve
-  include ::Sprockets::PathDependencyUtils
-  include ::Sprockets::PathUtils
-  include ::Sprockets::URIUtils
-end
-
-class Sprockets::SassCompressor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Server
-  ALLOWED_REQUEST_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::SourceMapUtils
-  BASE64_DIGITS = ::T.let(nil, ::T.untyped)
-  BASE64_VALUES = ::T.let(nil, ::T.untyped)
-  VLQ_BASE = ::T.let(nil, ::T.untyped)
-  VLQ_BASE_MASK = ::T.let(nil, ::T.untyped)
-  VLQ_BASE_SHIFT = ::T.let(nil, ::T.untyped)
-  VLQ_CONTINUATION_BIT = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets::Transformers
-  include ::Sprockets::Utils
-  include ::Sprockets::ProcessorUtils
-end
-
-class Sprockets::UglifierCompressor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::Utils::Gzip
-  COMPRESSABLE_MIME_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Sprockets::YUICompressor
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Sprockets
-  extend ::Sprockets::Dependencies
-  extend ::Sprockets::Compressing
-  extend ::Sprockets::Exporting
-  extend ::Sprockets::Processing
-  extend ::Sprockets::Transformers
-  extend ::Sprockets::Mime
-  extend ::Sprockets::Utils
-  extend ::Sprockets::URIUtils
-  extend ::Sprockets::PathDigestUtils
-  extend ::Sprockets::HTTPUtils
-  extend ::Sprockets::DigestUtils
-end
-
 module StateMachines
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -47722,6 +49358,16 @@ end
 
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
+  def ext(newext=T.unsafe(nil)); end
+
+  def pathmap(spec=T.unsafe(nil), &block); end
+
+  def pathmap_explode(); end
+
+  def pathmap_partial(n); end
+
+  def pathmap_replace(patterns, &block); end
+
   def shellescape(); end
 
   def shellsplit(); end
@@ -48643,6 +50289,99 @@ end
 module UnicodeNormalize
 end
 
+class User
+  include ::User::GeneratedAttributeMethods
+  include ::User::GeneratedAssociationMethods
+  include ::Devise::Models::Authenticatable
+  include ::Devise::Models::RemoteUserAuthenticatable
+  def after_add_for_notifications(); end
+
+  def after_add_for_notifications=(val); end
+
+  def after_add_for_notifications?(); end
+
+  def after_remove_for_notifications(); end
+
+  def after_remove_for_notifications=(val); end
+
+  def after_remove_for_notifications?(); end
+
+  def autosave_associated_records_for_notifications(*args); end
+
+  def before_add_for_notifications(); end
+
+  def before_add_for_notifications=(val); end
+
+  def before_add_for_notifications?(); end
+
+  def before_remove_for_notifications(); end
+
+  def before_remove_for_notifications=(val); end
+
+  def before_remove_for_notifications?(); end
+
+  def devise_modules(); end
+
+  def devise_modules?(); end
+
+  def validate_associated_records_for_notifications(*args); end
+end
+
+module User::GeneratedAssociationMethods
+  def notification_ids(); end
+
+  def notification_ids=(ids); end
+
+  def notifications(); end
+
+  def notifications=(value); end
+end
+
+module User::GeneratedAssociationMethods
+end
+
+module User::GeneratedAttributeMethods
+end
+
+module User::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+class User
+  extend ::Devise::Models::Authenticatable::ClassMethods
+  def self.after_add_for_notifications(); end
+
+  def self.after_add_for_notifications=(val); end
+
+  def self.after_add_for_notifications?(); end
+
+  def self.after_remove_for_notifications(); end
+
+  def self.after_remove_for_notifications=(val); end
+
+  def self.after_remove_for_notifications?(); end
+
+  def self.before_add_for_notifications(); end
+
+  def self.before_add_for_notifications=(val); end
+
+  def self.before_add_for_notifications?(); end
+
+  def self.before_remove_for_notifications(); end
+
+  def self.before_remove_for_notifications=(val); end
+
+  def self.before_remove_for_notifications?(); end
+
+  def self.devise_modules(); end
+
+  def self.devise_modules=(val); end
+
+  def self.devise_modules?(); end
+
+  def self.find_for_remote_user_authentication(env); end
+end
+
 class Vector
   include ::ExceptionForMatrix
   include ::Matrix::CoercionHelper
@@ -48991,6 +50730,67 @@ class ViewComponentsController
 end
 
 class ViewComponentsController
+end
+
+module Warden::Mixins::Common
+  def cookies(); end
+end
+
+class Warden::Proxy
+  ENV_SESSION_OPTIONS = ::T.let(nil, ::T.untyped)
+  ENV_WARDEN_ERRORS = ::T.let(nil, ::T.untyped)
+end
+
+class Warden::SessionSerializer
+  def user_deserialize(args); end
+
+  def user_serialize(record); end
+end
+
+module Warden::Test::Helpers
+  def login_as(user, opts=T.unsafe(nil)); end
+
+  def logout(*scopes); end
+end
+
+module Warden::Test::Helpers
+  def self.included(_base); end
+end
+
+module Warden::Test::Mock
+  def warden(); end
+end
+
+class Warden::Test::Mock::Session
+  def app(); end
+
+  def app=(app); end
+
+  def call(e); end
+
+  def initialize(app, _configs=T.unsafe(nil)); end
+end
+
+class Warden::Test::Mock::Session
+end
+
+module Warden::Test::Mock
+  def self.included(_base); end
+end
+
+module Warden::Test::WardenHelpers
+  def _on_next_request(); end
+
+  def asset_paths(); end
+
+  def asset_paths=(*vals); end
+
+  def on_next_request(&blk); end
+
+  def test_reset!(); end
+end
+
+module Warden::Test::WardenHelpers
 end
 
 module Warning
@@ -49804,6 +51604,8 @@ class Work
 
   def after_remove_for_related_works?(); end
 
+  def autosave_associated_records_for_collection(*args); end
+
   def autosave_associated_records_for_contributors(*args); end
 
   def autosave_associated_records_for_files_attachments(*args); end
@@ -49895,6 +51697,12 @@ module Work::FilesAttachmentsAssociationExtension
 end
 
 module Work::GeneratedAssociationMethods
+  def build_collection(*args, &block); end
+
+  def collection(); end
+
+  def collection=(value); end
+
   def contributor_ids(); end
 
   def contributor_ids=(ids); end
@@ -49902,6 +51710,10 @@ module Work::GeneratedAssociationMethods
   def contributors(); end
 
   def contributors=(value); end
+
+  def create_collection(*args, &block); end
+
+  def create_collection!(*args, &block); end
 
   def files(); end
 
@@ -49938,6 +51750,8 @@ module Work::GeneratedAssociationMethods
   def related_works(); end
 
   def related_works=(value); end
+
+  def reload_collection(); end
 end
 
 module Work::GeneratedAssociationMethods

@@ -10,6 +10,8 @@
       <%= image_pack_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
     </a>
 
+    <div id="notifications"></div>
+
     <a class="nav-link" href="#">Help</a>
   </nav>
 </header>
@@ -29,7 +31,7 @@
         </p>
 
         <div class="d-flex flex-column flex-md-row">
-          <%= link_to 'Start here', new_collection_work_path(Collection.all.first), class: 'btn btn-primary btn-lg mb-3 mr-md-3' %> 
+          <%= link_to 'Start here', new_collection_work_path(Collection.all.first), class: 'btn btn-primary btn-lg mb-3 mr-md-3' %>
         </div>
         <p class="text-muted mb-0">
            Not ready to deposit? Learn more about the process. It's a few simple steps and often takes less than 10 minutes

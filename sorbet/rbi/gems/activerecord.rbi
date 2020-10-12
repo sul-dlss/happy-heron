@@ -147,7 +147,7 @@ end
 module Arel::Attributes
   def self.for(column); end
 end
-class Anonymous_Struct_17 < Struct
+class Anonymous_Struct_20 < Struct
   def name; end
   def name=(_); end
   def relation; end
@@ -157,7 +157,7 @@ class Anonymous_Struct_17 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Arel::Attributes::Attribute < Anonymous_Struct_17
+class Arel::Attributes::Attribute < Anonymous_Struct_20
   def able_to_type_cast?; end
   def lower; end
   def type_cast_for_database(value); end
@@ -636,7 +636,7 @@ class Arel::Visitors::Dot::Node
   def name; end
   def name=(arg0); end
 end
-class Anonymous_Struct_18 < Struct
+class Anonymous_Struct_21 < Struct
   def from; end
   def from=(_); end
   def name; end
@@ -648,7 +648,7 @@ class Anonymous_Struct_18 < Struct
   def to; end
   def to=(_); end
 end
-class Arel::Visitors::Dot::Edge < Anonymous_Struct_18
+class Arel::Visitors::Dot::Edge < Anonymous_Struct_21
 end
 class Arel::Visitors::IBM_DB < Arel::Visitors::ToSql
   def collect_optimizer_hints(o, collector); end
@@ -2148,6 +2148,7 @@ end
 class ActiveRecord::Scoping::ScopeRegistry
   def initialize; end
   def raise_invalid_scope_type!(scope_type); end
+  def self.value_for(**, &&); end
   def set_value_for(scope_type, model, value); end
   def value_for(scope_type, model, skip_inherited_scope = nil); end
   extend ActiveSupport::PerThreadRegistry
@@ -2457,6 +2458,7 @@ class ActiveRecord::ExplainRegistry
   def queries; end
   def queries=(arg0); end
   def reset; end
+  def self.collect?(**, &&); end
   extend ActiveSupport::PerThreadRegistry
 end
 class ActiveRecord::ExplainSubscriber
@@ -2793,7 +2795,7 @@ class ActiveRecord::Type::Time < ActiveModel::Type::Time
   def serialize(value); end
   include ActiveRecord::Type::Internal::Timezone
 end
-class ActiveRecord::Type::Time::Value < Anonymous_Delegator_19
+class ActiveRecord::Type::Time::Value < Anonymous_Delegator_22
 end
 class ActiveRecord::Type::Text < ActiveModel::Type::String
   def type; end
@@ -2802,7 +2804,7 @@ class ActiveRecord::Type::UnsignedInteger < ActiveModel::Type::Integer
   def max_value; end
   def min_value; end
 end
-class ActiveRecord::Type::Serialized < Anonymous_Delegator_20
+class ActiveRecord::Type::Serialized < Anonymous_Delegator_23
   def accessor; end
   def assert_valid_value(value); end
   def changed_in_place?(raw_old_value, value); end
@@ -2944,7 +2946,7 @@ module ActiveRecord::Core::ClassMethods
   def table_metadata; end
   def type_caster; end
 end
-class ActiveRecord::Core::InspectionMask < Anonymous_Delegator_21
+class ActiveRecord::Core::InspectionMask < Anonymous_Delegator_24
   def pretty_print(pp); end
 end
 class ActiveRecord::ConnectionTimeoutError < ActiveRecord::ConnectionNotEstablished
@@ -3384,7 +3386,7 @@ module ActiveRecord::Locking::Optimistic::ClassMethods
   def reset_locking_column; end
   def update_counters(id, counters); end
 end
-class ActiveRecord::Locking::LockingType < Anonymous_Delegator_22
+class ActiveRecord::Locking::LockingType < Anonymous_Delegator_25
   def deserialize(value); end
   def encode_with(coder); end
   def init_with(coder); end
@@ -3449,7 +3451,7 @@ end
 module ActiveRecord::AttributeMethods::TimeZoneConversion
   extend ActiveSupport::Concern
 end
-class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter < Anonymous_Delegator_23
+class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter < Anonymous_Delegator_26
   def cast(value); end
   def convert_time_to_time_zone(value); end
   def deserialize(value); end
@@ -3785,6 +3787,7 @@ module ActiveRecord::Suppressor::ClassMethods
 end
 class ActiveRecord::SuppressorRegistry
   def initialize; end
+  def self.suppressed(**, &&); end
   def suppressed; end
   extend ActiveSupport::PerThreadRegistry
 end
@@ -4459,7 +4462,7 @@ module ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
   def validate_constraint(table_name, constraint_name); end
   def validate_foreign_key(from_table, to_table = nil, **options); end
 end
-class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata < Anonymous_Delegator_24
+class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata < Anonymous_Delegator_27
   def ==(other); end
   def eql?(other); end
   def fmod; end
@@ -4860,7 +4863,6 @@ class ActiveRecord::Base
   def validation_context=(arg0); end
   def verbose_query_logs; end
   def warn_on_records_fetched_greater_than; end
-  extend ActionText::Attribute::ClassMethods
   extend ActiveModel::AttributeMethods::ClassMethods
   extend ActiveModel::Callbacks
   extend ActiveModel::Conversion::ClassMethods
@@ -4919,7 +4921,8 @@ class ActiveRecord::Base
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::DescendantsTracker
-  include ActionText::Attribute
+  extend Devise::Models
+  extend OrmAdapter::ToAdapter
   include ActiveModel::AttributeMethods
   include ActiveModel::AttributeMethods
   include ActiveModel::Conversion
@@ -5548,6 +5551,19 @@ class ActiveRecord::AssociationRelation < ActiveRecord::Relation
   def new(attributes = nil, &block); end
   def proxy_association; end
 end
+class ActiveRecord::Associations::Builder::CollectionAssociation < ActiveRecord::Associations::Builder::Association
+  def self.define_callback(model, callback_name, name, options); end
+  def self.define_callbacks(model, reflection); end
+  def self.define_extensions(model, name, &block); end
+  def self.define_readers(mixin, name); end
+  def self.define_writers(mixin, name); end
+  def self.valid_options(options); end
+end
+class ActiveRecord::Associations::Builder::HasMany < ActiveRecord::Associations::Builder::CollectionAssociation
+  def self.macro; end
+  def self.valid_dependent_options; end
+  def self.valid_options(options); end
+end
 class ActiveRecord::Associations::Builder::SingularAssociation < ActiveRecord::Associations::Builder::Association
   def self.define_accessors(model, reflection); end
   def self.define_constructors(mixin, name); end
@@ -5562,19 +5578,6 @@ class ActiveRecord::Associations::Builder::BelongsTo < ActiveRecord::Association
   def self.define_validations(model, reflection); end
   def self.macro; end
   def self.touch_record(o, changes, foreign_key, name, touch, touch_method); end
-  def self.valid_dependent_options; end
-  def self.valid_options(options); end
-end
-class ActiveRecord::Associations::Builder::CollectionAssociation < ActiveRecord::Associations::Builder::Association
-  def self.define_callback(model, callback_name, name, options); end
-  def self.define_callbacks(model, reflection); end
-  def self.define_extensions(model, name, &block); end
-  def self.define_readers(mixin, name); end
-  def self.define_writers(mixin, name); end
-  def self.valid_options(options); end
-end
-class ActiveRecord::Associations::Builder::HasMany < ActiveRecord::Associations::Builder::CollectionAssociation
-  def self.macro; end
   def self.valid_dependent_options; end
   def self.valid_options(options); end
 end
@@ -5839,6 +5842,74 @@ class ActiveRecord::Result
   def to_hash; end
   include Enumerable
 end
+module RoleTerm::GeneratedAttributeMethods
+  def created_at; end
+  def created_at=(value); end
+  def created_at?(*args); end
+  def created_at_before_last_save(*args); end
+  def created_at_before_type_cast(*args); end
+  def created_at_came_from_user?(*args); end
+  def created_at_change(*args); end
+  def created_at_change_to_be_saved(*args); end
+  def created_at_changed?(*args); end
+  def created_at_in_database(*args); end
+  def created_at_previous_change(*args); end
+  def created_at_previously_changed?(*args); end
+  def created_at_was(*args); end
+  def created_at_will_change!(*args); end
+  def id_before_last_save(*args); end
+  def id_came_from_user?(*args); end
+  def id_change(*args); end
+  def id_change_to_be_saved(*args); end
+  def id_changed?(*args); end
+  def id_previous_change(*args); end
+  def id_previously_changed?(*args); end
+  def id_will_change!(*args); end
+  def label; end
+  def label=(value); end
+  def label?(*args); end
+  def label_before_last_save(*args); end
+  def label_before_type_cast(*args); end
+  def label_came_from_user?(*args); end
+  def label_change(*args); end
+  def label_change_to_be_saved(*args); end
+  def label_changed?(*args); end
+  def label_in_database(*args); end
+  def label_previous_change(*args); end
+  def label_previously_changed?(*args); end
+  def label_was(*args); end
+  def label_will_change!(*args); end
+  def restore_created_at!(*args); end
+  def restore_id!(*args); end
+  def restore_label!(*args); end
+  def restore_updated_at!(*args); end
+  def saved_change_to_created_at(*args); end
+  def saved_change_to_created_at?(*args); end
+  def saved_change_to_id(*args); end
+  def saved_change_to_id?(*args); end
+  def saved_change_to_label(*args); end
+  def saved_change_to_label?(*args); end
+  def saved_change_to_updated_at(*args); end
+  def saved_change_to_updated_at?(*args); end
+  def updated_at; end
+  def updated_at=(value); end
+  def updated_at?(*args); end
+  def updated_at_before_last_save(*args); end
+  def updated_at_before_type_cast(*args); end
+  def updated_at_came_from_user?(*args); end
+  def updated_at_change(*args); end
+  def updated_at_change_to_be_saved(*args); end
+  def updated_at_changed?(*args); end
+  def updated_at_in_database(*args); end
+  def updated_at_previous_change(*args); end
+  def updated_at_previously_changed?(*args); end
+  def updated_at_was(*args); end
+  def updated_at_will_change!(*args); end
+  def will_save_change_to_created_at?(*args); end
+  def will_save_change_to_id?(*args); end
+  def will_save_change_to_label?(*args); end
+  def will_save_change_to_updated_at?(*args); end
+end
 class ActiveRecord::Tasks::DatabaseAlreadyExists < StandardError
 end
 class ActiveRecord::Tasks::DatabaseNotSupported < StandardError
@@ -5920,6 +5991,7 @@ class ActiveRecord::InternalMetadata < ActiveRecord::Base
   def self._validators; end
   def self.attribute_type_decorations; end
   def self.create_table; end
+  def self.default_scope_override; end
   def self.defined_enums; end
   def self.drop_table; end
   def self.primary_key; end
@@ -6019,142 +6091,4 @@ class ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation < ActiveRe
   extend ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
   include ActiveRecord::Delegation::ClassSpecificRelation
   include ActiveRecord::SchemaMigration::GeneratedRelationMethods
-end
-module ActiveRecord::TestDatabases
-  def self.create_and_load_schema(i, env_name:); end
-end
-class ActiveRecord::FixtureSet
-  def [](x); end
-  def []=(k, v); end
-  def all_loaded_fixtures; end
-  def all_loaded_fixtures=(obj); end
-  def config; end
-  def each(&block); end
-  def fixtures; end
-  def initialize(_, name, class_name, path, config = nil); end
-  def model_class; end
-  def model_class=(class_name); end
-  def name; end
-  def read_fixture_files(path); end
-  def self.all_loaded_fixtures; end
-  def self.all_loaded_fixtures=(obj); end
-  def self.cache_fixtures(connection, fixtures_map); end
-  def self.cache_for_connection(connection); end
-  def self.cached_fixtures(connection, keys_to_fetch = nil); end
-  def self.context_class; end
-  def self.create_fixtures(fixtures_directory, fixture_set_names, class_names = nil, config = nil, &block); end
-  def self.default_fixture_model_name(fixture_set_name, config = nil); end
-  def self.default_fixture_table_name(fixture_set_name, config = nil); end
-  def self.fixture_is_cached?(connection, table_name); end
-  def self.identify(label, column_type = nil); end
-  def self.insert(fixture_sets, connection); end
-  def self.instantiate_all_loaded_fixtures(object, load_instances = nil); end
-  def self.instantiate_fixtures(object, fixture_set, load_instances = nil); end
-  def self.read_and_insert(fixtures_directory, fixture_files, class_names, connection); end
-  def self.reset_cache; end
-  def self.update_all_loaded_fixtures(fixtures_map); end
-  def size; end
-  def table_name; end
-  def table_rows; end
-  def yaml_file_path(path); end
-end
-class ActiveRecord::FixtureSet::File
-  def config_row; end
-  def each(&block); end
-  def initialize(file); end
-  def model_class; end
-  def prepare_erb(content); end
-  def raw_rows; end
-  def render(content); end
-  def rows; end
-  def self.open(file); end
-  def validate(data); end
-  include Enumerable
-end
-class ActiveRecord::FixtureSet::RenderContext
-  def self.create_subclass; end
-end
-class ActiveRecord::FixtureSet::TableRow
-  def add_join_records(association); end
-  def fill_row_model_attributes; end
-  def fill_timestamps; end
-  def generate_primary_key; end
-  def initialize(fixture, table_rows:, label:, now:); end
-  def interpolate_label; end
-  def model_class; end
-  def model_metadata; end
-  def reflection_class; end
-  def resolve_enums; end
-  def resolve_sti_reflections; end
-  def to_hash; end
-end
-class ActiveRecord::FixtureSet::TableRow::ReflectionProxy
-  def initialize(association); end
-  def join_table; end
-  def name; end
-  def primary_key_type; end
-end
-class ActiveRecord::FixtureSet::TableRow::HasManyThroughProxy < ActiveRecord::FixtureSet::TableRow::ReflectionProxy
-  def join_table; end
-  def lhs_key; end
-  def rhs_key; end
-end
-class ActiveRecord::FixtureSet::ModelMetadata
-  def has_primary_key_column?; end
-  def inheritance_column_name; end
-  def initialize(model_class); end
-  def primary_key_name; end
-  def primary_key_type; end
-  def timestamp_column_names; end
-end
-class ActiveRecord::FixtureSet::TableRows
-  def build_table_rows_from(table_name, fixtures, config); end
-  def initialize(table_name, model_class:, fixtures:, config:); end
-  def model_class; end
-  def model_metadata; end
-  def tables; end
-  def to_hash; end
-end
-module ActiveRecord::TestFixtures
-  def after_teardown; end
-  def before_setup; end
-  def enlist_fixture_connections; end
-  def instantiate_fixtures; end
-  def load_fixtures(config); end
-  def load_instances?; end
-  def run_in_transaction?; end
-  def setup_fixtures(config = nil); end
-  def setup_shared_connection_pool; end
-  def teardown_fixtures; end
-  extend ActiveSupport::Concern
-end
-module ActiveRecord::TestFixtures::ClassMethods
-  def fixtures(*fixture_set_names); end
-  def set_fixture_class(class_names = nil); end
-  def setup_fixture_accessors(fixture_set_names = nil); end
-  def uses_transaction(*methods); end
-  def uses_transaction?(method); end
-end
-class ActiveRecord::FixtureClassNotFound < ActiveRecord::ActiveRecordError
-end
-class ActiveRecord::FixtureSet::ClassCache
-  def [](fs_name); end
-  def default_fixture_model(fs_name, config); end
-  def initialize(class_names, config); end
-  def insert_class(class_names, name, klass); end
-end
-class ActiveRecord::Fixture
-  def [](key); end
-  def class_name; end
-  def each; end
-  def find; end
-  def fixture; end
-  def initialize(fixture, model_class); end
-  def model_class; end
-  def to_hash; end
-  include Enumerable
-end
-class ActiveRecord::Fixture::FixtureError < StandardError
-end
-class ActiveRecord::Fixture::FormatError < ActiveRecord::Fixture::FixtureError
 end
