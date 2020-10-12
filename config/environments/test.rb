@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 # The test environment is used exclusively to run your application's
@@ -8,6 +8,8 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  require 'test_shibboleth_headers'
+  config.middleware.use TestShibbolethHeaders
 
   config.cache_classes = false
   config.action_view.cache_template_loading = true

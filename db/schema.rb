@@ -66,6 +66,17 @@ ActiveRecord::Schema.define(version: 2020_10_09_194443) do
     t.index ["work_id"], name: "index_contributors_on_work_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "recipient_id"
+    t.string "action"
+    t.string "notifiable_type"
+    t.integer "notifiable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "related_links", force: :cascade do |t|
     t.bigint "work_id", null: false
     t.string "link_title"
@@ -87,6 +98,18 @@ ActiveRecord::Schema.define(version: 2020_10_09_194443) do
     t.string "label", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "works", force: :cascade do |t|
@@ -115,6 +138,7 @@ ActiveRecord::Schema.define(version: 2020_10_09_194443) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "contributors", "role_terms"
   add_foreign_key "contributors", "works"
+  add_foreign_key "notifications", "users"
   add_foreign_key "related_links", "works"
   add_foreign_key "related_works", "works"
   add_foreign_key "works", "collections"

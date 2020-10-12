@@ -3,3 +3,12 @@ dor_services:
   token: ~
 
 redis_url: redis://localhost:6379/
+
+# The HTTP_X_REMOTE_USER variable comes from our Apache config behind a reverse
+# proxy, where we can't set or build upon REMOTE_USER. Instead, we set the
+# X-Remote-User header and that is translated to the HTTP_X_REMOTE_USER
+# environment variable. These are used by the devise-remote-user gem to
+# authenticate users.
+remote_user_headers:
+  - REMOTE_USER
+  - HTTP_X_REMOTE_USER

@@ -5,9 +5,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'config', '~> 2.2'
+gem 'devise', '~> 4.7'
+gem 'devise-remote-user', '~> 1.0'
 gem 'dor-services-client'
 gem 'pg'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
+gem 'redis', '~> 4.0'
 gem 'sidekiq', '~> 6.1'
 gem 'sorbet-runtime'
 gem 'state_machines-activerecord'

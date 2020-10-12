@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 class WorksController < ApplicationController
+  before_action :authenticate_user!
+
   layout 'editor'
 
   def new
