@@ -17,6 +17,8 @@ Start up dependencies with `docker-compose up`, then run tests with `bundle exec
 
 H2 uses Sorbet optional Ruby type checking. Run a manual static type check via `srb tc`; note that CI for H2 will automate this. After adding a new gem to the Gemfile, or running `bundle update`, build the new type definitions with `srb rbi update`.
 
+### Automation
+
 If you would like to automate this step, consider using a git pre-commit hook. To do this, create a file named `.git/hooks/pre-commit` and add code like the following:
 
 ```sh
