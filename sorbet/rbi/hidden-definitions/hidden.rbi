@@ -5445,39 +5445,6 @@ class ActionDispatch::Request
   def self.parameter_parsers(); end
 end
 
-class ActionDispatch::RequestEncoder
-  def accept_header(); end
-
-  def content_type(); end
-
-  def encode_params(params); end
-
-  def initialize(mime_name, param_encoder, response_parser); end
-
-  def response_parser(); end
-end
-
-class ActionDispatch::RequestEncoder::IdentityEncoder
-  def accept_header(); end
-
-  def content_type(); end
-
-  def encode_params(params); end
-
-  def response_parser(); end
-end
-
-class ActionDispatch::RequestEncoder::IdentityEncoder
-end
-
-class ActionDispatch::RequestEncoder
-  def self.encoder(name); end
-
-  def self.parser(content_type); end
-
-  def self.register_encoder(mime_name, param_encoder: T.unsafe(nil), response_parser: T.unsafe(nil)); end
-end
-
 class ActionDispatch::RequestId
   def call(env); end
 
@@ -18746,7 +18713,6 @@ end
 
 class ActiveRecord::SuppressorRegistry
   extend ::ActiveSupport::PerThreadRegistry
-  def self.suppressed(*_, &_1); end
 end
 
 class ActiveRecord::TableMetadata
@@ -18787,18 +18753,6 @@ class ActiveRecord::TableMetadata
 end
 
 module ActiveRecord::Tasks
-end
-
-class ActiveRecord::Tasks::DatabaseAlreadyExists
-end
-
-class ActiveRecord::Tasks::DatabaseAlreadyExists
-end
-
-class ActiveRecord::Tasks::DatabaseNotSupported
-end
-
-class ActiveRecord::Tasks::DatabaseNotSupported
 end
 
 module ActiveRecord::Tasks::DatabaseTasks
@@ -23057,12 +23011,6 @@ class ActiveSupport::Testing::SimpleStubs::Stub
 end
 
 class ActiveSupport::Testing::SimpleStubs
-end
-
-module ActiveSupport::Testing::Stream
-end
-
-module ActiveSupport::Testing::Stream
 end
 
 module ActiveSupport::Testing::TaggedLogging
@@ -34023,6 +33971,9 @@ end
 module DeviseHelper
 end
 
+class DeviseRemoteUser::Engine
+end
+
 class DidYouMean::ClassNameChecker
   def class_name(); end
 
@@ -44260,104 +44211,6 @@ end
 class Rails::BacktraceCleaner
 end
 
-module Rails::Command
-  include ::Rails::Command::Behavior
-  HELP_MAPPINGS = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Command::Actions
-  def load_generators(); end
-
-  def load_tasks(); end
-
-  def require_application!(); end
-
-  def require_application_and_environment!(); end
-
-  def require_environment!(); end
-
-  def set_application_directory!(); end
-end
-
-module Rails::Command::Actions
-end
-
-class Rails::Command::Base
-  include ::Rails::Command::Actions
-  def help(); end
-end
-
-class Rails::Command::Base::Error
-end
-
-class Rails::Command::Base::Error
-end
-
-class Rails::Command::Base
-  def self.banner(*_); end
-
-  def self.base_name(); end
-
-  def self.command_name(); end
-
-  def self.default_command_root(); end
-
-  def self.desc(usage=T.unsafe(nil), description=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def self.engine?(); end
-
-  def self.executable(); end
-
-  def self.hide_command!(); end
-
-  def self.inherited(base); end
-
-  def self.perform(command, args, config); end
-
-  def self.printing_commands(); end
-
-  def self.usage_path(); end
-end
-
-module Rails::Command::Behavior
-end
-
-module Rails::Command::Behavior::ClassMethods
-  def no_color!(); end
-
-  def subclasses(); end
-end
-
-module Rails::Command::Behavior::ClassMethods
-end
-
-module Rails::Command::Behavior
-  extend ::ActiveSupport::Concern
-end
-
-module Rails::Command::Spellchecker
-end
-
-module Rails::Command::Spellchecker
-  def self.suggest(word, from:); end
-end
-
-module Rails::Command
-  extend ::ActiveSupport::Autoload
-  extend ::Rails::Command::Behavior::ClassMethods
-  def self.environment(); end
-
-  def self.find_by_namespace(namespace, command_name=T.unsafe(nil)); end
-
-  def self.hidden_commands(); end
-
-  def self.invoke(full_namespace, args=T.unsafe(nil), **config); end
-
-  def self.print_commands(); end
-
-  def self.root(); end
-end
-
 module Rails::Configuration
 end
 
@@ -44504,353 +44357,6 @@ class Rails::Engine
   def self.isolated=(isolated); end
 
   def self.isolated?(); end
-end
-
-module Rails::Generators
-  include ::Rails::Command::Behavior
-  def namespace(); end
-
-  def namespace=(obj); end
-  DEFAULT_ALIASES = ::T.let(nil, ::T.untyped)
-  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Generators::Actions
-  def add_source(source, options=T.unsafe(nil), &block); end
-
-  def application(data=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def environment(data=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def gem(*args); end
-
-  def gem_group(*names, &block); end
-
-  def generate(what, *args); end
-
-  def git(commands=T.unsafe(nil)); end
-
-  def github(repo, options=T.unsafe(nil), &block); end
-
-  def initialize(*_); end
-
-  def initializer(filename, data=T.unsafe(nil)); end
-
-  def lib(filename, data=T.unsafe(nil)); end
-
-  def rails_command(command, options=T.unsafe(nil)); end
-
-  def rake(command, options=T.unsafe(nil)); end
-
-  def rakefile(filename, data=T.unsafe(nil)); end
-
-  def readme(path); end
-
-  def route(routing_code); end
-
-  def vendor(filename, data=T.unsafe(nil)); end
-end
-
-class Rails::Generators::Actions::CreateMigration
-  def existing_migration(); end
-
-  def migration_dir(); end
-
-  def migration_file_name(); end
-
-  def relative_existing_migration(); end
-end
-
-class Rails::Generators::Actions::CreateMigration
-end
-
-module Rails::Generators::Actions
-end
-
-class Rails::Generators::ActiveModel
-  def destroy(); end
-
-  def errors(); end
-
-  def initialize(name); end
-
-  def name(); end
-
-  def save(); end
-
-  def update(params=T.unsafe(nil)); end
-end
-
-class Rails::Generators::ActiveModel
-  def self.all(klass); end
-
-  def self.build(klass, params=T.unsafe(nil)); end
-
-  def self.find(klass, params=T.unsafe(nil)); end
-end
-
-module Rails::Generators::AppName
-  RESERVED_NAMES = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Generators::AppName
-end
-
-class Rails::Generators::Base
-  include ::Thor::Actions
-  include ::Rails::Generators::Actions
-end
-
-class Rails::Generators::Base
-  def self.add_shebang_option!(); end
-
-  def self.base_name(); end
-
-  def self.base_root(); end
-
-  def self.default_aliases_for_option(name, options); end
-
-  def self.default_for_option(config, name, options, default); end
-
-  def self.default_generator_root(); end
-
-  def self.default_source_root(); end
-
-  def self.default_value_for_option(name, options); end
-
-  def self.generator_name(); end
-
-  def self.hide!(); end
-
-  def self.hook_for(*names, &block); end
-
-  def self.hooks(); end
-
-  def self.inherited(base); end
-
-  def self.prepare_for_invocation(name, value); end
-
-  def self.remove_hook_for(*names); end
-
-  def self.usage_path(); end
-end
-
-module Rails::Generators::Database
-  def convert_database_option_for_jruby(); end
-
-  def gem_for_database(database=T.unsafe(nil)); end
-
-  def initialize(*_); end
-  DATABASES = ::T.let(nil, ::T.untyped)
-  JDBC_DATABASES = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Generators::Database
-end
-
-module Rails::Generators::Migration
-  def create_migration(destination, data, config=T.unsafe(nil), &block); end
-
-  def migration_class_name(); end
-
-  def migration_file_name(); end
-
-  def migration_number(); end
-
-  def migration_template(source, destination, config=T.unsafe(nil)); end
-
-  def set_migration_assigns!(destination); end
-end
-
-module Rails::Generators::Migration::ClassMethods
-  def current_migration_number(dirname); end
-
-  def migration_exists?(dirname, file_name); end
-
-  def migration_lookup_at(dirname); end
-
-  def next_migration_number(dirname); end
-end
-
-module Rails::Generators::Migration::ClassMethods
-end
-
-module Rails::Generators::Migration
-  extend ::ActiveSupport::Concern
-end
-
-class Rails::Generators::NamedBase
-  def file_name(); end
-
-  def initialize(args, *options); end
-
-  def js_template(source, destination); end
-
-  def name(); end
-
-  def name=(name); end
-end
-
-class Rails::Generators::NamedBase
-  def self.check_class_collision(options=T.unsafe(nil)); end
-end
-
-module Rails::Generators::ResourceHelpers
-  def initialize(*args); end
-end
-
-module Rails::Generators::ResourceHelpers
-  def self.included(base); end
-end
-
-class Rails::Generators::TestCase
-  include ::Rails::Generators::Testing::Behaviour
-  include ::ActiveSupport::Testing::Stream
-  include ::Rails::Generators::Testing::SetupAndTeardown
-  include ::Rails::Generators::Testing::Assertions
-  include ::FileUtils
-  include ::FileUtils::StreamUtils_
-  def current_path(); end
-
-  def current_path=(val); end
-
-  def current_path?(); end
-
-  def default_arguments(); end
-
-  def default_arguments=(val); end
-
-  def default_arguments?(); end
-
-  def destination_root(); end
-
-  def destination_root=(val); end
-
-  def destination_root?(); end
-
-  def generator_class(); end
-
-  def generator_class=(val); end
-
-  def generator_class?(); end
-end
-
-class Rails::Generators::TestCase
-  def self.current_path(); end
-
-  def self.current_path=(val); end
-
-  def self.current_path?(); end
-
-  def self.default_arguments(); end
-
-  def self.default_arguments=(val); end
-
-  def self.default_arguments?(); end
-
-  def self.destination_root(); end
-
-  def self.destination_root=(val); end
-
-  def self.destination_root?(); end
-
-  def self.generator_class(); end
-
-  def self.generator_class=(val); end
-
-  def self.generator_class?(); end
-end
-
-module Rails::Generators::Testing
-end
-
-module Rails::Generators::Testing::Assertions
-  def assert_class_method(method, content, &block); end
-
-  def assert_directory(relative, *contents); end
-
-  def assert_field_default_value(attribute_type, value); end
-
-  def assert_field_type(attribute_type, field_type); end
-
-  def assert_file(relative, *contents); end
-
-  def assert_instance_method(method, content); end
-
-  def assert_method(method, content); end
-
-  def assert_migration(relative, *contents, &block); end
-
-  def assert_no_directory(relative); end
-
-  def assert_no_file(relative); end
-
-  def assert_no_migration(relative); end
-end
-
-module Rails::Generators::Testing::Assertions
-end
-
-module Rails::Generators::Testing::Behaviour
-  include ::ActiveSupport::Testing::Stream
-  def create_generated_attribute(attribute_type, name=T.unsafe(nil), index=T.unsafe(nil)); end
-
-  def generator(args=T.unsafe(nil), options=T.unsafe(nil), config=T.unsafe(nil)); end
-
-  def run_generator(args=T.unsafe(nil), config=T.unsafe(nil)); end
-end
-
-module Rails::Generators::Testing::Behaviour
-  extend ::ActiveSupport::Concern
-end
-
-module Rails::Generators::Testing::SetupAndTeardown
-  def setup(); end
-
-  def teardown(); end
-end
-
-module Rails::Generators::Testing::SetupAndTeardown
-end
-
-module Rails::Generators::Testing
-end
-
-module Rails::Generators
-  extend ::Rails::Command::Behavior::ClassMethods
-  def self.aliases(); end
-
-  def self.api_only!(); end
-
-  def self.configure!(config); end
-
-  def self.fallbacks(); end
-
-  def self.find_by_namespace(name, base=T.unsafe(nil), context=T.unsafe(nil)); end
-
-  def self.help(command=T.unsafe(nil)); end
-
-  def self.hidden_namespaces(); end
-
-  def self.hide_namespace(*namespaces); end
-
-  def self.hide_namespaces(*namespaces); end
-
-  def self.invoke(namespace, args=T.unsafe(nil), config=T.unsafe(nil)); end
-
-  def self.namespace(); end
-
-  def self.namespace=(obj); end
-
-  def self.options(); end
-
-  def self.print_generators(); end
-
-  def self.public_namespaces(); end
-
-  def self.sorted_groups(); end
-
-  def self.templates_path(); end
 end
 
 module Rails::Html
@@ -47559,137 +47065,6 @@ module RoleTerm::GeneratedAssociationMethods
 end
 
 module RoleTerm::GeneratedAttributeMethods
-  def created_at(); end
-
-  def created_at=(value); end
-
-  def created_at?(*args); end
-
-  def created_at_before_last_save(*args); end
-
-  def created_at_before_type_cast(*args); end
-
-  def created_at_came_from_user?(*args); end
-
-  def created_at_change(*args); end
-
-  def created_at_change_to_be_saved(*args); end
-
-  def created_at_changed?(*args); end
-
-  def created_at_in_database(*args); end
-
-  def created_at_previous_change(*args); end
-
-  def created_at_previously_changed?(*args); end
-
-  def created_at_was(*args); end
-
-  def created_at_will_change!(*args); end
-
-  def id_before_last_save(*args); end
-
-  def id_came_from_user?(*args); end
-
-  def id_change(*args); end
-
-  def id_change_to_be_saved(*args); end
-
-  def id_changed?(*args); end
-
-  def id_previous_change(*args); end
-
-  def id_previously_changed?(*args); end
-
-  def id_will_change!(*args); end
-
-  def label(); end
-
-  def label=(value); end
-
-  def label?(*args); end
-
-  def label_before_last_save(*args); end
-
-  def label_before_type_cast(*args); end
-
-  def label_came_from_user?(*args); end
-
-  def label_change(*args); end
-
-  def label_change_to_be_saved(*args); end
-
-  def label_changed?(*args); end
-
-  def label_in_database(*args); end
-
-  def label_previous_change(*args); end
-
-  def label_previously_changed?(*args); end
-
-  def label_was(*args); end
-
-  def label_will_change!(*args); end
-
-  def restore_created_at!(*args); end
-
-  def restore_id!(*args); end
-
-  def restore_label!(*args); end
-
-  def restore_updated_at!(*args); end
-
-  def saved_change_to_created_at(*args); end
-
-  def saved_change_to_created_at?(*args); end
-
-  def saved_change_to_id(*args); end
-
-  def saved_change_to_id?(*args); end
-
-  def saved_change_to_label(*args); end
-
-  def saved_change_to_label?(*args); end
-
-  def saved_change_to_updated_at(*args); end
-
-  def saved_change_to_updated_at?(*args); end
-
-  def updated_at(); end
-
-  def updated_at=(value); end
-
-  def updated_at?(*args); end
-
-  def updated_at_before_last_save(*args); end
-
-  def updated_at_before_type_cast(*args); end
-
-  def updated_at_came_from_user?(*args); end
-
-  def updated_at_change(*args); end
-
-  def updated_at_change_to_be_saved(*args); end
-
-  def updated_at_changed?(*args); end
-
-  def updated_at_in_database(*args); end
-
-  def updated_at_previous_change(*args); end
-
-  def updated_at_previously_changed?(*args); end
-
-  def updated_at_was(*args); end
-
-  def updated_at_will_change!(*args); end
-
-  def will_save_change_to_created_at?(*args); end
-
-  def will_save_change_to_id?(*args); end
-
-  def will_save_change_to_label?(*args); end
-
-  def will_save_change_to_updated_at?(*args); end
 end
 
 module RoleTerm::GeneratedAttributeMethods
@@ -49212,6 +48587,9 @@ module Sidekiq::LoggingUtils
   LEVELS = ::T.let(nil, ::T.untyped)
 end
 
+class Sidekiq::Rails
+end
+
 class Sidekiq::Web
   ASSETS = ::T.let(nil, ::T.untyped)
   DEFAULT_TABS = ::T.let(nil, ::T.untyped)
@@ -49591,62 +48969,6 @@ module Thor::Actions
   WARNINGS = ::T.let(nil, ::T.untyped)
 end
 
-class Thor::Actions::CreateFile
-  def data(); end
-
-  def force_on_collision?(); end
-
-  def force_or_skip_or_conflict(force, skip, &block); end
-
-  def identical?(); end
-
-  def initialize(base, destination, data, config=T.unsafe(nil)); end
-
-  def on_conflict_behavior(&block); end
-
-  def render(); end
-end
-
-class Thor::Actions::CreateFile
-end
-
-class Thor::Actions::EmptyDirectory
-  def base(); end
-
-  def config(); end
-
-  def convert_encoded_instructions(filename); end
-
-  def destination(); end
-
-  def destination=(destination); end
-
-  def exists?(); end
-
-  def given_destination(); end
-
-  def initialize(base, destination, config=T.unsafe(nil)); end
-
-  def invoke!(); end
-
-  def invoke_with_conflict_check(&block); end
-
-  def on_conflict_behavior(); end
-
-  def on_file_clash_behavior(); end
-
-  def pretend?(); end
-
-  def relative_destination(); end
-
-  def revoke!(); end
-
-  def say_status(status, color); end
-end
-
-class Thor::Actions::EmptyDirectory
-end
-
 module Thor::Actions
   def self.included(base); end
 end
@@ -49668,6 +48990,43 @@ end
 Thor::Correctable = DidYouMean::Correctable
 
 Thor::DynamicTask = Thor::DynamicCommand
+
+class Thor::Group
+  include ::Thor::Base
+  include ::Thor::Invocation
+  include ::Thor::Shell
+  def _invoke_for_class_method(klass, command=T.unsafe(nil), *args, &block); end
+end
+
+class Thor::Group
+  def self.banner(); end
+
+  def self.desc(description=T.unsafe(nil)); end
+
+  def self.get_options_from_invocations(group_options, base_options); end
+
+  def self.handle_argument_error(command, error, _args, arity); end
+
+  def self.help(shell); end
+
+  def self.invocation_blocks(); end
+
+  def self.invocations(); end
+
+  def self.invoke(*names, &block); end
+
+  def self.invoke_from_option(*names, &block); end
+
+  def self.printable_commands(*_); end
+
+  def self.printable_tasks(*_); end
+
+  def self.remove_invocation(*names); end
+
+  def self.self_command(); end
+
+  def self.self_task(); end
+end
 
 Thor::HiddenTask = Thor::HiddenCommand
 
@@ -50124,6 +49483,9 @@ end
 
 module Turbolinks::Controller
   extend ::ActiveSupport::Concern
+end
+
+class Turbolinks::Engine
 end
 
 module Turbolinks::Redirection

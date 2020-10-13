@@ -2642,8 +2642,3 @@ class ActiveSupport::Duration::ISO8601Serializer
   def normalize; end
   def serialize; end
 end
-module ActiveSupport::Testing::Stream
-  def capture(stream); end
-  def quietly; end
-  def silence_stream(stream); end
-end
