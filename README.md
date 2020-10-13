@@ -24,6 +24,13 @@ if git diff --cached --name-only --diff-filter=ACM | grep --quiet 'Gemfile.lock'
 then
     exec env SRB_YES=1 bundle exec srb rbi update
 fi
+
+if git diff --cached --name-only --diff-filter=ACM | grep --quiet '^app/'
+then
+    exec bundle exec rake rails_rbi:all
+    exec bundle exec srb rbi hidden-definitions
+    exec bundle exec srb rbi suggest-typed
+fi
 ```
 
 Then commit the changes in `sorbet/` to git.
