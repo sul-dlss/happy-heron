@@ -1,6 +1,7 @@
 # H2 Self-deposit front end for the Stanford Digital Repository
 
 ## Design
+
 * Comps: https://projects.invisionapp.com/share/EQXC9CLKCR2
 * Design Documentation: https://docs.google.com/document/d/1fcr2DYo7OrX-qTdeUOTWKSS1rlq_47sehESmbvgUsrk/edit
 
@@ -27,6 +28,10 @@ fi
 ```
 
 Then commit the changes in `sorbet/` to git.
+
+## Deployment
+
+H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module). Passenger configuration lives in `config/Passengerfile.json` which is managed by Puppet and does not live in the application repository.
 
 ## Architecture
 
