@@ -24,9 +24,13 @@ set :log_level, :info
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files,
+       'config/database.yml', # in Puppet
+       'config/secrets.yml', # in shared_configs
+       'config/Passengerfile.json' # in Puppet
 
 # Default value for linked_dirs is []
+# These directories are handled by shared_configs
 append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/sockets', 'public/system'
 
 # Default value for default_env is {}
