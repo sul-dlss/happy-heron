@@ -11689,6 +11689,31 @@ end
 class ActiveRecord::AdvisoryLockBase
   include ::ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
   include ::ActiveRecord::AdvisoryLockBase::GeneratedAssociationMethods
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_AssociationRelation
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Associations_CollectionProxy
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Relation
 end
 
 module ActiveRecord::AdvisoryLockBase::GeneratedAssociationMethods
@@ -11701,6 +11726,13 @@ module ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
 end
 
 module ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+module ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -13022,7 +13054,6 @@ class ActiveRecord::Base
   extend ::ActiveModel::Naming
   extend ::ActiveRecord::DynamicMatchers
   extend ::ActiveRecord::Explain
-  extend ::ActiveRecord::Enum
   extend ::ActiveRecord::Delegation::DelegateCache
   extend ::ActiveRecord::Aggregations::ClassMethods
   extend ::ActiveRecord::Core::ClassMethods
@@ -13047,6 +13078,8 @@ class ActiveRecord::Base
   extend ::ActiveRecord::SecureToken::ClassMethods
   extend ::ActiveRecord::Suppressor::ClassMethods
   extend ::OrmAdapter::ToAdapter
+  extend ::SorbetRails::CustomFinderMethods
+  extend ::SorbetRails::PluckToTStruct
   extend ::Devise::Models
   def self.__callbacks(); end
 
@@ -13263,6 +13296,8 @@ class ActiveRecord::Base
   def self.index_nested_attribute_errors(); end
 
   def self.index_nested_attribute_errors=(obj); end
+
+  def self.inherited(child); end
 
   def self.internal_metadata_table_name(); end
 
@@ -15915,13 +15950,6 @@ end
 module ActiveRecord::Delegation::ClassSpecificRelation
 end
 
-module ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-  def name(); end
-end
-
-module ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-end
-
 module ActiveRecord::Delegation::ClassSpecificRelation
   extend ::ActiveSupport::Concern
 end
@@ -16006,9 +16034,10 @@ class ActiveRecord::EagerLoadPolymorphicError
 end
 
 module ActiveRecord::Enum
-  def enum(definitions); end
+  def enum(*args, &blk); end
 
   def inherited(base); end
+  SR_ENUM_KEYWORDS = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveRecord::Enum::EnumType
@@ -16273,6 +16302,31 @@ end
 class ActiveRecord::InternalMetadata
   include ::ActiveRecord::InternalMetadata::GeneratedAttributeMethods
   include ::ActiveRecord::InternalMetadata::GeneratedAssociationMethods
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_Relation
 end
 
 module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
@@ -16285,6 +16339,13 @@ module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
 end
 
 module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
+module ActiveRecord::InternalMetadata::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -18109,6 +18170,8 @@ class ActiveRecord::Relation
   include ::ActiveRecord::SpawnMethods
   include ::ActiveRecord::Calculations
   include ::ActiveRecord::FinderMethods
+  include ::SorbetRails::CustomFinderMethods
+  include ::SorbetRails::PluckToTStruct
   def ==(other); end
 
   def _deprecated_scope_source(); end
@@ -18441,6 +18504,31 @@ class ActiveRecord::SchemaMigration
   include ::ActiveRecord::SchemaMigration::GeneratedAttributeMethods
   include ::ActiveRecord::SchemaMigration::GeneratedAssociationMethods
   def version(); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_Relation
 end
 
 module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
@@ -18453,6 +18541,13 @@ module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
 end
 
 module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
+module ActiveRecord::SchemaMigration::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -19627,6 +19722,31 @@ class ActiveStorage::Attachment
   def purge(); end
 
   def purge_later(); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveStorage::Attachment::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Attachment::GeneratedRelationMethods
+end
+
+class ActiveStorage::Attachment::ActiveRecord_AssociationRelation
+end
+
+class ActiveStorage::Attachment::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Attachment::GeneratedRelationMethods
+end
+
+class ActiveStorage::Attachment::ActiveRecord_Associations_CollectionProxy
+end
+
+class ActiveStorage::Attachment::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Attachment::GeneratedRelationMethods
+end
+
+class ActiveStorage::Attachment::ActiveRecord_Relation
 end
 
 module ActiveStorage::Attachment::GeneratedAssociationMethods
@@ -19656,6 +19776,13 @@ module ActiveStorage::Attachment::GeneratedAttributeMethods
 end
 
 module ActiveStorage::Attachment::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ActiveStorage::Attachment::GeneratedRelationMethods
+end
+
+module ActiveStorage::Attachment::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -19750,6 +19877,31 @@ class ActiveStorage::Blob
   def validate_associated_records_for_attachments(*args); end
 
   def video?(); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveStorage::Blob::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Blob::GeneratedRelationMethods
+end
+
+class ActiveStorage::Blob::ActiveRecord_AssociationRelation
+end
+
+class ActiveStorage::Blob::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Blob::GeneratedRelationMethods
+end
+
+class ActiveStorage::Blob::ActiveRecord_Associations_CollectionProxy
+end
+
+class ActiveStorage::Blob::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Blob::GeneratedRelationMethods
+end
+
+class ActiveStorage::Blob::ActiveRecord_Relation
 end
 
 module ActiveStorage::Blob::Analyzable
@@ -19802,6 +19954,16 @@ module ActiveStorage::Blob::GeneratedAttributeMethods
 end
 
 module ActiveStorage::Blob::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ActiveStorage::Blob::GeneratedRelationMethods
+  def unattached(*_, &_1); end
+
+  def with_attached_preview_image(*_, &_1); end
+end
+
+module ActiveStorage::Blob::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -23450,6 +23612,31 @@ end
 class ApplicationRecord
   include ::ApplicationRecord::GeneratedAttributeMethods
   include ::ApplicationRecord::GeneratedAssociationMethods
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ApplicationRecord::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ApplicationRecord::GeneratedRelationMethods
+end
+
+class ApplicationRecord::ActiveRecord_AssociationRelation
+end
+
+class ApplicationRecord::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ApplicationRecord::GeneratedRelationMethods
+end
+
+class ApplicationRecord::ActiveRecord_Associations_CollectionProxy
+end
+
+class ApplicationRecord::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ApplicationRecord::GeneratedRelationMethods
+end
+
+class ApplicationRecord::ActiveRecord_Relation
 end
 
 module ApplicationRecord::GeneratedAssociationMethods
@@ -23462,6 +23649,13 @@ module ApplicationRecord::GeneratedAttributeMethods
 end
 
 module ApplicationRecord::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ApplicationRecord::GeneratedRelationMethods
+end
+
+module ApplicationRecord::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -31460,6 +31654,31 @@ end
 class Collection
   include ::Collection::GeneratedAttributeMethods
   include ::Collection::GeneratedAssociationMethods
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class Collection::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Collection::GeneratedRelationMethods
+end
+
+class Collection::ActiveRecord_AssociationRelation
+end
+
+class Collection::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Collection::GeneratedRelationMethods
+end
+
+class Collection::ActiveRecord_Associations_CollectionProxy
+end
+
+class Collection::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Collection::GeneratedRelationMethods
+end
+
+class Collection::ActiveRecord_Relation
 end
 
 module Collection::GeneratedAssociationMethods
@@ -31472,6 +31691,13 @@ module Collection::GeneratedAttributeMethods
 end
 
 module Collection::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Collection::GeneratedRelationMethods
+end
+
+module Collection::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -31617,6 +31843,31 @@ class Contributor
   def autosave_associated_records_for_role_term(*args); end
 
   def autosave_associated_records_for_work(*args); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class Contributor::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Contributor::GeneratedRelationMethods
+end
+
+class Contributor::ActiveRecord_AssociationRelation
+end
+
+class Contributor::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Contributor::GeneratedRelationMethods
+end
+
+class Contributor::ActiveRecord_Associations_CollectionProxy
+end
+
+class Contributor::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Contributor::GeneratedRelationMethods
+end
+
+class Contributor::ActiveRecord_Relation
 end
 
 module Contributor::GeneratedAssociationMethods
@@ -31652,6 +31903,13 @@ module Contributor::GeneratedAttributeMethods
 end
 
 module Contributor::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Contributor::GeneratedRelationMethods
+end
+
+module Contributor::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -37299,6 +37557,68 @@ Gem::UnsatisfiableDepedencyError = Gem::UnsatisfiableDependencyError
 
 Gem::Version::Requirement = Gem::Requirement
 
+module GeneratedUrlHelpers
+  def collection_works_path(*args); end
+
+  def collection_works_url(*args); end
+
+  def destroy_user_session_path(*args); end
+
+  def destroy_user_session_url(*args); end
+
+  def new_collection_work_path(*args); end
+
+  def new_collection_work_url(*args); end
+
+  def new_user_session_path(*args); end
+
+  def new_user_session_url(*args); end
+
+  def preview_view_component_path(*args); end
+
+  def preview_view_component_url(*args); end
+
+  def preview_view_components_path(*args); end
+
+  def preview_view_components_url(*args); end
+
+  def rails_info_path(*args); end
+
+  def rails_info_properties_path(*args); end
+
+  def rails_info_properties_url(*args); end
+
+  def rails_info_routes_path(*args); end
+
+  def rails_info_routes_url(*args); end
+
+  def rails_info_url(*args); end
+
+  def rails_mailers_path(*args); end
+
+  def rails_mailers_url(*args); end
+
+  def root_path(*args); end
+
+  def root_url(*args); end
+
+  def sidekiq_web_path(*args); end
+
+  def sidekiq_web_url(*args); end
+
+  def welcome_path(*args); end
+
+  def welcome_url(*args); end
+
+  def work_path(*args); end
+
+  def work_url(*args); end
+end
+
+module GeneratedUrlHelpers
+  extend ::ActiveSupport::Concern
+end
+
 class GlobalID
   def ==(other); end
 
@@ -38369,6 +38689,10 @@ module IRB
   def self.setup(ap_path, argv: T.unsafe(nil)); end
 end
 
+module ITypeAssert
+  Elem = type_member(:out)
+end
+
 class Integer
   include ::JSON::Ext::Generator::GeneratorMethods::Integer
   include ::ActiveSupport::NumericWithFormat
@@ -39437,6 +39761,15 @@ class MessagePack::Timestamp
   TYPE = ::T.let(nil, ::T.untyped)
 end
 
+module MethodSource
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module MethodSource::CodeHelpers::IncompleteExpression
+  GENERIC_REGEXPS = ::T.let(nil, ::T.untyped)
+  RBX_ONLY_REGEXPS = ::T.let(nil, ::T.untyped)
+end
+
 module Mime
   ALL = ::T.let(nil, ::T.untyped)
   EXTENSION_LOOKUP = ::T.let(nil, ::T.untyped)
@@ -40451,6 +40784,31 @@ class Notification
   def autosave_associated_records_for_recipient(*args); end
 
   def autosave_associated_records_for_user(*args); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class Notification::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Notification::GeneratedRelationMethods
+end
+
+class Notification::ActiveRecord_AssociationRelation
+end
+
+class Notification::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Notification::GeneratedRelationMethods
+end
+
+class Notification::ActiveRecord_Associations_CollectionProxy
+end
+
+class Notification::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Notification::GeneratedRelationMethods
+end
+
+class Notification::ActiveRecord_Relation
 end
 
 module Notification::GeneratedAssociationMethods
@@ -40492,6 +40850,13 @@ module Notification::GeneratedAttributeMethods
 end
 
 module Notification::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Notification::GeneratedRelationMethods
+end
+
+module Notification::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -42676,12 +43041,26 @@ class Parallel::UserInterruptHandler
   INTERRUPT_SIGNAL = ::T.let(nil, ::T.untyped)
 end
 
+module Parlour
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Parlour::Debugging::Tree
+  INDENT_SPACES = ::T.let(nil, ::T.untyped)
+end
+
+class Parlour::RbiGenerator::Parameter
+  PREFIXES = ::T.let(nil, ::T.untyped)
+end
+
 ParseError = Racc::ParseError
 
 module Parser
   MESSAGES = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
 end
+
+Parser::CurrentRuby = Parser::Ruby27
 
 class Parser::Diagnostic
   LEVELS = ::T.let(nil, ::T.untyped)
@@ -42720,6 +43099,12 @@ class Parser::Ruby24
   Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
 end
 
+class Parser::Ruby27
+  Racc_arg = ::T.let(nil, ::T.untyped)
+  Racc_debug_parser = ::T.let(nil, ::T.untyped)
+  Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
+end
+
 class Parser::Source::Buffer
   ENCODING_RE = ::T.let(nil, ::T.untyped)
 end
@@ -42749,6 +43134,10 @@ class Pathname
   def glob(*_); end
 
   def make_symlink(_); end
+end
+
+module Polyfill
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class Proc
@@ -45511,6 +45900,31 @@ class RelatedLink
   include ::RelatedLink::GeneratedAttributeMethods
   include ::RelatedLink::GeneratedAssociationMethods
   def autosave_associated_records_for_work(*args); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class RelatedLink::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedLink::GeneratedRelationMethods
+end
+
+class RelatedLink::ActiveRecord_AssociationRelation
+end
+
+class RelatedLink::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedLink::GeneratedRelationMethods
+end
+
+class RelatedLink::ActiveRecord_Associations_CollectionProxy
+end
+
+class RelatedLink::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedLink::GeneratedRelationMethods
+end
+
+class RelatedLink::ActiveRecord_Relation
 end
 
 module RelatedLink::GeneratedAssociationMethods
@@ -45537,10 +45951,42 @@ module RelatedLink::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
+module RelatedLink::GeneratedRelationMethods
+end
+
+module RelatedLink::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
 class RelatedWork
   include ::RelatedWork::GeneratedAttributeMethods
   include ::RelatedWork::GeneratedAssociationMethods
   def autosave_associated_records_for_work(*args); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class RelatedWork::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedWork::GeneratedRelationMethods
+end
+
+class RelatedWork::ActiveRecord_AssociationRelation
+end
+
+class RelatedWork::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedWork::GeneratedRelationMethods
+end
+
+class RelatedWork::ActiveRecord_Associations_CollectionProxy
+end
+
+class RelatedWork::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedWork::GeneratedRelationMethods
+end
+
+class RelatedWork::ActiveRecord_Relation
 end
 
 module RelatedWork::GeneratedAssociationMethods
@@ -45564,6 +46010,13 @@ module RelatedWork::GeneratedAttributeMethods
 end
 
 module RelatedWork::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module RelatedWork::GeneratedRelationMethods
+end
+
+module RelatedWork::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -47056,6 +47509,31 @@ end
 class RoleTerm
   include ::RoleTerm::GeneratedAttributeMethods
   include ::RoleTerm::GeneratedAssociationMethods
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class RoleTerm::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RoleTerm::GeneratedRelationMethods
+end
+
+class RoleTerm::ActiveRecord_AssociationRelation
+end
+
+class RoleTerm::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RoleTerm::GeneratedRelationMethods
+end
+
+class RoleTerm::ActiveRecord_Associations_CollectionProxy
+end
+
+class RoleTerm::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RoleTerm::GeneratedRelationMethods
+end
+
+class RoleTerm::ActiveRecord_Relation
 end
 
 module RoleTerm::GeneratedAssociationMethods
@@ -47068,6 +47546,13 @@ module RoleTerm::GeneratedAttributeMethods
 end
 
 module RoleTerm::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module RoleTerm::GeneratedRelationMethods
+end
+
+module RoleTerm::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -48708,6 +49193,19 @@ module Socket::Constants
   SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
 end
 
+SorbetRails::JobRbiFormatter::Parameter = Parlour::RbiGenerator::Parameter
+
+SorbetRails::MailerRbiFormatter::Parameter = Parlour::RbiGenerator::Parameter
+
+SorbetRails::ModelPlugins::Base::Parameter = Parlour::RbiGenerator::Parameter
+
+class SorbetRails::Railtie
+end
+
+module SorbetRails
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class SortedSet
   def initialize(*args, &block); end
 end
@@ -48846,6 +49344,10 @@ Struct::Tms = Process::Tms
 
 class SynchronizedDelegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class TA
+  Elem = type_member
 end
 
 module TZInfo::RubyCoreSupport
@@ -49496,6 +49998,14 @@ module Turbolinks::Source
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module TypeCoerce::Configuration
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class TypeCoerce::Converter
+  PRIMITIVE_TYPES = ::T.let(nil, ::T.untyped)
+end
+
 module URI
   include ::URI::RFC2396_REGEXP
 end
@@ -49687,6 +50197,31 @@ class User
   def devise_modules?(); end
 
   def validate_associated_records_for_notifications(*args); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class User::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::User::GeneratedRelationMethods
+end
+
+class User::ActiveRecord_AssociationRelation
+end
+
+class User::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::User::GeneratedRelationMethods
+end
+
+class User::ActiveRecord_Associations_CollectionProxy
+end
+
+class User::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::User::GeneratedRelationMethods
+end
+
+class User::ActiveRecord_Relation
 end
 
 module User::GeneratedAssociationMethods
@@ -49706,6 +50241,13 @@ module User::GeneratedAttributeMethods
 end
 
 module User::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module User::GeneratedRelationMethods
+end
+
+module User::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -51047,6 +51589,31 @@ class Work
   def validate_associated_records_for_related_links(*args); end
 
   def validate_associated_records_for_related_works(*args); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class Work::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Work::GeneratedRelationMethods
+end
+
+class Work::ActiveRecord_AssociationRelation
+end
+
+class Work::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Work::GeneratedRelationMethods
+end
+
+class Work::ActiveRecord_Associations_CollectionProxy
+end
+
+class Work::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Work::GeneratedRelationMethods
+end
+
+class Work::ActiveRecord_Relation
 end
 
 module Work::FilesAttachmentsAssociationExtension
@@ -51123,6 +51690,14 @@ module Work::GeneratedAttributeMethods
 end
 
 module Work::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Work::GeneratedRelationMethods
+  def with_attached_files(*_, &_1); end
+end
+
+module Work::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
