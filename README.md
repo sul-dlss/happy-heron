@@ -36,7 +36,7 @@ then
 fi
 ```
 
-Then commit the changes in `sorbet/` to git.
+Thereafter, every time you commit changes to `Gemfile.lock` or `app`, Sorbet will update type-checking information. Once it's done, add & commit the changes in `sorbet/` (feel free to squash them into the prior commit).
 
 ## Deployment
 
