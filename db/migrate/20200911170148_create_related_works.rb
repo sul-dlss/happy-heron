@@ -1,4 +1,3 @@
-# typed: true
 class CreateRelatedWorks < ActiveRecord::Migration[6.0]
   def change
     create_table :related_works do |t|

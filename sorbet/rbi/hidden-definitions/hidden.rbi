@@ -2114,10 +2114,6 @@ end
 module ActionController::Head
 end
 
-module ActionController::Helpers
-  def helpers(); end
-end
-
 module ActionController::Helpers::ClassMethods
   def all_helpers_from_path(path); end
 
@@ -5445,39 +5441,6 @@ class ActionDispatch::Request
   def self.parameter_parsers(); end
 end
 
-class ActionDispatch::RequestEncoder
-  def accept_header(); end
-
-  def content_type(); end
-
-  def encode_params(params); end
-
-  def initialize(mime_name, param_encoder, response_parser); end
-
-  def response_parser(); end
-end
-
-class ActionDispatch::RequestEncoder::IdentityEncoder
-  def accept_header(); end
-
-  def content_type(); end
-
-  def encode_params(params); end
-
-  def response_parser(); end
-end
-
-class ActionDispatch::RequestEncoder::IdentityEncoder
-end
-
-class ActionDispatch::RequestEncoder
-  def self.encoder(name); end
-
-  def self.parser(content_type); end
-
-  def self.register_encoder(mime_name, param_encoder: T.unsafe(nil), response_parser: T.unsafe(nil)); end
-end
-
 class ActionDispatch::RequestId
   def call(env); end
 
@@ -7269,9 +7232,6 @@ class ActionMailer::DeliveryJob
   def perform(mailer, mail_method, delivery_method, *args); end
 end
 
-class ActionMailer::DeliveryJob
-end
-
 module ActionMailer::DeliveryMethods
   def wrap_delivery_behavior!(*args); end
 end
@@ -7320,9 +7280,6 @@ class ActionMailer::MailDeliveryJob
   def perform(mailer, mail_method, delivery_method, args:, kwargs: T.unsafe(nil), params: T.unsafe(nil)); end
 end
 
-class ActionMailer::MailDeliveryJob
-end
-
 module ActionMailer::MailHelper
   def attachments(); end
 
@@ -7367,9 +7324,6 @@ end
 class ActionMailer::NonInferrableMailerError
 end
 
-module ActionMailer::Parameterized
-end
-
 module ActionMailer::Parameterized::ClassMethods
   def with(params); end
 end
@@ -7379,9 +7333,6 @@ end
 
 class ActionMailer::Parameterized::DeliveryJob
   def perform(mailer, mail_method, delivery_method, params, *args); end
-end
-
-class ActionMailer::Parameterized::DeliveryJob
 end
 
 class ActionMailer::Parameterized::Mailer
@@ -11722,6 +11673,31 @@ end
 class ActiveRecord::AdvisoryLockBase
   include ::ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
   include ::ActiveRecord::AdvisoryLockBase::GeneratedAssociationMethods
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_AssociationRelation
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Associations_CollectionProxy
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+class ActiveRecord::AdvisoryLockBase::ActiveRecord_Relation
 end
 
 module ActiveRecord::AdvisoryLockBase::GeneratedAssociationMethods
@@ -11734,6 +11710,13 @@ module ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
 end
 
 module ActiveRecord::AdvisoryLockBase::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
+end
+
+module ActiveRecord::AdvisoryLockBase::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -11766,9 +11749,6 @@ class ActiveRecord::AssociationRelation
   def initialize(klass, association, **_); end
 
   def proxy_association(); end
-end
-
-class ActiveRecord::AssociationRelation
 end
 
 module ActiveRecord::Associations
@@ -12285,9 +12265,6 @@ class ActiveRecord::Associations::CollectionProxy
   def where_clause(*_, &_1); end
 
   def where_clause=(arg); end
-end
-
-class ActiveRecord::Associations::CollectionProxy
 end
 
 module ActiveRecord::Associations::ForeignAssociation
@@ -13055,7 +13032,6 @@ class ActiveRecord::Base
   extend ::ActiveModel::Naming
   extend ::ActiveRecord::DynamicMatchers
   extend ::ActiveRecord::Explain
-  extend ::ActiveRecord::Enum
   extend ::ActiveRecord::Delegation::DelegateCache
   extend ::ActiveRecord::Aggregations::ClassMethods
   extend ::ActiveRecord::Core::ClassMethods
@@ -13080,6 +13056,7 @@ class ActiveRecord::Base
   extend ::ActiveRecord::SecureToken::ClassMethods
   extend ::ActiveRecord::Suppressor::ClassMethods
   extend ::OrmAdapter::ToAdapter
+  extend ::SorbetRails::CustomFinderMethods
   extend ::Devise::Models
   def self.__callbacks(); end
 
@@ -13296,6 +13273,8 @@ class ActiveRecord::Base
   def self.index_nested_attribute_errors(); end
 
   def self.index_nested_attribute_errors=(obj); end
+
+  def self.inherited(child); end
 
   def self.internal_metadata_table_name(); end
 
@@ -15948,13 +15927,6 @@ end
 module ActiveRecord::Delegation::ClassSpecificRelation
 end
 
-module ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-  def name(); end
-end
-
-module ActiveRecord::Delegation::ClassSpecificRelation::ClassMethods
-end
-
 module ActiveRecord::Delegation::ClassSpecificRelation
   extend ::ActiveSupport::Concern
 end
@@ -16039,9 +16011,10 @@ class ActiveRecord::EagerLoadPolymorphicError
 end
 
 module ActiveRecord::Enum
-  def enum(definitions); end
+  def enum(*args, &blk); end
 
   def inherited(base); end
+  SR_ENUM_KEYWORDS = ::T.let(nil, ::T.untyped)
 end
 
 class ActiveRecord::Enum::EnumType
@@ -16304,10 +16277,24 @@ module ActiveRecord::Integration
 end
 
 class ActiveRecord::InternalMetadata
-  include ::ActiveRecord::InternalMetadata::GeneratedAttributeMethods
   include ::ActiveRecord::InternalMetadata::GeneratedAssociationMethods
 end
 
+class ActiveRecord::InternalMetadata::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
+class ActiveRecord::InternalMetadata::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
 module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
 end
 
@@ -16315,9 +16302,13 @@ module ActiveRecord::InternalMetadata::GeneratedAssociationMethods
 end
 
 module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module ActiveRecord::InternalMetadata::GeneratedAttributeMethods
+module ActiveRecord::InternalMetadata::GeneratedRelationMethods
+end
+
+module ActiveRecord::InternalMetadata::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -18133,7 +18124,6 @@ module ActiveRecord::Reflection
 end
 
 class ActiveRecord::Relation
-  include ::Enumerable
   include ::ActiveRecord::Delegation
   include ::ActiveRecord::Explain
   include ::ActiveRecord::Batches
@@ -18142,6 +18132,7 @@ class ActiveRecord::Relation
   include ::ActiveRecord::SpawnMethods
   include ::ActiveRecord::Calculations
   include ::ActiveRecord::FinderMethods
+  include ::SorbetRails::CustomFinderMethods
   def ==(other); end
 
   def _deprecated_scope_source(); end
@@ -18156,17 +18147,11 @@ class ActiveRecord::Relation
 
   def bind_attribute(name, value); end
 
-  def build(attributes=T.unsafe(nil), &block); end
-
   def cache_key(timestamp_column=T.unsafe(nil)); end
 
   def cache_key_with_version(); end
 
   def cache_version(timestamp_column=T.unsafe(nil)); end
-
-  def create(attributes=T.unsafe(nil), &block); end
-
-  def create!(attributes=T.unsafe(nil), &block); end
 
   def create_or_find_by(attributes, &block); end
 
@@ -18185,18 +18170,6 @@ class ActiveRecord::Relation
   def encode_with(coder); end
 
   def explain(); end
-
-  def find_or_create_by(attributes, &block); end
-
-  def find_or_create_by!(attributes, &block); end
-
-  def find_or_initialize_by(attributes, &block); end
-
-  def first_or_create(attributes=T.unsafe(nil), &block); end
-
-  def first_or_create!(attributes=T.unsafe(nil), &block); end
-
-  def first_or_initialize(attributes=T.unsafe(nil), &block); end
 
   def has_limit_or_offset?(); end
 
@@ -18217,8 +18190,6 @@ class ActiveRecord::Relation
   def locked?(); end
 
   def model(); end
-
-  def new(attributes=T.unsafe(nil), &block); end
 
   def null_relation?(); end
 
@@ -18241,8 +18212,6 @@ class ActiveRecord::Relation
   def skip_preloading_value=(skip_preloading_value); end
 
   def table(); end
-
-  def to_a(); end
 
   def to_ary(); end
 
@@ -18471,11 +18440,25 @@ class ActiveRecord::SchemaDumper
 end
 
 class ActiveRecord::SchemaMigration
-  include ::ActiveRecord::SchemaMigration::GeneratedAttributeMethods
   include ::ActiveRecord::SchemaMigration::GeneratedAssociationMethods
   def version(); end
 end
 
+class ActiveRecord::SchemaMigration::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
+class ActiveRecord::SchemaMigration::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
 module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
 end
 
@@ -18483,9 +18466,13 @@ module ActiveRecord::SchemaMigration::GeneratedAssociationMethods
 end
 
 module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module ActiveRecord::SchemaMigration::GeneratedAttributeMethods
+module ActiveRecord::SchemaMigration::GeneratedRelationMethods
+end
+
+module ActiveRecord::SchemaMigration::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -18746,7 +18733,6 @@ end
 
 class ActiveRecord::SuppressorRegistry
   extend ::ActiveSupport::PerThreadRegistry
-  def self.suppressed(*_, &_1); end
 end
 
 class ActiveRecord::TableMetadata
@@ -18787,18 +18773,6 @@ class ActiveRecord::TableMetadata
 end
 
 module ActiveRecord::Tasks
-end
-
-class ActiveRecord::Tasks::DatabaseAlreadyExists
-end
-
-class ActiveRecord::Tasks::DatabaseAlreadyExists
-end
-
-class ActiveRecord::Tasks::DatabaseNotSupported
-end
-
-class ActiveRecord::Tasks::DatabaseNotSupported
 end
 
 module ActiveRecord::Tasks::DatabaseTasks
@@ -19513,9 +19487,6 @@ class ActiveStorage::AnalyzeJob
   def perform(blob); end
 end
 
-class ActiveStorage::AnalyzeJob
-end
-
 class ActiveStorage::Analyzer
   def blob(); end
 
@@ -19664,8 +19635,6 @@ class ActiveStorage::Attached::One
 end
 
 class ActiveStorage::Attachment
-  include ::ActiveStorage::Attachment::GeneratedAttributeMethods
-  include ::ActiveStorage::Attachment::GeneratedAssociationMethods
   def autosave_associated_records_for_blob(*args); end
 
   def autosave_associated_records_for_record(*args); end
@@ -19675,33 +19644,35 @@ class ActiveStorage::Attachment
   def purge_later(); end
 end
 
+class ActiveStorage::Attachment::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Attachment::GeneratedRelationMethods
+end
+
+class ActiveStorage::Attachment::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Attachment::GeneratedRelationMethods
+end
+
+class ActiveStorage::Attachment::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Attachment::GeneratedRelationMethods
+end
+
 module ActiveStorage::Attachment::GeneratedAssociationMethods
-  def blob(); end
-
-  def blob=(value); end
-
-  def build_blob(*args, &block); end
-
-  def create_blob(*args, &block); end
-
-  def create_blob!(*args, &block); end
-
-  def record(); end
-
-  def record=(value); end
-
   def reload_blob(); end
 
   def reload_record(); end
 end
 
-module ActiveStorage::Attachment::GeneratedAssociationMethods
+module ActiveStorage::Attachment::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module ActiveStorage::Attachment::GeneratedAttributeMethods
+module ActiveStorage::Attachment::GeneratedRelationMethods
 end
 
-module ActiveStorage::Attachment::GeneratedAttributeMethods
+module ActiveStorage::Attachment::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -19712,15 +19683,7 @@ end
 class ActiveStorage::BaseController
 end
 
-class ActiveStorage::BaseJob
-end
-
-class ActiveStorage::BaseJob
-end
-
 class ActiveStorage::Blob
-  include ::ActiveStorage::Blob::GeneratedAttributeMethods
-  include ::ActiveStorage::Blob::GeneratedAssociationMethods
   include ::ActiveStorage::Blob::Analyzable
   include ::ActiveStorage::Blob::Identifiable
   def after_add_for_attachments(); end
@@ -19798,6 +19761,21 @@ class ActiveStorage::Blob
   def video?(); end
 end
 
+class ActiveStorage::Blob::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Blob::GeneratedRelationMethods
+end
+
+class ActiveStorage::Blob::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Blob::GeneratedRelationMethods
+end
+
+class ActiveStorage::Blob::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ActiveStorage::Blob::GeneratedRelationMethods
+end
+
 module ActiveStorage::Blob::Analyzable
   def analyze(); end
 
@@ -19810,44 +19788,24 @@ module ActiveStorage::Blob::Analyzable
 end
 
 module ActiveStorage::Blob::GeneratedAssociationMethods
-  def attachment_ids(); end
-
   def attachment_ids=(ids); end
-
-  def attachments(); end
-
-  def attachments=(value); end
-
-  def build_preview_image_attachment(*args, &block); end
-
-  def create_preview_image_attachment(*args, &block); end
-
-  def create_preview_image_attachment!(*args, &block); end
-
-  def preview_image(); end
-
-  def preview_image=(attachable); end
-
-  def preview_image_attachment(); end
-
-  def preview_image_attachment=(value); end
-
-  def preview_image_blob(); end
-
-  def preview_image_blob=(value); end
 
   def reload_preview_image_attachment(); end
 
   def reload_preview_image_blob(); end
 end
 
-module ActiveStorage::Blob::GeneratedAssociationMethods
+module ActiveStorage::Blob::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module ActiveStorage::Blob::GeneratedAttributeMethods
+module ActiveStorage::Blob::GeneratedRelationMethods
+  def unattached(*_, &_1); end
+
+  def with_attached_preview_image(*_, &_1); end
 end
 
-module ActiveStorage::Blob::GeneratedAttributeMethods
+module ActiveStorage::Blob::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -19920,10 +19878,6 @@ class ActiveStorage::Blob
   def self.service=(val); end
 
   def self.service?(); end
-
-  def self.unattached(*args); end
-
-  def self.with_attached_preview_image(*args); end
 end
 
 class ActiveStorage::BlobsController
@@ -20106,9 +20060,6 @@ end
 
 class ActiveStorage::PurgeJob
   def perform(blob); end
-end
-
-class ActiveStorage::PurgeJob
 end
 
 module ActiveStorage::Reflection
@@ -23059,12 +23010,6 @@ end
 class ActiveSupport::Testing::SimpleStubs
 end
 
-module ActiveSupport::Testing::Stream
-end
-
-module ActiveSupport::Testing::Stream
-end
-
 module ActiveSupport::Testing::TaggedLogging
   def before_setup(); end
 
@@ -23502,6 +23447,31 @@ end
 class ApplicationRecord
   include ::ApplicationRecord::GeneratedAttributeMethods
   include ::ApplicationRecord::GeneratedAssociationMethods
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class ApplicationRecord::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ApplicationRecord::GeneratedRelationMethods
+end
+
+class ApplicationRecord::ActiveRecord_AssociationRelation
+end
+
+class ApplicationRecord::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ApplicationRecord::GeneratedRelationMethods
+end
+
+class ApplicationRecord::ActiveRecord_Associations_CollectionProxy
+end
+
+class ApplicationRecord::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::ApplicationRecord::GeneratedRelationMethods
+end
+
+class ApplicationRecord::ActiveRecord_Relation
 end
 
 module ApplicationRecord::GeneratedAssociationMethods
@@ -23514,6 +23484,13 @@ module ApplicationRecord::GeneratedAttributeMethods
 end
 
 module ApplicationRecord::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module ApplicationRecord::GeneratedRelationMethods
+end
+
+module ApplicationRecord::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -31510,10 +31487,24 @@ class Cocina::Models::Vocab
 end
 
 class Collection
-  include ::Collection::GeneratedAttributeMethods
   include ::Collection::GeneratedAssociationMethods
 end
 
+class Collection::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Collection::GeneratedRelationMethods
+end
+
+class Collection::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Collection::GeneratedRelationMethods
+end
+
+class Collection::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Collection::GeneratedRelationMethods
+end
+
 module Collection::GeneratedAssociationMethods
 end
 
@@ -31521,9 +31512,13 @@ module Collection::GeneratedAssociationMethods
 end
 
 module Collection::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module Collection::GeneratedAttributeMethods
+module Collection::GeneratedRelationMethods
+end
+
+module Collection::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -31664,46 +31659,40 @@ class ConnectionPool::Wrapper
 end
 
 class Contributor
-  include ::Contributor::GeneratedAttributeMethods
-  include ::Contributor::GeneratedAssociationMethods
   def autosave_associated_records_for_role_term(*args); end
 
   def autosave_associated_records_for_work(*args); end
 end
 
+class Contributor::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Contributor::GeneratedRelationMethods
+end
+
+class Contributor::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Contributor::GeneratedRelationMethods
+end
+
+class Contributor::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Contributor::GeneratedRelationMethods
+end
+
 module Contributor::GeneratedAssociationMethods
-  def build_role_term(*args, &block); end
-
-  def build_work(*args, &block); end
-
-  def create_role_term(*args, &block); end
-
-  def create_role_term!(*args, &block); end
-
-  def create_work(*args, &block); end
-
-  def create_work!(*args, &block); end
-
   def reload_role_term(); end
 
   def reload_work(); end
-
-  def role_term(); end
-
-  def role_term=(value); end
-
-  def work(); end
-
-  def work=(value); end
-end
-
-module Contributor::GeneratedAssociationMethods
 end
 
 module Contributor::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module Contributor::GeneratedAttributeMethods
+module Contributor::GeneratedRelationMethods
+end
+
+module Contributor::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -32810,9 +32799,6 @@ class Devise::Mailer
   def reset_password_instructions(record, token, opts=T.unsafe(nil)); end
 
   def unlock_instructions(record, token, opts=T.unsafe(nil)); end
-end
-
-class Devise::Mailer
 end
 
 module Devise::Mailers
@@ -34020,7 +34006,7 @@ module DeviseHelper
   def devise_error_messages!(); end
 end
 
-module DeviseHelper
+class DeviseRemoteUser::Engine
 end
 
 class DidYouMean::ClassNameChecker
@@ -37348,6 +37334,36 @@ Gem::UnsatisfiableDepedencyError = Gem::UnsatisfiableDependencyError
 
 Gem::Version::Requirement = Gem::Requirement
 
+module GeneratedUrlHelpers
+  def preview_view_component_path(*args); end
+
+  def preview_view_component_url(*args); end
+
+  def preview_view_components_path(*args); end
+
+  def preview_view_components_url(*args); end
+
+  def rails_info_path(*args); end
+
+  def rails_info_properties_path(*args); end
+
+  def rails_info_properties_url(*args); end
+
+  def rails_info_routes_path(*args); end
+
+  def rails_info_routes_url(*args); end
+
+  def rails_info_url(*args); end
+
+  def rails_mailers_path(*args); end
+
+  def rails_mailers_url(*args); end
+end
+
+module GeneratedUrlHelpers
+  extend ::ActiveSupport::Concern
+end
+
 class GlobalID
   def ==(other); end
 
@@ -39486,6 +39502,15 @@ class MessagePack::Timestamp
   TYPE = ::T.let(nil, ::T.untyped)
 end
 
+module MethodSource
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module MethodSource::CodeHelpers::IncompleteExpression
+  GENERIC_REGEXPS = ::T.let(nil, ::T.untyped)
+  RBX_ONLY_REGEXPS = ::T.let(nil, ::T.untyped)
+end
+
 module Mime
   ALL = ::T.let(nil, ::T.untyped)
   EXTENSION_LOOKUP = ::T.let(nil, ::T.untyped)
@@ -40493,8 +40518,6 @@ module Nokogiri::XML::Searchable
 end
 
 class Notification
-  include ::Notification::GeneratedAttributeMethods
-  include ::Notification::GeneratedAssociationMethods
   def autosave_associated_records_for_notifiable(*args); end
 
   def autosave_associated_records_for_recipient(*args); end
@@ -40502,45 +40525,37 @@ class Notification
   def autosave_associated_records_for_user(*args); end
 end
 
+class Notification::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Notification::GeneratedRelationMethods
+end
+
+class Notification::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Notification::GeneratedRelationMethods
+end
+
+class Notification::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Notification::GeneratedRelationMethods
+end
+
 module Notification::GeneratedAssociationMethods
-  def build_recipient(*args, &block); end
-
-  def build_user(*args, &block); end
-
-  def create_recipient(*args, &block); end
-
-  def create_recipient!(*args, &block); end
-
-  def create_user(*args, &block); end
-
-  def create_user!(*args, &block); end
-
-  def notifiable(); end
-
-  def notifiable=(value); end
-
-  def recipient(); end
-
-  def recipient=(value); end
-
   def reload_notifiable(); end
 
   def reload_recipient(); end
 
   def reload_user(); end
-
-  def user(); end
-
-  def user=(value); end
-end
-
-module Notification::GeneratedAssociationMethods
 end
 
 module Notification::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module Notification::GeneratedAttributeMethods
+module Notification::GeneratedRelationMethods
+end
+
+module Notification::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -40556,6 +40571,8 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
+
+  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -40574,6 +40591,10 @@ class Object
   STDOUT = ::T.let(nil, ::T.untyped)
   Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
+end
+
+class Object
+  def self.yaml_tag(url); end
 end
 
 module OpenAPIParser
@@ -42725,12 +42746,26 @@ class Parallel::UserInterruptHandler
   INTERRUPT_SIGNAL = ::T.let(nil, ::T.untyped)
 end
 
+module Parlour
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Parlour::Debugging::Tree
+  INDENT_SPACES = ::T.let(nil, ::T.untyped)
+end
+
+class Parlour::RbiGenerator::Parameter
+  PREFIXES = ::T.let(nil, ::T.untyped)
+end
+
 ParseError = Racc::ParseError
 
 module Parser
   MESSAGES = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
 end
+
+Parser::CurrentRuby = Parser::Ruby27
 
 class Parser::Diagnostic
   LEVELS = ::T.let(nil, ::T.untyped)
@@ -42769,6 +42804,12 @@ class Parser::Ruby24
   Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
 end
 
+class Parser::Ruby27
+  Racc_arg = ::T.let(nil, ::T.untyped)
+  Racc_debug_parser = ::T.let(nil, ::T.untyped)
+  Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
+end
+
 class Parser::Source::Buffer
   ENCODING_RE = ::T.let(nil, ::T.untyped)
 end
@@ -42798,6 +42839,46 @@ class Pathname
   def glob(*_); end
 
   def make_symlink(_); end
+end
+
+module Polyfill
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Polyfill::Module::M10440
+end
+
+module Polyfill::Module::M10440
+end
+
+module Polyfill::Module::M10460
+end
+
+module Polyfill::Module::M10460
+end
+
+module Polyfill::Module::M10480
+end
+
+module Polyfill::Module::M10480
+end
+
+module Polyfill::Module::M10500
+end
+
+module Polyfill::Module::M10500
+end
+
+module Polyfill::Module::M10520
+end
+
+module Polyfill::Module::M10520
+end
+
+module Polyfill::Module::M10560
+end
+
+module Polyfill::Module::M10560
 end
 
 class Proc
@@ -42867,6 +42948,30 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Psych
+  def self.add_builtin_type(type_tag, &block); end
+
+  def self.add_domain_type(domain, type_tag, &block); end
+
+  def self.add_tag(tag, klass); end
+
+  def self.domain_types(); end
+
+  def self.domain_types=(domain_types); end
+
+  def self.dump_tags(); end
+
+  def self.dump_tags=(dump_tags); end
+
+  def self.libyaml_version(); end
+
+  def self.load_tags(); end
+
+  def self.load_tags=(load_tags); end
+
+  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -44260,104 +44365,6 @@ end
 class Rails::BacktraceCleaner
 end
 
-module Rails::Command
-  include ::Rails::Command::Behavior
-  HELP_MAPPINGS = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Command::Actions
-  def load_generators(); end
-
-  def load_tasks(); end
-
-  def require_application!(); end
-
-  def require_application_and_environment!(); end
-
-  def require_environment!(); end
-
-  def set_application_directory!(); end
-end
-
-module Rails::Command::Actions
-end
-
-class Rails::Command::Base
-  include ::Rails::Command::Actions
-  def help(); end
-end
-
-class Rails::Command::Base::Error
-end
-
-class Rails::Command::Base::Error
-end
-
-class Rails::Command::Base
-  def self.banner(*_); end
-
-  def self.base_name(); end
-
-  def self.command_name(); end
-
-  def self.default_command_root(); end
-
-  def self.desc(usage=T.unsafe(nil), description=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def self.engine?(); end
-
-  def self.executable(); end
-
-  def self.hide_command!(); end
-
-  def self.inherited(base); end
-
-  def self.perform(command, args, config); end
-
-  def self.printing_commands(); end
-
-  def self.usage_path(); end
-end
-
-module Rails::Command::Behavior
-end
-
-module Rails::Command::Behavior::ClassMethods
-  def no_color!(); end
-
-  def subclasses(); end
-end
-
-module Rails::Command::Behavior::ClassMethods
-end
-
-module Rails::Command::Behavior
-  extend ::ActiveSupport::Concern
-end
-
-module Rails::Command::Spellchecker
-end
-
-module Rails::Command::Spellchecker
-  def self.suggest(word, from:); end
-end
-
-module Rails::Command
-  extend ::ActiveSupport::Autoload
-  extend ::Rails::Command::Behavior::ClassMethods
-  def self.environment(); end
-
-  def self.find_by_namespace(namespace, command_name=T.unsafe(nil)); end
-
-  def self.hidden_commands(); end
-
-  def self.invoke(full_namespace, args=T.unsafe(nil), **config); end
-
-  def self.print_commands(); end
-
-  def self.root(); end
-end
-
 module Rails::Configuration
 end
 
@@ -44504,353 +44511,6 @@ class Rails::Engine
   def self.isolated=(isolated); end
 
   def self.isolated?(); end
-end
-
-module Rails::Generators
-  include ::Rails::Command::Behavior
-  def namespace(); end
-
-  def namespace=(obj); end
-  DEFAULT_ALIASES = ::T.let(nil, ::T.untyped)
-  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Generators::Actions
-  def add_source(source, options=T.unsafe(nil), &block); end
-
-  def application(data=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def environment(data=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def gem(*args); end
-
-  def gem_group(*names, &block); end
-
-  def generate(what, *args); end
-
-  def git(commands=T.unsafe(nil)); end
-
-  def github(repo, options=T.unsafe(nil), &block); end
-
-  def initialize(*_); end
-
-  def initializer(filename, data=T.unsafe(nil)); end
-
-  def lib(filename, data=T.unsafe(nil)); end
-
-  def rails_command(command, options=T.unsafe(nil)); end
-
-  def rake(command, options=T.unsafe(nil)); end
-
-  def rakefile(filename, data=T.unsafe(nil)); end
-
-  def readme(path); end
-
-  def route(routing_code); end
-
-  def vendor(filename, data=T.unsafe(nil)); end
-end
-
-class Rails::Generators::Actions::CreateMigration
-  def existing_migration(); end
-
-  def migration_dir(); end
-
-  def migration_file_name(); end
-
-  def relative_existing_migration(); end
-end
-
-class Rails::Generators::Actions::CreateMigration
-end
-
-module Rails::Generators::Actions
-end
-
-class Rails::Generators::ActiveModel
-  def destroy(); end
-
-  def errors(); end
-
-  def initialize(name); end
-
-  def name(); end
-
-  def save(); end
-
-  def update(params=T.unsafe(nil)); end
-end
-
-class Rails::Generators::ActiveModel
-  def self.all(klass); end
-
-  def self.build(klass, params=T.unsafe(nil)); end
-
-  def self.find(klass, params=T.unsafe(nil)); end
-end
-
-module Rails::Generators::AppName
-  RESERVED_NAMES = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Generators::AppName
-end
-
-class Rails::Generators::Base
-  include ::Thor::Actions
-  include ::Rails::Generators::Actions
-end
-
-class Rails::Generators::Base
-  def self.add_shebang_option!(); end
-
-  def self.base_name(); end
-
-  def self.base_root(); end
-
-  def self.default_aliases_for_option(name, options); end
-
-  def self.default_for_option(config, name, options, default); end
-
-  def self.default_generator_root(); end
-
-  def self.default_source_root(); end
-
-  def self.default_value_for_option(name, options); end
-
-  def self.generator_name(); end
-
-  def self.hide!(); end
-
-  def self.hook_for(*names, &block); end
-
-  def self.hooks(); end
-
-  def self.inherited(base); end
-
-  def self.prepare_for_invocation(name, value); end
-
-  def self.remove_hook_for(*names); end
-
-  def self.usage_path(); end
-end
-
-module Rails::Generators::Database
-  def convert_database_option_for_jruby(); end
-
-  def gem_for_database(database=T.unsafe(nil)); end
-
-  def initialize(*_); end
-  DATABASES = ::T.let(nil, ::T.untyped)
-  JDBC_DATABASES = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Generators::Database
-end
-
-module Rails::Generators::Migration
-  def create_migration(destination, data, config=T.unsafe(nil), &block); end
-
-  def migration_class_name(); end
-
-  def migration_file_name(); end
-
-  def migration_number(); end
-
-  def migration_template(source, destination, config=T.unsafe(nil)); end
-
-  def set_migration_assigns!(destination); end
-end
-
-module Rails::Generators::Migration::ClassMethods
-  def current_migration_number(dirname); end
-
-  def migration_exists?(dirname, file_name); end
-
-  def migration_lookup_at(dirname); end
-
-  def next_migration_number(dirname); end
-end
-
-module Rails::Generators::Migration::ClassMethods
-end
-
-module Rails::Generators::Migration
-  extend ::ActiveSupport::Concern
-end
-
-class Rails::Generators::NamedBase
-  def file_name(); end
-
-  def initialize(args, *options); end
-
-  def js_template(source, destination); end
-
-  def name(); end
-
-  def name=(name); end
-end
-
-class Rails::Generators::NamedBase
-  def self.check_class_collision(options=T.unsafe(nil)); end
-end
-
-module Rails::Generators::ResourceHelpers
-  def initialize(*args); end
-end
-
-module Rails::Generators::ResourceHelpers
-  def self.included(base); end
-end
-
-class Rails::Generators::TestCase
-  include ::Rails::Generators::Testing::Behaviour
-  include ::ActiveSupport::Testing::Stream
-  include ::Rails::Generators::Testing::SetupAndTeardown
-  include ::Rails::Generators::Testing::Assertions
-  include ::FileUtils
-  include ::FileUtils::StreamUtils_
-  def current_path(); end
-
-  def current_path=(val); end
-
-  def current_path?(); end
-
-  def default_arguments(); end
-
-  def default_arguments=(val); end
-
-  def default_arguments?(); end
-
-  def destination_root(); end
-
-  def destination_root=(val); end
-
-  def destination_root?(); end
-
-  def generator_class(); end
-
-  def generator_class=(val); end
-
-  def generator_class?(); end
-end
-
-class Rails::Generators::TestCase
-  def self.current_path(); end
-
-  def self.current_path=(val); end
-
-  def self.current_path?(); end
-
-  def self.default_arguments(); end
-
-  def self.default_arguments=(val); end
-
-  def self.default_arguments?(); end
-
-  def self.destination_root(); end
-
-  def self.destination_root=(val); end
-
-  def self.destination_root?(); end
-
-  def self.generator_class(); end
-
-  def self.generator_class=(val); end
-
-  def self.generator_class?(); end
-end
-
-module Rails::Generators::Testing
-end
-
-module Rails::Generators::Testing::Assertions
-  def assert_class_method(method, content, &block); end
-
-  def assert_directory(relative, *contents); end
-
-  def assert_field_default_value(attribute_type, value); end
-
-  def assert_field_type(attribute_type, field_type); end
-
-  def assert_file(relative, *contents); end
-
-  def assert_instance_method(method, content); end
-
-  def assert_method(method, content); end
-
-  def assert_migration(relative, *contents, &block); end
-
-  def assert_no_directory(relative); end
-
-  def assert_no_file(relative); end
-
-  def assert_no_migration(relative); end
-end
-
-module Rails::Generators::Testing::Assertions
-end
-
-module Rails::Generators::Testing::Behaviour
-  include ::ActiveSupport::Testing::Stream
-  def create_generated_attribute(attribute_type, name=T.unsafe(nil), index=T.unsafe(nil)); end
-
-  def generator(args=T.unsafe(nil), options=T.unsafe(nil), config=T.unsafe(nil)); end
-
-  def run_generator(args=T.unsafe(nil), config=T.unsafe(nil)); end
-end
-
-module Rails::Generators::Testing::Behaviour
-  extend ::ActiveSupport::Concern
-end
-
-module Rails::Generators::Testing::SetupAndTeardown
-  def setup(); end
-
-  def teardown(); end
-end
-
-module Rails::Generators::Testing::SetupAndTeardown
-end
-
-module Rails::Generators::Testing
-end
-
-module Rails::Generators
-  extend ::Rails::Command::Behavior::ClassMethods
-  def self.aliases(); end
-
-  def self.api_only!(); end
-
-  def self.configure!(config); end
-
-  def self.fallbacks(); end
-
-  def self.find_by_namespace(name, base=T.unsafe(nil), context=T.unsafe(nil)); end
-
-  def self.help(command=T.unsafe(nil)); end
-
-  def self.hidden_namespaces(); end
-
-  def self.hide_namespace(*namespaces); end
-
-  def self.hide_namespaces(*namespaces); end
-
-  def self.invoke(namespace, args=T.unsafe(nil), config=T.unsafe(nil)); end
-
-  def self.namespace(); end
-
-  def self.namespace=(obj); end
-
-  def self.options(); end
-
-  def self.print_generators(); end
-
-  def self.public_namespaces(); end
-
-  def self.sorted_groups(); end
-
-  def self.templates_path(); end
 end
 
 module Rails::Html
@@ -46002,62 +45662,70 @@ module Regexp::Syntax::Token::UnicodeProperty::Category
 end
 
 class RelatedLink
-  include ::RelatedLink::GeneratedAttributeMethods
-  include ::RelatedLink::GeneratedAssociationMethods
   def autosave_associated_records_for_work(*args); end
 end
 
+class RelatedLink::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedLink::GeneratedRelationMethods
+end
+
+class RelatedLink::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedLink::GeneratedRelationMethods
+end
+
+class RelatedLink::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedLink::GeneratedRelationMethods
+end
+
 module RelatedLink::GeneratedAssociationMethods
-  def build_work(*args, &block); end
-
-  def create_work(*args, &block); end
-
-  def create_work!(*args, &block); end
-
   def reload_work(); end
-
-  def work(); end
-
-  def work=(value); end
-end
-
-module RelatedLink::GeneratedAssociationMethods
-end
-
-module RelatedLink::GeneratedAttributeMethods
 end
 
 module RelatedLink::GeneratedAttributeMethods
   extend ::Mutex_m
 end
 
+module RelatedLink::GeneratedRelationMethods
+end
+
+module RelatedLink::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
 class RelatedWork
-  include ::RelatedWork::GeneratedAttributeMethods
-  include ::RelatedWork::GeneratedAssociationMethods
   def autosave_associated_records_for_work(*args); end
 end
 
+class RelatedWork::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedWork::GeneratedRelationMethods
+end
+
+class RelatedWork::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedWork::GeneratedRelationMethods
+end
+
+class RelatedWork::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RelatedWork::GeneratedRelationMethods
+end
+
 module RelatedWork::GeneratedAssociationMethods
-  def build_work(*args, &block); end
-
-  def create_work(*args, &block); end
-
-  def create_work!(*args, &block); end
-
   def reload_work(); end
-
-  def work(); end
-
-  def work=(value); end
-end
-
-module RelatedWork::GeneratedAssociationMethods
 end
 
 module RelatedWork::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module RelatedWork::GeneratedAttributeMethods
+module RelatedWork::GeneratedRelationMethods
+end
+
+module RelatedWork::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -47548,10 +47216,24 @@ class Ripper
 end
 
 class RoleTerm
-  include ::RoleTerm::GeneratedAttributeMethods
   include ::RoleTerm::GeneratedAssociationMethods
 end
 
+class RoleTerm::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RoleTerm::GeneratedRelationMethods
+end
+
+class RoleTerm::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RoleTerm::GeneratedRelationMethods
+end
+
+class RoleTerm::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::RoleTerm::GeneratedRelationMethods
+end
+
 module RoleTerm::GeneratedAssociationMethods
 end
 
@@ -47559,140 +47241,13 @@ module RoleTerm::GeneratedAssociationMethods
 end
 
 module RoleTerm::GeneratedAttributeMethods
-  def created_at(); end
-
-  def created_at=(value); end
-
-  def created_at?(*args); end
-
-  def created_at_before_last_save(*args); end
-
-  def created_at_before_type_cast(*args); end
-
-  def created_at_came_from_user?(*args); end
-
-  def created_at_change(*args); end
-
-  def created_at_change_to_be_saved(*args); end
-
-  def created_at_changed?(*args); end
-
-  def created_at_in_database(*args); end
-
-  def created_at_previous_change(*args); end
-
-  def created_at_previously_changed?(*args); end
-
-  def created_at_was(*args); end
-
-  def created_at_will_change!(*args); end
-
-  def id_before_last_save(*args); end
-
-  def id_came_from_user?(*args); end
-
-  def id_change(*args); end
-
-  def id_change_to_be_saved(*args); end
-
-  def id_changed?(*args); end
-
-  def id_previous_change(*args); end
-
-  def id_previously_changed?(*args); end
-
-  def id_will_change!(*args); end
-
-  def label(); end
-
-  def label=(value); end
-
-  def label?(*args); end
-
-  def label_before_last_save(*args); end
-
-  def label_before_type_cast(*args); end
-
-  def label_came_from_user?(*args); end
-
-  def label_change(*args); end
-
-  def label_change_to_be_saved(*args); end
-
-  def label_changed?(*args); end
-
-  def label_in_database(*args); end
-
-  def label_previous_change(*args); end
-
-  def label_previously_changed?(*args); end
-
-  def label_was(*args); end
-
-  def label_will_change!(*args); end
-
-  def restore_created_at!(*args); end
-
-  def restore_id!(*args); end
-
-  def restore_label!(*args); end
-
-  def restore_updated_at!(*args); end
-
-  def saved_change_to_created_at(*args); end
-
-  def saved_change_to_created_at?(*args); end
-
-  def saved_change_to_id(*args); end
-
-  def saved_change_to_id?(*args); end
-
-  def saved_change_to_label(*args); end
-
-  def saved_change_to_label?(*args); end
-
-  def saved_change_to_updated_at(*args); end
-
-  def saved_change_to_updated_at?(*args); end
-
-  def updated_at(); end
-
-  def updated_at=(value); end
-
-  def updated_at?(*args); end
-
-  def updated_at_before_last_save(*args); end
-
-  def updated_at_before_type_cast(*args); end
-
-  def updated_at_came_from_user?(*args); end
-
-  def updated_at_change(*args); end
-
-  def updated_at_change_to_be_saved(*args); end
-
-  def updated_at_changed?(*args); end
-
-  def updated_at_in_database(*args); end
-
-  def updated_at_previous_change(*args); end
-
-  def updated_at_previously_changed?(*args); end
-
-  def updated_at_was(*args); end
-
-  def updated_at_will_change!(*args); end
-
-  def will_save_change_to_created_at?(*args); end
-
-  def will_save_change_to_id?(*args); end
-
-  def will_save_change_to_label?(*args); end
-
-  def will_save_change_to_updated_at?(*args); end
+  extend ::Mutex_m
 end
 
-module RoleTerm::GeneratedAttributeMethods
+module RoleTerm::GeneratedRelationMethods
+end
+
+module RoleTerm::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -49212,6 +48767,9 @@ module Sidekiq::LoggingUtils
   LEVELS = ::T.let(nil, ::T.untyped)
 end
 
+class Sidekiq::Rails
+end
+
 class Sidekiq::Web
   ASSETS = ::T.let(nil, ::T.untyped)
   DEFAULT_TABS = ::T.let(nil, ::T.untyped)
@@ -49328,6 +48886,19 @@ module Socket::Constants
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
   SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
+end
+
+SorbetRails::JobRbiFormatter::Parameter = Parlour::RbiGenerator::Parameter
+
+SorbetRails::MailerRbiFormatter::Parameter = Parlour::RbiGenerator::Parameter
+
+SorbetRails::ModelPlugins::Base::Parameter = Parlour::RbiGenerator::Parameter
+
+class SorbetRails::Railtie
+end
+
+module SorbetRails
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class SortedSet
@@ -49591,62 +49162,6 @@ module Thor::Actions
   WARNINGS = ::T.let(nil, ::T.untyped)
 end
 
-class Thor::Actions::CreateFile
-  def data(); end
-
-  def force_on_collision?(); end
-
-  def force_or_skip_or_conflict(force, skip, &block); end
-
-  def identical?(); end
-
-  def initialize(base, destination, data, config=T.unsafe(nil)); end
-
-  def on_conflict_behavior(&block); end
-
-  def render(); end
-end
-
-class Thor::Actions::CreateFile
-end
-
-class Thor::Actions::EmptyDirectory
-  def base(); end
-
-  def config(); end
-
-  def convert_encoded_instructions(filename); end
-
-  def destination(); end
-
-  def destination=(destination); end
-
-  def exists?(); end
-
-  def given_destination(); end
-
-  def initialize(base, destination, config=T.unsafe(nil)); end
-
-  def invoke!(); end
-
-  def invoke_with_conflict_check(&block); end
-
-  def on_conflict_behavior(); end
-
-  def on_file_clash_behavior(); end
-
-  def pretend?(); end
-
-  def relative_destination(); end
-
-  def revoke!(); end
-
-  def say_status(status, color); end
-end
-
-class Thor::Actions::EmptyDirectory
-end
-
 module Thor::Actions
   def self.included(base); end
 end
@@ -49668,6 +49183,43 @@ end
 Thor::Correctable = DidYouMean::Correctable
 
 Thor::DynamicTask = Thor::DynamicCommand
+
+class Thor::Group
+  include ::Thor::Base
+  include ::Thor::Invocation
+  include ::Thor::Shell
+  def _invoke_for_class_method(klass, command=T.unsafe(nil), *args, &block); end
+end
+
+class Thor::Group
+  def self.banner(); end
+
+  def self.desc(description=T.unsafe(nil)); end
+
+  def self.get_options_from_invocations(group_options, base_options); end
+
+  def self.handle_argument_error(command, error, _args, arity); end
+
+  def self.help(shell); end
+
+  def self.invocation_blocks(); end
+
+  def self.invocations(); end
+
+  def self.invoke(*names, &block); end
+
+  def self.invoke_from_option(*names, &block); end
+
+  def self.printable_commands(*_); end
+
+  def self.printable_tasks(*_); end
+
+  def self.remove_invocation(*names); end
+
+  def self.self_command(); end
+
+  def self.self_task(); end
+end
 
 Thor::HiddenTask = Thor::HiddenCommand
 
@@ -50126,12 +49678,23 @@ module Turbolinks::Controller
   extend ::ActiveSupport::Concern
 end
 
+class Turbolinks::Engine
+end
+
 module Turbolinks::Redirection
   extend ::ActiveSupport::Concern
 end
 
 module Turbolinks::Source
   VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module TypeCoerce::Configuration
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class TypeCoerce::Converter
+  PRIMITIVE_TYPES = ::T.let(nil, ::T.untyped)
 end
 
 module URI
@@ -50290,8 +49853,6 @@ module UnicodeNormalize
 end
 
 class User
-  include ::User::GeneratedAttributeMethods
-  include ::User::GeneratedAssociationMethods
   include ::Devise::Models::Authenticatable
   include ::Devise::Models::RemoteUserAuthenticatable
   def after_add_for_notifications(); end
@@ -50327,23 +49888,33 @@ class User
   def validate_associated_records_for_notifications(*args); end
 end
 
-module User::GeneratedAssociationMethods
-  def notification_ids(); end
+class User::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::User::GeneratedRelationMethods
+end
 
+class User::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::User::GeneratedRelationMethods
+end
+
+class User::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::User::GeneratedRelationMethods
+end
+
+module User::GeneratedAssociationMethods
   def notification_ids=(ids); end
-
-  def notifications(); end
-
-  def notifications=(value); end
-end
-
-module User::GeneratedAssociationMethods
 end
 
 module User::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module User::GeneratedAttributeMethods
+module User::GeneratedRelationMethods
+end
+
+module User::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -51541,8 +51112,6 @@ module Webpacker
 end
 
 class Work
-  include ::Work::GeneratedAttributeMethods
-  include ::Work::GeneratedAssociationMethods
   include ::StateMachines::InstanceMethods
   def after_add_for_contributors(); end
 
@@ -51687,6 +51256,21 @@ class Work
   def validate_associated_records_for_related_works(*args); end
 end
 
+class Work::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Work::GeneratedRelationMethods
+end
+
+class Work::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Work::GeneratedRelationMethods
+end
+
+class Work::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Work::GeneratedRelationMethods
+end
+
 module Work::FilesAttachmentsAssociationExtension
   def purge(); end
 
@@ -51697,70 +51281,28 @@ module Work::FilesAttachmentsAssociationExtension
 end
 
 module Work::GeneratedAssociationMethods
-  def build_collection(*args, &block); end
-
-  def collection(); end
-
-  def collection=(value); end
-
-  def contributor_ids(); end
-
   def contributor_ids=(ids); end
-
-  def contributors(); end
-
-  def contributors=(value); end
-
-  def create_collection(*args, &block); end
-
-  def create_collection!(*args, &block); end
-
-  def files(); end
-
-  def files=(attachables); end
-
-  def files_attachment_ids(); end
 
   def files_attachment_ids=(ids); end
 
-  def files_attachments(); end
-
-  def files_attachments=(value); end
-
-  def files_blob_ids(); end
-
   def files_blob_ids=(ids); end
-
-  def files_blobs(); end
-
-  def files_blobs=(value); end
-
-  def related_link_ids(); end
 
   def related_link_ids=(ids); end
 
-  def related_links(); end
-
-  def related_links=(value); end
-
-  def related_work_ids(); end
-
   def related_work_ids=(ids); end
-
-  def related_works(); end
-
-  def related_works=(value); end
 
   def reload_collection(); end
 end
 
-module Work::GeneratedAssociationMethods
+module Work::GeneratedAttributeMethods
+  extend ::Mutex_m
 end
 
-module Work::GeneratedAttributeMethods
+module Work::GeneratedRelationMethods
+  def with_attached_files(*_, &_1); end
 end
 
-module Work::GeneratedAttributeMethods
+module Work::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
@@ -51885,8 +51427,6 @@ class Work
   def self.before_remove_for_related_works=(val); end
 
   def self.before_remove_for_related_works?(); end
-
-  def self.with_attached_files(*args); end
 end
 
 class WorkFormComponent
