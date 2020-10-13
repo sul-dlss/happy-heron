@@ -22,12 +22,15 @@ gem 'webpacker', '~> 5.0'
 group :development, :test do
   gem 'byebug'
   gem 'factory_bot_rails'
+  gem 'rspec_junit_formatter' # used by CircleCI
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-sorbet', require: false
+  # CodeClimate is not compatible with 0.18+. See https://github.com/codeclimate/test-reporter/issues/413
+  gem 'simplecov', '~> 0.17.1', require: false
 end
 
 group :development do

@@ -34185,6 +34185,16 @@ class Dir
   def self.exists?(_); end
 end
 
+module Docile
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Docile::FallbackContextProxy
+  NON_FALLBACK_METHODS = ::T.let(nil, ::T.untyped)
+  NON_PROXIED_INSTANCE_VARIABLES = ::T.let(nil, ::T.untyped)
+  NON_PROXIED_METHODS = ::T.let(nil, ::T.untyped)
+end
+
 module Dor
 end
 
@@ -40518,10 +40528,6 @@ module Nokogiri::XML::Searchable
 end
 
 class Notification
-  def autosave_associated_records_for_notifiable(*args); end
-
-  def autosave_associated_records_for_recipient(*args); end
-
   def autosave_associated_records_for_user(*args); end
 end
 
@@ -40541,10 +40547,6 @@ class Notification::ActiveRecord_Relation
 end
 
 module Notification::GeneratedAssociationMethods
-  def reload_notifiable(); end
-
-  def reload_recipient(); end
-
   def reload_user(); end
 end
 
@@ -40571,8 +40573,6 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
-
-  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -40591,10 +40591,6 @@ class Object
   STDOUT = ::T.let(nil, ::T.untyped)
   Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
-end
-
-class Object
-  def self.yaml_tag(url); end
 end
 
 module OpenAPIParser
@@ -42845,42 +42841,6 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M10440
-end
-
-module Polyfill::Module::M10440
-end
-
-module Polyfill::Module::M10460
-end
-
-module Polyfill::Module::M10460
-end
-
-module Polyfill::Module::M10480
-end
-
-module Polyfill::Module::M10480
-end
-
-module Polyfill::Module::M10500
-end
-
-module Polyfill::Module::M10500
-end
-
-module Polyfill::Module::M10520
-end
-
-module Polyfill::Module::M10520
-end
-
-module Polyfill::Module::M10560
-end
-
-module Polyfill::Module::M10560
-end
-
 class Proc
   def <<(_); end
 
@@ -42948,30 +42908,6 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Psych
-  def self.add_builtin_type(type_tag, &block); end
-
-  def self.add_domain_type(domain, type_tag, &block); end
-
-  def self.add_tag(tag, klass); end
-
-  def self.domain_types(); end
-
-  def self.domain_types=(domain_types); end
-
-  def self.dump_tags(); end
-
-  def self.dump_tags=(dump_tags); end
-
-  def self.libyaml_version(); end
-
-  def self.load_tags(); end
-
-  def self.load_tags=(load_tags); end
-
-  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -43888,6 +43824,15 @@ RSpec::Support::StrictSignatureVerifier = RSpec::Support::MethodSignatureVerifie
 
 module RSpec::Support::Version
   STRING = ::T.let(nil, ::T.untyped)
+end
+
+class RSpecJUnitFormatter
+  DISCOURAGED_REGEXP = ::T.let(nil, ::T.untyped)
+  DISCOURAGED_REPLACEMENTS = ::T.let(nil, ::T.untyped)
+  ILLEGAL_REGEXP = ::T.let(nil, ::T.untyped)
+  ILLEGAL_REPLACEMENT = ::T.let(nil, ::T.untyped)
+  STRIP_DIFF_COLORS_BLOCK_REGEXP = ::T.let(nil, ::T.untyped)
+  STRIP_DIFF_COLORS_CODES_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
 module Racc
@@ -47251,6 +47196,8 @@ module RoleTerm::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
+RspecJunitFormatter = RSpecJUnitFormatter
+
 class RuboCop::AST::Builder
   NODE_MAP = ::T.let(nil, ::T.untyped)
 end
@@ -48846,6 +48793,32 @@ class SignedGlobalID
   def self.verifier(); end
 
   def self.verifier=(verifier); end
+end
+
+module SimpleCov
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module SimpleCov::ExitCodes
+  EXCEPTION = ::T.let(nil, ::T.untyped)
+  MAXIMUM_COVERAGE_DROP = ::T.let(nil, ::T.untyped)
+  MINIMUM_COVERAGE = ::T.let(nil, ::T.untyped)
+  SUCCESS = ::T.let(nil, ::T.untyped)
+end
+
+class SimpleCov::Formatter::HTMLFormatter
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class SimpleCov::LinesClassifier
+  COMMENT_LINE = ::T.let(nil, ::T.untyped)
+  NOT_RELEVANT = ::T.let(nil, ::T.untyped)
+  RELEVANT = ::T.let(nil, ::T.untyped)
+  WHITESPACE_LINE = ::T.let(nil, ::T.untyped)
+  WHITESPACE_OR_COMMENT_LINE = ::T.let(nil, ::T.untyped)
+end
+
+class SimpleCov::Railtie
 end
 
 class SimpleDelegator
