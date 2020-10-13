@@ -6,7 +6,7 @@ class User < ApplicationRecord
             presence: true,
             uniqueness: { case_sensitive: false }
 
-  has_many :notifications, as: :recipient, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   devise :remote_user_authenticatable
 end
