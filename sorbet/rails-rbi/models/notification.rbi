@@ -64,36 +64,6 @@ module Notification::GeneratedAttributeMethods
 end
 
 module Notification::GeneratedAssociationMethods
-  sig { returns(T.untyped) }
-  def notifiable; end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
-  def build_notifiable(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
-  def create_notifiable(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
-  def create_notifiable!(*args, &block); end
-
-  sig { params(value: T.untyped).void }
-  def notifiable=(value); end
-
-  sig { returns(::User) }
-  def recipient; end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
-  def build_recipient(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
-  def create_recipient(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
-  def create_recipient!(*args, &block); end
-
-  sig { params(value: ::User).void }
-  def recipient=(value); end
-
   sig { returns(::User) }
   def user; end
 
