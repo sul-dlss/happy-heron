@@ -51,3 +51,11 @@ H2 is deployed via Capistrano to servers running the Passenger server in standal
 ## Architecture
 
 At the end of the 2020 workcycle, H2 should use sdr-api to do file and metadata deposits.
+
+## Branch aliasing
+
+If your Git muscle memory is too strong and you find you keep typing `master` when you mean `main` (the default branch for H2), you can help yourself a bit by creating an alias thusly:
+
+```shell
+$ git symbolic-ref refs/heads/master refs/heads/main
+```
