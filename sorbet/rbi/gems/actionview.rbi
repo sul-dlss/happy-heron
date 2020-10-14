@@ -1312,7 +1312,6 @@ class ActionView::TestCase < ActiveSupport::TestCase
   include ActionView::Helpers::UrlHelper
   include ActionView::TestCase::Behavior
   include ActiveSupport::Testing::ConstantLookup
-  include Rails::Controller::Testing::TemplateAssertions
   include Rails::Dom::Testing::Assertions
   include Rails::Dom::Testing::Assertions
 end

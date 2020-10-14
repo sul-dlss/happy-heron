@@ -3008,8 +3008,6 @@ class ActionController::TestCase
   include ::ActionDispatch::Assertions::ResponseAssertions
   include ::ActionDispatch::Assertions::RoutingAssertions
   include ::Turbolinks::Assertions
-  include ::Rails::Controller::Testing::TestProcess
-  include ::Rails::Controller::Testing::TemplateAssertions
   def _controller_class(); end
 
   def _controller_class=(val); end
@@ -4246,9 +4244,6 @@ class ActionDispatch::IntegrationTest
   include ::ActionMailer::TestHelper
   include ::ActiveJob::TestHelper
   include ::ActionMailer::TestCase::ClearTestDeliveries
-  include ::Rails::Controller::Testing::TemplateAssertions
-  include ::Rails::Controller::Testing::Integration
-  include ::Rails::Controller::Testing::TestProcess
 end
 
 module ActionDispatch::IntegrationTest::Behavior
@@ -9819,7 +9814,6 @@ class ActionView::TestCase
   include ::ActionView::RoutingUrlFor
   include ::ActionDispatch::Routing::UrlFor
   include ::ActionDispatch::Routing::PolymorphicRoutes
-  include ::Rails::Controller::Testing::TemplateAssertions
   def _helper_methods(); end
 
   def _helper_methods=(val); end
@@ -44748,21 +44742,6 @@ class Rails::Configuration::MiddlewareStackProxy
 end
 
 module Rails::Configuration
-end
-
-module Rails::Controller::Testing
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Rails::Controller::Testing::Railtie
-end
-
-module Rails::Controller::Testing::TemplateAssertions
-  RENDER_TEMPLATE_INSTANCE_VARIABLES = ::T.let(nil, ::T.untyped)
-end
-
-module Rails::Controller::Testing::TemplateAssertions
-  extend ::ActiveSupport::Concern
 end
 
 module Rails::Dom::Testing::Assertions::SelectorAssertions::CountDescribable
