@@ -3302,6 +3302,8 @@ class ActionController::TestCase < ActiveSupport::TestCase
   include ActionController::TestCase::Behavior
   include ActionDispatch::Assertions
   include ActiveSupport::Testing::ConstantLookup
+  include Rails::Controller::Testing::TemplateAssertions
+  include Rails::Controller::Testing::TestProcess
   include Rails::Dom::Testing::Assertions
   include Rails::Dom::Testing::Assertions
 end

@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class EmbargoComponent < ViewComponent::Base
+class EmbargoComponent < ApplicationComponent
   def initialize(form:)
     @form = form
   end

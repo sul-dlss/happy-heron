@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class AgreementComponent < ViewComponent::Base
+class AgreementComponent < ApplicationComponent
   def initialize(form:)
     @form = form
   end

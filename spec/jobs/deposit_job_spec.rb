@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe DepositJob, type: :job do
+RSpec.describe DepositJob do
   let(:client) { instance_double(Dor::Services::Client, objects: objects) }
   let(:druid) { 'druid:bc123df4567' }
   let(:model) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }

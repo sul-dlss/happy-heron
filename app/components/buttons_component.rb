@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class ButtonsComponent < ViewComponent::Base
+class ButtonsComponent < ApplicationComponent
   def initialize(form:)
     @form = form
   end

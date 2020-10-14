@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class WorksController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
 
   def new
     @collection = Collection.find(params[:collection_id])

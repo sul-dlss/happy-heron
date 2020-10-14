@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class LicenseComponent < ViewComponent::Base
+class LicenseComponent < ApplicationComponent
   def initialize(form:)
     @form = form
   end
