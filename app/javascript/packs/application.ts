@@ -3,10 +3,15 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+import * as ActiveStorage from '@rails/activestorage'
+import Rails from '@rails/ujs'
+import Turbolinks from 'turbolinks'
+
+Rails.start()
+Turbolinks.start()
+ActiveStorage.start()
+
+import 'channels'
 import 'controllers'
 
 // import 'bootstrap'
@@ -20,4 +25,4 @@ import 'stylesheets/main'
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-require('modules/validate-forms')
+import * from './modules/validate-forms'
