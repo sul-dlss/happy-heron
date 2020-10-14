@@ -22,7 +22,6 @@ gem 'webpacker', '~> 5.0'
 group :development, :test do
   gem 'byebug'
   gem 'factory_bot_rails'
-  gem 'rails-controller-testing'
   gem 'rspec'
   gem 'rspec_junit_formatter' # used by CircleCI
   gem 'rspec-rails'
