@@ -72,13 +72,13 @@ module Work::GeneratedAttributeMethods
   def created_at?; end
 
   sig { returns(String) }
-  def created_etdf; end
+  def created_edtf; end
 
   sig { params(value: T.any(String, Symbol)).void }
-  def created_etdf=(value); end
+  def created_edtf=(value); end
 
   sig { returns(T::Boolean) }
-  def created_etdf?; end
+  def created_edtf?; end
 
   sig { returns(T.nilable(String)) }
   def druid; end
