@@ -26,8 +26,7 @@ set :log_level, :info
 # Default value for :linked_files is []
 append :linked_files,
        'config/database.yml', # in Puppet
-       'config/secrets.yml', # in shared_configs
-       'config/Passengerfile.json' # in Puppet
+       'config/secrets.yml' # in shared_configs
 
 # Default value for linked_dirs is []
 # These directories are handled by shared_configs
