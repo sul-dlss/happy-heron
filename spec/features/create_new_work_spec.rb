@@ -26,7 +26,7 @@ RSpec.describe 'Create a new work', js: true do
 
       expect(page).to have_content('title = My Title')
       expect(page).to have_content("contact_email = #{user.email}")
-      expect(page).to have_content('created_etdf = 01/01/2020')
+      expect(page).to have_content('created_edtf = 01/01/2020')
       expect(page).to have_content('abstract = Whatever')
       expect(page).to have_content('citation = Whatever')
       expect(page).to have_content('license = Copyleft')

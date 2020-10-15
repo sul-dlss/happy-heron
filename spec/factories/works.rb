@@ -7,7 +7,7 @@ FactoryBot.define do
     work_type { 'Book' }
     subtype { 'Non-fiction' }
     contact_email { 'io@io.io' }
-    created_etdf { '1900' }
+    created_edtf { '1900' }
     abstract { 'test abstract' }
     citation { 'test citation' }
     access { 'stanford' }
