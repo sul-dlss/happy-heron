@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class AddFilesComponent < ViewComponent::Base
+class AddFilesComponent < ApplicationComponent
   def initialize(form:)
     @form = form
   end

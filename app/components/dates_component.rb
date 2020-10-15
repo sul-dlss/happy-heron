@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-class DatesComponent < ViewComponent::Base
+class DatesComponent < ApplicationComponent
   def initialize(form:)
     @form = form
   end

@@ -3,4 +3,5 @@
 
 # Models a collection in the database
 class Collection < ApplicationRecord
+  has_many :works, dependent: :destroy
 end

@@ -105,6 +105,7 @@ module Capybara
   def self.visible_text_only=(*args, &block); end
   def self.w3c_click_offset(*args, &block); end
   def self.w3c_click_offset=(*args, &block); end
+  extend Capybara::DSL
 end
 class Capybara::SessionConfig
   def always_include_port; end
@@ -1629,4 +1630,402 @@ end
 class Capybara::ReadOnlyElementError < Capybara::CapybaraError
 end
 module Capybara::RackTest
+end
+module Capybara::DSL
+  def accept_alert(**, &&); end
+  def accept_confirm(**, &&); end
+  def accept_prompt(**, &&); end
+  def all(**, &&); end
+  def assert_all_of_selectors(**, &&); end
+  def assert_any_of_selectors(**, &&); end
+  def assert_current_path(**, &&); end
+  def assert_no_current_path(**, &&); end
+  def assert_no_selector(**, &&); end
+  def assert_no_text(**, &&); end
+  def assert_no_title(**, &&); end
+  def assert_none_of_selectors(**, &&); end
+  def assert_selector(**, &&); end
+  def assert_text(**, &&); end
+  def assert_title(**, &&); end
+  def attach_file(**, &&); end
+  def body(**, &&); end
+  def check(**, &&); end
+  def choose(**, &&); end
+  def click_button(**, &&); end
+  def click_link(**, &&); end
+  def click_link_or_button(**, &&); end
+  def click_on(**, &&); end
+  def current_host(**, &&); end
+  def current_path(**, &&); end
+  def current_scope(**, &&); end
+  def current_url(**, &&); end
+  def current_window(**, &&); end
+  def dismiss_confirm(**, &&); end
+  def dismiss_prompt(**, &&); end
+  def evaluate_script(**, &&); end
+  def execute_script(**, &&); end
+  def fill_in(**, &&); end
+  def find(**, &&); end
+  def find_all(**, &&); end
+  def find_button(**, &&); end
+  def find_by_id(**, &&); end
+  def find_field(**, &&); end
+  def find_link(**, &&); end
+  def first(**, &&); end
+  def go_back(**, &&); end
+  def go_forward(**, &&); end
+  def has_button?(**, &&); end
+  def has_checked_field?(**, &&); end
+  def has_content?(**, &&); end
+  def has_css?(**, &&); end
+  def has_current_path?(**, &&); end
+  def has_field?(**, &&); end
+  def has_link?(**, &&); end
+  def has_no_button?(**, &&); end
+  def has_no_checked_field?(**, &&); end
+  def has_no_content?(**, &&); end
+  def has_no_css?(**, &&); end
+  def has_no_current_path?(**, &&); end
+  def has_no_field?(**, &&); end
+  def has_no_link?(**, &&); end
+  def has_no_select?(**, &&); end
+  def has_no_selector?(**, &&); end
+  def has_no_table?(**, &&); end
+  def has_no_text?(**, &&); end
+  def has_no_title?(**, &&); end
+  def has_no_unchecked_field?(**, &&); end
+  def has_no_xpath?(**, &&); end
+  def has_select?(**, &&); end
+  def has_selector?(**, &&); end
+  def has_table?(**, &&); end
+  def has_text?(**, &&); end
+  def has_title?(**, &&); end
+  def has_unchecked_field?(**, &&); end
+  def has_xpath?(**, &&); end
+  def html(**, &&); end
+  def open_new_window(**, &&); end
+  def page; end
+  def query(**, &&); end
+  def refresh(**, &&); end
+  def refute_selector(**, &&); end
+  def reset_session!(**, &&); end
+  def response_headers(**, &&); end
+  def save_and_open_page(**, &&); end
+  def save_and_open_screenshot(**, &&); end
+  def save_page(**, &&); end
+  def save_screenshot(**, &&); end
+  def scroll_by(**, &&); end
+  def scroll_to(**, &&); end
+  def select(**, &&); end
+  def self.extended(base); end
+  def self.included(base); end
+  def source(**, &&); end
+  def status_code(**, &&); end
+  def switch_to_frame(**, &&); end
+  def switch_to_window(**, &&); end
+  def text(**, &&); end
+  def title(**, &&); end
+  def uncheck(**, &&); end
+  def unselect(**, &&); end
+  def using_session(name_or_session, &block); end
+  def using_wait_time(seconds, &block); end
+  def visit(**, &&); end
+  def window_opened_by(**, &&); end
+  def windows(**, &&); end
+  def within(**, &&); end
+  def within_element(**, &&); end
+  def within_fieldset(**, &&); end
+  def within_frame(**, &&); end
+  def within_table(**, &&); end
+  def within_window(**, &&); end
+end
+module Capybara::RSpecMatchers
+  def become_closed(**options); end
+  def have_all_of_selectors(*args, **kw_args, &optional_filter_block); end
+  def have_ancestor(*args, **kw_args, &optional_filter_block); end
+  def have_any_of_selectors(*args, **kw_args, &optional_filter_block); end
+  def have_button(locator = nil, **options, &optional_filter_block); end
+  def have_checked_field(locator = nil, **options, &optional_filter_block); end
+  def have_content(text_or_type, *args, **options); end
+  def have_css(expr, **options, &optional_filter_block); end
+  def have_current_path(path, **options); end
+  def have_field(locator = nil, **options, &optional_filter_block); end
+  def have_link(locator = nil, **options, &optional_filter_block); end
+  def have_no_ancestor(*args, **kw_args, &optional_filter_block); end
+  def have_no_button(*args, **kw_args, &optional_filter_block); end
+  def have_no_checked_field(*args, **kw_args, &optional_filter_block); end
+  def have_no_content(*args, **kw_args, &optional_filter_block); end
+  def have_no_css(*args, **kw_args, &optional_filter_block); end
+  def have_no_current_path(*args, **kw_args, &optional_filter_block); end
+  def have_no_field(*args, **kw_args, &optional_filter_block); end
+  def have_no_link(*args, **kw_args, &optional_filter_block); end
+  def have_no_select(*args, **kw_args, &optional_filter_block); end
+  def have_no_selector(*args, **kw_args, &optional_filter_block); end
+  def have_no_sibling(*args, **kw_args, &optional_filter_block); end
+  def have_no_table(*args, **kw_args, &optional_filter_block); end
+  def have_no_text(*args, **kw_args, &optional_filter_block); end
+  def have_no_title(*args, **kw_args, &optional_filter_block); end
+  def have_no_unchecked_field(*args, **kw_args, &optional_filter_block); end
+  def have_no_xpath(*args, **kw_args, &optional_filter_block); end
+  def have_none_of_selectors(*args, **kw_args, &optional_filter_block); end
+  def have_select(locator = nil, **options, &optional_filter_block); end
+  def have_selector(*args, **kw_args, &optional_filter_block); end
+  def have_sibling(*args, **kw_args, &optional_filter_block); end
+  def have_style(styles, **options); end
+  def have_table(locator = nil, **options, &optional_filter_block); end
+  def have_text(text_or_type, *args, **options); end
+  def have_title(title, **options); end
+  def have_unchecked_field(locator = nil, **options, &optional_filter_block); end
+  def have_xpath(expr, **options, &optional_filter_block); end
+  def match_css(expr, **options, &optional_filter_block); end
+  def match_selector(*args, **kw_args, &optional_filter_block); end
+  def match_style(styles, **options); end
+  def match_xpath(expr, **options, &optional_filter_block); end
+  def not_match_css(*args, **kw_args, &optional_filter_block); end
+  def not_match_selector(*args, **kw_args, &optional_filter_block); end
+  def not_match_xpath(*args, **kw_args, &optional_filter_block); end
+end
+module Capybara::RSpecMatchers::Matchers
+end
+module Capybara::RSpecMatchers::Matchers::Compound
+  def and(matcher); end
+  def and_then(matcher); end
+  def or(matcher); end
+  include RSpec::Matchers::Composable
+end
+class Capybara::RSpecMatchers::Matchers::Compound::CapybaraEvaluator
+  def initialize(actual); end
+  def matcher_matches?(matcher); end
+  def reset; end
+end
+module Capybara::RSpecMatchers::Matchers::Compound::Synchronizer
+  def match(_expected, actual); end
+  def sync_element(el); end
+end
+class Capybara::RSpecMatchers::Matchers::Compound::And < RSpec::Matchers::BuiltIn::Compound::And
+  def synchronized_match?; end
+  include Capybara::RSpecMatchers::Matchers::Compound::Synchronizer
+end
+class Capybara::RSpecMatchers::Matchers::Compound::Or < RSpec::Matchers::BuiltIn::Compound::Or
+  def synchronized_match?; end
+  include Capybara::RSpecMatchers::Matchers::Compound::Synchronizer
+end
+module Capybara::RSpecMatchers::CountSugar
+  def at_least(number); end
+  def at_most(number); end
+  def exactly(number); end
+  def once; end
+  def options; end
+  def thrice; end
+  def times; end
+  def twice; end
+end
+module Capybara::RSpecMatchers::SpatialSugar
+  def above(el); end
+  def below(el); end
+  def left_of(el); end
+  def near(el); end
+  def options; end
+  def right_of(el); end
+end
+class Capybara::RSpecMatchers::Matchers::Base
+  def failure_message; end
+  def failure_message_when_negated; end
+  def initialize(*args, **kw_args, &filter_block); end
+  def session_options; end
+  def session_query_args; end
+  def session_query_options; end
+  include Capybara::RSpecMatchers::Matchers::Compound
+end
+class Capybara::RSpecMatchers::Matchers::WrappedElementMatcher < Capybara::RSpecMatchers::Matchers::Base
+  def does_not_match?(actual); end
+  def matches?(actual); end
+  def wrap(actual); end
+end
+class Capybara::RSpecMatchers::Matchers::CountableWrappedElementMatcher < Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  include Capybara::RSpecMatchers::CountSugar
+  include Capybara::RSpecMatchers::SpatialSugar
+end
+class Capybara::RSpecMatchers::Matchers::NegatedMatcher
+  def description; end
+  def does_not_match?(actual); end
+  def failure_message; end
+  def failure_message_when_negated; end
+  def initialize(matcher); end
+  def matches?(actual); end
+  include Capybara::RSpecMatchers::Matchers::Compound
+end
+class Capybara::RSpecMatchers::Matchers::HaveSelector < Capybara::RSpecMatchers::Matchers::CountableWrappedElementMatcher
+  def description; end
+  def element_does_not_match?(el); end
+  def element_matches?(el); end
+  def initialize(*args, **kw_args, &filter_block); end
+  def query; end
+end
+class Capybara::RSpecMatchers::Matchers::HaveAllSelectors < Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  def description; end
+  def does_not_match?(_actual); end
+  def element_matches?(el); end
+end
+class Capybara::RSpecMatchers::Matchers::HaveNoSelectors < Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  def description; end
+  def does_not_match?(_actual); end
+  def element_matches?(el); end
+end
+class Capybara::RSpecMatchers::Matchers::HaveAnySelectors < Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  def description; end
+  def does_not_match?(_actual); end
+  def element_matches?(el); end
+end
+class Capybara::RSpecMatchers::Matchers::HaveAncestor < Capybara::RSpecMatchers::Matchers::CountableWrappedElementMatcher
+  def description; end
+  def element_does_not_match?(el); end
+  def element_matches?(el); end
+  def query; end
+end
+class Capybara::RSpecMatchers::Matchers::HaveSibling < Capybara::RSpecMatchers::Matchers::CountableWrappedElementMatcher
+  def description; end
+  def element_does_not_match?(el); end
+  def element_matches?(el); end
+  def query; end
+end
+class Capybara::RSpecMatchers::Matchers::MatchSelector < Capybara::RSpecMatchers::Matchers::HaveSelector
+  def description; end
+  def element_does_not_match?(el); end
+  def element_matches?(el); end
+  def query; end
+end
+class Capybara::RSpecMatchers::Matchers::HaveCurrentPath < Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  def current_path; end
+  def description; end
+  def element_does_not_match?(el); end
+  def element_matches?(el); end
+end
+class Capybara::RSpecMatchers::Matchers::MatchStyle < Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  def description; end
+  def does_not_match?(_actual); end
+  def element_matches?(el); end
+end
+class Capybara::RSpecMatchers::Matchers::HaveStyle < Capybara::RSpecMatchers::Matchers::MatchStyle
+  def initialize(*args, **kw_args, &filter_block); end
+end
+class Capybara::RSpecMatchers::Matchers::HaveText < Capybara::RSpecMatchers::Matchers::CountableWrappedElementMatcher
+  def description; end
+  def element_does_not_match?(el); end
+  def element_matches?(el); end
+  def format(content); end
+  def text; end
+end
+class Capybara::RSpecMatchers::Matchers::HaveTitle < Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  def description; end
+  def element_does_not_match?(el); end
+  def element_matches?(el); end
+  def title; end
+end
+class Capybara::RSpecMatchers::Matchers::BecomeClosed
+  def failure_message; end
+  def failure_message_when_negated; end
+  def initialize(options); end
+  def matches?(window); end
+end
+class RSpec::Core::ExampleGroup
+  def self.feature(*args, &example_group_block); end
+  def self.ffeature(*args, &example_group_block); end
+  def self.fscenario(*all_args, &block); end
+  def self.scenario(*all_args, &block); end
+  def self.xfeature(*args, &example_group_block); end
+  def self.xscenario(*all_args, &block); end
+end
+module RSpec
+  def self.feature(*args, &example_group_block); end
+  def self.ffeature(*args, &example_group_block); end
+  def self.xfeature(*args, &example_group_block); end
+end
+class Module
+  def feature(*a, &b); end
+  def ffeature(*a, &b); end
+  def xfeature(*a, &b); end
+end
+module Capybara::RSpecMatcherProxies
+  def all(*args, **kwargs, &block); end
+  def within(*args, **kwargs, &block); end
+end
+module Capybara::DSLRSpecProxyInstaller
+  def self.prepended(base); end
+end
+module Capybara::DSLRSpecProxyInstaller::ClassMethods
+  def included(base); end
+end
+module Capybara::RSpecMatcherProxyInstaller
+  def self.prepended(base); end
+end
+module Capybara::RSpecMatcherProxyInstaller::ClassMethods
+  def included(base); end
+end
+module Capybara::Minitest
+end
+module Capybara::Minitest::Assertions
+  def assert_all_of_selectors(*args, &optional_filter_block); end
+  def assert_ancestor(*args, &optional_filter_block); end
+  def assert_any_of_selectors(*args, &optional_filter_block); end
+  def assert_button(*args, &optional_filter_block); end
+  def assert_checked_field(*args, &optional_filter_block); end
+  def assert_content(*args, **kwargs); end
+  def assert_css(*args, &optional_filter_block); end
+  def assert_current_path(*args, **kwargs); end
+  def assert_field(*args, &optional_filter_block); end
+  def assert_link(*args, &optional_filter_block); end
+  def assert_matches_css(*args, &optional_filter_block); end
+  def assert_matches_selector(*args, &optional_filter_block); end
+  def assert_matches_style(*args, &optional_filter_block); end
+  def assert_matches_xpath(*args, &optional_filter_block); end
+  def assert_no_ancestor(*args, &optional_filter_block); end
+  def assert_no_button(*args, &optional_filter_block); end
+  def assert_no_checked_field(*args, &optional_filter_block); end
+  def assert_no_content(*args, **kwargs); end
+  def assert_no_css(*args, &optional_filter_block); end
+  def assert_no_current_path(*args, **kwargs); end
+  def assert_no_field(*args, &optional_filter_block); end
+  def assert_no_link(*args, &optional_filter_block); end
+  def assert_no_select(*args, &optional_filter_block); end
+  def assert_no_selector(*args, &optional_filter_block); end
+  def assert_no_sibling(*args, &optional_filter_block); end
+  def assert_no_table(*args, &optional_filter_block); end
+  def assert_no_text(*args, **kwargs); end
+  def assert_no_title(*args, **kwargs); end
+  def assert_no_unchecked_field(*args, &optional_filter_block); end
+  def assert_no_xpath(*args, &optional_filter_block); end
+  def assert_none_of_selectors(*args, &optional_filter_block); end
+  def assert_not_matches_css(*args, &optional_filter_block); end
+  def assert_not_matches_selector(*args, &optional_filter_block); end
+  def assert_not_matches_xpath(*args, &optional_filter_block); end
+  def assert_select(*args, &optional_filter_block); end
+  def assert_selector(*args, &optional_filter_block); end
+  def assert_sibling(*args, &optional_filter_block); end
+  def assert_table(*args, &optional_filter_block); end
+  def assert_text(*args, **kwargs); end
+  def assert_title(*args, **kwargs); end
+  def assert_unchecked_field(*args, &optional_filter_block); end
+  def assert_xpath(*args, &optional_filter_block); end
+  def determine_subject(args); end
+  def extract_locator(args); end
+  def refute_ancestor(*args, &optional_filter_block); end
+  def refute_button(*args, &optional_filter_block); end
+  def refute_checked_field(*args, &optional_filter_block); end
+  def refute_content(*args, **kwargs); end
+  def refute_css(*args, &optional_filter_block); end
+  def refute_current_path(*args, **kwargs); end
+  def refute_field(*args, &optional_filter_block); end
+  def refute_link(*args, &optional_filter_block); end
+  def refute_matches_css(*args, &optional_filter_block); end
+  def refute_matches_selector(*args, &optional_filter_block); end
+  def refute_matches_xpath(*args, &optional_filter_block); end
+  def refute_select(*args, &optional_filter_block); end
+  def refute_selector(*args, &optional_filter_block); end
+  def refute_sibling(*args, &optional_filter_block); end
+  def refute_table(*args, &optional_filter_block); end
+  def refute_text(*args, **kwargs); end
+  def refute_title(*args, **kwargs); end
+  def refute_unchecked_field(*args, &optional_filter_block); end
+  def refute_xpath(*args, &optional_filter_block); end
 end

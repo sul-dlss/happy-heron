@@ -184,3 +184,13 @@ module Anonymous_Module_37
   include Anonymous_Module_4
   include Anonymous_Module_5
 end
+module ViewComponent::TestHelpers
+  def controller; end
+  def page; end
+  def refute_component_rendered; end
+  def render_inline(component, **args, &block); end
+  def rendered_component; end
+  def request; end
+  def with_variant(variant); end
+  include Capybara::Minitest::Assertions
+end

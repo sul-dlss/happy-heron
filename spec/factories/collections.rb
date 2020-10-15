@@ -17,4 +17,12 @@ FactoryBot.define do
     reviewers { 'MyString' }
     depositors { 'MyString' }
   end
+
+  trait :with_works do
+    transient do
+      works_count { 2 }
+    end
+
+    works { Array.new(works_count) { association(:work) } }
+  end
 end

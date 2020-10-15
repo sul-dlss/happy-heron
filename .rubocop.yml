@@ -17,6 +17,15 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
 
+RSpec/DescribeClass:
+  Exclude:
+    - spec/features/**/*
+    - spec/requests/**/*
+
+RSpec/ExampleLength:
+  Exclude:
+    - spec/features/**/*
+
 Lint/MissingSuper: # (new in 0.89)
   Enabled: true
   Exclude:

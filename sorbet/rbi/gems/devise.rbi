@@ -894,3 +894,13 @@ module Anonymous_Module_47
   include ActionDispatch::Routing::UrlFor
   include Anonymous_Module_4
 end
+module Devise::Test::ControllerHelpers
+  def _catch_warden(&block); end
+  def _process_unauthenticated(env, options = nil); end
+  def process(*arg0); end
+  def setup_controller_for_warden; end
+  def sign_in(resource, deprecated = nil, scope: nil); end
+  def sign_out(resource_or_scope); end
+  def warden; end
+  extend ActiveSupport::Concern
+end

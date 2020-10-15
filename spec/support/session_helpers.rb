@@ -3,8 +3,13 @@
 
 module SessionHelpers
   def sign_in(user = nil, groups: [])
-    TestShibbolethHeaders.user = user.login
+    TestShibbolethHeaders.user = user.email
     TestShibbolethHeaders.groups = groups
+  end
+
+  def sign_out
+    TestShibbolethHeaders.user = nil
+    TestShibbolethHeaders.groups = []
   end
 end
 

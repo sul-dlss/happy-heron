@@ -22,6 +22,7 @@ gem 'webpacker', '~> 5.0'
 group :development, :test do
   gem 'byebug'
   gem 'factory_bot_rails'
+  gem 'rspec'
   gem 'rspec_junit_formatter' # used by CircleCI
   gem 'rspec-rails'
   gem 'rubocop', require: false
@@ -43,11 +44,8 @@ group :development do
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
+  gem 'apparition'
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
 end
 
 group :deployment do

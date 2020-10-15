@@ -3,12 +3,9 @@
 
 require 'rails_helper'
 
-RSpec.describe DepositProgressComponent, type: :component do
+RSpec.describe DepositProgressComponent do
   it 'renders the component' do
-    #   expect(
-    #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-    #   ).to include(
-    #     "Hello, components!"
-    #   )
+    expect(render_inline(described_class.new).to_html)
+      .to include('1. File')
   end
 end

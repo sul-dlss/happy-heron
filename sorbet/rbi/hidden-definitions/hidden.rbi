@@ -6450,51 +6450,6 @@ end
 class ActionDispatch::Static
 end
 
-class ActionDispatch::SystemTestCase
-  include ::Capybara::DSL
-  include ::Capybara::Minitest::Assertions
-  include ::ActionDispatch::SystemTesting::TestHelpers::SetupAndTeardown
-  include ::ActionDispatch::SystemTesting::TestHelpers::ScreenshotHelper
-  def initialize(*_); end
-
-  def method_missing(method, *args, &block); end
-end
-
-class ActionDispatch::SystemTestCase
-  def self.driven_by(driver, using: T.unsafe(nil), screen_size: T.unsafe(nil), options: T.unsafe(nil), &capabilities); end
-
-  def self.driver(); end
-
-  def self.driver=(val); end
-
-  def self.driver?(); end
-
-  def self.start_application(); end
-end
-
-module ActionDispatch::SystemTesting::TestHelpers::ScreenshotHelper
-  def take_failed_screenshot(); end
-
-  def take_screenshot(); end
-end
-
-module ActionDispatch::SystemTesting::TestHelpers::ScreenshotHelper
-end
-
-module ActionDispatch::SystemTesting::TestHelpers::SetupAndTeardown
-  def after_teardown(); end
-
-  def before_setup(); end
-
-  def before_teardown(); end
-
-  def host!(host); end
-  DEFAULT_HOST = ::T.let(nil, ::T.untyped)
-end
-
-module ActionDispatch::SystemTesting::TestHelpers::SetupAndTeardown
-end
-
 module ActionDispatch::TestProcess
   include ::ActionDispatch::TestProcess::FixtureFile
   def assigns(key=T.unsafe(nil)); end
@@ -23284,25 +23239,6 @@ module ActiveSupport
   def self.version(); end
 end
 
-class AddFilesComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class AddFilesComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 module Addressable::IDNA
   ACE_MAX_LENGTH = ::T.let(nil, ::T.untyped)
   ACE_PREFIX = ::T.let(nil, ::T.untyped)
@@ -23392,25 +23328,6 @@ end
 
 class Addrinfo
   def connect_internal(local_addrinfo, timeout=T.unsafe(nil)); end
-end
-
-class AgreementComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class AgreementComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
 end
 
 class ApplicationCable::Channel
@@ -27646,25 +27563,6 @@ module Bundler
   def self.with_unbundled_env(); end
 end
 
-class ButtonsComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class ButtonsComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 module Byebug
   PORT = ::T.let(nil, ::T.untyped)
 end
@@ -27796,6 +27694,79 @@ class Capybara::Ambiguous
 end
 
 class Capybara::Ambiguous
+end
+
+class Capybara::Apparition::Browser::Launcher::Local
+  DEFAULT_BOOLEAN_OPTIONS = ::T.let(nil, ::T.untyped)
+  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
+  DEFAULT_VALUE_OPTIONS = ::T.let(nil, ::T.untyped)
+  HEADLESS_OPTIONS = ::T.let(nil, ::T.untyped)
+  KILL_TIMEOUT = ::T.let(nil, ::T.untyped)
+end
+
+module Capybara::Apparition::Browser::Render
+  PAPER_SIZES = ::T.let(nil, ::T.untyped)
+end
+
+Capybara::Apparition::ClickFailed = Capybara::Apparition::MouseEventFailed
+
+module Capybara::Apparition::Drag
+  ATTACH_FILE = ::T.let(nil, ::T.untyped)
+  DROP_FILE = ::T.let(nil, ::T.untyped)
+  DROP_STRING = ::T.let(nil, ::T.untyped)
+  HTML5_DRAG_DROP_SCRIPT = ::T.let(nil, ::T.untyped)
+  LEGACY_DRAG_CHECK = ::T.let(nil, ::T.untyped)
+  MOUSEDOWN_TRACKER = ::T.let(nil, ::T.untyped)
+end
+
+class Capybara::Apparition::Driver
+  DEFAULT_TIMEOUT = ::T.let(nil, ::T.untyped)
+  VERSION_STRING = ::T.let(nil, ::T.untyped)
+end
+
+class Capybara::Apparition::Inspector
+  BROWSERS = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+end
+
+class Capybara::Apparition::Keyboard
+  KEY_DEFINITIONS = ::T.let(nil, ::T.untyped)
+  MODIFIERS = ::T.let(nil, ::T.untyped)
+end
+
+class Capybara::Apparition::Mouse
+  BUTTONS = ::T.let(nil, ::T.untyped)
+end
+
+class Capybara::Apparition::Node
+  CLEAR_ELEMENT_JS = ::T.let(nil, ::T.untyped)
+  CURRENT_NODE_SELECTED_JS = ::T.let(nil, ::T.untyped)
+  DELETE_TEXT_JS = ::T.let(nil, ::T.untyped)
+  DISPATCH_EVENT_JS = ::T.let(nil, ::T.untyped)
+  ELEMENT_DISABLED_JS = ::T.let(nil, ::T.untyped)
+  ELEMENT_PROP_OR_ATTR_JS = ::T.let(nil, ::T.untyped)
+  ELEMENT_VISIBLE_TEXT_JS = ::T.let(nil, ::T.untyped)
+  EVENTS = ::T.let(nil, ::T.untyped)
+  FIND_CSS_JS = ::T.let(nil, ::T.untyped)
+  FIND_XPATH_JS = ::T.let(nil, ::T.untyped)
+  GET_ATTRIBUTES_JS = ::T.let(nil, ::T.untyped)
+  GET_CLIENT_RECT_JS = ::T.let(nil, ::T.untyped)
+  GET_PATH_JS = ::T.let(nil, ::T.untyped)
+  GET_STYLES_JS = ::T.let(nil, ::T.untyped)
+  GET_VALUE_JS = ::T.let(nil, ::T.untyped)
+  SELECT_OPTION_JS = ::T.let(nil, ::T.untyped)
+  UNSELECT_OPTION_JS = ::T.let(nil, ::T.untyped)
+  VISIBLE_JS = ::T.let(nil, ::T.untyped)
+end
+
+Capybara::Apparition::NodeNotAttachedError = Capybara::Apparition::ObsoleteNode
+
+class Capybara::Apparition::Page
+  CSS_FIND_JS = ::T.let(nil, ::T.untyped)
+  EVALUATE_ASYNC_JS = ::T.let(nil, ::T.untyped)
+  EVALUATE_WITH_ID_JS = ::T.let(nil, ::T.untyped)
+  EXECUTE_JS = ::T.let(nil, ::T.untyped)
+  XPATH_FIND_JS = ::T.let(nil, ::T.untyped)
 end
 
 class Capybara::CapybaraError
@@ -27952,6 +27923,7 @@ class Capybara::Config
 end
 
 module Capybara::DSL
+  include ::Capybara::DSLRSpecProxyInstaller
   def accept_alert(*_, &_1); end
 
   def accept_confirm(*_, &_1); end
@@ -28162,9 +28134,22 @@ module Capybara::DSL
 end
 
 module Capybara::DSL
+  extend ::Capybara::DSLRSpecProxyInstaller::ClassMethods
   def self.extended(base); end
+end
 
-  def self.included(base); end
+module Capybara::DSLRSpecProxyInstaller
+end
+
+module Capybara::DSLRSpecProxyInstaller::ClassMethods
+  def included(base); end
+end
+
+module Capybara::DSLRSpecProxyInstaller::ClassMethods
+end
+
+module Capybara::DSLRSpecProxyInstaller
+  def self.prepended(base); end
 end
 
 module Capybara::Driver
@@ -29008,6 +28993,400 @@ class Capybara::Queries::TitleQuery
 end
 
 module Capybara::Queries
+end
+
+module Capybara::RSpecMatcherProxies
+  def all(*args, **kwargs, &block); end
+
+  def within(*args, **kwargs, &block); end
+end
+
+module Capybara::RSpecMatcherProxies
+end
+
+module Capybara::RSpecMatcherProxyInstaller
+end
+
+module Capybara::RSpecMatcherProxyInstaller::ClassMethods
+  def included(base); end
+end
+
+module Capybara::RSpecMatcherProxyInstaller::ClassMethods
+end
+
+module Capybara::RSpecMatcherProxyInstaller
+  def self.prepended(base); end
+end
+
+module Capybara::RSpecMatchers
+  def become_closed(**options); end
+
+  def have_all_of_selectors(*args, **kw_args, &optional_filter_block); end
+
+  def have_ancestor(*args, **kw_args, &optional_filter_block); end
+
+  def have_any_of_selectors(*args, **kw_args, &optional_filter_block); end
+
+  def have_button(locator=T.unsafe(nil), **options, &optional_filter_block); end
+
+  def have_checked_field(locator=T.unsafe(nil), **options, &optional_filter_block); end
+
+  def have_content(text_or_type, *args, **options); end
+
+  def have_css(expr, **options, &optional_filter_block); end
+
+  def have_current_path(path, **options); end
+
+  def have_field(locator=T.unsafe(nil), **options, &optional_filter_block); end
+
+  def have_link(locator=T.unsafe(nil), **options, &optional_filter_block); end
+
+  def have_no_ancestor(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_button(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_checked_field(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_content(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_css(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_current_path(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_field(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_link(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_select(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_selector(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_sibling(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_table(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_text(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_title(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_unchecked_field(*args, **kw_args, &optional_filter_block); end
+
+  def have_no_xpath(*args, **kw_args, &optional_filter_block); end
+
+  def have_none_of_selectors(*args, **kw_args, &optional_filter_block); end
+
+  def have_select(locator=T.unsafe(nil), **options, &optional_filter_block); end
+
+  def have_selector(*args, **kw_args, &optional_filter_block); end
+
+  def have_sibling(*args, **kw_args, &optional_filter_block); end
+
+  def have_style(styles, **options); end
+
+  def have_table(locator=T.unsafe(nil), **options, &optional_filter_block); end
+
+  def have_text(text_or_type, *args, **options); end
+
+  def have_title(title, **options); end
+
+  def have_unchecked_field(locator=T.unsafe(nil), **options, &optional_filter_block); end
+
+  def have_xpath(expr, **options, &optional_filter_block); end
+
+  def match_css(expr, **options, &optional_filter_block); end
+
+  def match_selector(*args, **kw_args, &optional_filter_block); end
+
+  def match_style(styles, **options); end
+
+  def match_xpath(expr, **options, &optional_filter_block); end
+
+  def not_match_css(*args, **kw_args, &optional_filter_block); end
+
+  def not_match_selector(*args, **kw_args, &optional_filter_block); end
+
+  def not_match_xpath(*args, **kw_args, &optional_filter_block); end
+end
+
+module Capybara::RSpecMatchers::CountSugar
+  def at_least(number); end
+
+  def at_most(number); end
+
+  def exactly(number); end
+
+  def once(); end
+
+  def thrice(); end
+
+  def times(); end
+
+  def twice(); end
+end
+
+module Capybara::RSpecMatchers::CountSugar
+end
+
+module Capybara::RSpecMatchers::Matchers
+end
+
+class Capybara::RSpecMatchers::Matchers::Base
+  include ::Capybara::RSpecMatchers::Matchers::Compound
+  include ::RSpec::Matchers::Composable
+  def failure_message(); end
+
+  def failure_message_when_negated(); end
+
+  def initialize(*args, **kw_args, &filter_block); end
+end
+
+class Capybara::RSpecMatchers::Matchers::Base
+end
+
+class Capybara::RSpecMatchers::Matchers::BecomeClosed
+  def failure_message(); end
+
+  def failure_message_when_negated(); end
+
+  def initialize(options); end
+
+  def matches?(window); end
+end
+
+class Capybara::RSpecMatchers::Matchers::BecomeClosed
+end
+
+module Capybara::RSpecMatchers::Matchers::Compound
+  include ::RSpec::Matchers::Composable
+  def and(matcher); end
+
+  def and_then(matcher); end
+
+  def or(matcher); end
+end
+
+class Capybara::RSpecMatchers::Matchers::Compound::And
+  include ::Capybara::RSpecMatchers::Matchers::Compound::Synchronizer
+end
+
+class Capybara::RSpecMatchers::Matchers::Compound::And
+end
+
+class Capybara::RSpecMatchers::Matchers::Compound::CapybaraEvaluator
+  def initialize(actual); end
+
+  def matcher_matches?(matcher); end
+
+  def reset(); end
+end
+
+class Capybara::RSpecMatchers::Matchers::Compound::CapybaraEvaluator
+end
+
+class Capybara::RSpecMatchers::Matchers::Compound::Or
+  include ::Capybara::RSpecMatchers::Matchers::Compound::Synchronizer
+end
+
+class Capybara::RSpecMatchers::Matchers::Compound::Or
+end
+
+module Capybara::RSpecMatchers::Matchers::Compound::Synchronizer
+  def match(_expected, actual); end
+
+  def sync_element(el); end
+end
+
+module Capybara::RSpecMatchers::Matchers::Compound::Synchronizer
+end
+
+module Capybara::RSpecMatchers::Matchers::Compound
+end
+
+class Capybara::RSpecMatchers::Matchers::CountableWrappedElementMatcher
+  include ::Capybara::RSpecMatchers::CountSugar
+  include ::Capybara::RSpecMatchers::SpatialSugar
+end
+
+class Capybara::RSpecMatchers::Matchers::CountableWrappedElementMatcher
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveAllSelectors
+  def description(); end
+
+  def does_not_match?(_actual); end
+
+  def element_matches?(el); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveAllSelectors
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveAncestor
+  def description(); end
+
+  def element_does_not_match?(el); end
+
+  def element_matches?(el); end
+
+  def query(); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveAncestor
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveAnySelectors
+  def description(); end
+
+  def does_not_match?(_actual); end
+
+  def element_matches?(el); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveAnySelectors
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveCurrentPath
+  def description(); end
+
+  def element_does_not_match?(el); end
+
+  def element_matches?(el); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveCurrentPath
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveNoSelectors
+  def description(); end
+
+  def does_not_match?(_actual); end
+
+  def element_matches?(el); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveNoSelectors
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveSelector
+  def description(); end
+
+  def element_does_not_match?(el); end
+
+  def element_matches?(el); end
+
+  def query(); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveSelector
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveSibling
+  def description(); end
+
+  def element_does_not_match?(el); end
+
+  def element_matches?(el); end
+
+  def query(); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveSibling
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveStyle
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveStyle
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveText
+  def description(); end
+
+  def element_does_not_match?(el); end
+
+  def element_matches?(el); end
+
+  def format(content); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveText
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveTitle
+  def description(); end
+
+  def element_does_not_match?(el); end
+
+  def element_matches?(el); end
+end
+
+class Capybara::RSpecMatchers::Matchers::HaveTitle
+end
+
+class Capybara::RSpecMatchers::Matchers::MatchSelector
+end
+
+class Capybara::RSpecMatchers::Matchers::MatchSelector
+end
+
+class Capybara::RSpecMatchers::Matchers::MatchStyle
+  def description(); end
+
+  def does_not_match?(_actual); end
+
+  def element_matches?(el); end
+end
+
+class Capybara::RSpecMatchers::Matchers::MatchStyle
+end
+
+class Capybara::RSpecMatchers::Matchers::NegatedMatcher
+  include ::Capybara::RSpecMatchers::Matchers::Compound
+  include ::RSpec::Matchers::Composable
+  def description(); end
+
+  def does_not_match?(actual); end
+
+  def failure_message(); end
+
+  def failure_message_when_negated(); end
+
+  def initialize(matcher); end
+
+  def matches?(actual); end
+end
+
+class Capybara::RSpecMatchers::Matchers::NegatedMatcher
+end
+
+class Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+  def does_not_match?(actual); end
+
+  def matches?(actual); end
+end
+
+class Capybara::RSpecMatchers::Matchers::WrappedElementMatcher
+end
+
+module Capybara::RSpecMatchers::Matchers
+end
+
+module Capybara::RSpecMatchers::SpatialSugar
+  def above(el); end
+
+  def below(el); end
+
+  def left_of(el); end
+
+  def near(el); end
+
+  def right_of(el); end
+end
+
+module Capybara::RSpecMatchers::SpatialSugar
+end
+
+module Capybara::RSpecMatchers
 end
 
 module Capybara::RackTest
@@ -30335,6 +30714,7 @@ end
 
 module Capybara
   extend ::Capybara::DSL
+  extend ::Capybara::DSLRSpecProxyInstaller
   def self.HTML(html); end
 
   def self.add_selector(name, **options, &block); end
@@ -30514,14 +30894,6 @@ module Capybara
   def self.w3c_click_offset(*args, &block); end
 
   def self.w3c_click_offset=(*args, &block); end
-end
-
-module ChildProcess
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class ChildProcess::AbstractProcess
-  POLL_INTERVAL = ::T.let(nil, ::T.untyped)
 end
 
 class Class
@@ -31488,6 +31860,33 @@ end
 
 class Collection
   include ::Collection::GeneratedAssociationMethods
+  def after_add_for_works(); end
+
+  def after_add_for_works=(val); end
+
+  def after_add_for_works?(); end
+
+  def after_remove_for_works(); end
+
+  def after_remove_for_works=(val); end
+
+  def after_remove_for_works?(); end
+
+  def autosave_associated_records_for_works(*args); end
+
+  def before_add_for_works(); end
+
+  def before_add_for_works=(val); end
+
+  def before_add_for_works?(); end
+
+  def before_remove_for_works(); end
+
+  def before_remove_for_works=(val); end
+
+  def before_remove_for_works?(); end
+
+  def validate_associated_records_for_works(*args); end
 end
 
 class Collection::ActiveRecord_AssociationRelation
@@ -31506,6 +31905,13 @@ class Collection::ActiveRecord_Relation
 end
 
 module Collection::GeneratedAssociationMethods
+  def work_ids(); end
+
+  def work_ids=(ids); end
+
+  def works(); end
+
+  def works=(value); end
 end
 
 module Collection::GeneratedAssociationMethods
@@ -31520,6 +31926,32 @@ end
 
 module Collection::GeneratedRelationMethods
   extend ::Mutex_m
+end
+
+class Collection
+  def self.after_add_for_works(); end
+
+  def self.after_add_for_works=(val); end
+
+  def self.after_add_for_works?(); end
+
+  def self.after_remove_for_works(); end
+
+  def self.after_remove_for_works=(val); end
+
+  def self.after_remove_for_works?(); end
+
+  def self.before_add_for_works(); end
+
+  def self.before_add_for_works=(val); end
+
+  def self.before_add_for_works?(); end
+
+  def self.before_remove_for_works(); end
+
+  def self.before_remove_for_works=(val); end
+
+  def self.before_remove_for_works?(); end
 end
 
 module CommonMarker
@@ -31694,25 +32126,6 @@ end
 
 module Contributor::GeneratedRelationMethods
   extend ::Mutex_m
-end
-
-class ContributorsComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class ContributorsComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
 end
 
 class Crass::Parser
@@ -32225,25 +32638,6 @@ class DateTime
   def self.civil_from_format(utc_or_local, year, month=T.unsafe(nil), day=T.unsafe(nil), hour=T.unsafe(nil), min=T.unsafe(nil), sec=T.unsafe(nil)); end
 end
 
-class DatesComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class DatesComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 module DeepMerge
   DEFAULT_FIELD_KNOCKOUT_PREFIX = ::T.let(nil, ::T.untyped)
 end
@@ -32253,25 +32647,6 @@ class Delegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
 end
 
-class DepositProgressComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class DepositProgressComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 module Deprecation
   ACTIVESUPPORT_CONCERN_REGEX = ::T.let(nil, ::T.untyped)
   IGNORE_REGEX = ::T.let(nil, ::T.untyped)
@@ -32279,25 +32654,6 @@ end
 
 module Deprecation
   extend ::ActiveSupport::Concern
-end
-
-class DescriptionComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class DescriptionComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
 end
 
 module Devise
@@ -34900,25 +35256,6 @@ module ERB::Util
   def self.unwrapped_html_escape(s); end
 end
 
-class EmbargoComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class EmbargoComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 class Encoding
   def _dump(*_); end
   CESU_8 = ::T.let(nil, ::T.untyped)
@@ -37256,7 +37593,10 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
+  def removed_method_calls(); end
+
   def to_ruby(); end
+  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -38495,25 +38835,6 @@ class KeyError
   include ::DidYouMean::Correctable
 end
 
-class LicenseComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class LicenseComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 module Listen
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -39727,6 +40048,10 @@ class Module
 
   def deprecate(*method_names); end
 
+  def feature(*a, &b); end
+
+  def ffeature(*a, &b); end
+
   def mattr_accessor(*syms, instance_reader: T.unsafe(nil), instance_writer: T.unsafe(nil), instance_accessor: T.unsafe(nil), default: T.unsafe(nil), &blk); end
 
   def mattr_reader(*syms, instance_reader: T.unsafe(nil), instance_accessor: T.unsafe(nil), default: T.unsafe(nil)); end
@@ -39770,6 +40095,8 @@ class Module
   def thread_mattr_reader(*syms, instance_reader: T.unsafe(nil), instance_accessor: T.unsafe(nil)); end
 
   def thread_mattr_writer(*syms, instance_writer: T.unsafe(nil), instance_accessor: T.unsafe(nil)); end
+
+  def xfeature(*a, &b); end
   DELEGATION_RESERVED_KEYWORDS = ::T.let(nil, ::T.untyped)
   DELEGATION_RESERVED_METHOD_NAMES = ::T.let(nil, ::T.untyped)
   RUBY_RESERVED_KEYWORDS = ::T.let(nil, ::T.untyped)
@@ -39994,6 +40321,8 @@ Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
+
+Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
 
 Net::HTTPSuccessCode = Net::HTTPSuccess
 
@@ -43615,6 +43944,20 @@ class RSpec::Core::ExampleGroup
   INSTANCE_VARIABLE_TO_IGNORE = ::T.let(nil, ::T.untyped)
 end
 
+class RSpec::Core::ExampleGroup
+  def self.feature(*args, &example_group_block); end
+
+  def self.ffeature(*args, &example_group_block); end
+
+  def self.fscenario(*all_args, &block); end
+
+  def self.scenario(*all_args, &block); end
+
+  def self.xfeature(*args, &example_group_block); end
+
+  def self.xscenario(*all_args, &block); end
+end
+
 RSpec::Core::ExclusionRules = RSpec::Core::FilterRules
 
 class RSpec::Core::FilterRules
@@ -43710,6 +44053,7 @@ module RSpec::Expectations::Version
 end
 
 module RSpec::Matchers
+  include ::Capybara::RSpecMatcherProxyInstaller
   BE_PREDICATE_REGEX = ::T.let(nil, ::T.untyped)
   DYNAMIC_MATCHER_REGEX = ::T.let(nil, ::T.untyped)
   HAS_REGEX = ::T.let(nil, ::T.untyped)
@@ -43733,9 +44077,17 @@ module RSpec::Matchers::DSL::Macros
   RAISE_NOTIFIER = ::T.let(nil, ::T.untyped)
 end
 
+class RSpec::Matchers::DSL::Matcher
+  include ::Capybara::RSpecMatcherProxyInstaller
+end
+
 class RSpec::Matchers::ExpectedsForMultipleDiffs
   DEFAULT_DIFF_LABEL = ::T.let(nil, ::T.untyped)
   DESCRIPTION_MAX_LENGTH = ::T.let(nil, ::T.untyped)
+end
+
+module RSpec::Matchers
+  extend ::Capybara::RSpecMatcherProxyInstaller::ClassMethods
 end
 
 module RSpec::Mocks
@@ -43824,6 +44176,18 @@ RSpec::Support::StrictSignatureVerifier = RSpec::Support::MethodSignatureVerifie
 
 module RSpec::Support::Version
   STRING = ::T.let(nil, ::T.untyped)
+end
+
+module RSpec::Version
+  STRING = ::T.let(nil, ::T.untyped)
+end
+
+module RSpec
+  def self.feature(*args, &example_group_block); end
+
+  def self.ffeature(*args, &example_group_block); end
+
+  def self.xfeature(*args, &example_group_block); end
 end
 
 class RSpecJUnitFormatter
@@ -48432,210 +48796,6 @@ module SecureRandom
   def self.base58(n=T.unsafe(nil)); end
 end
 
-module Selenium::WebDriver
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Chrome::Bridge
-  COMMANDS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Chrome::Options
-  KEY = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::DriverExtensions::Rotatable
-  ORIENTATIONS = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Error
-  DEPRECATED_ERRORS = ::T.let(nil, ::T.untyped)
-  ERRORS = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Firefox
-  DEFAULT_ASSUME_UNTRUSTED_ISSUER = ::T.let(nil, ::T.untyped)
-  DEFAULT_ENABLE_NATIVE_EVENTS = ::T.let(nil, ::T.untyped)
-  DEFAULT_LOAD_NO_FOCUS_LIB = ::T.let(nil, ::T.untyped)
-  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
-  DEFAULT_SECURE_SSL = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Firefox::Binary
-  NO_FOCUS_LIBRARIES = ::T.let(nil, ::T.untyped)
-  NO_FOCUS_LIBRARY_NAME = ::T.let(nil, ::T.untyped)
-  QUIT_TIMEOUT = ::T.let(nil, ::T.untyped)
-  WAIT_TIMEOUT = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Firefox::Extension
-  NAMESPACE = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Firefox::Launcher
-  SOCKET_LOCK_TIMEOUT = ::T.let(nil, ::T.untyped)
-  STABLE_CONNECTION_TIMEOUT = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Firefox::Marionette::Bridge
-  COMMANDS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Firefox::Options
-  KEY = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Firefox::Profile
-  VALID_PREFERENCE_TYPES = ::T.let(nil, ::T.untyped)
-  WEBDRIVER_EXTENSION_PATH = ::T.let(nil, ::T.untyped)
-  WEBDRIVER_PREFS = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::HTML5::SharedWebStorage
-  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
-end
-
-class Selenium::WebDriver::IE::Options
-  CAPABILITIES = ::T.let(nil, ::T.untyped)
-  KEY = ::T.let(nil, ::T.untyped)
-  SCROLL_BOTTOM = ::T.let(nil, ::T.untyped)
-  SCROLL_TOP = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Interactions
-  KEY = ::T.let(nil, ::T.untyped)
-  NONE = ::T.let(nil, ::T.untyped)
-  POINTER = ::T.let(nil, ::T.untyped)
-  SOURCE_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Interactions::Interaction
-  PAUSE = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Interactions::KeyInput
-  SUBTYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Interactions::PointerInput
-  KIND = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Interactions::PointerMove
-  ORIGINS = ::T.let(nil, ::T.untyped)
-  POINTER = ::T.let(nil, ::T.untyped)
-  VIEWPORT = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Interactions::PointerPress
-  BUTTONS = ::T.let(nil, ::T.untyped)
-  DIRECTIONS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Keyboard
-  MODIFIERS = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Keys
-  KEYS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Manager
-  SECONDS_PER_DAY = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::PortProber
-  IGNORED_ERRORS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Proxy
-  ALLOWED = ::T.let(nil, ::T.untyped)
-  TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::Bridge
-  COMMANDS = ::T.let(nil, ::T.untyped)
-  PORT = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::Capabilities
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::Http::Common
-  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
-  DEFAULT_HEADERS = ::T.let(nil, ::T.untyped)
-  MAX_REDIRECTS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::Http::Default
-  MAX_RETRIES = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::OSS::Bridge
-  COMMANDS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::Response
-  STACKTRACE_KEY = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::W3C::Bridge
-  COMMANDS = ::T.let(nil, ::T.untyped)
-  ESCAPE_CSS_REGEXP = ::T.let(nil, ::T.untyped)
-  QUIT_ERRORS = ::T.let(nil, ::T.untyped)
-  UNICODE_CODE_POINT = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Remote::W3C::Capabilities
-  EXTENSION_CAPABILITY_PATTERN = ::T.let(nil, ::T.untyped)
-  KNOWN = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Safari::Bridge
-  COMMANDS = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::SearchContext
-  FINDERS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Service
-  SOCKET_LOCK_TIMEOUT = ::T.let(nil, ::T.untyped)
-  START_TIMEOUT = ::T.let(nil, ::T.untyped)
-  STOP_TIMEOUT = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::SocketPoller
-  CONNECTED_ERRORS = ::T.let(nil, ::T.untyped)
-  CONNECT_TIMEOUT = ::T.let(nil, ::T.untyped)
-  NOT_CONNECTED_ERRORS = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Support::Color
-  HEX3_PATTERN = ::T.let(nil, ::T.untyped)
-  HEX_PATTERN = ::T.let(nil, ::T.untyped)
-  HSLA_PATTERN = ::T.let(nil, ::T.untyped)
-  HSL_PATTERN = ::T.let(nil, ::T.untyped)
-  RGBA_PATTERN = ::T.let(nil, ::T.untyped)
-  RGBA_PCT_PATTERN = ::T.let(nil, ::T.untyped)
-  RGB_PATTERN = ::T.let(nil, ::T.untyped)
-  RGB_PCT_PATTERN = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::TouchScreen
-  FLICK_SPEED = ::T.let(nil, ::T.untyped)
-end
-
-class Selenium::WebDriver::Wait
-  DEFAULT_INTERVAL = ::T.let(nil, ::T.untyped)
-  DEFAULT_TIMEOUT = ::T.let(nil, ::T.untyped)
-end
-
-module Selenium::WebDriver::Zipper
-  EXTENSIONS = ::T.let(nil, ::T.untyped)
-end
-
 module SemanticRange
   ANY = ::T.let(nil, ::T.untyped)
   BUILD = ::T.let(nil, ::T.untyped)
@@ -49604,25 +49764,6 @@ class Time
   def self.zone_default=(zone_default); end
 end
 
-class TitleComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class TitleComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 class TracePoint
   def eval_script(); end
 
@@ -49893,6 +50034,8 @@ end
 
 class User
   extend ::Devise::Models::Authenticatable::ClassMethods
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
   def self.after_add_for_notifications(); end
 
   def self.after_add_for_notifications=(val); end
@@ -50790,15 +50933,6 @@ module WebSocket::HTTP
   def self.normalize_header(name); end
 end
 
-module Webdrivers
-  DEFAULT_CACHE_TIME = ::T.let(nil, ::T.untyped)
-  DEFAULT_INSTALL_DIR = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Webdrivers::Railtie
-end
-
 module Webpacker
   def bootstrap(*_, &_1); end
 
@@ -51407,25 +51541,6 @@ class WorkFormComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class WorkTypeComponent
-  include ::ActionView::RoutingUrlFor
-  include ::ActionDispatch::Routing::UrlFor
-  include ::ActionDispatch::Routing::PolymorphicRoutes
-  def default_url_options(); end
-
-  def default_url_options=(val); end
-
-  def default_url_options?(); end
-end
-
-class WorkTypeComponent
-  def self.default_url_options(); end
-
-  def self.default_url_options=(val); end
-
-  def self.default_url_options?(); end
-end
-
 module XPath::DSL
   def join(*expressions); end
   AXES = ::T.let(nil, ::T.untyped)
@@ -51442,162 +51557,6 @@ end
 module Zeitwerk::ExplicitNamespace
   extend ::Zeitwerk::RealModName
 end
-
-module Zip
-  CDIR_ENTRY_STATIC_HEADER_LENGTH = ::T.let(nil, ::T.untyped)
-  CENTRAL_DIRECTORY_ENTRY_SIGNATURE = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHODS = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_AES = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_BZIP2 = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_DEFLATE = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_DEFLATE_64 = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_IBM_CMPSC = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_IBM_LZ77 = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_IBM_TERSE = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_IMPLODE = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_JPEG = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_LZMA = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_PKWARE_DCLI = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_PPMD = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_REDUCE_1 = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_REDUCE_2 = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_REDUCE_3 = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_REDUCE_4 = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_SHRINK = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_STORE = ::T.let(nil, ::T.untyped)
-  COMPRESSION_METHOD_WAVPACK = ::T.let(nil, ::T.untyped)
-  FILE_TYPE_DIR = ::T.let(nil, ::T.untyped)
-  FILE_TYPE_FILE = ::T.let(nil, ::T.untyped)
-  FILE_TYPE_SYMLINK = ::T.let(nil, ::T.untyped)
-  FSTYPES = ::T.let(nil, ::T.untyped)
-  FSTYPE_ACORN = ::T.let(nil, ::T.untyped)
-  FSTYPE_AMIGA = ::T.let(nil, ::T.untyped)
-  FSTYPE_ATARI = ::T.let(nil, ::T.untyped)
-  FSTYPE_ATHEOS = ::T.let(nil, ::T.untyped)
-  FSTYPE_BEOS = ::T.let(nil, ::T.untyped)
-  FSTYPE_CPM = ::T.let(nil, ::T.untyped)
-  FSTYPE_FAT = ::T.let(nil, ::T.untyped)
-  FSTYPE_HPFS = ::T.let(nil, ::T.untyped)
-  FSTYPE_MAC = ::T.let(nil, ::T.untyped)
-  FSTYPE_MAC_OSX = ::T.let(nil, ::T.untyped)
-  FSTYPE_MVS = ::T.let(nil, ::T.untyped)
-  FSTYPE_NTFS = ::T.let(nil, ::T.untyped)
-  FSTYPE_QDOS = ::T.let(nil, ::T.untyped)
-  FSTYPE_TANDEM = ::T.let(nil, ::T.untyped)
-  FSTYPE_THEOS = ::T.let(nil, ::T.untyped)
-  FSTYPE_TOPS20 = ::T.let(nil, ::T.untyped)
-  FSTYPE_UNIX = ::T.let(nil, ::T.untyped)
-  FSTYPE_VFAT = ::T.let(nil, ::T.untyped)
-  FSTYPE_VMS = ::T.let(nil, ::T.untyped)
-  FSTYPE_VM_CMS = ::T.let(nil, ::T.untyped)
-  FSTYPE_Z_SYSTEM = ::T.let(nil, ::T.untyped)
-  LOCAL_ENTRY_SIGNATURE = ::T.let(nil, ::T.untyped)
-  LOCAL_ENTRY_STATIC_HEADER_LENGTH = ::T.let(nil, ::T.untyped)
-  LOCAL_ENTRY_TRAILING_DESCRIPTOR_LENGTH = ::T.let(nil, ::T.untyped)
-  RUNNING_ON_WINDOWS = ::T.let(nil, ::T.untyped)
-  VERSION_MADE_BY = ::T.let(nil, ::T.untyped)
-  VERSION_NEEDED_TO_EXTRACT = ::T.let(nil, ::T.untyped)
-  VERSION_NEEDED_TO_EXTRACT_ZIP64 = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::CentralDirectory
-  END_OF_CDS = ::T.let(nil, ::T.untyped)
-  MAX_END_OF_CDS_SIZE = ::T.let(nil, ::T.untyped)
-  STATIC_EOCD_SIZE = ::T.let(nil, ::T.untyped)
-  ZIP64_END_OF_CDS = ::T.let(nil, ::T.untyped)
-  ZIP64_EOCD_LOCATOR = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::Decompressor
-  CHUNK_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::DecryptedIo
-  CHUNK_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::Entry
-  DEFLATED = ::T.let(nil, ::T.untyped)
-  EFS = ::T.let(nil, ::T.untyped)
-  STORED = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::ExtraField
-  ID_MAP = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::ExtraField::IUnix
-  HEADER_ID = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::ExtraField::NTFS
-  HEADER_ID = ::T.let(nil, ::T.untyped)
-  SEC_TO_UNIX_EPOCH = ::T.let(nil, ::T.untyped)
-  WINDOWS_TICK = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::ExtraField::OldUnix
-  HEADER_ID = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::ExtraField::UniversalTime
-  ATIME_MASK = ::T.let(nil, ::T.untyped)
-  CTIME_MASK = ::T.let(nil, ::T.untyped)
-  HEADER_ID = ::T.let(nil, ::T.untyped)
-  MTIME_MASK = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::ExtraField::Zip64
-  HEADER_ID = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::ExtraField::Zip64Placeholder
-  HEADER_ID = ::T.let(nil, ::T.untyped)
-end
-
-class Zip::File
-  CREATE = ::T.let(nil, ::T.untyped)
-  DATA_BUFFER_SIZE = ::T.let(nil, ::T.untyped)
-  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
-  IO_METHODS = ::T.let(nil, ::T.untyped)
-  MAX_SEGMENT_SIZE = ::T.let(nil, ::T.untyped)
-  MIN_SEGMENT_SIZE = ::T.let(nil, ::T.untyped)
-  SPLIT_SIGNATURE = ::T.let(nil, ::T.untyped)
-  ZIP64_EOCD_SIGNATURE = ::T.let(nil, ::T.untyped)
-end
-
-module Zip::IOExtras
-  CHUNK_SIZE = ::T.let(nil, ::T.untyped)
-  RANGE_ALL = ::T.let(nil, ::T.untyped)
-end
-
-module Zip::IOExtras::AbstractInputStream
-  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
-end
-
-class Zip::InputStream
-  CHUNK_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-module Zip::NullInputStream
-  include ::ActiveSupport::ToJsonWithActiveSupportEncoder
-end
-
-class Zip::StreamableStream
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
-end
-
-Zip::ZipCompressionMethodError = Zip::CompressionMethodError
-
-Zip::ZipDestinationFileExistsError = Zip::DestinationFileExistsError
-
-Zip::ZipEntryExistsError = Zip::EntryExistsError
-
-Zip::ZipEntryNameError = Zip::EntryNameError
-
-Zip::ZipError = Zip::Error
-
-Zip::ZipInternalError = Zip::InternalError
 
 class Zlib::Deflate
   def initialize(*_); end

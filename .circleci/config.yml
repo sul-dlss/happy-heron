@@ -1,6 +1,8 @@
 version: 2.1
+orbs:
+  node: circleci/node@2.1.1
 references:
-  default_ruby_version: &default_ruby_version 2.7.1-node
+  default_ruby_version: &default_ruby_version 2.7.1-node-browsers
   default_postgres_version: &default_postgres_version 11-alpine
   ruby_envs: &ruby_envs
     environment:
@@ -55,7 +57,7 @@ jobs:
             - happy-heron-bundle-{{ checksum "Gemfile.lock" }}
             - happy-heron-bundle-
       - run:
-          name: Install dependencies
+          name: Install Ruby dependencies
           command: bundle check || bundle install
       - save_cache:
           key: happy-heron-bundle-{{ checksum "Gemfile.lock" }}
@@ -97,6 +99,9 @@ jobs:
       - run:
           name: Database setup
           command: bin/rails db:setup
+      - node/install-packages:
+          cache-key: yarn.lock
+          pkg-manager: yarn
       - run:
           name: Install CodeClimate coverage reporter
           command: |
