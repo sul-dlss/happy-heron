@@ -3,10 +3,10 @@
 
   <%= form_with model: work, url: [work.collection, work], data: { controller: 'progress' },
       html: { class: 'needs-validation row', novalidate: true, multipart: true } do |f| %>
+    <%= f.hidden_field :work_type %>
+    <%= f.hidden_field :subtype %> 
     <%= render DepositProgressComponent.new %>
-
     <%= render AddFilesComponent.new(form: f) %>
-    <%= render WorkTypeComponent.new(form: f) %>
     <%= render TitleComponent.new(form: f) %>
     <%= render ContributorsComponent.new %>
     <%= render DatesComponent.new(form: f) %>
