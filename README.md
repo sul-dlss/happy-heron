@@ -44,6 +44,10 @@ fi
 
 Thereafter, every time you commit changes to `Gemfile.lock` or `app`, Sorbet will update type-checking information. Once it's done, add & commit the changes in `sorbet/` (feel free to squash them into the prior commit).
 
+#### N.B.
+
+Before running `rake rails_rbi:all`, make sure the `db` docker-compose service is running, else the type definitions for the app's models will be deleted.
+
 ## Deployment
 
 H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module). Passenger configuration lives in `config/Passengerfile.json` which is managed by Puppet and does not live in the application repository.
