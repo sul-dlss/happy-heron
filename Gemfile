@@ -3,23 +3,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'bootsnap', '>= 1.4.2', require: false
-gem 'config', '~> 2.2'
-gem 'devise', '~> 4.7'
-gem 'devise-remote-user', '~> 1.0'
-gem 'dor-services-client'
-gem 'pg'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
-gem 'redis', '~> 4.0'
-gem 'sdr-client'
-gem 'sidekiq', '~> 6.1'
-gem 'sorbet-rails' # used both statically and at runtime
-gem 'sorbet-runtime'
-gem 'state_machines-activerecord'
-gem 'turbolinks', '~> 5'
-gem 'view_component', '~> 2.18'
-gem 'webpacker', '~> 5.0'
-
 group :development, :test do
   gem 'byebug'
   gem 'factory_bot_rails'
@@ -55,3 +38,21 @@ group :deployment do
   gem 'capistrano-rvm', require: false
   gem 'dlss-capistrano', '~> 3.6', require: false
 end
+
+gem 'action_policy', '~> 0.5.3'
+gem 'bootsnap', '>= 1.4.2', require: false
+gem 'config', '~> 2.2'
+gem 'devise', '~> 4.7'
+gem 'devise-remote-user', '~> 1.0'
+gem 'dor-services-client'
+gem 'pg'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
+gem 'redis', '~> 4.0'
+gem 'sdr-client'
+gem 'sidekiq', '~> 6.1'
+gem 'sorbet-rails' # used both statically and at runtime
+gem 'sorbet-runtime'
+gem 'state_machines-activerecord'
+gem 'turbolinks', '~> 5'
+gem 'view_component', '~> 2.18'
+gem 'webpacker', '~> 5.0'

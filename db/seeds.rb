@@ -11,4 +11,4 @@
 RoleTerm.create([{ label: 'Author' }, { label: 'Contributor' }])
 
 # Don't load this in production:
-FactoryBot.create(:collection)
+FactoryBot.create(:collection, creator: FactoryBot.create(:user, email: 'a.user@stanford.edu'))

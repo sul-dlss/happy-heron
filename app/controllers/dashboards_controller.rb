@@ -4,6 +4,6 @@
 # Displays the list of collections to the user
 class DashboardsController < ApplicationController
   def show
-    @collections = Collection.all
+    @collections = authorized_scope(Collection.all)
   end
 end

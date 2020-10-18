@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action_policy (0.5.3)
+      ruby-next-core (>= 0.10.3)
     actioncable (6.0.3.3)
       actionpack (= 6.0.3.3)
       nio4r (~> 2.0)
@@ -349,6 +351,7 @@ GEM
       rubocop
     ruby-enum (0.8.0)
       i18n
+    ruby-next-core (0.10.5)
     ruby-progressbar (1.10.1)
     safe_type (1.1.1)
     sdr-client (0.33.0)
@@ -435,6 +438,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  action_policy (~> 0.5.3)
   apparition
   bootsnap (>= 1.4.2)
   byebug

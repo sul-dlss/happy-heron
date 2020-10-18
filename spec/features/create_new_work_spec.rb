@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a new work', js: true do
-  let!(:collection) { create(:collection) }
+  let!(:collection) { create(:collection, creator: user) }
   let(:user) { create(:user) }
 
   before do
