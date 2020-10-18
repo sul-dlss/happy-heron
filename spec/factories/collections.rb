@@ -16,6 +16,7 @@ FactoryBot.define do
     managers { 'maya.aguirre, jcairns' }
     reviewers { 'MyString' }
     depositors { 'MyString' }
+    creator
   end
 
   trait :with_works do

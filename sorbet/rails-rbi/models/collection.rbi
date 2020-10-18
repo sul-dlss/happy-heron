@@ -154,6 +154,21 @@ module Collection::GeneratedAttributeMethods
 end
 
 module Collection::GeneratedAssociationMethods
+  sig { returns(::User) }
+  def creator; end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
+  def build_creator(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
+  def create_creator(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
+  def create_creator!(*args, &block); end
+
+  sig { params(value: ::User).void }
+  def creator=(value); end
+
   sig { returns(::Work::ActiveRecord_Associations_CollectionProxy) }
   def works; end
 
