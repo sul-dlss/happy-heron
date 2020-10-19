@@ -1742,7 +1742,7 @@ class ActionDispatch::DebugExceptions
   def log_error(request, wrapper); end
   def logger(request); end
   def render(status, body, format); end
-  def render_exception(request, exception); end
+  def render_exception(arg, exception); end
   def render_for_api_request(content_type, wrapper); end
   def render_for_browser_request(request, wrapper); end
   def routes_inspector(exception); end

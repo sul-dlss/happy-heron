@@ -26,7 +26,8 @@ set :log_level, :info
 # Default value for :linked_files is []
 append :linked_files,
        'config/database.yml', # in Puppet
-       'config/secrets.yml' # in shared_configs
+       'config/secrets.yml', # in shared_configs
+       'config/honeybadger.yml' # in shared_configs
 
 # Default value for linked_dirs is []
 # These directories are handled by shared_configs
@@ -43,6 +44,9 @@ append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/sockets', 'publi
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+# honeybadger_env otherwise defaults to rails_env
+set :honeybadger_env, fetch(:stage)
 
 # Manage sidekiq via systemd (from dlss-capistrano gem)
 set :sidekiq_systemd_use_hooks, true

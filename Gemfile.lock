@@ -209,6 +209,7 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     highline (2.0.3)
+    honeybadger (4.7.2)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -453,6 +454,7 @@ DEPENDENCIES
   dlss-capistrano (~> 3.6)
   dor-services-client
   factory_bot_rails
+  honeybadger (~> 4.0)
   listen (~> 3.2)
   okcomputer
   pg
