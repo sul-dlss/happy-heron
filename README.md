@@ -19,6 +19,12 @@ Ruby dependencies can be installed with `bundle install`, JavaScript dependencie
 
 Start up dependencies with `docker-compose up`, then run tests with `bundle exec rspec`.
 
+To run the server in development mode set `REMOTE_USER` because we aren't running behing Shibboleth.
+
+```shell
+REMOTE_USER=auser@stanford.edu bin/rails server
+```
+
 ## Type checking
 
 H2 uses Sorbet optional Ruby type checking. Run a manual static type check via `srb tc`; note that CI for H2 will automate this. After adding a new gem to the Gemfile, or running `bundle update`, build the new type definitions with `srb rbi update`.

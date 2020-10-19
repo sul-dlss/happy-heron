@@ -214,6 +214,7 @@ class ActionCable::Channel::Base
   extend ActionCable::Channel::Callbacks::ClassMethods
   extend ActionCable::Channel::Naming::ClassMethods
   extend ActionCable::Channel::PeriodicTimers::ClassMethods
+  extend ActionPolicy::Channel::ClassMethods
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
@@ -222,6 +223,7 @@ class ActionCable::Channel::Base
   include ActionCable::Channel::Naming
   include ActionCable::Channel::PeriodicTimers
   include ActionCable::Channel::Streams
+  include ActionPolicy::Channel
   include ActiveSupport::Callbacks
   include ActiveSupport::Rescuable
 end

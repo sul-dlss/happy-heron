@@ -2809,6 +2809,8 @@ class ActionController::Base < ActionController::Metal
   def asset_host=(value); end
   def assets_dir; end
   def assets_dir=(value); end
+  def authorize_count; end
+  def authorize_count=(arg0); end
   def default_asset_host_protocol; end
   def default_asset_host_protocol=(value); end
   def default_protect_from_forgery; end
@@ -2961,6 +2963,7 @@ class ActionController::Base < ActionController::Metal
   def self.without_modules(*modules); end
   def stylesheets_dir; end
   def stylesheets_dir=(value); end
+  def verify_authorized_skipped; end
   extend AbstractController::Caching::ClassMethods
   extend AbstractController::Caching::ConfigMethods
   extend AbstractController::Caching::Fragments::ClassMethods
@@ -2983,6 +2986,7 @@ class ActionController::Base < ActionController::Metal
   extend ActionController::Rendering::ClassMethods
   extend ActionController::RequestForgeryProtection::ClassMethods
   extend ActionController::RespondWith::ClassMethods
+  extend ActionPolicy::Controller::ClassMethods
   extend ActionView::Layouts::ClassMethods
   extend ActionView::Rendering::ClassMethods
   extend ActionView::ViewPaths::ClassMethods
@@ -3046,6 +3050,8 @@ class ActionController::Base < ActionController::Metal
   include ActionDispatch::Routing::RouteSet::MountedHelpers
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::Routing::UrlFor
+  include ActionPolicy::Controller
+  include ActionPolicy::Controller
   include ActionView::Layouts
   include ActionView::Rendering
   include ActionView::ViewPaths

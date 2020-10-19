@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a new work', js: true do
-  let(:collection) { create(:collection) }
+  let!(:collection) { create(:collection, creator: user) }
   let(:user) { create(:user) }
 
   before do
@@ -13,8 +13,10 @@ RSpec.describe 'Create a new work', js: true do
 
   context 'when successful deposit' do
     it 'deposits and renders work show page' do
-      visit "/collections/#{collection.id}/works/new"
-      expect(page).to have_content('Deposit your work')
+      visit dashboard_path
+
+      click_link '+ Deposit to this collection', href: new_collection_work_path(collection)
+      expect(page).to have_content 'Deposit your work'
 
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact e-mail', with: user.email

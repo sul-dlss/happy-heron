@@ -336,6 +336,12 @@ class ActionCable::Channel::Base
   include ::ActionCable::Channel::Naming
   include ::ActionCable::Channel::Broadcasting
   include ::ActiveSupport::Rescuable
+  include ::ActionPolicy::Channel
+  include ::ActionPolicy::Behaviour
+  include ::ActionPolicy::Behaviours::PolicyFor
+  include ::ActionPolicy::Behaviours::Scoping
+  include ::ActionPolicy::Behaviours::Namespaced
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
   def __callbacks(); end
 
   def __callbacks?(); end
@@ -1588,6 +1594,16 @@ class ActionController::Base
   include ::Devise::Controllers::UrlHelpers
   include ::Turbolinks::Controller
   include ::Turbolinks::Redirection
+  include ::ActionPolicy::Controller
+  include ::ActionPolicy::Behaviour
+  include ::ActionPolicy::Behaviours::PolicyFor
+  include ::ActionPolicy::Behaviours::Scoping
+  include ::ActionPolicy::Behaviours::ThreadMemoized
+  include ::ActionPolicy::Behaviours::Memoized
+  include ::ActionPolicy::Behaviours::Namespaced
+  include ::ActionPolicy::Behaviours::ThreadMemoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Memoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
   include ::ViewComponent::RenderingMonkeyPatch
   include ::ViewComponent::RenderToStringMonkeyPatch
   def __callbacks(); end
@@ -1641,6 +1657,8 @@ class ActionController::Base
   def assets_dir(); end
 
   def assets_dir=(value); end
+
+  def authorize_count=(authorize_count); end
 
   def default_asset_host_protocol(); end
 
@@ -1755,6 +1773,8 @@ class ActionController::Base
   def stylesheets_dir(); end
 
   def stylesheets_dir=(value); end
+
+  def verify_authorized_skipped(); end
   MODULES = ::T.let(nil, ::T.untyped)
   PROTECTED_IVARS = ::T.let(nil, ::T.untyped)
 end
@@ -7481,6 +7501,96 @@ module ActionPack
   def self.version(); end
 end
 
+module ActionPolicy
+  CACHE_NAMESPACE = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::AuthorizationContextMissing
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Authorizer
+  extend ::ActionPolicy::Rails::Authorizer
+end
+
+class ActionPolicy::Base
+  include ::ActionPolicy::Policy::Rails::Instrumentation
+  def user(); end
+end
+
+class ActionPolicy::Base::APR
+  include ::ActionPolicy::Policy::ResultFailureReasons
+end
+
+module ActionPolicy::Channel
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
+end
+
+module ActionPolicy::Channel
+  extend ::ActiveSupport::Concern
+end
+
+module ActionPolicy::Controller
+  include ::ActionPolicy::Behaviours::ThreadMemoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Memoized::InstanceMethods
+  include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
+end
+
+module ActionPolicy::Controller
+  extend ::ActiveSupport::Concern
+end
+
+module ActionPolicy::I18n
+  DEFAULT_UNAUTHORIZED_MESSAGE = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::LookupChain
+  CLASSIFY_SYMBOL_LOOKUP = ::T.let(nil, ::T.untyped)
+  CLASS_POLICY_CLASS = ::T.let(nil, ::T.untyped)
+  INFER_FROM_CLASS = ::T.let(nil, ::T.untyped)
+  INSTANCE_POLICY_CLASS = ::T.let(nil, ::T.untyped)
+  NAMESPACE_LOOKUP = ::T.let(nil, ::T.untyped)
+  SYMBOL_LOOKUP = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::PerThreadCache
+  CACHE_KEY = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Policy::Aliases
+  DEFAULT = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Policy::Rails::Instrumentation
+  APPLY_EVENT_NAME = ::T.let(nil, ::T.untyped)
+  INIT_EVENT_NAME = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::PrettyPrint
+  FALSE = ::T.let(nil, ::T.untyped)
+  TRUE = ::T.let(nil, ::T.untyped)
+end
+
+module ActionPolicy::Rails::Authorizer
+  EVENT_NAME = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::Railtie
+end
+
+class ActionPolicy::UnknownNamedScope
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::UnknownScopeType
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
+class ActionPolicy::UnrecognizedScopeTarget
+  MESSAGE_TEMPLATE = ::T.let(nil, ::T.untyped)
+end
+
 module ActionText
 end
 
@@ -11706,9 +11816,6 @@ class ActiveRecord::AssociationRelation
   def proxy_association(); end
 end
 
-class ActiveRecord::AssociationRelation
-end
-
 module ActiveRecord::Associations
   def association(name); end
 
@@ -12223,9 +12330,6 @@ class ActiveRecord::Associations::CollectionProxy
   def where_clause(*_, &_1); end
 
   def where_clause=(arg); end
-end
-
-class ActiveRecord::Associations::CollectionProxy
 end
 
 module ActiveRecord::Associations::ForeignAssociation
@@ -13018,7 +13122,6 @@ class ActiveRecord::Base
   extend ::ActiveRecord::Suppressor::ClassMethods
   extend ::OrmAdapter::ToAdapter
   extend ::SorbetRails::CustomFinderMethods
-  extend ::SorbetRails::PluckToTStruct
   extend ::Devise::Models
   def self.__callbacks(); end
 
@@ -18086,7 +18189,6 @@ module ActiveRecord::Reflection
 end
 
 class ActiveRecord::Relation
-  include ::Enumerable
   include ::ActiveRecord::Delegation
   include ::ActiveRecord::Explain
   include ::ActiveRecord::Batches
@@ -18096,7 +18198,6 @@ class ActiveRecord::Relation
   include ::ActiveRecord::Calculations
   include ::ActiveRecord::FinderMethods
   include ::SorbetRails::CustomFinderMethods
-  include ::SorbetRails::PluckToTStruct
   def ==(other); end
 
   def _deprecated_scope_source(); end
@@ -18111,17 +18212,11 @@ class ActiveRecord::Relation
 
   def bind_attribute(name, value); end
 
-  def build(attributes=T.unsafe(nil), &block); end
-
   def cache_key(timestamp_column=T.unsafe(nil)); end
 
   def cache_key_with_version(); end
 
   def cache_version(timestamp_column=T.unsafe(nil)); end
-
-  def create(attributes=T.unsafe(nil), &block); end
-
-  def create!(attributes=T.unsafe(nil), &block); end
 
   def create_or_find_by(attributes, &block); end
 
@@ -18140,18 +18235,6 @@ class ActiveRecord::Relation
   def encode_with(coder); end
 
   def explain(); end
-
-  def find_or_create_by(attributes, &block); end
-
-  def find_or_create_by!(attributes, &block); end
-
-  def find_or_initialize_by(attributes, &block); end
-
-  def first_or_create(attributes=T.unsafe(nil), &block); end
-
-  def first_or_create!(attributes=T.unsafe(nil), &block); end
-
-  def first_or_initialize(attributes=T.unsafe(nil), &block); end
 
   def has_limit_or_offset?(); end
 
@@ -18172,8 +18255,6 @@ class ActiveRecord::Relation
   def locked?(); end
 
   def model(); end
-
-  def new(attributes=T.unsafe(nil), &block); end
 
   def null_relation?(); end
 
@@ -18196,8 +18277,6 @@ class ActiveRecord::Relation
   def skip_preloading_value=(skip_preloading_value); end
 
   def table(); end
-
-  def to_a(); end
 
   def to_ary(); end
 
@@ -31898,6 +31977,8 @@ class Collection
 
   def after_remove_for_works?(); end
 
+  def autosave_associated_records_for_creator(*args); end
+
   def autosave_associated_records_for_works(*args); end
 
   def before_add_for_works(); end
@@ -31931,6 +32012,8 @@ class Collection::ActiveRecord_Relation
 end
 
 module Collection::GeneratedAssociationMethods
+  def reload_creator(); end
+
   def work_ids=(ids); end
 end
 
@@ -31969,6 +32052,10 @@ class Collection
   def self.before_remove_for_works=(val); end
 
   def self.before_remove_for_works?(); end
+end
+
+class CollectionPolicy
+  def __scoping__active_record_relation__default(relation); end
 end
 
 module CommonMarker
@@ -38892,10 +38979,6 @@ module IRB
   def self.setup(ap_path, argv: T.unsafe(nil)); end
 end
 
-module ITypeAssert
-  Elem = type_member(:out)
-end
-
 class Integer
   include ::JSON::Ext::Generator::GeneratorMethods::Integer
   include ::ActiveSupport::NumericWithFormat
@@ -41017,8 +41100,6 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
-
-  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -41037,10 +41118,6 @@ class Object
   STDOUT = ::T.let(nil, ::T.untyped)
   Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
-end
-
-class Object
-  def self.yaml_tag(url); end
 end
 
 module OpenAPIParser
@@ -43291,42 +43368,6 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M10600
-end
-
-module Polyfill::Module::M10600
-end
-
-module Polyfill::Module::M10620
-end
-
-module Polyfill::Module::M10620
-end
-
-module Polyfill::Module::M10640
-end
-
-module Polyfill::Module::M10640
-end
-
-module Polyfill::Module::M10660
-end
-
-module Polyfill::Module::M10660
-end
-
-module Polyfill::Module::M10680
-end
-
-module Polyfill::Module::M10680
-end
-
-module Polyfill::Module::M10720
-end
-
-module Polyfill::Module::M10720
-end
-
 class Proc
   def <<(_); end
 
@@ -43390,30 +43431,6 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Psych
-  def self.add_builtin_type(type_tag, &block); end
-
-  def self.add_domain_type(domain, type_tag, &block); end
-
-  def self.add_tag(tag, klass); end
-
-  def self.domain_types(); end
-
-  def self.domain_types=(domain_types); end
-
-  def self.dump_tags(); end
-
-  def self.dump_tags=(dump_tags); end
-
-  def self.libyaml_version(); end
-
-  def self.load_tags(); end
-
-  def self.load_tags=(load_tags); end
-
-  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -48911,6 +48928,14 @@ end
 class RubyLex
 end
 
+module RubyNext
+  LAST_MINOR_VERSIONS = ::T.let(nil, ::T.untyped)
+  LATEST_VERSION = ::T.let(nil, ::T.untyped)
+  MIN_SUPPORTED_VERSION = ::T.let(nil, ::T.untyped)
+  RUBY_NEXT_DIR = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 class RubyVM::AbstractSyntaxTree::Node
   def pretty_print_children(q, names=T.unsafe(nil)); end
 end
@@ -49834,10 +49859,6 @@ Struct::Tms = Process::Tms
 
 class SynchronizedDelegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
-end
-
-class TA
-  Elem = type_member
 end
 
 module TZInfo::RubyCoreSupport

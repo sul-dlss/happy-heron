@@ -1,0 +1,17 @@
+<main class="mb-3 mb-md-5" id="content">
+  <div class="container px-4 px-md-3" id="dashboard">
+    <section>
+      <header>Your collections</header>
+      <ul class="collections">
+        <% @collections.each do |collection| %>
+          <li>
+            <div>
+              <header><%= collection.name %></header>
+              <%= link_to '+ Deposit to this collection', new_collection_work_path(collection), class: "btn btn-primary" %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  </div>
+</main>
