@@ -55,6 +55,9 @@ class DepositJob < ApplicationJob
       identification: {
         sourceId: "hydrus:#{work.id}" # TODO: what should this be?
       },
+      structural: {
+        contains: []
+      },
       label: work.title,
       type: Cocina::Models::Vocab.object, # TODO: use something based on worktype
       version: 0
