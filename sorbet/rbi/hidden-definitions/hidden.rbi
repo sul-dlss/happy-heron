@@ -6163,7 +6163,11 @@ end
 module ActionDispatch::Routing::RouteSet::MountedHelpers
   def _main_app(); end
 
+  def _okcomputer(); end
+
   def main_app(); end
+
+  def okcomputer(); end
 end
 
 module ActionDispatch::Routing::RouteSet::MountedHelpers
@@ -35074,6 +35078,10 @@ class Dry::Logic::Rule
   Undefined = ::T.let(nil, ::T.untyped)
 end
 
+class Dry::Logic::Rule::Interface
+  SPLAT = ::T.let(nil, ::T.untyped)
+end
+
 class Dry::Logic::RuleCompiler
   EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
   EMPTY_HASH = ::T.let(nil, ::T.untyped)
@@ -35327,8 +35335,6 @@ module Enumerable
   def pluck(*keys); end
 
   def sum(identity=T.unsafe(nil), &block); end
-
-  def tally(); end
 
   def without(*elements); end
 end
@@ -37824,6 +37830,10 @@ Gem::UnsatisfiableDepedencyError = Gem::UnsatisfiableDependencyError
 Gem::Version::Requirement = Gem::Requirement
 
 module GeneratedUrlHelpers
+  def okcomputer_path(*args); end
+
+  def okcomputer_url(*args); end
+
   def preview_view_component_path(*args); end
 
   def preview_view_component_url(*args); end
@@ -38906,6 +38916,7 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
+  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -40151,8 +40162,6 @@ class Module
 
   def cattr_writer(*syms, instance_writer: T.unsafe(nil), instance_accessor: T.unsafe(nil), default: T.unsafe(nil)); end
 
-  def const_source_location(*_); end
-
   def delegate(*methods, to: T.unsafe(nil), prefix: T.unsafe(nil), allow_nil: T.unsafe(nil), private: T.unsafe(nil)); end
 
   def delegate_missing_to(target); end
@@ -41017,8 +41026,6 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
-
-  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -41039,8 +41046,11 @@ class Object
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
 end
 
-class Object
-  def self.yaml_tag(url); end
+class OkComputer::Engine
+end
+
+class OkComputer::OptionalCheck
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
 end
 
 module OpenAPIParser
@@ -43291,42 +43301,6 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M10600
-end
-
-module Polyfill::Module::M10600
-end
-
-module Polyfill::Module::M10620
-end
-
-module Polyfill::Module::M10620
-end
-
-module Polyfill::Module::M10640
-end
-
-module Polyfill::Module::M10640
-end
-
-module Polyfill::Module::M10660
-end
-
-module Polyfill::Module::M10660
-end
-
-module Polyfill::Module::M10680
-end
-
-module Polyfill::Module::M10680
-end
-
-module Polyfill::Module::M10720
-end
-
-module Polyfill::Module::M10720
-end
-
 class Proc
   def <<(_); end
 
@@ -43390,30 +43364,6 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Psych
-  def self.add_builtin_type(type_tag, &block); end
-
-  def self.add_domain_type(domain, type_tag, &block); end
-
-  def self.add_tag(tag, klass); end
-
-  def self.domain_types(); end
-
-  def self.domain_types=(domain_types); end
-
-  def self.dump_tags(); end
-
-  def self.dump_tags=(dump_tags); end
-
-  def self.libyaml_version(); end
-
-  def self.load_tags(); end
-
-  def self.load_tags=(load_tags); end
-
-  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -48002,6 +47952,7 @@ module RuboCop::AST::NodePattern::Sets
   SET_IT_SPECIFY_EXAMPLE_ETC_2 = ::T.let(nil, ::T.untyped)
   SET_IT_SPECIFY_EXAMPLE_ETC_3 = ::T.let(nil, ::T.untyped)
   SET_KEYS_VALUES = ::T.let(nil, ::T.untyped)
+  SET_KEY_HAS_KEY_FETCH_ETC = ::T.let(nil, ::T.untyped)
   SET_LAST_FIRST = ::T.let(nil, ::T.untyped)
   SET_LENGTH_SIZE = ::T.let(nil, ::T.untyped)
   SET_LET_LET = ::T.let(nil, ::T.untyped)
@@ -48068,6 +48019,7 @@ module RuboCop::AST::NodePattern::Sets
   SET__ = ::T.let(nil, ::T.untyped)
   SET__AT_SLICE = ::T.let(nil, ::T.untyped)
   SET__EQL_ = ::T.let(nil, ::T.untyped)
+  SET__EQUAL_EQL = ::T.let(nil, ::T.untyped)
   SET__GLOB = ::T.let(nil, ::T.untyped)
   SET___ = ::T.let(nil, ::T.untyped)
   SET___2 = ::T.let(nil, ::T.untyped)
@@ -48090,6 +48042,10 @@ end
 
 module RuboCop::AST::RuboCopCompatibility
   INCOMPATIBLE_COPS = ::T.let(nil, ::T.untyped)
+end
+
+module RuboCop::AST::Traversal
+  TYPE_TO_METHOD = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::AST::Version
@@ -48227,6 +48183,11 @@ class RuboCop::Cop::Lint::FormatParameterMismatch
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Lint::HashCompareByIdentity
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Lint::IdentityComparison
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
@@ -48273,6 +48234,11 @@ end
 
 class RuboCop::Cop::Lint::RedundantRequireStatement
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::RedundantSafeNavigation
+  MSG = ::T.let(nil, ::T.untyped)
+  NIL_SPECIFIC_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::SelfAssignment
@@ -48615,6 +48581,11 @@ class RuboCop::Cop::Style::ClassCheck
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Style::ClassEqualityComparison
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Style::ClassMethodsDefinitions
   MSG = ::T.let(nil, ::T.untyped)
   MSG_SCLASS = ::T.let(nil, ::T.untyped)
@@ -48760,6 +48731,10 @@ end
 
 class RuboCop::Cop::Style::RedundantFreeze
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::RedundantRegexpCharacterClass
+  REQUIRES_ESCAPE_OUTSIDE_CHAR_CLASS_CHARS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RedundantSelf

@@ -1,5 +1,5 @@
 sdr_api:
-  url: https://sdr-api-stage.stanford.edu
+  url: http://localhost:8080
   email: testing@example.org
   password: notusedanywhere
 

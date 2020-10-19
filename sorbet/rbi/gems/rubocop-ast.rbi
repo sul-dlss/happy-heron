@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-ast/all/rubocop-ast.rbi
 #
-# rubocop-ast-0.7.1
+# rubocop-ast-0.8.0
 
 module RuboCop
 end
@@ -933,6 +933,7 @@ class RuboCop::AST::DefNode < RuboCop::AST::Node
   def argument_forwarding?; end
   def arguments; end
   def body; end
+  def endless?; end
   def method_name; end
   def receiver; end
   def void_context?; end
@@ -1226,7 +1227,10 @@ class RuboCop::AST::Token
   def type; end
 end
 module RuboCop::AST::Traversal
+  def on_(node); end
   def on___ENCODING__(node); end
+  def on___FILE__(node); end
+  def on___LINE__(node); end
   def on_alias(node); end
   def on_and(node); end
   def on_and_asgn(node); end
@@ -1286,6 +1290,7 @@ module RuboCop::AST::Traversal
   def on_ivasgn(node); end
   def on_kwarg(node); end
   def on_kwbegin(node); end
+  def on_kwnilarg(node); end
   def on_kwoptarg(node); end
   def on_kwrestarg(node); end
   def on_kwsplat(node); end
@@ -1348,6 +1353,14 @@ module RuboCop::AST::Traversal
   def on_yield(node); end
   def on_zsuper(node); end
   def walk(node); end
+  extend RuboCop::AST::Traversal::CallbackCompiler
+end
+class RuboCop::AST::Traversal::DebugError < RuntimeError
+end
+module RuboCop::AST::Traversal::CallbackCompiler
+  def arity_check(range); end
+  def body(signature, prelude); end
+  def def_callback(type, *signature, arity: nil, arity_check: nil, body: nil); end
 end
 module RuboCop::AST::Version
 end

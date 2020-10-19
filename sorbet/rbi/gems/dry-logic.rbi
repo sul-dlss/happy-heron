@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-logic/all/dry-logic.rbi
 #
-# dry-logic-1.0.7
+# dry-logic-1.0.8
 
 module Dry
 end
@@ -209,10 +209,9 @@ class Dry::Logic::Rule::Interface < Module
   def curried; end
   def curried?; end
   def curried_args; end
+  def define_application; end
   def define_constant_application; end
   def define_constructor; end
-  def define_fixed_application; end
-  def define_splat_application; end
   def initialize(arity, curried); end
   def name; end
   def unapplied; end

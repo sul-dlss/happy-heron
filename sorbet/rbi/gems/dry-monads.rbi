@@ -96,10 +96,10 @@ class Dry::Monads::Result
   def success; end
   def to_monad; end
   def to_result; end
-  include Anonymous_Module_92
+  include Anonymous_Module_95
   include Dry::Monads::Transformer
 end
-module Anonymous_Module_92
+module Anonymous_Module_95
   def to_maybe(*arg0); end
   def to_validated(*arg0); end
 end
@@ -117,11 +117,11 @@ class Dry::Monads::Result::Success < Dry::Monads::Result
   def success; end
   def success?; end
   def to_s; end
-  include Anonymous_Dry_Equalizer_93
+  include Anonymous_Dry_Equalizer_96
   include Dry::Equalizer::Methods
   include Dry::Monads::RightBiased::Right
 end
-module Anonymous_Dry_Equalizer_93
+module Anonymous_Dry_Equalizer_96
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
@@ -144,11 +144,11 @@ class Dry::Monads::Result::Failure < Dry::Monads::Result
   def to_s; end
   def trace; end
   def value_or(val = nil); end
-  include Anonymous_Dry_Equalizer_94
+  include Anonymous_Dry_Equalizer_97
   include Dry::Equalizer::Methods
   include Dry::Monads::RightBiased::Left
 end
-module Anonymous_Dry_Equalizer_94
+module Anonymous_Dry_Equalizer_97
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end

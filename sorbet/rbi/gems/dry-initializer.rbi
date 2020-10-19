@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-initializer/all/dry-initializer.rbi
 #
-# dry-initializer-3.0.3
+# dry-initializer-3.0.4
 
 module Dry::Initializer::UNDEFINED
 end
@@ -197,10 +197,10 @@ class Dry::Initializer::Struct
   def self.new(options); end
   def to_h; end
   extend Dry::Initializer
-  include Anonymous_Module_113
+  include Anonymous_Module_116
   include Dry::Initializer::Mixin::Root
 end
-module Anonymous_Module_113
+module Anonymous_Module_116
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(*arg0); end
   extend Dry::Initializer::Mixin::Local
