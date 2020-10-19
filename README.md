@@ -19,7 +19,7 @@ Ruby dependencies can be installed with `bundle install`, JavaScript dependencie
 
 Start up dependencies with `docker-compose up`, then run tests with `bundle exec rspec`.
 
-To run the server in development mode set `REMOTE_USER` because we aren't running behing Shibboleth.
+To run the server in development mode set `REMOTE_USER` because we aren't running behind Shibboleth.
 
 ```shell
 REMOTE_USER=auser@stanford.edu bin/rails server

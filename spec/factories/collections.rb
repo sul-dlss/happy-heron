@@ -5,7 +5,7 @@ FactoryBot.define do
   factory :collection do
     name { 'MyString' }
     description { 'MyString' }
-    contact_email { 'MyString' }
+    contact_email { 'email@example.com' }
     release_option { 'MyString' }
     release_duration { 'MyString' }
     release_date { '2020-10-09' }

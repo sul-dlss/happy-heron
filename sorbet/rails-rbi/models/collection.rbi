@@ -26,6 +26,15 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def created_at?; end
 
+  sig { returns(Integer) }
+  def creator_id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def creator_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def creator_id?; end
+
   sig { returns(T.nilable(String)) }
   def default_license; end
 
