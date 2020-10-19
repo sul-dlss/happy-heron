@@ -26,7 +26,7 @@ RSpec.describe WorkFormComponent do
 
   it 'renders the component' do
     expect(render_inline(component).to_html)
-      .to include('Deposit your work', '1. File', 'Add your files', 'Type of Book deposit',
+      .to include('Deposit your work', '1. File', 'Add your files',
                   'Title of deposit and contact information', 'Authors and contributors', 'Date content was created',
                   'Describe your deposit', 'Manage release of this item', 'Terms of use and license')
   end

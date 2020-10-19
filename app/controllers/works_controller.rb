@@ -6,7 +6,7 @@ class WorksController < ApplicationController
 
   def new
     @collection = Collection.find(params[:collection_id])
-    @work = Work.new(work_type: 'text', collection: @collection)
+    @work = Work.new(work_type: 'text', subtype: 'manuscript', collection: @collection)
   end
 
   def create
