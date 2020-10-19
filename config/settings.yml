@@ -1,6 +1,7 @@
-dor_services:
-  url: ~
-  token: ~
+sdr_api:
+  url: https://sdr-api-stage.stanford.edu
+  email: testing@example.org
+  password: notusedanywhere
 
 redis_url: redis://localhost:6379/
 

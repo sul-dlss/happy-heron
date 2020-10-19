@@ -3,16 +3,49 @@
 
 # Deposits a Work into dor-services-app
 class DepositJob < ApplicationJob
+  extend T::Sig
+
   queue_as :default
 
+  sig { params(work: Work).void }
   def perform(work)
-    result = api_client.objects.register(params: create_model(work))
-    work.druid = result.externalIdentifier
+    job_id = deposit(create_model(work))
+    result = nil
+    until result
+      sleep 1
+      result = status(job_id: job_id)
+    end
+    raise result.failure unless result.success?
+
+    work.druid = result.value!
     work.deposit!
   end
 
   private
 
+  sig { params(job_id: Integer).returns(T.nilable(Dry::Monads::Result)) }
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  def status(job_id:)
+    login_result = login
+    return login_result unless login_result.success?
+
+    result = SdrClient::BackgroundJobResults.show(url: Settings.sdr_api.url, job_id: job_id)
+    if result[:status] != 'complete'
+      nil
+    elsif result[:output][:errors].present?
+      error = result[:output][:errors].first
+      error_msg = error[:title]
+      error_msg += ": #{error[:message]}" if error[:message]
+      Dry::Monads::Failure(error_msg)
+    else
+      Dry::Monads::Success(result[:output][:druid])
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
+
+  sig { params(work: Work).returns(Cocina::Models::RequestDRO) }
   # rubocop:disable Metrics/MethodLength
   def create_model(work)
     Cocina::Models::RequestDRO.new(
@@ -29,9 +62,27 @@ class DepositJob < ApplicationJob
   end
   # rubocop:enable Metrics/MethodLength
 
-  def api_client
-    # TODO: maybe SDR client instead
-    @api_client ||= Dor::Services::Client.configure(url: Settings.dor_services.url,
-                                                    token: Settings.dor_services.token)
+  # This allows a login using credentials from the config gem.
+  class LoginFromSettings
+    def self.run
+      { email: Settings.sdr_api.email, password: Settings.sdr_api.password }
+    end
+  end
+
+  sig { params(request_dro: Cocina::Models::RequestDRO).returns(Integer) }
+  def deposit(request_dro)
+    login_result = login
+    raise login_result.failure unless login_result.success?
+
+    SdrClient::Deposit.model_run(request_dro: request_dro,
+                                 # files: [],
+                                 url: Settings.sdr_api.url,
+                                 logger: Rails.logger,
+                                 accession: true)
+  end
+
+  sig { returns(Dry::Monads::Result) }
+  def login
+    SdrClient::Login.run(url: Settings.sdr_api.url, login_service: LoginFromSettings)
   end
 end

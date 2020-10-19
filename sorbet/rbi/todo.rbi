@@ -3,7 +3,7 @@
 
 # typed: strong
 module ::Anonymous_Delegator_11; end
-module ::Anonymous_Delegator_95; end
+module ::Anonymous_Delegator_99; end
 module ::Capistrano::OneTimeKey; end
 module ActionView::Helpers::FormBuilder; end
 module GeneratedUrlHelpers::Anonymous_Module_4; end
