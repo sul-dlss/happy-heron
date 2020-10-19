@@ -3,4 +3,6 @@
 
 class RelatedWork < ApplicationRecord
   belongs_to :work
+
+  validates :citation, presence: true
 end
