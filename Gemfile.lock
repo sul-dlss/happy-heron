@@ -243,6 +243,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     nokogiri-happymapper (0.8.1)
       nokogiri (~> 1.5)
+    okcomputer (1.18.2)
     openapi3_parser (0.8.2)
       commonmarker (~> 0.17)
       psych (~> 3.1)
@@ -453,6 +454,7 @@ DEPENDENCIES
   dor-services-client
   factory_bot_rails
   listen (~> 3.2)
+  okcomputer
   pg
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)

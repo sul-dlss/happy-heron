@@ -564,7 +564,6 @@ module RSpec::Core::HashImitatable
   def []=(key, value); end
   def all?(*args, &block); end
   def any?(*args, &block); end
-  def assert_exclusive_keys(*args, &block); end
   def assert_valid_keys(*args, &block); end
   def assoc(*args, &block); end
   def chain(*args, &block); end
@@ -612,8 +611,6 @@ module RSpec::Core::HashImitatable
   def entries(*args, &block); end
   def except!(*args, &block); end
   def except(*args, &block); end
-  def exclude?(*args, &block); end
-  def excluding(*args, &block); end
   def extra_hash_attributes; end
   def extract!(*args, &block); end
   def extractable_options?(*args, &block); end
@@ -636,10 +633,7 @@ module RSpec::Core::HashImitatable
   def has_value?(*args, &block); end
   def hash_for_delegation; end
   def include?(*args, &block); end
-  def including(*args, &block); end
   def index(*args, &block); end
-  def index_by(*args, &block); end
-  def index_with(*args, &block); end
   def inject(*args, &block); end
   def invert(*args, &block); end
   def issue_deprecation(_method_name, *_args); end
@@ -647,10 +641,8 @@ module RSpec::Core::HashImitatable
   def key(*args, &block); end
   def key?(*args, &block); end
   def keys(*args, &block); end
-  def ko_deep_merge!(*args, &block); end
   def lazy(*args, &block); end
   def length(*args, &block); end
-  def many?(*args, &block); end
   def map(*args, &block); end
   def max(*args, &block); end
   def max_by(*args, &block); end
@@ -665,7 +657,6 @@ module RSpec::Core::HashImitatable
   def none?(*args, &block); end
   def one?(*args, &block); end
   def partition(*args, &block); end
-  def pluck(*args, &block); end
   def rassoc(*args, &block); end
   def reduce(*args, &block); end
   def rehash(*args, &block); end
@@ -719,7 +710,6 @@ module RSpec::Core::HashImitatable
   def with_defaults!(*args, &block); end
   def with_defaults(*args, &block); end
   def with_indifferent_access(*args, &block); end
-  def without(*args, &block); end
   def zip(*args, &block); end
 end
 module RSpec::Core::HashImitatable::ClassMethods
@@ -975,13 +965,10 @@ class RSpec::Core::OutputWrapper
   def as_json(*args, &block); end
   def autoclose=(*args, &block); end
   def autoclose?(*args, &block); end
-  def beep(*args, &block); end
   def binmode(*args, &block); end
   def binmode?(*args, &block); end
   def bytes(*args, &block); end
   def chars(*args, &block); end
-  def check_winsize_changed(*args, &block); end
-  def clear_screen(*args, &block); end
   def close(*args, &block); end
   def close_on_exec=(*args, &block); end
   def close_on_exec?(*args, &block); end
@@ -989,27 +976,13 @@ class RSpec::Core::OutputWrapper
   def close_write(*args, &block); end
   def closed?(*args, &block); end
   def codepoints(*args, &block); end
-  def console_mode(*args, &block); end
-  def console_mode=(*args, &block); end
-  def cooked!(*args, &block); end
-  def cooked(*args, &block); end
-  def cursor(*args, &block); end
-  def cursor=(*args, &block); end
-  def cursor_down(*args, &block); end
-  def cursor_left(*args, &block); end
-  def cursor_right(*args, &block); end
-  def cursor_up(*args, &block); end
   def each(*args, &block); end
   def each_byte(*args, &block); end
   def each_char(*args, &block); end
   def each_codepoint(*args, &block); end
   def each_line(*args, &block); end
-  def echo=(*args, &block); end
-  def echo?(*args, &block); end
   def eof(*args, &block); end
   def eof?(*args, &block); end
-  def erase_line(*args, &block); end
-  def erase_screen(*args, &block); end
   def external_encoding(*args, &block); end
   def fcntl(*args, &block); end
   def fdatasync(*args, &block); end
@@ -1018,28 +991,20 @@ class RSpec::Core::OutputWrapper
   def fsync(*args, &block); end
   def getbyte(*args, &block); end
   def getc(*args, &block); end
-  def getch(*args, &block); end
-  def getpass(*args, &block); end
   def gets(*args, &block); end
-  def goto(*args, &block); end
-  def goto_column(*args, &block); end
-  def iflush(*args, &block); end
   def initialize(output); end
   def inspect(*args, &block); end
   def internal_encoding(*args, &block); end
   def ioctl(*args, &block); end
-  def ioflush(*args, &block); end
   def isatty(*args, &block); end
   def lineno(*args, &block); end
   def lineno=(*args, &block); end
   def lines(*args, &block); end
   def method_missing(name, *args, &block); end
-  def noecho(*args, &block); end
   def nonblock(*args, &block); end
   def nonblock=(*args, &block); end
   def nonblock?(*args, &block); end
   def nread(*args, &block); end
-  def oflush(*args, &block); end
   def output; end
   def output=(arg0); end
   def pathconf(*args, &block); end
@@ -1047,14 +1012,11 @@ class RSpec::Core::OutputWrapper
   def pos(*args, &block); end
   def pos=(*args, &block); end
   def pread(*args, &block); end
-  def pressed?(*args, &block); end
   def print(*args, &block); end
   def printf(*args, &block); end
   def putc(*args, &block); end
   def puts(*args, &block); end
   def pwrite(*args, &block); end
-  def raw!(*args, &block); end
-  def raw(*args, &block); end
   def read(*args, &block); end
   def read_nonblock(*args, &block); end
   def readbyte(*args, &block); end
@@ -1066,8 +1028,6 @@ class RSpec::Core::OutputWrapper
   def reopen(*args, &block); end
   def respond_to?(name, priv = nil); end
   def rewind(*args, &block); end
-  def scroll_backward(*args, &block); end
-  def scroll_forward(*args, &block); end
   def seek(*args, &block); end
   def set_encoding(*args, &block); end
   def set_encoding_by_bom(*args, &block); end
@@ -1086,8 +1046,6 @@ class RSpec::Core::OutputWrapper
   def wait(*args, &block); end
   def wait_readable(*args, &block); end
   def wait_writable(*args, &block); end
-  def winsize(*args, &block); end
-  def winsize=(*args, &block); end
   def write(*args, &block); end
   def write_nonblock(*args, &block); end
 end

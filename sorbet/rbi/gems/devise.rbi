@@ -495,10 +495,10 @@ class Devise::FailureApp < ActionController::Metal
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::Routing::UrlFor
   include ActiveSupport::Benchmarkable
-  include Anonymous_Module_39
+  include Anonymous_Module_41
   include Devise::Controllers::StoreLocation
 end
-module Anonymous_Module_39
+module Anonymous_Module_41
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -599,10 +599,10 @@ class DeviseController < ApplicationController
   def unknown_action!(msg); end
   extend Devise::Controllers::ScopedViews::ClassMethods
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_40
+  include Anonymous_Module_42
   include Devise::Controllers::ScopedViews
 end
-module Anonymous_Module_40
+module Anonymous_Module_42
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -635,9 +635,9 @@ class Devise::OmniauthCallbacksController < DeviseController
   def self.middleware_stack; end
   def translation_scope; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_41
+  include Anonymous_Module_43
 end
-module Anonymous_Module_41
+module Anonymous_Module_43
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -673,9 +673,9 @@ class Devise::PasswordsController < DeviseController
   def unlockable?(resource); end
   def update; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_42
+  include Anonymous_Module_44
 end
-module Anonymous_Module_42
+module Anonymous_Module_44
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -712,9 +712,9 @@ class Devise::SessionsController < DeviseController
   def translation_scope; end
   def verify_signed_out_user; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_43
+  include Anonymous_Module_45
 end
-module Anonymous_Module_43
+module Anonymous_Module_45
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -747,9 +747,9 @@ class Devise::UnlocksController < DeviseController
   def show; end
   def translation_scope; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_44
+  include Anonymous_Module_46
 end
-module Anonymous_Module_44
+module Anonymous_Module_46
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -781,9 +781,9 @@ class Devise::ConfirmationsController < DeviseController
   def show; end
   def translation_scope; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_45
+  include Anonymous_Module_47
 end
-module Anonymous_Module_45
+module Anonymous_Module_47
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -829,9 +829,9 @@ class Devise::RegistrationsController < DeviseController
   def update_needs_confirmation?(resource, previous); end
   def update_resource(resource, params); end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_46
+  include Anonymous_Module_48
 end
-module Anonymous_Module_46
+module Anonymous_Module_48
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -874,11 +874,11 @@ class Devise::Mailer < ActionMailer::Base
   def unlock_instructions(record, token, opts = nil); end
   extend Devise::Controllers::ScopedViews::ClassMethods
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_47
+  include Anonymous_Module_49
   include Devise::Controllers::ScopedViews
   include Devise::Mailers::Helpers
 end
-module Anonymous_Module_47
+module Anonymous_Module_49
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end

@@ -19,6 +19,8 @@ module ActionView::VERSION
 end
 class ActionView::Railtie < Rails::Engine
 end
+class ActionView::LogSubscriber < ActiveSupport::LogSubscriber
+end
 module ActionView::Helpers
   def self.eager_load!; end
   extend ActiveSupport::Autoload
@@ -568,8 +570,6 @@ module ActionView::Helpers::TranslationHelper
   def translate(key, **options); end
   extend ActiveSupport::Concern
   include ActionView::Helpers::TagHelper
-end
-class ActionView::LogSubscriber < ActiveSupport::LogSubscriber
 end
 module ActionView::Context
   def _layout_for(name = nil); end
