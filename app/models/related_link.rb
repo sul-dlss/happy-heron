@@ -3,4 +3,6 @@
 
 class RelatedLink < ApplicationRecord
   belongs_to :work
+
+  validates :url, presence: true
 end
