@@ -35,13 +35,6 @@ module GeneratedUrlHelpers
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def root_url(*args, **kwargs); end
 
-  # Sigs for route /welcome(.:format)
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def welcome_path(*args, **kwargs); end
-
-  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
-  def welcome_url(*args, **kwargs); end
-
   # Sigs for route /collections/:collection_id/works(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def collection_works_path(*args, **kwargs); end

@@ -153,6 +153,17 @@ module Collection::GeneratedAttributeMethods
   def visibility?; end
 end
 
+module Collection::GeneratedAssociationMethods
+  sig { returns(::Work::ActiveRecord_Associations_CollectionProxy) }
+  def works; end
+
+  sig { returns(T::Array[Integer]) }
+  def work_ids; end
+
+  sig { params(value: T::Enumerable[::Work]).void }
+  def works=(value); end
+end
+
 module Collection::CustomFinderMethods
   sig { params(limit: Integer).returns(T::Array[Collection]) }
   def first_n(limit); end
@@ -172,6 +183,7 @@ end
 
 class Collection < ApplicationRecord
   include Collection::GeneratedAttributeMethods
+  include Collection::GeneratedAssociationMethods
   extend Collection::CustomFinderMethods
   extend Collection::QueryMethodsReturningRelation
   RelationType = T.type_alias { T.any(Collection::ActiveRecord_Relation, Collection::ActiveRecord_Associations_CollectionProxy, Collection::ActiveRecord_AssociationRelation) }

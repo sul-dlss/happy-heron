@@ -11706,6 +11706,9 @@ class ActiveRecord::AssociationRelation
   def proxy_association(); end
 end
 
+class ActiveRecord::AssociationRelation
+end
+
 module ActiveRecord::Associations
   def association(name); end
 
@@ -12220,6 +12223,9 @@ class ActiveRecord::Associations::CollectionProxy
   def where_clause(*_, &_1); end
 
   def where_clause=(arg); end
+end
+
+class ActiveRecord::Associations::CollectionProxy
 end
 
 module ActiveRecord::Associations::ForeignAssociation
@@ -13012,6 +13018,7 @@ class ActiveRecord::Base
   extend ::ActiveRecord::Suppressor::ClassMethods
   extend ::OrmAdapter::ToAdapter
   extend ::SorbetRails::CustomFinderMethods
+  extend ::SorbetRails::PluckToTStruct
   extend ::Devise::Models
   def self.__callbacks(); end
 
@@ -18079,6 +18086,7 @@ module ActiveRecord::Reflection
 end
 
 class ActiveRecord::Relation
+  include ::Enumerable
   include ::ActiveRecord::Delegation
   include ::ActiveRecord::Explain
   include ::ActiveRecord::Batches
@@ -18088,6 +18096,7 @@ class ActiveRecord::Relation
   include ::ActiveRecord::Calculations
   include ::ActiveRecord::FinderMethods
   include ::SorbetRails::CustomFinderMethods
+  include ::SorbetRails::PluckToTStruct
   def ==(other); end
 
   def _deprecated_scope_source(); end
@@ -18102,11 +18111,17 @@ class ActiveRecord::Relation
 
   def bind_attribute(name, value); end
 
+  def build(attributes=T.unsafe(nil), &block); end
+
   def cache_key(timestamp_column=T.unsafe(nil)); end
 
   def cache_key_with_version(); end
 
   def cache_version(timestamp_column=T.unsafe(nil)); end
+
+  def create(attributes=T.unsafe(nil), &block); end
+
+  def create!(attributes=T.unsafe(nil), &block); end
 
   def create_or_find_by(attributes, &block); end
 
@@ -18125,6 +18140,18 @@ class ActiveRecord::Relation
   def encode_with(coder); end
 
   def explain(); end
+
+  def find_or_create_by(attributes, &block); end
+
+  def find_or_create_by!(attributes, &block); end
+
+  def find_or_initialize_by(attributes, &block); end
+
+  def first_or_create(attributes=T.unsafe(nil), &block); end
+
+  def first_or_create!(attributes=T.unsafe(nil), &block); end
+
+  def first_or_initialize(attributes=T.unsafe(nil), &block); end
 
   def has_limit_or_offset?(); end
 
@@ -18145,6 +18172,8 @@ class ActiveRecord::Relation
   def locked?(); end
 
   def model(); end
+
+  def new(attributes=T.unsafe(nil), &block); end
 
   def null_relation?(); end
 
@@ -18167,6 +18196,8 @@ class ActiveRecord::Relation
   def skip_preloading_value=(skip_preloading_value); end
 
   def table(); end
+
+  def to_a(); end
 
   def to_ary(); end
 
@@ -25173,10 +25204,6 @@ end
 
 BasicObject::BasicObject = BasicObject
 
-class BasicSocket
-  def read_nonblock(len, str=T.unsafe(nil), exception: T.unsafe(nil)); end
-end
-
 class Benchmark::Job
   def initialize(width); end
 end
@@ -31859,7 +31886,6 @@ class Cocina::Models::Vocab
 end
 
 class Collection
-  include ::Collection::GeneratedAssociationMethods
   def after_add_for_works(); end
 
   def after_add_for_works=(val); end
@@ -31905,16 +31931,7 @@ class Collection::ActiveRecord_Relation
 end
 
 module Collection::GeneratedAssociationMethods
-  def work_ids(); end
-
   def work_ids=(ids); end
-
-  def works(); end
-
-  def works=(value); end
-end
-
-module Collection::GeneratedAssociationMethods
 end
 
 module Collection::GeneratedAttributeMethods
@@ -32645,6 +32662,11 @@ end
 class Delegator
   include ::ActiveSupport::Tryable
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class DepositJob
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module Deprecation
@@ -35062,6 +35084,25 @@ class Dry::Logic::RuleCompiler
   Undefined = ::T.let(nil, ::T.untyped)
 end
 
+module Dry::Monads
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+  EMPTY_HASH = ::T.let(nil, ::T.untyped)
+  EMPTY_OPTS = ::T.let(nil, ::T.untyped)
+  EMPTY_SET = ::T.let(nil, ::T.untyped)
+  EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  Self = ::T.let(nil, ::T.untyped)
+  Undefined = ::T.let(nil, ::T.untyped)
+  Unit = ::T.let(nil, ::T.untyped)
+end
+
+Dry::Monads::Failure = Dry::Monads::Result::Failure
+
+Dry::Monads::Result::Mixin::Failure = Dry::Monads::Result::Failure
+
+Dry::Monads::Result::Mixin::Success = Dry::Monads::Result::Success
+
+Dry::Monads::Success = Dry::Monads::Result::Success
+
 module Dry::Schema
   DEFAULT_MESSAGES_PATH = ::T.let(nil, ::T.untyped)
   DEFAULT_MESSAGES_ROOT = ::T.let(nil, ::T.untyped)
@@ -35346,35 +35387,90 @@ class Enumerator
   def self.produce(*_); end
 end
 
-Errno::EAUTH = Errno::NOERROR
+class Errno::EAUTH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EBADARCH = Errno::NOERROR
+class Errno::EAUTH
+end
 
-Errno::EBADEXEC = Errno::NOERROR
+class Errno::EBADARCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EBADMACHO = Errno::NOERROR
+class Errno::EBADARCH
+end
 
-Errno::EBADRPC = Errno::NOERROR
+class Errno::EBADEXEC
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADEXEC
+end
+
+class Errno::EBADMACHO
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADMACHO
+end
+
+class Errno::EBADRPC
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADRPC
+end
 
 Errno::ECAPMODE = Errno::NOERROR
 
-Errno::EDEADLOCK = Errno::EDEADLK
+Errno::EDEADLOCK = Errno::NOERROR
 
-Errno::EDEVERR = Errno::NOERROR
+class Errno::EDEVERR
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EDEVERR
+end
 
 Errno::EDOOFUS = Errno::NOERROR
 
-Errno::EFTYPE = Errno::NOERROR
+class Errno::EFTYPE
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EFTYPE
+end
 
 Errno::EIPSEC = Errno::NOERROR
 
-Errno::ELAST = Errno::NOERROR
+class Errno::ELAST
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ENEEDAUTH = Errno::NOERROR
+class Errno::ELAST
+end
 
-Errno::ENOATTR = Errno::NOERROR
+class Errno::ENEEDAUTH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ENOPOLICY = Errno::NOERROR
+class Errno::ENEEDAUTH
+end
+
+class Errno::ENOATTR
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ENOATTR
+end
+
+class Errno::ENOPOLICY
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ENOPOLICY
+end
 
 Errno::ENOTCAPABLE = Errno::NOERROR
 
@@ -35385,21 +35481,56 @@ end
 class Errno::ENOTSUP
 end
 
-Errno::EPROCLIM = Errno::NOERROR
+class Errno::EPROCLIM
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EPROCUNAVAIL = Errno::NOERROR
+class Errno::EPROCLIM
+end
 
-Errno::EPROGMISMATCH = Errno::NOERROR
+class Errno::EPROCUNAVAIL
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EPROGUNAVAIL = Errno::NOERROR
+class Errno::EPROCUNAVAIL
+end
 
-Errno::EPWROFF = Errno::NOERROR
+class Errno::EPROGMISMATCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EQFULL = Errno::NOERROR
+class Errno::EPROGMISMATCH
+end
 
-Errno::ERPCMISMATCH = Errno::NOERROR
+class Errno::EPROGUNAVAIL
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ESHLIBVERS = Errno::NOERROR
+class Errno::EPROGUNAVAIL
+end
+
+class Errno::EPWROFF
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EPWROFF
+end
+
+Errno::EQFULL = Errno::ELAST
+
+class Errno::ERPCMISMATCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ERPCMISMATCH
+end
+
+class Errno::ESHLIBVERS
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ESHLIBVERS
+end
 
 module Erubi
   RANGE_ALL = ::T.let(nil, ::T.untyped)
@@ -35441,7 +35572,15 @@ class Etc::Group
 end
 
 class Etc::Passwd
+  def change(); end
+
+  def change=(_); end
+
   def dir=(_); end
+
+  def expire(); end
+
+  def expire=(_); end
 
   def gecos(); end
 
@@ -35454,6 +35593,10 @@ class Etc::Passwd
   def passwd=(_); end
 
   def shell=(_); end
+
+  def uclass(); end
+
+  def uclass=(_); end
 
   def uid=(_); end
 end
@@ -35612,7 +35755,6 @@ module FFI::Platform
   DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
   FLOAT_ALIGN = ::T.let(nil, ::T.untyped)
   FLOAT_SIZE = ::T.let(nil, ::T.untyped)
-  GNU_LIBC = ::T.let(nil, ::T.untyped)
   INT16_ALIGN = ::T.let(nil, ::T.untyped)
   INT16_SIZE = ::T.let(nil, ::T.untyped)
   INT32_ALIGN = ::T.let(nil, ::T.untyped)
@@ -37593,10 +37735,7 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
-  def removed_method_calls(); end
-
   def to_ruby(); end
-  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -38375,37 +38514,6 @@ module INotify
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module INotify::Native::Flags
-  IN_ACCESS = ::T.let(nil, ::T.untyped)
-  IN_ALL_EVENTS = ::T.let(nil, ::T.untyped)
-  IN_ATTRIB = ::T.let(nil, ::T.untyped)
-  IN_CLOSE = ::T.let(nil, ::T.untyped)
-  IN_CLOSE_NOWRITE = ::T.let(nil, ::T.untyped)
-  IN_CLOSE_WRITE = ::T.let(nil, ::T.untyped)
-  IN_CREATE = ::T.let(nil, ::T.untyped)
-  IN_DELETE = ::T.let(nil, ::T.untyped)
-  IN_DELETE_SELF = ::T.let(nil, ::T.untyped)
-  IN_DONT_FOLLOW = ::T.let(nil, ::T.untyped)
-  IN_IGNORED = ::T.let(nil, ::T.untyped)
-  IN_ISDIR = ::T.let(nil, ::T.untyped)
-  IN_MASK_ADD = ::T.let(nil, ::T.untyped)
-  IN_MODIFY = ::T.let(nil, ::T.untyped)
-  IN_MOVE = ::T.let(nil, ::T.untyped)
-  IN_MOVED_FROM = ::T.let(nil, ::T.untyped)
-  IN_MOVED_TO = ::T.let(nil, ::T.untyped)
-  IN_MOVE_SELF = ::T.let(nil, ::T.untyped)
-  IN_ONESHOT = ::T.let(nil, ::T.untyped)
-  IN_ONLYDIR = ::T.let(nil, ::T.untyped)
-  IN_OPEN = ::T.let(nil, ::T.untyped)
-  IN_Q_OVERFLOW = ::T.let(nil, ::T.untyped)
-  IN_UNMOUNT = ::T.let(nil, ::T.untyped)
-  PC_NAME_MAX = ::T.let(nil, ::T.untyped)
-end
-
-class INotify::Notifier
-  RECURSIVE_BLACKLIST = ::T.let(nil, ::T.untyped)
-end
-
 class IO
   def beep(); end
 
@@ -38784,6 +38892,10 @@ module IRB
   def self.setup(ap_path, argv: T.unsafe(nil)); end
 end
 
+module ITypeAssert
+  Elem = type_member(:out)
+end
+
 class Integer
   include ::JSON::Ext::Generator::GeneratorMethods::Integer
   include ::ActiveSupport::NumericWithFormat
@@ -38794,7 +38906,6 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
-  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -40245,8 +40356,6 @@ end
 class Net::HTTPAlreadyReported
 end
 
-Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
-
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
 class Net::HTTPEarlyHints
@@ -40258,7 +40367,13 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-Net::HTTPInformationCode = Net::HTTPInformation
+class Net::HTTPInformation
+end
+
+Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPInformation
+end
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -40306,8 +40421,6 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
-Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
-
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -40316,15 +40429,17 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
-Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
-
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPSuccess
+end
 
-Net::HTTPSuccessCode = Net::HTTPSuccess
+Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPSuccess
+end
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -40902,6 +41017,8 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
+
+  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -40920,6 +41037,10 @@ class Object
   STDOUT = ::T.let(nil, ::T.untyped)
   Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
+end
+
+class Object
+  def self.yaml_tag(url); end
 end
 
 module OpenAPIParser
@@ -43170,16 +43291,48 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module Polyfill::Module::M10600
+end
+
+module Polyfill::Module::M10600
+end
+
+module Polyfill::Module::M10620
+end
+
+module Polyfill::Module::M10620
+end
+
+module Polyfill::Module::M10640
+end
+
+module Polyfill::Module::M10640
+end
+
+module Polyfill::Module::M10660
+end
+
+module Polyfill::Module::M10660
+end
+
+module Polyfill::Module::M10680
+end
+
+module Polyfill::Module::M10680
+end
+
+module Polyfill::Module::M10720
+end
+
+module Polyfill::Module::M10720
+end
+
 class Proc
   def <<(_); end
 
   def >>(_); end
 
   def clone(); end
-end
-
-module Process
-  CLOCK_TAI = ::T.let(nil, ::T.untyped)
 end
 
 class ProgressBar::Components::Bar
@@ -43237,6 +43390,30 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Psych
+  def self.add_builtin_type(type_tag, &block); end
+
+  def self.add_domain_type(domain, type_tag, &block); end
+
+  def self.add_tag(tag, klass); end
+
+  def self.domain_types(); end
+
+  def self.domain_types=(domain_types); end
+
+  def self.dump_tags(); end
+
+  def self.dump_tags=(dump_tags); end
+
+  def self.libyaml_version(); end
+
+  def self.load_tags(); end
+
+  def self.load_tags=(load_tags); end
+
+  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -43396,7 +43573,6 @@ end
 
 class Puma::Server
   ThreadLocalKey = ::T.let(nil, ::T.untyped)
-  UNPACK_TCP_STATE_FROM_TCP_INFO = ::T.let(nil, ::T.untyped)
 end
 
 class Puma::ThreadPool
@@ -48785,6 +48961,324 @@ end
 
 ScanError = StringScanner::Error
 
+module SdrClient
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module SdrClient::BackgroundJobResults
+end
+
+module SdrClient::BackgroundJobResults
+  def self.show(url:, job_id:); end
+end
+
+module SdrClient::CLI
+  HELP = ::T.let(nil, ::T.untyped)
+end
+
+module SdrClient::CLI
+  def self.display_errors(errors); end
+
+  def self.help(); end
+
+  def self.poll_for_job_complete(job_id:, url:); end
+
+  def self.start(command, options); end
+
+  def self.validate_deposit_options(options); end
+end
+
+class SdrClient::Connection
+  include ::Dry::Monads::Result::Mixin
+  include ::Dry::Monads::Result::Mixin::Constructors
+  def connection(); end
+
+  def initialize(url:, token: T.unsafe(nil)); end
+
+  def post(*_, &_1); end
+
+  def proxy(to); end
+
+  def put(*_, &_1); end
+end
+
+class SdrClient::Connection
+end
+
+class SdrClient::Credentials
+end
+
+class SdrClient::Credentials::NoCredentialsError
+end
+
+class SdrClient::Credentials::NoCredentialsError
+end
+
+class SdrClient::Credentials
+  def self.credentials_file(); end
+
+  def self.credentials_path(); end
+
+  def self.read(); end
+
+  def self.write(body); end
+end
+
+module SdrClient::Deposit
+  BOOK_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::File
+  def as_json(); end
+
+  def initialize(external_identifier:, label:, filename:, access: T.unsafe(nil), preserve: T.unsafe(nil), shelve: T.unsafe(nil), mime_type: T.unsafe(nil), md5: T.unsafe(nil), sha1: T.unsafe(nil), use: T.unsafe(nil)); end
+end
+
+class SdrClient::Deposit::File
+end
+
+class SdrClient::Deposit::FileMetadataBuilder
+  def build(); end
+
+  def initialize(files:, files_metadata:); end
+end
+
+class SdrClient::Deposit::FileMetadataBuilder
+  def self.build(files:, files_metadata:); end
+end
+
+module SdrClient::Deposit::FileMetadataBuilderOperations
+end
+
+class SdrClient::Deposit::FileMetadataBuilderOperations::MD5
+  NAME = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::FileMetadataBuilderOperations::MD5
+  def self.for(file_path:, **_); end
+end
+
+class SdrClient::Deposit::FileMetadataBuilderOperations::MimeType
+  NAME = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::FileMetadataBuilderOperations::MimeType
+  def self.for(file_path:, **_); end
+end
+
+class SdrClient::Deposit::FileMetadataBuilderOperations::SHA1
+  NAME = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::FileMetadataBuilderOperations::SHA1
+  def self.for(file_path:, **_); end
+end
+
+module SdrClient::Deposit::FileMetadataBuilderOperations
+end
+
+class SdrClient::Deposit::FileSet
+  def as_json(); end
+
+  def initialize(label:, uploads: T.unsafe(nil), uploads_metadata: T.unsafe(nil), files: T.unsafe(nil)); end
+end
+
+class SdrClient::Deposit::FileSet
+end
+
+module SdrClient::Deposit::Files
+end
+
+class SdrClient::Deposit::Files::DirectUploadRequest
+  def as_json(); end
+
+  def byte_size(); end
+
+  def byte_size=(_); end
+
+  def checksum(); end
+
+  def checksum=(_); end
+
+  def content_type(); end
+
+  def content_type=(_); end
+
+  def filename(); end
+
+  def filename=(_); end
+
+  def to_json(*_args); end
+end
+
+class SdrClient::Deposit::Files::DirectUploadRequest
+  def self.[](*_); end
+
+  def self.from_file(path, file_name:, content_type:); end
+
+  def self.members(); end
+end
+
+class SdrClient::Deposit::Files::DirectUploadResponse
+  def byte_size(); end
+
+  def byte_size=(_); end
+
+  def checksum(); end
+
+  def checksum=(_); end
+
+  def content_type(); end
+
+  def content_type=(_); end
+
+  def created_at(); end
+
+  def created_at=(_); end
+
+  def direct_upload(); end
+
+  def direct_upload=(_); end
+
+  def filename(); end
+
+  def filename=(_); end
+
+  def id(); end
+
+  def id=(_); end
+
+  def key(); end
+
+  def key=(_); end
+
+  def metadata(); end
+
+  def metadata=(_); end
+
+  def signed_id(); end
+
+  def signed_id=(_); end
+end
+
+class SdrClient::Deposit::Files::DirectUploadResponse
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+module SdrClient::Deposit::Files
+end
+
+class SdrClient::Deposit::MatchingFileGroupingStrategy
+end
+
+class SdrClient::Deposit::MatchingFileGroupingStrategy
+  def self.run(uploads: T.unsafe(nil)); end
+end
+
+class SdrClient::Deposit::MetadataBuilder
+  def initialize(metadata:, grouping_strategy:, logger:); end
+
+  def with_uploads(upload_responses); end
+end
+
+class SdrClient::Deposit::MetadataBuilder
+end
+
+class SdrClient::Deposit::ModelProcess
+  def initialize(request_dro:, connection:, accession:, files: T.unsafe(nil), logger: T.unsafe(nil)); end
+
+  def run(); end
+end
+
+class SdrClient::Deposit::ModelProcess
+end
+
+class SdrClient::Deposit::Process
+  def initialize(metadata:, connection:, accession:, grouping_strategy: T.unsafe(nil), files: T.unsafe(nil), logger: T.unsafe(nil)); end
+
+  def run(); end
+end
+
+class SdrClient::Deposit::Process
+end
+
+class SdrClient::Deposit::Request
+  def as_json(); end
+
+  def for(filename); end
+
+  def initialize(apo:, source_id:, label: T.unsafe(nil), access: T.unsafe(nil), download: T.unsafe(nil), use_statement: T.unsafe(nil), copyright: T.unsafe(nil), collection: T.unsafe(nil), catkey: T.unsafe(nil), embargo_release_date: T.unsafe(nil), embargo_access: T.unsafe(nil), type: T.unsafe(nil), viewing_direction: T.unsafe(nil), file_sets: T.unsafe(nil), files_metadata: T.unsafe(nil)); end
+
+  def type(); end
+
+  def with_file_sets(file_sets); end
+end
+
+class SdrClient::Deposit::Request
+end
+
+class SdrClient::Deposit::SingleFileGroupingStrategy
+end
+
+class SdrClient::Deposit::SingleFileGroupingStrategy
+  def self.run(uploads: T.unsafe(nil)); end
+end
+
+class SdrClient::Deposit::UploadFiles
+  def initialize(files:, mime_types:, logger:, connection:); end
+
+  def run(); end
+  BLOB_PATH = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::UploadFiles
+end
+
+class SdrClient::Deposit::UploadResource
+  def initialize(accession:, metadata:, logger:, connection:); end
+
+  def run(); end
+  DRO_PATH = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::UploadResource
+  def self.run(accession:, metadata:, logger:, connection:); end
+end
+
+module SdrClient::Deposit
+  def self.model_run(request_dro:, url:, accession:, files: T.unsafe(nil), logger: T.unsafe(nil)); end
+
+  def self.run(apo:, source_id:, url:, label: T.unsafe(nil), type: T.unsafe(nil), viewing_direction: T.unsafe(nil), access: T.unsafe(nil), download: T.unsafe(nil), use_statement: T.unsafe(nil), copyright: T.unsafe(nil), collection: T.unsafe(nil), catkey: T.unsafe(nil), embargo_release_date: T.unsafe(nil), embargo_access: T.unsafe(nil), files: T.unsafe(nil), files_metadata: T.unsafe(nil), accession: T.unsafe(nil), grouping_strategy: T.unsafe(nil), logger: T.unsafe(nil)); end
+end
+
+class SdrClient::Error
+end
+
+class SdrClient::Error
+end
+
+module SdrClient::Login
+  LOGIN_PATH = ::T.let(nil, ::T.untyped)
+end
+
+module SdrClient::Login
+  extend ::Dry::Monads::Result::Mixin
+  extend ::Dry::Monads::Result::Mixin::Constructors
+  def self.run(url:, login_service: T.unsafe(nil), credential_store: T.unsafe(nil)); end
+end
+
+module SdrClient::LoginPrompt
+end
+
+module SdrClient::LoginPrompt
+  def self.run(); end
+end
+
+module SdrClient
+end
+
 module SecureRandom
   BASE36_ALPHABET = ::T.let(nil, ::T.untyped)
   BASE58_ALPHABET = ::T.let(nil, ::T.untyped)
@@ -49008,17 +49502,185 @@ module Skiptrace
 end
 
 class Socket
+  AF_CCITT = ::T.let(nil, ::T.untyped)
+  AF_CHAOS = ::T.let(nil, ::T.untyped)
+  AF_CNT = ::T.let(nil, ::T.untyped)
+  AF_COIP = ::T.let(nil, ::T.untyped)
+  AF_DATAKIT = ::T.let(nil, ::T.untyped)
+  AF_DLI = ::T.let(nil, ::T.untyped)
+  AF_E164 = ::T.let(nil, ::T.untyped)
+  AF_ECMA = ::T.let(nil, ::T.untyped)
+  AF_HYLINK = ::T.let(nil, ::T.untyped)
+  AF_IMPLINK = ::T.let(nil, ::T.untyped)
+  AF_ISO = ::T.let(nil, ::T.untyped)
+  AF_LAT = ::T.let(nil, ::T.untyped)
+  AF_LINK = ::T.let(nil, ::T.untyped)
+  AF_NATM = ::T.let(nil, ::T.untyped)
+  AF_NDRV = ::T.let(nil, ::T.untyped)
+  AF_NETBIOS = ::T.let(nil, ::T.untyped)
+  AF_NS = ::T.let(nil, ::T.untyped)
+  AF_OSI = ::T.let(nil, ::T.untyped)
+  AF_PPP = ::T.let(nil, ::T.untyped)
+  AF_PUP = ::T.let(nil, ::T.untyped)
+  AF_SIP = ::T.let(nil, ::T.untyped)
+  AF_SYSTEM = ::T.let(nil, ::T.untyped)
+  AI_DEFAULT = ::T.let(nil, ::T.untyped)
+  AI_MASK = ::T.let(nil, ::T.untyped)
+  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
+  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
+  EAI_MAX = ::T.let(nil, ::T.untyped)
+  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
+  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
+  IFF_LINK0 = ::T.let(nil, ::T.untyped)
+  IFF_LINK1 = ::T.let(nil, ::T.untyped)
+  IFF_LINK2 = ::T.let(nil, ::T.untyped)
+  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
+  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
+  IPPROTO_EON = ::T.let(nil, ::T.untyped)
+  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
+  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
+  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
+  IPPROTO_ND = ::T.let(nil, ::T.untyped)
+  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
+  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
+  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
+  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
+  IP_RECVIF = ::T.let(nil, ::T.untyped)
+  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
+  MSG_EOF = ::T.let(nil, ::T.untyped)
+  MSG_FLUSH = ::T.let(nil, ::T.untyped)
+  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
+  MSG_HOLD = ::T.let(nil, ::T.untyped)
+  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
+  MSG_SEND = ::T.let(nil, ::T.untyped)
+  PF_CCITT = ::T.let(nil, ::T.untyped)
+  PF_CHAOS = ::T.let(nil, ::T.untyped)
+  PF_CNT = ::T.let(nil, ::T.untyped)
+  PF_COIP = ::T.let(nil, ::T.untyped)
+  PF_DATAKIT = ::T.let(nil, ::T.untyped)
+  PF_DLI = ::T.let(nil, ::T.untyped)
+  PF_ECMA = ::T.let(nil, ::T.untyped)
+  PF_HYLINK = ::T.let(nil, ::T.untyped)
+  PF_IMPLINK = ::T.let(nil, ::T.untyped)
+  PF_ISO = ::T.let(nil, ::T.untyped)
+  PF_LAT = ::T.let(nil, ::T.untyped)
+  PF_LINK = ::T.let(nil, ::T.untyped)
+  PF_NATM = ::T.let(nil, ::T.untyped)
+  PF_NDRV = ::T.let(nil, ::T.untyped)
+  PF_NETBIOS = ::T.let(nil, ::T.untyped)
+  PF_NS = ::T.let(nil, ::T.untyped)
+  PF_OSI = ::T.let(nil, ::T.untyped)
+  PF_PIP = ::T.let(nil, ::T.untyped)
+  PF_PPP = ::T.let(nil, ::T.untyped)
+  PF_PUP = ::T.let(nil, ::T.untyped)
+  PF_RTIP = ::T.let(nil, ::T.untyped)
+  PF_SIP = ::T.let(nil, ::T.untyped)
+  PF_SYSTEM = ::T.let(nil, ::T.untyped)
+  PF_XTP = ::T.let(nil, ::T.untyped)
+  SCM_CREDS = ::T.let(nil, ::T.untyped)
+  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
+  SO_NKE = ::T.let(nil, ::T.untyped)
+  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
+  SO_NREAD = ::T.let(nil, ::T.untyped)
+  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
+  SO_WANTMORE = ::T.let(nil, ::T.untyped)
+  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
+  TCP_NOOPT = ::T.let(nil, ::T.untyped)
+  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
 end
 
 module Socket::Constants
+  AF_CCITT = ::T.let(nil, ::T.untyped)
+  AF_CHAOS = ::T.let(nil, ::T.untyped)
+  AF_CNT = ::T.let(nil, ::T.untyped)
+  AF_COIP = ::T.let(nil, ::T.untyped)
+  AF_DATAKIT = ::T.let(nil, ::T.untyped)
+  AF_DLI = ::T.let(nil, ::T.untyped)
+  AF_E164 = ::T.let(nil, ::T.untyped)
+  AF_ECMA = ::T.let(nil, ::T.untyped)
+  AF_HYLINK = ::T.let(nil, ::T.untyped)
+  AF_IMPLINK = ::T.let(nil, ::T.untyped)
+  AF_ISO = ::T.let(nil, ::T.untyped)
+  AF_LAT = ::T.let(nil, ::T.untyped)
+  AF_LINK = ::T.let(nil, ::T.untyped)
+  AF_NATM = ::T.let(nil, ::T.untyped)
+  AF_NDRV = ::T.let(nil, ::T.untyped)
+  AF_NETBIOS = ::T.let(nil, ::T.untyped)
+  AF_NS = ::T.let(nil, ::T.untyped)
+  AF_OSI = ::T.let(nil, ::T.untyped)
+  AF_PPP = ::T.let(nil, ::T.untyped)
+  AF_PUP = ::T.let(nil, ::T.untyped)
+  AF_SIP = ::T.let(nil, ::T.untyped)
+  AF_SYSTEM = ::T.let(nil, ::T.untyped)
+  AI_DEFAULT = ::T.let(nil, ::T.untyped)
+  AI_MASK = ::T.let(nil, ::T.untyped)
+  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
+  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
+  EAI_MAX = ::T.let(nil, ::T.untyped)
+  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
+  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
+  IFF_LINK0 = ::T.let(nil, ::T.untyped)
+  IFF_LINK1 = ::T.let(nil, ::T.untyped)
+  IFF_LINK2 = ::T.let(nil, ::T.untyped)
+  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
+  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
+  IPPROTO_EON = ::T.let(nil, ::T.untyped)
+  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
+  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
+  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
+  IPPROTO_ND = ::T.let(nil, ::T.untyped)
+  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
+  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
+  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
+  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
+  IP_RECVIF = ::T.let(nil, ::T.untyped)
+  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
+  MSG_EOF = ::T.let(nil, ::T.untyped)
+  MSG_FLUSH = ::T.let(nil, ::T.untyped)
+  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
+  MSG_HOLD = ::T.let(nil, ::T.untyped)
+  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
+  MSG_SEND = ::T.let(nil, ::T.untyped)
+  PF_CCITT = ::T.let(nil, ::T.untyped)
+  PF_CHAOS = ::T.let(nil, ::T.untyped)
+  PF_CNT = ::T.let(nil, ::T.untyped)
+  PF_COIP = ::T.let(nil, ::T.untyped)
+  PF_DATAKIT = ::T.let(nil, ::T.untyped)
+  PF_DLI = ::T.let(nil, ::T.untyped)
+  PF_ECMA = ::T.let(nil, ::T.untyped)
+  PF_HYLINK = ::T.let(nil, ::T.untyped)
+  PF_IMPLINK = ::T.let(nil, ::T.untyped)
+  PF_ISO = ::T.let(nil, ::T.untyped)
+  PF_LAT = ::T.let(nil, ::T.untyped)
+  PF_LINK = ::T.let(nil, ::T.untyped)
+  PF_NATM = ::T.let(nil, ::T.untyped)
+  PF_NDRV = ::T.let(nil, ::T.untyped)
+  PF_NETBIOS = ::T.let(nil, ::T.untyped)
+  PF_NS = ::T.let(nil, ::T.untyped)
+  PF_OSI = ::T.let(nil, ::T.untyped)
+  PF_PIP = ::T.let(nil, ::T.untyped)
+  PF_PPP = ::T.let(nil, ::T.untyped)
+  PF_PUP = ::T.let(nil, ::T.untyped)
+  PF_RTIP = ::T.let(nil, ::T.untyped)
+  PF_SIP = ::T.let(nil, ::T.untyped)
+  PF_SYSTEM = ::T.let(nil, ::T.untyped)
+  PF_XTP = ::T.let(nil, ::T.untyped)
+  SCM_CREDS = ::T.let(nil, ::T.untyped)
+  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
+  SO_NKE = ::T.let(nil, ::T.untyped)
+  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
+  SO_NREAD = ::T.let(nil, ::T.untyped)
+  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
+  SO_WANTMORE = ::T.let(nil, ::T.untyped)
+  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
+  TCP_NOOPT = ::T.let(nil, ::T.untyped)
+  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
 end
 
 SorbetRails::JobRbiFormatter::Parameter = Parlour::RbiGenerator::Parameter
@@ -49172,6 +49834,10 @@ Struct::Tms = Process::Tms
 
 class SynchronizedDelegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class TA
+  Elem = type_member
 end
 
 module TZInfo::RubyCoreSupport
