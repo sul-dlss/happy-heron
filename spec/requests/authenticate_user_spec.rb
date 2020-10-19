@@ -44,6 +44,12 @@ RSpec.describe 'Authenticate the user' do
       get "/works/#{work.id}"
       expect(response).to have_http_status(:success)
     end
+
+    it 'redirects from /collections/new to login URL' do
+      get '/collections/new'
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to("#{default_host}webauth/login")
+    end
   end
 
   context 'with authenticated user' do
@@ -76,6 +82,11 @@ RSpec.describe 'Authenticate the user' do
 
     it 'allows GETs to /works/:work_id' do
       get "/works/#{work.id}"
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'allows GETs to /collections/new' do
+      get '/collections/new'
       expect(response).to have_http_status(:success)
     end
   end
