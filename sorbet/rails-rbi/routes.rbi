@@ -14,6 +14,13 @@ class ActionMailer::Base
 end
 
 module GeneratedUrlHelpers
+  # Sigs for route /status
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def okcomputer_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def okcomputer_url(*args, **kwargs); end
+
   # Sigs for route /webauth/login(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def new_user_session_path(*args, **kwargs); end
@@ -63,6 +70,20 @@ module GeneratedUrlHelpers
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def work_url(*args, **kwargs); end
 
+  # Sigs for route /collections(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def collections_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def collections_url(*args, **kwargs); end
+
+  # Sigs for route /collections/new(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def new_collection_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def new_collection_url(*args, **kwargs); end
+
   # Sigs for route /queues
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def sidekiq_web_path(*args, **kwargs); end
@@ -104,4 +125,27 @@ module GeneratedUrlHelpers
 
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def rails_direct_uploads_url(*args, **kwargs); end
+end
+
+module GeneratedUrlHelpers
+  # Sigs for route /
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def root_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def root_url(*args, **kwargs); end
+
+  # Sigs for route /all(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def okcomputer_checks_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def okcomputer_checks_url(*args, **kwargs); end
+
+  # Sigs for route /:check(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def okcomputer_check_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def okcomputer_check_url(*args, **kwargs); end
 end

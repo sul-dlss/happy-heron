@@ -37915,10 +37915,6 @@ Gem::UnsatisfiableDepedencyError = Gem::UnsatisfiableDependencyError
 Gem::Version::Requirement = Gem::Requirement
 
 module GeneratedUrlHelpers
-  def okcomputer_path(*args); end
-
-  def okcomputer_url(*args); end
-
   def preview_view_component_path(*args); end
 
   def preview_view_component_url(*args); end
@@ -38997,7 +38993,6 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
-  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -41105,6 +41100,8 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
+
+  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -41123,6 +41120,10 @@ class Object
   STDOUT = ::T.let(nil, ::T.untyped)
   Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
+end
+
+class Object
+  def self.yaml_tag(url); end
 end
 
 class OkComputer::Engine
@@ -43380,6 +43381,42 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module Polyfill::Module::M11000
+end
+
+module Polyfill::Module::M11000
+end
+
+module Polyfill::Module::M11020
+end
+
+module Polyfill::Module::M11020
+end
+
+module Polyfill::Module::M11040
+end
+
+module Polyfill::Module::M11040
+end
+
+module Polyfill::Module::M11060
+end
+
+module Polyfill::Module::M11060
+end
+
+module Polyfill::Module::M11080
+end
+
+module Polyfill::Module::M11080
+end
+
+module Polyfill::Module::M11120
+end
+
+module Polyfill::Module::M11120
+end
+
 class Proc
   def <<(_); end
 
@@ -43443,6 +43480,30 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Psych
+  def self.add_builtin_type(type_tag, &block); end
+
+  def self.add_domain_type(domain, type_tag, &block); end
+
+  def self.add_tag(tag, klass); end
+
+  def self.domain_types(); end
+
+  def self.domain_types=(domain_types); end
+
+  def self.dump_tags(); end
+
+  def self.dump_tags=(dump_tags); end
+
+  def self.libyaml_version(); end
+
+  def self.load_tags(); end
+
+  def self.load_tags=(load_tags); end
+
+  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
