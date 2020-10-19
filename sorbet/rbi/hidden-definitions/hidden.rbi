@@ -3545,6 +3545,7 @@ class ActionDispatch::Cookies
 end
 
 class ActionDispatch::DebugExceptions
+  include ::Honeybadger::Plugins::Rails::ExceptionsCatcher
   def call(env); end
 
   def initialize(app, routes_app=T.unsafe(nil), response_format=T.unsafe(nil), interceptors=T.unsafe(nil)); end
@@ -21828,23 +21829,12 @@ module ActiveSupport::LazyLoadHooks
 end
 
 class ActiveSupport::LogSubscriber
+  include ::Honeybadger::Breadcrumbs::LogSubscriberInjector
   def colorize_logging(); end
 
   def colorize_logging=(obj); end
 
-  def debug(progname=T.unsafe(nil), &block); end
-
-  def error(progname=T.unsafe(nil), &block); end
-
-  def fatal(progname=T.unsafe(nil), &block); end
-
-  def info(progname=T.unsafe(nil), &block); end
-
   def logger(); end
-
-  def unknown(progname=T.unsafe(nil), &block); end
-
-  def warn(progname=T.unsafe(nil), &block); end
   BLACK = ::T.let(nil, ::T.untyped)
   BLUE = ::T.let(nil, ::T.untyped)
   BOLD = ::T.let(nil, ::T.untyped)
@@ -38118,6 +38108,181 @@ end
 
 HashWithIndifferentAccess = ActiveSupport::HashWithIndifferentAccess
 
+module Honeybadger
+  BINDING_HAS_SOURCE_LOCATION = ::T.let(nil, ::T.untyped)
+  GEM_ROOT = ::T.let(nil, ::T.untyped)
+  MAX_EXCEPTION_CAUSES = ::T.let(nil, ::T.untyped)
+  NOTIFIER = ::T.let(nil, ::T.untyped)
+  NOT_BLANK = ::T.let(nil, ::T.untyped)
+  PROJECT_ROOT = ::T.let(nil, ::T.untyped)
+  RELATIVE_ROOT = ::T.let(nil, ::T.untyped)
+  STRING_EMPTY = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Backend::Response
+  FRIENDLY_ERRORS = ::T.let(nil, ::T.untyped)
+  NOT_BLANK = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Backend::Server
+  CHECK_IN_ENDPOINT = ::T.let(nil, ::T.untyped)
+  ENDPOINTS = ::T.let(nil, ::T.untyped)
+  HTTP_ERRORS = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Backtrace::Line
+  INPUT_FORMAT = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Config
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+  DEFAULT_PATHS = ::T.let(nil, ::T.untyped)
+  DEVELOPMENT_ENVIRONMENTS = ::T.let(nil, ::T.untyped)
+  DOTTED_KEY = ::T.let(nil, ::T.untyped)
+  IGNORE_DEFAULT = ::T.let(nil, ::T.untyped)
+  IVARS = ::T.let(nil, ::T.untyped)
+  KEY_REPLACEMENT = ::T.let(nil, ::T.untyped)
+  NOT_BLANK = ::T.let(nil, ::T.untyped)
+  OPTIONS = ::T.let(nil, ::T.untyped)
+end
+
+module Honeybadger::Config::Env
+  ARRAY_VALUES = ::T.let(nil, ::T.untyped)
+  CONFIG_KEY = ::T.let(nil, ::T.untyped)
+  CONFIG_MAPPING = ::T.let(nil, ::T.untyped)
+  IGNORED_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Config::Mash
+  def initialize(config, prefix: T.unsafe(nil), hash: T.unsafe(nil)); end
+
+  def to_h(); end
+
+  def to_hash(); end
+  KEYS = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Config::Mash
+end
+
+class Honeybadger::Config::Ruby
+  def backend(); end
+
+  def backend=(backend); end
+
+  def backtrace_filter(&block); end
+
+  def before_notify(action=T.unsafe(nil), &block); end
+
+  def exception_filter(&block); end
+
+  def exception_fingerprint(&block); end
+
+  def logger(); end
+
+  def logger=(logger); end
+end
+
+class Honeybadger::Config::Ruby
+end
+
+module Honeybadger::Config::Yaml
+  DISALLOWED_KEYS = ::T.let(nil, ::T.untyped)
+end
+
+module Honeybadger::Config::Yaml
+  def self.dotify_keys(hash, key_prefix=T.unsafe(nil)); end
+
+  def self.load_yaml(path); end
+
+  def self.new(path, env=T.unsafe(nil)); end
+end
+
+class Honeybadger::Init::Rails::Railtie
+end
+
+module Honeybadger::Logging
+  LOGGER_PROG = ::T.let(nil, ::T.untyped)
+  PREFIX = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Logging::ConfigLogger
+  CALLER_LOCATION = ::T.let(nil, ::T.untyped)
+  DEBUG_SUPPLEMENT = ::T.let(nil, ::T.untyped)
+  INFO_SUPPLEMENT = ::T.let(nil, ::T.untyped)
+  LOCATE_CALLER_LOCATION = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Notice
+  BACKTRACE_FILTERS = ::T.let(nil, ::T.untyped)
+  GEM_ROOT_CACHE = ::T.let(nil, ::T.untyped)
+  PROJECT_ROOT_CACHE = ::T.let(nil, ::T.untyped)
+  TAG_SANITIZER = ::T.let(nil, ::T.untyped)
+  TAG_SEPERATOR = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Plugin
+  CALLER_FILE = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Util::HTTP
+  ERRORS = ::T.let(nil, ::T.untyped)
+  HEADERS = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Util::Lambda
+  AWS_ENV_MAP = ::T.let(nil, ::T.untyped)
+end
+
+module Honeybadger::Util::RequestHash
+  CGI_WHITELIST = ::T.let(nil, ::T.untyped)
+  HTTP_HEADER_PREFIX = ::T.let(nil, ::T.untyped)
+end
+
+module Honeybadger::Util::RequestPayload
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+  HTTP_COOKIE_KEY = ::T.let(nil, ::T.untyped)
+  KEYS = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Util::SQL
+  DQuotedData = ::T.let(nil, ::T.untyped)
+  DoubleQuoters = ::T.let(nil, ::T.untyped)
+  EmptyReplacement = ::T.let(nil, ::T.untyped)
+  EscapedQuotes = ::T.let(nil, ::T.untyped)
+  Newline = ::T.let(nil, ::T.untyped)
+  NumericData = ::T.let(nil, ::T.untyped)
+  Replacement = ::T.let(nil, ::T.untyped)
+  SQuotedData = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Util::Sanitizer
+  BASIC_OBJECT = ::T.let(nil, ::T.untyped)
+  COOKIE_PAIRS = ::T.let(nil, ::T.untyped)
+  COOKIE_PAIR_SEP = ::T.let(nil, ::T.untyped)
+  COOKIE_SEP = ::T.let(nil, ::T.untyped)
+  DEPTH = ::T.let(nil, ::T.untyped)
+  ENCODE_OPTS = ::T.let(nil, ::T.untyped)
+  FILTERED = ::T.let(nil, ::T.untyped)
+  IMMUTABLE = ::T.let(nil, ::T.untyped)
+  MAX_STRING_SIZE = ::T.let(nil, ::T.untyped)
+  RAISED = ::T.let(nil, ::T.untyped)
+  RECURSION = ::T.let(nil, ::T.untyped)
+  TRUNCATED = ::T.let(nil, ::T.untyped)
+  VALID_ENCODINGS = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Util::Stats
+  HAS_LOAD = ::T.let(nil, ::T.untyped)
+  HAS_MEM = ::T.let(nil, ::T.untyped)
+end
+
+class Honeybadger::Worker
+  BASE_THROTTLE = ::T.let(nil, ::T.untyped)
+  SHUTDOWN = ::T.let(nil, ::T.untyped)
+end
+
 module I18n
   DEFAULT_INTERPOLATION_PATTERNS = ::T.let(nil, ::T.untyped)
   EMPTY_HASH = ::T.let(nil, ::T.untyped)
@@ -38993,6 +39158,7 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
+  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -39098,6 +39264,7 @@ class LoadError
 end
 
 class Logger
+  include ::Honeybadger::Breadcrumbs::LogWrapper
   def debug!(); end
 
   def error!(); end
@@ -40443,8 +40610,6 @@ end
 class Net::HTTPAlreadyReported
 end
 
-Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
-
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
 class Net::HTTPEarlyHints
@@ -40504,8 +40669,6 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
-Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
-
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -40513,8 +40676,6 @@ Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
 Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
-
-Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
 
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
@@ -41100,8 +41261,6 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
-
-  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -41120,10 +41279,6 @@ class Object
   STDOUT = ::T.let(nil, ::T.untyped)
   Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
-end
-
-class Object
-  def self.yaml_tag(url); end
 end
 
 class OkComputer::Engine
@@ -43381,42 +43536,6 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M11000
-end
-
-module Polyfill::Module::M11000
-end
-
-module Polyfill::Module::M11020
-end
-
-module Polyfill::Module::M11020
-end
-
-module Polyfill::Module::M11040
-end
-
-module Polyfill::Module::M11040
-end
-
-module Polyfill::Module::M11060
-end
-
-module Polyfill::Module::M11060
-end
-
-module Polyfill::Module::M11080
-end
-
-module Polyfill::Module::M11080
-end
-
-module Polyfill::Module::M11120
-end
-
-module Polyfill::Module::M11120
-end
-
 class Proc
   def <<(_); end
 
@@ -43480,30 +43599,6 @@ end
 
 module Psych
   VERSION = ::T.let(nil, ::T.untyped)
-end
-
-module Psych
-  def self.add_builtin_type(type_tag, &block); end
-
-  def self.add_domain_type(domain, type_tag, &block); end
-
-  def self.add_tag(tag, klass); end
-
-  def self.domain_types(); end
-
-  def self.domain_types=(domain_types); end
-
-  def self.dump_tags(); end
-
-  def self.dump_tags=(dump_tags); end
-
-  def self.libyaml_version(); end
-
-  def self.load_tags(); end
-
-  def self.load_tags=(load_tags); end
-
-  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -49965,6 +50060,10 @@ class Tempfile::Remover
 end
 
 class Thor
+  include ::Honeybadger::Plugins::Thor
+  def invoke_command(*args); end
+
+  def invoke_command_without_honeybadger(command, *args); end
   HELP_MAPPINGS = ::T.let(nil, ::T.untyped)
   TEMPLATE_EXTNAME = ::T.let(nil, ::T.untyped)
   THOR_RESERVED_WORDS = ::T.let(nil, ::T.untyped)
