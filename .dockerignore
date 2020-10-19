@@ -1,0 +1,11 @@
+.git
+.dockerignore
+.byebug_history
+Gemfile.local
+Gemfile.local.lock
+log
+tmp
+postgres-data
+redis-data
+# Required for puma to have a place to put the pid file
+!tmp/pids/.keep

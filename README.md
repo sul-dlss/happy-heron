@@ -17,13 +17,23 @@ Ruby dependencies can be installed with `bundle install`, JavaScript dependencie
 
 ## Testing
 
-Start up dependencies with `docker-compose up`, then run tests with `bundle exec rspec`.
+Start up dependencies with `docker-compose up db` (with `-d` to run in background), then run tests with `bundle exec rspec`.
 
 To run the server in development mode set `REMOTE_USER` because we aren't running behind Shibboleth.
 
 ```shell
 REMOTE_USER=auser@stanford.edu bin/rails server
 ```
+
+### Integration
+
+Spin up all docker-compose services for local development and in-browser testing:
+
+```shell
+$ docker-compose up # use -d to run in background
+```
+
+This will spin up the H2 web application, its background workers, and all service dependencies declared in docker-compose.yml.
 
 ## Type checking
 
