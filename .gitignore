@@ -47,3 +47,7 @@ config/environments/*.local.yml
 
 # SimpleCov coverage artifacts
 /coverage
+
+# allow local gems
+/Gemfile.local
+/Gemfile.local.lock
