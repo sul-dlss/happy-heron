@@ -47,6 +47,7 @@ then
     exec bundle exec srb rbi suggest-typed
 fi
 ```
+and then `chmod +x .git/hooks/pre-commit`.
 
 Thereafter, every time you commit changes to `Gemfile.lock` or `app`, Sorbet will update type-checking information. Once it's done, add & commit the changes in `sorbet/` (feel free to squash them into the prior commit).
 
