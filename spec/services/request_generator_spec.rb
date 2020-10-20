@@ -14,7 +14,7 @@ RSpec.describe RequestGenerator do
       label: 'Test title',
       version: 0,
       administrative: {
-        hasAdminPolicy: 'druid:pq757cd0790'
+        hasAdminPolicy: 'druid:zx485kb6348'
       },
       description: {
         title: [

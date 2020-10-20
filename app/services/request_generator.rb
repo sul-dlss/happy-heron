@@ -24,7 +24,7 @@ class RequestGenerator
   def generate
     {
       administrative: {
-        hasAdminPolicy: 'druid:pq757cd0790' # TODO: What should this be? this is the hydrus APO.
+        hasAdminPolicy: Settings.h2.hydrus_apo
       },
       identification: {
         sourceId: "hydrus:#{work.id}" # TODO: what should this be?
