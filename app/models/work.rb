@@ -18,7 +18,7 @@ class Work < ApplicationRecord
   validates :state, presence: true
   validates :subtype, presence: true
   validates :title, presence: true
-  validates :work_type, presence: true
+  validates :work_type, presence: true, inclusion: { in: WorkType.all.map(&:id) }
 
   state_machine initial: :first_draft do
     event :deposit do
