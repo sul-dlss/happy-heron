@@ -8,7 +8,7 @@ class CollectionsController < ApplicationController
 
   def new
     @collection = Collection.new(managers: current_user.email,
-                                 visibility: 'world')
+                                 access: 'world')
     authorize! @collection
   end
 
@@ -29,6 +29,6 @@ class CollectionsController < ApplicationController
 
   def collection_params
     params.require(:collection).permit(:name, :description, :contact_email,
-                                       :visibility, :managers)
+                                       :access, :managers)
   end
 end

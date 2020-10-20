@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_18_003611) do
+ActiveRecord::Schema.define(version: 2020_10_20_162212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_10_18_003611) do
     t.string "release_option"
     t.string "release_duration"
     t.date "release_date"
-    t.string "visibility", null: false
+    t.string "access", null: false
     t.string "required_license"
     t.string "default_license"
     t.boolean "email_when_participants_changed"
