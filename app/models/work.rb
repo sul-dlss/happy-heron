@@ -12,7 +12,7 @@ class Work < ApplicationRecord
   validates :abstract, presence: true
   validates :access, presence: true
   validates :citation, presence: true
-  validates :contact_email, presence: true
+  validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :created_edtf, presence: true
   validates :license, presence: true
   validates :state, presence: true
