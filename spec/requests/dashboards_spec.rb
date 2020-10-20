@@ -3,14 +3,10 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Dashboards', type: :request do
-  before do
-    create(:collection)
-  end
-
+RSpec.describe 'Dashboard requests' do
   it 'shows links to create in a collection' do
     get '/dashboard'
-    expect(response).to be_successful
+    expect(response).to have_http_status(:ok)
     expect(response.body).to include 'Your collections'
   end
 end
