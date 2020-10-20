@@ -35,20 +35,20 @@
           <header>Manage release of deposits for discovery and download</header>
           <p>Who will have permission to download files for deposits to this collection?</p>
           <div class="form-check">
-            <%= form.radio_button :visibility, 'world', class: "form-check-input" %>
-            <%= form.label class: "form-check-label", for: "collection_visibility_world" do %>
+            <%= form.radio_button :access, 'world', class: "form-check-input" %>
+            <%= form.label class: "form-check-label", for: "collection_access_world" do %>
               Everyone &mdash; anyone in the world will be able to download the files for all deposits in this collection.
             <% end %>
           </div>
           <div class="form-check">
-            <%= form.radio_button :visibility, 'stanford', class: "form-check-input" %>
-            <%= form.label  class: "form-check-label", for: "collection_visibility_stanford" do %>
+            <%= form.radio_button :access, 'stanford', class: "form-check-input" %>
+            <%= form.label  class: "form-check-label", for: "collection_access_stanford" do %>
               Stanford community &mdash; only members of the Stanford community will be able to download the files for all deposits in this collection.
             <% end %>
           </div>
           <div class="form-check">
-            <%= form.radio_button :visibility, 'depositor-selects', class: "form-check-input" %>
-            <%= form.label class: "form-check-label", for: "collection_visibility_depositor-selects" do %>
+            <%= form.radio_button :access, 'depositor-selects', class: "form-check-input" %>
+            <%= form.label class: "form-check-label", for: "collection_access_depositor-selects" do %>
               Depositor selects &mdash; default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.
             <% end %>
           </div>

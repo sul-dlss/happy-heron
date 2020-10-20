@@ -9,6 +9,15 @@ end
 
 module Collection::GeneratedAttributeMethods
   sig { returns(String) }
+  def access; end
+
+  sig { params(value: T.any(String, Symbol)).void }
+  def access=(value); end
+
+  sig { returns(T::Boolean) }
+  def access?; end
+
+  sig { returns(String) }
   def contact_email; end
 
   sig { params(value: T.any(String, Symbol)).void }
@@ -151,15 +160,6 @@ module Collection::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def updated_at?; end
-
-  sig { returns(String) }
-  def visibility; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def visibility=(value); end
-
-  sig { returns(T::Boolean) }
-  def visibility?; end
 end
 
 module Collection::GeneratedAssociationMethods

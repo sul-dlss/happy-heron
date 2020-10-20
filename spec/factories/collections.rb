@@ -9,7 +9,7 @@ FactoryBot.define do
     release_option { 'MyString' }
     release_duration { 'MyString' }
     release_date { '2020-10-09' }
-    visibility { 'MyString' }
+    access { 'MyString' }
     required_license { 'MyString' }
     default_license { 'MyString' }
     email_when_participants_changed { false }

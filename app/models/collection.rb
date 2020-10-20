@@ -10,5 +10,5 @@ class Collection < ApplicationRecord
   validates :description, presence: true
   validates :managers, presence: true
   validates :name, presence: true
-  validates :visibility, presence: true
+  validates :access, presence: true
 end
