@@ -9,7 +9,7 @@ class DepositJob < ApplicationJob
 
   sig { params(work: Work).void }
   def perform(work)
-    job_id = deposit(create_model(work))
+    job_id = deposit(RequestGenerator.generate_model(work: work))
     result = nil
     until result
       sleep 1
@@ -43,26 +43,6 @@ class DepositJob < ApplicationJob
     end
   end
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-
-  sig { params(work: Work).returns(Cocina::Models::RequestDRO) }
-  # rubocop:disable Metrics/MethodLength
-  def create_model(work)
-    Cocina::Models::RequestDRO.new(
-      administrative: {
-        hasAdminPolicy: 'druid:pq757cd0790' # TODO: What should this be? this is the hydrus APO.
-      },
-      identification: {
-        sourceId: "hydrus:#{work.id}" # TODO: what should this be?
-      },
-      structural: {
-        contains: []
-      },
-      label: work.title,
-      type: Cocina::Models::Vocab.object, # TODO: use something based on worktype
-      version: 0
-    )
-  end
   # rubocop:enable Metrics/MethodLength
 
   # This allows a login using credentials from the config gem.
