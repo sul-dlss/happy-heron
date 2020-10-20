@@ -6,7 +6,7 @@ class Collection < ApplicationRecord
   has_many :works, dependent: :destroy
   belongs_to :creator, class_name: 'User'
 
-  validates :contact_email, presence: true
+  validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :description, presence: true
   validates :managers, presence: true
   validates :name, presence: true
