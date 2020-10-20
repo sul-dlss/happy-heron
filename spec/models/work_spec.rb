@@ -28,6 +28,11 @@ RSpec.describe Work do
     expect(work.files).to be_attached
   end
 
+  it 'has a valid contact email' do
+    work.contact_email = 'notavalidemail'
+    expect {work.save!}.to raise_error(an_instance_of(ActiveRecord::RecordInvalid).and having_attributes(message: "Validation failed: Contact email is invalid"))
+  end
+
   describe 'state machine flow' do
     it 'starts in first draft' do
       expect(work.state).to eq('first_draft')
