@@ -9,6 +9,16 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: work_access; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.work_access AS ENUM (
+    'stanford',
+    'world'
+);
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -359,7 +369,7 @@ CREATE TABLE public.works (
     created_edtf character varying NOT NULL,
     abstract text NOT NULL,
     citation character varying NOT NULL,
-    access character varying NOT NULL,
+    access public.work_access DEFAULT 'world'::public.work_access NOT NULL,
     embargo_date date,
     license character varying NOT NULL,
     agree_to_terms boolean DEFAULT false,
@@ -745,6 +755,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201013170323'),
 ('20201014223440'),
 ('20201018003611'),
-('20201020162212');
+('20201020162212'),
+('20201020211040');
 
 

@@ -2,6 +2,20 @@
 # Please rerun bundle exec rake rails_rbi:models[Work] to regenerate.
 
 # typed: strong
+module Work::EnumInstanceMethods
+  sig { returns(T::Boolean) }
+  def stanford?; end
+
+  sig { void }
+  def stanford!; end
+
+  sig { returns(T::Boolean) }
+  def world?; end
+
+  sig { void }
+  def world!; end
+end
+
 module Work::ActiveRelation_WhereNot
   sig { params(opts: T.untyped, rest: T.untyped).returns(T.self_type) }
   def not(opts, *rest); end
@@ -20,7 +34,7 @@ module Work::GeneratedAttributeMethods
   sig { returns(String) }
   def access; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.any(Integer, String, Symbol)).void }
   def access=(value); end
 
   sig { returns(T::Boolean) }
@@ -171,6 +185,14 @@ module Work::GeneratedAttributeMethods
   def work_type?; end
 end
 
+class Work::Access < T::Enum
+  enums do
+    Stanford = new(%q{stanford})
+    World = new(%q{world})
+  end
+
+end
+
 module Work::CustomFinderMethods
   sig { params(limit: Integer).returns(T::Array[Work]) }
   def first_n(limit); end
@@ -189,14 +211,36 @@ module Work::CustomFinderMethods
 end
 
 class Work < ApplicationRecord
+  include Work::EnumInstanceMethods
   include Work::GeneratedAttributeMethods
   include Work::GeneratedAssociationMethods
   extend Work::CustomFinderMethods
   extend Work::QueryMethodsReturningRelation
   RelationType = T.type_alias { T.any(Work::ActiveRecord_Relation, Work::ActiveRecord_Associations_CollectionProxy, Work::ActiveRecord_AssociationRelation) }
 
+  sig { returns(T::Hash[T.any(String, Symbol), String]) }
+  def self.accesses; end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def self.not_stanford(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def self.not_world(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def self.stanford(*args); end
+
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
   def self.with_attached_files(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def self.world(*args); end
+
+  sig { returns(Work::Access) }
+  def typed_access; end
+
+  sig { params(value: Work::Access).void }
+  def typed_access=(value); end
 end
 
 class Work::ActiveRecord_Relation < ActiveRecord::Relation
@@ -206,7 +250,19 @@ class Work::ActiveRecord_Relation < ActiveRecord::Relation
   Elem = type_member(fixed: Work)
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def not_stanford(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def not_world(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def stanford(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
   def with_attached_files(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def world(*args); end
 end
 
 class Work::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
@@ -216,7 +272,19 @@ class Work::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   Elem = type_member(fixed: Work)
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def not_stanford(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def not_world(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def stanford(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
   def with_attached_files(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def world(*args); end
 end
 
 class Work::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
@@ -225,7 +293,19 @@ class Work::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associatio
   Elem = type_member(fixed: Work)
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def not_stanford(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def not_world(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def stanford(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
   def with_attached_files(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def world(*args); end
 
   sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
   def <<(*records); end
