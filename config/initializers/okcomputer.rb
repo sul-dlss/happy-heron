@@ -6,13 +6,10 @@ OkComputer.check_in_parallel = true
 
 # Required
 OkComputer::Registry.register 'ruby_version', OkComputer::RubyVersionCheck.new
-
-OkComputer::Registry.register 'redis', OkComputer::RedisCheck.new(url: Settings.redis_url)
+OkComputer::Registry.register 'redis', OkComputer::RedisCheck.new(url: ENV.fetch('REDIS_URL', Settings.redis_url))
 
 # Optional
 OkComputer::Registry.register 'background_jobs', OkComputer::SidekiqLatencyCheck.new('default', 25)
-
-# sdr-api
 OkComputer::Registry.register 'sdr_api', OkComputer::HttpCheck.new("#{Settings.sdr_api.url}/status")
 
 OkComputer.make_optional %w[

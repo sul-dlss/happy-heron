@@ -10,7 +10,7 @@ AllCops:
   Exclude:
     - db/**/*
     - node_modules/**/*
-    - bin/bundle
+    - bin/**/*
     - vendor/**/*
 
 Metrics/BlockLength:

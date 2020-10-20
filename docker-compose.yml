@@ -1,6 +1,43 @@
 version: '3.6'
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    environment:
+      DATABASE_NAME: h2
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOSTNAME: db
+      RAILS_LOG_TO_STDOUT: 'true'
+      REDIS_URL: redis://redis:6379/ # for ActionCable
+      REMOTE_USER: sdr.user@stanford.edu
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - redis
+      - workers
+  workers:
+    build:
+      context: .
+      dockerfile: docker/workers/Dockerfile
+    environment:
+      DATABASE_NAME: h2
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOSTNAME: db
+      REDIS_URL: redis://redis:6379/ # for Sidekiq
+    volumes:
+      - .:/app
+    working_dir: /app
+    depends_on:
+      - db
+      - redis
   db:
     image: postgres:11
     environment:
