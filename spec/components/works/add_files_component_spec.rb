@@ -3,11 +3,11 @@
 
 require 'rails_helper'
 
-RSpec.describe AgreementComponent do
-  let(:form) { instance_double(ActionView::Helpers::FormBuilder, check_box: nil, label: nil) }
+RSpec.describe Works::AddFilesComponent do
+  let(:form) { instance_double(ActionView::Helpers::FormBuilder, file_field: nil) }
 
   it 'renders the component' do
     expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('<div class="form-check">')
+      .to include('Add your files')
   end
 end

@@ -1,0 +1,19 @@
+<div id="editor">
+  <h1 class="row">Deposit your work</h1>
+
+  <%= form_with model: work, url: [work.collection, work], data: { controller: 'progress' },
+      html: { class: 'needs-validation row', novalidate: true, multipart: true } do |f| %>
+    <%= f.hidden_field :work_type %>
+    <%= f.hidden_field :subtype %>
+    <%= render Works::DepositProgressComponent.new %>
+    <%= render Works::AddFilesComponent.new(form: f) %>
+    <%= render Works::TitleComponent.new(form: f) %>
+    <%= render Works::ContributorsComponent.new %>
+    <%= render Works::DatesComponent.new(form: f) %>
+    <%= render Works::DescriptionComponent.new(form: f) %>
+    <%= render Works::EmbargoComponent.new(form: f) %>
+    <%= render Works::LicenseComponent.new(form: f) %>
+    <%= render Works::AgreementComponent.new(form: f) %>
+    <%= render ButtonsComponent.new(form: f) %>
+  <% end %>
+</div>

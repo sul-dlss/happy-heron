@@ -3,11 +3,11 @@
 
 require 'rails_helper'
 
-RSpec.describe AddFilesComponent do
-  let(:form) { instance_double(ActionView::Helpers::FormBuilder, file_field: nil) }
+RSpec.describe Works::LicenseComponent do
+  let(:form) { instance_double(ActionView::Helpers::FormBuilder, label: nil, select: nil) }
 
   it 'renders the component' do
     expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('Add your files')
+      .to include('Terms of use and license')
   end
 end

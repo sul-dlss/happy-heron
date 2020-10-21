@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe DatesComponent do
+RSpec.describe Works::DatesComponent do
   let(:form) { instance_double(ActionView::Helpers::FormBuilder, label: nil, text_field: nil) }
 
   it 'renders the component' do

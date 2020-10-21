@@ -3,9 +3,9 @@
 
 require 'rails_helper'
 
-RSpec.describe ContributorsComponent do
+RSpec.describe Works::DepositProgressComponent do
   it 'renders the component' do
     expect(render_inline(described_class.new).to_html)
-      .to include('Authors and contributors')
+      .to include('1. File')
   end
 end

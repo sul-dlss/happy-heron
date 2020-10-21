@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe DescriptionComponent do
+RSpec.describe Works::DescriptionComponent do
   let(:form) { instance_double(ActionView::Helpers::FormBuilder, label: nil, text_area: nil) }
 
   it 'renders the component' do

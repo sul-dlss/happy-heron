@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe EmbargoComponent do
+RSpec.describe Works::EmbargoComponent do
   let(:form) { instance_double(ActionView::Helpers::FormBuilder, label: nil, select: nil) }
 
   it 'renders the component' do
