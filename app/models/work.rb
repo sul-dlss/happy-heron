@@ -13,8 +13,8 @@ class Work < ApplicationRecord
 
   accepts_nested_attributes_for :contributors, allow_destroy: true, reject_if: :last_name_blank
 
-  validates :abstract, :access, :citation, :contact_email, :state,
-            :subtype, :title, presence: true
+  validates :abstract, :access, :citation, :state, :subtype, :title, presence: true
+  validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :created_edtf, presence: true, edtf: true
   validates :license, presence: true, inclusion: { in: License.all.map(&:id) }
   validates :work_type, presence: true, inclusion: { in: WorkType.all.map(&:id) }

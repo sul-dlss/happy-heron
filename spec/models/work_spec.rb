@@ -26,6 +26,11 @@ RSpec.describe Work do
     expect(work.files).to be_attached
   end
 
+  it 'has a valid contact email' do
+    work.contact_email = 'notavalidemail'
+    expect { work.save! }.to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
+  end
+
   describe 'created_edtf' do
     let(:work) { build(:work, created_edtf: date_string) }
 
