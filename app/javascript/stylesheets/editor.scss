@@ -1,8 +1,8 @@
 #editor {
   section {
     border: 1px solid gray;
-    border-radius: .5rem;
-    background-color: #f8f6f0;
+    border-radius: .25rem;
+    background-color: $floral-white;
     margin-bottom: 1rem;
     padding: 1rem;
   }
@@ -11,6 +11,19 @@
     font-size: larger;
     font-weight: 700;
     margin-bottom: 1rem;
+  }
+
+  .inner-container {
+    border: 1px solid gray;
+    border-radius: .25rem;
+    background-color: $silver-sand;
+    margin: 1rem;
+    padding: 1rem;
+
+    .role-prefix {
+      text-align: center;
+      padding-top: 2rem;
+    }
   }
 }
 @import 'depositProgress';

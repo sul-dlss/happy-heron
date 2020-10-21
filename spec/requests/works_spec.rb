@@ -46,7 +46,6 @@ RSpec.describe 'Works requests' do
     context 'when Settings.allow_sdr_content_changes is' do
       let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
 
-      # rubocop:disable RSpec/ExampleLength
       it 'false, it redirects and displays alert' do
         allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
         get "/collections/#{collection.id}/works/new"
@@ -55,12 +54,36 @@ RSpec.describe 'Works requests' do
         expect(response).to be_successful
         expect(response.body).to include alert_text
       end
-      # rubocop:enable RSpec/ExampleLength
 
       it 'true, it does NOT display alert' do
         get "/collections/#{collection.id}/works/new"
         expect(response).to be_successful
         expect(response.body).not_to include alert_text
+      end
+    end
+
+    describe 'create work' do
+      let(:collection) { create(:collection) }
+      let(:manager_role) { create(:role_term, label: 'manager') }
+      let(:developer_role) { create(:role_term, label: 'developer') }
+
+      let(:contributors) do
+        [
+          { '_destroy' => '1', 'first_name' => 'Justin',
+            'last_name' => 'Coyne', 'role_term_id' => developer_role.id },
+          { '_destroy' => 'false', 'first_name' => 'Naomi',
+            'last_name' => 'Dushay', 'role_term_id' => developer_role.id },
+          { '_destroy' => 'false', 'first_name' => 'Vivian',
+            'last_name' => 'Wong', 'role_term_id' => manager_role.id }
+        ]
+      end
+      let(:work_params) { attributes_for(:work).merge(contributors_attributes: contributors) }
+
+      it 'displays the work' do
+        post "/collections/#{collection.id}/works", params: { work: work_params }
+        expect(response).to have_http_status(:found)
+        work = Work.last
+        expect(work.contributors.size).to eq 2
       end
     end
   end

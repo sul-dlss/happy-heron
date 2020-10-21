@@ -1,7 +1,5 @@
-$stanford-cardinal: #8c1515;
-$stanford-mint: #009b76;
+@import 'palette';
 $primary: $stanford-cardinal;
-
 @import 'bootstrap/scss/bootstrap';
 
 .stanford-navbar {
