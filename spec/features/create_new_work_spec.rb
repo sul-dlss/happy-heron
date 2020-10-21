@@ -28,7 +28,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
-      fill_in 'Date created', with: '01/01/2020'
+      fill_in 'Date created', with: '2020-01-01'
       fill_in 'Abstract', with: 'Whatever'
       fill_in 'Citation', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'
@@ -36,7 +36,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
       expect(page).to have_content('title = My Title')
       expect(page).to have_content("contact_email = #{user.email}")
-      expect(page).to have_content('created_edtf = 01/01/2020')
+      expect(page).to have_content('created_edtf = 2020-01-01')
       expect(page).to have_content('abstract = Whatever')
       expect(page).to have_content('citation = Whatever')
       expect(page).to have_content('license = Copyleft')
