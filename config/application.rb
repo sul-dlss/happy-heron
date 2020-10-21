@@ -30,6 +30,9 @@ module HappyHeron
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # Use SQL schema format so we can have nice things like Postgres enums
+    config.active_record.schema_format = :sql
+
     # Mount the ActionCable server at a known path
     config.action_cable.mount_path = '/cable'
   end
