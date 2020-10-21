@@ -48,7 +48,7 @@ RSpec.describe 'Collections requests' do
             name: 'My Test Collection',
             description: 'This is a very good collection.',
             contact_email: user.email,
-            visibility: 'world',
+            access: 'world',
             managers: user.email
           }
         }

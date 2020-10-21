@@ -13,3 +13,6 @@ redis_url: redis://localhost:6379/
 remote_user_headers:
   - REMOTE_USER
   - HTTP_X_REMOTE_USER
+
+h2:
+  hydrus_apo: 'druid:zx485kb6348'

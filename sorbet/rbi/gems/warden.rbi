@@ -185,3 +185,15 @@ class Warden::NotAuthenticated < StandardError
 end
 module Warden::Test
 end
+module Warden::Test::Helpers
+  def login_as(user, opts = nil); end
+  def logout(*scopes); end
+  def self.included(_base); end
+end
+module Warden::Test::WardenHelpers
+  def _on_next_request; end
+  def asset_paths; end
+  def asset_paths=(*vals); end
+  def on_next_request(&blk); end
+  def test_reset!; end
+end

@@ -78,7 +78,7 @@ Lint/UselessMethodDefinition: # (new in 0.90)
 Lint/UselessTimes: # (new in 0.91)
   Enabled: true
 Style/AccessorGrouping: # (new in 0.87)
-  Enabled: true
+  Enabled: false # because this doesn't work well with Sorbet annotations
 Style/BisectedAttrAccessor: # (new in 0.87)
   Enabled: true
 Style/CaseLikeIf: # (new in 0.88)
