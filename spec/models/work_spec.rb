@@ -28,8 +28,7 @@ RSpec.describe Work do
 
   it 'has a valid contact email' do
     work.contact_email = 'notavalidemail'
-    expect { work.save! }.to raise_error(an_instance_of(ActiveRecord::RecordInvalid)
-      .and having_attributes(message: "Validation failed: Contact email is invalid"))
+    expect { work.save! }.to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
   end
 
   describe 'created_edtf' do
