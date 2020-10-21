@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe WorkFormComponent do
+RSpec.describe Works::WorkFormComponent do
   let(:component) { described_class.new(work: work) }
   let(:fake_form) do
     instance_double(ActionView::Helpers::FormBuilder,

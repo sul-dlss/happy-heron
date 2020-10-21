@@ -29,7 +29,7 @@ RSpec/ExampleLength:
 Lint/MissingSuper: # (new in 0.89)
   Enabled: true
   Exclude:
-    - app/components/**
+    - app/components/**/*
 
 Layout/BeginEndAlignment: # (new in 0.91)
   Enabled: true
