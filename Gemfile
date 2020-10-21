@@ -35,6 +35,7 @@ group :test do
 end
 
 group :deployment do
+  gem 'capistrano-maintenance', '~> 1.2', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
