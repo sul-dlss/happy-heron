@@ -13,7 +13,7 @@ class Work < ApplicationRecord
   validates :access, presence: true
   validates :citation, presence: true
   validates :contact_email, presence: true
-  validates :created_edtf, presence: true
+  validates :created_edtf, presence: true, edtf: true
   validates :license, presence: true
   validates :state, presence: true
   validates :subtype, presence: true

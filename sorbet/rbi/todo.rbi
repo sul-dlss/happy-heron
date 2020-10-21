@@ -2,7 +2,7 @@
 #   srb rbi todo
 
 # typed: strong
-module ::Anonymous_Delegator_104; end
+module ::Anonymous_Delegator_106; end
 module ::Anonymous_Delegator_11; end
 module ::Capistrano::OneTimeKey; end
 module ActionView::Helpers::FormBuilder; end

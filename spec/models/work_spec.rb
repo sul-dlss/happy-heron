@@ -28,6 +28,26 @@ RSpec.describe Work do
     expect(work.files).to be_attached
   end
 
+  describe 'created_edtf' do
+    let(:work) { build(:work, created_edtf: date_string) }
+
+    context 'with non-EDTF value' do
+      let(:date_string) { 'foo bar' }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with EDTF value' do
+      let(:date_string) { '2019-04-04' }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+  end
+
   describe 'state machine flow' do
     it 'starts in first draft' do
       expect(work.state).to eq('first_draft')

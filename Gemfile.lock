@@ -197,6 +197,8 @@ GEM
       dry-equalizer (~> 0.2)
       dry-initializer (~> 3.0)
       dry-schema (~> 1.5, >= 1.5.2)
+    edtf (3.0.5)
+      activesupport (>= 3.0, < 7.0)
     erubi (1.9.0)
     factory_bot (6.1.0)
       activesupport (>= 5.0.0)
@@ -453,6 +455,7 @@ DEPENDENCIES
   devise-remote-user (~> 1.0)
   dlss-capistrano (~> 3.6)
   dor-services-client
+  edtf
   factory_bot_rails
   honeybadger (~> 4.0)
   listen (~> 3.2)
