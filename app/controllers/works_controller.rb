@@ -3,6 +3,7 @@
 
 class WorksController < ApplicationController
   before_action :authenticate_user!, except: [:show]
+  before_action :ensure_sdr_updatable
 
   def new
     @collection = Collection.find(params[:collection_id])

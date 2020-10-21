@@ -9,6 +9,7 @@ RSpec.describe 'User return location' do
 
   before do
     sign_in user
+    allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
 
   context 'when in session' do

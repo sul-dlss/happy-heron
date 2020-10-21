@@ -27,4 +27,11 @@ class ApplicationController < ActionController::Base
     # :user is the scope we are authenticating
     store_location_for(:user, request.fullpath)
   end
+
+  def ensure_sdr_updatable
+    return if Settings.allow_sdr_content_changes
+
+    flash[:warning] = 'Creating/Updating SDR content (i.e. collections or works) is not yet available.'
+    redirect_to :root
+  end
 end

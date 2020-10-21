@@ -1,56 +1,19 @@
 # typed: false
 # frozen_string_literal: true
 
-# Deposits a Work into dor-services-app
-class DepositJob < ApplicationJob
-  extend T::Sig
-
+# Deposits a Work into SDR API.
+class DepositJob < BaseDepositJob
   queue_as :default
 
   sig { params(work: Work).void }
   def perform(work)
     job_id = deposit(RequestGenerator.generate_model(work: work))
-    result = nil
-    until result
-      sleep 1
-      result = status(job_id: job_id)
-    end
-    raise result.failure unless result.success?
-
-    work.druid = result.value!
-    work.deposit!
+    DepositStatusJob.perform_later(work: work, job_id: job_id)
+  rescue StandardError => e
+    Honeybadger.notify(e)
   end
 
   private
-
-  sig { params(job_id: Integer).returns(T.nilable(Dry::Monads::Result)) }
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  def status(job_id:)
-    login_result = login
-    return login_result unless login_result.success?
-
-    result = SdrClient::BackgroundJobResults.show(url: Settings.sdr_api.url, job_id: job_id)
-    if result[:status] != 'complete'
-      nil
-    elsif result[:output][:errors].present?
-      error = result[:output][:errors].first
-      error_msg = error[:title]
-      error_msg += ": #{error[:message]}" if error[:message]
-      Dry::Monads::Failure(error_msg)
-    else
-      Dry::Monads::Success(result[:output][:druid])
-    end
-  end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
-
-  # This allows a login using credentials from the config gem.
-  class LoginFromSettings
-    def self.run
-      { email: Settings.sdr_api.email, password: Settings.sdr_api.password }
-    end
-  end
 
   sig { params(request_dro: Cocina::Models::RequestDRO).returns(Integer) }
   def deposit(request_dro)
@@ -62,10 +25,5 @@ class DepositJob < ApplicationJob
                                  url: Settings.sdr_api.url,
                                  logger: Rails.logger,
                                  accession: true)
-  end
-
-  sig { returns(Dry::Monads::Result) }
-  def login
-    SdrClient::Login.run(url: Settings.sdr_api.url, login_service: LoginFromSettings)
   end
 end

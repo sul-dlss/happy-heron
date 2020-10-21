@@ -1,0 +1,11 @@
+// Dismissible alerts
+
+// Expand the left padding and account for the close button's positioning.
+.alert-dismissible {
+  padding-left: $alert-dismissible-padding-r;
+
+  // Move alert button close link position to left
+  .btn-close {
+    left: 0;
+  }
+}

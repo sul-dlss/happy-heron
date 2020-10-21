@@ -10,31 +10,35 @@ RSpec.describe DepositJob do
   let(:druid) { 'druid:bc123df4567' }
   let(:model) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
   let(:work) { create(:work) }
-  let(:result) { Success() }
 
   before do
-    allow(SdrClient::Login).to receive(:run).and_return(result)
-    allow(SdrClient::Deposit).to receive(:model_run).and_return(1234)
-    allow(SdrClient::BackgroundJobResults).to receive(:show).and_return(background_result)
+    allow(SdrClient::Login).to receive(:run).and_return(Success())
+    allow(DepositStatusJob).to receive(:perform_later)
+    allow(Honeybadger).to receive(:notify)
   end
 
-  context 'when the job is successful' do
-    let(:background_result) { { status: 'complete', output: { druid: druid } } }
+  context 'when the deposit request is successful' do
+    before do
+      allow(SdrClient::Deposit).to receive(:model_run).and_return(1234)
+    end
 
-    it 'registers the work' do
+    it 'initiates a DepositStatusJob' do
       described_class.perform_now(work)
       expect(SdrClient::Deposit).to have_received(:model_run)
-      expect(work.druid).to eq druid
-      expect(work.state_name).to eq :deposited
+      expect(DepositStatusJob).to have_received(:perform_later).with(work: work, job_id: 1234)
     end
   end
 
-  context 'when the job is not successful' do
-    let(:background_result) { { status: 'complete', output: { errors: [{ title: 'something went wrong' }] } } }
+  context 'when the deposit request is not successful' do
+    before do
+      allow(SdrClient::Deposit).to receive(:model_run).and_raise('Deposit failed.')
+    end
 
-    it 'registers the work' do
-      expect { described_class.perform_now(work) }.to raise_error('something went wrong')
+    it 'notifies' do
+      described_class.perform_now(work)
       expect(SdrClient::Deposit).to have_received(:model_run)
+      expect(DepositStatusJob).not_to have_received(:perform_later)
+      expect(Honeybadger).to have_received(:notify)
     end
   end
 end
