@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Works
-  class ContributorsComponent < ApplicationComponent
+  class ContributorRowComponent < ApplicationComponent
     sig { params(form: ActionView::Helpers::FormBuilder).void }
     def initialize(form:)
       @form = form

@@ -7,7 +7,10 @@ class WorksController < ApplicationController
 
   def new
     @collection = Collection.find(params[:collection_id])
-    @work = Work.new(work_type: 'text', subtype: 'manuscript', collection: @collection)
+    @work = Work.new(work_type: 'text',
+                     subtype: 'manuscript',
+                     collection: @collection,
+                     contributors: [Contributor.new])
   end
 
   def create
@@ -30,6 +33,7 @@ class WorksController < ApplicationController
   def work_params
     params.require(:work).permit(:title, :work_type, :subtype, :contact_email,
                                  :created_edtf, :abstract, :citation, :access, :license, :agree_to_terms,
-                                 files: [])
+                                 files: [],
+                                 contributors_attributes: %i[_destroy id first_name last_name role_term_id])
   end
 end

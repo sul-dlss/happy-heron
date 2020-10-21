@@ -1,0 +1,22 @@
+<div class="contributor row inner-container">
+  <div class="col-md-12">
+    <%= button_tag "🗑", class: 'btn btn-sm float-right', aria: { label: 'Remove' },
+        data: { action: "click->nested-form#remove_association" } %>
+  </div>
+  <div class="col-md-4">
+    <%= form.hidden_field :_destroy %>
+    <%= form.label :first_name, class: 'form-label' %>
+    <%= form.text_field :first_name, class: 'form-control' %>
+  </div>
+  <div class="col-md-4">
+    <%= form.label :last_name, class: 'form-label' %>
+    <%= form.text_field :last_name, class: 'form-control' %>
+  </div>
+  <div class="col-md-1 role-prefix">
+    as
+  </div>
+  <div class="col-md-3">
+    <%= form.label :role_term_id, class: 'form-label' %>
+    <%= form.select :role_term_id, options_from_collection_for_select(RoleTerm.all, 'id', 'label'), class: 'form-control' %>
+  </div>
+</div>

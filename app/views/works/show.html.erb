@@ -1,3 +1,9 @@
 <pre>
 <%= @work.attributes.map { |k, v| "#{k} = #{v}\n"}.join.html_safe %>
+contributors = <%= @work.contributors.size %>
+<% @work.contributors.each do |c| %>
+  <%= c.first_name %>
+  <%= c.last_name %>
+  <%= c.role_term %>
+<% end %>
 </pre>

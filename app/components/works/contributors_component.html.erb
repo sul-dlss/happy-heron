@@ -1,3 +1,19 @@
-<section>
-  <header>Authors and contributors</header>
+<section data-controller="nested-form">
+  <header>List authors and contributors</header>
+  <p>Enter the name(s) of people, organizations or events responsible for producing the deposit.<p>
+
+  <template data-target='nested-form.template'>
+    <%= form.fields_for :contributors, Contributor.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
+      <%= render Works::ContributorRowComponent.new(form: contributor_form) %>
+    <% end %>
+  </template>
+
+  <%= form.fields_for :contributors do |contributor_form| %>
+    <%= render Works::ContributorRowComponent.new(form: contributor_form) %>
+  <% end %>
+
+  <div data-target="nested-form.add_item">
+    <%= button_tag '+ Add another author/contributor', class: "btn btn-outline-primary", data: { action: "nested-form#add_association" } %>
+  </div>
+
 </section>

@@ -2,12 +2,16 @@
 # frozen_string_literal: true
 
 class Work < ApplicationRecord
+  extend T::Sig
+
   belongs_to :collection
 
   has_many :contributors, dependent: :destroy
   has_many :related_links, dependent: :destroy
   has_many :related_works, dependent: :destroy
   has_many_attached :files
+
+  accepts_nested_attributes_for :contributors, allow_destroy: true, reject_if: :last_name_blank
 
   validates :abstract, :access, :citation, :state, :subtype, :title, presence: true
   validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -28,5 +32,10 @@ class Work < ApplicationRecord
     event :new_version do
       transition deposited: :version_draft
     end
+  end
+
+  sig { params(attr: T::Hash[String, String]).returns(T::Boolean) }
+  def last_name_blank(attr)
+    attr['last_name'].blank?
   end
 end

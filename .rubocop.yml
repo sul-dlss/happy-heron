@@ -23,8 +23,7 @@ RSpec/DescribeClass:
     - spec/requests/**/*
 
 RSpec/ExampleLength:
-  Exclude:
-    - spec/features/**/*
+  Enabled: false
 
 Lint/MissingSuper: # (new in 0.89)
   Enabled: true

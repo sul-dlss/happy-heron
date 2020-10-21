@@ -14,7 +14,7 @@ RSpec/AnyInstance:
 # Offense count: 1
 # Configuration parameters: AllowSubject.
 RSpec/MultipleMemoizedHelpers:
-  Max: 6
+  Max: 7
 
 # Offense count: 25
 Style/Documentation:
