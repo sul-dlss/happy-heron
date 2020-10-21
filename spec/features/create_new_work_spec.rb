@@ -39,7 +39,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       expect(page).to have_content('created_edtf = 2020-01-01')
       expect(page).to have_content('abstract = Whatever')
       expect(page).to have_content('citation = Whatever')
-      expect(page).to have_content('license = Copyleft')
+      expect(page).to have_content('license = CC-PDDC')
       expect(page).to have_content('agree_to_terms = true')
       expect(page).to have_content('state = first_draft')
       expect(page).to have_content('collection_id = ')
