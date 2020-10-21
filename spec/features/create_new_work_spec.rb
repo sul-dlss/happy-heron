@@ -8,6 +8,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
   before do
     sign_in user
+    allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
 
   context 'when successful deposit' do

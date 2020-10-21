@@ -9,6 +9,7 @@ RSpec.describe 'Welcome page' do
   context 'when authenticated' do
     before do
       sign_in user
+      allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
     end
 
     it 'displays logout link' do
