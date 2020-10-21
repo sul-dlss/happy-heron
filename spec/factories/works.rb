@@ -10,7 +10,7 @@ FactoryBot.define do
     created_edtf { '1900' }
     abstract { 'test abstract' }
     citation { 'test citation' }
-    license { 'cc-0' }
+    license { 'CC0-1.0' }
     collection
   end
 

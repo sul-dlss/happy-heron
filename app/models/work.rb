@@ -9,9 +9,10 @@ class Work < ApplicationRecord
   has_many :related_works, dependent: :destroy
   has_many_attached :files
 
-  validates :abstract, :access, :citation, :contact_email, :license, :state,
+  validates :abstract, :access, :citation, :contact_email, :state,
             :subtype, :title, presence: true
   validates :created_edtf, presence: true, edtf: true
+  validates :license, presence: true, inclusion: { in: License.all.map(&:id) }
   validates :work_type, presence: true, inclusion: { in: WorkType.all.map(&:id) }
 
   enum access: {
