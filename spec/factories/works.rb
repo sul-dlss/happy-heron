@@ -4,7 +4,7 @@
 FactoryBot.define do
   factory :work do
     title { 'Test title' }
-    work_type { 'Book' }
+    work_type { 'text' }
     subtype { 'Non-fiction' }
     contact_email { 'io@io.io' }
     created_edtf { '1900' }
