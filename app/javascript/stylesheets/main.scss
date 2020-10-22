@@ -1,5 +1,9 @@
 @import 'palette';
 $primary: $stanford-cardinal;
+$modal-content-bg: $whisper;
+$modal-backdrop-bg: white;
+$modal-backdrop-opacity: 0.8;
+
 @import 'bootstrap/scss/bootstrap';
 
 .stanford-navbar {
@@ -15,5 +19,6 @@ $primary: $stanford-cardinal;
 }
 
 @import 'editor';
+@import 'toggle';
 @import 'dashboard';
 @import 'alert';

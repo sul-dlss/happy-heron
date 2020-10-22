@@ -24,9 +24,13 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Contact email', with: collection_attrs.fetch(:contact_email)
       click_button 'Deposit'
 
-      click_link '+ Deposit to this collection' # , match: :first
-      expect(page).to have_content 'Deposit your work'
+      click_button '+ Deposit to this collection' # , match: :first
 
+      expect(page).to have_content 'What type of content will you deposit?'
+      find('label', text: 'Sound').click
+      click_button 'Continue'
+
+      expect(page).to have_content 'Deposit your work'
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
       fill_in 'Date created', with: '2020-01-01'
@@ -36,6 +40,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       click_button 'Deposit'
 
       expect(page).to have_content('title = My Title')
+      expect(page).to have_content('work_type = sound')
       expect(page).to have_content("contact_email = #{user.email}")
       expect(page).to have_content('created_edtf = 2020-01-01')
       expect(page).to have_content('abstract = Whatever')

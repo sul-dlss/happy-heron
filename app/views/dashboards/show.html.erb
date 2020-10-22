@@ -1,6 +1,6 @@
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="dashboard">
-    <section>
+    <section data-controller="work-type">
       <header>Your collections
         <% if allowed_to?(:create?, Collection) %>
           <%= link_to '+ Create a new collection', new_collection_path, class: "btn btn-outline-primary float-right" %>
@@ -12,12 +12,43 @@
             <li>
               <div>
                 <header><%= collection.name %></header>
-                <%= link_to '+ Deposit to this collection', new_collection_work_path(collection), class: "btn btn-primary" %>
+                <%= button_tag '+ Deposit to this collection',
+                      data: {
+                        destination: new_collection_work_path(collection),
+                        toggle: 'modal',
+                        target: '#workTypeModal',
+                        action: "work-type#set_collection"
+                      },
+                      class: "btn btn-primary" %>
               </div>
             </li>
           <% end %>
         </ul>
       <% end %>
+
+      <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="content-type-prompt">What type of content will you deposit?</h5>
+              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="get" action="/collections/1/work/new" data-target="work-type.form">
+                <div class="row">
+                  <% WorkType.all.each do |type| %>
+                    <div class="col-md-3" style="height: 4rem">
+                      <input type="radio" name="work_type" value="<%= type.id %>" id="<%= type.id.dasherize %>" class="toggle" required>
+                      <label for="<%= type.id.dasherize %>"><span class="check">✓</span> <span class="fas fa-2x fa-<%= type.icon %>"></span> <div class="work-type-button-text"><%= type.label %></div></label>
+                    </div>
+                  <% end %>
+                </div>
+                <button type="submit" class="btn btn-primary mx-auto d-block">Continue</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </main>

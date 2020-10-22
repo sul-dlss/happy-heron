@@ -1,0 +1,50 @@
+input[type="radio"].toggle {
+  display: none;
+}
+
+input[type="radio"].toggle:checked + label {
+  border: 3px solid $primary;
+  background-color: rgba($primary, 0.3);
+  left: -1.5px;
+  position: relative;
+  top: -1.5px; /* keeps the button from moving when the border grows */
+
+  .check {
+    visibility: visible;
+  }
+}
+
+input[type="radio"].toggle + label {
+  @extend .btn;
+
+  border: 1px solid gray;
+  font-size: smaller;
+  line-height: 1;
+  padding: 0.375rem 0.375rem;
+  text-align: left;
+  width: 80%;
+
+  svg { /* font-awesome icon */
+    vertical-align: middle;
+  }
+
+  svg.fa-mouse { /* font-awesome icon */
+    vertical-align: top;
+  }
+
+  .check {
+    font-size: larger;
+    font-weight: bold;
+    margin-left: 5px;
+    visibility: hidden;
+  }
+
+  .work-type-button-text {
+    display: inline-block;
+    max-width: 60%;
+  }
+}
+
+[for="software, code"] {
+  background-color: pink;
+}

@@ -38,8 +38,9 @@ RSpec.describe 'Works requests' do
 
     describe 'new work form' do
       it 'renders the form' do
-        get "/collections/#{collection.id}/works/new"
+        get "/collections/#{collection.id}/works/new?work_type=video"
         expect(response).to have_http_status(:ok)
+        expect(response.body).to include 'video'
       end
     end
 
@@ -48,7 +49,7 @@ RSpec.describe 'Works requests' do
 
       it 'false, it redirects and displays alert' do
         allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
-        get "/collections/#{collection.id}/works/new"
+        get "/collections/#{collection.id}/works/new?work_type=text"
         expect(response).to redirect_to(:root)
         follow_redirect!
         expect(response).to be_successful
@@ -56,7 +57,7 @@ RSpec.describe 'Works requests' do
       end
 
       it 'true, it does NOT display alert' do
-        get "/collections/#{collection.id}/works/new"
+        get "/collections/#{collection.id}/works/new?work_type=other"
         expect(response).to be_successful
         expect(response.body).not_to include alert_text
       end
