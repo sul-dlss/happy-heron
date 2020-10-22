@@ -26,6 +26,10 @@
       padding-top: 2rem;
     }
   }
+
+  .invalid-feedback {
+    color: $stanford-digital-red;
+  }
 }
 
 @import 'depositProgress';

@@ -1,23 +1,8 @@
 @import 'palette';
-$primary: $stanford-cardinal;
-$modal-content-bg: $whisper;
-$modal-backdrop-bg: white;
-$modal-backdrop-opacity: 0.8;
-
+@import 'bootstrapVariables';
 @import 'bootstrap/scss/bootstrap';
-
-.stanford-navbar {
-  background-color: var(--bs-primary);
-  .nav-link {
-    color: rgba(255,255,255,0.85);
-  }
-}
-
-.stanford-masthead {
-  padding: 5rem 0;
-  background: linear-gradient(165deg, #f7f5fb 50%, #fff 50%);
-}
-
+@import 'suNavbar';
+@import 'sulFooter';
 @import 'editor';
 @import 'toggle';
 @import 'dashboard';
