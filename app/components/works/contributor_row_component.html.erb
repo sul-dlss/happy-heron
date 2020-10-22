@@ -17,6 +17,6 @@
   </div>
   <div class="col-md-3">
     <%= form.label :role_term_id, class: 'form-label' %>
-    <%= form.select :role_term_id, options_from_collection_for_select(RoleTerm.all, 'id', 'label'), class: 'form-control' %>
+    <%= form.select :role_term_id, options_from_collection_for_select(RoleTerm.all, 'id', 'label'), {}, class: 'form-select' %>
   </div>
 </div>
