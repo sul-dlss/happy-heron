@@ -2,7 +2,7 @@
   section {
     border: 1px solid gray;
     border-radius: .25rem;
-    background-color: $floral-white;
+    background-color: $stanford-fog-light;
     margin-bottom: 1rem;
     padding: 2rem;
     padding-left: 4rem;
@@ -27,5 +27,6 @@
     }
   }
 }
+
 @import 'depositProgress';
 @import "dropzone";
