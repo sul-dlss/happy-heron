@@ -8,6 +8,15 @@ module Contributor::ActiveRelation_WhereNot
 end
 
 module Contributor::GeneratedAttributeMethods
+  sig { returns(String) }
+  def contributor_type; end
+
+  sig { params(value: T.any(String, Symbol)).void }
+  def contributor_type=(value); end
+
+  sig { returns(T::Boolean) }
+  def contributor_type?; end
+
   sig { returns(ActiveSupport::TimeWithZone) }
   def created_at; end
 
@@ -44,14 +53,14 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def last_name?; end
 
-  sig { returns(Integer) }
-  def role_term_id; end
+  sig { returns(String) }
+  def role; end
 
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def role_term_id=(value); end
+  sig { params(value: T.any(String, Symbol)).void }
+  def role=(value); end
 
   sig { returns(T::Boolean) }
-  def role_term_id?; end
+  def role?; end
 
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
@@ -73,21 +82,6 @@ module Contributor::GeneratedAttributeMethods
 end
 
 module Contributor::GeneratedAssociationMethods
-  sig { returns(::RoleTerm) }
-  def role_term; end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::RoleTerm).void)).returns(::RoleTerm) }
-  def build_role_term(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::RoleTerm).void)).returns(::RoleTerm) }
-  def create_role_term(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::RoleTerm).void)).returns(::RoleTerm) }
-  def create_role_term!(*args, &block); end
-
-  sig { params(value: ::RoleTerm).void }
-  def role_term=(value); end
-
   sig { returns(::Work) }
   def work; end
 
