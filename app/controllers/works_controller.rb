@@ -6,19 +6,21 @@ class WorksController < ApplicationController
   before_action :ensure_sdr_updatable
 
   def new
-    @collection = Collection.find(params[:collection_id])
-    @work = Work.new(work_type: params[:work_type],
-                     subtype: 'manuscript',
-                     collection: @collection,
-                     contributors: [Contributor.new])
+    collection = Collection.find(params[:collection_id])
+    work = Work.new(work_type: params[:work_type],
+                    collection: collection,
+                    contributors: [Contributor.new])
+    @form = WorkForm.new(work)
   end
 
   def create
-    @collection = Collection.find(params[:collection_id])
-    @work = Work.new(work_params.merge(collection: @collection))
-    if @work.save
-      DepositJob.perform_later(@work) if params[:commit] == 'Deposit'
-      redirect_to @work
+    work = Work.new
+    @form = WorkForm.new(work)
+
+    stuff = work_params.merge(collection_id: params[:collection_id])
+    if @form.validate(stuff) && @form.save
+      DepositJob.perform_later(work) if params[:commit] == 'Deposit'
+      redirect_to work
     else
       render :new
     end

@@ -33,7 +33,19 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       expect(page).to have_content 'Deposit your work'
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
-      fill_in 'Date created', with: '2020-01-01'
+
+      fill_in 'Publication year', with: '2020'
+      select 'February', from: 'Publication month'
+
+      choose 'Date range'
+
+      fill_in 'Created range start year', with: '2020'
+      select 'March', from: 'Created range start month'
+      select '6', from: 'Created range start day'
+      fill_in 'Created range end year', with: '2020'
+      select 'October', from: 'Created range end month'
+      select '30', from: 'Created range end day'
+
       fill_in 'Abstract', with: 'Whatever'
       fill_in 'Citation', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'
@@ -42,7 +54,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       expect(page).to have_content('title = My Title')
       expect(page).to have_content('work_type = sound')
       expect(page).to have_content("contact_email = #{user.email}")
-      expect(page).to have_content('created_edtf = 2020-01-01')
+      expect(page).to have_content('created_edtf = 2020-03-06/2020-10-30')
       expect(page).to have_content('abstract = Whatever')
       expect(page).to have_content('citation = Whatever')
       expect(page).to have_content('license = CC-PDDC')

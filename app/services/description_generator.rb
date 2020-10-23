@@ -21,7 +21,7 @@ class DescriptionGenerator
       title: title,
       # TODO: keywords not yet in model.
       note: [abstract, citation, contact],
-      event: [created_date]
+      event: [created_date].compact
     }
   end
 
@@ -53,6 +53,8 @@ class DescriptionGenerator
 
   # rubocop:disable Metrics/MethodLength
   def created_date
+    return unless work.created_edtf
+
     {
       "type": 'creation',
       "date": [

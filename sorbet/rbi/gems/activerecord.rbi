@@ -2427,6 +2427,50 @@ module ActiveRecord::QueryCache::ClassMethods
   def cache(&block); end
   def uncached(&block); end
 end
+module ActiveRecord::Validations
+  def default_validation_context; end
+  def perform_validations(options = nil); end
+  def raise_validation_error; end
+  def save!(**options); end
+  def save(**options); end
+  def valid?(context = nil); end
+  def validate(context = nil); end
+  extend ActiveSupport::Concern
+  include ActiveModel::Validations
+end
+class ActiveRecord::Validations::AssociatedValidator < ActiveModel::EachValidator
+  def valid_object?(record); end
+  def validate_each(record, attribute, value); end
+end
+module ActiveRecord::Validations::ClassMethods
+  def validates_absence_of(*attr_names); end
+  def validates_associated(*attr_names); end
+  def validates_length_of(*attr_names); end
+  def validates_presence_of(*attr_names); end
+  def validates_size_of(*attr_names); end
+  def validates_uniqueness_of(*attr_names); end
+end
+class ActiveRecord::Validations::UniquenessValidator < ActiveModel::EachValidator
+  def build_relation(klass, attribute, value); end
+  def find_finder_class_for(record); end
+  def initialize(options); end
+  def map_enum_attribute(klass, attribute, value); end
+  def scope_relation(record, relation); end
+  def validate_each(record, attribute, value); end
+end
+class ActiveRecord::Validations::PresenceValidator < ActiveModel::Validations::PresenceValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+class ActiveRecord::Validations::AbsenceValidator < ActiveModel::Validations::AbsenceValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+class ActiveRecord::Validations::LengthValidator < ActiveModel::Validations::LengthValidator
+  def validate_each(record, attribute, association_or_value); end
+end
+class ActiveRecord::RecordInvalid < ActiveRecord::ActiveRecordError
+  def initialize(record = nil); end
+  def record; end
+end
 module ActiveRecord::AttributeDecorators
   extend ActiveSupport::Concern
 end
@@ -3311,50 +3355,6 @@ end
 module ActiveRecord::Integration::ClassMethods
   def collection_cache_key(collection = nil, timestamp_column = nil); end
   def to_param(method_name = nil); end
-end
-module ActiveRecord::Validations
-  def default_validation_context; end
-  def perform_validations(options = nil); end
-  def raise_validation_error; end
-  def save!(**options); end
-  def save(**options); end
-  def valid?(context = nil); end
-  def validate(context = nil); end
-  extend ActiveSupport::Concern
-  include ActiveModel::Validations
-end
-class ActiveRecord::Validations::AssociatedValidator < ActiveModel::EachValidator
-  def valid_object?(record); end
-  def validate_each(record, attribute, value); end
-end
-module ActiveRecord::Validations::ClassMethods
-  def validates_absence_of(*attr_names); end
-  def validates_associated(*attr_names); end
-  def validates_length_of(*attr_names); end
-  def validates_presence_of(*attr_names); end
-  def validates_size_of(*attr_names); end
-  def validates_uniqueness_of(*attr_names); end
-end
-class ActiveRecord::Validations::UniquenessValidator < ActiveModel::EachValidator
-  def build_relation(klass, attribute, value); end
-  def find_finder_class_for(record); end
-  def initialize(options); end
-  def map_enum_attribute(klass, attribute, value); end
-  def scope_relation(record, relation); end
-  def validate_each(record, attribute, value); end
-end
-class ActiveRecord::Validations::PresenceValidator < ActiveModel::Validations::PresenceValidator
-  def validate_each(record, attribute, association_or_value); end
-end
-class ActiveRecord::Validations::AbsenceValidator < ActiveModel::Validations::AbsenceValidator
-  def validate_each(record, attribute, association_or_value); end
-end
-class ActiveRecord::Validations::LengthValidator < ActiveModel::Validations::LengthValidator
-  def validate_each(record, attribute, association_or_value); end
-end
-class ActiveRecord::RecordInvalid < ActiveRecord::ActiveRecordError
-  def initialize(record = nil); end
-  def record; end
 end
 module ActiveRecord::CounterCache
   def _create_record(attribute_names = nil); end

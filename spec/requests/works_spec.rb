@@ -67,14 +67,15 @@ RSpec.describe 'Works requests' do
       let(:collection) { create(:collection) }
 
       let(:contributors) do
-        [
+        { '0' =>
           { '_destroy' => '1', 'first_name' => 'Justin',
             'last_name' => 'Coyne', 'role_term' => 'person|Collector' },
+          '999' =>
           { '_destroy' => 'false', 'first_name' => 'Naomi',
             'last_name' => 'Dushay', 'role_term' => 'person|Author' },
+          '1002' =>
           { '_destroy' => 'false', 'first_name' => 'Vivian',
-            'last_name' => 'Wong', 'role_term' => 'person|Contributing author' }
-        ]
+            'last_name' => 'Wong', 'role_term' => 'person|Contributing author' } }
       end
       let(:work_params) do
         attributes_for(:work)
@@ -91,7 +92,7 @@ RSpec.describe 'Works requests' do
         expect(response).to have_http_status(:found)
         work = Work.last
         expect(work.contributors.size).to eq 2
-        expect(work.published).to eq Date.parse('2020-2-14')
+        expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
       end
     end
