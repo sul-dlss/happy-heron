@@ -8,6 +8,6 @@ RSpec.describe Works::LicenseComponent do
 
   it 'renders the component' do
     expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('Terms of use and license')
+      .to include('Select a license')
   end
 end
