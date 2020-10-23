@@ -34,6 +34,6 @@ class WorksController < ApplicationController
     params.require(:work).permit(:title, :work_type, :subtype, :contact_email,
                                  :created_edtf, :abstract, :citation, :access, :license, :agree_to_terms,
                                  files: [],
-                                 contributors_attributes: %i[_destroy id first_name last_name role_term_id])
+                                 contributors_attributes: %i[_destroy id first_name last_name role_term])
   end
 end

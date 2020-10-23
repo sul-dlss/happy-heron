@@ -65,17 +65,15 @@ RSpec.describe 'Works requests' do
 
     describe 'create work' do
       let(:collection) { create(:collection) }
-      let(:manager_role) { create(:role_term, label: 'manager') }
-      let(:developer_role) { create(:role_term, label: 'developer') }
 
       let(:contributors) do
         [
           { '_destroy' => '1', 'first_name' => 'Justin',
-            'last_name' => 'Coyne', 'role_term_id' => developer_role.id },
+            'last_name' => 'Coyne', 'role_term' => 'person|Collector' },
           { '_destroy' => 'false', 'first_name' => 'Naomi',
-            'last_name' => 'Dushay', 'role_term_id' => developer_role.id },
+            'last_name' => 'Dushay', 'role_term' => 'person|Author' },
           { '_destroy' => 'false', 'first_name' => 'Vivian',
-            'last_name' => 'Wong', 'role_term_id' => manager_role.id }
+            'last_name' => 'Wong', 'role_term' => 'person|Contributing author' }
         ]
       end
       let(:work_params) { attributes_for(:work).merge(contributors_attributes: contributors) }

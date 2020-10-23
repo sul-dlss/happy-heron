@@ -21,8 +21,6 @@ CREATE TYPE public.work_access AS ENUM (
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
-
 --
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
@@ -156,9 +154,10 @@ CREATE TABLE public.contributors (
     work_id bigint NOT NULL,
     first_name character varying NOT NULL,
     last_name character varying NOT NULL,
-    role_term_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    contributor_type character varying NOT NULL,
+    role character varying NOT NULL
 );
 
 
@@ -277,37 +276,6 @@ CREATE SEQUENCE public.related_works_id_seq
 --
 
 ALTER SEQUENCE public.related_works_id_seq OWNED BY public.related_works.id;
-
-
---
--- Name: role_terms; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.role_terms (
-    id bigint NOT NULL,
-    label character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: role_terms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.role_terms_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: role_terms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.role_terms_id_seq OWNED BY public.role_terms.id;
 
 
 --
@@ -449,13 +417,6 @@ ALTER TABLE ONLY public.related_works ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- Name: role_terms id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.role_terms ALTER COLUMN id SET DEFAULT nextval('public.role_terms_id_seq'::regclass);
-
-
---
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -534,14 +495,6 @@ ALTER TABLE ONLY public.related_works
 
 
 --
--- Name: role_terms role_terms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.role_terms
-    ADD CONSTRAINT role_terms_pkey PRIMARY KEY (id);
-
-
---
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -591,13 +544,6 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE INDEX index_collections_on_creator_id ON public.collections USING btree (creator_id);
-
-
---
--- Name: index_contributors_on_role_term_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_contributors_on_role_term_id ON public.contributors USING btree (role_term_id);
 
 
 --
@@ -668,14 +614,6 @@ CREATE UNIQUE INDEX index_works_on_druid_and_version ON public.works USING btree
 --
 
 CREATE INDEX index_works_on_state ON public.works USING btree (state);
-
-
---
--- Name: contributors fk_rails_13ac0dcd3f; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.contributors
-    ADD CONSTRAINT fk_rails_13ac0dcd3f FOREIGN KEY (role_term_id) REFERENCES public.role_terms(id);
 
 
 --
@@ -756,6 +694,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201014223440'),
 ('20201018003611'),
 ('20201020162212'),
-('20201020211040');
+('20201020211040'),
+('20201022194547');
 
 

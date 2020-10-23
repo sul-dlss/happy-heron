@@ -7,8 +7,3 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-RoleTerm.create([{ label: 'Author' }, { label: 'Contributor' }])
-
-# Don't load this in production:
-FactoryBot.create(:collection, creator: FactoryBot.create(:user, email: 'a.user@stanford.edu'))

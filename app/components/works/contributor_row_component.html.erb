@@ -16,7 +16,7 @@
     as
   </div>
   <div class="col-md-3">
-    <%= form.label :role_term_id, class: 'form-label' %>
-    <%= form.select :role_term_id, options_from_collection_for_select(RoleTerm.all, 'id', 'label'), {}, class: 'form-select' %>
+    <%= form.label :role_term, class: 'form-label' %>
+    <%= form.select :role_term, grouped_options_for_select(Contributor.grouped_options),  {}, class: 'form-select' %>
   </div>
 </div>

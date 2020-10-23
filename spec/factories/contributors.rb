@@ -12,6 +12,7 @@ FactoryBot.define do
     end
 
     work
-    role_term
+    contributor_type { 'person' }
+    role { 'Contributing author' }
   end
 end
