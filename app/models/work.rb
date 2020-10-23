@@ -11,7 +11,7 @@ class Work < ApplicationRecord
   has_many :related_works, dependent: :destroy
   has_many_attached :files
 
-  validates :abstract, :access, :citation, :state, :subtype, :title, presence: true
+  validates :abstract, :access, :state, :title, presence: true
   validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :created_edtf, :published_edtf, edtf: true
   validates :license, presence: true, inclusion: { in: License.all.map(&:id) }

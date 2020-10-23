@@ -7,6 +7,8 @@ class WorksController < ApplicationController
 
   def new
     collection = Collection.find(params[:collection_id])
+    raise 'Missing required parameter work_type' unless params[:work_type]
+
     work = Work.new(work_type: params[:work_type],
                     collection: collection,
                     contributors: [Contributor.new])
@@ -33,14 +35,14 @@ class WorksController < ApplicationController
   private
 
   def work_params
-    params.require(:work).permit(:title, :work_type, :subtype, :contact_email,
+    params.require(:work).permit(:title, :work_type, :contact_email,
                                  'published(1i)', 'published(2i)', 'published(3i)',
                                  :creation_type,
                                  'created(1i)', 'created(2i)', 'created(3i)',
                                  'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
                                  'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
                                  :created_edtf, :abstract, :citation, :access, :license, :agree_to_terms,
-                                 files: [],
+                                 files: [], subtype: [],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term])
   end
 end

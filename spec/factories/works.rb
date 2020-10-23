@@ -5,7 +5,7 @@ FactoryBot.define do
   factory :work do
     title { 'Test title' }
     work_type { 'text' }
-    subtype { 'Non-fiction' }
+    subtype { ['3D model', 'GIS'] }
     contact_email { 'io@io.io' }
     abstract { 'test abstract' }
     citation { 'test citation' }

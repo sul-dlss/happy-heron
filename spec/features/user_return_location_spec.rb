@@ -13,7 +13,7 @@ RSpec.describe 'User return location' do
   end
 
   context 'when in session' do
-    let(:return_to_url) { new_collection_work_url(collection) }
+    let(:return_to_url) { new_collection_work_url(collection, work_type: 'text') }
 
     it 'redirects to user_return_to URL' do
       add_to_session(user_return_to: return_to_url)

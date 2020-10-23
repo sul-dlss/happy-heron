@@ -8,6 +8,24 @@
   </div>
 
   <div class="mb-3 row">
+    <div class="col-sm-12" style="font-size: larger">
+      Work types (optional)
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+
+    <% subtypes.each do |subtype| %>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <%= form.check_box :subtype, { multiple: true, class: 'form-check-input' }, subtype, nil %>
+          <%= form.label "subtype_#{subtype}", subtype, class: 'form-check-label' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3 row">
     <%= form.label :citation, class: 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= form.text_area :citation, class: "form-control", required: true %>

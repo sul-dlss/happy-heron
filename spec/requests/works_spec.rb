@@ -16,6 +16,12 @@ RSpec.describe 'Works requests' do
       sign_out
     end
 
+    it 'redirects from /collections/:collection_id/works/new to login URL' do
+      get "/collections/#{collection.id}/works/new"
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
     it 'allows GETs to /works/:work_id' do
       get "/works/#{work.id}"
       expect(response).to have_http_status(:ok)
@@ -94,6 +100,7 @@ RSpec.describe 'Works requests' do
         expect(work.contributors.size).to eq 2
         expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
+        expect(work.subtype).to eq ['3D model', 'GIS']
       end
     end
   end

@@ -15,12 +15,6 @@ RSpec.describe 'Collections requests' do
       sign_out
     end
 
-    it 'redirects from /collections/:collection_id/works/new to login URL' do
-      get "/collections/#{collection.id}/works/new"
-      expect(response).to have_http_status(:found)
-      expect(response).to redirect_to(new_user_session_path)
-    end
-
     it 'redirects from /collections/new to login URL' do
       get '/collections/new'
       expect(response).to have_http_status(:found)
@@ -33,11 +27,6 @@ RSpec.describe 'Collections requests' do
 
     before do
       sign_in user
-    end
-
-    it 'allows GETs to /collections/:collection_id/works/new' do
-      get "/collections/#{collection.id}/works/new"
-      expect(response).to have_http_status(:ok)
     end
 
     it 'allows GETs to /collections/new' do
