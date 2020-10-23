@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe Work do
-  subject(:work) { create(:work, :with_contributors, :with_related_links, :with_related_works, :with_attached_file) }
+  subject(:work) { build(:work, :with_contributors, :with_related_links, :with_related_works, :with_attached_file) }
 
   it 'belongs to a collection' do
     expect(work.collection).to be_a(Collection)

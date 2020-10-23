@@ -3,7 +3,7 @@
 
 class EdtfValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    return unless EDTF.parse(value).nil?
+    return if value.nil? || EDTF.parse(value)
 
     record.errors[attribute] << 'is not valid EDTF'
   end

@@ -32,6 +32,11 @@ class WorksController < ApplicationController
 
   def work_params
     params.require(:work).permit(:title, :work_type, :subtype, :contact_email,
+                                 'published(1i)', 'published(2i)', 'published(3i)',
+                                 :creation_type,
+                                 'created(1i)', 'created(2i)', 'created(3i)',
+                                 'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
+                                 'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
                                  :created_edtf, :abstract, :citation, :access, :license, :agree_to_terms,
                                  files: [],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term])
