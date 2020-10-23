@@ -18,6 +18,7 @@ RSpec.describe Works::WorkFormComponent do
                   'Title of deposit and contact information',
                   'List authors and contributors',
                   'Date content was created',
-                  'Describe your deposit', 'Manage release of this item', 'Terms of use and license')
+                  'Describe your deposit', 'Manage release of this item',
+                  'Select a license')
   end
 end
