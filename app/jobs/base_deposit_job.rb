@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # Base class for Deposit jobs.
@@ -9,6 +9,9 @@ class BaseDepositJob < ApplicationJob
 
   # This allows a login using credentials from the config gem.
   class LoginFromSettings
+    extend T::Sig
+
+    sig { returns(email: String, password: String) }
     def self.run
       { email: Settings.sdr_api.email, password: Settings.sdr_api.password }
     end

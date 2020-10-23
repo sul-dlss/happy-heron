@@ -3,6 +3,7 @@
 
 # Base class for application policies
 class ApplicationPolicy < ActionPolicy::Base
+  extend T::Sig
   # Configure additional authorization contexts here
   # (`user` is added by default).
   #

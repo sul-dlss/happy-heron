@@ -8,6 +8,7 @@ class CollectionPolicy < ApplicationPolicy
   end
 
   # allow everyone to create collections
+  sig { returns(T::Boolean) }
   def create?
     true
   end
