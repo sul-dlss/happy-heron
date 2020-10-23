@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
@@ -10,7 +10,29 @@ class ApplicationController < ActionController::Base
   # From: https://github.com/heartcombo/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   before_action :store_user_location!, if: :storable_location?
 
+  rescue_from ActionPolicy::Unauthorized, with: :deny_access
+
+  sig { returns(T.nilable(User)) }
+  def current_user
+    super.tap do |cur_user|
+      break unless cur_user
+
+      cur_user.groups = ldap_groups
+    end
+  end
+
   private
+
+  sig { returns(T::Array[String]) }
+  def ldap_groups
+    return request.env['eduPersonEntitlement'].split(';') if request.env['eduPersonEntitlement']
+
+    []
+  end
+
+  def deny_access
+    render status: :unauthorized, html: 'You are unauthorized to see this'
+  end
 
   # Its important that the location is NOT stored if:
   # - The request method is not GET (non idempotent)

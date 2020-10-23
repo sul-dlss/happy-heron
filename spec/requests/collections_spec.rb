@@ -22,11 +22,29 @@ RSpec.describe 'Collections requests' do
     end
   end
 
-  context 'with authenticated user' do
+  context 'with an authenticated user who is not in any application workgroups' do
     let(:user) { create(:user) }
 
     before do
-      sign_in user
+      sign_in user, groups: ['sdr:baz']
+    end
+
+    it 'does not authorize GETs to /collections/new' do
+      get '/collections/new'
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it 'does not allow the user to save a collection' do
+      post '/collections', params: { collection: { should_not: 'even read these params' } }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
+  context 'with an authenticated collection creator' do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     end
 
     it 'allows GETs to /collections/new' do

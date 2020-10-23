@@ -10,6 +10,6 @@ class CollectionPolicy < ApplicationPolicy
   # allow everyone to create collections
   sig { returns(T::Boolean) }
   def create?
-    true
+    user.collection_creator?
   end
 end

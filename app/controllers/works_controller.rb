@@ -4,8 +4,10 @@
 class WorksController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :ensure_sdr_updatable
+  verify_authorized except: [:show]
 
   def new
+    authorize!
     collection = Collection.find(params[:collection_id])
     raise 'Missing required parameter work_type' unless params[:work_type]
 
@@ -16,6 +18,7 @@ class WorksController < ApplicationController
   end
 
   def create
+    authorize!
     work = Work.new
     @form = WorkForm.new(work)
 
