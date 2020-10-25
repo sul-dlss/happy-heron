@@ -4,25 +4,13 @@
 module Works
   # Draws a widget for publication and creation dates
   class DatesComponent < ApplicationComponent
-    def initialize(form:)
+    def initialize(form:, min_year:, max_year:)
       @form = form
+      @min_year = min_year
+      @max_year = max_year
     end
 
-    attr_reader :form
-
-    delegate :earliest_year, to: :Settings
-
-    def published_year
-      published_edtf&.year
-    end
-
-    def published_month
-      published_edtf&.month
-    end
-
-    def published_day
-      published_edtf&.day
-    end
+    attr_reader :form, :min_year, :max_year
 
     def created_year
       created_edtf&.year

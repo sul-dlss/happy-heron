@@ -1,0 +1,21 @@
+<div class="mb-3 row">
+  <div class="col-sm-2 h6">
+    Publication date
+  </div>
+  <div class="col-sm-10">
+    <div class="year">
+      <label for="work_published_year" class="visually-hidden">Publication year</label>
+      <%= year_field %>
+      <div class="invalid-feedback">Publication year must be between <%= min_year %> and <%= max_year %></div>
+    </div>
+    <div class="month">
+      <label for="work_published_month" class="visually-hidden">Publication month</label>
+      <%= month_field %>
+    </div>
+
+    <div class="day">
+      <label for="work_published_day" class="visually-hidden">Publication day</label>
+      <%= day_field %>
+    </div>
+  </div>
+</div>

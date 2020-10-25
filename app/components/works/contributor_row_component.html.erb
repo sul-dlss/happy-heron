@@ -17,12 +17,20 @@
   </div>
   <div class="col-md-4" data-target="contributors.personName">
     <%= form.label :first_name, class: 'form-label' %>
-    <%= form.text_field :first_name, class: 'form-control', data: { action: 'change->contributors#inputChanged', target: 'contributors.personNameInput' }, required: true %>
+    <%= form.text_field :first_name, class: 'form-control',
+        data: {
+          action: 'change->contributors#inputChanged change->auto-citation#updateDisplay',
+          target: 'contributors.personNameInput auto-citation.contributorFirst'
+        }, required: true %>
     <div class="invalid-feedback">You must provide a first name</div>
   </div>
   <div class="col-md-4" data-target="contributors.personName">
     <%= form.label :last_name, class: 'form-label' %>
-    <%= form.text_field :last_name, class: 'form-control', data: { action: 'change->contributors#inputChanged', target: 'contributors.personNameInput' }, required: true %>
+    <%= form.text_field :last_name, class: 'form-control',
+        data: {
+          action: 'change->contributors#inputChanged change->auto-citation#updateDisplay',
+          target: 'contributors.personNameInput auto-citation.contributorLast'
+        }, required: true %>
     <div class="invalid-feedback">You must provide a last name</div>
   </div>
   <div class="col-md-8" data-target="contributors.organizationName">

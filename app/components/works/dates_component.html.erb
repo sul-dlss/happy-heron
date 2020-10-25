@@ -1,26 +1,8 @@
 <section id="dates">
   <header>Enter dates related to your deposit (optional)</header>
-  <div class="mb-3 row">
-    <div class="col-sm-2 h6">
-      Publication date
-    </div>
-    <div class="col-sm-10">
-      <div class="year">
-        <label for="work_published_year" class="visually-hidden">Publication year</label>
-        <%= number_field_tag 'work[published(1i)]', published_year, id: 'work_published_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
-        <div class="invalid-feedback">Publication year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
-      </div>
-      <div class="month">
-        <label for="work_published_month" class="visually-hidden">Publication month</label>
-        <%= select_month published_month, { prefix: 'work', field_name: 'published(2i)', prompt: 'month'}, id: 'work_published_month', class: "form-control" %>
-      </div>
-
-      <div class="day">
-        <label for="work_published_day" class="visually-hidden">Publication day</label>
-        <%= select_day published_day, { prefix: 'work', field_name: 'published(3i)', prompt: 'day'}, id: 'work_published_day', class: "form-control" %>
-      </div>
-    </div>
-  </div>
+  <%= render Works::PublicationDateComponent.new(published_edtf: published_edtf,
+                                                 min_year: min_year,
+                                                 max_year: max_year) %>
 
   <div class="mb-3 row">
     <div class="col-sm-3 h6">
@@ -36,8 +18,8 @@
     <div class="col-sm-10">
       <div class="year">
         <label for="work_created_year" class="visually-hidden">Created year</label>
-        <%= number_field_tag 'work[created(1i)]', created_year, id: 'work_created_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
-        <div class="invalid-feedback">Created year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
+        <%= number_field_tag 'work[created(1i)]', created_year, id: 'work_created_year', class: "form-control", min: min_year, max: max_year %>
+        <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
       </div>
       <div class="month">
         <label for="work_created_month" class="visually-hidden">Created month</label>
@@ -61,8 +43,8 @@
       <div class="start-date">
         <div class="year">
           <label for="work_created_range_start_year" class="visually-hidden">Created range start year</label>
-          <%= number_field_tag 'work[created_range(1i)]', created_range_start_year, id: 'work_created_range_start_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
-          <div class="invalid-feedback">Created year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
+          <%= number_field_tag 'work[created_range(1i)]', created_range_start_year, id: 'work_created_range_start_year', class: "form-control", min: min_year, max: max_year %>
+          <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
         </div>
         <div class="month">
           <label for="work_created_range_start_month" class="visually-hidden">Created range start month</label>
@@ -81,8 +63,8 @@
       <div class="end-date">
         <div class="year">
           <label for="work_created_range_end_year" class="visually-hidden">Created range end year</label>
-          <%= number_field_tag 'work[created_range(4i)]', created_range_end_year, id: 'work_created_range_end_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
-          <div class="invalid-feedback">Created year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
+          <%= number_field_tag 'work[created_range(4i)]', created_range_end_year, id: 'work_created_range_end_year', class: "form-control", min: min_year, max: max_year %>
+          <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
         </div>
         <div class="month">
           <label for="work_created_range_end_month" class="visually-hidden">Created range end month</label>

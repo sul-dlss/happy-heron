@@ -22,7 +22,7 @@ module Works
                                      {}, class: 'form-select',
                                          data: {
                                            action: 'change->contributors#typeChanged',
-                                           target: 'contributors.role'
+                                           target: 'contributors.role auto-citation.contributorRole'
                                          }
     end
 

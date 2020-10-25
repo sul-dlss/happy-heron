@@ -108,6 +108,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
       # End of remote form validation
 
+      uncheck 'Use default citation'
       fill_in 'Citation for this deposit (optional)', with: 'Whatever'
 
       click_link 'Terms of Deposit'
