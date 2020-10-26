@@ -68,7 +68,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
     let(:collection) { create(:collection) }
 
     it 'does not submit' do
-      visit "/collections/#{collection.id}/works/new"
+      visit "/collections/#{collection.id}/works/new?work_type=text"
       expect(page).to have_content('Deposit your work')
 
       fill_in 'Title of deposit', with: 'My Title'

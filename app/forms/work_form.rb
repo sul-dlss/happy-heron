@@ -7,12 +7,13 @@ class WorkForm < Reform::Form
   feature Coercion
 
   property :work_type
-  property :subtype, default: 'manuscript'
+  property :subtype
   property :title
   property :contact_email
   property :abstract
   property :citation
   property :collection_id
+  property :access
   property :license
   property :agree_to_terms
 
