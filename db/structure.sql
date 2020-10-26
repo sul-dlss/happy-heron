@@ -102,6 +102,39 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: attached_files; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.attached_files (
+    id bigint NOT NULL,
+    label character varying,
+    hide boolean DEFAULT false NOT NULL,
+    work_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: attached_files_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.attached_files_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: attached_files_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.attached_files_id_seq OWNED BY public.attached_files.id;
+
+
+--
 -- Name: collections; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -383,6 +416,13 @@ ALTER TABLE ONLY public.active_storage_blobs ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: attached_files id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.attached_files ALTER COLUMN id SET DEFAULT nextval('public.attached_files_id_seq'::regclass);
+
+
+--
 -- Name: collections id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -453,6 +493,14 @@ ALTER TABLE ONLY public.active_storage_blobs
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: attached_files attached_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.attached_files
+    ADD CONSTRAINT attached_files_pkey PRIMARY KEY (id);
 
 
 --
@@ -538,6 +586,13 @@ CREATE UNIQUE INDEX index_active_storage_attachments_uniqueness ON public.active
 --
 
 CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_blobs USING btree (key);
+
+
+--
+-- Name: index_attached_files_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_attached_files_on_work_id ON public.attached_files USING btree (work_id);
 
 
 --
@@ -642,6 +697,14 @@ ALTER TABLE ONLY public.works
 
 
 --
+-- Name: attached_files fk_rails_84b18313d5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.attached_files
+    ADD CONSTRAINT fk_rails_84b18313d5 FOREIGN KEY (work_id) REFERENCES public.works(id);
+
+
+--
 -- Name: related_links fk_rails_85852d9d42; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -698,6 +761,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201020211040'),
 ('20201022194547'),
 ('20201023123700'),
-('20201023212141');
+('20201023212141'),
+('20201026222437');
 
 

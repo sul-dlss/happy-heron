@@ -10,10 +10,10 @@ import {
 } from "helpers";
 
 export default class extends Controller {
-  static targets = ["input"];
+  static targets = ["input", "previews", "template"];
 
   connect() {
-    this.dropZone = createDropZone(this);
+    this.dropZone = createDropZone(this, this.templateTarget.innerHTML);
     this.hideFileInput();
     this.bindEvents();
     Dropzone.autoDiscover = false; // necessary quirk for Dropzone error in console
@@ -72,12 +72,15 @@ export default class extends Controller {
   }
 
   get addRemoveLinks() {
-    return this.data.get("addRemoveLinks") || true;
+    return this.data.get("addRemoveLinks") || false;
   }
 }
 
 class DirectUploadController {
+  // source is the input element
+  // file is the File object from dropzone
   constructor(source, file) {
+    this.count = Math.floor(Math.random() * 1_000_000_000)
     this.directUpload = createDirectUpload(file, source.url, this);
     this.source = source;
     this.file = file;
@@ -86,6 +89,8 @@ class DirectUploadController {
   start() {
     this.file.controller = this;
     this.hiddenInput = this.createHiddenInput();
+    this.addDescription();
+    this.addHideCheckbox();
     this.directUpload.create((error, attributes) => {
       if (error) {
         removeElement(this.hiddenInput);
@@ -97,11 +102,21 @@ class DirectUploadController {
     });
   }
 
+  addDescription() {
+    const detail = this.file.previewElement.querySelector('.upload-description')
+    detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
+  }
+
+  addHideCheckbox() {
+    const detail = this.file.previewElement.querySelector('.dz-details')
+    detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
+  }
+
   createHiddenInput() {
     const input = document.createElement("input");
     input.type = "hidden";
-    input.name = this.source.inputTarget.name;
-    insertAfter(input, this.source.inputTarget);
+    input.name = `work[attached_files_attributes][${this.count}][file]`
+    insertAfter(input, this.source.previewsTarget);
     return input;
   }
 
@@ -153,7 +168,7 @@ function createDirectUpload(file, url, controller) {
   return new DirectUpload(file, url, controller);
 }
 
-function createDropZone(controller) {
+function createDropZone(controller, template) {
   return new Dropzone(controller.element, {
     url: controller.url,
     headers: controller.headers,
@@ -161,6 +176,11 @@ function createDropZone(controller) {
     maxFilesize: controller.maxFileSize,
     acceptedFiles: controller.acceptedFiles,
     addRemoveLinks: controller.addRemoveLinks,
+    previewTemplate: template,
+    previewsContainer: ".dropzone-previews",
+    thumbnailHeight: 42,
+    thumbnailWidth: 34,
+
     autoQueue: false
   });
 }

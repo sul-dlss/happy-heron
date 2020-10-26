@@ -39,10 +39,7 @@ FactoryBot.define do
 
   trait :with_attached_file do
     after(:build) do |work|
-      # NOTE: alas, file_fixture methods don't work within FactoryBot
-      work.files.attach(io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
-                        filename: 'sul.svg',
-                        content_type: 'image/svg+xml')
+      work.attached_files.build
     end
   end
 end

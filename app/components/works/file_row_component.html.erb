@@ -1,0 +1,28 @@
+<div class="dz-preview dz-file-preview row">
+  <div class="thumb">
+    <img data-dz-thumbnail />
+  </div>
+  <div class="col-md-2">
+    <div class="dz-filename"><span data-dz-name></span></div>
+    <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+    <div class="dz-success-mark"><span>✔</span></div>
+    <div class="dz-error-mark"><span>✘</span></div>
+    <div class="dz-error-message"><span data-dz-errormessage></span></div>
+  </div>
+
+  <div class="upload-description col row">
+    <%= form.label :label, 'Description', class: 'col-form-label col-md-3' %>
+    <div class="col-md-9">
+    <%= form.text_field :label, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="dz-details col-md-2">
+    <%= form.check_box :hide, class: 'form-check-input' %>
+    <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
+  </div>
+
+  <div class="col-md-1">
+    <%= button_tag '🗑', class: "dz-remove pull-right btn", data: { 'dz-remove': true } %>
+  </div>
+</div>

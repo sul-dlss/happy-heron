@@ -83,9 +83,24 @@ RSpec.describe 'Works requests' do
           { '_destroy' => 'false', 'first_name' => 'Vivian',
             'last_name' => 'Wong', 'role_term' => 'person|Contributing author' } }
       end
+
+      let(:upload) { fixture_file_upload(Rails.root.join('public/apple-touch-icon.png'), 'image/png') }
+
+      let(:files) do
+        { '0' =>
+          { '_destroy' => '1', 'label' => 'Wrong PDF',
+            'file' => upload },
+          '999' =>
+          { '_destroy' => 'false', 'label' => 'My PNG',
+            'file' => upload },
+          '1002' =>
+          { '_destroy' => 'false', 'label' => 'My PDF',
+            'file' => upload } }
+      end
       let(:work_params) do
         attributes_for(:work)
           .merge(contributors_attributes: contributors,
+                 attached_files_attributes: files,
                  'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
                  creation_type: 'range',
                  'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
@@ -98,6 +113,7 @@ RSpec.describe 'Works requests' do
         expect(response).to have_http_status(:found)
         work = Work.last
         expect(work.contributors.size).to eq 2
+        expect(work.attached_files.size).to eq 2
         expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
         expect(work.subtype).to eq ['3D model', 'GIS']

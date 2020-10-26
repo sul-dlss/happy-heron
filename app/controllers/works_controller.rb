@@ -42,7 +42,8 @@ class WorksController < ApplicationController
                                  'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
                                  'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
                                  :created_edtf, :abstract, :citation, :access, :license, :agree_to_terms,
-                                 files: [], subtype: [],
+                                 subtype: [],
+                                 attached_files_attributes: %i[_destroy id label hide file],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term])
   end
 end
