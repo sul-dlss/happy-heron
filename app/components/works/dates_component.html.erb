@@ -1,9 +1,103 @@
 <section>
-  <header>Date content was created</header>
+  <header>Enter dates related to your deposit (optional)</header>
   <div class="mb-3 row">
-    <%= form.label :created_edtf, 'Date created', class: 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10">
-      <%= form.text_field :created_edtf, class: "form-control", required: true %>
+    <div class="col-sm-2 h6">
+      Publication date
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <div class="col">
+          <label for="work_published_year" class="visually-hidden">Publication year</label>
+          <%= number_field_tag 'work[published(1i)]', nil, id: 'work_published_year', class: "form-control", max: Date.today.year %>
+        </div>
+        <div class="col">
+          <label for="work_published_month" class="visually-hidden">Publication month</label>
+          <%= select_month nil, { prefix: 'work', field_name: 'published(2i)', prompt: 'month'}, id: 'work_published_month', class: "form-control" %>
+        </div>
+
+        <div class="col">
+          <label for="work_published_day" class="visually-hidden">Publication day</label>
+          <%= select_day nil, { prefix: 'work', field_name: 'published(3i)', prompt: 'day'}, id: 'work_published_day', class: "form-control" %>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="mb-3 row">
+    <div class="col-sm-12 h6">
+      Creation date
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <div class="col-sm-2">
+      <%= form.radio_button :creation_type, 'single', class: 'form-check-input' %>
+      <%= form.label :creation_type_single, 'Single date' %>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <div class="col">
+          <label for="work_created_year" class="visually-hidden">Created year</label>
+          <%= number_field_tag 'work[created(1i)]', nil, id: 'work_created_year', class: "form-control", max: Date.today.year %>
+        </div>
+        <div class="col">
+          <label for="work_created_month" class="visually-hidden">Created month</label>
+          <%= select_month nil, { prefix: 'work', field_name: 'created(2i)', prompt: 'month'}, id: 'work_created_month', class: "form-control" %>
+        </div>
+
+        <div class="col">
+          <label for="work_created_day" class="visually-hidden">Created day</label>
+          <%= select_day nil, { prefix: 'work', field_name: 'created(3i)', prompt: 'day'}, id: 'work_created_day', class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <div class="col-sm-2">
+      <%= form.radio_button :creation_type, 'range', class: 'form-check-input' %>
+       <%= form.label :creation_type_range, 'Date range' %>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="row">
+        <div class="col">
+          <label for="work_created_range_start_year" class="visually-hidden">Created range start year</label>
+          <%= number_field_tag 'work[created_range(1i)]', nil, id: 'work_created_range_start_year', class: "form-control", max: Date.today.year %>
+        </div>
+        <div class="col">
+          <label for="work_created_range_start_month" class="visually-hidden">Created range start month</label>
+          <%= select_month nil, { prefix: 'work', field_name: 'created_range(2i)', prompt: 'month'}, id: 'work_created_range_start_month', class: "form-control" %>
+        </div>
+
+        <div class="col">
+          <label for="work_created_range_start_day" class="visually-hidden">Created range start day</label>
+          <%= select_day nil, { prefix: 'work', field_name: 'created_range(3i)', prompt: 'day'}, id: 'work_created_range_start_day', class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-1 text-center">
+      to
+    </div>
+
+    <div class="col-sm-3">
+      <div class="row">
+        <div class="col">
+          <label for="work_created_range_end_year" class="visually-hidden">Created range end year</label>
+          <%= number_field_tag 'work[created_range(4i)]', nil, id: 'work_created_range_end_year', class: "form-control", max: Date.today.year %>
+        </div>
+        <div class="col">
+          <label for="work_created_range_end_month" class="visually-hidden">Created range end month</label>
+          <%= select_month nil, { prefix: 'work', field_name: 'created_range(5i)', prompt: 'month'}, id: 'work_created_range_end_month', class: "form-control" %>
+        </div>
+
+        <div class="col">
+          <label for="work_created_range_end_day" class="visually-hidden">Created range end day</label>
+          <%= select_day nil, { prefix: 'work', field_name: 'created_range(6i)', prompt: 'day'}, id: 'work_created_range_end_day', class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>

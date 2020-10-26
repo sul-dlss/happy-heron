@@ -7,7 +7,6 @@ FactoryBot.define do
     work_type { 'text' }
     subtype { 'Non-fiction' }
     contact_email { 'io@io.io' }
-    created_edtf { '1900' }
     abstract { 'test abstract' }
     citation { 'test citation' }
     license { 'CC0-1.0' }

@@ -971,22 +971,34 @@ class Byebug::Printers::Plain < Byebug::Printers::Base
   def print_collection(path, collection, &block); end
   def print_variables(variables, *_unused); end
 end
-class Byebug::LinetraceSetting < Byebug::Setting
+class Byebug::AutoprySetting < Byebug::Setting
   def banner; end
+  def initialize; end
   def value; end
   def value=(val); end
+end
+class Byebug::StackOnErrorSetting < Byebug::Setting
+  def banner; end
 end
 class Byebug::HistfileSetting < Byebug::Setting
   def banner; end
   def to_s; end
 end
-class Byebug::StackOnErrorSetting < Byebug::Setting
-  def banner; end
-end
-class Byebug::AutosaveSetting < Byebug::Setting
-  def banner; end
-end
 class Byebug::WidthSetting < Byebug::Setting
+  def banner; end
+  def to_s; end
+end
+class Byebug::SavefileSetting < Byebug::Setting
+  def banner; end
+  def to_s; end
+end
+class Byebug::FullpathSetting < Byebug::Setting
+  def banner; end
+end
+class Byebug::BasenameSetting < Byebug::Setting
+  def banner; end
+end
+class Byebug::ListsizeSetting < Byebug::Setting
   def banner; end
   def to_s; end
 end
@@ -996,31 +1008,10 @@ class Byebug::AutolistSetting < Byebug::Setting
   def value; end
   def value=(val); end
 end
-class Byebug::HistsizeSetting < Byebug::Setting
+class Byebug::AutosaveSetting < Byebug::Setting
   def banner; end
-  def to_s; end
 end
 class Byebug::CallstyleSetting < Byebug::Setting
-  def banner; end
-  def to_s; end
-end
-class Byebug::BasenameSetting < Byebug::Setting
-  def banner; end
-end
-class Byebug::AutoprySetting < Byebug::Setting
-  def banner; end
-  def initialize; end
-  def value; end
-  def value=(val); end
-end
-class Byebug::FullpathSetting < Byebug::Setting
-  def banner; end
-end
-class Byebug::ListsizeSetting < Byebug::Setting
-  def banner; end
-  def to_s; end
-end
-class Byebug::SavefileSetting < Byebug::Setting
   def banner; end
   def to_s; end
 end
@@ -1030,9 +1021,18 @@ class Byebug::PostMortemSetting < Byebug::Setting
   def value; end
   def value=(val); end
 end
+class Byebug::HistsizeSetting < Byebug::Setting
+  def banner; end
+  def to_s; end
+end
 class Byebug::AutoirbSetting < Byebug::Setting
   def banner; end
   def initialize; end
+  def value; end
+  def value=(val); end
+end
+class Byebug::LinetraceSetting < Byebug::Setting
+  def banner; end
   def value; end
   def value=(val); end
 end

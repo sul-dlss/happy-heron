@@ -6,19 +6,21 @@ class WorksController < ApplicationController
   before_action :ensure_sdr_updatable
 
   def new
-    @collection = Collection.find(params[:collection_id])
-    @work = Work.new(work_type: params[:work_type],
-                     subtype: 'manuscript',
-                     collection: @collection,
-                     contributors: [Contributor.new])
+    collection = Collection.find(params[:collection_id])
+    work = Work.new(work_type: params[:work_type],
+                    collection: collection,
+                    contributors: [Contributor.new])
+    @form = WorkForm.new(work)
   end
 
   def create
-    @collection = Collection.find(params[:collection_id])
-    @work = Work.new(work_params.merge(collection: @collection))
-    if @work.save
-      DepositJob.perform_later(@work) if params[:commit] == 'Deposit'
-      redirect_to @work
+    work = Work.new
+    @form = WorkForm.new(work)
+
+    stuff = work_params.merge(collection_id: params[:collection_id])
+    if @form.validate(stuff) && @form.save
+      DepositJob.perform_later(work) if params[:commit] == 'Deposit'
+      redirect_to work
     else
       render :new
     end
@@ -32,6 +34,11 @@ class WorksController < ApplicationController
 
   def work_params
     params.require(:work).permit(:title, :work_type, :subtype, :contact_email,
+                                 'published(1i)', 'published(2i)', 'published(3i)',
+                                 :creation_type,
+                                 'created(1i)', 'created(2i)', 'created(3i)',
+                                 'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
+                                 'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
                                  :created_edtf, :abstract, :citation, :access, :license, :agree_to_terms,
                                  files: [],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term])

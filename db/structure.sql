@@ -334,7 +334,7 @@ CREATE TABLE public.works (
     work_type character varying NOT NULL,
     subtype character varying NOT NULL,
     contact_email character varying NOT NULL,
-    created_edtf character varying NOT NULL,
+    created_edtf character varying,
     abstract text NOT NULL,
     citation character varying NOT NULL,
     access public.work_access DEFAULT 'world'::public.work_access NOT NULL,
@@ -344,7 +344,8 @@ CREATE TABLE public.works (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     state character varying NOT NULL,
-    collection_id bigint NOT NULL
+    collection_id bigint NOT NULL,
+    published_edtf character varying
 );
 
 
@@ -695,6 +696,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201018003611'),
 ('20201020162212'),
 ('20201020211040'),
-('20201022194547');
+('20201022194547'),
+('20201023123700');
 
 

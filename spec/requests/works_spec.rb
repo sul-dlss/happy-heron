@@ -67,22 +67,33 @@ RSpec.describe 'Works requests' do
       let(:collection) { create(:collection) }
 
       let(:contributors) do
-        [
+        { '0' =>
           { '_destroy' => '1', 'first_name' => 'Justin',
             'last_name' => 'Coyne', 'role_term' => 'person|Collector' },
+          '999' =>
           { '_destroy' => 'false', 'first_name' => 'Naomi',
             'last_name' => 'Dushay', 'role_term' => 'person|Author' },
+          '1002' =>
           { '_destroy' => 'false', 'first_name' => 'Vivian',
-            'last_name' => 'Wong', 'role_term' => 'person|Contributing author' }
-        ]
+            'last_name' => 'Wong', 'role_term' => 'person|Contributing author' } }
       end
-      let(:work_params) { attributes_for(:work).merge(contributors_attributes: contributors) }
+      let(:work_params) do
+        attributes_for(:work)
+          .merge(contributors_attributes: contributors,
+                 'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
+                 creation_type: 'range',
+                 'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
+                 'created_range(1i)' => '2020', 'created_range(2i)' => '3', 'created_range(3i)' => '4',
+                 'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31')
+      end
 
       it 'displays the work' do
         post "/collections/#{collection.id}/works", params: { work: work_params }
         expect(response).to have_http_status(:found)
         work = Work.last
         expect(work.contributors.size).to eq 2
+        expect(work.published_edtf).to eq '2020-02-14'
+        expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
       end
     end
   end

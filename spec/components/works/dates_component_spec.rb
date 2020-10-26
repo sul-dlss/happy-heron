@@ -4,10 +4,10 @@
 require 'rails_helper'
 
 RSpec.describe Works::DatesComponent do
-  let(:form) { instance_double(ActionView::Helpers::FormBuilder, label: nil, text_field: nil) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
 
   it 'renders the component' do
     expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('Date content was created')
+      .to include('Enter dates related to your deposit')
   end
 end

@@ -4,9 +4,10 @@
 require 'rails_helper'
 
 RSpec.describe Works::WorkFormComponent do
-  let(:component) { described_class.new(work: work) }
+  let(:component) { described_class.new(work_form: work_form) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
   let(:work) { build(:work) }
+  let(:work_form) { WorkForm.new(work) }
 
   before do
     allow(component).to receive(:form_with).and_yield(form)
@@ -17,7 +18,7 @@ RSpec.describe Works::WorkFormComponent do
       .to include('Deposit your work', '1. File', 'Add your files',
                   'Title of deposit and contact information',
                   'List authors and contributors',
-                  'Date content was created',
+                  'Enter dates related to your deposit',
                   'Describe your deposit', 'Manage release of this item',
                   'Select a license')
   end
