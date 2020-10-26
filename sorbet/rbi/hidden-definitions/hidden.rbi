@@ -23443,6 +23443,11 @@ class ApplicationCable::Connection
   def current_user=(current_user); end
 end
 
+class ApplicationCable::Connection
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class ApplicationComponent
   include ::ActionView::RoutingUrlFor
   include ::ActionDispatch::Routing::UrlFor
@@ -23460,6 +23465,11 @@ class ApplicationComponent
   def self.default_url_options=(val); end
 
   def self.default_url_options?(); end
+end
+
+class ApplicationController
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class ApplicationJob
@@ -25273,6 +25283,11 @@ class BCrypt::Engine
   MAX_COST = ::T.let(nil, ::T.untyped)
   MAX_SALT_LENGTH = ::T.let(nil, ::T.untyped)
   MIN_COST = ::T.let(nil, ::T.untyped)
+end
+
+class BaseDepositJob::LoginFromSettings
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class BaseDepositJob
@@ -32055,6 +32070,11 @@ end
 
 class CollectionPolicy
   def __scoping__active_record_relation__default(relation); end
+end
+
+class CollectionPolicy
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module CommonMarker
@@ -41882,7 +41902,6 @@ module PG::Constants
   PG_DIAG_STATEMENT_POSITION = ::T.let(nil, ::T.untyped)
   PG_DIAG_TABLE_NAME = ::T.let(nil, ::T.untyped)
   PQERRORS_DEFAULT = ::T.let(nil, ::T.untyped)
-  PQERRORS_SQLSTATE = ::T.let(nil, ::T.untyped)
   PQERRORS_TERSE = ::T.let(nil, ::T.untyped)
   PQERRORS_VERBOSE = ::T.let(nil, ::T.untyped)
   PQPING_NO_ATTEMPT = ::T.let(nil, ::T.untyped)
@@ -52463,6 +52482,11 @@ class Work
   def self.before_remove_for_related_works=(val); end
 
   def self.before_remove_for_related_works?(); end
+end
+
+class WorkPolicy
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class WorkType
