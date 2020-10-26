@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# This script runs as part of weekly dependency updates, making use of a new
+# hooks system to allow for app-specific update behavior without changing the
+# central auto-update infrastructure.
+#
+# See:
+# https://github.com/sul-dlss/access-update-scripts/blob/81d786378c37b547486e83d174dbbb7e3c93e277/autupdate.sh#L34
+
+bundle install
+SRB_YES=1 bundle exec srb rbi update
+bundle exec rake rails_rbi:all
+bundle exec srb rbi hidden-definitions
+bundle exec srb rbi suggest-typed
+git add sorbet && git commit -m 'Update type-checking signatures'
