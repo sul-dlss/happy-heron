@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-rspec/all/rubocop-rspec.rbi
 #
-# rubocop-rspec-1.43.2
+# rubocop-rspec-1.44.1
 
 module RuboCop
 end
@@ -58,6 +58,7 @@ class RuboCop::RSpec::Language::SelectorSet
   def selectors; end
   def send_or_block_or_block_pass_pattern; end
   def send_pattern; end
+  def to_a; end
 end
 module RuboCop::RSpec::Language::ExampleGroups
 end
@@ -377,11 +378,13 @@ class RuboCop::Cop::RSpec::ContextWording < RuboCop::Cop::RSpec::Base
   def prefixes; end
 end
 class RuboCop::Cop::RSpec::DescribeClass < RuboCop::Cop::RSpec::Base
-  def example_group_with_rails_metadata?(param0 = nil); end
+  def example_group_with_ignored_metadata?(param0 = nil); end
+  def ignored_metadata; end
+  def ignored_metadata?(node); end
   def not_a_const_described(param0 = nil); end
-  def on_top_level_group(top_level_node); end
-  def rails_metadata?(param0 = nil); end
+  def on_top_level_group(node); end
   def string_constant?(described); end
+  def sym_pair(param0 = nil); end
   include RuboCop::RSpec::TopLevelGroup
 end
 class RuboCop::Cop::RSpec::DescribeMethod < RuboCop::Cop::RSpec::Base
@@ -426,13 +429,16 @@ class RuboCop::Cop::RSpec::Dialect < RuboCop::Cop::RSpec::Base
   include RuboCop::Cop::MethodPreference
 end
 class RuboCop::Cop::RSpec::EmptyExampleGroup < RuboCop::Cop::RSpec::Base
+  def conditionals_with_examples?(body); end
   def custom_include?(method_name); end
   def custom_include_methods; end
   def example_group_body(param0 = nil); end
   def example_or_group_or_include?(param0 = nil); end
   def examples?(param0 = nil); end
   def examples_directly_or_in_block?(param0 = nil); end
+  def examples_in_branches?(if_node); end
   def examples_inside_block?(param0 = nil); end
+  def offensive?(body); end
   def on_block(node); end
 end
 class RuboCop::Cop::RSpec::EmptyHook < RuboCop::Cop::RSpec::Base
@@ -851,6 +857,17 @@ class RuboCop::Cop::RSpec::RepeatedExampleGroupDescription < RuboCop::Cop::RSpec
   def several_example_groups?(param0 = nil); end
   def skip_or_pending?(param0 = nil); end
 end
+class RuboCop::Cop::RSpec::RepeatedIncludeExample < RuboCop::Cop::RSpec::Base
+  def add_repeated_lines(items); end
+  def include_examples?(param0 = nil); end
+  def literal_include_examples?(node); end
+  def message(item, repeats); end
+  def on_begin(node); end
+  def repeated_include_examples(node); end
+  def several_include_examples?(param0 = nil); end
+  def shared_examples_name(param0 = nil); end
+  def signature_keys(item); end
+end
 class RuboCop::Cop::RSpec::ReturnFromStub < RuboCop::Cop::RSpec::Base
   def and_return_value(param0); end
   def check_and_return_call(node); end
@@ -928,6 +945,19 @@ class RuboCop::Cop::RSpec::SingleArgumentMessageChain < RuboCop::Cop::RSpec::Bas
   def single_key_hash?(param0 = nil); end
   def valid_usage?(node); end
   extend RuboCop::Cop::AutoCorrector
+end
+class RuboCop::Cop::RSpec::StubbedMock < RuboCop::Cop::RSpec::Base
+  def configured_response?(param0 = nil); end
+  def expectation(param0 = nil); end
+  def matcher_with_blockpass(param0 = nil); end
+  def matcher_with_configured_response(param0 = nil); end
+  def matcher_with_hash(param0 = nil); end
+  def matcher_with_return_block(param0 = nil); end
+  def message_expectation?(param0 = nil); end
+  def msg(method_name); end
+  def on_expectation(expectation, method_name, matcher); end
+  def on_send(node); end
+  def replacement(method_name); end
 end
 class RuboCop::Cop::RSpec::SubjectStub < RuboCop::Cop::RSpec::Base
   def find_all_explicit_subjects(node); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.18.2
+# view_component-2.20.0
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -58,6 +58,7 @@ class ViewComponent::Base < ActionView::Base
   def format; end
   def helpers; end
   def initialize(*arg0); end
+  def preview_controller; end
   def preview_path; end
   def preview_paths; end
   def preview_route; end
@@ -67,10 +68,8 @@ class ViewComponent::Base < ActionView::Base
   def render_in(view_context, &block); end
   def render_monkey_patch_enabled; end
   def request; end
-  def self.call_method_name(variant); end
   def self.compile(raise_errors: nil); end
   def self.compiled?; end
-  def self.compiled_template(file_path); end
   def self.content_areas; end
   def self.content_areas=(val); end
   def self.content_areas?; end
@@ -80,9 +79,8 @@ class ViewComponent::Base < ActionView::Base
   def self.identifier; end
   def self.inherited(child); end
   def self.initialize_parameters; end
-  def self.inline_calls; end
-  def self.inline_calls_defined_on_self; end
-  def self.matching_views_in_source_location; end
+  def self.preview_controller; end
+  def self.preview_controller=(obj); end
   def self.preview_path; end
   def self.preview_path=(obj); end
   def self.preview_paths; end
@@ -100,13 +98,11 @@ class ViewComponent::Base < ActionView::Base
   def self.slots?; end
   def self.source_location; end
   def self.source_location=(arg0); end
-  def self.template_errors; end
-  def self.templates; end
+  def self.template_compiler; end
   def self.test_controller; end
   def self.test_controller=(obj); end
   def self.type; end
   def self.validate_collection_parameter!(validate_default: nil); end
-  def self.variants_from_inline_calls(calls); end
   def self.virtual_path; end
   def self.virtual_path=(arg0); end
   def self.with_collection(collection, **args); end
@@ -133,6 +129,22 @@ module ViewComponent::RenderMonkeyPatch
 end
 module ViewComponent::RenderComponentHelper
   def render_component(component, &block); end
+end
+class ViewComponent::Compiler
+  def call_method_name(variant); end
+  def compile(raise_errors: nil); end
+  def compiled?; end
+  def compiled_template(file_path); end
+  def component_class; end
+  def define_render_template_for; end
+  def initialize(component_class); end
+  def inline_calls; end
+  def inline_calls_defined_on_self; end
+  def matching_views_in_source_location; end
+  def template_errors; end
+  def templates; end
+  def variants; end
+  def variants_from_inline_calls(calls); end
 end
 module ViewComponent::RenderingMonkeyPatch
   def render(options = nil, args = nil); end

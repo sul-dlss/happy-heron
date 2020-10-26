@@ -21,7 +21,7 @@ module Psych
   def self.dump_tags=(arg0); end
   def self.libyaml_version; end
   def self.load(yaml, legacy_filename = nil, filename: nil, fallback: nil, symbolize_names: nil, freeze: nil); end
-  def self.load_file(path); end
+  def self.load_file(path, *args); end
   def self.load_stream(yaml, legacy_filename = nil, filename: nil, fallback: nil); end
   def self.load_tags; end
   def self.load_tags=(arg0); end

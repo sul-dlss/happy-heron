@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activemodel/all/activemodel.rbi
 #
-# activemodel-6.0.3.3
+# activemodel-6.0.3.4
 
 module ActiveModel
   def self.eager_load!; end
@@ -264,6 +264,24 @@ end
 class ActiveModel::SecurePassword::InstanceMethodsOnActivation < Module
   def initialize(attribute); end
 end
+class ActiveModel::Validator
+  def initialize(options = nil); end
+  def kind; end
+  def options; end
+  def self.kind; end
+  def validate(record); end
+end
+class ActiveModel::EachValidator < ActiveModel::Validator
+  def attributes; end
+  def check_validity!; end
+  def initialize(options); end
+  def validate(record); end
+  def validate_each(record, attribute, value); end
+end
+class ActiveModel::BlockValidator < ActiveModel::EachValidator
+  def initialize(options, &block); end
+  def validate_each(record, attribute, value); end
+end
 module ActiveModel::Validations
   def errors; end
   def initialize_dup(other); end
@@ -276,6 +294,45 @@ module ActiveModel::Validations
   def validate(context = nil); end
   def validates_with(*args, &block); end
   extend ActiveSupport::Concern
+end
+class ActiveModel::Validations::ConfirmationValidator < ActiveModel::EachValidator
+  def confirmation_value_equal?(record, attribute, value, confirmed); end
+  def initialize(options); end
+  def setup!(klass); end
+  def validate_each(record, attribute, value); end
+end
+module ActiveModel::Validations::HelperMethods
+  def _merge_attributes(attr_names); end
+  def validates_absence_of(*attr_names); end
+  def validates_acceptance_of(*attr_names); end
+  def validates_confirmation_of(*attr_names); end
+  def validates_exclusion_of(*attr_names); end
+  def validates_format_of(*attr_names); end
+  def validates_inclusion_of(*attr_names); end
+  def validates_length_of(*attr_names); end
+  def validates_numericality_of(*attr_names); end
+  def validates_presence_of(*attr_names); end
+  def validates_size_of(*attr_names); end
+end
+class ActiveModel::Validations::AcceptanceValidator < ActiveModel::EachValidator
+  def acceptable_option?(value); end
+  def initialize(options); end
+  def setup!(klass); end
+  def validate_each(record, attribute, value); end
+end
+class ActiveModel::Validations::AcceptanceValidator::LazilyDefineAttributes < Module
+  def ==(other); end
+  def attributes; end
+  def define_on(klass); end
+  def included(klass); end
+  def initialize(attributes); end
+  def matches?(method_name); end
+end
+class ActiveModel::Validations::PresenceValidator < ActiveModel::EachValidator
+  def validate_each(record, attr_name, value); end
+end
+class ActiveModel::Validations::WithValidator < ActiveModel::EachValidator
+  def validate_each(record, attr, val); end
 end
 module ActiveModel::Validations::ClassMethods
   def _parse_validates_options(options); end
@@ -297,43 +354,38 @@ module ActiveModel::Validations::Clusivity
   def include?(record, value); end
   def inclusion_method(enumerable); end
 end
-class ActiveModel::Validator
-  def initialize(options = nil); end
-  def kind; end
-  def options; end
-  def self.kind; end
-  def validate(record); end
-end
-class ActiveModel::EachValidator < ActiveModel::Validator
-  def attributes; end
-  def check_validity!; end
-  def initialize(options); end
-  def validate(record); end
-  def validate_each(record, attribute, value); end
-end
-class ActiveModel::BlockValidator < ActiveModel::EachValidator
-  def initialize(options, &block); end
-  def validate_each(record, attribute, value); end
-end
 class ActiveModel::Validations::InclusionValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value); end
   include ActiveModel::Validations::Clusivity
 end
-module ActiveModel::Validations::HelperMethods
-  def _merge_attributes(attr_names); end
-  def validates_absence_of(*attr_names); end
-  def validates_acceptance_of(*attr_names); end
-  def validates_confirmation_of(*attr_names); end
-  def validates_exclusion_of(*attr_names); end
-  def validates_format_of(*attr_names); end
-  def validates_inclusion_of(*attr_names); end
-  def validates_length_of(*attr_names); end
-  def validates_numericality_of(*attr_names); end
-  def validates_presence_of(*attr_names); end
-  def validates_size_of(*attr_names); end
+class ActiveModel::Validations::ExclusionValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value); end
+  include ActiveModel::Validations::Clusivity
 end
 class ActiveModel::Validations::AbsenceValidator < ActiveModel::EachValidator
   def validate_each(record, attr_name, value); end
+end
+class ActiveModel::Validations::LengthValidator < ActiveModel::EachValidator
+  def check_validity!; end
+  def initialize(options); end
+  def skip_nil_check?(key); end
+  def validate_each(record, attribute, value); end
+end
+class ActiveModel::Validations::FormatValidator < ActiveModel::EachValidator
+  def check_options_validity(name); end
+  def check_validity!; end
+  def option_call(record, name); end
+  def record_error(record, attribute, name, value); end
+  def regexp_using_multiline_anchors?(regexp); end
+  def validate_each(record, attribute, value); end
+end
+module ActiveModel::Validations::Callbacks
+  def run_validations!; end
+  extend ActiveSupport::Concern
+end
+module ActiveModel::Validations::Callbacks::ClassMethods
+  def after_validation(*args, &block); end
+  def before_validation(*args, &block); end
 end
 class ActiveModel::Validations::NumericalityValidator < ActiveModel::EachValidator
   def allow_only_integer?(record); end
@@ -345,58 +397,6 @@ class ActiveModel::Validations::NumericalityValidator < ActiveModel::EachValidat
   def parse_as_number(raw_value); end
   def record_attribute_changed_in_place?(record, attr_name); end
   def validate_each(record, attr_name, value); end
-end
-module ActiveModel::Validations::Callbacks
-  def run_validations!; end
-  extend ActiveSupport::Concern
-end
-module ActiveModel::Validations::Callbacks::ClassMethods
-  def after_validation(*args, &block); end
-  def before_validation(*args, &block); end
-end
-class ActiveModel::Validations::ExclusionValidator < ActiveModel::EachValidator
-  def validate_each(record, attribute, value); end
-  include ActiveModel::Validations::Clusivity
-end
-class ActiveModel::Validations::ConfirmationValidator < ActiveModel::EachValidator
-  def confirmation_value_equal?(record, attribute, value, confirmed); end
-  def initialize(options); end
-  def setup!(klass); end
-  def validate_each(record, attribute, value); end
-end
-class ActiveModel::Validations::FormatValidator < ActiveModel::EachValidator
-  def check_options_validity(name); end
-  def check_validity!; end
-  def option_call(record, name); end
-  def record_error(record, attribute, name, value); end
-  def regexp_using_multiline_anchors?(regexp); end
-  def validate_each(record, attribute, value); end
-end
-class ActiveModel::Validations::PresenceValidator < ActiveModel::EachValidator
-  def validate_each(record, attr_name, value); end
-end
-class ActiveModel::Validations::LengthValidator < ActiveModel::EachValidator
-  def check_validity!; end
-  def initialize(options); end
-  def skip_nil_check?(key); end
-  def validate_each(record, attribute, value); end
-end
-class ActiveModel::Validations::AcceptanceValidator < ActiveModel::EachValidator
-  def acceptable_option?(value); end
-  def initialize(options); end
-  def setup!(klass); end
-  def validate_each(record, attribute, value); end
-end
-class ActiveModel::Validations::AcceptanceValidator::LazilyDefineAttributes < Module
-  def ==(other); end
-  def attributes; end
-  def define_on(klass); end
-  def included(klass); end
-  def initialize(attributes); end
-  def matches?(method_name); end
-end
-class ActiveModel::Validations::WithValidator < ActiveModel::EachValidator
-  def validate_each(record, attr, val); end
 end
 class ActiveModel::ValidationError < StandardError
   def initialize(model); end

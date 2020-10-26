@@ -54,7 +54,7 @@ module ActionPolicy::PrettyPrint
   def self.colorize(val); end
   def self.ignore_expressions; end
   def self.ignore_expressions=(arg0); end
-  def self.print_method(_1, _2); end
+  def self.print_method(_, _); end
 end
 class ActionPolicy::PrettyPrint::Visitor
   def collect(ast); end

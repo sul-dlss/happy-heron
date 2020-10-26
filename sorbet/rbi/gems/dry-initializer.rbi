@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-initializer/all/dry-initializer.rbi
 #
-# dry-initializer-3.0.3
+# dry-initializer-3.0.4
 
 module Dry::Initializer::UNDEFINED
 end
