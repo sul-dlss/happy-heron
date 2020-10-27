@@ -4,9 +4,9 @@
 require 'rails_helper'
 
 RSpec.describe RelatedLink do
-  subject(:related_link) { create(:related_link, work: work) }
+  subject(:related_link) { build(:related_link, work: work) }
 
-  let(:work) { create(:work) }
+  let(:work) { build(:work) }
 
   it 'has a title' do
     expect(related_link.link_title).to be_present

@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe User do
-  subject(:user) { create(:user) }
+  subject(:user) { build(:user) }
 
   context 'when email not provided' do
     let(:invalid_user) { described_class.new }
@@ -16,6 +16,8 @@ RSpec.describe User do
   end
 
   context 'when email is already used' do
+    before { user.save! }
+
     let(:invalid_user) { described_class.new(email: user.email) }
 
     it 'validates email is unique' do
@@ -25,7 +27,9 @@ RSpec.describe User do
   end
 
   context 'with notifications' do
-    let(:notification) { create(:notification, user: user) }
+    subject(:user) { build(:user, notifications: [notification]) }
+
+    let(:notification) { build(:notification) }
 
     it 'has notifications' do
       expect(user.notifications).to include(notification)

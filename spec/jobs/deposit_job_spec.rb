@@ -9,7 +9,7 @@ RSpec.describe DepositJob do
   let(:client) { instance_double(Dor::Services::Client, objects: objects) }
   let(:druid) { 'druid:bc123df4567' }
   let(:model) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
-  let(:work) { create(:work) }
+  let(:work) { build(:work, id: 8) }
 
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
