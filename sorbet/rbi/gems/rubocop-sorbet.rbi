@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-sorbet/all/rubocop-sorbet.rbi
 #
-# rubocop-sorbet-0.5.0
+# rubocop-sorbet-0.5.1
 
 module RuboCop
 end
@@ -25,8 +25,10 @@ end
 class RuboCop::Cop::Sorbet::BindingConstantWithoutTypeAlias < RuboCop::Cop::Cop
   def autocorrect(node); end
   def binding_unaliased_type?(param0 = nil); end
+  def dynamic_type_creation_with_block?(param0 = nil); end
   def generic_parameter_decl?(param0 = nil); end
   def method_needing_aliasing_on_t?(param0); end
+  def not_dynamic_type_creation_with_block?(node); end
   def not_generic_parameter_decl?(node); end
   def not_nil?(node); end
   def not_t_let?(node); end

@@ -13126,8 +13126,8 @@ class ActiveRecord::Base
   extend ::ActiveRecord::SecureToken::ClassMethods
   extend ::ActiveRecord::Suppressor::ClassMethods
   extend ::OrmAdapter::ToAdapter
-  extend ::SorbetRails::CustomFinderMethods
   extend ::Devise::Models
+  extend ::SorbetRails::CustomFinderMethods
   def self.__callbacks(); end
 
   def self.__callbacks=(val); end
@@ -25297,6 +25297,10 @@ end
 
 BasicObject::BasicObject = BasicObject
 
+class BasicSocket
+  def read_nonblock(len, str=T.unsafe(nil), exception: T.unsafe(nil)); end
+end
+
 class Benchmark::Job
   def initialize(width); end
 end
@@ -31135,8 +31139,6 @@ end
 class Cocina::Models::Access
   def access(); end
 
-  def download(); end
-
   def readLocation(); end
 end
 
@@ -31335,6 +31337,8 @@ class Cocina::Models::Description
 
   def form(); end
 
+  def geographic(); end
+
   def identifier(); end
 
   def language(); end
@@ -31395,6 +31399,8 @@ class Cocina::Models::DescriptiveBasicValue
 
   def encoding(); end
 
+  def identifier(); end
+
   def note(); end
 
   def parallelValue(); end
@@ -31421,6 +31427,15 @@ end
 class Cocina::Models::DescriptiveBasicValue
 end
 
+class Cocina::Models::DescriptiveGeographicMetadata
+  def form(); end
+
+  def subject(); end
+end
+
+class Cocina::Models::DescriptiveGeographicMetadata
+end
+
 class Cocina::Models::DescriptiveParallelValue
   def parallelValue(); end
 end
@@ -31443,6 +31458,8 @@ class Cocina::Models::DescriptiveValue
   def displayLabel(); end
 
   def encoding(); end
+
+  def identifier(); end
 
   def note(); end
 
@@ -31482,44 +31499,11 @@ class Cocina::Models::DescriptiveValueLanguage
   def value(); end
 
   def valueScript(); end
+
+  def version(); end
 end
 
 class Cocina::Models::DescriptiveValueLanguage
-end
-
-class Cocina::Models::DescriptiveValueRequired
-  def appliesTo(); end
-
-  def code(); end
-
-  def displayLabel(); end
-
-  def encoding(); end
-
-  def note(); end
-
-  def parallelValue(); end
-
-  def qualifier(); end
-
-  def source(); end
-
-  def standard(); end
-
-  def status(); end
-
-  def structuredValue(); end
-
-  def type(); end
-
-  def uri(); end
-
-  def value(); end
-
-  def valueLanguage(); end
-end
-
-class Cocina::Models::DescriptiveValueRequired
 end
 
 class Cocina::Models::Embargo
@@ -31537,6 +31521,10 @@ class Cocina::Models::Event
   def contributor(); end
 
   def date(); end
+
+  def displayLabel(); end
+
+  def identifier(); end
 
   def location(); end
 
@@ -31668,8 +31656,6 @@ class Cocina::Models::Language
 
   def structuredValue(); end
 
-  def type(); end
-
   def uri(); end
 
   def value(); end
@@ -31705,6 +31691,8 @@ class Cocina::Models::RelatedResource
 
   def contributor(); end
 
+  def displayLabel(); end
+
   def event(); end
 
   def form(); end
@@ -31717,11 +31705,17 @@ class Cocina::Models::RelatedResource
 
   def purl(); end
 
+  def standard(); end
+
+  def status(); end
+
   def subject(); end
 
   def title(); end
 
   def type(); end
+
+  def version(); end
 end
 
 class Cocina::Models::RelatedResource
@@ -31900,6 +31894,8 @@ class Cocina::Models::Source
   def uri(); end
 
   def value(); end
+
+  def version(); end
 end
 
 class Cocina::Models::Source
@@ -31915,9 +31911,48 @@ class Cocina::Models::Standard
   def uri(); end
 
   def value(); end
+
+  def version(); end
 end
 
 class Cocina::Models::Standard
+end
+
+class Cocina::Models::Title
+  def appliesTo(); end
+
+  def code(); end
+
+  def displayLabel(); end
+
+  def encoding(); end
+
+  def identifier(); end
+
+  def note(); end
+
+  def parallelValue(); end
+
+  def qualifier(); end
+
+  def source(); end
+
+  def standard(); end
+
+  def status(); end
+
+  def structuredValue(); end
+
+  def type(); end
+
+  def uri(); end
+
+  def value(); end
+
+  def valueLanguage(); end
+end
+
+class Cocina::Models::Title
 end
 
 class Cocina::Models::Validator
@@ -32245,6 +32280,11 @@ end
 
 module Contributor::GeneratedRelationMethods
   extend ::Mutex_m
+end
+
+class Contributor
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Crass::Parser
@@ -32760,6 +32800,10 @@ end
 
 class DateTime
   def self.civil_from_format(utc_or_local, year, month=T.unsafe(nil), day=T.unsafe(nil), hour=T.unsafe(nil), min=T.unsafe(nil), sec=T.unsafe(nil)); end
+end
+
+module Declarative::Schema::DSL
+  NestedBuilder = ::T.let(nil, ::T.untyped)
 end
 
 module DeepMerge
@@ -34670,6 +34714,183 @@ class Dir
   def self.exists?(_); end
 end
 
+module Disposable
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Disposable::Twin
+  INVALID_PROPERTY_NAMES = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion
+  DRY_TYPES_VERSION = ::T.let(nil, ::T.untyped)
+end
+
+Disposable::Twin::Coercion::DRY_TYPES_CONSTANT = Disposable::Twin::Coercion::Types::DRY_MODULE::Params
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE
+  Any = ::T.let(nil, ::T.untyped)
+  Array = ::T.let(nil, ::T.untyped)
+  Bool = ::T.let(nil, ::T.untyped)
+  Class = ::T.let(nil, ::T.untyped)
+  Date = ::T.let(nil, ::T.untyped)
+  DateTime = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  False = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  Nil = ::T.let(nil, ::T.untyped)
+  Range = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+  Time = ::T.let(nil, ::T.untyped)
+  True = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Coercible
+  Array = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::JSON
+  Array = ::T.let(nil, ::T.untyped)
+  Date = ::T.let(nil, ::T.untyped)
+  DateTime = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Nil = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+  Time = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Nominal
+  Any = ::T.let(nil, ::T.untyped)
+  Array = ::T.let(nil, ::T.untyped)
+  Bool = ::T.let(nil, ::T.untyped)
+  Class = ::T.let(nil, ::T.untyped)
+  Date = ::T.let(nil, ::T.untyped)
+  DateTime = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  False = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  Nil = ::T.let(nil, ::T.untyped)
+  Range = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+  Time = ::T.let(nil, ::T.untyped)
+  True = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional
+  Array = ::T.let(nil, ::T.untyped)
+  Class = ::T.let(nil, ::T.untyped)
+  Date = ::T.let(nil, ::T.untyped)
+  DateTime = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  False = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  Range = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+  Time = ::T.let(nil, ::T.untyped)
+  True = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional::Coercible
+  Array = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional::Params
+  Array = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional::Strict
+  Array = ::T.let(nil, ::T.untyped)
+  Class = ::T.let(nil, ::T.untyped)
+  Date = ::T.let(nil, ::T.untyped)
+  DateTime = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  False = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  Range = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+  Time = ::T.let(nil, ::T.untyped)
+  True = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Params
+  Array = ::T.let(nil, ::T.untyped)
+  Bool = ::T.let(nil, ::T.untyped)
+  Date = ::T.let(nil, ::T.untyped)
+  DateTime = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  False = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  Nil = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+  Time = ::T.let(nil, ::T.untyped)
+  True = ::T.let(nil, ::T.untyped)
+end
+
+module Disposable::Twin::Coercion::Types::DRY_MODULE::Strict
+  Any = ::T.let(nil, ::T.untyped)
+  Array = ::T.let(nil, ::T.untyped)
+  Bool = ::T.let(nil, ::T.untyped)
+  Class = ::T.let(nil, ::T.untyped)
+  Date = ::T.let(nil, ::T.untyped)
+  DateTime = ::T.let(nil, ::T.untyped)
+  Decimal = ::T.let(nil, ::T.untyped)
+  False = ::T.let(nil, ::T.untyped)
+  Float = ::T.let(nil, ::T.untyped)
+  Hash = ::T.let(nil, ::T.untyped)
+  Integer = ::T.let(nil, ::T.untyped)
+  Nil = ::T.let(nil, ::T.untyped)
+  Range = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+  Time = ::T.let(nil, ::T.untyped)
+  True = ::T.let(nil, ::T.untyped)
+end
+
+class Disposable::Twin::Definition
+  Filter = ::T.let(nil, ::T.untyped)
+end
+
+class Disposable::Twin::Definition::Each
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class Disposable::Twin
+  extend ::Disposable::Twin::Property::Unnest
+  extend ::Uber::Delegates
+end
+
 module Docile
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -35181,6 +35402,10 @@ class Dry::Logic::Rule
   Undefined = ::T.let(nil, ::T.untyped)
 end
 
+class Dry::Logic::Rule::Interface
+  SPLAT = ::T.let(nil, ::T.untyped)
+end
+
 class Dry::Logic::RuleCompiler
   EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
   EMPTY_HASH = ::T.let(nil, ::T.untyped)
@@ -35461,8 +35686,6 @@ module Enumerable
 
   def sum(identity=T.unsafe(nil), &block); end
 
-  def tally(); end
-
   def without(*elements); end
 end
 
@@ -35520,90 +35743,35 @@ class Enumerator
   def self.produce(*_); end
 end
 
-class Errno::EAUTH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EAUTH = Errno::NOERROR
 
-class Errno::EAUTH
-end
+Errno::EBADARCH = Errno::NOERROR
 
-class Errno::EBADARCH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EBADEXEC = Errno::NOERROR
 
-class Errno::EBADARCH
-end
+Errno::EBADMACHO = Errno::NOERROR
 
-class Errno::EBADEXEC
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EBADEXEC
-end
-
-class Errno::EBADMACHO
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EBADMACHO
-end
-
-class Errno::EBADRPC
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EBADRPC
-end
+Errno::EBADRPC = Errno::NOERROR
 
 Errno::ECAPMODE = Errno::NOERROR
 
-Errno::EDEADLOCK = Errno::NOERROR
+Errno::EDEADLOCK = Errno::EDEADLK
 
-class Errno::EDEVERR
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EDEVERR
-end
+Errno::EDEVERR = Errno::NOERROR
 
 Errno::EDOOFUS = Errno::NOERROR
 
-class Errno::EFTYPE
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EFTYPE
-end
+Errno::EFTYPE = Errno::NOERROR
 
 Errno::EIPSEC = Errno::NOERROR
 
-class Errno::ELAST
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::ELAST = Errno::NOERROR
 
-class Errno::ELAST
-end
+Errno::ENEEDAUTH = Errno::NOERROR
 
-class Errno::ENEEDAUTH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::ENOATTR = Errno::NOERROR
 
-class Errno::ENEEDAUTH
-end
-
-class Errno::ENOATTR
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ENOATTR
-end
-
-class Errno::ENOPOLICY
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ENOPOLICY
-end
+Errno::ENOPOLICY = Errno::NOERROR
 
 Errno::ENOTCAPABLE = Errno::NOERROR
 
@@ -35614,56 +35782,21 @@ end
 class Errno::ENOTSUP
 end
 
-class Errno::EPROCLIM
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EPROCLIM = Errno::NOERROR
 
-class Errno::EPROCLIM
-end
+Errno::EPROCUNAVAIL = Errno::NOERROR
 
-class Errno::EPROCUNAVAIL
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EPROGMISMATCH = Errno::NOERROR
 
-class Errno::EPROCUNAVAIL
-end
+Errno::EPROGUNAVAIL = Errno::NOERROR
 
-class Errno::EPROGMISMATCH
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::EPWROFF = Errno::NOERROR
 
-class Errno::EPROGMISMATCH
-end
+Errno::EQFULL = Errno::NOERROR
 
-class Errno::EPROGUNAVAIL
-  Errno = ::T.let(nil, ::T.untyped)
-end
+Errno::ERPCMISMATCH = Errno::NOERROR
 
-class Errno::EPROGUNAVAIL
-end
-
-class Errno::EPWROFF
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::EPWROFF
-end
-
-Errno::EQFULL = Errno::ELAST
-
-class Errno::ERPCMISMATCH
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ERPCMISMATCH
-end
-
-class Errno::ESHLIBVERS
-  Errno = ::T.let(nil, ::T.untyped)
-end
-
-class Errno::ESHLIBVERS
-end
+Errno::ESHLIBVERS = Errno::NOERROR
 
 module Erubi
   RANGE_ALL = ::T.let(nil, ::T.untyped)
@@ -35705,15 +35838,7 @@ class Etc::Group
 end
 
 class Etc::Passwd
-  def change(); end
-
-  def change=(_); end
-
   def dir=(_); end
-
-  def expire(); end
-
-  def expire=(_); end
 
   def gecos(); end
 
@@ -35726,10 +35851,6 @@ class Etc::Passwd
   def passwd=(_); end
 
   def shell=(_); end
-
-  def uclass(); end
-
-  def uclass=(_); end
 
   def uid=(_); end
 end
@@ -35888,6 +36009,7 @@ module FFI::Platform
   DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
   FLOAT_ALIGN = ::T.let(nil, ::T.untyped)
   FLOAT_SIZE = ::T.let(nil, ::T.untyped)
+  GNU_LIBC = ::T.let(nil, ::T.untyped)
   INT16_ALIGN = ::T.let(nil, ::T.untyped)
   INT16_SIZE = ::T.let(nil, ::T.untyped)
   INT32_ALIGN = ::T.let(nil, ::T.untyped)
@@ -37868,7 +37990,10 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
+  def removed_method_calls(); end
+
   def to_ruby(); end
+  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -38822,6 +38947,37 @@ module INotify
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module INotify::Native::Flags
+  IN_ACCESS = ::T.let(nil, ::T.untyped)
+  IN_ALL_EVENTS = ::T.let(nil, ::T.untyped)
+  IN_ATTRIB = ::T.let(nil, ::T.untyped)
+  IN_CLOSE = ::T.let(nil, ::T.untyped)
+  IN_CLOSE_NOWRITE = ::T.let(nil, ::T.untyped)
+  IN_CLOSE_WRITE = ::T.let(nil, ::T.untyped)
+  IN_CREATE = ::T.let(nil, ::T.untyped)
+  IN_DELETE = ::T.let(nil, ::T.untyped)
+  IN_DELETE_SELF = ::T.let(nil, ::T.untyped)
+  IN_DONT_FOLLOW = ::T.let(nil, ::T.untyped)
+  IN_IGNORED = ::T.let(nil, ::T.untyped)
+  IN_ISDIR = ::T.let(nil, ::T.untyped)
+  IN_MASK_ADD = ::T.let(nil, ::T.untyped)
+  IN_MODIFY = ::T.let(nil, ::T.untyped)
+  IN_MOVE = ::T.let(nil, ::T.untyped)
+  IN_MOVED_FROM = ::T.let(nil, ::T.untyped)
+  IN_MOVED_TO = ::T.let(nil, ::T.untyped)
+  IN_MOVE_SELF = ::T.let(nil, ::T.untyped)
+  IN_ONESHOT = ::T.let(nil, ::T.untyped)
+  IN_ONLYDIR = ::T.let(nil, ::T.untyped)
+  IN_OPEN = ::T.let(nil, ::T.untyped)
+  IN_Q_OVERFLOW = ::T.let(nil, ::T.untyped)
+  IN_UNMOUNT = ::T.let(nil, ::T.untyped)
+  PC_NAME_MAX = ::T.let(nil, ::T.untyped)
+end
+
+class INotify::Notifier
+  RECURSIVE_BLACKLIST = ::T.let(nil, ::T.untyped)
+end
+
 class IO
   def beep(); end
 
@@ -39210,6 +39366,7 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
+  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -40461,8 +40618,6 @@ class Module
 
   def cattr_writer(*syms, instance_writer: T.unsafe(nil), instance_accessor: T.unsafe(nil), default: T.unsafe(nil)); end
 
-  def const_source_location(*_); end
-
   def delegate(*methods, to: T.unsafe(nil), prefix: T.unsafe(nil), allow_nil: T.unsafe(nil), private: T.unsafe(nil)); end
 
   def delegate_missing_to(target); end
@@ -40582,6 +40737,27 @@ class MonitorMixin::ConditionVariable
   def initialize(monitor); end
 end
 
+module MultiJson
+  ALIASES = ::T.let(nil, ::T.untyped)
+  REQUIREMENT_MAP = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+MultiJson::DecodeError = MultiJson::ParseError
+
+MultiJson::LoadError = MultiJson::ParseError
+
+module MultiJson::OptionsCache
+  MAX_CACHE_SIZE = ::T.let(nil, ::T.untyped)
+end
+
+class MultiJson::Version
+  MAJOR = ::T.let(nil, ::T.untyped)
+  MINOR = ::T.let(nil, ::T.untyped)
+  PATCH = ::T.let(nil, ::T.untyped)
+  PRE = ::T.let(nil, ::T.untyped)
+end
+
 module Mutex_m
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -40679,8 +40855,6 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-Net::HTTPInformation::EXCEPTION_TYPE = Net::HTTPError
-
 Net::HTTPInformationCode = Net::HTTPInformation
 
 class Net::HTTPLoopDetected
@@ -40744,8 +40918,6 @@ Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
-
-Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
 
 Net::HTTPSuccessCode = Net::HTTPSuccess
 
@@ -41902,6 +42074,7 @@ module PG::Constants
   PG_DIAG_STATEMENT_POSITION = ::T.let(nil, ::T.untyped)
   PG_DIAG_TABLE_NAME = ::T.let(nil, ::T.untyped)
   PQERRORS_DEFAULT = ::T.let(nil, ::T.untyped)
+  PQERRORS_SQLSTATE = ::T.let(nil, ::T.untyped)
   PQERRORS_TERSE = ::T.let(nil, ::T.untyped)
   PQERRORS_VERBOSE = ::T.let(nil, ::T.untyped)
   PQPING_NO_ATTEMPT = ::T.let(nil, ::T.untyped)
@@ -43605,40 +43778,40 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M11080
+module Polyfill::Module::M11480
 end
 
-module Polyfill::Module::M11080
+module Polyfill::Module::M11480
 end
 
-module Polyfill::Module::M11100
+module Polyfill::Module::M11500
 end
 
-module Polyfill::Module::M11100
+module Polyfill::Module::M11500
 end
 
-module Polyfill::Module::M11120
+module Polyfill::Module::M11520
 end
 
-module Polyfill::Module::M11120
+module Polyfill::Module::M11520
 end
 
-module Polyfill::Module::M11140
+module Polyfill::Module::M11540
 end
 
-module Polyfill::Module::M11140
+module Polyfill::Module::M11540
 end
 
-module Polyfill::Module::M11160
+module Polyfill::Module::M11560
 end
 
-module Polyfill::Module::M11160
+module Polyfill::Module::M11560
 end
 
-module Polyfill::Module::M11200
+module Polyfill::Module::M11600
 end
 
-module Polyfill::Module::M11200
+module Polyfill::Module::M11600
 end
 
 class Proc
@@ -43647,6 +43820,10 @@ class Proc
   def >>(_); end
 
   def clone(); end
+end
+
+module Process
+  CLOCK_TAI = ::T.let(nil, ::T.untyped)
 end
 
 class ProgressBar::Components::Bar
@@ -43707,6 +43884,7 @@ module Psych
 end
 
 module Psych
+  extend ::Bootsnap::CompileCache::YAML::Patch
   def self.add_builtin_type(type_tag, &block); end
 
   def self.add_domain_type(domain, type_tag, &block); end
@@ -43887,6 +44065,7 @@ end
 
 class Puma::Server
   ThreadLocalKey = ::T.let(nil, ::T.untyped)
+  UNPACK_TCP_STATE_FROM_TCP_INFO = ::T.let(nil, ::T.untyped)
 end
 
 class Puma::ThreadPool
@@ -46220,6 +46399,213 @@ class Redis::HashRing
   def self.binary_search(ary, value); end
 end
 
+class Reform::Contract::Result::Errors
+  DottedErrors = ::T.let(nil, ::T.untyped)
+end
+
+class Reform::Form
+  include ::Reform::Form::ActiveModel
+  include ::Reform::Form::ActiveModel::FormBuilderMethods
+  include ::Reform::Form::ActiveRecord
+  include ::Reform::Form::ORM
+  include ::Reform::Form::ActiveModel::Validations
+  def to_model(); end
+  Deserialize = ::T.let(nil, ::T.untyped)
+end
+
+module Reform::Form::ActiveModel
+  def model_name(*args); end
+end
+
+module Reform::Form::ActiveModel::ClassMethods
+  def model(main_model, options=T.unsafe(nil)); end
+
+  def model_name(); end
+
+  def property(*_); end
+
+  def validate(*args, &block); end
+
+  def validates(*args, &block); end
+
+  def validates_each(*args, &block); end
+
+  def validates_with(*args, &block); end
+end
+
+module Reform::Form::ActiveModel::ClassMethods
+  def self.extended(base); end
+end
+
+module Reform::Form::ActiveModel::FormBuilderMethods
+  def deserialize!(params); end
+end
+
+module Reform::Form::ActiveModel::FormBuilderMethods
+  def self.included(base); end
+end
+
+module Reform::Form::ActiveModel::ModelReflections
+  def column_for_attribute(name); end
+
+  def defined_enums(); end
+
+  def has_attribute?(name); end
+end
+
+module Reform::Form::ActiveModel::ModelReflections::ClassMethods
+  def reflect_on_association(*args); end
+
+  def validators_on(*args); end
+end
+
+module Reform::Form::ActiveModel::ModelReflections::ClassMethods
+end
+
+module Reform::Form::ActiveModel::ModelReflections
+  def self.included(base); end
+end
+
+module Reform::Form::ActiveModel::ModelValidations
+  def copy_validations_from(models); end
+end
+
+class Reform::Form::ActiveModel::ModelValidations::Mapping
+  def add(from, to); end
+
+  def forward(attr); end
+
+  def forward_image(attrs); end
+
+  def inverse(attr); end
+
+  def inverse_image(attrs); end
+end
+
+class Reform::Form::ActiveModel::ModelValidations::Mapping
+  def self.from_representable_attrs(attrs); end
+end
+
+class Reform::Form::ActiveModel::ModelValidations::ValidationCopier
+  def copy(); end
+
+  def initialize(form_class, mapping, model, model_name=T.unsafe(nil)); end
+end
+
+class Reform::Form::ActiveModel::ModelValidations::ValidationCopier
+  def self.copy(form_class, mapping, models); end
+end
+
+module Reform::Form::ActiveModel::ModelValidations
+end
+
+module Reform::Form::ActiveModel::Validations
+  def custom_errors(); end
+
+  def errors(*args); end
+
+  def initialize(*_); end
+
+  def read_attribute_for_validation(name); end
+
+  def validate!(params, pointers=T.unsafe(nil)); end
+end
+
+module Reform::Form::ActiveModel::Validations
+  def self.included(includer); end
+end
+
+module Reform::Form::ActiveModel
+  def self.included(base); end
+end
+
+module Reform::Form::ActiveRecord
+  def to_nested_hash(*_); end
+end
+
+module Reform::Form::ActiveRecord::ClassMethods
+  def i18n_scope(); end
+
+  def validates_uniqueness_of(attribute, options=T.unsafe(nil)); end
+end
+
+module Reform::Form::ActiveRecord::ClassMethods
+end
+
+class Reform::Form::ActiveRecord::UniquenessValidator
+  include ::Reform::Form::ORM::UniquenessValidator
+end
+
+class Reform::Form::ActiveRecord::UniquenessValidator
+end
+
+module Reform::Form::ActiveRecord
+  def self.included(base); end
+end
+
+class Reform::Form::Call::Result
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+Reform::Form::Coercion = Disposable::Twin::Coercion
+
+Reform::Form::ModelReflections = Reform::Form::ActiveModel::ModelReflections
+
+module Reform::Form::MultiParameterAttributes
+  def deserialize!(params); end
+end
+
+class Reform::Form::MultiParameterAttributes::DateTimeParamsFilter
+  def call(params); end
+end
+
+class Reform::Form::MultiParameterAttributes::DateTimeParamsFilter
+end
+
+module Reform::Form::MultiParameterAttributes
+end
+
+module Reform::Form::ORM
+  def model_for_property(name); end
+end
+
+module Reform::Form::ORM::UniquenessValidator
+  def validate(form); end
+end
+
+module Reform::Form::ORM::UniquenessValidator
+end
+
+module Reform::Form::ORM
+end
+
+class Reform::Form
+  extend ::Reform::Form::ActiveModel::ClassMethods
+  extend ::Uber::InheritableAttr
+  extend ::Reform::Form::ActiveRecord::ClassMethods
+  def self.active_model_really_sucks(); end
+
+  def self.model_options(); end
+
+  def self.model_options=(v); end
+end
+
+module Reform::Rails
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Reform::Rails::Railtie
+  def active_model!(); end
+
+  def dry!(enable_am=T.unsafe(nil)); end
+end
+
+class Reform::Rails::Railtie
+end
+
+module Reform::Rails
+end
+
 class Regexp
   def multiline?(); end
   TOKEN_KEYS = ::T.let(nil, ::T.untyped)
@@ -47299,6 +47685,385 @@ module Reline
   def self.vi_editing_mode?(*args, &block); end
 end
 
+module Representable
+  As = ::T.let(nil, ::T.untyped)
+  AssignAs = ::T.let(nil, ::T.untyped)
+  AssignFragment = ::T.let(nil, ::T.untyped)
+  AssignName = ::T.let(nil, ::T.untyped)
+  Decorate = ::T.let(nil, ::T.untyped)
+  Default = ::T.let(nil, ::T.untyped)
+  Deserialize = ::T.let(nil, ::T.untyped)
+  Deserializer = ::T.let(nil, ::T.untyped)
+  FindOrInstantiate = ::T.let(nil, ::T.untyped)
+  GetValue = ::T.let(nil, ::T.untyped)
+  Getter = ::T.let(nil, ::T.untyped)
+  If = ::T.let(nil, ::T.untyped)
+  OptionsForNested = ::T.let(nil, ::T.untyped)
+  OverwriteOnNil = ::T.let(nil, ::T.untyped)
+  ParseFilter = ::T.let(nil, ::T.untyped)
+  Prepare = ::T.let(nil, ::T.untyped)
+  ReadFragment = ::T.let(nil, ::T.untyped)
+  Reader = ::T.let(nil, ::T.untyped)
+  RenderDefault = ::T.let(nil, ::T.untyped)
+  RenderFilter = ::T.let(nil, ::T.untyped)
+  Serialize = ::T.let(nil, ::T.untyped)
+  Serializer = ::T.let(nil, ::T.untyped)
+  SetValue = ::T.let(nil, ::T.untyped)
+  Setter = ::T.let(nil, ::T.untyped)
+  SkipParse = ::T.let(nil, ::T.untyped)
+  SkipRender = ::T.let(nil, ::T.untyped)
+  Stop = ::T.let(nil, ::T.untyped)
+  StopOnExcluded = ::T.let(nil, ::T.untyped)
+  StopOnNil = ::T.let(nil, ::T.untyped)
+  StopOnNotFound = ::T.let(nil, ::T.untyped)
+  StopOnSkipable = ::T.let(nil, ::T.untyped)
+  WriteFragment = ::T.let(nil, ::T.untyped)
+  Writer = ::T.let(nil, ::T.untyped)
+end
+
+module Representable::CreateObject
+  Class = ::T.let(nil, ::T.untyped)
+  Instance = ::T.let(nil, ::T.untyped)
+  Populator = ::T.let(nil, ::T.untyped)
+end
+
+module Representable::Declarative
+  NestedBuilder = ::T.let(nil, ::T.untyped)
+end
+
+class Representable::Decorator
+  extend ::Declarative::Heritage::Included
+  extend ::Declarative::Heritage::Inherited
+end
+
+module Representable::Hash::AllowSymbols
+end
+
+module Representable::Hash::AllowSymbols
+end
+
+module Representable::Hash::Collection
+  include ::Representable::Hash
+  include ::Representable
+  def create_representation_with(doc, options, format); end
+
+  def update_properties_from(doc, options, format); end
+end
+
+module Representable::Hash::Collection::ClassMethods
+  def items(options=T.unsafe(nil), &block); end
+end
+
+module Representable::Hash::Collection::ClassMethods
+end
+
+module Representable::Hash::Collection
+  extend ::Representable::Declarative
+  extend ::Declarative::Schema::DSL
+  extend ::Declarative::Schema::Feature
+  extend ::Declarative::Heritage::DSL
+  extend ::Declarative::Heritage::Included
+  extend ::Declarative::Heritage::Inherited
+  extend ::Representable::ModuleExtensions
+  extend ::Representable::ClassMethods
+  extend ::Representable::ForCollection
+  extend ::Representable::Represent
+  extend ::Representable::Hash::ClassMethods
+  def self.included(base); end
+end
+
+module Representable::JSON
+  include ::Representable::Hash
+  include ::Representable
+  def from_json(data, *args); end
+
+  def parse(data, *args); end
+
+  def render(*args); end
+
+  def to_json(*args); end
+end
+
+module Representable::JSON::ClassMethods
+  def collection_representer_class(); end
+
+  def format_engine(); end
+end
+
+module Representable::JSON::ClassMethods
+end
+
+module Representable::JSON::Collection
+  include ::Representable::JSON
+  include ::Representable::Hash
+  include ::Representable
+end
+
+module Representable::JSON::Collection
+  def self.included(base); end
+end
+
+module Representable::JSON
+  extend ::Representable::Hash::ClassMethods
+  extend ::Representable::Declarative
+  extend ::Declarative::Schema::DSL
+  extend ::Declarative::Schema::Feature
+  extend ::Declarative::Heritage::DSL
+  extend ::Declarative::Heritage::Included
+  extend ::Declarative::Heritage::Inherited
+  extend ::Representable::ModuleExtensions
+  extend ::Representable::ClassMethods
+  extend ::Representable::ForCollection
+  extend ::Representable::Represent
+  def self.included(base); end
+end
+
+module Representable::Object
+  def from_object(data, options=T.unsafe(nil), binding_builder=T.unsafe(nil)); end
+
+  def to_object(options=T.unsafe(nil), binding_builder=T.unsafe(nil)); end
+end
+
+class Representable::Object::Binding
+  def deserialize_method(); end
+
+  def read(hash, as); end
+
+  def serialize_method(); end
+
+  def write(hash, fragment, as); end
+end
+
+class Representable::Object::Binding::Collection
+  include ::Representable::Binding::Collection
+end
+
+class Representable::Object::Binding::Collection
+end
+
+class Representable::Object::Binding
+  def self.build_for(definition); end
+end
+
+module Representable::Object::ClassMethods
+  def collection_representer_class(); end
+end
+
+module Representable::Object::ClassMethods
+end
+
+module Representable::Object
+  def self.included(base); end
+end
+
+class Representable::Pipeline
+  Insert = ::T.let(nil, ::T.untyped)
+end
+
+class Representable::Populator
+  FindOrInstantiate = ::T.let(nil, ::T.untyped)
+end
+
+module Representable::XML
+  def from_node(node, options=T.unsafe(nil)); end
+
+  def from_xml(doc, *args); end
+
+  def parse(doc, *args); end
+
+  def render(*args); end
+
+  def to_node(options=T.unsafe(nil)); end
+
+  def to_xml(*args); end
+end
+
+class Representable::XML::Binding
+  def deserialize_from(nodes); end
+
+  def deserialize_method(); end
+
+  def read(node, as); end
+
+  def serialize_for(value, parent, as); end
+
+  def serialize_method(); end
+
+  def serialize_node(node, value, as); end
+
+  def write(parent, fragments, as); end
+end
+
+class Representable::XML::Binding::Attribute
+  def write(parent, value, as); end
+end
+
+class Representable::XML::Binding::Attribute
+end
+
+class Representable::XML::Binding::AttributeHash
+  def deserialize_from(node); end
+
+  def write(parent, value, as); end
+end
+
+class Representable::XML::Binding::AttributeHash
+end
+
+class Representable::XML::Binding::Collection
+  include ::Representable::Binding::Collection
+end
+
+class Representable::XML::Binding::Collection
+end
+
+class Representable::XML::Binding::Content
+  def serialize_for(value, parent); end
+
+  def write(parent, value, as); end
+end
+
+class Representable::XML::Binding::Content
+end
+
+class Representable::XML::Binding::Hash
+end
+
+class Representable::XML::Binding::Hash
+end
+
+class Representable::XML::Binding
+  def self.build_for(definition); end
+end
+
+module Representable::XML::ClassMethods
+  def collection_representer_class(); end
+
+  def format_engine(); end
+
+  def remove_namespaces!(); end
+end
+
+module Representable::XML::ClassMethods
+end
+
+module Representable::XML::Collection
+end
+
+module Representable::XML::Collection::Methods
+  def create_representation_with(doc, options, format); end
+
+  def update_properties_from(doc, *args); end
+end
+
+module Representable::XML::Collection::Methods
+end
+
+module Representable::XML::Collection
+  def self.included(base); end
+end
+
+module Representable::XML::Namespace
+  def add_namespace_definitions!(node, namespaces); end
+
+  def from_node(node, options=T.unsafe(nil)); end
+
+  def representable_map(options, format); end
+
+  def to_node(options=T.unsafe(nil)); end
+end
+
+module Representable::XML::Namespace::AsWithNamespace
+  def read(node, as); end
+
+  def write(doc, fragment, as); end
+end
+
+module Representable::XML::Namespace::AsWithNamespace
+end
+
+module Representable::XML::Namespace::DSL
+  def namespace(namespace); end
+
+  def namespace_def(mapping); end
+
+  def namespace_defs(); end
+
+  def property(name, options=T.unsafe(nil)); end
+
+  def update_namespace_defs!(namespace_defs); end
+end
+
+module Representable::XML::Namespace::DSL
+end
+
+module Representable::XML::Namespace
+  def self.Namespaced(prefix, name); end
+
+  def self.included(includer); end
+end
+
+module Representable::XML
+  def self.Node(document, name, attributes=T.unsafe(nil)); end
+
+  def self.included(base); end
+end
+
+module Representable::YAML
+  include ::Representable::Hash
+  include ::Representable
+  def from_yaml(doc, options=T.unsafe(nil)); end
+
+  def parse(doc, options=T.unsafe(nil)); end
+
+  def render(*args); end
+
+  def to_ast(options=T.unsafe(nil)); end
+
+  def to_yaml(*args); end
+end
+
+class Representable::YAML::Binding
+  def node_for(fragment); end
+
+  def write(map, fragment, as); end
+
+  def write_scalar(value); end
+end
+
+class Representable::YAML::Binding::Collection
+  include ::Representable::Binding::Collection
+  def node_for(fragments); end
+end
+
+class Representable::YAML::Binding::Collection
+end
+
+class Representable::YAML::Binding
+end
+
+module Representable::YAML::ClassMethods
+  def format_engine(); end
+end
+
+module Representable::YAML::ClassMethods
+end
+
+module Representable::YAML
+  extend ::Representable::Declarative
+  extend ::Declarative::Schema::DSL
+  extend ::Declarative::Schema::Feature
+  extend ::Declarative::Heritage::DSL
+  extend ::Declarative::Heritage::Included
+  extend ::Declarative::Heritage::Inherited
+  extend ::Representable::ModuleExtensions
+  extend ::Representable::ClassMethods
+  extend ::Representable::ForCollection
+  extend ::Representable::Represent
+  extend ::Representable::Hash::ClassMethods
+  def self.included(base); end
+end
+
 class RequestGenerator
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -48212,6 +48977,7 @@ module RuboCop::AST::NodePattern::Sets
   SET_ADD_DEPENDENCY_ADD_RUNTIME_DEPENDENCY_ADD_DEVELOPMENT_DEPENDENCY = ::T.let(nil, ::T.untyped)
   SET_AFTER_ACTION_APPEND_AFTER_ACTION_APPEND_AROUND_ACTION_ETC = ::T.let(nil, ::T.untyped)
   SET_ALL_CONTEXT = ::T.let(nil, ::T.untyped)
+  SET_AND_RETURN_AND_RAISE_AND_THROW_ETC = ::T.let(nil, ::T.untyped)
   SET_ANY_ALL_NORETURN_ETC = ::T.let(nil, ::T.untyped)
   SET_ANY_INSTANCE_ALLOW_ANY_INSTANCE_OF_EXPECT_ANY_INSTANCE_OF = ::T.let(nil, ::T.untyped)
   SET_AP_P_PP_ETC = ::T.let(nil, ::T.untyped)
@@ -48226,7 +48992,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_CALLER_CALLER_LOCATIONS = ::T.let(nil, ::T.untyped)
   SET_CALL_RUN = ::T.let(nil, ::T.untyped)
   SET_CAPTURE2_CAPTURE2E_CAPTURE3_ETC = ::T.let(nil, ::T.untyped)
-  SET_CHANNEL_CONTROLLER_HELPER_ETC = ::T.let(nil, ::T.untyped)
   SET_CIPHER_DIGEST = ::T.let(nil, ::T.untyped)
   SET_CLASS_EVAL_INSTANCE_EVAL = ::T.let(nil, ::T.untyped)
   SET_CLASS_EVAL_MODULE_EVAL = ::T.let(nil, ::T.untyped)
@@ -48285,6 +49050,7 @@ module RuboCop::AST::NodePattern::Sets
   SET_IT_SPECIFY_EXAMPLE_ETC_2 = ::T.let(nil, ::T.untyped)
   SET_IT_SPECIFY_EXAMPLE_ETC_3 = ::T.let(nil, ::T.untyped)
   SET_KEYS_VALUES = ::T.let(nil, ::T.untyped)
+  SET_KEY_HAS_KEY_FETCH_ETC = ::T.let(nil, ::T.untyped)
   SET_LAST_FIRST = ::T.let(nil, ::T.untyped)
   SET_LENGTH_SIZE = ::T.let(nil, ::T.untyped)
   SET_LET_LET = ::T.let(nil, ::T.untyped)
@@ -48303,6 +49069,7 @@ module RuboCop::AST::NodePattern::Sets
   SET_PREPEND_BEFORE_BEFORE_APPEND_BEFORE_ETC_2 = ::T.let(nil, ::T.untyped)
   SET_PRIVATE_PROTECTED = ::T.let(nil, ::T.untyped)
   SET_PRIVATE_PROTECTED_PUBLIC = ::T.let(nil, ::T.untyped)
+  SET_PROC_LAMBDA = ::T.let(nil, ::T.untyped)
   SET_PROP_CONST = ::T.let(nil, ::T.untyped)
   SET_PRY_REMOTE_PRY_PRY_REMOTE_CONSOLE = ::T.let(nil, ::T.untyped)
   SET_PUBLIC_CONSTANT_PRIVATE_CONSTANT = ::T.let(nil, ::T.untyped)
@@ -48313,6 +49080,7 @@ module RuboCop::AST::NodePattern::Sets
   SET_RECEIVE_HAVE_RECEIVED = ::T.let(nil, ::T.untyped)
   SET_RECEIVE_MESSAGE_CHAIN_STUB_CHAIN = ::T.let(nil, ::T.untyped)
   SET_RECEIVE_RECEIVE_MESSAGES_RECEIVE_MESSAGE_CHAIN_HAVE_RECEIVED = ::T.let(nil, ::T.untyped)
+  SET_RECEIVE_RECEIVE_MESSAGE_CHAIN = ::T.let(nil, ::T.untyped)
   SET_REDUCE_INJECT = ::T.let(nil, ::T.untyped)
   SET_REFERER_REFERRER = ::T.let(nil, ::T.untyped)
   SET_RENDER_REDIRECT_TO = ::T.let(nil, ::T.untyped)
@@ -48351,6 +49119,7 @@ module RuboCop::AST::NodePattern::Sets
   SET__ = ::T.let(nil, ::T.untyped)
   SET__AT_SLICE = ::T.let(nil, ::T.untyped)
   SET__EQL_ = ::T.let(nil, ::T.untyped)
+  SET__EQUAL_EQL = ::T.let(nil, ::T.untyped)
   SET__GLOB = ::T.let(nil, ::T.untyped)
   SET___ = ::T.let(nil, ::T.untyped)
   SET___2 = ::T.let(nil, ::T.untyped)
@@ -48373,6 +49142,10 @@ end
 
 module RuboCop::AST::RuboCopCompatibility
   INCOMPATIBLE_COPS = ::T.let(nil, ::T.untyped)
+end
+
+module RuboCop::AST::Traversal
+  TYPE_TO_METHOD = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::AST::Version
@@ -48510,6 +49283,11 @@ class RuboCop::Cop::Lint::FormatParameterMismatch
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Lint::HashCompareByIdentity
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Lint::IdentityComparison
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
@@ -48556,6 +49334,11 @@ end
 
 class RuboCop::Cop::Lint::RedundantRequireStatement
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::RedundantSafeNavigation
+  MSG = ::T.let(nil, ::T.untyped)
+  NIL_SPECIFIC_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::SelfAssignment
@@ -48695,6 +49478,14 @@ class RuboCop::Cop::RSpec::MultipleExpectations
 end
 
 class RuboCop::Cop::RSpec::MultipleMemoizedHelpers
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::RepeatedIncludeExample
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::StubbedMock
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -48898,6 +49689,11 @@ class RuboCop::Cop::Style::ClassCheck
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Style::ClassEqualityComparison
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Style::ClassMethodsDefinitions
   MSG = ::T.let(nil, ::T.untyped)
   MSG_SCLASS = ::T.let(nil, ::T.untyped)
@@ -49043,6 +49839,10 @@ end
 
 class RuboCop::Cop::Style::RedundantFreeze
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::RedundantRegexpCharacterClass
+  REQUIRES_ESCAPE_OUTSIDE_CHAR_CLASS_CHARS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RedundantSelf
@@ -49793,185 +50593,17 @@ module Skiptrace
 end
 
 class Socket
-  AF_CCITT = ::T.let(nil, ::T.untyped)
-  AF_CHAOS = ::T.let(nil, ::T.untyped)
-  AF_CNT = ::T.let(nil, ::T.untyped)
-  AF_COIP = ::T.let(nil, ::T.untyped)
-  AF_DATAKIT = ::T.let(nil, ::T.untyped)
-  AF_DLI = ::T.let(nil, ::T.untyped)
-  AF_E164 = ::T.let(nil, ::T.untyped)
-  AF_ECMA = ::T.let(nil, ::T.untyped)
-  AF_HYLINK = ::T.let(nil, ::T.untyped)
-  AF_IMPLINK = ::T.let(nil, ::T.untyped)
-  AF_ISO = ::T.let(nil, ::T.untyped)
-  AF_LAT = ::T.let(nil, ::T.untyped)
-  AF_LINK = ::T.let(nil, ::T.untyped)
-  AF_NATM = ::T.let(nil, ::T.untyped)
-  AF_NDRV = ::T.let(nil, ::T.untyped)
-  AF_NETBIOS = ::T.let(nil, ::T.untyped)
-  AF_NS = ::T.let(nil, ::T.untyped)
-  AF_OSI = ::T.let(nil, ::T.untyped)
-  AF_PPP = ::T.let(nil, ::T.untyped)
-  AF_PUP = ::T.let(nil, ::T.untyped)
-  AF_SIP = ::T.let(nil, ::T.untyped)
-  AF_SYSTEM = ::T.let(nil, ::T.untyped)
-  AI_DEFAULT = ::T.let(nil, ::T.untyped)
-  AI_MASK = ::T.let(nil, ::T.untyped)
-  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
-  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
-  EAI_MAX = ::T.let(nil, ::T.untyped)
-  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
-  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
-  IFF_LINK0 = ::T.let(nil, ::T.untyped)
-  IFF_LINK1 = ::T.let(nil, ::T.untyped)
-  IFF_LINK2 = ::T.let(nil, ::T.untyped)
-  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
-  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
-  IPPROTO_EON = ::T.let(nil, ::T.untyped)
-  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
-  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
-  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
-  IPPROTO_ND = ::T.let(nil, ::T.untyped)
-  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
-  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
-  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
-  IP_RECVIF = ::T.let(nil, ::T.untyped)
-  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
-  MSG_EOF = ::T.let(nil, ::T.untyped)
-  MSG_FLUSH = ::T.let(nil, ::T.untyped)
-  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
-  MSG_HOLD = ::T.let(nil, ::T.untyped)
-  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
-  MSG_SEND = ::T.let(nil, ::T.untyped)
-  PF_CCITT = ::T.let(nil, ::T.untyped)
-  PF_CHAOS = ::T.let(nil, ::T.untyped)
-  PF_CNT = ::T.let(nil, ::T.untyped)
-  PF_COIP = ::T.let(nil, ::T.untyped)
-  PF_DATAKIT = ::T.let(nil, ::T.untyped)
-  PF_DLI = ::T.let(nil, ::T.untyped)
-  PF_ECMA = ::T.let(nil, ::T.untyped)
-  PF_HYLINK = ::T.let(nil, ::T.untyped)
-  PF_IMPLINK = ::T.let(nil, ::T.untyped)
-  PF_ISO = ::T.let(nil, ::T.untyped)
-  PF_LAT = ::T.let(nil, ::T.untyped)
-  PF_LINK = ::T.let(nil, ::T.untyped)
-  PF_NATM = ::T.let(nil, ::T.untyped)
-  PF_NDRV = ::T.let(nil, ::T.untyped)
-  PF_NETBIOS = ::T.let(nil, ::T.untyped)
-  PF_NS = ::T.let(nil, ::T.untyped)
-  PF_OSI = ::T.let(nil, ::T.untyped)
-  PF_PIP = ::T.let(nil, ::T.untyped)
-  PF_PPP = ::T.let(nil, ::T.untyped)
-  PF_PUP = ::T.let(nil, ::T.untyped)
-  PF_RTIP = ::T.let(nil, ::T.untyped)
-  PF_SIP = ::T.let(nil, ::T.untyped)
-  PF_SYSTEM = ::T.let(nil, ::T.untyped)
-  PF_XTP = ::T.let(nil, ::T.untyped)
-  SCM_CREDS = ::T.let(nil, ::T.untyped)
-  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
-  SO_NKE = ::T.let(nil, ::T.untyped)
-  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
-  SO_NREAD = ::T.let(nil, ::T.untyped)
-  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
-  SO_WANTMORE = ::T.let(nil, ::T.untyped)
-  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
-  TCP_NOOPT = ::T.let(nil, ::T.untyped)
-  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
+  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
 end
 
 module Socket::Constants
-  AF_CCITT = ::T.let(nil, ::T.untyped)
-  AF_CHAOS = ::T.let(nil, ::T.untyped)
-  AF_CNT = ::T.let(nil, ::T.untyped)
-  AF_COIP = ::T.let(nil, ::T.untyped)
-  AF_DATAKIT = ::T.let(nil, ::T.untyped)
-  AF_DLI = ::T.let(nil, ::T.untyped)
-  AF_E164 = ::T.let(nil, ::T.untyped)
-  AF_ECMA = ::T.let(nil, ::T.untyped)
-  AF_HYLINK = ::T.let(nil, ::T.untyped)
-  AF_IMPLINK = ::T.let(nil, ::T.untyped)
-  AF_ISO = ::T.let(nil, ::T.untyped)
-  AF_LAT = ::T.let(nil, ::T.untyped)
-  AF_LINK = ::T.let(nil, ::T.untyped)
-  AF_NATM = ::T.let(nil, ::T.untyped)
-  AF_NDRV = ::T.let(nil, ::T.untyped)
-  AF_NETBIOS = ::T.let(nil, ::T.untyped)
-  AF_NS = ::T.let(nil, ::T.untyped)
-  AF_OSI = ::T.let(nil, ::T.untyped)
-  AF_PPP = ::T.let(nil, ::T.untyped)
-  AF_PUP = ::T.let(nil, ::T.untyped)
-  AF_SIP = ::T.let(nil, ::T.untyped)
-  AF_SYSTEM = ::T.let(nil, ::T.untyped)
-  AI_DEFAULT = ::T.let(nil, ::T.untyped)
-  AI_MASK = ::T.let(nil, ::T.untyped)
-  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
-  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
-  EAI_MAX = ::T.let(nil, ::T.untyped)
-  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
-  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
-  IFF_LINK0 = ::T.let(nil, ::T.untyped)
-  IFF_LINK1 = ::T.let(nil, ::T.untyped)
-  IFF_LINK2 = ::T.let(nil, ::T.untyped)
-  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
-  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
-  IPPROTO_EON = ::T.let(nil, ::T.untyped)
-  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
-  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
-  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
-  IPPROTO_ND = ::T.let(nil, ::T.untyped)
-  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
-  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
-  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
-  IP_RECVIF = ::T.let(nil, ::T.untyped)
-  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
-  MSG_EOF = ::T.let(nil, ::T.untyped)
-  MSG_FLUSH = ::T.let(nil, ::T.untyped)
-  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
-  MSG_HOLD = ::T.let(nil, ::T.untyped)
-  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
-  MSG_SEND = ::T.let(nil, ::T.untyped)
-  PF_CCITT = ::T.let(nil, ::T.untyped)
-  PF_CHAOS = ::T.let(nil, ::T.untyped)
-  PF_CNT = ::T.let(nil, ::T.untyped)
-  PF_COIP = ::T.let(nil, ::T.untyped)
-  PF_DATAKIT = ::T.let(nil, ::T.untyped)
-  PF_DLI = ::T.let(nil, ::T.untyped)
-  PF_ECMA = ::T.let(nil, ::T.untyped)
-  PF_HYLINK = ::T.let(nil, ::T.untyped)
-  PF_IMPLINK = ::T.let(nil, ::T.untyped)
-  PF_ISO = ::T.let(nil, ::T.untyped)
-  PF_LAT = ::T.let(nil, ::T.untyped)
-  PF_LINK = ::T.let(nil, ::T.untyped)
-  PF_NATM = ::T.let(nil, ::T.untyped)
-  PF_NDRV = ::T.let(nil, ::T.untyped)
-  PF_NETBIOS = ::T.let(nil, ::T.untyped)
-  PF_NS = ::T.let(nil, ::T.untyped)
-  PF_OSI = ::T.let(nil, ::T.untyped)
-  PF_PIP = ::T.let(nil, ::T.untyped)
-  PF_PPP = ::T.let(nil, ::T.untyped)
-  PF_PUP = ::T.let(nil, ::T.untyped)
-  PF_RTIP = ::T.let(nil, ::T.untyped)
-  PF_SIP = ::T.let(nil, ::T.untyped)
-  PF_SYSTEM = ::T.let(nil, ::T.untyped)
-  PF_XTP = ::T.let(nil, ::T.untyped)
-  SCM_CREDS = ::T.let(nil, ::T.untyped)
-  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
-  SO_NKE = ::T.let(nil, ::T.untyped)
-  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
-  SO_NREAD = ::T.let(nil, ::T.untyped)
-  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
-  SO_WANTMORE = ::T.let(nil, ::T.untyped)
-  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
-  TCP_NOOPT = ::T.let(nil, ::T.untyped)
-  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
+  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
 end
 
 SorbetRails::JobRbiFormatter::Parameter = Parlour::RbiGenerator::Parameter
@@ -50903,6 +51535,8 @@ module URI
   def self.parser(); end
 end
 
+Uber::InheritableAttribute = Uber::InheritableAttr
+
 class UnboundMethod
   def bind_call(*_); end
 end
@@ -51082,6 +51716,8 @@ class ViewComponent::Base
 
   def initialize(*_); end
 
+  def preview_controller(); end
+
   def preview_path(); end
 
   def preview_paths(); end
@@ -51116,8 +51752,6 @@ class ViewComponent::Base
 end
 
 class ViewComponent::Base
-  def self.call_method_name(variant); end
-
   def self.compile(raise_errors: T.unsafe(nil)); end
 
   def self.compiled?(); end
@@ -51137,6 +51771,10 @@ class ViewComponent::Base
   def self.identifier(); end
 
   def self.inherited(child); end
+
+  def self.preview_controller(); end
+
+  def self.preview_controller=(obj); end
 
   def self.preview_path(); end
 
@@ -51169,6 +51807,8 @@ class ViewComponent::Base
   def self.source_location(); end
 
   def self.source_location=(source_location); end
+
+  def self.template_compiler(); end
 
   def self.test_controller(); end
 
@@ -51211,6 +51851,17 @@ module ViewComponent::CompileCache
   def self.invalidate!(); end
 
   def self.register(klass); end
+end
+
+class ViewComponent::Compiler
+  def compile(raise_errors: T.unsafe(nil)); end
+
+  def compiled?(); end
+
+  def initialize(component_class); end
+end
+
+class ViewComponent::Compiler
 end
 
 class ViewComponent::Engine
@@ -52326,8 +52977,6 @@ end
 module Work::GeneratedAssociationMethods
   def contributor_ids=(ids); end
 
-  def contributors_attributes=(attributes); end
-
   def files_attachment_ids=(ids); end
 
   def files_blob_ids=(ids); end
@@ -52361,8 +53010,6 @@ end
 
 class Work
   extend ::StateMachines::ClassMethods
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
   def self.after_add_for_contributors(); end
 
   def self.after_add_for_contributors=(val); end
@@ -52484,9 +53131,13 @@ class Work
   def self.before_remove_for_related_works?(); end
 end
 
-class WorkPolicy
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
+class WorkForm
+  include ::Disposable::Twin::Coercion
+  def contributors_attributes=(); end
+end
+
+class WorkForm
+  extend ::Disposable::Twin::Coercion::ClassMethods
 end
 
 class WorkType

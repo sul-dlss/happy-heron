@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-schema/all/dry-schema.rbi
 #
-# dry-schema-1.5.4
+# dry-schema-1.5.6
 
 module Dry
 end
@@ -42,6 +42,7 @@ class Dry::Schema::Path
   def self.call(spec); end
   def self.keys_from_hash(hash); end
   def to_h(value = nil); end
+  def without_index; end
   include Anonymous_Dry_Equalizer_125
   include Comparable
   include Dry::Equalizer::Methods
@@ -372,6 +373,7 @@ class Dry::Schema::Macros::Value < Dry::Schema::Macros::DSL
   def call(*predicates, **opts, &block); end
   def hash_type?(type); end
   def import_steps(schema); end
+  def maybe_type?(type); end
   def method_missing(meth, *args, &block); end
   def respond_to_missing?(meth, include_private = nil); end
   include Anonymous_Module_140

@@ -558,10 +558,3 @@ class FFI::Bitmask < FFI::Enum
   def initialize(*args); end
   def to_native(query, ctx); end
 end
-module INotify
-end
-module INotify::Native
-  extend FFI::Library
-end
-class INotify::Native::Event < FFI::Struct
-end

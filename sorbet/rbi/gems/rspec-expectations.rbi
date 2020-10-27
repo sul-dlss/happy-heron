@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rspec-expectations/all/rspec-expectations.rbi
 #
-# rspec-expectations-3.9.2
+# rspec-expectations-3.9.3
 
 module RSpec
 end
@@ -87,7 +87,7 @@ module RSpec::Matchers
   def match_array(items); end
   def match_regex(*args, &block); end
   def matching(*args, &block); end
-  def method_missing(method, *args, &block); end
+  def method_missing(method, *args, **kwargs, &block); end
   def output(expected = nil); end
   def raise_error(error = nil, message = nil, &block); end
   def raise_exception(error = nil, message = nil, &block); end
@@ -547,10 +547,12 @@ class RSpec::Matchers::BuiltIn::Be < RSpec::Matchers::BuiltIn::BaseMatcher
 end
 class RSpec::Matchers::BuiltIn::BeComparedTo < RSpec::Matchers::BuiltIn::BaseMatcher
   def description; end
+  def does_not_match?(actual); end
   def failure_message; end
   def failure_message_when_negated; end
   def initialize(operand, operator); end
   def matches?(actual); end
+  def perform_match(actual); end
   include RSpec::Matchers::BuiltIn::BeHelpers
 end
 class RSpec::Matchers::BuiltIn::BePredicate < RSpec::Matchers::BuiltIn::BaseMatcher
@@ -559,7 +561,7 @@ class RSpec::Matchers::BuiltIn::BePredicate < RSpec::Matchers::BuiltIn::BaseMatc
   def failure_message; end
   def failure_message_expecting(value); end
   def failure_message_when_negated; end
-  def initialize(*args, &block); end
+  def initialize(*args, **kwargs, &block); end
   def matches?(actual, &block); end
   def parse_expected(expected); end
   def predicate; end
@@ -824,7 +826,7 @@ class RSpec::Matchers::BuiltIn::Has < RSpec::Matchers::BuiltIn::BaseMatcher
   def failure_message; end
   def failure_message_args_description; end
   def failure_message_when_negated; end
-  def initialize(method_name, *args, &block); end
+  def initialize(method_name, *args, **kwargs, &block); end
   def matches?(actual, &block); end
   def method_description; end
   def predicate; end
