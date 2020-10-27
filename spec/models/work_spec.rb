@@ -23,7 +23,7 @@ RSpec.describe Work do
   end
 
   it 'has attached files' do
-    expect(work.files).to be_attached
+    expect(work.attached_files).to be_present
   end
 
   it 'has a valid contact email' do

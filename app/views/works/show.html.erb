@@ -1,9 +1,16 @@
 <pre>
-<%= @work.attributes.map { |k, v| "#{k} = #{v}\n"}.join.html_safe %>
-contributors = <%= @work.contributors.size %>
-<% @work.contributors.each do |c| %>
-  <%= c.first_name %>
-  <%= c.last_name %>
-  <%= c.role_term %>
-<% end %>
+  <%= @work.attributes.map { |k, v| "#{k} = #{v}\n"}.join.html_safe %>
+  contributors = <%= @work.contributors.size %>
+  <% @work.contributors.each do |c| %>
+    <%= c.first_name %>
+    <%= c.last_name %>
+    <%= c.role_term %>
+  <% end %>
+
+  attached_files = <%= @work.attached_files.size %>
+  <% @work.attached_files.each do |c| %>
+    Has attached file: <%= c.file.attached? %>
+    Label: <%= c.label %>
+    Is hidden: <%= c.hide? %>
+  <% end %>
 </pre>

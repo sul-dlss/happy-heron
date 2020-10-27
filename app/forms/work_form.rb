@@ -67,6 +67,25 @@ class WorkForm < Reform::Form
     property :_destroy, virtual: true
   end
 
+  collection :attached_files,
+             populator: lambda { |fragment:, **|
+               # The fragment represents one row of the attached file data from the HTML form
+               # find out if incoming file is already added.
+               item = attached_files.find_by(id: fragment['id']) if fragment['id'].present?
+
+               if fragment['_destroy'] == '1'
+                 attached_files.delete(item)
+                 return skip!
+               end
+               item || attached_files.append(AttachedFile.new)
+             } do
+    property :id
+    property :label
+    property :hide
+    property :file
+    property :_destroy, virtual: true
+  end
+
   private
 
   def deserialize_edtf(name, offset = 0)

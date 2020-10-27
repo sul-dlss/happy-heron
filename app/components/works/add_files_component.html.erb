@@ -1,13 +1,24 @@
-<section>
+<section data-controller="dropzone" data-dropzone-max-file-size="2000" data-dropzone-max-files="1000">
   <header>Add your files</header>
-  <div class="dropzone dropzone-default dz-clickable" data-controller="dropzone" data-dropzone-max-file-size="2000" data-dropzone-max-files="1000">
+  <p>All file types are accepted.</p>
+  <div class="dropzone dropzone-default dz-clickable">
     <%= form.file_field :files, multiple: true, direct_upload: true,
                         data: { target: 'dropzone.input progress.fileField',
                                 'progress-step': 'file',
                                 action: "change->progress#check" } %>
     <div class="dz-message needsclick text-secondary">
-      <header>Drag files here to upload or click here to browse</header>
-      <span class="small">2 GB file size maximum.</span>
+      <p>Drop files here</p>
     </div>
   </div>
+  <div class="dropzone-previews" data-target="dropzone.previews">
+    <%= form.fields_for :attached_files do |file_form| %>
+      <%= render Works::FileRowComponent.new(form: file_form) %>
+    <% end %>
+  </div>
+
+  <template data-target='dropzone.template'>
+    <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
+      <%= render Works::FileRowComponent.new(form: file_form) %>
+    <% end %>
+  </template>
 </section>
