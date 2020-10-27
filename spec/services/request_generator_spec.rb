@@ -4,8 +4,6 @@
 require 'rails_helper'
 
 RSpec.describe RequestGenerator do
-  let(:work) { create(:work) }
-
   let(:model) { described_class.generate_model(work: work) }
 
   context 'when date is not present' do
@@ -49,7 +47,7 @@ RSpec.describe RequestGenerator do
       }
     end
 
-    let(:work) { create(:work) }
+    let(:work) { build(:work, id: 7) }
 
     it 'generates the model' do
       expect(model.to_h).to eq(expected_model)
@@ -109,7 +107,7 @@ RSpec.describe RequestGenerator do
       }
     end
 
-    let(:work) { create(:work, created_edtf: '1900') }
+    let(:work) { build(:work, id: 7, created_edtf: '1900') }
 
     it 'generates the model' do
       expect(model.to_h).to eq(expected_model)

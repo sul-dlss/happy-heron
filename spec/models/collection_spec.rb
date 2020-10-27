@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe Collection do
-  subject(:collection) { create(:collection, :with_works) }
+  subject(:collection) { build(:collection, :with_works) }
 
   it 'has many works' do
     expect(collection.works).to all(be_a(Work))

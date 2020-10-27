@@ -4,9 +4,9 @@
 require 'rails_helper'
 
 RSpec.describe Notification do
-  subject(:notification) { create(:notification, user: user) }
+  subject(:notification) { build(:notification, user: user) }
 
-  let(:user) { create(:user) }
+  let(:user) { build(:user) }
 
   it 'belongs to a user' do
     expect(notification.user).to eq(user)

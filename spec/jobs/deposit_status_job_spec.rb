@@ -8,7 +8,7 @@ RSpec.describe DepositStatusJob do
 
   let(:client) { instance_double(Dor::Services::Client, objects: objects) }
   let(:druid) { 'druid:bc123df4567' }
-  let(:work) { create(:work) }
+  let(:work) { build(:work) }
   let(:result) { Success() }
   let(:job_id) { 1234 }
 
