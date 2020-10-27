@@ -15,7 +15,6 @@ FactoryBot.define do
     email_when_participants_changed { false }
     managers { 'maya.aguirre, jcairns' }
     reviewers { 'MyString' }
-    depositors { 'MyString' }
     creator
   end
 

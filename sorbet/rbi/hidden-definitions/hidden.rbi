@@ -25278,6 +25278,49 @@ class Array
   def self.wrap(object); end
 end
 
+class AttachedFile
+  def autosave_associated_records_for_file_attachment(); end
+
+  def autosave_associated_records_for_file_blob(); end
+
+  def autosave_associated_records_for_work(*args); end
+end
+
+class AttachedFile::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::AttachedFile::GeneratedRelationMethods
+end
+
+class AttachedFile::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::AttachedFile::GeneratedRelationMethods
+end
+
+class AttachedFile::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::AttachedFile::GeneratedRelationMethods
+end
+
+module AttachedFile::GeneratedAssociationMethods
+  def reload_file_attachment(); end
+
+  def reload_file_blob(); end
+
+  def reload_work(); end
+end
+
+module AttachedFile::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module AttachedFile::GeneratedRelationMethods
+  def with_attached_file(*_, &_1); end
+end
+
+module AttachedFile::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
 class BCrypt::Engine
   DEFAULT_COST = ::T.let(nil, ::T.untyped)
   MAX_COST = ::T.let(nil, ::T.untyped)
@@ -25296,10 +25339,6 @@ class BaseDepositJob
 end
 
 BasicObject::BasicObject = BasicObject
-
-class BasicSocket
-  def read_nonblock(len, str=T.unsafe(nil), exception: T.unsafe(nil)); end
-end
 
 class Benchmark::Job
   def initialize(width); end
@@ -32014,11 +32053,35 @@ class Cocina::Models::Vocab
 end
 
 class Collection
+  def after_add_for_collections_depositors(); end
+
+  def after_add_for_collections_depositors=(val); end
+
+  def after_add_for_collections_depositors?(); end
+
+  def after_add_for_depositors(); end
+
+  def after_add_for_depositors=(val); end
+
+  def after_add_for_depositors?(); end
+
   def after_add_for_works(); end
 
   def after_add_for_works=(val); end
 
   def after_add_for_works?(); end
+
+  def after_remove_for_collections_depositors(); end
+
+  def after_remove_for_collections_depositors=(val); end
+
+  def after_remove_for_collections_depositors?(); end
+
+  def after_remove_for_depositors(); end
+
+  def after_remove_for_depositors=(val); end
+
+  def after_remove_for_depositors?(); end
 
   def after_remove_for_works(); end
 
@@ -32026,9 +32089,25 @@ class Collection
 
   def after_remove_for_works?(); end
 
+  def autosave_associated_records_for_collections_depositors(*args); end
+
   def autosave_associated_records_for_creator(*args); end
 
+  def autosave_associated_records_for_depositors(*args); end
+
   def autosave_associated_records_for_works(*args); end
+
+  def before_add_for_collections_depositors(); end
+
+  def before_add_for_collections_depositors=(val); end
+
+  def before_add_for_collections_depositors?(); end
+
+  def before_add_for_depositors(); end
+
+  def before_add_for_depositors=(val); end
+
+  def before_add_for_depositors?(); end
 
   def before_add_for_works(); end
 
@@ -32036,11 +32115,27 @@ class Collection
 
   def before_add_for_works?(); end
 
+  def before_remove_for_collections_depositors(); end
+
+  def before_remove_for_collections_depositors=(val); end
+
+  def before_remove_for_collections_depositors?(); end
+
+  def before_remove_for_depositors(); end
+
+  def before_remove_for_depositors=(val); end
+
+  def before_remove_for_depositors?(); end
+
   def before_remove_for_works(); end
 
   def before_remove_for_works=(val); end
 
   def before_remove_for_works?(); end
+
+  def validate_associated_records_for_collections_depositors(*args); end
+
+  def validate_associated_records_for_depositors(*args); end
 
   def validate_associated_records_for_works(*args); end
 end
@@ -32061,6 +32156,8 @@ class Collection::ActiveRecord_Relation
 end
 
 module Collection::GeneratedAssociationMethods
+  def depositor_ids=(ids); end
+
   def reload_creator(); end
 
   def work_ids=(ids); end
@@ -32078,11 +32175,35 @@ module Collection::GeneratedRelationMethods
 end
 
 class Collection
+  def self.after_add_for_collections_depositors(); end
+
+  def self.after_add_for_collections_depositors=(val); end
+
+  def self.after_add_for_collections_depositors?(); end
+
+  def self.after_add_for_depositors(); end
+
+  def self.after_add_for_depositors=(val); end
+
+  def self.after_add_for_depositors?(); end
+
   def self.after_add_for_works(); end
 
   def self.after_add_for_works=(val); end
 
   def self.after_add_for_works?(); end
+
+  def self.after_remove_for_collections_depositors(); end
+
+  def self.after_remove_for_collections_depositors=(val); end
+
+  def self.after_remove_for_collections_depositors?(); end
+
+  def self.after_remove_for_depositors(); end
+
+  def self.after_remove_for_depositors=(val); end
+
+  def self.after_remove_for_depositors?(); end
 
   def self.after_remove_for_works(); end
 
@@ -32090,11 +32211,35 @@ class Collection
 
   def self.after_remove_for_works?(); end
 
+  def self.before_add_for_collections_depositors(); end
+
+  def self.before_add_for_collections_depositors=(val); end
+
+  def self.before_add_for_collections_depositors?(); end
+
+  def self.before_add_for_depositors(); end
+
+  def self.before_add_for_depositors=(val); end
+
+  def self.before_add_for_depositors?(); end
+
   def self.before_add_for_works(); end
 
   def self.before_add_for_works=(val); end
 
   def self.before_add_for_works?(); end
+
+  def self.before_remove_for_collections_depositors(); end
+
+  def self.before_remove_for_collections_depositors=(val); end
+
+  def self.before_remove_for_collections_depositors?(); end
+
+  def self.before_remove_for_depositors(); end
+
+  def self.before_remove_for_depositors=(val); end
+
+  def self.before_remove_for_depositors?(); end
 
   def self.before_remove_for_works(); end
 
@@ -34726,168 +34871,7 @@ module Disposable::Twin::Coercion
   DRY_TYPES_VERSION = ::T.let(nil, ::T.untyped)
 end
 
-Disposable::Twin::Coercion::DRY_TYPES_CONSTANT = Disposable::Twin::Coercion::Types::DRY_MODULE::Params
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE
-  Any = ::T.let(nil, ::T.untyped)
-  Array = ::T.let(nil, ::T.untyped)
-  Bool = ::T.let(nil, ::T.untyped)
-  Class = ::T.let(nil, ::T.untyped)
-  Date = ::T.let(nil, ::T.untyped)
-  DateTime = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  False = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  Nil = ::T.let(nil, ::T.untyped)
-  Range = ::T.let(nil, ::T.untyped)
-  String = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-  Time = ::T.let(nil, ::T.untyped)
-  True = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Coercible
-  Array = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  String = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::JSON
-  Array = ::T.let(nil, ::T.untyped)
-  Date = ::T.let(nil, ::T.untyped)
-  DateTime = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Nil = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-  Time = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Nominal
-  Any = ::T.let(nil, ::T.untyped)
-  Array = ::T.let(nil, ::T.untyped)
-  Bool = ::T.let(nil, ::T.untyped)
-  Class = ::T.let(nil, ::T.untyped)
-  Date = ::T.let(nil, ::T.untyped)
-  DateTime = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  False = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  Nil = ::T.let(nil, ::T.untyped)
-  Range = ::T.let(nil, ::T.untyped)
-  String = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-  Time = ::T.let(nil, ::T.untyped)
-  True = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional
-  Array = ::T.let(nil, ::T.untyped)
-  Class = ::T.let(nil, ::T.untyped)
-  Date = ::T.let(nil, ::T.untyped)
-  DateTime = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  False = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  Range = ::T.let(nil, ::T.untyped)
-  String = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-  Time = ::T.let(nil, ::T.untyped)
-  True = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional::Coercible
-  Array = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  String = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional::Params
-  Array = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Optional::Strict
-  Array = ::T.let(nil, ::T.untyped)
-  Class = ::T.let(nil, ::T.untyped)
-  Date = ::T.let(nil, ::T.untyped)
-  DateTime = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  False = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  Range = ::T.let(nil, ::T.untyped)
-  String = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-  Time = ::T.let(nil, ::T.untyped)
-  True = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Params
-  Array = ::T.let(nil, ::T.untyped)
-  Bool = ::T.let(nil, ::T.untyped)
-  Date = ::T.let(nil, ::T.untyped)
-  DateTime = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  False = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  Nil = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-  Time = ::T.let(nil, ::T.untyped)
-  True = ::T.let(nil, ::T.untyped)
-end
-
-module Disposable::Twin::Coercion::Types::DRY_MODULE::Strict
-  Any = ::T.let(nil, ::T.untyped)
-  Array = ::T.let(nil, ::T.untyped)
-  Bool = ::T.let(nil, ::T.untyped)
-  Class = ::T.let(nil, ::T.untyped)
-  Date = ::T.let(nil, ::T.untyped)
-  DateTime = ::T.let(nil, ::T.untyped)
-  Decimal = ::T.let(nil, ::T.untyped)
-  False = ::T.let(nil, ::T.untyped)
-  Float = ::T.let(nil, ::T.untyped)
-  Hash = ::T.let(nil, ::T.untyped)
-  Integer = ::T.let(nil, ::T.untyped)
-  Nil = ::T.let(nil, ::T.untyped)
-  Range = ::T.let(nil, ::T.untyped)
-  String = ::T.let(nil, ::T.untyped)
-  Symbol = ::T.let(nil, ::T.untyped)
-  Time = ::T.let(nil, ::T.untyped)
-  True = ::T.let(nil, ::T.untyped)
-end
-
-class Disposable::Twin::Definition
-  Filter = ::T.let(nil, ::T.untyped)
-end
-
-class Disposable::Twin::Definition::Each
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
-end
-
 class Disposable::Twin
-  extend ::Disposable::Twin::Property::Unnest
   extend ::Uber::Delegates
 end
 
@@ -35743,35 +35727,90 @@ class Enumerator
   def self.produce(*_); end
 end
 
-Errno::EAUTH = Errno::NOERROR
+class Errno::EAUTH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EBADARCH = Errno::NOERROR
+class Errno::EAUTH
+end
 
-Errno::EBADEXEC = Errno::NOERROR
+class Errno::EBADARCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EBADMACHO = Errno::NOERROR
+class Errno::EBADARCH
+end
 
-Errno::EBADRPC = Errno::NOERROR
+class Errno::EBADEXEC
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADEXEC
+end
+
+class Errno::EBADMACHO
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADMACHO
+end
+
+class Errno::EBADRPC
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EBADRPC
+end
 
 Errno::ECAPMODE = Errno::NOERROR
 
-Errno::EDEADLOCK = Errno::EDEADLK
+Errno::EDEADLOCK = Errno::NOERROR
 
-Errno::EDEVERR = Errno::NOERROR
+class Errno::EDEVERR
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EDEVERR
+end
 
 Errno::EDOOFUS = Errno::NOERROR
 
-Errno::EFTYPE = Errno::NOERROR
+class Errno::EFTYPE
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EFTYPE
+end
 
 Errno::EIPSEC = Errno::NOERROR
 
-Errno::ELAST = Errno::NOERROR
+class Errno::ELAST
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ENEEDAUTH = Errno::NOERROR
+class Errno::ELAST
+end
 
-Errno::ENOATTR = Errno::NOERROR
+class Errno::ENEEDAUTH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ENOPOLICY = Errno::NOERROR
+class Errno::ENEEDAUTH
+end
+
+class Errno::ENOATTR
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ENOATTR
+end
+
+class Errno::ENOPOLICY
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ENOPOLICY
+end
 
 Errno::ENOTCAPABLE = Errno::NOERROR
 
@@ -35782,21 +35821,56 @@ end
 class Errno::ENOTSUP
 end
 
-Errno::EPROCLIM = Errno::NOERROR
+class Errno::EPROCLIM
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EPROCUNAVAIL = Errno::NOERROR
+class Errno::EPROCLIM
+end
 
-Errno::EPROGMISMATCH = Errno::NOERROR
+class Errno::EPROCUNAVAIL
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EPROGUNAVAIL = Errno::NOERROR
+class Errno::EPROCUNAVAIL
+end
 
-Errno::EPWROFF = Errno::NOERROR
+class Errno::EPROGMISMATCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::EQFULL = Errno::NOERROR
+class Errno::EPROGMISMATCH
+end
 
-Errno::ERPCMISMATCH = Errno::NOERROR
+class Errno::EPROGUNAVAIL
+  Errno = ::T.let(nil, ::T.untyped)
+end
 
-Errno::ESHLIBVERS = Errno::NOERROR
+class Errno::EPROGUNAVAIL
+end
+
+class Errno::EPWROFF
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::EPWROFF
+end
+
+Errno::EQFULL = Errno::ELAST
+
+class Errno::ERPCMISMATCH
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ERPCMISMATCH
+end
+
+class Errno::ESHLIBVERS
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ESHLIBVERS
+end
 
 module Erubi
   RANGE_ALL = ::T.let(nil, ::T.untyped)
@@ -35838,7 +35912,15 @@ class Etc::Group
 end
 
 class Etc::Passwd
+  def change(); end
+
+  def change=(_); end
+
   def dir=(_); end
+
+  def expire(); end
+
+  def expire=(_); end
 
   def gecos(); end
 
@@ -35851,6 +35933,10 @@ class Etc::Passwd
   def passwd=(_); end
 
   def shell=(_); end
+
+  def uclass(); end
+
+  def uclass=(_); end
 
   def uid=(_); end
 end
@@ -36009,7 +36095,6 @@ module FFI::Platform
   DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
   FLOAT_ALIGN = ::T.let(nil, ::T.untyped)
   FLOAT_SIZE = ::T.let(nil, ::T.untyped)
-  GNU_LIBC = ::T.let(nil, ::T.untyped)
   INT16_ALIGN = ::T.let(nil, ::T.untyped)
   INT16_SIZE = ::T.let(nil, ::T.untyped)
   INT32_ALIGN = ::T.let(nil, ::T.untyped)
@@ -37990,10 +38075,7 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
-  def removed_method_calls(); end
-
   def to_ruby(); end
-  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -38947,37 +39029,6 @@ module INotify
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module INotify::Native::Flags
-  IN_ACCESS = ::T.let(nil, ::T.untyped)
-  IN_ALL_EVENTS = ::T.let(nil, ::T.untyped)
-  IN_ATTRIB = ::T.let(nil, ::T.untyped)
-  IN_CLOSE = ::T.let(nil, ::T.untyped)
-  IN_CLOSE_NOWRITE = ::T.let(nil, ::T.untyped)
-  IN_CLOSE_WRITE = ::T.let(nil, ::T.untyped)
-  IN_CREATE = ::T.let(nil, ::T.untyped)
-  IN_DELETE = ::T.let(nil, ::T.untyped)
-  IN_DELETE_SELF = ::T.let(nil, ::T.untyped)
-  IN_DONT_FOLLOW = ::T.let(nil, ::T.untyped)
-  IN_IGNORED = ::T.let(nil, ::T.untyped)
-  IN_ISDIR = ::T.let(nil, ::T.untyped)
-  IN_MASK_ADD = ::T.let(nil, ::T.untyped)
-  IN_MODIFY = ::T.let(nil, ::T.untyped)
-  IN_MOVE = ::T.let(nil, ::T.untyped)
-  IN_MOVED_FROM = ::T.let(nil, ::T.untyped)
-  IN_MOVED_TO = ::T.let(nil, ::T.untyped)
-  IN_MOVE_SELF = ::T.let(nil, ::T.untyped)
-  IN_ONESHOT = ::T.let(nil, ::T.untyped)
-  IN_ONLYDIR = ::T.let(nil, ::T.untyped)
-  IN_OPEN = ::T.let(nil, ::T.untyped)
-  IN_Q_OVERFLOW = ::T.let(nil, ::T.untyped)
-  IN_UNMOUNT = ::T.let(nil, ::T.untyped)
-  PC_NAME_MAX = ::T.let(nil, ::T.untyped)
-end
-
-class INotify::Notifier
-  RECURSIVE_BLACKLIST = ::T.let(nil, ::T.untyped)
-end
-
 class IO
   def beep(); end
 
@@ -39366,7 +39417,6 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
-  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -40833,16 +40883,12 @@ class Net::HTTP
   ENVIRONMENT_VARIABLE_IS_MULTIUSER_SAFE = ::T.let(nil, ::T.untyped)
 end
 
-Net::HTTP::ProxyMod = Net::HTTP::ProxyDelta
-
 class Net::HTTPAlreadyReported
   HAS_BODY = ::T.let(nil, ::T.untyped)
 end
 
 class Net::HTTPAlreadyReported
 end
-
-Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
 
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
@@ -40855,7 +40901,13 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-Net::HTTPInformationCode = Net::HTTPInformation
+class Net::HTTPInformation
+end
+
+Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPInformation
+end
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -40903,8 +40955,6 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
-Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
-
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -40913,13 +40963,17 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
-Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
-
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-Net::HTTPSuccessCode = Net::HTTPSuccess
+class Net::HTTPSuccess
+end
+
+Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPSuccess
+end
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -43822,10 +43876,6 @@ class Proc
   def clone(); end
 end
 
-module Process
-  CLOCK_TAI = ::T.let(nil, ::T.untyped)
-end
-
 class ProgressBar::Components::Bar
   DEFAULT_PROGRESS_MARK = ::T.let(nil, ::T.untyped)
   DEFAULT_REMAINDER_MARK = ::T.let(nil, ::T.untyped)
@@ -44065,7 +44115,6 @@ end
 
 class Puma::Server
   ThreadLocalKey = ::T.let(nil, ::T.untyped)
-  UNPACK_TCP_STATE_FROM_TCP_INFO = ::T.let(nil, ::T.untyped)
 end
 
 class Puma::ThreadPool
@@ -46399,10 +46448,6 @@ class Redis::HashRing
   def self.binary_search(ary, value); end
 end
 
-class Reform::Contract::Result::Errors
-  DottedErrors = ::T.let(nil, ::T.untyped)
-end
-
 class Reform::Form
   include ::Reform::Form::ActiveModel
   include ::Reform::Form::ActiveModel::FormBuilderMethods
@@ -46417,86 +46462,12 @@ module Reform::Form::ActiveModel
   def model_name(*args); end
 end
 
-module Reform::Form::ActiveModel::ClassMethods
-  def model(main_model, options=T.unsafe(nil)); end
-
-  def model_name(); end
-
-  def property(*_); end
-
-  def validate(*args, &block); end
-
-  def validates(*args, &block); end
-
-  def validates_each(*args, &block); end
-
-  def validates_with(*args, &block); end
-end
-
-module Reform::Form::ActiveModel::ClassMethods
-  def self.extended(base); end
-end
-
 module Reform::Form::ActiveModel::FormBuilderMethods
   def deserialize!(params); end
 end
 
 module Reform::Form::ActiveModel::FormBuilderMethods
   def self.included(base); end
-end
-
-module Reform::Form::ActiveModel::ModelReflections
-  def column_for_attribute(name); end
-
-  def defined_enums(); end
-
-  def has_attribute?(name); end
-end
-
-module Reform::Form::ActiveModel::ModelReflections::ClassMethods
-  def reflect_on_association(*args); end
-
-  def validators_on(*args); end
-end
-
-module Reform::Form::ActiveModel::ModelReflections::ClassMethods
-end
-
-module Reform::Form::ActiveModel::ModelReflections
-  def self.included(base); end
-end
-
-module Reform::Form::ActiveModel::ModelValidations
-  def copy_validations_from(models); end
-end
-
-class Reform::Form::ActiveModel::ModelValidations::Mapping
-  def add(from, to); end
-
-  def forward(attr); end
-
-  def forward_image(attrs); end
-
-  def inverse(attr); end
-
-  def inverse_image(attrs); end
-end
-
-class Reform::Form::ActiveModel::ModelValidations::Mapping
-  def self.from_representable_attrs(attrs); end
-end
-
-class Reform::Form::ActiveModel::ModelValidations::ValidationCopier
-  def copy(); end
-
-  def initialize(form_class, mapping, model, model_name=T.unsafe(nil)); end
-end
-
-class Reform::Form::ActiveModel::ModelValidations::ValidationCopier
-  def self.copy(form_class, mapping, models); end
-end
-
-module Reform::Form::ActiveModel::ModelValidations
 end
 
 module Reform::Form::ActiveModel::Validations
@@ -46523,66 +46494,19 @@ module Reform::Form::ActiveRecord
   def to_nested_hash(*_); end
 end
 
-module Reform::Form::ActiveRecord::ClassMethods
-  def i18n_scope(); end
-
-  def validates_uniqueness_of(attribute, options=T.unsafe(nil)); end
-end
-
-module Reform::Form::ActiveRecord::ClassMethods
-end
-
-class Reform::Form::ActiveRecord::UniquenessValidator
-  include ::Reform::Form::ORM::UniquenessValidator
-end
-
-class Reform::Form::ActiveRecord::UniquenessValidator
-end
-
 module Reform::Form::ActiveRecord
   def self.included(base); end
-end
-
-class Reform::Form::Call::Result
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
-end
-
-Reform::Form::Coercion = Disposable::Twin::Coercion
-
-Reform::Form::ModelReflections = Reform::Form::ActiveModel::ModelReflections
-
-module Reform::Form::MultiParameterAttributes
-  def deserialize!(params); end
-end
-
-class Reform::Form::MultiParameterAttributes::DateTimeParamsFilter
-  def call(params); end
-end
-
-class Reform::Form::MultiParameterAttributes::DateTimeParamsFilter
-end
-
-module Reform::Form::MultiParameterAttributes
 end
 
 module Reform::Form::ORM
   def model_for_property(name); end
 end
 
-module Reform::Form::ORM::UniquenessValidator
-  def validate(form); end
-end
-
-module Reform::Form::ORM::UniquenessValidator
-end
-
 module Reform::Form::ORM
 end
 
 class Reform::Form
-  extend ::Reform::Form::ActiveModel::ClassMethods
   extend ::Uber::InheritableAttr
-  extend ::Reform::Form::ActiveRecord::ClassMethods
   def self.active_model_really_sucks(); end
 
   def self.model_options(); end
@@ -50593,17 +50517,185 @@ module Skiptrace
 end
 
 class Socket
+  AF_CCITT = ::T.let(nil, ::T.untyped)
+  AF_CHAOS = ::T.let(nil, ::T.untyped)
+  AF_CNT = ::T.let(nil, ::T.untyped)
+  AF_COIP = ::T.let(nil, ::T.untyped)
+  AF_DATAKIT = ::T.let(nil, ::T.untyped)
+  AF_DLI = ::T.let(nil, ::T.untyped)
+  AF_E164 = ::T.let(nil, ::T.untyped)
+  AF_ECMA = ::T.let(nil, ::T.untyped)
+  AF_HYLINK = ::T.let(nil, ::T.untyped)
+  AF_IMPLINK = ::T.let(nil, ::T.untyped)
+  AF_ISO = ::T.let(nil, ::T.untyped)
+  AF_LAT = ::T.let(nil, ::T.untyped)
+  AF_LINK = ::T.let(nil, ::T.untyped)
+  AF_NATM = ::T.let(nil, ::T.untyped)
+  AF_NDRV = ::T.let(nil, ::T.untyped)
+  AF_NETBIOS = ::T.let(nil, ::T.untyped)
+  AF_NS = ::T.let(nil, ::T.untyped)
+  AF_OSI = ::T.let(nil, ::T.untyped)
+  AF_PPP = ::T.let(nil, ::T.untyped)
+  AF_PUP = ::T.let(nil, ::T.untyped)
+  AF_SIP = ::T.let(nil, ::T.untyped)
+  AF_SYSTEM = ::T.let(nil, ::T.untyped)
+  AI_DEFAULT = ::T.let(nil, ::T.untyped)
+  AI_MASK = ::T.let(nil, ::T.untyped)
+  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
+  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
+  EAI_MAX = ::T.let(nil, ::T.untyped)
+  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
+  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
+  IFF_LINK0 = ::T.let(nil, ::T.untyped)
+  IFF_LINK1 = ::T.let(nil, ::T.untyped)
+  IFF_LINK2 = ::T.let(nil, ::T.untyped)
+  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
+  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
+  IPPROTO_EON = ::T.let(nil, ::T.untyped)
+  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
+  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
+  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
+  IPPROTO_ND = ::T.let(nil, ::T.untyped)
+  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
+  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
+  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
+  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
+  IP_RECVIF = ::T.let(nil, ::T.untyped)
+  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
+  MSG_EOF = ::T.let(nil, ::T.untyped)
+  MSG_FLUSH = ::T.let(nil, ::T.untyped)
+  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
+  MSG_HOLD = ::T.let(nil, ::T.untyped)
+  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
+  MSG_SEND = ::T.let(nil, ::T.untyped)
+  PF_CCITT = ::T.let(nil, ::T.untyped)
+  PF_CHAOS = ::T.let(nil, ::T.untyped)
+  PF_CNT = ::T.let(nil, ::T.untyped)
+  PF_COIP = ::T.let(nil, ::T.untyped)
+  PF_DATAKIT = ::T.let(nil, ::T.untyped)
+  PF_DLI = ::T.let(nil, ::T.untyped)
+  PF_ECMA = ::T.let(nil, ::T.untyped)
+  PF_HYLINK = ::T.let(nil, ::T.untyped)
+  PF_IMPLINK = ::T.let(nil, ::T.untyped)
+  PF_ISO = ::T.let(nil, ::T.untyped)
+  PF_LAT = ::T.let(nil, ::T.untyped)
+  PF_LINK = ::T.let(nil, ::T.untyped)
+  PF_NATM = ::T.let(nil, ::T.untyped)
+  PF_NDRV = ::T.let(nil, ::T.untyped)
+  PF_NETBIOS = ::T.let(nil, ::T.untyped)
+  PF_NS = ::T.let(nil, ::T.untyped)
+  PF_OSI = ::T.let(nil, ::T.untyped)
+  PF_PIP = ::T.let(nil, ::T.untyped)
+  PF_PPP = ::T.let(nil, ::T.untyped)
+  PF_PUP = ::T.let(nil, ::T.untyped)
+  PF_RTIP = ::T.let(nil, ::T.untyped)
+  PF_SIP = ::T.let(nil, ::T.untyped)
+  PF_SYSTEM = ::T.let(nil, ::T.untyped)
+  PF_XTP = ::T.let(nil, ::T.untyped)
+  SCM_CREDS = ::T.let(nil, ::T.untyped)
+  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
+  SO_NKE = ::T.let(nil, ::T.untyped)
+  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
+  SO_NREAD = ::T.let(nil, ::T.untyped)
+  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
+  SO_WANTMORE = ::T.let(nil, ::T.untyped)
+  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
+  TCP_NOOPT = ::T.let(nil, ::T.untyped)
+  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
 end
 
 module Socket::Constants
+  AF_CCITT = ::T.let(nil, ::T.untyped)
+  AF_CHAOS = ::T.let(nil, ::T.untyped)
+  AF_CNT = ::T.let(nil, ::T.untyped)
+  AF_COIP = ::T.let(nil, ::T.untyped)
+  AF_DATAKIT = ::T.let(nil, ::T.untyped)
+  AF_DLI = ::T.let(nil, ::T.untyped)
+  AF_E164 = ::T.let(nil, ::T.untyped)
+  AF_ECMA = ::T.let(nil, ::T.untyped)
+  AF_HYLINK = ::T.let(nil, ::T.untyped)
+  AF_IMPLINK = ::T.let(nil, ::T.untyped)
+  AF_ISO = ::T.let(nil, ::T.untyped)
+  AF_LAT = ::T.let(nil, ::T.untyped)
+  AF_LINK = ::T.let(nil, ::T.untyped)
+  AF_NATM = ::T.let(nil, ::T.untyped)
+  AF_NDRV = ::T.let(nil, ::T.untyped)
+  AF_NETBIOS = ::T.let(nil, ::T.untyped)
+  AF_NS = ::T.let(nil, ::T.untyped)
+  AF_OSI = ::T.let(nil, ::T.untyped)
+  AF_PPP = ::T.let(nil, ::T.untyped)
+  AF_PUP = ::T.let(nil, ::T.untyped)
+  AF_SIP = ::T.let(nil, ::T.untyped)
+  AF_SYSTEM = ::T.let(nil, ::T.untyped)
+  AI_DEFAULT = ::T.let(nil, ::T.untyped)
+  AI_MASK = ::T.let(nil, ::T.untyped)
+  AI_V4MAPPED_CFG = ::T.let(nil, ::T.untyped)
+  EAI_BADHINTS = ::T.let(nil, ::T.untyped)
+  EAI_MAX = ::T.let(nil, ::T.untyped)
+  EAI_PROTOCOL = ::T.let(nil, ::T.untyped)
+  IFF_ALTPHYS = ::T.let(nil, ::T.untyped)
+  IFF_LINK0 = ::T.let(nil, ::T.untyped)
+  IFF_LINK1 = ::T.let(nil, ::T.untyped)
+  IFF_LINK2 = ::T.let(nil, ::T.untyped)
+  IFF_OACTIVE = ::T.let(nil, ::T.untyped)
+  IFF_SIMPLEX = ::T.let(nil, ::T.untyped)
+  IPPROTO_EON = ::T.let(nil, ::T.untyped)
+  IPPROTO_GGP = ::T.let(nil, ::T.untyped)
+  IPPROTO_HELLO = ::T.let(nil, ::T.untyped)
+  IPPROTO_MAX = ::T.let(nil, ::T.untyped)
+  IPPROTO_ND = ::T.let(nil, ::T.untyped)
+  IPPROTO_XTP = ::T.let(nil, ::T.untyped)
   IPV6_DONTFRAG = ::T.let(nil, ::T.untyped)
   IPV6_PATHMTU = ::T.let(nil, ::T.untyped)
   IPV6_RECVPATHMTU = ::T.let(nil, ::T.untyped)
-  SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
+  IPV6_USE_MIN_MTU = ::T.let(nil, ::T.untyped)
+  IP_PORTRANGE = ::T.let(nil, ::T.untyped)
+  IP_RECVDSTADDR = ::T.let(nil, ::T.untyped)
+  IP_RECVIF = ::T.let(nil, ::T.untyped)
+  LOCAL_PEERCRED = ::T.let(nil, ::T.untyped)
+  MSG_EOF = ::T.let(nil, ::T.untyped)
+  MSG_FLUSH = ::T.let(nil, ::T.untyped)
+  MSG_HAVEMORE = ::T.let(nil, ::T.untyped)
+  MSG_HOLD = ::T.let(nil, ::T.untyped)
+  MSG_RCVMORE = ::T.let(nil, ::T.untyped)
+  MSG_SEND = ::T.let(nil, ::T.untyped)
+  PF_CCITT = ::T.let(nil, ::T.untyped)
+  PF_CHAOS = ::T.let(nil, ::T.untyped)
+  PF_CNT = ::T.let(nil, ::T.untyped)
+  PF_COIP = ::T.let(nil, ::T.untyped)
+  PF_DATAKIT = ::T.let(nil, ::T.untyped)
+  PF_DLI = ::T.let(nil, ::T.untyped)
+  PF_ECMA = ::T.let(nil, ::T.untyped)
+  PF_HYLINK = ::T.let(nil, ::T.untyped)
+  PF_IMPLINK = ::T.let(nil, ::T.untyped)
+  PF_ISO = ::T.let(nil, ::T.untyped)
+  PF_LAT = ::T.let(nil, ::T.untyped)
+  PF_LINK = ::T.let(nil, ::T.untyped)
+  PF_NATM = ::T.let(nil, ::T.untyped)
+  PF_NDRV = ::T.let(nil, ::T.untyped)
+  PF_NETBIOS = ::T.let(nil, ::T.untyped)
+  PF_NS = ::T.let(nil, ::T.untyped)
+  PF_OSI = ::T.let(nil, ::T.untyped)
+  PF_PIP = ::T.let(nil, ::T.untyped)
+  PF_PPP = ::T.let(nil, ::T.untyped)
+  PF_PUP = ::T.let(nil, ::T.untyped)
+  PF_RTIP = ::T.let(nil, ::T.untyped)
+  PF_SIP = ::T.let(nil, ::T.untyped)
+  PF_SYSTEM = ::T.let(nil, ::T.untyped)
+  PF_XTP = ::T.let(nil, ::T.untyped)
+  SCM_CREDS = ::T.let(nil, ::T.untyped)
+  SO_DONTTRUNC = ::T.let(nil, ::T.untyped)
+  SO_NKE = ::T.let(nil, ::T.untyped)
+  SO_NOSIGPIPE = ::T.let(nil, ::T.untyped)
+  SO_NREAD = ::T.let(nil, ::T.untyped)
+  SO_USELOOPBACK = ::T.let(nil, ::T.untyped)
+  SO_WANTMORE = ::T.let(nil, ::T.untyped)
+  SO_WANTOOBFLAG = ::T.let(nil, ::T.untyped)
+  TCP_NOOPT = ::T.let(nil, ::T.untyped)
+  TCP_NOPUSH = ::T.let(nil, ::T.untyped)
 end
 
 SorbetRails::JobRbiFormatter::Parameter = Parlour::RbiGenerator::Parameter
@@ -52807,23 +52899,17 @@ end
 
 class Work
   include ::StateMachines::InstanceMethods
+  def after_add_for_attached_files(); end
+
+  def after_add_for_attached_files=(val); end
+
+  def after_add_for_attached_files?(); end
+
   def after_add_for_contributors(); end
 
   def after_add_for_contributors=(val); end
 
   def after_add_for_contributors?(); end
-
-  def after_add_for_files_attachments(); end
-
-  def after_add_for_files_attachments=(val); end
-
-  def after_add_for_files_attachments?(); end
-
-  def after_add_for_files_blobs(); end
-
-  def after_add_for_files_blobs=(val); end
-
-  def after_add_for_files_blobs?(); end
 
   def after_add_for_related_links(); end
 
@@ -52837,23 +52923,17 @@ class Work
 
   def after_add_for_related_works?(); end
 
+  def after_remove_for_attached_files(); end
+
+  def after_remove_for_attached_files=(val); end
+
+  def after_remove_for_attached_files?(); end
+
   def after_remove_for_contributors(); end
 
   def after_remove_for_contributors=(val); end
 
   def after_remove_for_contributors?(); end
-
-  def after_remove_for_files_attachments(); end
-
-  def after_remove_for_files_attachments=(val); end
-
-  def after_remove_for_files_attachments?(); end
-
-  def after_remove_for_files_blobs(); end
-
-  def after_remove_for_files_blobs=(val); end
-
-  def after_remove_for_files_blobs?(); end
 
   def after_remove_for_related_links(); end
 
@@ -52867,35 +52947,27 @@ class Work
 
   def after_remove_for_related_works?(); end
 
+  def autosave_associated_records_for_attached_files(*args); end
+
   def autosave_associated_records_for_collection(*args); end
 
   def autosave_associated_records_for_contributors(*args); end
 
-  def autosave_associated_records_for_files_attachments(*args); end
-
-  def autosave_associated_records_for_files_blobs(*args); end
-
   def autosave_associated_records_for_related_links(*args); end
 
   def autosave_associated_records_for_related_works(*args); end
+
+  def before_add_for_attached_files(); end
+
+  def before_add_for_attached_files=(val); end
+
+  def before_add_for_attached_files?(); end
 
   def before_add_for_contributors(); end
 
   def before_add_for_contributors=(val); end
 
   def before_add_for_contributors?(); end
-
-  def before_add_for_files_attachments(); end
-
-  def before_add_for_files_attachments=(val); end
-
-  def before_add_for_files_attachments?(); end
-
-  def before_add_for_files_blobs(); end
-
-  def before_add_for_files_blobs=(val); end
-
-  def before_add_for_files_blobs?(); end
 
   def before_add_for_related_links(); end
 
@@ -52909,23 +52981,17 @@ class Work
 
   def before_add_for_related_works?(); end
 
+  def before_remove_for_attached_files(); end
+
+  def before_remove_for_attached_files=(val); end
+
+  def before_remove_for_attached_files?(); end
+
   def before_remove_for_contributors(); end
 
   def before_remove_for_contributors=(val); end
 
   def before_remove_for_contributors?(); end
-
-  def before_remove_for_files_attachments(); end
-
-  def before_remove_for_files_attachments=(val); end
-
-  def before_remove_for_files_attachments?(); end
-
-  def before_remove_for_files_blobs(); end
-
-  def before_remove_for_files_blobs=(val); end
-
-  def before_remove_for_files_blobs?(); end
 
   def before_remove_for_related_links(); end
 
@@ -52939,11 +53005,9 @@ class Work
 
   def before_remove_for_related_works?(); end
 
+  def validate_associated_records_for_attached_files(*args); end
+
   def validate_associated_records_for_contributors(*args); end
-
-  def validate_associated_records_for_files_attachments(*args); end
-
-  def validate_associated_records_for_files_blobs(*args); end
 
   def validate_associated_records_for_related_links(*args); end
 
@@ -52965,21 +53029,10 @@ class Work::ActiveRecord_Relation
   include ::Work::GeneratedRelationMethods
 end
 
-module Work::FilesAttachmentsAssociationExtension
-  def purge(); end
-
-  def purge_later(); end
-end
-
-module Work::FilesAttachmentsAssociationExtension
-end
-
 module Work::GeneratedAssociationMethods
+  def attached_file_ids=(ids); end
+
   def contributor_ids=(ids); end
-
-  def files_attachment_ids=(ids); end
-
-  def files_blob_ids=(ids); end
 
   def related_link_ids=(ids); end
 
@@ -52999,8 +53052,6 @@ module Work::GeneratedRelationMethods
 
   def stanford(*_, &_1); end
 
-  def with_attached_files(*_, &_1); end
-
   def world(*_, &_1); end
 end
 
@@ -53010,23 +53061,17 @@ end
 
 class Work
   extend ::StateMachines::ClassMethods
+  def self.after_add_for_attached_files(); end
+
+  def self.after_add_for_attached_files=(val); end
+
+  def self.after_add_for_attached_files?(); end
+
   def self.after_add_for_contributors(); end
 
   def self.after_add_for_contributors=(val); end
 
   def self.after_add_for_contributors?(); end
-
-  def self.after_add_for_files_attachments(); end
-
-  def self.after_add_for_files_attachments=(val); end
-
-  def self.after_add_for_files_attachments?(); end
-
-  def self.after_add_for_files_blobs(); end
-
-  def self.after_add_for_files_blobs=(val); end
-
-  def self.after_add_for_files_blobs?(); end
 
   def self.after_add_for_related_links(); end
 
@@ -53040,23 +53085,17 @@ class Work
 
   def self.after_add_for_related_works?(); end
 
+  def self.after_remove_for_attached_files(); end
+
+  def self.after_remove_for_attached_files=(val); end
+
+  def self.after_remove_for_attached_files?(); end
+
   def self.after_remove_for_contributors(); end
 
   def self.after_remove_for_contributors=(val); end
 
   def self.after_remove_for_contributors?(); end
-
-  def self.after_remove_for_files_attachments(); end
-
-  def self.after_remove_for_files_attachments=(val); end
-
-  def self.after_remove_for_files_attachments?(); end
-
-  def self.after_remove_for_files_blobs(); end
-
-  def self.after_remove_for_files_blobs=(val); end
-
-  def self.after_remove_for_files_blobs?(); end
 
   def self.after_remove_for_related_links(); end
 
@@ -53070,23 +53109,17 @@ class Work
 
   def self.after_remove_for_related_works?(); end
 
+  def self.before_add_for_attached_files(); end
+
+  def self.before_add_for_attached_files=(val); end
+
+  def self.before_add_for_attached_files?(); end
+
   def self.before_add_for_contributors(); end
 
   def self.before_add_for_contributors=(val); end
 
   def self.before_add_for_contributors?(); end
-
-  def self.before_add_for_files_attachments(); end
-
-  def self.before_add_for_files_attachments=(val); end
-
-  def self.before_add_for_files_attachments?(); end
-
-  def self.before_add_for_files_blobs(); end
-
-  def self.before_add_for_files_blobs=(val); end
-
-  def self.before_add_for_files_blobs?(); end
 
   def self.before_add_for_related_links(); end
 
@@ -53100,23 +53133,17 @@ class Work
 
   def self.before_add_for_related_works?(); end
 
+  def self.before_remove_for_attached_files(); end
+
+  def self.before_remove_for_attached_files=(val); end
+
+  def self.before_remove_for_attached_files?(); end
+
   def self.before_remove_for_contributors(); end
 
   def self.before_remove_for_contributors=(val); end
 
   def self.before_remove_for_contributors?(); end
-
-  def self.before_remove_for_files_attachments(); end
-
-  def self.before_remove_for_files_attachments=(val); end
-
-  def self.before_remove_for_files_attachments?(); end
-
-  def self.before_remove_for_files_blobs(); end
-
-  def self.before_remove_for_files_blobs=(val); end
-
-  def self.before_remove_for_files_blobs?(); end
 
   def self.before_remove_for_related_links(); end
 
@@ -53133,11 +53160,9 @@ end
 
 class WorkForm
   include ::Disposable::Twin::Coercion
-  def contributors_attributes=(); end
-end
+  def attached_files_attributes=(); end
 
-class WorkForm
-  extend ::Disposable::Twin::Coercion::ClassMethods
+  def contributors_attributes=(); end
 end
 
 class WorkType
@@ -53151,6 +53176,11 @@ class Works::ContributorRowComponent
 end
 
 class Works::ContributorsComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::FileRowComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end

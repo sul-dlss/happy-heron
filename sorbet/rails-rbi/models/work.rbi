@@ -49,10 +49,10 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def agree_to_terms?; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def citation; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
   def citation=(value); end
 
   sig { returns(T::Boolean) }
@@ -85,10 +85,10 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def created_at?; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def created_edtf; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
   def created_edtf=(value); end
 
   sig { returns(T::Boolean) }
@@ -130,6 +130,15 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def license?; end
 
+  sig { returns(T.nilable(String)) }
+  def published_edtf; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def published_edtf=(value); end
+
+  sig { returns(T::Boolean) }
+  def published_edtf?; end
+
   sig { returns(String) }
   def state; end
 
@@ -139,10 +148,10 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def state?; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(T::Array[String])) }
   def subtype; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T::Array[T.any(String, Symbol)])).void }
   def subtype=(value); end
 
   sig { returns(T::Boolean) }
@@ -193,6 +202,59 @@ class Work::Access < T::Enum
 
 end
 
+module Work::GeneratedAssociationMethods
+  sig { returns(::AttachedFile::ActiveRecord_Associations_CollectionProxy) }
+  def attached_files; end
+
+  sig { returns(T::Array[Integer]) }
+  def attached_file_ids; end
+
+  sig { params(value: T::Enumerable[::AttachedFile]).void }
+  def attached_files=(value); end
+
+  sig { returns(::Collection) }
+  def collection; end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
+  def build_collection(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
+  def create_collection(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
+  def create_collection!(*args, &block); end
+
+  sig { params(value: ::Collection).void }
+  def collection=(value); end
+
+  sig { returns(::Contributor::ActiveRecord_Associations_CollectionProxy) }
+  def contributors; end
+
+  sig { returns(T::Array[Integer]) }
+  def contributor_ids; end
+
+  sig { params(value: T::Enumerable[::Contributor]).void }
+  def contributors=(value); end
+
+  sig { returns(::RelatedLink::ActiveRecord_Associations_CollectionProxy) }
+  def related_links; end
+
+  sig { returns(T::Array[Integer]) }
+  def related_link_ids; end
+
+  sig { params(value: T::Enumerable[::RelatedLink]).void }
+  def related_links=(value); end
+
+  sig { returns(::RelatedWork::ActiveRecord_Associations_CollectionProxy) }
+  def related_works; end
+
+  sig { returns(T::Array[Integer]) }
+  def related_work_ids; end
+
+  sig { params(value: T::Enumerable[::RelatedWork]).void }
+  def related_works=(value); end
+end
+
 module Work::CustomFinderMethods
   sig { params(limit: Integer).returns(T::Array[Work]) }
   def first_n(limit); end
@@ -231,9 +293,6 @@ class Work < ApplicationRecord
   def self.stanford(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def self.with_attached_files(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
   def self.world(*args); end
 
   sig { returns(Work::Access) }
@@ -259,9 +318,6 @@ class Work::ActiveRecord_Relation < ActiveRecord::Relation
   def stanford(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def with_attached_files(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
   def world(*args); end
 end
 
@@ -281,9 +337,6 @@ class Work::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   def stanford(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def with_attached_files(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
   def world(*args); end
 end
 
@@ -300,9 +353,6 @@ class Work::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associatio
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
   def stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def with_attached_files(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
   def world(*args); end
@@ -544,72 +594,4 @@ module Work::QueryMethodsReturningAssociationRelation
     ).returns(ActiveRecord::Batches::BatchEnumerator)
   end
   def in_batches(of: 1000, start: nil, finish: nil, load: false, error_on_ignore: nil, &block); end
-end
-
-module Work::GeneratedAssociationMethods
-  sig { returns(::Collection) }
-  def collection; end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
-  def build_collection(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
-  def create_collection(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
-  def create_collection!(*args, &block); end
-
-  sig { params(value: ::Collection).void }
-  def collection=(value); end
-
-  sig { returns(::Contributor::ActiveRecord_Associations_CollectionProxy) }
-  def contributors; end
-
-  sig { returns(T::Array[Integer]) }
-  def contributor_ids; end
-
-  sig { params(value: T::Enumerable[::Contributor]).void }
-  def contributors=(value); end
-
-  sig { returns(::ActiveStorage::Attachment::ActiveRecord_Associations_CollectionProxy) }
-  def files_attachments; end
-
-  sig { returns(T::Array[Integer]) }
-  def files_attachment_ids; end
-
-  sig { params(value: T::Enumerable[::ActiveStorage::Attachment]).void }
-  def files_attachments=(value); end
-
-  sig { returns(::ActiveStorage::Blob::ActiveRecord_Associations_CollectionProxy) }
-  def files_blobs; end
-
-  sig { returns(T::Array[Integer]) }
-  def files_blob_ids; end
-
-  sig { params(value: T::Enumerable[::ActiveStorage::Blob]).void }
-  def files_blobs=(value); end
-
-  sig { returns(::RelatedLink::ActiveRecord_Associations_CollectionProxy) }
-  def related_links; end
-
-  sig { returns(T::Array[Integer]) }
-  def related_link_ids; end
-
-  sig { params(value: T::Enumerable[::RelatedLink]).void }
-  def related_links=(value); end
-
-  sig { returns(::RelatedWork::ActiveRecord_Associations_CollectionProxy) }
-  def related_works; end
-
-  sig { returns(T::Array[Integer]) }
-  def related_work_ids; end
-
-  sig { params(value: T::Enumerable[::RelatedWork]).void }
-  def related_works=(value); end
-
-  sig { returns(T.nilable(ActiveStorage::Attached::Many)) }
-  def files; end
-
-  sig { params(attachables: T.untyped).returns(T.untyped) }
-  def files=(attachables); end
 end
