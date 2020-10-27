@@ -151,7 +151,6 @@ CREATE TABLE public.collections (
     default_license character varying,
     email_when_participants_changed boolean,
     managers character varying NOT NULL,
-    depositors character varying,
     reviewers character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
@@ -211,6 +210,16 @@ CREATE SEQUENCE public.contributors_id_seq
 --
 
 ALTER SEQUENCE public.contributors_id_seq OWNED BY public.contributors.id;
+
+
+--
+-- Name: depositors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.depositors (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
 
 
 --
@@ -610,6 +619,13 @@ CREATE INDEX index_contributors_on_work_id ON public.contributors USING btree (w
 
 
 --
+-- Name: index_depositors_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_depositors_on_collection_id_and_user_id ON public.depositors USING btree (collection_id, user_id);
+
+
+--
 -- Name: index_notifications_on_opened_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -762,6 +778,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201022194547'),
 ('20201023123700'),
 ('20201023212141'),
-('20201026222437');
+('20201026222437'),
+('20201027203358');
 
 

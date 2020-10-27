@@ -8,6 +8,15 @@ module Contributor::ActiveRelation_WhereNot
 end
 
 module Contributor::GeneratedAttributeMethods
+  sig { returns(String) }
+  def contributor_type; end
+
+  sig { params(value: T.any(String, Symbol)).void }
+  def contributor_type=(value); end
+
+  sig { returns(T::Boolean) }
+  def contributor_type?; end
+
   sig { returns(ActiveSupport::TimeWithZone) }
   def created_at; end
 
@@ -44,14 +53,14 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def last_name?; end
 
-  sig { returns(Integer) }
-  def role_term_id; end
+  sig { returns(String) }
+  def role; end
 
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def role_term_id=(value); end
+  sig { params(value: T.any(String, Symbol)).void }
+  def role=(value); end
 
   sig { returns(T::Boolean) }
-  def role_term_id?; end
+  def role?; end
 
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end

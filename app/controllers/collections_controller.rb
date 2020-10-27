@@ -8,16 +8,19 @@ class CollectionsController < ApplicationController
   verify_authorized
 
   def new
-    @collection = Collection.new(managers: current_user.email,
-                                 access: 'world')
-    authorize! @collection
+    collection = Collection.new(creator: current_user)
+    authorize! collection
+
+    @form = CollectionForm.new(collection)
+    @form.prepopulate!
   end
 
   def create
-    @collection = Collection.new(collection_params.merge(creator: current_user))
-    authorize! @collection
+    collection = Collection.new(creator: current_user)
+    authorize! collection
+    @form = CollectionForm.new(collection)
 
-    if @collection.save
+    if @form.validate(collection_params) && @form.save
       # TODO: https://github.com/sul-dlss/happy-heron/issues/92
       # DepositCollectionJob.perform_later(@collection) if params[:commit] == 'Deposit'
       redirect_to dashboard_path
@@ -30,6 +33,6 @@ class CollectionsController < ApplicationController
 
   def collection_params
     params.require(:collection).permit(:name, :description, :contact_email,
-                                       :access, :managers)
+                                       :access, :managers, :depositor_sunets)
   end
 end

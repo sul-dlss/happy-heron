@@ -154,6 +154,8 @@ Rails/AfterCommitOverride: # (new in 2.8)
   Enabled: true
 Rails/FindById: # (new in 2.7)
   Enabled: true
+Rails/HasAndBelongsToMany:
+  Enabled: false
 Rails/Inquiry: # (new in 2.7)
   Enabled: true
 Rails/MailerName: # (new in 2.7)

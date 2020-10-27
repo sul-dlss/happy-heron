@@ -42,7 +42,8 @@ RSpec.describe 'Collections requests' do
             description: 'This is a very good collection.',
             contact_email: user.email,
             access: 'world',
-            managers: user.email
+            managers: user.email,
+            depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
           }
         }
       end
@@ -51,6 +52,9 @@ RSpec.describe 'Collections requests' do
         post '/collections', params: collection_params
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(dashboard_path)
+        collection = Collection.last
+        expect(collection.depositors.size).to eq 6
+        expect(collection.depositors).to all(be_kind_of(User))
       end
     end
 

@@ -3,7 +3,7 @@
     <div id="editor">
       <h1 class="row">Deposit your work</h1>
 
-      <%= form_with model: @collection,
+      <%= form_with model: @form,
           html: { class: 'needs-validation row', novalidate: true, multipart: true } do |form| %>
         <section>
           <header>Details</header>
@@ -57,10 +57,24 @@
         <section>
           <header>Collection participants</header>
           <div class="mb-3 row">
+            <p class="col-sm-2 col-form-label">Created by</p>
+            <div class="col-sm-10">
+              <%= @form.creator %>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
             <%= form.label :managers, 'Managers', class: 'col-sm-2 col-form-label' %>
             <div class="col-sm-10">
               <%= form.text_field :managers, class: "form-control", required: true %>
               <div class="invalid-feedback">You must provide managers</div>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <%= form.label :depositor_sunets, 'Depositors', class: 'col-sm-2 col-form-label' %>
+            <div class="col-sm-10">
+              <%= form.text_field :depositor_sunets, class: "form-control" %>
             </div>
           </div>
         </section>

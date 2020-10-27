@@ -53,15 +53,6 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def default_license?; end
 
-  sig { returns(T.nilable(String)) }
-  def depositors; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def depositors=(value); end
-
-  sig { returns(T::Boolean) }
-  def depositors?; end
-
   sig { returns(String) }
   def description; end
 
@@ -177,6 +168,15 @@ module Collection::GeneratedAssociationMethods
 
   sig { params(value: ::User).void }
   def creator=(value); end
+
+  sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
+  def depositors; end
+
+  sig { returns(T::Array[Integer]) }
+  def depositor_ids; end
+
+  sig { params(value: T::Enumerable[::User]).void }
+  def depositors=(value); end
 
   sig { returns(::Work::ActiveRecord_Associations_CollectionProxy) }
   def works; end
