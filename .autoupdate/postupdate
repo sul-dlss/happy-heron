@@ -12,8 +12,5 @@ docker-compose up -d db
 bundle install
 bundle exec rails db:create db:migrate db:seed
 SRB_YES=1 bundle exec srb rbi update
-bundle exec rake rails_rbi:all
-bundle exec srb rbi hidden-definitions
-bundle exec srb rbi suggest-typed
 docker-compose down -v
 git add sorbet && git commit -m 'Update type-checking signatures'
