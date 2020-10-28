@@ -9,6 +9,13 @@
 
 # Else: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
 export DOCKER_HOST=unix:///var/run/docker.sock
+env
+echo $DOCKER_HOST
+whoami
+groups
+pwd
+docker info
+docker ps
 # Database service must be running and DB must be created to allow sorbet-rails to generate RBIs
 docker-compose up -d db
 bin/bundle install
