@@ -97,10 +97,24 @@ RSpec.describe 'Works requests' do
           { '_destroy' => 'false', 'label' => 'My PDF',
             'file' => upload } }
       end
+
+      let(:keywords) do
+        { '0' =>
+          { '_destroy' => 'false', 'label' => 'Feminism',
+            'uri' => 'http://id.worldcat.org/fast/922671' },
+          '999' =>
+          { '_destroy' => '1', 'label' => 'My PNG',
+            'uri' => '' },
+          '1002' =>
+          { '_destroy' => 'false', 'label' => 'Freeform keyword',
+            'uri' => '' } }
+      end
+
       let(:work_params) do
         attributes_for(:work)
           .merge(contributors_attributes: contributors,
                  attached_files_attributes: files,
+                 keywords_attributes: keywords,
                  'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
                  creation_type: 'range',
                  'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
@@ -114,6 +128,7 @@ RSpec.describe 'Works requests' do
         work = Work.last
         expect(work.contributors.size).to eq 2
         expect(work.attached_files.size).to eq 2
+        expect(work.keywords.size).to eq 2
         expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
         expect(work.subtype).to eq ['3D model', 'GIS']

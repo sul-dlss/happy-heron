@@ -11,6 +11,7 @@ class Work < ApplicationRecord
   has_many :related_links, dependent: :destroy
   has_many :related_works, dependent: :destroy
   has_many :attached_files, dependent: :destroy
+  has_many :keywords, dependent: :destroy
 
   validates :abstract, :access, :state, :title, presence: true
   validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }

@@ -4,6 +4,7 @@
 require 'reform/form/coercion'
 
 # The form for work creation and editing
+# rubocop:disable Metrics/ClassLength
 class WorkForm < Reform::Form
   feature Coercion
 
@@ -87,6 +88,24 @@ class WorkForm < Reform::Form
     property :_destroy, virtual: true
   end
 
+  collection :keywords,
+             populator: lambda { |fragment:, **|
+               # The fragment represents one row of the attached file data from the HTML form
+               # find out if incoming file is already added.
+               item = keywords.find_by(id: fragment['id']) if fragment['id'].present?
+
+               if fragment['_destroy'] == '1'
+                 keywords.delete(item)
+                 return skip!
+               end
+               item || keywords.append(Keyword.new)
+             } do
+    property :id
+    property :label
+    property :uri
+    property :_destroy, virtual: true
+  end
+
   private
 
   def deserialize_edtf(name, offset = 0)
@@ -116,3 +135,4 @@ class WorkForm < Reform::Form
     date
   end
 end
+# rubocop:enable Metrics/ClassLength

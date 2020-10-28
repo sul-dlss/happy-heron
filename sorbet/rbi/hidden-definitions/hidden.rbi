@@ -39462,6 +39462,40 @@ class KeyError
   include ::DidYouMean::Correctable
 end
 
+class Keyword
+  def autosave_associated_records_for_work(*args); end
+end
+
+class Keyword::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Keyword::GeneratedRelationMethods
+end
+
+class Keyword::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Keyword::GeneratedRelationMethods
+end
+
+class Keyword::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Keyword::GeneratedRelationMethods
+end
+
+module Keyword::GeneratedAssociationMethods
+  def reload_work(); end
+end
+
+module Keyword::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Keyword::GeneratedRelationMethods
+end
+
+module Keyword::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
 class License
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -40906,9 +40940,13 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-Net::HTTPInformation::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPInformation
+end
 
-Net::HTTPInformationCode = Net::HTTPInformation
+Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPInformation
+end
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -40968,9 +41006,13 @@ Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPSuccess
+end
 
-Net::HTTPSuccessCode = Net::HTTPSuccess
+Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPSuccess
+end
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -42125,6 +42167,7 @@ module PG::Constants
   PG_DIAG_STATEMENT_POSITION = ::T.let(nil, ::T.untyped)
   PG_DIAG_TABLE_NAME = ::T.let(nil, ::T.untyped)
   PQERRORS_DEFAULT = ::T.let(nil, ::T.untyped)
+  PQERRORS_SQLSTATE = ::T.let(nil, ::T.untyped)
   PQERRORS_TERSE = ::T.let(nil, ::T.untyped)
   PQERRORS_VERBOSE = ::T.let(nil, ::T.untyped)
   PQPING_NO_ATTEMPT = ::T.let(nil, ::T.untyped)
@@ -52907,6 +52950,12 @@ class Work
 
   def after_add_for_contributors?(); end
 
+  def after_add_for_keywords(); end
+
+  def after_add_for_keywords=(val); end
+
+  def after_add_for_keywords?(); end
+
   def after_add_for_related_links(); end
 
   def after_add_for_related_links=(val); end
@@ -52931,6 +52980,12 @@ class Work
 
   def after_remove_for_contributors?(); end
 
+  def after_remove_for_keywords(); end
+
+  def after_remove_for_keywords=(val); end
+
+  def after_remove_for_keywords?(); end
+
   def after_remove_for_related_links(); end
 
   def after_remove_for_related_links=(val); end
@@ -52949,6 +53004,8 @@ class Work
 
   def autosave_associated_records_for_contributors(*args); end
 
+  def autosave_associated_records_for_keywords(*args); end
+
   def autosave_associated_records_for_related_links(*args); end
 
   def autosave_associated_records_for_related_works(*args); end
@@ -52964,6 +53021,12 @@ class Work
   def before_add_for_contributors=(val); end
 
   def before_add_for_contributors?(); end
+
+  def before_add_for_keywords(); end
+
+  def before_add_for_keywords=(val); end
+
+  def before_add_for_keywords?(); end
 
   def before_add_for_related_links(); end
 
@@ -52989,6 +53052,12 @@ class Work
 
   def before_remove_for_contributors?(); end
 
+  def before_remove_for_keywords(); end
+
+  def before_remove_for_keywords=(val); end
+
+  def before_remove_for_keywords?(); end
+
   def before_remove_for_related_links(); end
 
   def before_remove_for_related_links=(val); end
@@ -53004,6 +53073,8 @@ class Work
   def validate_associated_records_for_attached_files(*args); end
 
   def validate_associated_records_for_contributors(*args); end
+
+  def validate_associated_records_for_keywords(*args); end
 
   def validate_associated_records_for_related_links(*args); end
 
@@ -53029,6 +53100,8 @@ module Work::GeneratedAssociationMethods
   def attached_file_ids=(ids); end
 
   def contributor_ids=(ids); end
+
+  def keyword_ids=(ids); end
 
   def related_link_ids=(ids); end
 
@@ -53069,6 +53142,12 @@ class Work
 
   def self.after_add_for_contributors?(); end
 
+  def self.after_add_for_keywords(); end
+
+  def self.after_add_for_keywords=(val); end
+
+  def self.after_add_for_keywords?(); end
+
   def self.after_add_for_related_links(); end
 
   def self.after_add_for_related_links=(val); end
@@ -53092,6 +53171,12 @@ class Work
   def self.after_remove_for_contributors=(val); end
 
   def self.after_remove_for_contributors?(); end
+
+  def self.after_remove_for_keywords(); end
+
+  def self.after_remove_for_keywords=(val); end
+
+  def self.after_remove_for_keywords?(); end
 
   def self.after_remove_for_related_links(); end
 
@@ -53117,6 +53202,12 @@ class Work
 
   def self.before_add_for_contributors?(); end
 
+  def self.before_add_for_keywords(); end
+
+  def self.before_add_for_keywords=(val); end
+
+  def self.before_add_for_keywords?(); end
+
   def self.before_add_for_related_links(); end
 
   def self.before_add_for_related_links=(val); end
@@ -53141,6 +53232,12 @@ class Work
 
   def self.before_remove_for_contributors?(); end
 
+  def self.before_remove_for_keywords(); end
+
+  def self.before_remove_for_keywords=(val); end
+
+  def self.before_remove_for_keywords?(); end
+
   def self.before_remove_for_related_links(); end
 
   def self.before_remove_for_related_links=(val); end
@@ -53159,6 +53256,8 @@ class WorkForm
   def attached_files_attributes=(); end
 
   def contributors_attributes=(); end
+
+  def keywords_attributes=(); end
 end
 
 class WorkPolicy
