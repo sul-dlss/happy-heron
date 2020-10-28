@@ -3,7 +3,7 @@
   <div class="mb-3 row">
     <%= form.label :access, 'Who can access?', class: 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
-      <%= form.select :access, ['stanford'], {}, class: "form-select" %>
+      <%= form.select :access, [['Select...', ''], ['Stanford Community', 'stanford'], ['Everyone', 'everyone']], {}, class: "form-select" %>
     </div>
   </div>
 </section>
