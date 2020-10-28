@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/sidekiq/all/sidekiq.rbi
 #
-# typed: false
+# typed: strong
 
 module Sidekiq::Worker
   mixes_in_class_methods(Sidekiq::Worker::ClassMethods)
