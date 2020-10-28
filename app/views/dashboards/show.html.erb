@@ -11,7 +11,7 @@
           <% @collections.each do |collection| %>
             <li>
               <div>
-                <header><%= collection.name %></header>
+                <header><%= collection.name %> <%= link_to '✏️', edit_collection_path(collection), aria: { label: "Edit #{collection.name}"} %></header>
                 <%= button_tag '+ Deposit to this collection',
                       data: {
                         destination: new_collection_work_path(collection),

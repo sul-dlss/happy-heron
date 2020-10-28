@@ -12,15 +12,25 @@ class CollectionForm < Reform::Form
   property :access, default: 'world'
   property :creator, writable: false
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
-    self.depositor_sunets = model.depositors.map { |user| user.email.delete_suffix('@stanford.edu') }
+    self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
 
   def sync(*)
     sunetids = depositor_sunets.split(/\s*,\s*/)
     emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
-    model.depositors = emails.map { |email| User.create_or_find_by(email: email) }
+    model.depositors = emails.map do |email|
+      # It's odd that we need to do both, but this is how it's written.
+      # See: https://github.com/rails/rails/issues/36027
+      User.find_by(email: email) || User.create_or_find_by(email: email)
+    end
     super
   end
 
   validates :name, :description, :contact_email, :managers, :access, presence: true
+
+  private
+
+  def depositor_sunets_from_model
+    model.depositors.map { |user| user.email.delete_suffix('@stanford.edu') }
+  end
 end
