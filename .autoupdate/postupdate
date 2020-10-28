@@ -7,6 +7,8 @@
 # See:
 # https://github.com/sul-dlss/access-update-scripts/blob/81d786378c37b547486e83d174dbbb7e3c93e277/autupdate.sh#L34
 
+# Else: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
+export DOCKER_HOST=unix:///var/run/docker.sock
 # Database service must be running and DB must be created to allow sorbet-rails to generate RBIs
 docker-compose up -d db
 bin/bundle install
