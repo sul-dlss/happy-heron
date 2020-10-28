@@ -30,6 +30,7 @@ RSpec.describe 'Works requests' do
 
   context 'with an authenticated user who is not in any application workgroups' do
     let(:user) { create(:user) }
+    let(:alert_text) { 'You are not authorized to perform the requested action' }
 
     before do
       sign_in user, groups: ['sdr:baz']
@@ -45,7 +46,10 @@ RSpec.describe 'Works requests' do
     describe 'new work form' do
       it 'returns an unauthorized http status code' do
         get "/collections/#{collection.id}/works/new?work_type=video"
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to redirect_to(:root)
+        follow_redirect!
+        expect(response).to be_successful
+        expect(response.body).to include alert_text
       end
     end
 
@@ -54,7 +58,10 @@ RSpec.describe 'Works requests' do
 
       it 'displays the work' do
         post "/collections/#{collection.id}/works", params: { work: { bad: 'data anyway' } }
-        expect(response).to have_http_status(:unauthorized)
+        expect(response).to redirect_to(:root)
+        follow_redirect!
+        expect(response).to be_successful
+        expect(response.body).to include alert_text
       end
     end
   end

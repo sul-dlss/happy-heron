@@ -31,7 +31,8 @@ class ApplicationController < ActionController::Base
   end
 
   def deny_access
-    render status: :unauthorized, html: 'You are unauthorized to see this'
+    flash[:warning] = 'You are not authorized to perform the requested action'
+    redirect_to :root
   end
 
   # Its important that the location is NOT stored if:

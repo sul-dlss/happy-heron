@@ -24,6 +24,7 @@ RSpec.describe 'Collections requests' do
 
   context 'with an authenticated user who is not in any application workgroups' do
     let(:user) { create(:user) }
+    let(:alert_text) { 'You are not authorized to perform the requested action' }
 
     before do
       sign_in user, groups: ['sdr:baz']
@@ -31,12 +32,18 @@ RSpec.describe 'Collections requests' do
 
     it 'does not authorize GETs to /collections/new' do
       get '/collections/new'
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to redirect_to(:root)
+      follow_redirect!
+      expect(response).to be_successful
+      expect(response.body).to include alert_text
     end
 
     it 'does not allow the user to save a collection' do
       post '/collections', params: { collection: { should_not: 'even read these params' } }
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to redirect_to(:root)
+      follow_redirect!
+      expect(response).to be_successful
+      expect(response.body).to include alert_text
     end
   end
 

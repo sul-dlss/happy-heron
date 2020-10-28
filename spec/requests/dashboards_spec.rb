@@ -13,7 +13,10 @@ RSpec.describe 'Dashboard requests' do
 
     it 'returns an unauthorized http status code' do
       get '/dashboard'
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to redirect_to(:root)
+      follow_redirect!
+      expect(response).to be_successful
+      expect(response.body).to include 'You are not authorized to perform the requested action'
     end
   end
 
@@ -22,7 +25,10 @@ RSpec.describe 'Dashboard requests' do
 
     it 'returns an unauthorized http status code' do
       get '/dashboard'
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to redirect_to(:root)
+      follow_redirect!
+      expect(response).to be_successful
+      expect(response.body).to include 'You are not authorized to perform the requested action'
     end
   end
 
