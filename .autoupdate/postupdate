@@ -9,13 +9,13 @@
 
 # Database service must be running and DB must be created to allow sorbet-rails to generate RBIs
 docker-compose up -d db
-bin/bundle install
-bin/rails db:create
-bin/rails db:migrate
-bin/rails db:seed
-SRB_YES=1 bin/bundle exec srb rbi update
-bin/bundle exec rake rails_rbi:all
-bin/bundle exec srb rbi hidden-definitions
-bin/bundle exec srb rbi suggest-typed
+bundle install
+bundle exec rails db:create
+bundle exec rails db:migrate
+bundle exec rails db:seed
+SRB_YES=1 bundle exec srb rbi update
+bundle exec rake rails_rbi:all
+bundle exec srb rbi hidden-definitions
+bundle exec srb rbi suggest-typed
 docker-compose down
 git add sorbet && git commit -m 'Update type-checking signatures'
