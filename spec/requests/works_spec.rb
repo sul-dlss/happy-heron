@@ -28,49 +28,11 @@ RSpec.describe 'Works requests' do
     end
   end
 
-  context 'with an authenticated user who is not in any application workgroups' do
-    let(:user) { create(:user) }
-    let(:alert_text) { 'You are not authorized to perform the requested action' }
-
-    before do
-      sign_in user, groups: ['sdr:baz']
-    end
-
-    describe 'show a work' do
-      it 'displays the work' do
-        get "/works/#{work.id}"
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
-    describe 'new work form' do
-      it 'returns an unauthorized http status code' do
-        get "/collections/#{collection.id}/works/new?work_type=video"
-        expect(response).to redirect_to(:root)
-        follow_redirect!
-        expect(response).to be_successful
-        expect(response.body).to include alert_text
-      end
-    end
-
-    describe 'create work' do
-      let(:collection) { create(:collection) }
-
-      it 'displays the work' do
-        post "/collections/#{collection.id}/works", params: { work: { bad: 'data anyway' } }
-        expect(response).to redirect_to(:root)
-        follow_redirect!
-        expect(response).to be_successful
-        expect(response.body).to include alert_text
-      end
-    end
-  end
-
-  context 'with an authenticated collection creator' do
+  context 'with an authenticated user' do
     let(:user) { create(:user) }
 
     before do
-      sign_in user, groups: ['dlss:hydrus-app-collection-creators']
+      sign_in user
     end
 
     describe 'show a work' do

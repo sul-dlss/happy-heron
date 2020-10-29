@@ -13,7 +13,7 @@ class TestShibbolethHeaders
 
   def call(env)
     env['REMOTE_USER'] = user
-    env['eduPersonEntitlement'] = groups.join(';') if groups.present? # allow omission of header for testing
+    env[Settings.authorization_group_header] = Array(groups).join(';')
     @app.call(env)
   end
 end

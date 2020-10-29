@@ -22,7 +22,7 @@ Start up dependencies with `docker-compose up db` (with `-d` to run in backgroun
 To run the server in development mode set `REMOTE_USER` because we aren't running behind Shibboleth.
 
 ```shell
-REMOTE_USER=auser@stanford.edu bin/rails server
+REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-adminstrators bin/rails server
 ```
 
 ### Integration

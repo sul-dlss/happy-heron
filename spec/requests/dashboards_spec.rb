@@ -44,7 +44,7 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user is an application admin' do
-    before { sign_in user, groups: ['dlss:hydrus-app-adminstrators'] }
+    before { sign_in user, groups: ['dlss:hydrus-app-administrators'] }
 
     it 'shows the dashboard' do
       get '/dashboard'
@@ -53,7 +53,9 @@ RSpec.describe 'Dashboard requests' do
 
     it 'does not show a link to create collections' do
       get '/dashboard'
-      expect(response.body).not_to include '+ Create a new collection'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'Your collections'
+      expect(response.body).to include '+ Create a new collection'
     end
   end
 end

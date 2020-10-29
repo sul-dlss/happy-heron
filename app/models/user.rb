@@ -17,8 +17,8 @@ class User < ApplicationRecord
   devise :remote_user_authenticatable
 
   sig { returns(T::Boolean) }
-  def application_user?
-    (groups & application_user_groups).present?
+  def administrator?
+    groups.include?(Settings.authorization_workgroup_names.administrators)
   end
 
   sig { returns(T::Boolean) }
@@ -34,12 +34,5 @@ class User < ApplicationRecord
   sig { returns(String) }
   def to_s
     email
-  end
-
-  private
-
-  sig { returns(T::Array[String]) }
-  def application_user_groups
-    [Settings.authorization_workgroup_names.administrators, Settings.authorization_workgroup_names.collection_creators]
   end
 end
