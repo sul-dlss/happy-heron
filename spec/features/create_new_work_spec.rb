@@ -7,7 +7,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
   let(:user) { create(:user) }
 
   before do
-    sign_in user
+    sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
 

@@ -19,3 +19,8 @@ h2:
 
 # feature flag
 allow_sdr_content_changes: true
+
+# mappings from authorization role to workgroup name
+authorization_workgroup_names:
+  administrators: 'dlss:hydrus-app-adminstrators'
+  collection_creators: 'dlss:hydrus-app-collection-creators'
