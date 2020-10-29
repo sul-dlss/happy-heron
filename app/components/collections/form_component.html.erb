@@ -1,0 +1,79 @@
+<header>All fields are required, unless otherwise noted.</header>
+<%= form_with model: collection_form,
+    html: { class: 'needs-validation row', novalidate: true, multipart: true } do |form| %>
+  <section>
+    <header>Details</header>
+    <div class="mb-3 row">
+      <%= form.label :name, 'Collection name', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.text_field :name, class: "form-control", required: true %>
+        <div class="invalid-feedback">You must provide a name</div>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <%= form.label :description, 'Description', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.text_field :description, class: "form-control", required: true %>
+        <div class="invalid-feedback">You must provide a description</div>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <%= form.label :contact_email, 'Contact email', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.email_field :contact_email, class: "form-control", required: true %>
+        <div class="invalid-feedback">You must provide a valid email address</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <header>Manage release of deposits for discovery and download</header>
+    <p>Who will have permission to download files for deposits to this collection?</p>
+    <div class="form-check">
+      <%= form.radio_button :access, 'world', class: "form-check-input" %>
+      <%= form.label class: "form-check-label", for: "collection_access_world" do %>
+        Everyone &mdash; anyone in the world will be able to download the files for all deposits in this collection.
+      <% end %>
+    </div>
+    <div class="form-check">
+      <%= form.radio_button :access, 'stanford', class: "form-check-input" %>
+      <%= form.label  class: "form-check-label", for: "collection_access_stanford" do %>
+        Stanford community &mdash; only members of the Stanford community will be able to download the files for all deposits in this collection.
+      <% end %>
+    </div>
+    <div class="form-check">
+      <%= form.radio_button :access, 'depositor-selects', class: "form-check-input" %>
+      <%= form.label class: "form-check-label", for: "collection_access_depositor-selects" do %>
+        Depositor selects &mdash; default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.
+      <% end %>
+    </div>
+  </section>
+
+  <section>
+    <header>Collection participants</header>
+    <div class="mb-3 row">
+      <p class="col-sm-2 col-form-label">Created by</p>
+      <div class="col-sm-10">
+        <%= collection_form.creator %>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <%= form.label :managers, 'Managers', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.text_field :managers, class: "form-control", required: true %>
+        <div class="invalid-feedback">You must provide managers</div>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <%= form.label :depositor_sunets, 'Depositors', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.text_field :depositor_sunets, class: "form-control" %>
+      </div>
+    </div>
+  </section>
+
+  <%= render ButtonsComponent.new(form: form) %>
+<% end %>
