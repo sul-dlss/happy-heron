@@ -1,6 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
+# Models the deposit of an digital repository object in H2.
 class Work < ApplicationRecord
   extend T::Sig
 

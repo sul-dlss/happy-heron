@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 module Works
+  # Renders a widget corresponding to a single file attached to the work.
   class FileRowComponent < ApplicationComponent
     sig { params(form: ActionView::Helpers::FormBuilder).void }
     def initialize(form:)

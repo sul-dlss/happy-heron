@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 module Works
+  # A widget for managing the collection of contributors to the work.
   class ContributorsComponent < ApplicationComponent
     sig { params(form: ActionView::Helpers::FormBuilder).void }
     def initialize(form:)

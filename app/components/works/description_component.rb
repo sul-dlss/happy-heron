@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 module Works
+  # Renders a widget for describing (abstract, keywords, citation, etc.) a work.
   class DescriptionComponent < ApplicationComponent
     def initialize(form:)
       @form = form
