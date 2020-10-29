@@ -13,4 +13,10 @@
     Label: <%= c.label %>
     Is hidden: <%= c.hide? %>
   <% end %>
+  
+  keywords = <%= @work.keywords.size %>
+  <% @work.keywords.each do |c| %>
+    Label: <%= c.label %>
+    URI: <%= c.uri %>
+  <% end %>
 </pre>
