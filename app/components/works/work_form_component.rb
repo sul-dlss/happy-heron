@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 module Works
+  # The component that renders the form for editing or creating a work.
   class WorkFormComponent < ApplicationComponent
     attr_reader :work_form
 

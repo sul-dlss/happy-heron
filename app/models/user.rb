@@ -1,6 +1,7 @@
 # typed: strict
 # frozen_string_literal: true
 
+# Models a user of the system
 class User < ApplicationRecord
   extend T::Sig
 

@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 module ApplicationCable
+  # Represents an authorized ActionCable connection
   class Connection < ActionCable::Connection::Base
     extend T::Sig
 

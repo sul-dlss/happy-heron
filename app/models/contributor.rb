@@ -1,6 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
+# Models a contributor to a Work
 class Contributor < ApplicationRecord
   extend T::Sig
 

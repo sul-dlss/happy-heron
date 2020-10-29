@@ -3,6 +3,7 @@
 
 require 'reform/form/coercion'
 
+# The form for work creation and editing
 class WorkForm < Reform::Form
   feature Coercion
 

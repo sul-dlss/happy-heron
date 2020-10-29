@@ -1,6 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
+# The form for collection creation and editing
 class CollectionForm < Reform::Form
   property :name
   property :description

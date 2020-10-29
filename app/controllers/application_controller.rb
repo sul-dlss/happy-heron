@@ -1,6 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
+# Base class for all controllers in the application.
 class ApplicationController < ActionController::Base
   extend T::Sig
 
