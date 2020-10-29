@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/state_machines/all/state_machines.rbi
 #
-# typed: false
+# typed: strict
 
 module StateMachines::MacroMethods
   sig do
