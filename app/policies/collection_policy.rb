@@ -7,9 +7,11 @@ class CollectionPolicy < ApplicationPolicy
     relation.where(creator: user)
   end
 
-  # allow everyone to create collections
+  # Those who are members of the LDAP collection group may create collections
   sig { returns(T::Boolean) }
   def create?
-    user.collection_creator?
+    administrator? || collection_creator?
   end
+
+  delegate :administrator?, :collection_creator?, to: :user
 end

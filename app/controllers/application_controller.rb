@@ -26,9 +26,10 @@ class ApplicationController < ActionController::Base
 
   sig { returns(T::Array[String]) }
   def ldap_groups
-    return request.env['eduPersonEntitlement'].split(';') if request.env['eduPersonEntitlement']
-
-    []
+    raw_header = request.env[Settings.authorization_group_header]
+    raw_header = ENV['ROLES'] if Rails.env.development?
+    logger.debug("Roles are #{raw_header}")
+    raw_header&.split(';') || []
   end
 
   def deny_access

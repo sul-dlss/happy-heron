@@ -4,7 +4,9 @@
 # Authorization policy for Work objects
 class WorkPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
+
+  # TODO: Only depositors in a specific collection should be able to deposit
   def create?
-    user.collection_creator?
+    true
   end
 end
