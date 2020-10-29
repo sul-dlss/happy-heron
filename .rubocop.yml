@@ -25,6 +25,10 @@ RSpec/DescribeClass:
 RSpec/ExampleLength:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Max: 8
+
+
 Lint/MissingSuper: # (new in 0.89)
   Enabled: true
   Exclude:

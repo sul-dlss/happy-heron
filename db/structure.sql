@@ -223,6 +223,39 @@ CREATE TABLE public.depositors (
 
 
 --
+-- Name: keywords; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.keywords (
+    id bigint NOT NULL,
+    work_id bigint NOT NULL,
+    label character varying,
+    uri character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: keywords_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.keywords_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: keywords_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.keywords_id_seq OWNED BY public.keywords.id;
+
+
+--
 -- Name: notifications; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -446,6 +479,13 @@ ALTER TABLE ONLY public.contributors ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: keywords id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.keywords ALTER COLUMN id SET DEFAULT nextval('public.keywords_id_seq'::regclass);
+
+
+--
 -- Name: notifications id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -526,6 +566,14 @@ ALTER TABLE ONLY public.collections
 
 ALTER TABLE ONLY public.contributors
     ADD CONSTRAINT contributors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: keywords keywords_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.keywords
+    ADD CONSTRAINT keywords_pkey PRIMARY KEY (id);
 
 
 --
@@ -623,6 +671,13 @@ CREATE INDEX index_contributors_on_work_id ON public.contributors USING btree (w
 --
 
 CREATE UNIQUE INDEX index_depositors_on_collection_id_and_user_id ON public.depositors USING btree (collection_id, user_id);
+
+
+--
+-- Name: index_keywords_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_keywords_on_work_id ON public.keywords USING btree (work_id);
 
 
 --
@@ -753,6 +808,14 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: keywords fk_rails_ddae867842; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.keywords
+    ADD CONSTRAINT fk_rails_ddae867842 FOREIGN KEY (work_id) REFERENCES public.works(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -779,6 +842,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201023123700'),
 ('20201023212141'),
 ('20201026222437'),
-('20201027203358');
+('20201027203358'),
+('20201028205711');
 
 

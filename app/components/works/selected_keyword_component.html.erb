@@ -1,0 +1,11 @@
+<li class="selection-choice" title="<%= form.object.label %>">
+  <button type="button" class="btn remove" tabindex="-1" title="Remove item"
+          aria-label="Remove item" aria-describedby="<%= label_id %>"
+          data-action="click->keywords#removeAssociation">
+    <span aria-hidden="true">×</span>
+  </button>
+  <%= form.hidden_field :_destroy %>
+  <%= form.hidden_field :label %>
+  <%= form.hidden_field :uri %>
+  <span class="choice-display" id="<%= label_id %>"><%= form.object.label %></span>
+</li>

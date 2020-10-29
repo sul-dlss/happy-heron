@@ -10,8 +10,3 @@
 RSpec/AnyInstance:
   Exclude:
     - 'spec/channels/application_cable/connection_spec.rb'
-
-# Offense count: 1
-# Configuration parameters: AllowSubject.
-RSpec/MultipleMemoizedHelpers:
-  Max: 7

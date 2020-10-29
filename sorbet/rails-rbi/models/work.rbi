@@ -236,6 +236,15 @@ module Work::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::Contributor]).void }
   def contributors=(value); end
 
+  sig { returns(::Keyword::ActiveRecord_Associations_CollectionProxy) }
+  def keywords; end
+
+  sig { returns(T::Array[Integer]) }
+  def keyword_ids; end
+
+  sig { params(value: T::Enumerable[::Keyword]).void }
+  def keywords=(value); end
+
   sig { returns(::RelatedLink::ActiveRecord_Associations_CollectionProxy) }
   def related_links; end
 
