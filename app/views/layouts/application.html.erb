@@ -7,6 +7,8 @@
     <%= action_cable_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <%= stylesheet_link_tag "https://www-media.stanford.edu/su-identity/css/su-identity.css" %>
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -18,34 +20,86 @@
       </div>
     </div>
 
-    <header class="navbar navbar-expand navbar-dark stanford-navbar">
-      <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
-        <a class="navbar-brand p-0 mr-2" href="/" aria-label="Stanford Digital Repository">
-          <%= image_pack_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
-        </a>
+    <div id="su-wrap">
+      <div id="su-content">
+        <header class="navbar navbar-expand navbar-dark stanford-navbar">
+          <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
+            <a class="navbar-brand p-0 mr-2" href="/" aria-label="Stanford Digital Repository">
+              <%= image_pack_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
+            </a>
 
-        <div id="notifications"></div>
+            <div id="notifications"></div>
 
-        <div id="login" class="nav-link">
-          <% if current_user %>
-            <%= link_to('Logout', destroy_user_session_path, class: 'nav-link') %>
-          <% else %>
-            <%= link_to('Login', new_user_session_path, class: 'nav-link') %>
-          <% end %>
+            <div id="login" class="nav-link">
+              <% if current_user %>
+                <%= link_to('Logout', destroy_user_session_path, class: 'nav-link') %>
+              <% else %>
+                <%= link_to('Login', new_user_session_path, class: 'nav-link') %>
+              <% end %>
+            </div>
+
+            <a class="nav-link" href="#">Help</a>
+          </nav>
+        </header>
+
+        <%= render 'shared/flashes' %>
+
+        <%= yield %>
+
+      </div>
+    </div>
+
+    <footer role="contentinfo">
+      <div id="sul-footer-container">
+        <div id="sul-footer">
+          <div id="sul-footer-img" class="span2">
+            <%= link_to 'https://library.stanford.edu' do %>
+              <%= image_pack_tag "sul-logo-stacked.svg", alt: "Stanford Libraries", height: 45 %>
+            <% end %>
+          </div>
+          <div id="sul-footer-links" class="span2">
+            <ul>
+              <li><a href="https://library.stanford.edu/hours">Hours &amp; locations</a></li>
+              <li><a href="https://library.stanford.edu/myaccount">My Account</a></li>
+              <li><a href="https://library.stanford.edu/ask">Ask us</a></li>
+              <li><a href="https://library.stanford.edu/opt-out">Opt out of analytics</a></li>
+              <li><a href="https://library-status.stanford.edu/">System status</a></li>
+            </ul>
+          </div>
         </div>
-
-        <a class="nav-link" href="#">Help</a>
-      </nav>
-    </header>
-
-    <%= render 'shared/flashes' %>
-
-    <%= yield %>
-
-    <footer class="stanford-footer p-3 p-md-5 mt-5 bg-light text-center text-sm-left">
-      <div class="container">
-        Stanford | Libraries
       </div>
     </footer>
+
+    <div id="global-footer" role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div id="bottom-logo" class="col-sm-2">
+            <a href="https://www.stanford.edu">
+              <img src="https://www-media.stanford.edu/su-identity/images/footer-stanford-logo@2x.png" alt="Stanford University" width="105" height="49"/>
+            </a>
+          </div>
+          <!-- #bottom-logo end -->
+          <div id="bottom-text" class="col-sm-8">
+            <ul>
+              <li class="home"><a href="https://www.stanford.edu">Stanford Home</a></li>
+              <li class="maps alt"><a href="https://visit.stanford.edu/plan/">Maps & Directions</a></li>
+              <li class="search-stanford"><a href="https://www.stanford.edu/search/">Search Stanford</a></li>
+              <li class="emergency alt"><a href="https://emergency.stanford.edu">Emergency Info</a></li>
+            </ul>
+            <ul id="policy-links">
+              <li><a href="https://www.stanford.edu/site/terms/" title="Terms of use for sites">Terms of Use</a></li>
+              <li><a href="https://www.stanford.edu/site/privacy/" title="Privacy and cookie policy">Privacy</a></li>
+              <li><a href="https://uit.stanford.edu/security/copyright-infringement" title="Report alleged copyright infringement">Copyright</a></li>
+              <li><a href="https://adminguide.stanford.edu/chapter-1/subchapter-5/policy-1-5-4" title="Ownership and use of Stanford trademarks and images">Trademarks</a></li>
+              <li><a href="http://exploredegrees.stanford.edu/nonacademicregulations/nondiscrimination/" title="Non-discrimination policy">Non-Discrimination</a></li>
+              <li><a href="https://www.stanford.edu/site/accessibility" title="Report web accessibility issues">Accessibility</a></li>
+            </ul>
+          </div> <!-- .bottom-text end -->
+          <div class="clear"></div>
+          <p class="copyright vcard offset-sm-2 ml-3">&copy; <span class="fn org">Stanford University</span>, <span class="adr"> <span class="locality">Stanford</span>, <span class="region">California</span> <span class="postal-code">94305</span></span>.
+          </p>
+        </div> <!-- .row end -->
+      </div> <!-- .container end -->
+    </div>
   </body>
 </html>
