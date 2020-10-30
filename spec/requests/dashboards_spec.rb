@@ -51,7 +51,7 @@ RSpec.describe 'Dashboard requests' do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'does not show a link to create collections' do
+    it 'shows a link to create collections' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Your collections'
