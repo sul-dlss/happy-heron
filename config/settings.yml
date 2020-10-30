@@ -17,6 +17,9 @@ remote_user_headers:
 h2:
   hydrus_apo: 'druid:zx485kb6348'
 
+earliest_publication_year: 1000
+earliest_created_year: 1000
+
 # feature flag
 allow_sdr_content_changes: true
 

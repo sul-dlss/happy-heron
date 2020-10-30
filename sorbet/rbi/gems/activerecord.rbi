@@ -5584,6 +5584,17 @@ class ActiveRecord::Associations::Builder::BelongsTo < ActiveRecord::Association
   def self.valid_dependent_options; end
   def self.valid_options(options); end
 end
+class ActiveRecord::Associations::Builder::HasAndBelongsToMany
+  def association_name; end
+  def belongs_to_options(options); end
+  def initialize(association_name, lhs_model, options); end
+  def lhs_model; end
+  def middle_options(join_model); end
+  def middle_reflection(join_model); end
+  def options; end
+  def table_name; end
+  def through_model; end
+end
 class ActiveRecord::Associations::Builder::HasOne < ActiveRecord::Associations::Builder::SingularAssociation
   def self.add_destroy_callbacks(model, reflection); end
   def self.add_touch_callbacks(model, reflection); end

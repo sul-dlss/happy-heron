@@ -7,6 +7,62 @@ module Keyword::ActiveRelation_WhereNot
   def not(opts, *rest); end
 end
 
+module Keyword::GeneratedAttributeMethods
+  sig { returns(ActiveSupport::TimeWithZone) }
+  def created_at; end
+
+  sig { params(value: T.any(Date, Time, ActiveSupport::TimeWithZone)).void }
+  def created_at=(value); end
+
+  sig { returns(T::Boolean) }
+  def created_at?; end
+
+  sig { returns(Integer) }
+  def id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def id=(value); end
+
+  sig { returns(T::Boolean) }
+  def id?; end
+
+  sig { returns(T.nilable(String)) }
+  def label; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def label=(value); end
+
+  sig { returns(T::Boolean) }
+  def label?; end
+
+  sig { returns(ActiveSupport::TimeWithZone) }
+  def updated_at; end
+
+  sig { params(value: T.any(Date, Time, ActiveSupport::TimeWithZone)).void }
+  def updated_at=(value); end
+
+  sig { returns(T::Boolean) }
+  def updated_at?; end
+
+  sig { returns(T.nilable(String)) }
+  def uri; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def uri=(value); end
+
+  sig { returns(T::Boolean) }
+  def uri?; end
+
+  sig { returns(Integer) }
+  def work_id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def work_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def work_id?; end
+end
+
 module Keyword::GeneratedAssociationMethods
   sig { returns(::Work) }
   def work; end
@@ -42,6 +98,7 @@ module Keyword::CustomFinderMethods
 end
 
 class Keyword < ApplicationRecord
+  include Keyword::GeneratedAttributeMethods
   include Keyword::GeneratedAssociationMethods
   extend Keyword::CustomFinderMethods
   extend Keyword::QueryMethodsReturningRelation

@@ -239,7 +239,7 @@ module Work::GeneratedAssociationMethods
   sig { returns(::Keyword::ActiveRecord_Associations_CollectionProxy) }
   def keywords; end
 
-  sig { returns(T::Array[T.untyped]) }
+  sig { returns(T::Array[Integer]) }
   def keyword_ids; end
 
   sig { params(value: T::Enumerable[::Keyword]).void }

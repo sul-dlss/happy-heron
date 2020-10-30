@@ -13,3 +13,4 @@ module T::Private::Abstract::Hooks; end
 module T::Private::Methods::MethodHooks; end
 module T::Private::Methods::SingletonMethodHooks; end
 module T::Props::Plugin::ClassMethods; end
+module Types::Custom::NilableInteger; end

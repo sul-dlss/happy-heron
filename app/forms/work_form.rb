@@ -19,18 +19,18 @@ class WorkForm < Reform::Form
   property :license
   property :agree_to_terms
 
-  property 'created(1i)', virtual: true
-  property 'created(2i)', virtual: true
-  property 'created(3i)', virtual: true
-  property 'created_range(1i)', virtual: true
-  property 'created_range(2i)', virtual: true
-  property 'created_range(3i)', virtual: true
-  property 'created_range(4i)', virtual: true
-  property 'created_range(5i)', virtual: true
-  property 'created_range(6i)', virtual: true
-  property 'published(1i)', virtual: true
-  property 'published(2i)', virtual: true
-  property 'published(3i)', virtual: true
+  property 'created(1i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created(2i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created(3i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created_range(1i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created_range(2i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created_range(3i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created_range(4i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created_range(5i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'created_range(6i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'published(1i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'published(2i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'published(3i)', virtual: true, type: ::Types::Custom::NilableInteger
   property :creation_type, virtual: true, default: 'single'
 
   def sync(*)
@@ -47,6 +47,12 @@ class WorkForm < Reform::Form
   end
 
   validates :title, presence: true
+  validates 'created(1i)', 'created_range(1i)', 'created_range(4i)',
+            inclusion: { in: Settings.earliest_created_year..Time.zone.today.year },
+            allow_nil: true
+  validates 'published(1i)',
+            inclusion: { in: Settings.earliest_publication_year..Time.zone.today.year },
+            allow_nil: true
 
   collection :contributors,
              populator: lambda { |fragment:, **|
@@ -109,9 +115,9 @@ class WorkForm < Reform::Form
   private
 
   def deserialize_edtf(name, offset = 0)
-    year = public_send("#{name}(#{offset + 1}i)")
-    month = public_send("#{name}(#{offset + 2}i)")
-    day = public_send("#{name}(#{offset + 3}i)")
+    year = public_send("#{name}(#{offset + 1}i)").to_s
+    month = public_send("#{name}(#{offset + 2}i)").to_s
+    day = public_send("#{name}(#{offset + 3}i)").to_s
     deserialize_edtf_date(year, month, day)
   end
 
