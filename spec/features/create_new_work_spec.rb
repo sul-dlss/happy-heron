@@ -31,6 +31,20 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       click_button 'Continue'
 
       expect(page).to have_content 'Deposit your work'
+
+      # Test client-side validation messages
+      fill_in 'Publication year', with: '2021'
+      fill_in 'Created year', with: '999'
+      click_button 'Deposit'
+      expect(page).to have_content(
+        "Publication year must be between #{Settings.earliest_publication_year} and #{Time.zone.today.year}"
+      )
+      expect(page).to have_content(
+        "Created year must be between #{Settings.earliest_created_year} and #{Time.zone.today.year}"
+      )
+      fill_in 'Created year', with: ''
+      # End of validation testing, continue filling out deposit form
+
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
 

@@ -20,7 +20,8 @@ module Sidekiq::Worker::ClassMethods
       retry: T.nilable(T.any(Integer, T::Boolean)),
       backtrace: T.nilable(T.any(Integer, T::Boolean)),
       pool: T.nilable(Symbol),
-      unique_for: T.nilable(ActiveSupport::Duration)
+      unique_for: T.nilable(ActiveSupport::Duration),
+      unique_until: T.nilable(Symbol)
     ).void
   end
   def sidekiq_options(
@@ -28,7 +29,8 @@ module Sidekiq::Worker::ClassMethods
     retry: nil,
     backtrace: nil,
     pool: nil,
-    unique_for: nil
+    unique_for: nil,
+    unique_until: nil
   )
   end
   
