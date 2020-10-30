@@ -7,7 +7,7 @@ class DashboardsController < ApplicationController
   verify_authorized
 
   def show
-    @collections = authorized_scope(Collection.all)
     authorize! :dashboard
+    @collections = authorized_scope(Collection.all)
   end
 end

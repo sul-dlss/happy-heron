@@ -84,6 +84,20 @@ module GeneratedUrlHelpers
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def new_collection_url(*args, **kwargs); end
 
+  # Sigs for route /collections/:id/edit(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def edit_collection_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def edit_collection_url(*args, **kwargs); end
+
+  # Sigs for route /collections/:id(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def collection_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def collection_url(*args, **kwargs); end
+
   # Sigs for route /queues
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def sidekiq_web_path(*args, **kwargs); end
