@@ -28,3 +28,5 @@ authorization_group_header: HTTP_X_GROUPS
 authorization_workgroup_names:
   administrators: 'dlss:hydrus-app-administrators'
   collection_creators: 'dlss:hydrus-app-collection-creators'
+
+file_uploads_root: tmp/uploads

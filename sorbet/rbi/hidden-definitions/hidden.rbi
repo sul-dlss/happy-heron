@@ -35296,6 +35296,18 @@ end
 module Dor
 end
 
+module DruidTools
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class DruidTools::Druid
+  STRICT_LET = ::T.let(nil, ::T.untyped)
+end
+
+DruidTools::PurlDruid = DruidTools::AccessDruid
+
+DruidTools::StacksDruid = DruidTools::AccessDruid
+
 module Dry::Configurable
   EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
   EMPTY_HASH = ::T.let(nil, ::T.untyped)
@@ -36976,6 +36988,8 @@ end
 
 class FactoryBot::SyntaxRunner
   include ::FactoryBot::Syntax::Methods
+  include ::ActionDispatch::TestProcess
+  include ::ActionDispatch::TestProcess::FixtureFile
 end
 
 class FactoryBot::SyntaxRunner
@@ -40954,6 +40968,8 @@ Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
+
+Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
 
 Net::HTTPSuccessCode = Net::HTTPSuccess
 
@@ -52884,9 +52900,15 @@ end
 module Work::GeneratedAssociationMethods
   def attached_file_ids=(ids); end
 
+  def attached_files_attributes=(attributes); end
+
   def contributor_ids=(ids); end
 
+  def contributors_attributes=(attributes); end
+
   def keyword_ids=(ids); end
+
+  def keywords_attributes=(attributes); end
 
   def related_link_ids=(ids); end
 

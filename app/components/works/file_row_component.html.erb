@@ -18,11 +18,12 @@
   </div>
 
   <div class="dz-details col-md-2">
+    <%= form.hidden_field :_destroy %>
     <%= form.check_box :hide, class: 'form-check-input' %>
     <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
   </div>
 
   <div class="col-md-1">
-    <%= button_tag '🗑', class: "dz-remove pull-right btn", data: { 'dz-remove': true } %>
+    <%= button_tag '🗑', class: "dz-remove pull-right btn", data: { action: "click->dropzone#removeAssociation" } %>
   </div>
 </div>

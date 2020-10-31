@@ -9,12 +9,25 @@ RSpec.describe WorkForm do
   let(:work) { build(:work) }
 
   describe 'populator on files' do
+    let!(:blob) do
+      ActiveStorage::Blob.create_after_upload!(
+        io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
+        filename: 'sul.svg',
+        content_type: 'image/svg+xml'
+      )
+    end
+
+    after do
+      blob.destroy
+    end
+
     it 'populates attached_files' do
-      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true }])
+      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }])
 
       expect(form.attached_files.size).to eq 1
       expect(form.attached_files.first.label).to eq 'hello'
       expect(form.attached_files.first.hide).to be true
+      expect(form.attached_files.first.file).to eq blob.signed_id
     end
   end
 

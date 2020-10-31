@@ -20,7 +20,6 @@ class RequestGenerator
   end
 
   sig { returns(Hash) }
-  # rubocop:disable Metrics/MethodLength
   def generate
     {
       administrative: {
@@ -38,7 +37,6 @@ class RequestGenerator
       version: 0
     }
   end
-  # rubocop:enable Metrics/MethodLength
 
   private
 

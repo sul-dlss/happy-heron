@@ -39,7 +39,7 @@ FactoryBot.define do
 
   trait :with_attached_file do
     after(:build) do |work|
-      work.attached_files.build
+      create(:attached_file, :with_file, work: work)
     end
   end
 end

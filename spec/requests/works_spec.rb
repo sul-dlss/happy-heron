@@ -84,18 +84,50 @@ RSpec.describe 'Works requests' do
             'last_name' => 'Wong', 'role_term' => 'person|Contributing author' } }
       end
 
-      let(:upload) { fixture_file_upload(Rails.root.join('public/apple-touch-icon.png'), 'image/png') }
+      let(:upload1) do
+        ActiveStorage::Blob.create_after_upload!(
+          io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+          filename: 'apple-touch-icon.png',
+          content_type: 'image/png'
+        )
+      end
+
+      let(:upload2) do
+        ActiveStorage::Blob.create_after_upload!(
+          io: File.open(Rails.root.join('spec/fixtures/files/favicon.ico')),
+          filename: 'favicon.ico',
+          content_type: 'image/vnd.microsoft.icon'
+        )
+      end
+
+      let(:upload3) do
+        ActiveStorage::Blob.create_after_upload!(
+          io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
+          filename: 'sul.svg',
+          content_type: 'image/svg+xml'
+        )
+      end
 
       let(:files) do
-        { '0' =>
-          { '_destroy' => '1', 'label' => 'Wrong PDF',
-            'file' => upload },
-          '999' =>
-          { '_destroy' => 'false', 'label' => 'My PNG',
-            'file' => upload },
-          '1002' =>
-          { '_destroy' => 'false', 'label' => 'My PDF',
-            'file' => upload } }
+        {
+          '0' => {
+            '_destroy' => '1',
+            'label' => 'Wrong ICO',
+            'file' => upload1.signed_id
+          },
+          '999' => {
+            '_destroy' => 'false',
+            'label' => 'My ICO',
+            'hide' => false,
+            'file' => upload2.signed_id
+          },
+          '1002' => {
+            '_destroy' => 'false',
+            'label' => 'My SVG',
+            'hide' => false,
+            'file' => upload3.signed_id
+          }
+        }
       end
 
       let(:keywords) do

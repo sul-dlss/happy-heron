@@ -25,6 +25,13 @@ export default class extends Controller {
     this.inputTarget.style.display = "none";
   }
 
+  removeAssociation(event) {
+    event.preventDefault()
+    const item = event.target.closest('.dz-complete')
+    item.querySelector("input[name*='_destroy']").value = 1
+    item.style.display = 'none'
+  }
+
   // Tell the ProgressController to update
   informProgress() {
     this.inputTarget.dispatchEvent(new Event('change'))
@@ -156,7 +163,6 @@ class DirectUploadController {
     this.file.status = Dropzone.SUCCESS;
     this.source.dropZone.emit("success", this.file);
     this.source.dropZone.emit("complete", this.file);
-
   }
 }
 
