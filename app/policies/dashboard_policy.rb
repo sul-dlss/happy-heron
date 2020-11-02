@@ -8,5 +8,5 @@ class DashboardPolicy < ApplicationPolicy
     administrator? || collection_creator? # TODO: || has created any deposits
   end
 
-  delegate :administrator?, :collection_creator?, to: :user
+  delegate :administrator?, :collection_creator?, to: :user_with_groups
 end
