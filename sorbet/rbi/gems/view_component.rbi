@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.20.0
+# view_component-2.21.0
 
 module ViewComponent
   extend ActiveSupport::Autoload

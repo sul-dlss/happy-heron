@@ -19,24 +19,28 @@ RSpec.describe DepositJob do
 
   context 'when the deposit request is successful' do
     before do
-      allow(SdrClient::Deposit).to receive(:model_run).and_return(1234)
+      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new])
+      allow(SdrClient::Deposit::UploadResource).to receive(:run).and_return(1234)
     end
 
     it 'initiates a DepositStatusJob' do
       described_class.perform_now(work)
-      expect(SdrClient::Deposit).to have_received(:model_run)
+      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       expect(DepositStatusJob).to have_received(:perform_later).with(work: work, job_id: 1234)
     end
   end
 
   context 'when the deposit request is not successful' do
     before do
-      allow(SdrClient::Deposit).to receive(:model_run).and_raise('Deposit failed.')
+      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+      allow(SdrClient::Deposit::UploadResource).to receive(:run).and_raise('Deposit failed.')
     end
 
     it 'notifies' do
       described_class.perform_now(work)
-      expect(SdrClient::Deposit).to have_received(:model_run)
+      # expect(SdrClient::Deposit).to have_received(:model_run)
+      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       expect(DepositStatusJob).not_to have_received(:perform_later)
       expect(Honeybadger).to have_received(:notify)
     end

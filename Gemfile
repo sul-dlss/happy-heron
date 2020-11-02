@@ -55,7 +55,7 @@ gem 'pg'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 gem 'redis', '~> 4.0'
 gem 'reform-rails', '~> 0.2.0'
-gem 'sdr-client'
+gem 'sdr-client', github: 'sul-dlss/sdr-client', branch: 'extract_updater'
 gem 'sidekiq', '~> 6.1'
 gem 'sorbet-rails' # used both statically and at runtime
 gem 'sorbet-runtime'

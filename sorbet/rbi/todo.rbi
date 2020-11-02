@@ -5,7 +5,7 @@
 module ::Anonymous_Delegator_11; end
 module ::Anonymous_Delegator_110; end
 module ::Capistrano::OneTimeKey; end
-module ActionView::Helpers::FormBuilder; end
+module ::FilterEncryptedAttributes; end
 module GeneratedUrlHelpers::Anonymous_Module_4; end
 module GeneratedUrlHelpers::Anonymous_Module_5; end
 module T::InterfaceWrapper::Helpers; end

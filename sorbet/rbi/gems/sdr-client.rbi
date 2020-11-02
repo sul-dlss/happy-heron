@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-0.35.1
+# sdr-client-01aee6cc113a
 
 module SdrClient
 end
@@ -144,7 +144,6 @@ class SdrClient::Deposit::ModelProcess
   def request_dro; end
   def request_files; end
   def run; end
-  def with_external_identifiers(upload_responses); end
 end
 class SdrClient::Deposit::Process
   def check_files_exist; end
@@ -157,19 +156,32 @@ class SdrClient::Deposit::Process
   def mime_types; end
   def run; end
 end
+class SdrClient::Deposit::UpdateDroWithFileIdentifiers
+  def self.signed_id_map(upload_responses); end
+  def self.update(request_dro:, upload_responses:); end
+  def self.updated_structural(structural, signed_ids); end
+end
 class SdrClient::Deposit::UploadFiles
-  def collect_file_metadata; end
   def connection; end
   def direct_upload(metadata_json); end
-  def files; end
-  def initialize(files:, mime_types:, logger:, connection:); end
+  def file_metadata; end
+  def initialize(file_metadata:, logger:, connection:); end
   def logger; end
-  def mime_types; end
   def run; end
+  def self.upload(file_metadata:, logger:, connection:); end
   def unexpected_response(response); end
   def upload_file(filename:, url:, content_type:, content_length:); end
-  def upload_file_metadata(file_metadata); end
+  def upload_file_metadata; end
   def upload_files(upload_responses); end
+end
+class SdrClient::Deposit::UploadFilesMetadataBuilder
+  def build; end
+  def filename_for(file_path); end
+  def files; end
+  def initialize(files:, mime_types:); end
+  def mime_type_for(file_path); end
+  def mime_types; end
+  def self.build(files:, mime_types:); end
 end
 class SdrClient::Deposit::UploadResource
   def accession?; end

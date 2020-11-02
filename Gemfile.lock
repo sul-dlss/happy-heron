@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/sul-dlss/sdr-client.git
+  revision: 01aee6cc113a5a202e32171f06138e60461c3638
+  branch: extract_updater
+  specs:
+    sdr-client (0.35.1)
+      activesupport
+      cocina-models (~> 0.42.1)
+      dry-monads
+      faraday (>= 0.16)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -383,11 +394,6 @@ GEM
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     safe_type (1.1.1)
-    sdr-client (0.35.1)
-      activesupport
-      cocina-models (~> 0.42.1)
-      dry-monads
-      faraday (>= 0.16)
     semantic_range (2.3.0)
     sidekiq (6.1.2)
       connection_pool (>= 2.2.2)
@@ -502,7 +508,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-sorbet
-  sdr-client
+  sdr-client!
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
   sorbet (= 0.5.5981)
