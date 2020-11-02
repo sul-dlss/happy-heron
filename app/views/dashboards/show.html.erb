@@ -29,23 +29,7 @@
       <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="content-type-prompt">What type of content will you deposit?</h5>
-              <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form method="get" action="/collections/1/work/new" data-target="work-type.form">
-                <div class="row">
-                  <% WorkType.all.each do |type| %>
-                    <div class="col-md-3" style="height: 4rem">
-                      <input type="radio" name="work_type" value="<%= type.id %>" id="<%= type.id.dasherize %>" class="toggle" required>
-                      <label for="<%= type.id.dasherize %>"><span class="check">✓</span> <span class="fas fa-2x fa-<%= type.icon %>"></span> <div class="work-type-button-text"><%= type.label %></div></label>
-                    </div>
-                  <% end %>
-                </div>
-                <button type="submit" class="btn btn-primary mx-auto d-block">Continue</button>
-              </form>
-            </div>
+            <%= render Works::CreateModalComponent.new %>
           </div>
         </div>
       </div>
