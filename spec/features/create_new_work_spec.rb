@@ -85,7 +85,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
   end
 
   context 'when unsuccessful' do
-    let(:collection) { create(:collection) }
+    let(:collection) { create(:collection, depositors: [user]) }
 
     it 'does not submit' do
       visit "/collections/#{collection.id}/works/new?work_type=text"
