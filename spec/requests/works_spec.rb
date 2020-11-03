@@ -43,6 +43,8 @@ RSpec.describe 'Works requests' do
     end
 
     describe 'new work form' do
+      let(:collection) { create(:collection, depositors: [user]) }
+
       it 'renders the form' do
         get "/collections/#{collection.id}/works/new?work_type=video"
         expect(response).to have_http_status(:ok)
@@ -52,6 +54,7 @@ RSpec.describe 'Works requests' do
 
     context 'when Settings.allow_sdr_content_changes is' do
       let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
+      let(:collection) { create(:collection, depositors: [user]) }
 
       it 'false, it redirects and displays alert' do
         allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
@@ -70,7 +73,7 @@ RSpec.describe 'Works requests' do
     end
 
     describe 'create work with everything' do
-      let(:collection) { create(:collection) }
+      let(:collection) { create(:collection, depositors: [user]) }
 
       let(:contributors) do
         { '0' =>
@@ -140,7 +143,7 @@ RSpec.describe 'Works requests' do
     end
 
     describe 'create work with a minimal set' do
-      let(:collection) { create(:collection) }
+      let(:collection) { create(:collection, depositors: [user]) }
       let(:work_params) do
         {
           title: 'Test title',
