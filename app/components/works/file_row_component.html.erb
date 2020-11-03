@@ -24,6 +24,8 @@
   </div>
 
   <div class="col-md-1">
-    <%= button_tag '🗑', class: "dz-remove pull-right btn", data: { action: "click->dropzone#removeAssociation" } %>
+    <%= button_tag class: "dz-remove pull-right btn", data: { action: "click->dropzone#removeAssociation" } do %>
+      <span class="far fa-trash-alt"></span>
+    <% end %>
   </div>
 </div>
