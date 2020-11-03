@@ -13,13 +13,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionPolicy::Unauthorized, with: :deny_access
 
-  sig { returns(T.nilable(User)) }
-  def current_user
-    super.tap do |cur_user|
-      break unless cur_user
+  authorize :user_with_groups
 
-      cur_user.groups = ldap_groups
-    end
+  sig { returns(T.nilable(UserWithGroups)) }
+  def user_with_groups
+    UserWithGroups.new(user: current_user, groups: ldap_groups) if current_user
   end
 
   private
