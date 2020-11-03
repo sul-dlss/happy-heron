@@ -4,10 +4,10 @@
 require 'rails_helper'
 
 RSpec.describe Works::EmbargoComponent do
-  let(:form) { instance_double(ActionView::Helpers::FormBuilder, label: nil, select: nil) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
 
   it 'renders the component' do
     expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('Manage release of this item for discovery and download after publication')
+      .to include('Manage release of this deposit for discovery and download after publication')
   end
 end

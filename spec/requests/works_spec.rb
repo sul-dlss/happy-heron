@@ -69,7 +69,7 @@ RSpec.describe 'Works requests' do
       end
     end
 
-    describe 'create work' do
+    describe 'create work with everything' do
       let(:collection) { create(:collection) }
 
       let(:contributors) do
@@ -109,6 +109,7 @@ RSpec.describe 'Works requests' do
           { '_destroy' => 'false', 'label' => 'Freeform keyword',
             'uri' => '' } }
       end
+      let(:embargo_year) { Time.zone.today.year + 1 }
 
       let(:work_params) do
         attributes_for(:work)
@@ -119,7 +120,9 @@ RSpec.describe 'Works requests' do
                  creation_type: 'range',
                  'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
                  'created_range(1i)' => '2020', 'created_range(2i)' => '3', 'created_range(3i)' => '4',
-                 'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31')
+                 'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31',
+                 'release' => 'embargo',
+                 'embargo_date(1i)' => embargo_year, 'embargo_date(2i)' => '4', 'embargo_date(3i)' => '4')
       end
 
       it 'displays the work' do
@@ -131,7 +134,35 @@ RSpec.describe 'Works requests' do
         expect(work.keywords.size).to eq 2
         expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
+        expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
         expect(work.subtype).to eq ['3D model', 'GIS']
+      end
+    end
+
+    describe 'create work with a minimal set' do
+      let(:collection) { create(:collection) }
+      let(:work_params) do
+        {
+          title: 'Test title',
+          work_type: 'text',
+          contact_email: 'io@io.io',
+          abstract: 'test abstract',
+          license: 'CC0-1.0',
+          release: 'immediate'
+        }
+      end
+
+      it 'displays the work' do
+        post "/collections/#{collection.id}/works", params: { work: work_params }
+        expect(response).to have_http_status(:found)
+        work = Work.last
+        expect(work.contributors).to be_empty
+        expect(work.attached_files).to be_empty
+        expect(work.keywords).to be_empty
+        expect(work.published_edtf).to be_nil
+        expect(work.created_edtf).to be_nil
+        expect(work.embargo_date).to be_nil
+        expect(work.subtype).to be_empty
       end
     end
   end
