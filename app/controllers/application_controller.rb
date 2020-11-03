@@ -28,7 +28,13 @@ class ApplicationController < ActionController::Base
   # This looks first in the session for groups, and then to the headers.
   # This allows the application session to outlive the shiboleth session
   def ldap_groups
-    session['groups'] ||= begin
+    session['groups'].presence || groups_from_request_env
+  end
+
+  sig { returns(T::Array[String]) }
+  # Get the groups from the headers and store them in the session
+  def groups_from_request_env
+    session['groups'] = begin
       raw_header = request.env[Settings.authorization_group_header]
       raw_header = ENV['ROLES'] if Rails.env.development?
       logger.debug("Roles are #{raw_header}")
