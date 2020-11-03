@@ -13,6 +13,7 @@ class WorksController < ApplicationController
     raise 'Missing required parameter work_type' unless params[:work_type]
 
     work = Work.new(work_type: params[:work_type],
+                    subtype: params[:subtype],
                     collection: collection,
                     contributors: [Contributor.new])
     @form = WorkForm.new(work)
