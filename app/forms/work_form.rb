@@ -32,6 +32,10 @@ class WorkForm < Reform::Form
   property 'published(2i)', virtual: true, type: ::Types::Custom::NilableInteger
   property 'published(3i)', virtual: true, type: ::Types::Custom::NilableInteger
   property :creation_type, virtual: true, default: 'single'
+  property :release, virtual: true, default: 'immediate'
+  property 'embargo_date(1i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'embargo_date(2i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property 'embargo_date(3i)', virtual: true, type: ::Types::Custom::NilableInteger
 
   def sync(*)
     model.created_edtf = case creation_type
@@ -42,6 +46,7 @@ class WorkForm < Reform::Form
                          end
 
     model.published_edtf = deserialize_edtf(:published)
+    model.embargo_date = deserialize_date(:embargo_date) if release == 'embargo'
 
     super
   end
@@ -53,6 +58,7 @@ class WorkForm < Reform::Form
   validates 'published(1i)',
             inclusion: { in: Settings.earliest_publication_year..Time.zone.today.year },
             allow_nil: true
+  validates 'release', presence: true, inclusion: { in: %w[immediate embargo] }
 
   collection :contributors,
              populator: lambda { |fragment:, **|
@@ -123,6 +129,13 @@ class WorkForm < Reform::Form
   end
 
   private
+
+  def deserialize_date(name)
+    year = public_send("#{name}(1i)")
+    month = public_send("#{name}(2i)")
+    day = public_send("#{name}(3i)")
+    Date.new(year, month, day)
+  end
 
   def deserialize_edtf(name, offset = 0)
     year = public_send("#{name}(#{offset + 1}i)").to_s

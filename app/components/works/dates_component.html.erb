@@ -1,10 +1,10 @@
 <section>
   <header>Enter dates related to your deposit (optional)</header>
   <div class="mb-3 row">
-    <div class="col-sm-2 h6">
+    <div class="col-lg-2 h6">
       Publication date
     </div>
-    <div class="col-sm-3">
+    <div class="col-lg-5 col-xl-4">
       <div class="row">
         <div class="col">
           <label for="work_published_year" class="visually-hidden">Publication year</label>
@@ -35,7 +35,7 @@
       <%= form.radio_button :creation_type, 'single', class: 'form-check-input' %>
       <%= form.label :creation_type_single, 'Single date' %>
     </div>
-    <div class="col-sm-3">
+    <div class="col-lg-5 col-xl-4">
       <div class="row">
         <div class="col">
           <label for="work_created_year" class="visually-hidden">Created year</label>
@@ -56,12 +56,12 @@
   </div>
 
   <div class="mb-3 row">
-    <div class="col-sm-2">
+    <div class="col-lg-2 col-md-4">
       <%= form.radio_button :creation_type, 'range', class: 'form-check-input' %>
        <%= form.label :creation_type_range, 'Date range' %>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-lg-5 col-xl-4">
       <div class="row">
         <div class="col">
           <label for="work_created_range_start_year" class="visually-hidden">Created range start year</label>
@@ -80,12 +80,11 @@
       </div>
     </div>
 
-    <div class="col-sm-1 text-center">
-      to
-    </div>
-
-    <div class="col-sm-3">
+    <div class="col-lg-5 col-xl-4">
       <div class="row">
+        <div style="width: 1.5rem; margin-right:.5rem; margin-top:0.5em">
+          to
+        </div>
         <div class="col">
           <label for="work_created_range_end_year" class="visually-hidden">Created range end year</label>
           <%= number_field_tag 'work[created_range(4i)]', nil, id: 'work_created_range_end_year', class: "form-control", min: Settings.earliest_created_year, max: Time.zone.today.year %>

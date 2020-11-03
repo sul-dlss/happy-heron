@@ -28,6 +28,10 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
       expect(page).to have_content 'What type of content will you deposit?'
       find('label', text: 'Sound').click
+
+      check 'Course/instruction'
+      check 'Poetry reading'
+
       click_button 'Continue'
 
       expect(page).to have_content 'Deposit your work'
@@ -61,12 +65,14 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       select '30', from: 'Created range end day'
 
       fill_in 'Abstract', with: 'Whatever'
+      check 'Musical notation'
       fill_in 'Citation', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'
       click_button 'Deposit'
 
       expect(page).to have_content('title = My Title')
       expect(page).to have_content('work_type = sound')
+      expect(page).to have_content('subtype = ["Course/instruction", "Musical notation", "Poetry reading"]')
       expect(page).to have_content("contact_email = #{user.email}")
       expect(page).to have_content('created_edtf = 2020-03-06/2020-10-30')
       expect(page).to have_content('abstract = Whatever')
@@ -79,7 +85,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
   end
 
   context 'when unsuccessful' do
-    let(:collection) { create(:collection) }
+    let(:collection) { create(:collection, depositors: [user]) }
 
     it 'does not submit' do
       visit "/collections/#{collection.id}/works/new?work_type=text"

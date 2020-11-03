@@ -1,0 +1,42 @@
+<script>
+  document.subtypes = {
+    <% WorkType.all.each do |type| %>
+      "<%= type.id %>": <%= type.subtypes.to_json.html_safe %>,
+    <% end %>
+  }
+</script>
+
+<div class="modal-header">
+  <h5 class="modal-title" id="content-type-prompt">What type of content will you deposit?</h5>
+  <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <form method="get" action="/collections/1/work/new" data-target="work-type.form">
+    <div class="row">
+      <% types.each do |type| %>
+        <div class="col-md-3" style="height: 4rem">
+          <input type="radio" name="work_type" value="<%= type.id %>" id="<%= type.id.dasherize %>" class="toggle" required data-action="work-type#change">
+          <label for="<%= type.id.dasherize %>"><span class="check">✓</span> <span class="fas fa-2x fa-<%= type.icon %>"></span> <div class="work-type-button-text"><%= type.label %></div></label>
+        </div>
+      <% end %>
+    </div>
+
+    <template data-target="work-type.template">
+      <div class="col-md-4">
+        <div class="form-check">
+          <input type="checkbox" name="subtype[]" value="SUBTYPE_LABEL" id="subtype_SUBTYPE_ID" class="form-check-input">
+          <label for="subtype_SUBTYPE_ID" class="form-check-label">SUBTYPE_LABEL</label>
+        </div>
+      </div>
+    </template>
+
+
+    <div class="row" data-target="work-type.area" hidden>
+      <h5>Which of the following terms further describe your deposit?</h5>
+    </div>
+
+    <div class="row mb-4" data-target="work-type.subtype"></div>
+
+    <button type="submit" class="btn btn-primary mx-auto d-block">Continue</button>
+  </form>
+</div>

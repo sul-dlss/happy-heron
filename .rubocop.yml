@@ -21,14 +21,18 @@ RSpec/DescribeClass:
   Exclude:
     - spec/features/**/*
     - spec/requests/**/*
-
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - spec/policies/**/*
 RSpec/ExampleLength:
   Enabled: false
-RSpec/NestedGroups:
-  Max: 4
-
 RSpec/MultipleMemoizedHelpers:
   Max: 10
+RSpec/NestedGroups:
+  Max: 4
+RSpec/ScatteredSetup:
+  Exclude:
+    - spec/policies/**/*
 
 Lint/MissingSuper: # (new in 0.89)
   Enabled: true

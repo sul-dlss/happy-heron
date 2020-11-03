@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User return location' do
-  let(:collection) { create(:collection) }
+  let(:collection) { create(:collection, depositors: [user]) }
   let(:user) { create(:user) }
 
   before do

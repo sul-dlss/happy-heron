@@ -5,8 +5,10 @@
 class WorkPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
 
-  # TODO: Only depositors in a specific collection should be able to deposit
+  # Only depositors in a specific collection are able to create new collection members
   def create?
-    true
+    collection = record.collection
+    collection.depositor_ids.include?(user.id) ||
+      collection.managers.include?(user.email.delete_suffix('@stanford.edu'))
   end
 end

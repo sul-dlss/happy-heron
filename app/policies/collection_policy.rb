@@ -4,7 +4,7 @@
 # Authorization policy for Collection objects
 class CollectionPolicy < ApplicationPolicy
   relation_scope do |relation|
-    relation.where(creator: user)
+    relation.where(creator: user_with_groups.user)
   end
 
   alias_rule :edit?, to: :update?
@@ -21,5 +21,5 @@ class CollectionPolicy < ApplicationPolicy
     true
   end
 
-  delegate :administrator?, :collection_creator?, to: :user
+  delegate :administrator?, :collection_creator?, to: :user_with_groups
 end

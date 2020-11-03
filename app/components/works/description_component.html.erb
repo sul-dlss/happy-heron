@@ -15,27 +15,31 @@
   </div>
 
   <div class="mb-3 row">
-    <div class="col-sm-12" style="font-size: larger">
+    <div class="col-sm-12 h5">
       Work types (optional)
     </div>
   </div>
 
-  <div class="mb-3 row">
-
+  <div class="mb-5 row">
     <% subtypes.each do |subtype| %>
       <div class="col-sm-4">
         <div class="form-check">
           <%= form.check_box :subtype, { multiple: true, class: 'form-check-input' }, subtype, nil %>
-          <%= form.label "subtype_#{subtype}", subtype, class: 'form-check-label' %>
+          <%= form.label "subtype_#{subtype.parameterize(separator: '_')}", subtype, class: 'form-check-label' %>
         </div>
       </div>
     <% end %>
   </div>
 
   <div class="mb-3 row">
-    <%= form.label :citation, class: 'col-sm-2 col-form-label' %>
+    <%= form.label :citation, 'Citation for this deposit (optional)', class: 'h5' %>
+  </div>
+  <p>This is the text that others can use when they want to cite this deposit. We highly recommend that you provide the text of that citation here to make it easier for them to cite your work and give you proper credit.</p>
+
+  <div class="mb-3 row">
+    <div class='col-sm-2'></div>
     <div class="col-sm-10">
-      <%= form.text_area :citation, class: "form-control", required: true %>
+      <%= form.text_area :citation, class: "form-control" %>
     </div>
   </div>
 </section>

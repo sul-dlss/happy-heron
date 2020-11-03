@@ -13,23 +13,31 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionPolicy::Unauthorized, with: :deny_access
 
-  sig { returns(T.nilable(User)) }
-  def current_user
-    super.tap do |cur_user|
-      break unless cur_user
+  authorize :user_with_groups
 
-      cur_user.groups = ldap_groups
-    end
+  sig { returns(T.nilable(UserWithGroups)) }
+  def user_with_groups
+    UserWithGroups.new(user: current_user, groups: ldap_groups) if current_user
   end
 
   private
 
   sig { returns(T::Array[String]) }
+  # This looks first in the session for groups, and then to the headers.
+  # This allows the application session to outlive the shiboleth session
   def ldap_groups
-    raw_header = request.env[Settings.authorization_group_header]
-    raw_header = ENV['ROLES'] if Rails.env.development?
-    logger.debug("Roles are #{raw_header}")
-    raw_header&.split(';') || []
+    session['groups'].presence || groups_from_request_env
+  end
+
+  sig { returns(T::Array[String]) }
+  # Get the groups from the headers and store them in the session
+  def groups_from_request_env
+    session['groups'] = begin
+      raw_header = request.env[Settings.authorization_group_header]
+      raw_header = ENV['ROLES'] if Rails.env.development?
+      logger.debug("Roles are #{raw_header}")
+      raw_header&.split(';') || []
+    end
   end
 
   def deny_access

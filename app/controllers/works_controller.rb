@@ -8,23 +8,24 @@ class WorksController < ApplicationController
   verify_authorized except: [:show]
 
   def new
-    authorize!
     collection = Collection.find(params[:collection_id])
     raise 'Missing required parameter work_type' unless params[:work_type]
 
     work = Work.new(work_type: params[:work_type],
+                    subtype: params[:subtype],
                     collection: collection,
                     contributors: [Contributor.new])
+    authorize! work
+
     @form = WorkForm.new(work)
   end
 
   def create
-    authorize!
-    work = Work.new
-    @form = WorkForm.new(work)
+    work = Work.new(collection_id: params[:collection_id])
+    authorize! work
 
-    stuff = work_params.merge(collection_id: params[:collection_id])
-    if @form.validate(stuff) && @form.save
+    @form = WorkForm.new(work)
+    if @form.validate(work_params) && @form.save
       DepositJob.perform_later(work) if params[:commit] == 'Deposit'
       redirect_to work
     else
@@ -45,7 +46,9 @@ class WorksController < ApplicationController
                                  'created(1i)', 'created(2i)', 'created(3i)',
                                  'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
                                  'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
-                                 :created_edtf, :abstract, :citation, :access, :license, :agree_to_terms,
+                                 :created_edtf, :abstract, :citation, :access, :license,
+                                 :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
+                                 :agree_to_terms,
                                  subtype: [],
                                  attached_files_attributes: %i[_destroy id label hide file],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term],
