@@ -1,11 +1,11 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # This generates a RequestDRO Description for a work
 class DescriptionGenerator
   extend T::Sig
 
-  sig { params(work: Work).returns(Hash) }
+  sig { params(work: Work).returns(T::Hash[Symbol, T::Array[T::Hash[String, T.untyped]]]) }
   def self.generate(work:)
     new(work: work).generate
   end
@@ -15,20 +15,22 @@ class DescriptionGenerator
     @work = work
   end
 
-  sig { returns(Hash) }
+  sig { returns(T::Hash[Symbol, T::Array[T::Hash[String, T.untyped]]]) }
   def generate
     {
       title: title,
       # TODO: keywords not yet in model.
       note: [abstract, citation, contact],
-      event: [created_date].compact
+      event: [created_date, published_date].compact
     }
   end
 
   private
 
+  sig { returns(Work) }
   attr_reader :work
 
+  sig { returns(T::Array[T::Hash[String, String]]) }
   def title
     [
       {
@@ -37,6 +39,7 @@ class DescriptionGenerator
     ]
   end
 
+  sig { returns(T::Hash[String, String]) }
   def abstract
     {
       "value": work.abstract,
@@ -44,6 +47,7 @@ class DescriptionGenerator
     }
   end
 
+  sig { returns(T::Hash[String, String]) }
   def citation
     {
       "value": work.citation,
@@ -51,6 +55,7 @@ class DescriptionGenerator
     }
   end
 
+  sig { returns(T.nilable(T::Hash[String, T.any(String, T::Array[T.untyped])])) }
   def created_date
     return unless work.created_edtf
 
@@ -67,6 +72,24 @@ class DescriptionGenerator
     }
   end
 
+  sig { returns(T.nilable(T::Hash[String, T.any(String, T::Array[T.untyped])])) }
+  def published_date
+    return unless work.published_edtf
+
+    {
+      "type": 'publication',
+      "date": [
+        {
+          "value": work.published_edtf,
+          "encoding": {
+            "code": 'edtf'
+          }
+        }
+      ]
+    }
+  end
+
+  sig { returns(T::Hash[String, String]) }
   def contact
     {
       "value": work.contact_email,
