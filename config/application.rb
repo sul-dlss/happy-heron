@@ -31,6 +31,9 @@ module HappyHeron
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    # Don't bother running AS analyzers since we handle technical metadata elsewhere
+    config.active_storage.analyzers = []
+
     # Use SQL schema format so we can have nice things like Postgres enums
     config.active_record.schema_format = :sql
 
