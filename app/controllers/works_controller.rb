@@ -13,11 +13,11 @@ class WorksController < ApplicationController
 
     work = Work.new(work_type: params[:work_type],
                     subtype: params[:subtype],
-                    collection: collection,
-                    contributors: [Contributor.new])
+                    collection: collection)
     authorize! work
 
     @form = WorkForm.new(work)
+    @form.prepopulate!
   end
 
   def create
@@ -53,6 +53,7 @@ class WorksController < ApplicationController
                                  attached_files_attributes: %i[_destroy id label hide file],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term],
                                  keywords_attributes: %i[_destroy id label uri],
-                                 related_works_attributes: %i[_destroy id citation])
+                                 related_works_attributes: %i[_destroy id citation],
+                                 related_links_attributes: %i[_destroy id link_title url])
   end
 end

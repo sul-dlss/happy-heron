@@ -24,7 +24,13 @@
   <% end %>
 
   related_works = <%= @work.related_works.size %>
-  <% @work.related_works.each do |k| %>
-    citation: <%= k.citation %>
+  <% @work.related_works.each do |related| %>
+    citation: <%= related.citation %>
+  <% end %>
+
+  related_links = <%= @work.related_links.size %>
+  <% @work.related_links.each do |link| %>
+    link title: <%= link.link_title %>
+    url: <%= link.url %>
   <% end %>
 </pre>

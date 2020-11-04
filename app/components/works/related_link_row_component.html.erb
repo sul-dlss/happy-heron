@@ -1,0 +1,27 @@
+<div class="contributor inner-container">
+  <div class="row mb-2">
+    <%= form.label :link_title, 'Link title', class: 'form-label col-md-2' %>
+
+    <div class="col-md-9">
+      <%= form.hidden_field :_destroy %>
+      <%= form.text_field :link_title, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-1">
+      <%= button_tag class: 'btn btn-sm float-right', aria: { label: 'Remove' },
+          data: { action: "click->nested-form#removeAssociation" } do %>
+        <span class="far fa-trash-alt"></span>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+
+    <%= form.label :url, 'URL', class: 'form-label col-md-2' %>
+
+    <div class="col-md-9">
+      <%= form.text_field :url, class: 'form-control' %>
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+</div>

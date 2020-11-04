@@ -1,0 +1,19 @@
+<div class="mb-3 row">
+  <h5>Links to related content (optional)</h5>
+</div>
+
+<div class="mb-3 row" data-controller="nested-form">
+  <template data-target='nested-form.template'>
+    <%= form.fields_for :related_links, RelatedLink.new, child_index: 'TEMPLATE_RECORD' do |link_form| %>
+      <%= render Works::RelatedLinkRowComponent.new(form: link_form) %>
+    <% end %>
+  </template>
+
+  <%= form.fields_for :related_links do |link_form| %>
+    <%= render Works::RelatedLinkRowComponent.new(form: link_form) %>
+  <% end %>
+
+  <div data-target="nested-form.add_item">
+    <%= button_tag '+ Add another link', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+  </div>
+</div>

@@ -74,7 +74,8 @@ class WorkForm < Reform::Form
                  return skip!
                end
                item || contributors.append(Contributor.new)
-             } do
+             },
+             prepopulator: ->(*) { contributors << Contributor.new } do
     property :id
     property :first_name
     property :last_name
@@ -138,11 +139,35 @@ class WorkForm < Reform::Form
                if fragment['_destroy'] == '1'
                  related_works.delete(item)
                  return skip!
+               elsif fragment['citation'].blank?
+                 return skip!
                end
                item || related_works.append(RelatedWork.new)
-             } do
+             },
+             prepopulator: ->(*) { related_works << RelatedWork.new } do
     property :id
     property :citation
+    property :_destroy, virtual: true
+  end
+
+  collection :related_links,
+             populator: lambda { |fragment:, **|
+               # The fragment represents one row of the attached file data from the HTML form
+               # find out if incoming file is already added.
+               item = related_links.find_by(id: fragment['id']) if fragment['id'].present?
+
+               if fragment['_destroy'] == '1'
+                 related_links.delete(item)
+                 return skip!
+               elsif fragment['url'].blank?
+                 return skip!
+               end
+               item || related_links.append(RelatedLink.new)
+             },
+             prepopulator: ->(*) { related_links << RelatedLink.new } do
+    property :id
+    property :link_title
+    property :url
     property :_destroy, virtual: true
   end
 

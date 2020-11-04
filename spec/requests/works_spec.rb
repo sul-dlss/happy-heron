@@ -156,6 +156,17 @@ RSpec.describe 'Works requests' do
         }
       end
 
+      let(:related_links) do
+        {
+          '0' =>
+          { '_destroy' => 'false', 'link_title' => 'link 1', 'url' => 'https://example.com' },
+          '999' =>
+          { '_destroy' => '1', 'link_title' => 'link 2', 'url' => 'https://example.com' },
+          '1002' =>
+          { '_destroy' => 'false', 'link_title' => 'link 3', 'url' => 'https://example.com' }
+        }
+      end
+
       let(:embargo_year) { Time.zone.today.year + 1 }
 
       let(:work_params) do
@@ -164,6 +175,7 @@ RSpec.describe 'Works requests' do
                  attached_files_attributes: files,
                  keywords_attributes: keywords,
                  related_works_attributes: related_works,
+                 related_links_attributes: related_links,
                  'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
                  creation_type: 'range',
                  'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
@@ -181,6 +193,7 @@ RSpec.describe 'Works requests' do
         expect(work.attached_files.size).to eq 2
         expect(work.keywords.size).to eq 2
         expect(work.related_works.size).to eq 2
+        expect(work.related_links.size).to eq 2
         expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
         expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
