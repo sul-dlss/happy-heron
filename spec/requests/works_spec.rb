@@ -182,6 +182,9 @@ RSpec.describe 'Works requests' do
           work_type: 'text',
           contact_email: 'io@io.io',
           abstract: 'test abstract',
+          keywords_attributes: {
+            '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+          },
           license: 'CC0-1.0',
           release: 'immediate'
         }
@@ -193,7 +196,7 @@ RSpec.describe 'Works requests' do
         work = Work.last
         expect(work.contributors).to be_empty
         expect(work.attached_files).to be_empty
-        expect(work.keywords).to be_empty
+        expect(work.keywords.size).to eq 1
         expect(work.published_edtf).to be_nil
         expect(work.created_edtf).to be_nil
         expect(work.embargo_date).to be_nil

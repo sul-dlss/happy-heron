@@ -1,5 +1,5 @@
 <div class="keywords" data-controller="keywords" data-action="focusout->keywords#close">
-  <div class="keywords-container" data-target="keywords.container" data-action="click->keywords#open">
+  <div class="keywords-container <%= 'is-invalid' if errors.present? %>" data-target="keywords.container" data-action="click->keywords#open">
     <span class="selection" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1"
       aria-disabled="false" aria-owns="keyword-results">
       <ul class="rendered" id="keyword-container" data-target="keywords.addItem">
@@ -18,12 +18,16 @@
         <input class="search-field" type="search" tabindex="0" autocorrect="off"
                data-target="keywords.search" autocapitalize="none" spellcheck="false"
                role="searchbox" aria-autocomplete="list" autocomplete="off"
+               id="work_keywords"
                aria-describedby="keyword-container"
                data-action="change->keywords#add"
                aria-controls="keyword-results">
       </span>
     </span>
   </div>
+  <% if errors.present? %>
+    <div class="invalid-feedback"><%= errors %></div>
+  <% end %>
 <%# -- TODO for autocomplete
   <div class="keywords-container keywords-container-open" data-target="keywords.container">
     <span class="keywords-dropdown select2-dropdown--above">

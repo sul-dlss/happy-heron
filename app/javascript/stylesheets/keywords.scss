@@ -1,5 +1,7 @@
 .keywords {
   .keywords-container {
+    @extend .form-control;
+
     box-sizing: border-box;
     margin: 0;
     position: relative;
@@ -11,8 +13,8 @@
   }
 
   .keywords-container-open .selection {
-    border-color: $input-focus-border-color;
-    box-shadow: 0 0 0 $input-focus-width rgba($primary, $input-btn-focus-color-opacity);
+    // border-color: $input-focus-border-color;
+    // box-shadow: 0 0 0 $input-focus-width rgba($primary, $input-btn-focus-color-opacity);
   }
 
   .keywords-dropdown {
@@ -39,8 +41,6 @@
 
 
   .selection {
-    @extend .form-control;
-
     .rendered {
         padding: 0;
     }
