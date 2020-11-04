@@ -13,6 +13,14 @@ FactoryBot.define do
     collection
   end
 
+  trait :published do
+    published_edtf { '2020-02-14' }
+  end
+
+  trait :with_creation_dates do
+    created_edtf { '2020-03-04/2020-10-31' }
+  end
+
   trait :with_contributors do
     transient do
       contributors_count { 3 }
