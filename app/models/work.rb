@@ -17,7 +17,7 @@ class Work < ApplicationRecord
   validates :abstract, :access, :state, :title, presence: true
   validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :created_edtf, :published_edtf, edtf: true
-  validates :license, presence: true, inclusion: { in: License.all.map(&:id) }
+  validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
 

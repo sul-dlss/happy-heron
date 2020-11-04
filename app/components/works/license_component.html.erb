@@ -4,7 +4,7 @@
     <%= form.label :license, class: 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= form.select :license,
-                      License.all.collect {|p| [ p.label, p.id ] },
+                      grouped_options_for_select(License.grouped_options),
                       {}, class: "form-select" %>
     </div>
   </div>
