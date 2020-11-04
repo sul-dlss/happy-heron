@@ -44,8 +44,10 @@ RSpec.describe DepositStatusJob do
   context 'when the job is not completed' do
     let(:background_result) { { status: 'incomplete' } }
 
-    it 'raises' do
-      expect { described_class.perform_now(work: work, job_id: job_id) }.to raise_error('No result yet for job 1234')
+    it 'raises a custom exception (so it can be ignored by Honeybadger)' do
+      expect { described_class.perform_now(work: work, job_id: job_id) }.to raise_error(
+        TryAgainLater, 'No result yet for job 1234'
+      )
     end
   end
 end

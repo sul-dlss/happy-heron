@@ -8,8 +8,8 @@ class DepositStatusJob < BaseDepositJob
   sig { params(work: Work, job_id: Integer).void }
   def perform(work:, job_id:)
     result = status(job_id: job_id)
-    # This will force a recheck of status.
-    raise "No result yet for job #{job_id}" if result.nil?
+    # This will force a recheck of status (and should be ignored by Honeybadger)
+    raise TryAgainLater, "No result yet for job #{job_id}" if result.nil?
 
     if result.success?
       work.druid = result.value!
