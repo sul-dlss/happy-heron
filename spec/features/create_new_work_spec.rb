@@ -66,6 +66,10 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
       fill_in 'Abstract', with: 'Whatever'
       check 'Musical notation'
+
+      fill_in 'Keywords', with: 'Springs'
+      blur_from 'work_keywords'
+
       fill_in 'Citation', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'
       click_button 'Deposit'

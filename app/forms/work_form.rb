@@ -59,6 +59,7 @@ class WorkForm < Reform::Form
             inclusion: { in: Settings.earliest_publication_year..Time.zone.today.year },
             allow_nil: true
   validates 'release', presence: true, inclusion: { in: %w[immediate embargo] }
+  validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
 
   collection :contributors,
              populator: lambda { |fragment:, **|
