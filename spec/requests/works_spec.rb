@@ -144,6 +144,18 @@ RSpec.describe 'Works requests' do
           { '_destroy' => 'false', 'label' => 'Freeform keyword',
             'uri' => '' } }
       end
+
+      let(:related_works) do
+        {
+          '0' =>
+          { '_destroy' => 'false', 'citation' => 'citation 1' },
+          '999' =>
+          { '_destroy' => '1', 'citation' => 'citation 2' },
+          '1002' =>
+          { '_destroy' => 'false', 'citation' => 'citation 3' }
+        }
+      end
+
       let(:embargo_year) { Time.zone.today.year + 1 }
 
       let(:work_params) do
@@ -151,6 +163,7 @@ RSpec.describe 'Works requests' do
           .merge(contributors_attributes: contributors,
                  attached_files_attributes: files,
                  keywords_attributes: keywords,
+                 related_works_attributes: related_works,
                  'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
                  creation_type: 'range',
                  'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
@@ -167,6 +180,7 @@ RSpec.describe 'Works requests' do
         expect(work.contributors.size).to eq 2
         expect(work.attached_files.size).to eq 2
         expect(work.keywords.size).to eq 2
+        expect(work.related_works.size).to eq 2
         expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
         expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")

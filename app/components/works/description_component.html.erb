@@ -36,10 +36,12 @@
   </div>
   <p>This is the text that others can use when they want to cite this deposit. We highly recommend that you provide the text of that citation here to make it easier for them to cite your work and give you proper credit.</p>
 
-  <div class="mb-3 row">
+  <div class="mb-5 row">
     <div class='col-sm-2'></div>
     <div class="col-sm-10">
       <%= form.text_area :citation, class: "form-control" %>
     </div>
   </div>
+
+  <%= render Works::RelatedWorkComponent.new(form: form) %>
 </section>

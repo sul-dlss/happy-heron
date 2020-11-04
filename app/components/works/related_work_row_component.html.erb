@@ -1,0 +1,15 @@
+<div class="contributor row inner-container">
+  <%= form.label :citation, 'Citation of related published work', class: 'form-label col-md-2' %>
+
+  <div class="col-md-9">
+    <%= form.hidden_field :_destroy %>
+    <%= form.text_field :citation, class: 'form-control' %>
+  </div>
+
+  <div class="col-md-1">
+    <%= button_tag class: 'btn btn-sm float-right', aria: { label: 'Remove' },
+        data: { action: "click->nested-form#remove_association" } do %>
+      <span class="far fa-trash-alt"></span>
+    <% end %>
+  </div>
+</div>

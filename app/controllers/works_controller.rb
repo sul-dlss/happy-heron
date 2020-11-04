@@ -52,6 +52,7 @@ class WorksController < ApplicationController
                                  subtype: [],
                                  attached_files_attributes: %i[_destroy id label hide file],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term],
-                                 keywords_attributes: %i[_destroy id label uri])
+                                 keywords_attributes: %i[_destroy id label uri],
+                                 related_works_attributes: %i[_destroy id citation])
   end
 end
