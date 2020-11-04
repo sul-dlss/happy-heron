@@ -6,13 +6,14 @@ require 'rails_helper'
 RSpec.describe DepositJob do
   include Dry::Monads[:result]
 
-  let(:client) { instance_double(Dor::Services::Client, objects: objects) }
+  let(:conn) { instance_double(SdrClient::Connection) }
   let(:druid) { 'druid:bc123df4567' }
   let(:model) { instance_double(Cocina::Models::DRO, externalIdentifier: druid) }
   let(:work) { build(:work, id: 8) }
 
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
+    allow(SdrClient::Connection).to receive(:new).and_return(conn)
     allow(DepositStatusJob).to receive(:perform_later)
     allow(Honeybadger).to receive(:notify)
   end

@@ -40242,18 +40242,6 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M11500
-end
-
-module Polyfill::Module::M11500
-end
-
-module Polyfill::Module::M11520
-end
-
-module Polyfill::Module::M11520
-end
-
 module Polyfill::Module::M11540
 end
 
@@ -40272,10 +40260,22 @@ end
 module Polyfill::Module::M11580
 end
 
+module Polyfill::Module::M11600
+end
+
+module Polyfill::Module::M11600
+end
+
 module Polyfill::Module::M11620
 end
 
 module Polyfill::Module::M11620
+end
+
+module Polyfill::Module::M11660
+end
+
+module Polyfill::Module::M11660
 end
 
 class Proc
@@ -41270,6 +41270,12 @@ class RSpec::Rails::Railtie
 end
 
 RSpec::SharedContext = RSpec::Core::SharedContext
+
+module RSpec::Sorbet::Doubles
+  INLINE_DOUBLE_REGEX = ::T.let(nil, ::T.untyped)
+  TYPED_ARRAY_MESSAGE = ::T.let(nil, ::T.untyped)
+  VERIFYING_DOUBLE_OR_DOUBLE = ::T.let(nil, ::T.untyped)
+end
 
 module RSpec::Support
   DEFAULT_FAILURE_NOTIFIER = ::T.let(nil, ::T.untyped)

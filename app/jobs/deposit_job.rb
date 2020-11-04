@@ -19,6 +19,7 @@ class DepositJob < BaseDepositJob
   sig { params(request_dro: Cocina::Models::RequestDRO, blobs: T::Array[ActiveStorage::Blob]).returns(Integer) }
   def deposit(request_dro:, blobs:)
     login_result = login
+
     raise login_result.failure unless login_result.success?
 
     new_request_dro = SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,
