@@ -129,6 +129,23 @@ class WorkForm < Reform::Form
     property :_destroy, virtual: true
   end
 
+  collection :related_works,
+             populator: lambda { |fragment:, **|
+               # The fragment represents one row of the attached file data from the HTML form
+               # find out if incoming file is already added.
+               item = related_works.find_by(id: fragment['id']) if fragment['id'].present?
+
+               if fragment['_destroy'] == '1'
+                 related_works.delete(item)
+                 return skip!
+               end
+               item || related_works.append(RelatedWork.new)
+             } do
+    property :id
+    property :citation
+    property :_destroy, virtual: true
+  end
+
   private
 
   def deserialize_date(name)

@@ -22,4 +22,9 @@
     Label: <%= k.label %>
     URI: <%= k.uri %>
   <% end %>
+
+  related_works = <%= @work.related_works.size %>
+  <% @work.related_works.each do |k| %>
+    citation: <%= k.citation %>
+  <% end %>
 </pre>
