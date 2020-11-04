@@ -5,29 +5,62 @@
 class Contributor < ApplicationRecord
   extend T::Sig
 
+  SEPARATOR = '|'
+
+  ROLE_LABEL = {
+    'person' => 'Individual',
+    'organization' => 'Organization'
+  }.freeze
+
+  GROUPED_ROLES = {
+    'person' =>
+      [
+        'Author',
+        'Composer',
+        'Contributing author',
+        'Copyright holder',
+        'Creator',
+        'Data collector',
+        'Data contributor',
+        'Editor',
+        'Event organizer',
+        'Interviewee',
+        'Interviewer',
+        'Performer',
+        'Photographer',
+        'Primary thesis advisor',
+        'Principal investigator',
+        'Researcher',
+        'Software developer',
+        'Speaker',
+        'Thesis advisor'
+      ],
+    'organization' =>
+      [
+        'Author',
+        'Conference',
+        'Contributing author',
+        'Copyright holder',
+        'Data collector',
+        'Data contributor',
+        'Degree granting institution',
+        'Event',
+        'Event organizer',
+        'Funder',
+        'Host institution',
+        'Issuing body',
+        'Publisher',
+        'Research group',
+        'Sponsor'
+      ]
+  }.freeze
+
   belongs_to :work
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :contributor_type, presence: true, inclusion: { in: %w[person organization conference] }
-  validates :role, presence: true,
-                   inclusion: {
-                     in: [
-                       'Advisor',
-                       'Author',
-                       'Collector',
-                       'Contributing author',
-                       'Creator',
-                       'Editor',
-                       'Primary advisor',
-                       'Principal investigator',
-                       'Degree granting institution',
-                       'Distributor',
-                       'Publisher',
-                       'Sponsor',
-                       'Conference'
-                     ]
-                   }
+  validates :contributor_type, presence: true, inclusion: { in: %w[person organization] }
+  validates :role, presence: true, inclusion: { in: GROUPED_ROLES.values.flatten }
 
   # This is used by the form
   sig { returns(String) }
@@ -49,37 +82,4 @@ class Contributor < ApplicationRecord
       [label, GROUPED_ROLES.fetch(key).map { |role| [role, [key, role].join(SEPARATOR)] }]
     end
   end
-
-  SEPARATOR = '|'
-
-  ROLE_LABEL = {
-    'person' => 'Individual',
-    'organization' => 'Organization',
-    'conference' => 'Conference'
-  }.freeze
-
-  GROUPED_ROLES = {
-    'person' =>
-      [
-        'Advisor',
-        'Author',
-        'Collector',
-        'Contributing author',
-        'Creator',
-        'Editor',
-        'Primary advisor',
-        'Principal investigator'
-      ],
-    'organization' =>
-      [
-        'Author',
-        'Contributing author',
-        'Degree granting institution',
-        'Distributor',
-        'Publisher',
-        'Sponsor'
-      ],
-    'conference' =>
-      %w[Conference]
-  }.freeze
 end
