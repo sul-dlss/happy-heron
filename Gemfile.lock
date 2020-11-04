@@ -351,6 +351,9 @@ GEM
       rspec-expectations (~> 3.9)
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
+    rspec-sorbet (1.5.0)
+      sorbet
+      sorbet-runtime
     rspec-support (3.10.0)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
@@ -383,7 +386,7 @@ GEM
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     safe_type (1.1.1)
-    sdr-client (0.35.1)
+    sdr-client (0.36.0)
       activesupport
       cocina-models (~> 0.42.1)
       dry-monads
@@ -496,13 +499,14 @@ DEPENDENCIES
   reform-rails (~> 0.2.0)
   rspec
   rspec-rails
+  rspec-sorbet
   rspec_junit_formatter
   rubocop
   rubocop-performance
   rubocop-rails
   rubocop-rspec
   rubocop-sorbet
-  sdr-client
+  sdr-client (~> 0.36)
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
   sorbet (= 0.5.5981)
