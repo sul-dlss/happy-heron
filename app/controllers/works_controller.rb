@@ -39,7 +39,6 @@ class WorksController < ApplicationController
 
   private
 
-  # rubocop:disable Metrics/MethodLength
   def work_params
     params.require(:work).permit(:title, :work_type, :contact_email,
                                  'published(1i)', 'published(2i)', 'published(3i)',
@@ -55,5 +54,4 @@ class WorksController < ApplicationController
                                  contributors_attributes: %i[_destroy id first_name last_name role_term],
                                  keywords_attributes: %i[_destroy id label uri])
   end
-  # rubocop:enable Metrics/MethodLength
 end

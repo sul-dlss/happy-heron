@@ -51,7 +51,6 @@ class DescriptionGenerator
     }
   end
 
-  # rubocop:disable Metrics/MethodLength
   def created_date
     return unless work.created_edtf
 
@@ -67,7 +66,6 @@ class DescriptionGenerator
       ]
     }
   end
-  # rubocop:enable Metrics/MethodLength
 
   def contact
     {

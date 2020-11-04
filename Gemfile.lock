@@ -481,6 +481,7 @@ DEPENDENCIES
   devise-remote-user (~> 1.0)
   dlss-capistrano (~> 3.6)
   dor-services-client
+  druid-tools
   dry-types
   edtf
   factory_bot_rails

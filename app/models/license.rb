@@ -20,7 +20,6 @@ class License
   # id is an identifier from https://spdx.org/licenses/
   sig { returns(T::Array[License]) }
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def self.all
     [
       new(id: 'CC-PDDC', label: 'Public domain mark'),
@@ -45,5 +44,4 @@ class License
     ]
   end
   # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 end

@@ -8,15 +8,18 @@
   <% end %>
 
   attached_files = <%= @work.attached_files.size %>
-  <% @work.attached_files.each do |c| %>
-    Has attached file: <%= c.file.attached? %>
-    Label: <%= c.label %>
-    Is hidden: <%= c.hide? %>
+  <% @work.attached_files.each do |af| %>
+    Has attached file: <%= af.file.attached? %>
+    Label: <%= af.label %>
+    Is hidden: <%= af.hide? %>
+    Filename: <%= af.filename %>
+    Size (bytes): <%= af.byte_size %>
+    Content type: <%= af.content_type %>
   <% end %>
-  
+
   keywords = <%= @work.keywords.size %>
-  <% @work.keywords.each do |c| %>
-    Label: <%= c.label %>
-    URI: <%= c.uri %>
+  <% @work.keywords.each do |k| %>
+    Label: <%= k.label %>
+    URI: <%= k.uri %>
   <% end %>
 </pre>

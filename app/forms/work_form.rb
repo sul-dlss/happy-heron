@@ -88,10 +88,20 @@ class WorkForm < Reform::Form
                item = attached_files.find_by(id: fragment['id']) if fragment['id'].present?
 
                if fragment['_destroy'] == '1'
-                 attached_files.delete(item)
+                 # Remove AttachedFile and associated AS model instances if AF exists
+                 # Else, there is no AF, so remove the AS::Blob directly
+                 if item
+                   attached_files.delete(item)
+                 else
+                   ActiveStorage::Blob.find_signed(fragment['file']).purge_later
+                 end
                  return skip!
                end
-               item || attached_files.append(AttachedFile.new)
+               return item if item
+
+               new_attached_file = AttachedFile.new
+               new_attached_file.file.attach(ActiveStorage::Blob.find_signed(fragment['file']))
+               attached_files.append(new_attached_file)
              } do
     property :id
     property :label

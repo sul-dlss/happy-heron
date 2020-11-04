@@ -17,4 +17,10 @@ RSpec.describe AttachedFile, type: :model do
   it 'has attached files' do
     expect(attached_file.file).to be_attached
   end
+
+  it 'delegates to its blob' do
+    expect(attached_file.filename).to eq(attached_file.file.attachment.blob.filename)
+    expect(attached_file.content_type).to eq(attached_file.file.attachment.blob.content_type)
+    expect(attached_file.byte_size).to eq(attached_file.file.attachment.blob.byte_size)
+  end
 end
