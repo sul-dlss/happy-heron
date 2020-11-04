@@ -32,7 +32,7 @@ RSpec.describe 'Works requests' do
     let(:user) { create(:user) }
 
     before do
-      sign_in user
+      sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     end
 
     describe 'show a work' do
@@ -49,6 +49,63 @@ RSpec.describe 'Works requests' do
         get "/collections/#{collection.id}/works/new?work_type=video"
         expect(response).to have_http_status(:ok)
         expect(response.body).to include 'video'
+      end
+
+      context 'with a missing work type' do
+        it 'redirects to dashboard with an informative flash message' do
+          get "/collections/#{collection.id}/works/new?work_type="
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Invalid value of required parameter work_type: nil'
+        end
+      end
+
+      context 'with an invalid work type' do
+        it 'redirects to dashboard with an informative flash message' do
+          get "/collections/#{collection.id}/works/new?work_type=hyrax"
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Invalid value of required parameter work_type: hyrax'
+        end
+      end
+
+      context 'with an invalid work type and subtypes' do
+        it 'redirects to dashboard with an informative flash message' do
+          get "/collections/#{collection.id}/works/new?work_type=hyrax&subtype%5B%5D=Tusks"
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Invalid value of required parameter work_type: hyrax'
+          expect(response.body).to include 'Invalid subtype value for work_type &#39;hyrax&#39;: Tusks'
+        end
+      end
+
+      context 'with an invalid subtype/work_type combo' do
+        it 'redirects to dashboard with an informative flash message' do
+          get "/collections/#{collection.id}/works/new?work_type=sound&subtype%5B%5D=Essay"
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Invalid subtype value for work_type &#39;sound&#39;: Essay'
+        end
+      end
+
+      context 'with a work_type that lacks subtypes' do
+        it 'renders the form' do
+          get "/collections/#{collection.id}/works/new?work_type=other"
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'text'
+        end
+      end
+
+      context 'with a valid subtype/work_type combo' do
+        it 'renders the form' do
+          get "/collections/#{collection.id}/works/new?work_type=text&subtype%5B%5D=Essay"
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'text'
+        end
       end
     end
 
@@ -170,7 +227,7 @@ RSpec.describe 'Works requests' do
         expect(work.published_edtf).to eq '2020-02-14'
         expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
         expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
-        expect(work.subtype).to eq ['3D model', 'GIS']
+        expect(work.subtype).to eq ['Article', 'Presentation slides']
       end
     end
 

@@ -8,9 +8,8 @@ class WorksController < ApplicationController
   verify_authorized except: [:show]
 
   def new
+    validate_work_types!
     collection = Collection.find(params[:collection_id])
-    raise 'Missing required parameter work_type' unless params[:work_type]
-
     work = Work.new(work_type: params[:work_type],
                     subtype: params[:subtype],
                     collection: collection,
@@ -53,5 +52,22 @@ class WorksController < ApplicationController
                                  attached_files_attributes: %i[_destroy id label hide file],
                                  contributors_attributes: %i[_destroy id first_name last_name role_term],
                                  keywords_attributes: %i[_destroy id label uri])
+  end
+
+  def validate_work_types!
+    errors = []
+
+    unless WorkTypeValidator.valid?(params[:work_type])
+      errors << "Invalid value of required parameter work_type: #{params[:work_type].presence || 'nil'}"
+    end
+
+    unless WorkSubtypeValidator.valid?(params[:work_type], params[:subtype])
+      errors << "Invalid subtype value for work_type '#{params[:work_type]}': #{params[:subtype].join}"
+    end
+
+    return if errors.empty?
+
+    flash[:error] = errors.join("\n")
+    redirect_to dashboard_path
   end
 end

@@ -17,7 +17,8 @@ class Work < ApplicationRecord
   validates :contact_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :created_edtf, :published_edtf, edtf: true
   validates :license, presence: true, inclusion: { in: License.all.map(&:id) }
-  validates :work_type, presence: true, inclusion: { in: WorkType.all.map(&:id) }
+  validates :subtype, work_subtype: true
+  validates :work_type, presence: true, work_type: true
 
   enum access: {
     stanford: 'stanford',

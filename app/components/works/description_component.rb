@@ -11,7 +11,7 @@ module Works
     attr_reader :form
 
     def subtypes
-      WorkType.find(form.object.work_type).subtypes
+      WorkType.subtypes_for(form.object.work_type)
     end
   end
 end

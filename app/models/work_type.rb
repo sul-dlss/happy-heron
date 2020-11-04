@@ -5,6 +5,7 @@
 # rubocop:disable Metrics/ClassLength
 class WorkType
   extend T::Sig
+
   DATA_TYPES = [
     '3D model',
     'Audio',
@@ -123,9 +124,9 @@ class WorkType
     @subtypes = subtypes
   end
 
-  sig { params(id: String).returns(WorkType) }
+  sig { params(id: T.nilable(String)).returns(T.nilable(WorkType)) }
   def self.find(id)
-    all.find { |work| work.id == id } || raise("Unable to find #{id}")
+    all.find { |work| work.id == id }
   end
 
   # id is a value acceptable for MODS typeOfResource
@@ -141,6 +142,16 @@ class WorkType
       new(id: 'text', label: 'Text', icon: 'book-open', subtypes: TEXT_TYPES),
       new(id: 'video', label: 'Video', icon: 'film', subtypes: VIDEO_TYPES)
     ]
+  end
+
+  sig { returns(T::Array[String]) }
+  def self.type_list
+    all.map(&:id).sort
+  end
+
+  sig { params(id: T.nilable(String)).returns(T::Array[String]) }
+  def self.subtypes_for(id)
+    find(id)&.subtypes || []
   end
 end
 # rubocop:enable Metrics/ClassLength
