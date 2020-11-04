@@ -21,6 +21,14 @@ FactoryBot.define do
     created_edtf { '2020-03-04/2020-10-31' }
   end
 
+  trait :with_keywords do
+    transient do
+      keywords_count { 3 }
+    end
+
+    keywords { Array.new(keywords_count) { association(:keyword) } }
+  end
+
   trait :with_contributors do
     transient do
       contributors_count { 3 }

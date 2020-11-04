@@ -7,7 +7,7 @@ RSpec.describe DescriptionGenerator do
   subject(:model) { described_class.generate(work: work) }
 
   let(:work) do
-    build(:work, :with_creation_dates, :published)
+    build(:work, :with_creation_dates, :published, :with_keywords)
   end
 
   it 'makes the descripion' do
@@ -15,6 +15,11 @@ RSpec.describe DescriptionGenerator do
       event: [
         { date: [{ encoding: { code: 'edtf' }, value: '2020-03-04/2020-10-31' }], type: 'creation' },
         { date: [{ encoding: { code: 'edtf' }, value: '2020-02-14' }], type: 'publication' }
+      ],
+      subject: [
+        { type: 'topic', value: 'MyString' },
+        { type: 'topic', value: 'MyString' },
+        { type: 'topic', value: 'MyString' }
       ],
       note: [
         { type: 'summary', value: 'test abstract' },
