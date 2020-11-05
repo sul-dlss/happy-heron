@@ -289,5 +289,28 @@ RSpec.describe 'Works requests' do
         expect(work.subtype).to be_empty
       end
     end
+
+    describe 'update work with a validation problem' do
+      let(:work) { create(:work) }
+      let(:user) { work.depositor }
+      let(:work_params) do
+        {
+          title: '',
+          work_type: 'text',
+          contact_email: 'io@io.io',
+          abstract: 'test abstract',
+          keywords_attributes: {
+            '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+          },
+          license: 'CC0-1.0',
+          release: 'immediate'
+        }
+      end
+
+      it 'displays the edit page' do
+        patch "/works/#{work.id}", params: { work: work_params }
+        expect(response).to have_http_status(:ok)
+      end
+    end
   end
 end

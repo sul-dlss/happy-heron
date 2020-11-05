@@ -18,7 +18,7 @@ RSpec.describe 'User return location' do
     it 'redirects to user_return_to URL' do
       add_to_session(user_return_to: return_to_url)
       visit '/webauth/login'
-      expect(page.body).to include('Deposit your work')
+      expect(page.body).to include('Deposit your content')
       expect(page.current_url).to eq(return_to_url)
     end
   end

@@ -32,6 +32,27 @@ class WorksController < ApplicationController
     end
   end
 
+  def edit
+    work = Work.find(params[:id])
+    authorize! work
+
+    @form = WorkForm.new(work)
+    @form.prepopulate!
+  end
+
+  def update
+    work = Work.find(params[:id])
+    authorize! work
+
+    @form = WorkForm.new(work)
+    if @form.validate(work_params) && @form.save
+      DepositJob.perform_later(work) if params[:commit] == 'Deposit'
+      redirect_to work
+    else
+      render :edit
+    end
+  end
+
   def show
     @work = Work.find(params[:id])
   end

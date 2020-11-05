@@ -10,6 +10,10 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false }
 
   has_many :notifications, dependent: :destroy
+  has_many :deposits, class_name: 'Work',
+                      foreign_key: 'depositor_id',
+                      inverse_of: :depositor,
+                      dependent: :destroy
 
   devise :remote_user_authenticatable
 
