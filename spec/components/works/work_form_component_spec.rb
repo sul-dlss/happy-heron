@@ -12,7 +12,7 @@ RSpec.describe Works::WorkFormComponent do
 
   it 'renders the component' do
     expect(rendered.to_html)
-      .to include('Deposit your work', '1. File', 'Add your files',
+      .to include('Deposit your content', '1. File', 'Add your files',
                   'Title of deposit and contact information',
                   'List authors and contributors',
                   'Enter dates related to your deposit',

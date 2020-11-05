@@ -35,7 +35,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
       click_button 'Continue'
 
-      expect(page).to have_content 'Deposit your work'
+      expect(page).to have_content 'Deposit your content'
 
       # Test client-side validation messages
       fill_in 'Publication year', with: '2021'
@@ -95,7 +95,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
     it 'does not submit' do
       visit "/collections/#{collection.id}/works/new?work_type=text"
-      expect(page).to have_content('Deposit your work')
+      expect(page).to have_content('Deposit your content')
 
       fill_in 'Title of deposit', with: 'My Title'
       check 'I agree to the SDR Terms of Deposit'
@@ -103,7 +103,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
       expect(page).not_to have_content('title = My Title')
       expect(page).not_to have_content('agree_to_terms = true')
-      expect(page).to have_content('Deposit your work')
+      expect(page).to have_content('Deposit your content')
     end
   end
 end

@@ -5,7 +5,7 @@
 class DashboardPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def show?
-    administrator? || collection_creator? # TODO: || has created any deposits
+    administrator? || collection_creator? || user.deposits.any?
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups

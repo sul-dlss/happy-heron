@@ -1,6 +1,6 @@
 <div id="editor">
-  <h1 class="row">Deposit your work</h1>
-  <%= form_with model: work_form, url: [work_form.model.collection, work_form],
+  <h1 class="row"><%= page_title %></h1>
+  <%= form_with model: work_form, url: url,
       local: true,
       data: { controller: 'progress' },
       html: { class: "needs-validation row #{'was-validated' if work_form.errors.present?}", novalidate: true, multipart: true } do |f| %>

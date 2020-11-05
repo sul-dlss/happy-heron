@@ -8,6 +8,9 @@ class DashboardsController < ApplicationController
 
   def show
     authorize! :dashboard
-    @collections = authorized_scope(Collection.all)
+    @presenter = DashboardPresenter.new(
+      collections: authorized_scope(Collection.all),
+      drafts: Work.where(state: 'first_draft')
+    )
   end
 end

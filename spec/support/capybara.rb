@@ -5,4 +5,9 @@ require 'capybara/apparition'
 require 'capybara/rails'
 require 'capybara/rspec'
 
+# Uncomment for a headed browser:
+# Capybara.register_driver :apparition do |app|
+#   Capybara::Apparition::Driver.new(app, headless: false)
+# end
+
 Capybara.javascript_driver = :apparition

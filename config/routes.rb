@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show
 
   resources :collections, only: %i[new create edit update] do
-    resources :works, shallow: true, only: %i[new create show]
+    resources :works, shallow: true, only: %i[new create show edit update]
   end
 
   # @note Only admins should be able to access the Sidekiq web UI.  But this is accomplished by Puppet

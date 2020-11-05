@@ -11,6 +11,7 @@ FactoryBot.define do
     citation { 'test citation' }
     license { 'CC0-1.0' }
     depositor { association(:user) }
+    access { 'world' }
     collection
   end
 
@@ -27,7 +28,7 @@ FactoryBot.define do
       keywords_count { 3 }
     end
 
-    keywords { Array.new(keywords_count) { association(:keyword) } }
+    keywords { build_list(:keyword, keywords_count) }
   end
 
   trait :with_contributors do

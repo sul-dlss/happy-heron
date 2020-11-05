@@ -1,14 +1,23 @@
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="dashboard">
+    <section class="mb-5">
+      <header>Deposits in progress</header>
+      <% @presenter.drafts.each do |draft| %>
+        <div>
+          <%= draft.collection.name %> &gt; <%= link_to draft.title.presence || 'No title', edit_work_path(draft) %>
+        </div>
+      <% end %>
+    </section>
+
     <section data-controller="work-type">
       <header>Your collections
         <% if allowed_to?(:create?, Collection) %>
           <%= link_to '+ Create a new collection', new_collection_path, class: "btn btn-outline-primary float-right" %>
         <% end %>
       </header>
-      <% if @collections.present? %>
+      <% if @presenter.collections.present? %>
         <ul class="collections">
-          <% @collections.each do |collection| %>
+          <% @presenter.collections.each do |collection| %>
             <li>
               <div>
                 <header><%= collection.name %>
