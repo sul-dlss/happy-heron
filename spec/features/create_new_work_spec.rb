@@ -70,21 +70,27 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Abstract', with: 'Whatever'
       check 'Musical notation'
 
-      fill_in 'Citation', with: 'Whatever'
+      # fill_in 'Citation', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'
 
       # Test remote form validation which only happens once client-side validation passes
       expect(page).not_to have_content('Please add at least one keyword')
       expect(page).not_to have_css('.keywords-container.is-invalid')
       expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
+
       click_button 'Deposit'
+
       expect(page).to have_content('Please add at least one keyword')
       expect(page).to have_css('.keywords-container.is-invalid')
       expect(page).to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
-      # End of remote form validation
 
       fill_in 'Keywords', with: 'Springs'
       blur_from 'work_keywords'
+
+      expect(page).not_to have_content('Please add at least one keyword')
+      expect(page).not_to have_css('.keywords-container.is-invalid')
+      expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
+      # End of remote form validation
 
       fill_in 'Citation for this deposit (optional)', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'

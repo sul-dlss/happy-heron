@@ -19,6 +19,8 @@ export default class extends Controller {
 
     this.searchTarget.value = ''
     this.addItemTarget.insertAdjacentHTML('beforeend', content)
+    // Remove error indications when keyword(s) added
+    this.containerTarget.classList.remove('is-invalid')
   }
 
   removeAssociation(event) {
