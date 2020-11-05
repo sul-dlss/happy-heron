@@ -236,6 +236,21 @@ module Work::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::Contributor]).void }
   def contributors=(value); end
 
+  sig { returns(::User) }
+  def depositor; end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
+  def build_depositor(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
+  def create_depositor(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
+  def create_depositor!(*args, &block); end
+
+  sig { params(value: ::User).void }
+  def depositor=(value); end
+
   sig { returns(::Keyword::ActiveRecord_Associations_CollectionProxy) }
   def keywords; end
 

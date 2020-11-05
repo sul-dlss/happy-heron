@@ -1684,16 +1684,6 @@ class RSpec::Core::Time
   def self.now(*arg0); end
 end
 class Module
-  def context(*a, &b); end
-  def describe(*a, &b); end
-  def example_group(*a, &b); end
-  def fcontext(*a, &b); end
-  def fdescribe(*a, &b); end
-  def shared_context(name, *args, &block); end
-  def shared_examples(name, *args, &block); end
-  def shared_examples_for(name, *args, &block); end
-  def xcontext(*a, &b); end
-  def xdescribe(*a, &b); end
 end
 class RSpec::Core::Formatters::BaseFormatter
   def close(_notification); end

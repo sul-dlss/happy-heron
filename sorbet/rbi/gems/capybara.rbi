@@ -1941,11 +1941,6 @@ module RSpec
   def self.ffeature(*args, &example_group_block); end
   def self.xfeature(*args, &example_group_block); end
 end
-class Module
-  def feature(*a, &b); end
-  def ffeature(*a, &b); end
-  def xfeature(*a, &b); end
-end
 module Capybara::RSpecMatcherProxies
   def all(*args, **kwargs, &block); end
   def within(*args, **kwargs, &block); end
