@@ -31,6 +31,28 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'populator on contributors' do
+    let(:contributors) do
+      [
+        { '_destroy' => '1', 'first_name' => 'Justin',
+          'last_name' => 'Coyne', 'role_term' => 'person|Data collector' },
+        { '_destroy' => 'false', 'first_name' => 'Naomi',
+          'last_name' => 'Dushay', 'full_name' => 'Stanford', 'role_term' => 'person|Author' },
+        { '_destroy' => 'false', 'first_name' => 'Naomi',
+          'last_name' => 'Dushay', 'full_name' => 'The Leland Stanford Junior University',
+          'role_term' => 'organization|Host institution' }
+      ]
+    end
+
+    it 'filters out name values for the wrong type' do
+      form.validate(contributors: contributors)
+      expect(form.contributors.size).to eq 2
+      expect(form.contributors.first.full_name).to be_nil
+      expect(form.contributors.last.first_name).to be_nil
+      expect(form.contributors.last.last_name).to be_nil
+    end
+  end
+
   describe 'year validation' do
     let(:current_year) { Time.zone.today.year }
 

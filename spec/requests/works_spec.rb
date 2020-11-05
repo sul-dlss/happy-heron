@@ -135,13 +135,14 @@ RSpec.describe 'Works requests' do
       let(:contributors) do
         { '0' =>
           { '_destroy' => '1', 'first_name' => 'Justin',
-            'last_name' => 'Coyne', 'role_term' => 'person|Collector' },
+            'last_name' => 'Coyne', 'role_term' => 'person|Data collector' },
           '999' =>
           { '_destroy' => 'false', 'first_name' => 'Naomi',
-            'last_name' => 'Dushay', 'role_term' => 'person|Author' },
+            'last_name' => 'Dushay', 'full_name' => 'Stanford', 'role_term' => 'person|Author' },
           '1002' =>
-          { '_destroy' => 'false', 'first_name' => 'Vivian',
-            'last_name' => 'Wong', 'role_term' => 'person|Contributing author' } }
+          { '_destroy' => 'false', 'first_name' => 'Naomi',
+            'last_name' => 'Dushay', 'full_name' => 'The Leland Stanford Junior University',
+            'role_term' => 'organization|Host institution' } }
       end
 
       let(:upload1) do
@@ -247,6 +248,7 @@ RSpec.describe 'Works requests' do
         expect(response).to have_http_status(:found)
         work = Work.last
         expect(work.contributors.size).to eq 2
+        expect(work.contributors.last.full_name).to eq 'The Leland Stanford Junior University'
         expect(work.attached_files.size).to eq 2
         expect(work.keywords.size).to eq 2
         expect(work.related_works.size).to eq 2

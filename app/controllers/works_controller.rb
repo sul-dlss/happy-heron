@@ -50,7 +50,7 @@ class WorksController < ApplicationController
                                  :agree_to_terms,
                                  subtype: [],
                                  attached_files_attributes: %i[_destroy id label hide file],
-                                 contributors_attributes: %i[_destroy id first_name last_name role_term],
+                                 contributors_attributes: %i[_destroy id full_name first_name last_name role_term],
                                  keywords_attributes: %i[_destroy id label uri],
                                  related_works_attributes: %i[_destroy id citation],
                                  related_links_attributes: %i[_destroy id link_title url])
