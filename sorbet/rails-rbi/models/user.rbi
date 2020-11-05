@@ -82,6 +82,15 @@ module User::GeneratedAttributeMethods
 end
 
 module User::GeneratedAssociationMethods
+  sig { returns(::Work::ActiveRecord_Associations_CollectionProxy) }
+  def deposits; end
+
+  sig { returns(T::Array[Integer]) }
+  def deposit_ids; end
+
+  sig { params(value: T::Enumerable[::Work]).void }
+  def deposits=(value); end
+
   sig { returns(::Notification::ActiveRecord_Associations_CollectionProxy) }
   def notifications; end
 

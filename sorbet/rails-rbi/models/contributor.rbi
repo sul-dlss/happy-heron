@@ -26,14 +26,23 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def created_at?; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def first_name; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
   def first_name=(value); end
 
   sig { returns(T::Boolean) }
   def first_name?; end
+
+  sig { returns(T.nilable(String)) }
+  def full_name; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def full_name=(value); end
+
+  sig { returns(T::Boolean) }
+  def full_name?; end
 
   sig { returns(Integer) }
   def id; end
@@ -44,10 +53,10 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def id?; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def last_name; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
   def last_name=(value); end
 
   sig { returns(T::Boolean) }
