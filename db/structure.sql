@@ -421,7 +421,8 @@ CREATE TABLE public.works (
     state character varying NOT NULL,
     collection_id bigint NOT NULL,
     published_edtf character varying,
-    subtype text[] DEFAULT '{}'::text[]
+    subtype text[] DEFAULT '{}'::text[],
+    depositor_id bigint NOT NULL
 );
 
 
@@ -731,6 +732,13 @@ CREATE INDEX index_works_on_collection_id ON public.works USING btree (collectio
 
 
 --
+-- Name: index_works_on_depositor_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_depositor_id ON public.works USING btree (depositor_id);
+
+
+--
 -- Name: index_works_on_druid_and_version; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -809,6 +817,14 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: works fk_rails_db22aa4202; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.works
+    ADD CONSTRAINT fk_rails_db22aa4202 FOREIGN KEY (depositor_id) REFERENCES public.users(id);
+
+
+--
 -- Name: keywords fk_rails_ddae867842; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -845,6 +861,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201026222437'),
 ('20201027203358'),
 ('20201028205711'),
-('20201105141009');
+('20201105141009'),
+('20201105191840');
 
 
