@@ -16,18 +16,18 @@
        <%= form.radio_button :release, 'embargo', class: 'form-check-input' %>
        <%= form.label :release_embargo, 'On this date' %>
      </div>
-     <div class="col-sm-3">
+     <div class="col-sm-9">
        <div class="row">
-         <div class="col">
+         <div class="col-sm-2">
            <label for="work_embargo_year" class="visually-hidden">Embargo year</label>
            <%= select_year Time.zone.today, { prefix: 'work', field_name: 'embargo_date(1i)', start_year: Time.zone.today.year, end_year: 3.years.from_now.year }, id: 'work_embargo_year', class: "form-control" %>
          </div>
-         <div class="col">
+         <div class="col-sm-3">
            <label for="work_embargo_month" class="visually-hidden">Embargo month</label>
            <%= select_month nil, { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month'}, id: 'work_embargo_month', class: "form-control" %>
          </div>
 
-         <div class="col">
+         <div class="col-sm-2">
            <label for="work_embargo_day" class="visually-hidden">Embargo day</label>
            <%= select_day nil, { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day'}, id: 'work_embargo_day', class: "form-control" %>
          </div>
