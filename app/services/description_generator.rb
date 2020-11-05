@@ -19,7 +19,7 @@ class DescriptionGenerator
   def generate
     {
       title: title,
-      # TODO: keywords not yet in model.
+      subject: keywords,
       note: [abstract, citation, contact],
       event: [created_date, published_date].compact
     }
@@ -37,6 +37,16 @@ class DescriptionGenerator
         "value": work.title
       }
     ]
+  end
+
+  sig { returns(T::Array[T::Hash[String, String]]) }
+  def keywords
+    work.keywords.map do |keyword|
+      {
+        "value": keyword.label,
+        "type": 'topic'
+      }
+    end
   end
 
   sig { returns(T::Hash[String, String]) }
