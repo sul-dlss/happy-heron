@@ -6,6 +6,18 @@
     <% end %>
     <%= form.hidden_field :_destroy %>
   </div>
+  <div class="col-md-3">
+    <%= form.label :role_term, class: 'form-label' %>
+    <%= form.select :role_term, grouped_options_for_select(Contributor.grouped_options),
+                    {}, class: 'form-select',
+                    data: {
+                      action: 'change->contributor#typeChanged',
+                      target: 'contributor.role'
+                    } %>
+  </div>
+  <div class="col-md-1 role-prefix">
+    is
+  </div>
   <div class="col-md-4" data-target="contributor.personName">
     <%= form.label :first_name, class: 'form-label' %>
     <%= form.text_field :first_name, class: 'form-control' %>
@@ -17,17 +29,5 @@
   <div class="col-md-8" data-target="contributor.organizationName">
     <%= form.label :full_name, 'Name', class: 'form-label' %>
     <%= form.text_field :full_name, class: 'form-control' %>
-  </div>
-  <div class="col-md-1 role-prefix">
-    as
-  </div>
-  <div class="col-md-3">
-    <%= form.label :role_term, class: 'form-label' %>
-    <%= form.select :role_term, grouped_options_for_select(Contributor.grouped_options),
-                    {}, class: 'form-select',
-                    data: {
-                      action: 'change->contributor#typeChanged',
-                      target: 'contributor.role'
-                    } %>
   </div>
 </div>
