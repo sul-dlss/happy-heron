@@ -14,15 +14,4 @@ RSpec.describe Works::KeywordsComponent do
       .to be_present
     expect(rendered.css('.keywords-container.is-invalid')).not_to be_present
   end
-
-  context 'when the keyword is not provided' do
-    before do
-      work_form.validate({})
-    end
-
-    it 'renders the component errors' do
-      expect(rendered.css('.keywords-container.is-invalid')).to be_present
-      expect(rendered.css('.keywords-container.is-invalid ~ .invalid-feedback')).to be_present
-    end
-  end
 end

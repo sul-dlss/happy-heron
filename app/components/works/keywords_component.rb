@@ -9,9 +9,5 @@ module Works
     end
 
     attr_reader :form
-
-    def errors
-      helpers.safe_join form.object.errors[:keywords]
-    end
   end
 end
