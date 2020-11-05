@@ -315,7 +315,7 @@ module ActiveStorage::SetBlob
   def set_blob; end
   extend ActiveSupport::Concern
 end
-class ActiveStorage::BlobsController < ActiveStorage::BaseController
+class ActiveStorage::RepresentationsController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
   def self.__callbacks; end
   def self._helpers; end
@@ -346,7 +346,7 @@ module Anonymous_Module_32
   include Anonymous_Module_28
   include Anonymous_Module_29
 end
-class ActiveStorage::RepresentationsController < ActiveStorage::BaseController
+class ActiveStorage::BlobsController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
   def self.__callbacks; end
   def self._helpers; end
@@ -425,25 +425,15 @@ class ActiveStorage::PurgeJob < ActiveStorage::BaseJob
   def self.queue_name; end
   def self.rescue_handlers; end
 end
-class ActiveStorage::Variant
-  def blob; end
-  def content_type(**, &&); end
-  def filename(**, &&); end
-  def format(**, &&); end
-  def image; end
-  def initialize(blob, variation_or_variation_key); end
+class ActiveStorage::Variation
+  def initialize(transformations); end
   def key; end
-  def process; end
-  def processed; end
-  def processed?; end
-  def service(**, &&); end
-  def service_url(expires_in: nil, disposition: nil); end
-  def specification; end
-  def transform(image, &block); end
-  def upload(file); end
-  def variation; end
-end
-class ActiveStorage::Variant::Specification < OpenStruct
+  def self.decode(key); end
+  def self.encode(transformations); end
+  def self.wrap(variator); end
+  def transform(file, format: nil, &block); end
+  def transformations; end
+  def transformer; end
 end
 class ActiveStorage::Downloader
   def download(key, file); end
@@ -649,29 +639,25 @@ module Anonymous_Module_35
   def saved_change_to_identified; end
   def saved_change_to_identified?; end
 end
-class ActiveStorage::Filename
-  def <=>(other); end
-  def as_json(*arg0); end
-  def base; end
-  def extension; end
-  def extension_with_delimiter; end
-  def extension_without_delimiter; end
-  def initialize(filename); end
-  def sanitized; end
-  def self.wrap(filename); end
-  def to_json; end
-  def to_s; end
-  include Comparable
-end
-class ActiveStorage::Variation
-  def initialize(transformations); end
+class ActiveStorage::Variant
+  def blob; end
+  def content_type(**, &&); end
+  def filename(**, &&); end
+  def format(**, &&); end
+  def image; end
+  def initialize(blob, variation_or_variation_key); end
   def key; end
-  def self.decode(key); end
-  def self.encode(transformations); end
-  def self.wrap(variator); end
-  def transform(file, format: nil, &block); end
-  def transformations; end
-  def transformer; end
+  def process; end
+  def processed; end
+  def processed?; end
+  def service(**, &&); end
+  def service_url(expires_in: nil, disposition: nil); end
+  def specification; end
+  def transform(image, &block); end
+  def upload(file); end
+  def variation; end
+end
+class ActiveStorage::Variant::Specification < OpenStruct
 end
 module ActiveStorage::Attachment::GeneratedAttributeMethods
 end
@@ -722,14 +708,19 @@ class ActiveStorage::Attachment::ActiveRecord_AssociationRelation < ActiveRecord
   include ActiveRecord::Delegation::ClassSpecificRelation
   include ActiveStorage::Attachment::GeneratedRelationMethods
 end
-class ActiveStorage::Current < ActiveSupport::CurrentAttributes
-  def self.host; end
-  def self.host=(attribute); end
-  include Anonymous_Module_36
-end
-module Anonymous_Module_36
-  def host; end
-  def host=(attribute); end
+class ActiveStorage::Filename
+  def <=>(other); end
+  def as_json(*arg0); end
+  def base; end
+  def extension; end
+  def extension_with_delimiter; end
+  def extension_without_delimiter; end
+  def initialize(filename); end
+  def sanitized; end
+  def self.wrap(filename); end
+  def to_json; end
+  def to_s; end
+  include Comparable
 end
 class ActiveStorage::Preview
   def blob; end
@@ -745,6 +736,15 @@ class ActiveStorage::Preview
   def variation; end
 end
 class ActiveStorage::Preview::UnprocessedError < StandardError
+end
+class ActiveStorage::Current < ActiveSupport::CurrentAttributes
+  def self.host; end
+  def self.host=(attribute); end
+  include Anonymous_Module_36
+end
+module Anonymous_Module_36
+  def host; end
+  def host=(attribute); end
 end
 class ActiveStorage::Attached::Changes::CreateOne
   def attachable; end
