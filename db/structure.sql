@@ -184,12 +184,13 @@ ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
 CREATE TABLE public.contributors (
     id bigint NOT NULL,
     work_id bigint NOT NULL,
-    first_name character varying NOT NULL,
-    last_name character varying NOT NULL,
+    first_name character varying,
+    last_name character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     contributor_type character varying NOT NULL,
-    role character varying NOT NULL
+    role character varying NOT NULL,
+    full_name character varying
 );
 
 
@@ -843,6 +844,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201023212141'),
 ('20201026222437'),
 ('20201027203358'),
-('20201028205711');
+('20201028205711'),
+('20201105141009');
 
 

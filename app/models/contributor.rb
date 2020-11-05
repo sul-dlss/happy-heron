@@ -57,10 +57,17 @@ class Contributor < ApplicationRecord
 
   belongs_to :work
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :first_name, presence: true, if: :person?
+  validates :last_name, presence: true, if: :person?
+  validates :full_name, presence: true, unless: :person?
+
   validates :contributor_type, presence: true, inclusion: { in: %w[person organization] }
   validates :role, presence: true, inclusion: { in: GROUPED_ROLES.values.flatten }
+
+  sig { returns(T::Boolean) }
+  def person?
+    contributor_type == 'person'
+  end
 
   # This is used by the form
   sig { returns(String) }
