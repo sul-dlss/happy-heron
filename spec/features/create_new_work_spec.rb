@@ -22,6 +22,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Collection name', with: collection_attrs.fetch(:name)
       fill_in 'Description', with: collection_attrs.fetch(:description)
       fill_in 'Contact email', with: collection_attrs.fetch(:contact_email)
+
       click_button 'Deposit'
 
       click_button '+ Deposit to this collection' # , match: :first
@@ -63,6 +64,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Created range end year', with: '2020'
       select 'October', from: 'Created range end month'
       select '30', from: 'Created range end day'
+      select 'Everyone', from: 'Who can access?'
 
       fill_in 'Abstract', with: 'Whatever'
       check 'Musical notation'
