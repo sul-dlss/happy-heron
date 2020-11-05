@@ -10,7 +10,9 @@ RSpec.describe StorageMigrator do
                         source: source_service,
                         target: target_service)
   end
-  let(:source_service) { described_class.send(:default_source) }
+  let(:source_service) do
+    ActiveStorage::Service.configure(:test, described_class.send(:active_storage_configs))
+  end
   let(:target_service) { described_class.send(:default_target) }
 
   describe '.migrate' do
