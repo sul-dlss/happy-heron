@@ -5,7 +5,7 @@ FactoryBot.define do
   factory :work do
     title { 'Test title' }
     work_type { 'text' }
-    subtype { ['3D model', 'GIS'] }
+    subtype { ['Article', 'Presentation slides'] } # Subtype values intentionally include an item with whitespace
     contact_email { 'io@io.io' }
     abstract { 'test abstract' }
     citation { 'test citation' }

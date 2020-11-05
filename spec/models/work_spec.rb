@@ -51,6 +51,48 @@ RSpec.describe Work do
     end
   end
 
+  describe 'type and subtype validation' do
+    context 'with an empty work type' do
+      let(:work) { build(:work, work_type: nil) }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a missing work type' do
+      let(:work) { build(:work, work_type: 'a pile of something') }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with an invalid subtype/work_type combo' do
+      let(:work) { build(:work, work_type: 'data', subtype: ['Animation']) }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a work_type that lacks subtypes' do
+      let(:work) { build(:work, work_type: 'other', subtype: []) }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+
+    context 'with a valid subtype/work_type combo ' do
+      let(:work) { build(:work, work_type: 'data', subtype: ['Software/code']) }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+  end
+
   describe 'access field' do
     it 'defaults to world' do
       expect(work.access).to eq('world')
