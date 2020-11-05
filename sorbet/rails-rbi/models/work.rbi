@@ -94,6 +94,15 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def created_edtf?; end
 
+  sig { returns(Integer) }
+  def depositor_id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def depositor_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def depositor_id?; end
+
   sig { returns(T.nilable(String)) }
   def druid; end
 

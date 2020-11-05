@@ -63,6 +63,13 @@ module GeneratedUrlHelpers
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def new_collection_work_url(*args, **kwargs); end
 
+  # Sigs for route /works/:id/edit(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def edit_work_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def edit_work_url(*args, **kwargs); end
+
   # Sigs for route /works/:id(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def work_path(*args, **kwargs); end
