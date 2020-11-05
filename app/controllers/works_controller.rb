@@ -20,7 +20,7 @@ class WorksController < ApplicationController
   end
 
   def create
-    work = Work.new(collection_id: params[:collection_id])
+    work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
 
     @form = WorkForm.new(work)

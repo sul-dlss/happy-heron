@@ -10,6 +10,7 @@ FactoryBot.define do
     abstract { 'test abstract' }
     citation { 'test citation' }
     license { 'CC0-1.0' }
+    depositor { association(:user) }
     collection
   end
 

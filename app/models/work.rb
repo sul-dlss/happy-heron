@@ -6,6 +6,7 @@ class Work < ApplicationRecord
   extend T::Sig
 
   belongs_to :collection
+  belongs_to :depositor, class_name: 'User'
 
   has_many :contributors, dependent: :destroy
   has_many :related_links, dependent: :destroy
