@@ -135,7 +135,7 @@ class WorkType
     [
       new(id: 'data', label: 'Data', icon: 'chart-bar', subtypes: DATA_TYPES),
       new(id: 'image', label: 'Image', icon: 'images', subtypes: IMAGE_TYPES),
-      new(id: 'mixed materials', label: 'Mixed Materials', icon: 'play', subtypes: MIXED_TYPES),
+      new(id: 'mixed material', label: 'Mixed Materials', icon: 'play', subtypes: MIXED_TYPES),
       new(id: 'other', label: 'Other', icon: 'archive', subtypes: []),
       new(id: 'software, multimedia', label: 'Software or Code', icon: 'mouse', subtypes: SOFTWARE_TYPES),
       new(id: 'sound', label: 'Sound', icon: 'microphone-alt', subtypes: SOUND_TYPES),
