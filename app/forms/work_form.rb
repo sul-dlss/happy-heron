@@ -60,6 +60,7 @@ class WorkForm < Reform::Form
             allow_nil: true
   validates 'release', presence: true, inclusion: { in: %w[immediate embargo] }
   validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
+  validates :contact_email, presence: true, format: { with: Devise.email_regexp }
 
   collection :contributors,
              populator: lambda { |fragment:, **|
