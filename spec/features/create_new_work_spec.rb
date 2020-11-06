@@ -48,7 +48,8 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
         "Created year must be between #{Settings.earliest_created_year} and #{Time.zone.today.year}"
       )
       fill_in 'Created year', with: ''
-      # End of validation testing, continue filling out deposit form
+      fill_in 'Publication year', with: ''
+      # End of client-side validation testing
 
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
@@ -69,8 +70,27 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Abstract', with: 'Whatever'
       check 'Musical notation'
 
+      # fill_in 'Citation', with: 'Whatever'
+      check 'I agree to the SDR Terms of Deposit'
+
+      # Test remote form validation which only happens once client-side validation passes
+      expect(page).not_to have_content('Please add at least one keyword')
+      expect(page).not_to have_css('.keywords-container.is-invalid')
+      expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
+
+      click_button 'Deposit'
+
+      expect(page).to have_content('Please add at least one keyword')
+      expect(page).to have_css('.keywords-container.is-invalid')
+      expect(page).to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
+
       fill_in 'Keywords', with: 'Springs'
       blur_from 'work_keywords'
+
+      expect(page).not_to have_content('Please add at least one keyword')
+      expect(page).not_to have_css('.keywords-container.is-invalid')
+      expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
+      # End of remote form validation
 
       fill_in 'Citation for this deposit (optional)', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'

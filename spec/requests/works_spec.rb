@@ -307,9 +307,10 @@ RSpec.describe 'Works requests' do
         }
       end
 
-      it 'displays the edit page' do
+      it 'returns a validation error in JSON format' do
         patch "/works/#{work.id}", params: { work: work_params }
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)['title']).to include("can't be blank")
       end
     end
   end

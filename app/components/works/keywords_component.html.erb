@@ -1,5 +1,5 @@
-<div class="keywords" data-controller="keywords" data-action="focusout->keywords#close">
-  <div class="keywords-container <%= 'is-invalid' if errors.present? %>" data-target="keywords.container" data-action="click->keywords#open">
+<div class="keywords" data-controller="keywords" data-action="focusout->keywords#close" data-target="progress.keywordsField">
+  <div class="keywords-container" data-target="keywords.container" data-action="click->keywords#open">
     <span class="selection" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1"
       aria-disabled="false" aria-owns="keyword-results">
       <ul class="rendered" id="keyword-container" data-target="keywords.addItem">
@@ -25,9 +25,7 @@
       </span>
     </span>
   </div>
-  <% if errors.present? %>
-    <div class="invalid-feedback"><%= errors %></div>
-  <% end %>
+  <div class="invalid-feedback"></div>
 <%# -- TODO for autocomplete
   <div class="keywords-container keywords-container-open" data-target="keywords.container">
     <span class="keywords-dropdown select2-dropdown--above">

@@ -28,7 +28,8 @@ class WorksController < ApplicationController
       DepositJob.perform_later(work) if params[:commit] == 'Deposit'
       redirect_to work
     else
-      render :new
+      # Send form errors to client in JSON format to be parsed and rendered there
+      render json: @form.errors, status: :bad_request
     end
   end
 
@@ -49,7 +50,8 @@ class WorksController < ApplicationController
       DepositJob.perform_later(work) if params[:commit] == 'Deposit'
       redirect_to work
     else
-      render :edit
+      # Send form errors to client in JSON format to be parsed and rendered there
+      render json: @form.errors, status: :bad_request
     end
   end
 
