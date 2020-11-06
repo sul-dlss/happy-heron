@@ -57,7 +57,7 @@ RSpec.describe 'Works requests' do
           expect(response).to redirect_to(dashboard_path)
           follow_redirect!
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include 'Invalid value of required parameter work_type: nil'
+          expect(response.body).to include 'Invalid value of required parameter work_type: missing'
         end
       end
 
@@ -92,11 +92,21 @@ RSpec.describe 'Works requests' do
         end
       end
 
-      context 'with a work_type that lacks subtypes' do
-        it 'renders the form' do
+      context 'with a work_type that is missing a required user-supplied subtype' do
+        it 'redirects to dashboard with an informative flash message' do
           get "/collections/#{collection.id}/works/new?work_type=other"
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include 'text'
+          expect(response.body).to include 'Invalid subtype value for work_type &#39;other&#39;: missing'
+        end
+      end
+
+      context 'with a work_type that has a required user-supplied subtype' do
+        it 'renders the form' do
+          get "/collections/#{collection.id}/works/new?work_type=other&subtype%5B%5D=Awesome+Subtype"
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Awesome Subtype'
         end
       end
 
@@ -109,23 +119,34 @@ RSpec.describe 'Works requests' do
       end
     end
 
-    context 'when Settings.allow_sdr_content_changes is' do
+    describe 'allowing content changes' do
       let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
       let(:collection) { create(:collection, depositors: [user]) }
 
-      it 'false, it redirects and displays alert' do
-        allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
-        get "/collections/#{collection.id}/works/new?work_type=text"
-        expect(response).to redirect_to(:root)
-        follow_redirect!
-        expect(response).to be_successful
-        expect(response.body).to include alert_text
+      context 'when false' do
+        before do
+          allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
+        end
+
+        it 'redirects and displays alert' do
+          get "/collections/#{collection.id}/works/new?work_type=text"
+          expect(response).to redirect_to(root_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include alert_text
+        end
       end
 
-      it 'true, it does NOT display alert' do
-        get "/collections/#{collection.id}/works/new?work_type=other"
-        expect(response).to be_successful
-        expect(response.body).not_to include alert_text
+      context 'when true' do
+        before do
+          allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
+        end
+
+        it 'does NOT display alert' do
+          get "/collections/#{collection.id}/works/new?work_type=text"
+          expect(response).to have_http_status(:ok)
+          expect(response.body).not_to include alert_text
+        end
       end
     end
 

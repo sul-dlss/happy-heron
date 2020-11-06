@@ -13,7 +13,10 @@ class WorkSubtypeValidator < ActiveModel::EachValidator
   # validate these on the incoming works/new request before there is a model
   # instance to validate.
   def self.valid?(work_type, value)
-    return true if value.nil? # Subtype is not required
+    return Array(value).first.present? if work_type == 'other'
+
+    # Subtype is not required for work types other than 'other'
+    return true if value.nil?
 
     value.all? { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) }
   end
