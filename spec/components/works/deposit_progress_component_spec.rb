@@ -6,6 +6,6 @@ require 'rails_helper'
 RSpec.describe Works::DepositProgressComponent do
   it 'renders the component' do
     expect(render_inline(described_class.new).to_html)
-      .to include('1. File')
+      .to include('File')
   end
 end
