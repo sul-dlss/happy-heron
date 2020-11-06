@@ -1,22 +1,22 @@
 <section>
   <header>Enter dates related to your deposit (optional)</header>
   <div class="mb-3 row">
-    <div class="col-lg-2 h6">
+    <div class="col-sm-2 h6">
       Publication date
     </div>
-    <div class="col-lg-5 col-xl-4">
+    <div class="col-sm-10">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-2">
           <label for="work_published_year" class="visually-hidden">Publication year</label>
           <%= number_field_tag 'work[published(1i)]', nil, id: 'work_published_year', class: "form-control", min: Settings.earliest_publication_year, max: Time.zone.today.year %>
           <div class="invalid-feedback">Publication year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
         </div>
-        <div class="col">
+        <div class="col-sm-3">
           <label for="work_published_month" class="visually-hidden">Publication month</label>
           <%= select_month nil, { prefix: 'work', field_name: 'published(2i)', prompt: 'month'}, id: 'work_published_month', class: "form-control" %>
         </div>
 
-        <div class="col">
+        <div class="col-sm-2">
           <label for="work_published_day" class="visually-hidden">Publication day</label>
           <%= select_day nil, { prefix: 'work', field_name: 'published(3i)', prompt: 'day'}, id: 'work_published_day', class: "form-control" %>
         </div>
@@ -25,7 +25,7 @@
   </div>
 
   <div class="mb-3 row">
-    <div class="col-sm-12 h6">
+    <div class="col-sm-3 h6">
       Creation date
     </div>
   </div>
@@ -35,19 +35,19 @@
       <%= form.radio_button :creation_type, 'single', class: 'form-check-input' %>
       <%= form.label :creation_type_single, 'Single date' %>
     </div>
-    <div class="col-lg-5 col-xl-4">
+    <div class="col-sm-10">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-2">
           <label for="work_created_year" class="visually-hidden">Created year</label>
           <%= number_field_tag 'work[created(1i)]', nil, id: 'work_created_year', class: "form-control", min: Settings.earliest_created_year, max: Time.zone.today.year %>
           <div class="invalid-feedback">Created year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
         </div>
-        <div class="col">
+        <div class="col-sm-3">
           <label for="work_created_month" class="visually-hidden">Created month</label>
           <%= select_month nil, { prefix: 'work', field_name: 'created(2i)', prompt: 'month'}, id: 'work_created_month', class: "form-control" %>
         </div>
 
-        <div class="col">
+        <div class="col-sm-2">
           <label for="work_created_day" class="visually-hidden">Created day</label>
           <%= select_day nil, { prefix: 'work', field_name: 'created(3i)', prompt: 'day'}, id: 'work_created_day', class: "form-control" %>
         </div>
@@ -56,51 +56,54 @@
   </div>
 
   <div class="mb-3 row">
-    <div class="col-lg-2 col-md-4">
+    <div class="col-md-2">
       <%= form.radio_button :creation_type, 'range', class: 'form-check-input' %>
        <%= form.label :creation_type_range, 'Date range' %>
     </div>
 
-    <div class="col-lg-5 col-xl-4">
+    <div class="col-md-10">
       <div class="row">
-        <div class="col">
+        <div class="col-sm-2">
           <label for="work_created_range_start_year" class="visually-hidden">Created range start year</label>
           <%= number_field_tag 'work[created_range(1i)]', nil, id: 'work_created_range_start_year', class: "form-control", min: Settings.earliest_created_year, max: Time.zone.today.year %>
           <div class="invalid-feedback">Created year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
         </div>
-        <div class="col">
+        <div class="col-sm-3">
           <label for="work_created_range_start_month" class="visually-hidden">Created range start month</label>
           <%= select_month nil, { prefix: 'work', field_name: 'created_range(2i)', prompt: 'month'}, id: 'work_created_range_start_month', class: "form-control" %>
         </div>
 
-        <div class="col">
+        <div class="col-sm-2">
           <label for="work_created_range_start_day" class="visually-hidden">Created range start day</label>
           <%= select_day nil, { prefix: 'work', field_name: 'created_range(3i)', prompt: 'day'}, id: 'work_created_range_start_day', class: "form-control" %>
         </div>
-      </div>
-    </div>
-
-    <div class="col-lg-5 col-xl-4">
-      <div class="row">
         <div style="width: 1.5rem; margin-right:.5rem; margin-top:0.5em">
           to
         </div>
-        <div class="col">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-sm-2">
           <label for="work_created_range_end_year" class="visually-hidden">Created range end year</label>
           <%= number_field_tag 'work[created_range(4i)]', nil, id: 'work_created_range_end_year', class: "form-control", min: Settings.earliest_created_year, max: Time.zone.today.year %>
           <div class="invalid-feedback">Created year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
         </div>
-        <div class="col">
+        <div class="col-sm-3">
           <label for="work_created_range_end_month" class="visually-hidden">Created range end month</label>
           <%= select_month nil, { prefix: 'work', field_name: 'created_range(5i)', prompt: 'month'}, id: 'work_created_range_end_month', class: "form-control" %>
         </div>
 
-        <div class="col">
+        <div class="col-sm-2">
           <label for="work_created_range_end_day" class="visually-hidden">Created range end day</label>
           <%= select_day nil, { prefix: 'work', field_name: 'created_range(6i)', prompt: 'day'}, id: 'work_created_range_end_day', class: "form-control" %>
         </div>
       </div>
     </div>
   </div>
-
 </section>
