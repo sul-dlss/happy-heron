@@ -12,6 +12,10 @@ class CollectionForm < Reform::Form
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
+  # TODO: review_enabled==false just nils out reviewers on save? review_enabled
+  # starts true if reviewers not nil, false otherwise?
+  property :review_enabled, virtual: true, default: false
+  property :reviewers
 
   def sync(*)
     sunetids = depositor_sunets.split(/\s*,\s*/)
