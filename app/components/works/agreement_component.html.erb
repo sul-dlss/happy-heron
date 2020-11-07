@@ -1,4 +1,36 @@
-<div class="form-check">
-  <%= form.check_box :agree_to_terms, required: true, class: 'form-check-input' %>
-  <%= form.label :agree_to_terms, 'I agree to the SDR Terms of Deposit', class: 'form-check-label' %>
+<div class="row justify-content-end agreement">
+  <div class="form-check col-auto">
+    <%= form.check_box :agree_to_terms, required: true, class: 'form-check-input' %>
+    <%= form.label :agree_to_terms,
+     "I agree to the #{link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { toggle: 'modal', target: '#termsOfDepositModal'}}".html_safe,
+     class: 'form-check-label' %>
+  </div>
+</div>
+
+<div class="modal" id="termsOfDepositModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+  <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="content-type-prompt">Terms of Deposit</h3>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          In depositing content to the Stanford Digital Repository (SDR), the Depositor grants The Trustees of Leland Stanford Junior University through the Stanford University Libraries (Stanford Libraries) the non-exclusive, worldwide, perpetual, irrevocable right to reproduce, distribute, display and transmit Depositor’s content (the Work), in whole or in part, in such print and electronic formats as may be in existence now or developed in the future, to sub-license others to do the same, and to preserve and protect the Work, subject to any third-party release or display restrictions specified by Depositor. Stanford Libraries may make the content available to users, subject to the applicable Terms of Use and to any license applied by Depositor. Terms of Use are subject to change by Stanford Libraries; Stanford Libraries will make a reasonable effort to notify the Depositor when changes occur. More information is available at the <a href="https://sdr.stanford.edu/" target="_blank">SDR web site</a>.
+        </p>
+        <p>
+        Stanford Libraries is free to reformat, delete or remove access to any or all of the Work in the SDR. If Stanford Libraries determines it is necessary to remove access to or delete permanently a Work, it will make a reasonable effort to notify the Depositor and, provided it would be lawful in Stanford Libraries’ determination to do so, make available a copy of the Work to Depositor (at Depositor’s expense). Depositor grants no other rights under this license, including, without limitation, any copyright interests in the Work.
+        </p>
+        <p>
+        Depositor represents and warrants that Depositor is the copyright holder of the Work, and/or has obtained the unrestricted permission of other copyright owner(s) to grant Stanford Libraries the rights required by this license or any applied license, including necessary licenses relating to any non-public, third-party software necessary to access, display, and run or print the Work. Depositor warrants that any jointly-owned or third-party owned material, such as graphs, images, photos, music, etc., is clearly identified and acknowledged within the content of the Work, and Depositor is solely responsible and will indemnify Stanford Libraries for any third party claims related to the Work as submitted.
+        </p>
+        <p>
+        Depositor further warrants that the Work does not violate any law or agreement or infringe upon anyone's publicity, privacy or confidentiality rights, including but not limited to privacy rights protected by HIPAA or FERPA. Depositor warrants that the Work does not contain any Restricted or Prohibited Data, such as Social Security Numbers, Driver’s License Numbers or bank account information. (More information is available at Stanford Data Classification Guidelines. Depositor represents that, depositing to the SDR does not violate an existing publication agreement, Internal Review Board (IRB), or contract governing deposited content. If the content is original work derived from a source work produced and/or owned by a third-party, Depositor represents compliance with the terms of use associated with that source work.
+        </p>
+        <p>
+        Depositor agrees to indemnify Stanford harmless against any third party claim based on an allegation that Stanford’s actions under this agreement violate that third party’s copyrights, trademarks, other intellectual property, privacy, publicity or other legal rights.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

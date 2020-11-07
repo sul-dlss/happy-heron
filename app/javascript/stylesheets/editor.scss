@@ -30,6 +30,11 @@
   .invalid-feedback {
     color: $stanford-digital-red;
   }
+
+  .agreement {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
 }
 
 @import 'depositProgress';

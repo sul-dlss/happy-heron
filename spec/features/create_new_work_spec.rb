@@ -93,6 +93,13 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       # End of remote form validation
 
       fill_in 'Citation for this deposit (optional)', with: 'Whatever'
+
+      click_link 'Terms of Deposit'
+      expect(page).to have_content(
+        'the Depositor grants The Trustees of Leland Stanford Junior University'
+      )
+      find('.btn-close').click
+
       check 'I agree to the SDR Terms of Deposit'
       click_button 'Deposit'
 
