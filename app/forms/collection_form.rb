@@ -6,9 +6,7 @@ class CollectionForm < Reform::Form
   property :name
   property :description
   property :contact_email
-  property :managers, prepopulator: lambda { |_options|
-    self.managers = model.creator.sunetid
-  }
+  property :managers, default: -> { model.creator.sunetid }
   property :access, default: 'world'
   property :creator, writable: false
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
