@@ -12,19 +12,13 @@ class CollectionForm < Reform::Form
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
-  # TODO: review_enabled==false just nils out reviewers on save? review_enabled
-  # starts true if reviewers not nil, false otherwise?
-  property :review_enabled, virtual: true, default: false
-  property :reviewers
+  property :review_enabled, virtual: true, default: -> { model.reviewers.present? ? 'true' : 'false' }
+  property :reviewer_sunets, virtual: true, default: -> { model.reviewers }
 
   def sync(*)
-    sunetids = depositor_sunets.split(/\s*,\s*/)
-    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
-    model.depositors = emails.map do |email|
-      # It's odd that we need to do both, but this is how it's written.
-      # See: https://github.com/rails/rails/issues/36027
-      User.find_by(email: email) || User.create_or_find_by(email: email)
-    end
+    update_depositors
+    update_reviewers
+
     super
   end
 
@@ -32,6 +26,20 @@ class CollectionForm < Reform::Form
   validates :contact_email, presence: true, format: { with: Devise.email_regexp }
 
   private
+
+  def update_depositors
+    sunetids = depositor_sunets.split(/\s*,\s*/)
+    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
+    model.depositors = emails.map do |email|
+      # It's odd that we need to do both, but this is how it's written.
+      # See: https://github.com/rails/rails/issues/36027
+      User.find_by(email: email) || User.create_or_find_by(email: email)
+    end
+  end
+
+  def update_reviewers
+    model.reviewers = (review_enabled == 'true' ? reviewer_sunets : nil)
+  end
 
   def depositor_sunets_from_model
     model.depositors.map(&:sunetid)

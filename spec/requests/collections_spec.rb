@@ -90,7 +90,7 @@ RSpec.describe 'Collections requests' do
             {
               managers: 'maya.aguirre,jcairns',
               review_enabled: 'true',
-              reviewers: 'maya.aguirre, jcairns,faridz'
+              reviewer_sunets: 'maya.aguirre, jcairns,faridz'
             }
           end
 
@@ -110,13 +110,13 @@ RSpec.describe 'Collections requests' do
           let(:review_workflow_params) do
             {
               review_enabled: 'false',
-              reviewers: 'maya.aguirre ,jcairns , faridz'
+              reviewer_sunets: 'maya.aguirre ,jcairns , faridz'
             }
           end
 
           before { collection_params[:collection].merge!(review_workflow_params) }
 
-          xit 'nils out the reviewers field' do
+          it 'nils out the reviewers field' do
             post '/collections', params: collection_params
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
@@ -209,6 +209,25 @@ RSpec.describe 'Collections requests' do
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           expect(collection.depositors.size).to eq 6
+        end
+
+        context 'when collection has reviewers specified' do
+          let(:collection) { create(:collection, managers: [user.sunetid], reviewers: 'asdf') }
+          let(:review_workflow_params) do
+            {
+              review_enabled: 'false',
+              reviewer_sunets: 'asdf'
+            }
+          end
+
+          before { collection_params[:collection].merge!(review_workflow_params) }
+
+          it 'removes the reviewers when the review workflow is set to disabled' do
+            patch "/collections/#{collection.id}", params: collection_params
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(dashboard_path)
+            expect(collection.reload.reviewers).to eq nil
+          end
         end
       end
 
