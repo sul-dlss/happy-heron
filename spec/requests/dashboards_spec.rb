@@ -8,7 +8,7 @@ RSpec.describe 'Dashboard requests' do
 
   before { sign_out }
 
-  context 'when user has no workgroup' do
+  context 'when user has no deposits' do
     before { sign_in user }
 
     it 'returns an unauthorized http status code' do
@@ -20,15 +20,18 @@ RSpec.describe 'Dashboard requests' do
     end
   end
 
-  context 'when user is not an application user' do
-    before { sign_in user, groups: ['workgroup:foo'] }
+  context 'when user has deposits' do
+    before do
+      sign_in user
+      create(:work, depositor: user, title: 'Happy little title')
+      create(:work, title: 'Secret')
+    end
 
-    it 'returns an unauthorized http status code' do
+    it 'shows the deposits that belong to the user' do
       get '/dashboard'
-      expect(response).to redirect_to(:root)
-      follow_redirect!
       expect(response).to be_successful
-      expect(response.body).to include 'You are not authorized to perform the requested action'
+      expect(response.body).to include 'Happy little title'
+      expect(response.body).not_to include 'Secret'
     end
   end
 
