@@ -101,10 +101,10 @@ RSpec.describe 'Collections requests' do
       end
     end
 
-    context 'when Settings.allow_sdr_content_changes is' do
+    describe 'allowing content changes' do
       let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
 
-      describe 'false' do
+      context 'when false' do
         before do
           allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
         end
@@ -113,15 +113,19 @@ RSpec.describe 'Collections requests' do
           get '/collections/new'
           expect(response).to redirect_to(:root)
           follow_redirect!
-          expect(response).to be_successful
+          expect(response).to have_http_status(:ok)
           expect(response.body).to include alert_text
         end
       end
 
-      describe 'true' do
+      context 'when true' do
+        before do
+          allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
+        end
+
         it 'does NOT display alert' do
           get '/collections/new'
-          expect(response).to be_successful
+          expect(response).to have_http_status(:ok)
           expect(response.body).not_to include alert_text
         end
       end
