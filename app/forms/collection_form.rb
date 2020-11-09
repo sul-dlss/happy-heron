@@ -3,6 +3,8 @@
 
 # The form for collection creation and editing
 class CollectionForm < Reform::Form
+  extend T::Sig
+
   property :name
   property :description
   property :contact_email
@@ -27,6 +29,7 @@ class CollectionForm < Reform::Form
 
   private
 
+  sig { void }
   def update_depositors
     sunetids = depositor_sunets.split(/\s*,\s*/)
     emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
@@ -37,10 +40,12 @@ class CollectionForm < Reform::Form
     end
   end
 
+  sig { void }
   def update_reviewers
     model.reviewers = (review_enabled == 'true' ? reviewer_sunets : nil)
   end
 
+  sig { returns(T::Array[String]) }
   def depositor_sunets_from_model
     model.depositors.map(&:sunetid)
   end
