@@ -2,8 +2,8 @@
   <h1 class="row"><%= page_title %></h1>
   <%= form_with model: work_form, url: url,
       data: {
-        controller: 'progress',
-        action: 'ajax:error->progress#displayErrors'
+        controller: 'edit-deposit',
+        action: 'ajax:error->edit-deposit#displayErrors'
       },
       html: { class: "needs-validation row #{'was-validated' if work_form.errors.present?}", novalidate: true, multipart: true } do |f| %>
     <%= f.hidden_field :work_type %>

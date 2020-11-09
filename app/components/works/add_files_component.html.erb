@@ -4,7 +4,7 @@
     have any trouble with adding your files, contact us.</p>
   <div class="dropzone dropzone-default dz-clickable">
     <%= form.file_field :files, multiple: true, direct_upload: true,
-                        data: { target: 'dropzone.input progress.fileField',
+                        data: { target: 'dropzone.input edit-deposit.fileField',
                                 'progress-step': 'file',
                                 action: "change->progress#check" } %>
     <div class="dz-message needsclick text-secondary">
