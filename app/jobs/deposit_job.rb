@@ -29,6 +29,7 @@ class DepositJob < BaseDepositJob
                                            logger: Rails.logger,
                                            connection: connection)
   end
+
   sig { params(blobs: T::Array[ActiveStorage::Blob]).returns(T::Array[SdrClient::Deposit::Files::DirectUploadRequest]) }
   def upload_responses(blobs)
     SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs),
