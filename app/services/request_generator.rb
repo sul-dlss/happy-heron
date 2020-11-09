@@ -32,7 +32,7 @@ class RequestGenerator
         contains: work.attached_files.map { |af| build_fileset(af) }
       },
       label: work.title,
-      type: Cocina::Models::Vocab.object, # TODO: use something based on worktype
+      type: cocina_type,
       description: DescriptionGenerator.generate(work: work),
       version: 0
     }
@@ -41,6 +41,11 @@ class RequestGenerator
   private
 
   attr_reader :work
+
+  sig { returns(String) }
+  def cocina_type
+    WorkType.find(work.work_type).cocina_type
+  end
 
   sig { params(attached_file: AttachedFile).returns(Hash) }
   def build_fileset(attached_file)
