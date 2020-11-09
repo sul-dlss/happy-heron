@@ -27,11 +27,11 @@ export default class extends Controller {
       return this.templateTarget.innerHTML.replace(/SUBTYPE_LABEL/g, subtype).replace(/SUBTYPE_ID/g, id)
     })
     this.subtypeTarget.innerHTML = subtypes.join('')
-    this.areaTarget.innerHTML = 'Which of the following terms further describe your deposit?'
+    this.areaTarget.innerHTML = '<h5>Which of the following terms further describe your deposit?</h5>'
   }
 
   displayOtherSubtypeOptions() {
     this.subtypeTarget.innerHTML = this.otherTemplateTarget.innerHTML
-    this.areaTarget.innerHTML = 'Specify "Other" type'
+    this.areaTarget.innerHTML = '<h5>Specify "Other" type</h5>'
   }
 }
