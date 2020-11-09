@@ -86,6 +86,8 @@ GEM
       capistrano-bundler (~> 1.4)
     capistrano-bundler (1.6.0)
       capistrano (~> 3.1)
+    capistrano-maintenance (1.2.1)
+      capistrano (>= 3.0)
     capistrano-one_time_key (0.1.0)
       capistrano (~> 3.0)
     capistrano-passenger (0.2.0)
@@ -475,6 +477,7 @@ DEPENDENCIES
   apparition
   bootsnap (>= 1.4.2)
   byebug
+  capistrano-maintenance (~> 1.2)
   capistrano-passenger
   capistrano-rails
   capistrano-rvm

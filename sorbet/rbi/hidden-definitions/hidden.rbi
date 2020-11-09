@@ -12677,7 +12677,6 @@ end
 
 class ActiveRecord::ExplainRegistry
   extend ::ActiveSupport::PerThreadRegistry
-  def self.collect?(*_, &_1); end
 end
 
 class ActiveRecord::ExplainSubscriber
@@ -14954,7 +14953,6 @@ end
 
 class ActiveRecord::Scoping::ScopeRegistry
   extend ::ActiveSupport::PerThreadRegistry
-  def self.value_for(*_, &_1); end
 end
 
 module ActiveRecord::Scoping
@@ -27636,6 +27634,11 @@ class DashboardPolicy
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class DashboardPresenter
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Date
   include ::DateAndTime::Zones
   def acts_like_date?(); end
@@ -34223,6 +34226,7 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
+  GMP_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class JSON::Ext::Generator::State
@@ -36243,8 +36247,6 @@ class Object
   def html_safe?(); end
 
   def presence_in(another_object); end
-
-  def to_yaml(options=T.unsafe(nil)); end
   ARGF = ::T.let(nil, ::T.untyped)
   ARGV = ::T.let(nil, ::T.untyped)
   CROSS_COMPILING = ::T.let(nil, ::T.untyped)
@@ -36263,10 +36265,6 @@ class Object
   STDOUT = ::T.let(nil, ::T.untyped)
   Settings = ::T.let(nil, ::T.untyped)
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
-end
-
-class Object
-  def self.yaml_tag(url); end
 end
 
 class OkComputer::Engine
@@ -38524,42 +38522,6 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M11520
-end
-
-module Polyfill::Module::M11520
-end
-
-module Polyfill::Module::M11540
-end
-
-module Polyfill::Module::M11540
-end
-
-module Polyfill::Module::M11560
-end
-
-module Polyfill::Module::M11560
-end
-
-module Polyfill::Module::M11580
-end
-
-module Polyfill::Module::M11580
-end
-
-module Polyfill::Module::M11600
-end
-
-module Polyfill::Module::M11600
-end
-
-module Polyfill::Module::M11640
-end
-
-module Polyfill::Module::M11640
-end
-
 class Proc
   def <<(_); end
 
@@ -38627,27 +38589,6 @@ end
 
 module Psych
   extend ::Bootsnap::CompileCache::YAML::Patch
-  def self.add_builtin_type(type_tag, &block); end
-
-  def self.add_domain_type(domain, type_tag, &block); end
-
-  def self.add_tag(tag, klass); end
-
-  def self.domain_types(); end
-
-  def self.domain_types=(domain_types); end
-
-  def self.dump_tags(); end
-
-  def self.dump_tags=(dump_tags); end
-
-  def self.libyaml_version(); end
-
-  def self.load_tags(); end
-
-  def self.load_tags=(load_tags); end
-
-  def self.remove_type(type_tag); end
 end
 
 module PublicSuffix
@@ -45100,15 +45041,6 @@ class Set
   InspectKey = ::T.let(nil, ::T.untyped)
 end
 
-module Sidekiq
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-  DEFAULT_WORKER_OPTIONS = ::T.let(nil, ::T.untyped)
-  FAKE_INFO = ::T.let(nil, ::T.untyped)
-  LICENSE = ::T.let(nil, ::T.untyped)
-  NAME = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
 module Sidekiq::LoggingUtils
   LEVELS = ::T.let(nil, ::T.untyped)
 end
@@ -46361,11 +46293,23 @@ end
 class User
   include ::Devise::Models::Authenticatable
   include ::Devise::Models::RemoteUserAuthenticatable
+  def after_add_for_deposits(); end
+
+  def after_add_for_deposits=(val); end
+
+  def after_add_for_deposits?(); end
+
   def after_add_for_notifications(); end
 
   def after_add_for_notifications=(val); end
 
   def after_add_for_notifications?(); end
+
+  def after_remove_for_deposits(); end
+
+  def after_remove_for_deposits=(val); end
+
+  def after_remove_for_deposits?(); end
 
   def after_remove_for_notifications(); end
 
@@ -46373,13 +46317,27 @@ class User
 
   def after_remove_for_notifications?(); end
 
+  def autosave_associated_records_for_deposits(*args); end
+
   def autosave_associated_records_for_notifications(*args); end
+
+  def before_add_for_deposits(); end
+
+  def before_add_for_deposits=(val); end
+
+  def before_add_for_deposits?(); end
 
   def before_add_for_notifications(); end
 
   def before_add_for_notifications=(val); end
 
   def before_add_for_notifications?(); end
+
+  def before_remove_for_deposits(); end
+
+  def before_remove_for_deposits=(val); end
+
+  def before_remove_for_deposits?(); end
 
   def before_remove_for_notifications(); end
 
@@ -46390,6 +46348,8 @@ class User
   def devise_modules(); end
 
   def devise_modules?(); end
+
+  def validate_associated_records_for_deposits(*args); end
 
   def validate_associated_records_for_notifications(*args); end
 end
@@ -46410,6 +46370,8 @@ class User::ActiveRecord_Relation
 end
 
 module User::GeneratedAssociationMethods
+  def deposit_ids=(ids); end
+
   def notification_ids=(ids); end
 end
 
@@ -46428,11 +46390,23 @@ class User
   extend ::Devise::Models::Authenticatable::ClassMethods
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+  def self.after_add_for_deposits(); end
+
+  def self.after_add_for_deposits=(val); end
+
+  def self.after_add_for_deposits?(); end
+
   def self.after_add_for_notifications(); end
 
   def self.after_add_for_notifications=(val); end
 
   def self.after_add_for_notifications?(); end
+
+  def self.after_remove_for_deposits(); end
+
+  def self.after_remove_for_deposits=(val); end
+
+  def self.after_remove_for_deposits?(); end
 
   def self.after_remove_for_notifications(); end
 
@@ -46440,11 +46414,23 @@ class User
 
   def self.after_remove_for_notifications?(); end
 
+  def self.before_add_for_deposits(); end
+
+  def self.before_add_for_deposits=(val); end
+
+  def self.before_add_for_deposits?(); end
+
   def self.before_add_for_notifications(); end
 
   def self.before_add_for_notifications=(val); end
 
   def self.before_add_for_notifications?(); end
+
+  def self.before_remove_for_deposits(); end
+
+  def self.before_remove_for_deposits=(val); end
+
+  def self.before_remove_for_deposits?(); end
 
   def self.before_remove_for_notifications(); end
 

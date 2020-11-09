@@ -329,7 +329,7 @@ class Array
   def inquiry; end
   def second; end
   def second_to_last; end
-  def self.wrap(object); end
+  def self.[](*arg0); end
   def split(value = nil); end
   def third; end
   def third_to_last; end
@@ -1887,7 +1887,7 @@ class ActiveSupport::StringInquirer < String
   def respond_to_missing?(method_name, include_private = nil); end
 end
 class File < IO
-  def self.lchmod; end
+  def self.lchmod(*arg0); end
   def self.lchown(*arg0); end
 end
 module ActiveSupport::TaggedLogging
@@ -2028,23 +2028,9 @@ class ActiveSupport::EventedFileUpdateChecker::PathHelper
   def normalize_extension(ext); end
   def xpath(path); end
 end
-module ActiveSupport::RangeWithFormat
-  def to_default_s(format = nil); end
-  def to_formatted_s(format = nil); end
-  def to_s(format = nil); end
-end
-module ActiveSupport::CompareWithRange
-  def ===(value); end
-  def cover?(value); end
-  def include?(value); end
-end
-module ActiveSupport::IncludeTimeWithZone
-  def include?(value); end
-end
-module ActiveSupport::EachTimeWithZone
-  def each(&block); end
-  def ensure_iteration_allowed; end
-  def step(n = nil, &block); end
+module Module::Concerning
+  def concern(topic, &module_definition); end
+  def concerning(topic, &block); end
 end
 class ActiveSupport::ArrayInquirer < Array
   def any?(*candidates); end
@@ -2065,12 +2051,23 @@ end
 module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
 end
-module ActiveSupport::MarshalWithAutoloading
-  def load(source, proc = nil); end
+module ActiveSupport::RangeWithFormat
+  def to_default_s(format = nil); end
+  def to_formatted_s(format = nil); end
+  def to_s(format = nil); end
 end
-module SecureRandom
-  def self.base36(n = nil); end
-  def self.base58(n = nil); end
+module ActiveSupport::CompareWithRange
+  def ===(value); end
+  def cover?(value); end
+  def include?(value); end
+end
+module ActiveSupport::IncludeTimeWithZone
+  def include?(value); end
+end
+module ActiveSupport::EachTimeWithZone
+  def each(&block); end
+  def ensure_iteration_allowed; end
+  def step(n = nil, &block); end
 end
 module Benchmark
   def self.ms; end
@@ -2083,9 +2080,12 @@ module Digest::UUID
   def self.uuid_v4; end
   def self.uuid_v5(uuid_namespace, name); end
 end
-module Module::Concerning
-  def concern(topic, &module_definition); end
-  def concerning(topic, &block); end
+module ActiveSupport::MarshalWithAutoloading
+  def load(source, proc = nil); end
+end
+module SecureRandom
+  def self.base36(n = nil); end
+  def self.base58(n = nil); end
 end
 module ActiveSupport::Cache
   def self.expand_cache_key(key, namespace = nil); end
