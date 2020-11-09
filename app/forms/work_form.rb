@@ -120,7 +120,7 @@ class WorkForm < Reform::Form
     property :id
     property :label
     property :hide
-    property :file
+    property :file, virtual: true
     property :_destroy, virtual: true
   end
 
