@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Edit a draft work', js: true do
-  let(:work) { create(:work, :with_keywords) }
+  let(:work) { create(:work, :with_keywords, work_type: 'other', subtype: ['Graphic novel']) }
   let(:user) { work.depositor }
 
   before do
@@ -23,6 +23,13 @@ RSpec.describe 'Edit a draft work', js: true do
       # See https://github.com/sul-dlss/happy-heron/issues/243
       check 'I agree to the SDR Terms of Deposit'
 
+      # Test validation
+      fill_in 'Other', with: ''
+      click_button 'Deposit'
+      expect(page).to have_content("You must provide a subtype for works of type 'Other'")
+      # End of validation testing
+
+      fill_in 'Other', with: 'Comic book'
       click_button 'Deposit'
 
       expect(page).to have_content('title = Test title')

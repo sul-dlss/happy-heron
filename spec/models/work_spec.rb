@@ -76,10 +76,18 @@ RSpec.describe Work do
       end
     end
 
-    context 'with a work_type that lacks subtypes' do
+    context 'with a work_type that requires a user-supplied subtype and is empty' do
       let(:work) { build(:work, work_type: 'other', subtype: []) }
 
-      it 'validates' do
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a work_type that requires a user-supplied subtype and is present' do
+      let(:work) { build(:work, work_type: 'other', subtype: ['Pill bottle']) }
+
+      it 'does not validate' do
         expect(work).to be_valid
       end
     end

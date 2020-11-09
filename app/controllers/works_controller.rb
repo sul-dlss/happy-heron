@@ -83,11 +83,12 @@ class WorksController < ApplicationController
     errors = []
 
     unless WorkTypeValidator.valid?(params[:work_type])
-      errors << "Invalid value of required parameter work_type: #{params[:work_type].presence || 'nil'}"
+      errors << "Invalid value of required parameter work_type: #{params[:work_type].presence || 'missing'}"
     end
 
     unless WorkSubtypeValidator.valid?(params[:work_type], params[:subtype])
-      errors << "Invalid subtype value for work_type '#{params[:work_type]}': #{params[:subtype].join}"
+      errors << "Invalid subtype value for work_type '#{params[:work_type]}': " +
+                (Array(params[:subtype]).join.presence || 'missing')
     end
 
     return if errors.empty?

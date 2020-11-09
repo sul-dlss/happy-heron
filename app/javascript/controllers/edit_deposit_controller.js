@@ -30,7 +30,7 @@ export default class extends Controller {
     for (const [fieldName, errorList] of Object.entries(data)) {
       const target = this.targets.find(`${fieldName}Field`)
       const container = target.querySelector(`.${fieldName}-container`)
-      container.classList.toggle('is-invalid')
+      container.classList.add('is-invalid')
       const feedback = target.querySelector('.invalid-feedback')
       feedback.innerHTML += errorList.join(' ')
     }

@@ -28,6 +28,10 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       click_button '+ Deposit to this collection' # , match: :first
 
       expect(page).to have_content 'What type of content will you deposit?'
+
+      expect(page).not_to have_css('input#subtype_other')
+      find('label', text: 'Other').click
+      expect(page).to have_css('input#subtype_other')
       find('label', text: 'Sound').click
 
       check 'Course/instruction'
@@ -47,6 +51,8 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       expect(page).to have_content(
         "Created year must be between #{Settings.earliest_created_year} and #{Time.zone.today.year}"
       )
+      expect(page).to have_content('You must provide an abstract')
+
       fill_in 'Created year', with: ''
       fill_in 'Publication year', with: ''
       # End of client-side validation testing

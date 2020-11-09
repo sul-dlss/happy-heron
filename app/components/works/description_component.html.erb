@@ -8,6 +8,7 @@
     <%= form.label :abstract, 'Abstract', class: 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
       <%= form.text_area :abstract, class: "form-control", required: true %>
+      <div class="invalid-feedback">You must provide an abstract</div>
     </div>
   </div>
 
@@ -24,14 +25,22 @@
     </div>
   </div>
 
-  <div class="mb-5 row">
-    <% subtypes.each do |subtype| %>
-      <div class="col-sm-4">
-        <div class="form-check">
-          <%= form.check_box :subtype, { multiple: true, class: 'form-check-input' }, subtype, nil %>
-          <%= form.label "subtype_#{subtype.parameterize(separator: '_')}", subtype, class: 'form-check-label' %>
-        </div>
+  <div class="mb-3 row">
+    <% if other_type? %>
+      <%= form.label :subtype, 'Other', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.text_field :subtype, class: 'form-control', required: true, multiple: true %>
+        <div class="invalid-feedback">You must provide a subtype for works of type 'Other'</div>
       </div>
+    <% else %>
+      <% subtypes.each do |subtype| %>
+        <div class="col-sm-4">
+          <div class="form-check">
+            <%= form.check_box :subtype, { multiple: true, class: 'form-check-input' }, subtype, nil %>
+            <%= form.label "subtype_#{subtype.parameterize(separator: '_')}", subtype, class: 'form-check-label' %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 
