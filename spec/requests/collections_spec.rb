@@ -59,15 +59,6 @@ RSpec.describe 'Collections requests' do
       expect(response).to have_http_status(:ok)
     end
 
-    describe 'edit' do
-      let(:collection) { create(:collection) }
-
-      it 'allows GETs to /collections/{id}/edit' do
-        get "/collections/#{collection.id}/edit"
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
     describe 'create' do
       context 'when collection saves' do
         let(:collection_params) do
@@ -110,9 +101,49 @@ RSpec.describe 'Collections requests' do
       end
     end
 
-    describe 'update' do
-      let(:collection) { create(:collection) }
+    context 'when Settings.allow_sdr_content_changes is' do
+      let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
 
+      describe 'false' do
+        before do
+          allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
+        end
+
+        it 'redirects and displays alert' do
+          get '/collections/new'
+          expect(response).to redirect_to(:root)
+          follow_redirect!
+          expect(response).to be_successful
+          expect(response.body).to include alert_text
+        end
+      end
+
+      describe 'true' do
+        it 'does NOT display alert' do
+          get '/collections/new'
+          expect(response).to be_successful
+          expect(response.body).not_to include alert_text
+        end
+      end
+    end
+  end
+
+  context 'with an authenticated collection manager' do
+    let(:user) { create(:user) }
+    let(:collection) { create(:collection, managers: [user.sunetid]) }
+
+    before do
+      sign_in user
+    end
+
+    describe 'edit' do
+      it 'allows GETs to /collections/{id}/edit' do
+        get "/collections/#{collection.id}/edit"
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    describe 'update' do
       context 'when collection saves' do
         let(:collection_params) do
           {
@@ -149,32 +180,6 @@ RSpec.describe 'Collections requests' do
           patch "/collections/#{collection.id}", params: collection_params
           expect(response).to have_http_status(:ok)
           expect(response.body).to include('All fields are required, unless otherwise noted.')
-        end
-      end
-    end
-
-    context 'when Settings.allow_sdr_content_changes is' do
-      let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
-
-      describe 'false' do
-        before do
-          allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
-        end
-
-        it 'redirects and displays alert' do
-          get '/collections/new'
-          expect(response).to redirect_to(:root)
-          follow_redirect!
-          expect(response).to be_successful
-          expect(response.body).to include alert_text
-        end
-      end
-
-      describe 'true' do
-        it 'does NOT display alert' do
-          get '/collections/new'
-          expect(response).to be_successful
-          expect(response.body).not_to include alert_text
         end
       end
     end

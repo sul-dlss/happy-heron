@@ -6,12 +6,10 @@ class ApplicationPolicy < ActionPolicy::Base
   extend T::Sig
   authorize :user_with_groups
 
-  # private
-  #
-  # Define shared methods useful for most policies.
-  # For example:
-  #
-  #  def owner?
-  #    record.user_id == user.id
-  #  end
+  private
+
+  sig { params(collection: Collection).returns(T::Boolean) }
+  def manages_collection?(collection)
+    collection.managers.include?(user.sunetid)
+  end
 end

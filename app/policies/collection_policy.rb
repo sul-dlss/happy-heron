@@ -15,10 +15,9 @@ class CollectionPolicy < ApplicationPolicy
     administrator? || collection_creator?
   end
 
-  # TODO: don't allow everyone to update collections (https://github.com/sul-dlss/happy-heron/issues/254)
   sig { returns(T::Boolean) }
   def update?
-    true
+    administrator? || manages_collection?(record)
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups
