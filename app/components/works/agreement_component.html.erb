@@ -4,6 +4,7 @@
     <%= form.label :agree_to_terms,
      "I agree to the #{link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { toggle: 'modal', target: '#termsOfDepositModal'}}".html_safe,
      class: 'form-check-label' %>
+     <div class="invalid-feedback">You must agree to the Terms of Deposit.</div>
   </div>
 </div>
 
