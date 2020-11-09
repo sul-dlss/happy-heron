@@ -21,6 +21,7 @@ RSpec.describe RequestGenerator do
               value: 'Test title'
             }
           ],
+          contributor: [],
           event: [],
           subject: [],
           note: [
@@ -70,6 +71,7 @@ RSpec.describe RequestGenerator do
             }
           ],
           event: [],
+          contributor: [],
           subject: [],
           note: [
             {
