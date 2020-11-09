@@ -113,13 +113,14 @@ class WorkForm < Reform::Form
                end
                return item if item
 
-               new_attached_file = AttachedFile.new
-               new_attached_file.file.attach(ActiveStorage::Blob.find_signed(fragment['file']))
-               attached_files.append(new_attached_file)
+               attached_files.append(AttachedFile.new(file: fragment['file']))
              } do
     property :id
     property :label
     property :hide
+    # The file property is virtual so it doesn't get set on update, which causes:
+    # ArgumentError: Could not find or build blob
+    # So we set it manually when creating.
     property :file, virtual: true
     property :_destroy, virtual: true
   end
