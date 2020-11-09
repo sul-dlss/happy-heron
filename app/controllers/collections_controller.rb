@@ -55,6 +55,7 @@ class CollectionsController < ApplicationController
 
   def collection_params
     params.require(:collection).permit(:name, :description, :contact_email,
-                                       :access, :managers, :depositor_sunets)
+                                       :access, :managers, :depositor_sunets,
+                                       :review_enabled, :reviewer_sunets)
   end
 end

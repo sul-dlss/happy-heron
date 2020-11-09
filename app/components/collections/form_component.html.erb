@@ -75,5 +75,37 @@
     </div>
   </section>
 
+  <section>
+    <header>Review Workflow</header>
+
+    <div class="mb-3 row">
+      <%= form.label :review_enabled, class: 'col-sm-9 col-form-label' do %>
+        A reviewer checks a deposit for clarity, accuracy, and completeness before approving the publication. Only one Reviewer
+        is required to review each deposit. A Reviewer can edit a deposit or return it to the Depositor with a request for changes.
+        The Depositor will receive a notification when their deposit is returned or approved.
+      <% end %>
+      <div class="col-sm-3">
+        <div class="form-check">
+          <%= form.radio_button :review_enabled, 'true', class: "form-check-input" %>
+          <%= form.label :collection_review_enabled_true, 'Enable Review Workflow', class: "form-check-label" %>
+        </div>
+        <div class="form-check">
+          <%= form.radio_button :review_enabled, 'false', class: "form-check-input" %>
+          <%= form.label :collection_review_enabled_false, 'Disable Review Workflow', class: "form-check-label" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO: only display sunet entry field if reviewer workflow is enabled -->
+    <p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
+    <div class="mb-3 row">
+      <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.text_field :reviewer_sunets, class: "form-control", required: false %> <!-- TODO: should prob have at least one required if enabled? -->
+        <div class="invalid-feedback">You must provide managers</div>
+      </div>
+    </div>
+  </section>
+
   <%= render ButtonsComponent.new(form: form) %>
 <% end %>

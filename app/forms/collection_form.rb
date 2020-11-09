@@ -3,26 +3,24 @@
 
 # The form for collection creation and editing
 class CollectionForm < Reform::Form
+  extend T::Sig
+
   property :name
   property :description
   property :contact_email
-  property :managers, prepopulator: lambda { |_options|
-    self.managers = model.creator.sunetid
-  }
+  property :managers, default: -> { model.creator.sunetid }
   property :access, default: 'world'
   property :creator, writable: false
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
+  property :review_enabled, virtual: true, default: -> { model.reviewers.present? ? 'true' : 'false' }
+  property :reviewer_sunets, virtual: true, default: -> { model.reviewers }
 
   def sync(*)
-    sunetids = depositor_sunets.split(/\s*,\s*/)
-    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
-    model.depositors = emails.map do |email|
-      # It's odd that we need to do both, but this is how it's written.
-      # See: https://github.com/rails/rails/issues/36027
-      User.find_by(email: email) || User.create_or_find_by(email: email)
-    end
+    update_depositors
+    update_reviewers
+
     super
   end
 
@@ -31,6 +29,23 @@ class CollectionForm < Reform::Form
 
   private
 
+  sig { void }
+  def update_depositors
+    sunetids = depositor_sunets.split(/\s*,\s*/)
+    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
+    model.depositors = emails.map do |email|
+      # It's odd that we need to do both, but this is how it's written.
+      # See: https://github.com/rails/rails/issues/36027
+      User.find_by(email: email) || User.create_or_find_by(email: email)
+    end
+  end
+
+  sig { void }
+  def update_reviewers
+    model.reviewers = (review_enabled == 'true' ? reviewer_sunets : nil)
+  end
+
+  sig { returns(T::Array[String]) }
   def depositor_sunets_from_model
     model.depositors.map(&:sunetid)
   end

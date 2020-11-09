@@ -29,7 +29,7 @@ RSpec/ExampleLength:
 RSpec/MultipleMemoizedHelpers:
   Max: 13
 RSpec/NestedGroups:
-  Max: 4
+  Max: 5
 RSpec/ScatteredSetup:
   Exclude:
     - spec/policies/**/*
