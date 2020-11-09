@@ -5,14 +5,14 @@
     <header>Details</header>
     <div class="mb-3 row">
       <%= form.label :name, 'Collection name', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-10 col-xl-8">
         <%= form.text_field :name, class: "form-control", required: true %>
         <div class="invalid-feedback">You must provide a name</div>
       </div>
     </div>
     <div class="mb-3 row">
       <%= form.label :description, 'Description', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-10 col-xl-8">
         <%= form.text_field :description, class: "form-control", required: true %>
         <div class="invalid-feedback">You must provide a description</div>
       </div>
@@ -20,7 +20,7 @@
 
     <div class="mb-3 row">
       <%= form.label :contact_email, 'Contact email', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-10 col-xl-8">
         <%= form.email_field :contact_email, class: "form-control", required: true, pattern: Devise.email_regexp.source %>
         <div class="invalid-feedback">You must provide a valid email address</div>
       </div>
@@ -54,14 +54,14 @@
     <header>Collection participants</header>
     <div class="mb-3 row">
       <p class="col-sm-2 col-form-label">Created by</p>
-      <div class="col-sm-10">
+      <div class="col-sm-10 col-xl-8">
         <%= collection_form.creator %>
       </div>
     </div>
 
     <div class="mb-3 row">
       <%= form.label :managers, 'Managers', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-10 col-xl-8">
         <%= form.text_field :managers, class: "form-control", required: true %>
         <div class="invalid-feedback">You must provide managers</div>
       </div>
@@ -69,7 +69,7 @@
 
     <div class="mb-3 row">
       <%= form.label :depositor_sunets, 'Depositors', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-10 col-xl-8">
         <%= form.text_field :depositor_sunets, class: "form-control" %>
       </div>
     </div>
@@ -79,7 +79,7 @@
     <header>Review Workflow</header>
 
     <div class="mb-3 row">
-      <%= form.label :review_enabled, class: 'col-sm-9 col-form-label' do %>
+      <%= form.label :review_enabled, class: 'col-sm-10 col-xl-8 col-form-label' do %>
         A reviewer checks a deposit for clarity, accuracy, and completeness before approving the publication. Only one Reviewer
         is required to review each deposit. A Reviewer can edit a deposit or return it to the Depositor with a request for changes.
         The Depositor will receive a notification when their deposit is returned or approved.
@@ -100,7 +100,7 @@
     <p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
     <div class="mb-3 row">
       <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-10 col-xl-8">
         <%= form.text_field :reviewer_sunets, class: "form-control", required: false %> <!-- TODO: should prob have at least one required if enabled? -->
         <div class="invalid-feedback">You must provide managers</div>
       </div>
