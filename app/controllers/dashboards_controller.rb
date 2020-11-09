@@ -10,7 +10,7 @@ class DashboardsController < ApplicationController
     authorize! :dashboard
     @presenter = DashboardPresenter.new(
       collections: authorized_scope(Collection.all),
-      drafts: Work.where(state: 'first_draft')
+      drafts: Work.where(state: 'first_draft', depositor: current_user)
     )
   end
 end
