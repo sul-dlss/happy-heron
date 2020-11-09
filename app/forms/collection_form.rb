@@ -26,7 +26,8 @@ class CollectionForm < Reform::Form
     super
   end
 
-  validates :name, :description, :contact_email, :managers, :access, presence: true
+  validates :name, :description, :managers, :access, presence: true
+  validates :contact_email, presence: true, format: { with: Devise.email_regexp }
 
   private
 
