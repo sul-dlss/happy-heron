@@ -9,8 +9,7 @@ class WorkPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def create?
     collection = record.collection
-    collection.depositor_ids.include?(user.id) ||
-      collection.managers.include?(user.email.delete_suffix('@stanford.edu'))
+    collection.depositor_ids.include?(user.id) || manages_collection?(collection)
   end
 
   # Only the depositor may edit/update a work

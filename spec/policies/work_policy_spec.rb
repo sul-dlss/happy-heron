@@ -27,7 +27,7 @@ RSpec.describe WorkPolicy do
     end
 
     succeed 'when user is a collection manager' do
-      before { collection.managers = [user.email.delete_suffix('@stanford.edu')] }
+      before { collection.managers = [user.sunetid] }
     end
   end
 end

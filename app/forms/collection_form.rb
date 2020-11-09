@@ -7,7 +7,7 @@ class CollectionForm < Reform::Form
   property :description
   property :contact_email
   property :managers, prepopulator: lambda { |_options|
-    self.managers = model.creator.email.delete_suffix('@stanford.edu')
+    self.managers = model.creator.sunetid
   }
   property :access, default: 'world'
   property :creator, writable: false
@@ -32,6 +32,6 @@ class CollectionForm < Reform::Form
   private
 
   def depositor_sunets_from_model
-    model.depositors.map { |user| user.email.delete_suffix('@stanford.edu') }
+    model.depositors.map(&:sunetid)
   end
 end

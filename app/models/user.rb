@@ -21,4 +21,9 @@ class User < ApplicationRecord
   def to_s
     email
   end
+
+  sig { returns(String) }
+  def sunetid
+    email.delete_suffix('@stanford.edu')
+  end
 end
