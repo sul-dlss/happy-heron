@@ -8,6 +8,6 @@ RSpec.describe ButtonsComponent do
 
   it 'renders the component' do
     expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('<div class="col-md-3 ml-md-auto">')
+      .to include('<div class="row justify-content-end">')
   end
 end

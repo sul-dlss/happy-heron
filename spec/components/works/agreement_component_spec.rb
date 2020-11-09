@@ -8,6 +8,6 @@ RSpec.describe Works::AgreementComponent do
 
   it 'renders the component' do
     expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('<div class="form-check">')
+      .to include('Terms of Deposit')
   end
 end
