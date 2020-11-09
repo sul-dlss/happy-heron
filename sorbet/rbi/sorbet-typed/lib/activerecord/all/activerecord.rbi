@@ -214,6 +214,7 @@ module ActiveRecord::Associations::ClassMethods
       class_name: T.nilable(T.any(Symbol, String)),
       extend: T.nilable(T.any(Module, T::Array[Module])),
       foreign_key: T.nilable(T.any(Symbol, String)),
+      inverse_of: T.nilable(T.any(Symbol, String, FalseClass)),
       join_table: T.nilable(T.any(Symbol, String)),
       validate: T.nilable(T::Boolean),
       blk: T.nilable(T.proc.void)
@@ -231,6 +232,7 @@ module ActiveRecord::Associations::ClassMethods
     class_name: nil,
     extend: nil,
     foreign_key: nil,
+    inverse_of: nil,
     join_table: nil,
     validate: nil,
     &blk
@@ -1034,7 +1036,7 @@ class ActiveRecord::Base
 
   sig do
     params(
-      arg: Symbol,
+      arg: T.any(Symbol, T.proc.returns(T.untyped)),
       if: T.nilable(T.any(Symbol, Proc, T.proc.params(arg0: T.untyped).returns(T.nilable(T::Boolean)))),
       on: T.nilable(T.any(Symbol, T::Array[Symbol])),
       unless: T.nilable(T.any(Symbol, Proc, T.proc.params(arg0: T.untyped).returns(T.nilable(T::Boolean))))
