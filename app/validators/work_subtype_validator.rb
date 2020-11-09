@@ -19,5 +19,7 @@ class WorkSubtypeValidator < ActiveModel::EachValidator
     return true if value.nil?
 
     value.all? { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) }
+  rescue WorkType::InvalidType
+    false
   end
 end

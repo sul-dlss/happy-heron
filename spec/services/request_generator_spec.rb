@@ -9,7 +9,7 @@ RSpec.describe RequestGenerator do
   context 'when files are not present' do
     let(:expected_model) do
       {
-        type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+        type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
         label: 'Test title',
         version: 0,
         administrative: {
@@ -47,7 +47,7 @@ RSpec.describe RequestGenerator do
         }
       }
     end
-    let(:work) { build(:work, id: 7) }
+    let(:work) { build(:work, id: 7, work_type: 'text') }
 
     it 'generates the model' do
       expect(model.to_h).to eq(expected_model)
@@ -57,7 +57,7 @@ RSpec.describe RequestGenerator do
   context 'when a file is present' do
     let(:expected_model) do
       {
-        type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+        type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
         label: 'Test title',
         version: 0,
         administrative: {
