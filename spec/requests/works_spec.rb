@@ -313,5 +313,13 @@ RSpec.describe 'Works requests' do
         expect(JSON.parse(response.body)['title']).to include("can't be blank")
       end
     end
+
+    describe 'view work' do
+      it 'renders the view' do
+        get "/works/#{work.id}"
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include work.title
+      end
+    end
   end
 end

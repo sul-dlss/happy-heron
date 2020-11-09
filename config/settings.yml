@@ -30,3 +30,5 @@ authorization_workgroup_names:
   collection_creators: 'dlss:hydrus-app-collection-creators'
 
 file_uploads_root: tmp/uploads
+
+purl_url: https://purl.stanford.edu

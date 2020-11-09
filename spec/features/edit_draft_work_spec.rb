@@ -25,7 +25,7 @@ RSpec.describe 'Edit a draft work', js: true do
 
       click_button 'Deposit'
 
-      expect(page).to have_content('title = Test title')
+      expect(page).to have_content('Test title')
     end
   end
 end

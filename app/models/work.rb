@@ -35,4 +35,11 @@ class Work < ApplicationRecord
       transition deposited: :version_draft
     end
   end
+
+  sig { returns(T.nilable(String)) }
+  def purl
+    return nil unless druid
+
+    File.join(Settings.purl_url, T.must(druid).delete_prefix('druid:'))
+  end
 end
