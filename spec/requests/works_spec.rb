@@ -325,7 +325,7 @@ RSpec.describe 'Works requests' do
         end
 
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params }
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors).to be_empty
@@ -438,7 +438,7 @@ RSpec.describe 'Works requests' do
         end
 
         it 'returns a validation error in JSON format' do
-          patch "/works/#{work.id}", params: { work: work_params, format: :json }
+          patch "/works/#{work.id}", params: { work: work_params, format: :json, commit: 'Deposit' }
           expect(response).to have_http_status(:bad_request)
           json = JSON.parse(response.body)
           expect(json['title']).to include("can't be blank")

@@ -23,12 +23,20 @@ class WorksController < ApplicationController
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
 
-    @form = WorkForm.new(work)
-    if @form.validate(work_params) && @form.save
-      after_save(work)
+    if submit_type == :deposit
+      @form = WorkForm.new(work)
+      # only validate on deposit, not on draft
+      if @form.validate(work_params) && @form.save
+        after_save(work)
+      else
+        # Send form errors to client in JSON format to be parsed and rendered there
+        render 'errors', status: :bad_request
+      end
     else
-      # Send form errors to client in JSON format to be parsed and rendered there
-      render 'errors', status: :bad_request
+      # draft saves without validation
+      @form = WorkFormDraft.new(work)
+      @form.save
+      redirect_to work
     end
   end
 
@@ -44,12 +52,20 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
     authorize! work
 
-    @form = WorkForm.new(work)
-    if @form.validate(work_params) && @form.save
-      after_save(work)
+    if submit_type == :deposit
+      @form = WorkForm.new(work)
+      # only validate on deposit, not on draft
+      if @form.validate(work_params) && @form.save
+        after_save(work)
+      else
+        # Send form errors to client in JSON format to be parsed and rendered there
+        render 'errors', status: :bad_request
+      end
     else
-      # Send form errors to client in JSON format to be parsed and rendered there
-      render 'errors', status: :bad_request
+      # draft saves without validation
+      @form = WorkFormDraft.new(work)
+      @form.save
+      redirect_to work
     end
   end
 
@@ -106,5 +122,13 @@ class WorksController < ApplicationController
 
     flash[:error] = errors.join("\n")
     redirect_to dashboard_path
+  end
+
+  def submit_type
+    if params[:commit] == 'Deposit'
+      :deposit
+    else
+      :draft
+    end
   end
 end
