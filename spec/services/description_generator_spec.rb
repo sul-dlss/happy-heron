@@ -37,4 +37,29 @@ RSpec.describe DescriptionGenerator do
       ]
     )
   end
+
+  context 'with mixed contributors' do
+    let(:work) do
+      build(:work, :with_mixed_contributors)
+    end
+    let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}" }
+    let(:contrib2_name) { work.contributors.last.full_name }
+
+    it 'creates description cocina model for org contribtor' do
+      expect(model).to eq(
+        note: [
+          { type: 'summary', value: 'test abstract' },
+          { type: 'preferred citation', value: 'test citation' },
+          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+        ],
+        title: [{ value: 'Test title' }],
+        contributor: [
+          { name: [{ value: contrib1_name }], role: [{ value: 'Contributing author' }], type: 'person' },
+          { name: [{ value: contrib2_name }], role: [{ value: 'Sponsor' }], type: 'organization' }
+        ],
+        event: [],
+        subject: []
+      )
+    end
+  end
 end

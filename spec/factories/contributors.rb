@@ -15,4 +15,14 @@ FactoryBot.define do
     contributor_type { 'person' }
     role { 'Contributing author' }
   end
+
+  trait :with_org_contributor do
+    sequence :full_name do |n|
+      "organization#{n}"
+    end
+
+    work
+    contributor_type { 'organization' }
+    role { 'Sponsor' }
+  end
 end
