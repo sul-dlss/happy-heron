@@ -69,20 +69,20 @@ class Contributor < ApplicationRecord
     contributor_type == 'person'
   end
 
-  # This is used by the form
+  # used by work_form
   sig { returns(String) }
   def role_term
     [contributor_type, role].join(SEPARATOR)
   end
 
-  # This is used by the the controller for setting values from the form.
+  # used by work_controller for setting values from the form.
   sig { params(val: String).void }
   def role_term=(val)
     contributor_type, role = val.split(SEPARATOR)
     self.attributes = { contributor_type: contributor_type, role: role }
   end
 
-  # The list for the form
+  # list for work_form pulldown
   sig { returns(T::Array[T::Array[T.any(String, T::Array[String])]]) }
   def self.grouped_options
     ROLE_LABEL.map do |key, label|

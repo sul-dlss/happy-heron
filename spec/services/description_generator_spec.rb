@@ -7,10 +7,10 @@ RSpec.describe DescriptionGenerator do
   subject(:model) { described_class.generate(work: work) }
 
   let(:work) do
-    build(:work, :with_creation_dates, :published, :with_keywords)
+    build(:work, :with_creation_dates, :published, :with_keywords, :with_contributors)
   end
 
-  it 'makes the descripion' do
+  it 'creates description cocina model' do
     expect(model).to eq(
       event: [
         { date: [{ encoding: { code: 'edtf' }, value: '2020-03-04/2020-10-31' }], type: 'creation' },
@@ -26,7 +26,12 @@ RSpec.describe DescriptionGenerator do
         { type: 'preferred citation', value: 'test citation' },
         { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
       ],
-      title: [{ value: 'Test title' }]
+      title: [{ value: 'Test title' }],
+      contributor: [
+        { name: [{ value: 'Last1, First1' }], role: [{ value: 'Contributing author' }], type: 'person' },
+        { name: [{ value: 'Last2, First2' }], role: [{ value: 'Contributing author' }], type: 'person' },
+        { name: [{ value: 'Last3, First3' }], role: [{ value: 'Contributing author' }], type: 'person' }
+      ]
     )
   end
 end

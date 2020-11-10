@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 # This generates a RequestDRO Description for a work
+# rubocop:disable Metrics/ClassLength
 class DescriptionGenerator
   extend T::Sig
 
@@ -19,6 +20,7 @@ class DescriptionGenerator
   def generate
     {
       title: title,
+      contributor: contributors,
       subject: keywords,
       note: [abstract, citation, contact],
       event: [created_date, published_date].compact
@@ -107,4 +109,55 @@ class DescriptionGenerator
       "displayLabel": 'Contact'
     }
   end
+
+  sig { returns(T::Array[T::Array[Object]]) }
+  def contributors
+    result = []
+
+    work.contributors.each do |work_form_contributor|
+      result << contributor(work_form_contributor)
+    end
+
+    result
+  end
+
+  # in cocina model terms, returns a DescriptiveValue
+  sig do
+    params(work_form_contributor: Contributor)
+      .returns({ name: [{ value: T.untyped }], type: String, role: [{ value: T.untyped }] })
+  end
+  def contributor(work_form_contributor)
+    # TODO: we may know status primary
+    if work_form_contributor.person?
+      {
+        "name": [
+          {
+            "value": "#{work_form_contributor.last_name}, #{work_form_contributor.first_name}"
+          }
+        ],
+        "type": 'person',
+        # TODO: we will know code, uri, source code and source uri
+        "role": [
+          {
+            "value": work_form_contributor.role
+          }
+        ]
+      }
+    else
+      {
+        "name": [
+          {
+            "value": work_form_contributor.full_name
+          }
+        ],
+        "type": 'organization',
+        "role": [
+          {
+            "value": work_form_contributor.role
+          }
+        ]
+      }
+    end
+  end
 end
+# rubocop:enable Metrics/ClassLength
