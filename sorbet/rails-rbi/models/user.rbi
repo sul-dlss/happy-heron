@@ -99,6 +99,15 @@ module User::GeneratedAssociationMethods
 
   sig { params(value: T::Enumerable[::Notification]).void }
   def notifications=(value); end
+
+  sig { returns(::Collection::ActiveRecord_Associations_CollectionProxy) }
+  def reviews_collections; end
+
+  sig { returns(T::Array[Integer]) }
+  def reviews_collection_ids; end
+
+  sig { params(value: T::Enumerable[::Collection]).void }
+  def reviews_collections=(value); end
 end
 
 module User::CustomFinderMethods
