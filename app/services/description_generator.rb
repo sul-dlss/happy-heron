@@ -36,7 +36,7 @@ class DescriptionGenerator
   def title
     [
       {
-        value: work.title
+        "value": work.title
       }
     ]
   end
@@ -45,8 +45,8 @@ class DescriptionGenerator
   def keywords
     work.keywords.map do |keyword|
       {
-        value: keyword.label,
-        type: 'topic'
+        "value": keyword.label,
+        "type": 'topic'
       }
     end
   end
@@ -54,16 +54,16 @@ class DescriptionGenerator
   sig { returns(T::Hash[String, String]) }
   def abstract
     {
-      value: work.abstract,
-      type: 'summary'
+      "value": work.abstract,
+      "type": 'summary'
     }
   end
 
   sig { returns(T::Hash[String, String]) }
   def citation
     {
-      value: work.citation,
-      type: 'preferred citation'
+      "value": work.citation,
+      "type": 'preferred citation'
     }
   end
 
@@ -72,12 +72,12 @@ class DescriptionGenerator
     return unless work.created_edtf
 
     {
-      type: 'creation',
-      date: [
+      "type": 'creation',
+      "date": [
         {
-          value: work.created_edtf,
-          encoding: {
-            code: 'edtf'
+          "value": work.created_edtf,
+          "encoding": {
+            "code": 'edtf'
           }
         }
       ]
@@ -89,12 +89,12 @@ class DescriptionGenerator
     return unless work.published_edtf
 
     {
-      type: 'publication',
-      date: [
+      "type": 'publication',
+      "date": [
         {
-          value: work.published_edtf,
-          encoding: {
-            code: 'edtf'
+          "value": work.published_edtf,
+          "encoding": {
+            "code": 'edtf'
           }
         }
       ]
@@ -104,9 +104,9 @@ class DescriptionGenerator
   sig { returns(T::Hash[String, String]) }
   def contact
     {
-      value: work.contact_email,
-      type: 'contact',
-      displayLabel: 'Contact'
+      "value": work.contact_email,
+      "type": 'contact',
+      "displayLabel": 'Contact'
     }
   end
 
@@ -124,27 +124,40 @@ class DescriptionGenerator
   # in cocina model terms, returns a DescriptiveValue
   sig do
     params(work_form_contributor: Contributor)
-      .returns({
-                 name: T::Array[T::Hash[Symbol, T.nilable(String)]],
-                 type: String,
-                 role: T::Array[T::Hash[Symbol, String]]
-               })
+      .returns({ name: [{ value: T.untyped }], type: String, role: [{ value: T.untyped }] })
   end
   def contributor(work_form_contributor)
-    {
-      name: [
-        {
-          value: work_form_contributor.formatted_name
-        }
-      ],
-      type: work_form_contributor.contributor_type,
-      # TODO: we will know code, uri, source code and source uri
-      role: [
-        {
-          value: work_form_contributor.role
-        }
-      ]
-    }
+    # TODO: we may know status primary
+    if work_form_contributor.person?
+      {
+        "name": [
+          {
+            "value": "#{work_form_contributor.last_name}, #{work_form_contributor.first_name}"
+          }
+        ],
+        "type": 'person',
+        # TODO: we will know code, uri, source code and source uri
+        "role": [
+          {
+            "value": work_form_contributor.role
+          }
+        ]
+      }
+    else
+      {
+        "name": [
+          {
+            "value": work_form_contributor.full_name
+          }
+        ],
+        "type": 'organization',
+        "role": [
+          {
+            "value": work_form_contributor.role
+          }
+        ]
+      }
+    end
   end
 end
 # rubocop:enable Metrics/ClassLength
