@@ -103,7 +103,7 @@ RSpec.describe 'Collections requests' do
             collection = Collection.last
             expect(collection.managers).to eq 'maya.aguirre,jcairns'
             expect(collection.reviewers.map(&:email)).to eq %w[maya.aguirre@stanford.edu
-              jcairns@stanford.edu faridz@stanford.edu]
+                                                               jcairns@stanford.edu faridz@stanford.edu]
           end
         end
 

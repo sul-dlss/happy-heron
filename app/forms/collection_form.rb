@@ -15,7 +15,9 @@ class CollectionForm < Reform::Form
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
   property :review_enabled, virtual: true, default: -> { model.reviewers.present? ? 'true' : 'false' }
-  property :reviewer_sunets, virtual: true, default: -> { model.reviewers }
+  property :reviewer_sunets, virtual: true, prepopulator: lambda { |_options|
+    self.reviewer_sunets = reviewer_sunets_from_model.join(', ')
+  }
 
   def sync(*)
     update_depositors
@@ -55,5 +57,10 @@ class CollectionForm < Reform::Form
   sig { returns(T::Array[String]) }
   def depositor_sunets_from_model
     model.depositors.map(&:sunetid)
+  end
+
+  sig { returns(T::Array[String]) }
+  def reviewer_sunets_from_model
+    model.reviewers.map(&:sunetid)
   end
 end

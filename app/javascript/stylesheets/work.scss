@@ -9,27 +9,19 @@
     }
   }
 
-  table {
-    border-color: $silver-sand;
-
+  .table {
     p {
+      // For citation and links
       margin-bottom: 0rem;
+    }
+
+    .table-title {
+      font-weight: 700;
+      font-size: large;
     }
   }
 
-  thead {
-    background-color: $silver-sand;
-  }
-
-  th {
-    font-weight: 700;
-  }
-
-  th.table-title {
-    font-weight: 700;
-    font-size: large;
-  }
-
+  // The pencil icon
   .edit {
     margin-left: 10px;
   }

@@ -1,0 +1,10 @@
+// Set up the light header style
+.table-light {
+  --bs-table-bg: #{$table-border-color};
+  border-color: $table-border-color;
+}
+
+// Add a border around all tables
+.table {
+  border: 1px solid $table-border-color;
+}

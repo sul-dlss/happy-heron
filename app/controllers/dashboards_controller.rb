@@ -10,7 +10,10 @@ class DashboardsController < ApplicationController
     authorize! :dashboard
     @presenter = DashboardPresenter.new(
       collections: authorized_scope(Collection.all),
-      drafts: Work.where(state: 'first_draft', depositor: current_user)
+      approvals: Work.with_state(:pending_approval)
+                      .joins(collection: :reviewers)
+                      .where('reviewers.user_id' => current_user),
+      drafts: Work.with_state(:first_draft).where(depositor: current_user)
     )
   end
 end
