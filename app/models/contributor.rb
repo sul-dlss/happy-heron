@@ -69,6 +69,13 @@ class Contributor < ApplicationRecord
     contributor_type == 'person'
   end
 
+  sig { returns(T.nilable(String)) }
+  def formatted_name
+    return full_name unless person?
+
+    "#{last_name}, #{first_name}"
+  end
+
   # used by work_form
   sig { returns(String) }
   def role_term
