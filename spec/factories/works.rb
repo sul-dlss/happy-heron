@@ -51,6 +51,18 @@ FactoryBot.define do
     related_links { Array.new(related_links_count) { association(:related_link) } }
   end
 
+  trait :with_some_untitled_related_links do
+    transient do
+      related_links_count { 2 }
+      untitled_related_links_count { 2 }
+    end
+
+    related_links do
+      Array.new(related_links_count) { association(:related_link) } +
+        Array.new(untitled_related_links_count) { association(:related_link, :untitled) }
+    end
+  end
+
   trait :with_related_works do
     transient do
       related_works_count { 2 }

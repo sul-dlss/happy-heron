@@ -7,7 +7,8 @@ RSpec.describe DescriptionGenerator do
   subject(:model) { described_class.generate(work: work) }
 
   let(:work) do
-    build(:work, :with_creation_dates, :published, :with_keywords, :with_contributors)
+    build(:work, :with_creation_dates, :published, :with_keywords,
+          :with_contributors, :with_some_untitled_related_links)
   end
   let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}" }
   let(:contrib2_name) { "#{work.contributors[1].last_name}, #{work.contributors[1].first_name}" }
@@ -34,6 +35,26 @@ RSpec.describe DescriptionGenerator do
         { name: [{ value: contrib1_name }], role: [{ value: 'Contributing author' }], type: 'person' },
         { name: [{ value: contrib2_name }], role: [{ value: 'Contributing author' }], type: 'person' },
         { name: [{ value: contrib3_name }], role: [{ value: 'Contributing author' }], type: 'person' }
+      ],
+      relatedResource: [
+        {
+          type: 'related to',
+          title: [{ value: 'My Awesome Research' }],
+          access: { url: [{ value: 'http://my.awesome.research.io' }] }
+        },
+        {
+          type: 'related to',
+          title: [{ value: 'My Awesome Research' }],
+          access: { url: [{ value: 'http://my.awesome.research.io' }] }
+        },
+        {
+          type: 'related to',
+          access: { url: [{ value: 'https://your.awesome.research.ai' }] }
+        },
+        {
+          type: 'related to',
+          access: { url: [{ value: 'https://your.awesome.research.ai' }] }
+        }
       ]
     )
   end
@@ -58,7 +79,8 @@ RSpec.describe DescriptionGenerator do
           { name: [{ value: contrib2_name }], role: [{ value: 'Sponsor' }], type: 'organization' }
         ],
         event: [],
-        subject: []
+        subject: [],
+        relatedResource: []
       )
     end
   end
