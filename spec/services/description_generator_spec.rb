@@ -9,6 +9,9 @@ RSpec.describe DescriptionGenerator do
   let(:work) do
     build(:work, :with_creation_dates, :published, :with_keywords, :with_contributors)
   end
+  let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}" }
+  let(:contrib2_name) { "#{work.contributors[1].last_name}, #{work.contributors[1].first_name}" }
+  let(:contrib3_name) { "#{work.contributors.last.last_name}, #{work.contributors.last.first_name}" }
 
   it 'creates description cocina model' do
     expect(model).to eq(
@@ -28,9 +31,9 @@ RSpec.describe DescriptionGenerator do
       ],
       title: [{ value: 'Test title' }],
       contributor: [
-        { name: [{ value: 'Last1, First1' }], role: [{ value: 'Contributing author' }], type: 'person' },
-        { name: [{ value: 'Last2, First2' }], role: [{ value: 'Contributing author' }], type: 'person' },
-        { name: [{ value: 'Last3, First3' }], role: [{ value: 'Contributing author' }], type: 'person' }
+        { name: [{ value: contrib1_name }], role: [{ value: 'Contributing author' }], type: 'person' },
+        { name: [{ value: contrib2_name }], role: [{ value: 'Contributing author' }], type: 'person' },
+        { name: [{ value: contrib3_name }], role: [{ value: 'Contributing author' }], type: 'person' }
       ]
     )
   end
