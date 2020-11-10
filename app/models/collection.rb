@@ -13,4 +13,9 @@ class Collection < ApplicationRecord
   validates :managers, presence: true
   validates :name, presence: true
   validates :access, presence: true
+
+  sig { returns(T::Boolean) }
+  def review_enabled?
+    reviewers.present?
+  end
 end
