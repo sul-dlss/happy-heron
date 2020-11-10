@@ -9,9 +9,9 @@ RSpec.describe DescriptionGenerator do
   let(:work) do
     build(:work, :with_creation_dates, :published, :with_keywords, :with_contributors)
   end
-  let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}"}
-  let(:contrib2_name) { "#{work.contributors[1].last_name}, #{work.contributors[1].first_name}"}
-  let(:contrib3_name) { "#{work.contributors.last.last_name}, #{work.contributors.last.first_name}"}
+  let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}" }
+  let(:contrib2_name) { "#{work.contributors[1].last_name}, #{work.contributors[1].first_name}" }
+  let(:contrib3_name) { "#{work.contributors.last.last_name}, #{work.contributors.last.first_name}" }
 
   it 'creates description cocina model' do
     expect(model).to eq(
