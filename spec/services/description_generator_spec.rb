@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe DescriptionGenerator do
-  subject(:model) { described_class.generate(work: work) }
+  subject(:model) { described_class.generate(work: work).to_h }
 
   let(:work) do
     build(:work, :with_creation_dates, :published, :with_keywords, :with_contributors,
