@@ -31,18 +31,25 @@ class CollectionForm < Reform::Form
 
   sig { void }
   def update_depositors
-    sunetids = depositor_sunets.split(/\s*,\s*/)
-    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
-    model.depositors = emails.map do |email|
-      # It's odd that we need to do both, but this is how it's written.
-      # See: https://github.com/rails/rails/issues/36027
-      User.find_by(email: email) || User.create_or_find_by(email: email)
-    end
+    model.depositors = field_to_users(depositor_sunets)
   end
 
   sig { void }
   def update_reviewers
-    model.reviewers = (review_enabled == 'true' ? reviewer_sunets : nil)
+    return model.reviewers = [] unless review_enabled == 'true'
+
+    model.reviewers = field_to_users(reviewer_sunets)
+  end
+
+  sig { params(field: String).returns(T::Array[User]) }
+  def field_to_users(field)
+    sunetids = field.split(/\s*,\s*/)
+    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
+    emails.map do |email|
+      # It's odd that we need to do both, but this is how it's written.
+      # See: https://github.com/rails/rails/issues/36027
+      User.find_by(email: email) || User.create_or_find_by(email: email)
+    end
   end
 
   sig { returns(T::Array[String]) }

@@ -151,7 +151,6 @@ CREATE TABLE public.collections (
     default_license character varying,
     email_when_participants_changed boolean,
     managers character varying NOT NULL,
-    reviewers character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL
@@ -352,6 +351,16 @@ CREATE SEQUENCE public.related_works_id_seq
 --
 
 ALTER SEQUENCE public.related_works_id_seq OWNED BY public.related_works.id;
+
+
+--
+-- Name: reviewers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.reviewers (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
 
 
 --
@@ -711,6 +720,13 @@ CREATE INDEX index_related_works_on_work_id ON public.related_works USING btree 
 
 
 --
+-- Name: index_reviewers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_reviewers_on_collection_id_and_user_id ON public.reviewers USING btree (collection_id, user_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -862,6 +878,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201027203358'),
 ('20201028205711'),
 ('20201105141009'),
-('20201105191840');
+('20201105191840'),
+('20201110133105');
 
 

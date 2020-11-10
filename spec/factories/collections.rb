@@ -14,7 +14,6 @@ FactoryBot.define do
     default_license { 'MyString' }
     email_when_participants_changed { false }
     managers { 'maya.aguirre, jcairns' }
-    reviewers { 'MyString' }
     creator
   end
 
@@ -24,5 +23,13 @@ FactoryBot.define do
     end
 
     works { Array.new(works_count) { association(:work) } }
+  end
+
+  trait :with_reviewers do
+    transient do
+      reviewer_count { 2 }
+    end
+
+    reviewers { build_list(:user, reviewer_count) }
   end
 end

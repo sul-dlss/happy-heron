@@ -134,15 +134,6 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def required_license?; end
 
-  sig { returns(T.nilable(String)) }
-  def reviewers; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def reviewers=(value); end
-
-  sig { returns(T::Boolean) }
-  def reviewers?; end
-
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
 
@@ -177,6 +168,15 @@ module Collection::GeneratedAssociationMethods
 
   sig { params(value: T::Enumerable[::User]).void }
   def depositors=(value); end
+
+  sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
+  def reviewers; end
+
+  sig { returns(T::Array[Integer]) }
+  def reviewer_ids; end
+
+  sig { params(value: T::Enumerable[::User]).void }
+  def reviewers=(value); end
 
   sig { returns(::Work::ActiveRecord_Associations_CollectionProxy) }
   def works; end
