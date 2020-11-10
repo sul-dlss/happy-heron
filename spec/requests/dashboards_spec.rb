@@ -6,8 +6,6 @@ require 'rails_helper'
 RSpec.describe 'Dashboard requests' do
   let(:user) { create(:user) }
 
-  before { sign_out }
-
   context 'when user has no deposits' do
     before { sign_in user }
 
@@ -49,16 +47,29 @@ RSpec.describe 'Dashboard requests' do
   context 'when user is an application admin' do
     before { sign_in user, groups: ['dlss:hydrus-app-administrators'] }
 
-    it 'shows the dashboard' do
-      get '/dashboard'
-      expect(response).to have_http_status(:ok)
-    end
-
     it 'shows a link to create collections' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Your collections'
       expect(response.body).to include '+ Create a new collection'
+    end
+  end
+
+  context 'when user is a reviewer' do
+    let(:collection) { create(:collection, :with_reviewers) }
+    let(:user) { collection.reviewers.first }
+
+    before do
+      create(:work, collection: collection, state: 'pending_approval', title: 'To Review')
+      create(:work, collection: collection, state: 'first_draft', title: 'No Review')
+      sign_in user
+    end
+
+    it 'shows a link to create collections' do
+      get '/dashboard'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'To Review'
+      expect(response.body).not_to include 'No Review'
     end
   end
 end

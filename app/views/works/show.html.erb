@@ -11,8 +11,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Details</th>
           <th scope="col"></th>
@@ -47,7 +47,7 @@
         </tr>
         <tr>
           <th scope="row">Version details</th>
-          <td><%= @work.version %>></td>
+          <td><%= @work.version %></td>
         </tr>
         <tr>
           <th scope="row">Deposit created</th>
@@ -68,8 +68,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Files<%= link_to edit_work_path(@work, anchor: "file"), aria: { label: "Edit files"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
           <th scope="col">Description</th>
@@ -91,8 +91,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Title and contact<%= link_to edit_work_path(@work, anchor: "title"), aria: { label: "Edit title and contact"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
           <th scope="col"></th>
@@ -114,8 +114,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Authors and contributors<%= link_to edit_work_path(@work, anchor: "author"), aria: { label: "Edit authors and contributors"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
           <th scope="col"></th>
@@ -135,8 +135,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Dates<%= link_to edit_work_path(@work, anchor: "dates"), aria: { label: "Edit dates"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
           <th scope="col"></th>
@@ -158,8 +158,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Collection</th>
           <th scope="col"></th>
@@ -177,8 +177,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Description<%= link_to edit_work_path(@work, anchor: "description"), aria: { label: "Edit description"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
           <th scope="col"></th>
@@ -220,8 +220,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Release data and visibility<%= link_to edit_work_path(@work, anchor: "release"), aria: { label: "Edit release data and visibility"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
           <th scope="col"></th>
@@ -243,8 +243,8 @@
 
   <div class="row">
     <div class="col">
-      <table class="table table-bordered table-sm">
-        <thead>
+      <table class="table table-sm">
+        <thead class="table-light">
         <tr>
           <th scope="col" class="table-title col-3">Terms of use and license<%= link_to edit_work_path(@work, anchor: "license"), aria: { label: "Edit terms of use and license"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
           <th scope="col"></th>

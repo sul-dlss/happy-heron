@@ -102,7 +102,8 @@ RSpec.describe 'Collections requests' do
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
             expect(collection.managers).to eq 'maya.aguirre,jcairns'
-            expect(collection.reviewers).to eq 'maya.aguirre, jcairns,faridz'
+            expect(collection.reviewers.map(&:email)).to eq %w[maya.aguirre@stanford.edu
+                                                               jcairns@stanford.edu faridz@stanford.edu]
           end
         end
 
@@ -121,7 +122,7 @@ RSpec.describe 'Collections requests' do
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
-            expect(collection.reviewers).to eq nil
+            expect(collection.reviewers).to be_empty
           end
         end
       end
@@ -212,7 +213,7 @@ RSpec.describe 'Collections requests' do
         end
 
         context 'when collection has reviewers specified' do
-          let(:collection) { create(:collection, managers: [user.sunetid], reviewers: 'asdf') }
+          let(:collection) { create(:collection, :with_reviewers, managers: [user.sunetid]) }
           let(:review_workflow_params) do
             {
               review_enabled: 'false',
@@ -226,7 +227,7 @@ RSpec.describe 'Collections requests' do
             patch "/collections/#{collection.id}", params: collection_params
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
-            expect(collection.reload.reviewers).to eq nil
+            expect(collection.reload.reviewers).to be_empty
           end
         end
       end

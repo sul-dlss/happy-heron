@@ -5,6 +5,19 @@
     margin-bottom: 1rem;
   }
 
+  .table {
+    th {
+      font-size: 14px;
+      font-weight: 525;
+    }
+
+    caption {
+      @extend header;
+      caption-side: top;
+      color: $body-color;
+    }
+  }
+
   margin-top: 1rem;
   max-width: 1140px;
 }

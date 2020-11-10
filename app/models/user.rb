@@ -15,6 +15,8 @@ class User < ApplicationRecord
                       inverse_of: :depositor,
                       dependent: :destroy
 
+  has_and_belongs_to_many :reviews_collections, class_name: 'Collection', join_table: 'reviewers'
+
   devise :remote_user_authenticatable
 
   sig { returns(String) }

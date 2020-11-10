@@ -5,7 +5,7 @@
 class DashboardPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def show?
-    administrator? || collection_creator? || user.deposits.any?
+    administrator? || collection_creator? || user.deposits.any? || user.reviews_collections.any?
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups

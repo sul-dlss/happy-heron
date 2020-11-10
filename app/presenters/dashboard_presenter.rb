@@ -5,14 +5,22 @@
 class DashboardPresenter
   extend T::Sig
 
-  sig { params(drafts: ActiveRecord::Relation, collections: ActiveRecord::Relation).void }
-  def initialize(drafts:, collections:)
+  sig do
+    params(drafts: ActiveRecord::Relation,
+           approvals: ActiveRecord::Relation,
+           collections: ActiveRecord::Relation).void
+  end
+  def initialize(drafts:, approvals:, collections:)
     @drafts = drafts
+    @approvals = approvals
     @collections = collections
   end
 
   sig { returns(ActiveRecord::Relation) }
   attr_reader :drafts
+
+  sig { returns(ActiveRecord::Relation) }
+  attr_reader :approvals
 
   sig { returns(ActiveRecord::Relation) }
   attr_reader :collections
