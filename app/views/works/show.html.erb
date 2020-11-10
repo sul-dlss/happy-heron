@@ -1,36 +1,267 @@
-<pre>
-  <%= @work.attributes.map { |k, v| "#{k} = #{v}\n"}.join.html_safe %>
-  contributors = <%= @work.contributors.size %>
-  <% @work.contributors.each do |c| %>
-    <%= c.first_name %>
-    <%= c.last_name %>
-    <%= c.role_term %>
-  <% end %>
+<div class="container" id="work">
+  <div class="row">
+    <div class="col">
+      <header>
+        <span class="header-text"><%= @work.title %></span>
+        <%= link_to edit_work_path(@work), aria: { label: "Edit #{@work.title}"} do %><span class="fas fa-pencil-alt edit"></span><% end %>
+        <% if @work.state != 'deposited' %><span class="font-italic" style="margin-left: 30px;">Draft - Not deposited</span><% end %>
+      </header>
+    </div>
+  </div>
 
-  attached_files = <%= @work.attached_files.size %>
-  <% @work.attached_files.each do |af| %>
-    Has attached file: <%= af.file.attached? %>
-    Label: <%= af.label %>
-    Is hidden: <%= af.hide? %>
-    Filename: <%= af.filename %>
-    Size (bytes): <%= af.byte_size %>
-    Content type: <%= af.content_type %>
-  <% end %>
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Details</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @work.purl %>
+          <tr>
+            <th scope="row">Persistent link</th>
+            <td><%= link_to @work.purl %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th scope="row">Collection</th>
+          <td><%= @work.collection.name %></td>
+        </tr>
+        <tr>
+          <th scope="row">Deposit type</th>
+          <td><%= @work.work_type %></td>
+        </tr>
+        <tr>
+          <th scope="row">Deposit subtypes</th>
+          <td><%= @work.subtype.join(', ') %></td>
+        </tr>
+        <tr>
+          <th scope="row">Depositor</th>
+          <td><%= @work.depositor %></td>
+        </tr>
+        <tr>
+          <th scope="row">Contact</th>
+          <td><%= @work.contact_email %>></td>
+        </tr>
+        <tr>
+          <th scope="row">Version details</th>
+          <td><%= @work.version %>></td>
+        </tr>
+        <tr>
+          <th scope="row">Deposit created</th>
+          <td><%= @work.created_at.to_s(:long) %></td>
+        </tr>
+        <tr>
+          <th scope="row">Version started</th>
+          <td>NOT IMPLEMENTED</td>
+        </tr>
+        <tr>
+          <th scope="row">Last saved</th>
+          <td><%= @work.updated_at.to_s(:long) %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  keywords = <%= @work.keywords.size %>
-  <% @work.keywords.each do |k| %>
-    Label: <%= k.label %>
-    URI: <%= k.uri %>
-  <% end %>
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Files<%= link_to edit_work_path(@work, anchor: "file"), aria: { label: "Edit files"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
+          <th scope="col">Description</th>
+          <th scope="col">Hide file</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @work.attached_files.each do |af| %>
+            <tr>
+              <td><%= af.filename %></td>
+              <td><%= af.label %></td>
+              <td><%= af.hide? %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  related_works = <%= @work.related_works.size %>
-  <% @work.related_works.each do |related| %>
-    citation: <%= related.citation %>
-  <% end %>
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Title and contact<%= link_to edit_work_path(@work, anchor: "title"), aria: { label: "Edit title and contact"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Title</th>
+          <td><%= @work.title %></td>
+        </tr>
+        <tr>
+          <th scope="row">Contact</th>
+          <td><%= @work.contact_email %>></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  related_links = <%= @work.related_links.size %>
-  <% @work.related_links.each do |link| %>
-    link title: <%= link.link_title %>
-    url: <%= link.url %>
-  <% end %>
-</pre>
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Authors and contributors<%= link_to edit_work_path(@work, anchor: "author"), aria: { label: "Edit authors and contributors"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @work.contributors.each do |c| %>
+          <tr>
+            <td><%= c.first_name %> <%= c.last_name %></td>
+            <td><%= c.role %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Dates<%= link_to edit_work_path(@work, anchor: "dates"), aria: { label: "Edit dates"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Publication date</th>
+          <td><%= @work.published_edtf %></td>
+        </tr>
+        <tr>
+          <th scope="row">Creation date</th>
+          <td><%= @work.created_edtf %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Collection</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Collection</th>
+          <td><%= @work.collection.name %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Description<%= link_to edit_work_path(@work, anchor: "description"), aria: { label: "Edit description"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Abstract</th>
+          <td><%= @work.abstract %></td>
+        </tr>
+        <tr>
+          <th scope="row">Keywords</th>
+          <td><%= @work.keywords.map {|keyword| keyword.label}.join(', ') %></td>
+        </tr>
+        <tr>
+          <th scope="row">Preferred citation</th>
+          <td><%= @work.citation %></td>
+        </tr>
+        <tr>
+          <th scope="row">Related published work</th>
+          <td>
+            <% @work.related_works.each do |related| %>
+              <p><%= related.citation %></p>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Related link</th>
+          <td>
+            <% @work.related_links.each do |link| %>
+              <p><%= link_to link.link_title, link.url %></p>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Release data and visibility<%= link_to edit_work_path(@work, anchor: "release"), aria: { label: "Edit release data and visibility"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Available</th>
+          <td><%= @work.embargo_date ? @work.embargo_date.to_s(:long) : 'Immediately'%></td>
+        </tr>
+        <tr>
+          <th scope="row">Access</th>
+          <td><%= @work.access == 'stanford' ? 'Stanford Community' : 'Everyone' %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead>
+        <tr>
+          <th scope="col" class="table-title col-3">Terms of use and license<%= link_to edit_work_path(@work, anchor: "license"), aria: { label: "Edit terms of use and license"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">License</th>
+          <td><%= License::ID_LABEL_HASH[@work.license] %></td>
+        </tr>
+        <tr>
+          <th scope="row">Terms of use</th>
+          <td>"User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the Depositor."</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

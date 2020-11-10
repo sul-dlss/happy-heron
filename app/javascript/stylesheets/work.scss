@@ -1,0 +1,36 @@
+#work {
+
+  header {
+    margin-bottom: 1rem;
+
+    .header-text {
+      font-size: larger;
+      font-weight: 700;
+    }
+  }
+
+  table {
+    border-color: $silver-sand;
+
+    p {
+      margin-bottom: 0rem;
+    }
+  }
+
+  thead {
+    background-color: $silver-sand;
+  }
+
+  th {
+    font-weight: 700;
+  }
+
+  th.table-title {
+    font-weight: 700;
+    font-size: large;
+  }
+
+  .edit {
+    margin-left: 10px;
+  }
+}

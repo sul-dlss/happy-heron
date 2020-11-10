@@ -109,17 +109,14 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       check 'I agree to the SDR Terms of Deposit'
       click_button 'Deposit'
 
-      expect(page).to have_content('title = My Title')
-      expect(page).to have_content('work_type = sound')
-      expect(page).to have_content('subtype = ["Course/instruction", "Musical notation", "Poetry reading"]')
-      expect(page).to have_content("contact_email = #{user.email}")
-      expect(page).to have_content('created_edtf = 2020-03-06/2020-10-30')
-      expect(page).to have_content('abstract = Whatever')
-      expect(page).to have_content('citation = Whatever')
-      expect(page).to have_content('license = CC-PDDC')
-      expect(page).to have_content('agree_to_terms = true')
-      expect(page).to have_content('state = first_draft')
-      expect(page).to have_content('collection_id = ')
+      expect(page).to have_content('My Title')
+      expect(page).to have_content('sound')
+      expect(page).to have_content('Course/instruction, Musical notation, Poetry reading')
+      expect(page).to have_content(user.email)
+      expect(page).to have_content('2020-03-06/2020-10-30')
+      expect(page).to have_content('Whatever')
+      expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
+      expect(page).to have_content('Draft - Not deposited')
     end
   end
 
