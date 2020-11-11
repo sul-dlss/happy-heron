@@ -23,20 +23,17 @@ class WorksController < ApplicationController
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
 
-    if deposit?
-      @form = WorkForm.new(work)
-      # only validate on deposit, not on draft
-      if @form.validate(work_params) && @form.save
-        after_save(work)
-      else
-        # Send form errors to client in JSON format to be parsed and rendered there
-        render 'errors', status: :bad_request
-      end
+    @form = if deposit?
+              WorkForm.new(work)
+            else
+              WorkFormDraft.new(work)
+            end
+
+    if @form.validate(work_params) && @form.save
+      after_save(work)
     else
-      # draft saves without validation
-      @form = WorkFormDraft.new(work)
-      @form.save
-      redirect_to work
+      # Send form errors to client in JSON format to be parsed and rendered there
+      render 'errors', status: :bad_request
     end
   end
 
@@ -52,20 +49,17 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
     authorize! work
 
-    if deposit?
-      @form = WorkForm.new(work)
-      # only validate on deposit, not on draft
-      if @form.validate(work_params) && @form.save
-        after_save(work)
-      else
-        # Send form errors to client in JSON format to be parsed and rendered there
-        render 'errors', status: :bad_request
-      end
+    @form = if deposit?
+              WorkForm.new(work)
+            else
+              WorkFormDraft.new(work)
+            end
+
+    if @form.validate(work_params) && @form.save
+      after_save(work)
     else
-      # draft saves without validation
-      @form = WorkFormDraft.new(work)
-      @form.save
-      redirect_to work
+      # Send form errors to client in JSON format to be parsed and rendered there
+      render 'errors', status: :bad_request
     end
   end
 
@@ -77,7 +71,7 @@ class WorksController < ApplicationController
 
   sig { params(work: Work).void }
   def after_save(work)
-    if params[:commit] == 'Deposit'
+    if deposit?
       if work.collection.review_enabled?
         work.submit_for_review!
       else

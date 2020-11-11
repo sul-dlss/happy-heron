@@ -336,6 +336,37 @@ RSpec.describe 'Works requests' do
           expect(work.embargo_date).to be_nil
           expect(work.subtype).to be_empty
           expect(work.state).to eq 'first_draft'
+          expect(DepositJob).to have_received(:perform_later)
+        end
+      end
+
+      context 'with empty draft' do
+        let(:collection) { create(:collection, depositors: [user]) }
+        let(:work_params) do
+          {
+            title: '',
+            contact_email: '',
+            abstract: '',
+            license: '',
+            work_type: 'text'
+          }
+        end
+
+        it 'saves and then displays the draft work' do
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Save as draft' }
+          expect(response).to have_http_status(:found)
+          work = Work.last
+          expect(work.title).to be_empty
+          expect(work.contact_email).to be_empty
+          expect(work.abstract).to be_empty
+          expect(work.contributors).to be_empty
+          expect(work.attached_files).to be_empty
+          expect(work.keywords.size).to eq 0
+          expect(work.published_edtf).to be_nil
+          expect(work.created_edtf).to be_nil
+          expect(work.embargo_date).to be_nil
+          expect(work.subtype).to be_empty
+          expect(work.state).to eq 'first_draft'
           expect(DepositJob).not_to have_received(:perform_later)
         end
       end

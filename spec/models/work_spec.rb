@@ -26,6 +26,11 @@ RSpec.describe Work do
     expect(work.attached_files).to be_present
   end
 
+  it 'has a valid contact email' do
+    work.contact_email = 'notavalidemail'
+    expect { work.save! }.to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
+  end
+
   describe 'created_edtf' do
     let(:work) { build(:work, created_edtf: date_string) }
 
@@ -39,6 +44,56 @@ RSpec.describe Work do
 
     context 'with EDTF value' do
       let(:date_string) { '2019-04-04' }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+  end
+
+  describe 'type and subtype validation' do
+    context 'with an empty work type' do
+      let(:work) { build(:work, work_type: nil) }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a missing work type' do
+      let(:work) { build(:work, work_type: 'a pile of something') }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with an invalid subtype/work_type combo' do
+      let(:work) { build(:work, work_type: 'data', subtype: ['Animation']) }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a work_type that requires a user-supplied subtype and is empty' do
+      let(:work) { build(:work, work_type: 'other', subtype: []) }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a work_type that requires a user-supplied subtype and is present' do
+      let(:work) { build(:work, work_type: 'other', subtype: ['Pill bottle']) }
+
+      it 'does not validate' do
+        expect(work).to be_valid
+      end
+    end
+
+    context 'with a valid subtype/work_type combo ' do
+      let(:work) { build(:work, work_type: 'data', subtype: ['Software/code']) }
 
       it 'validates' do
         expect(work).to be_valid

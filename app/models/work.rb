@@ -15,8 +15,11 @@ class Work < ApplicationRecord
   has_many :keywords, dependent: :destroy
   has_many :events, dependent: :destroy
 
+  validates :contact_email, format: { with: Devise.email_regexp }, unless: -> { contact_email.blank? }
   validates :state, presence: true
   validates :created_edtf, :published_edtf, edtf: true
+  validates :subtype, work_subtype: true
+  validates :work_type, presence: true, work_type: true
 
   enum access: {
     stanford: 'stanford',
