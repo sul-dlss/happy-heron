@@ -161,35 +161,14 @@ class DescriptionGenerator
     end
   end
 
-  sig do
-    returns(T::Array[
-      T.any(
-        { type: String, access: { url: T::Array[{ value: String }] } },
-        { type: String, access: { url: T::Array[{ value: String }] }, title: T::Array[{ value: String }] }
-      )
-    ])
-  end
+  sig { returns(T::Array[RelatedLink::COCINA_HASH_TYPE]) }
   def related_links
-    work.related_links.map do |rel_link|
-      {
-        type: 'related to',
-        access: { url: [{ value: rel_link.url }] }
-      }.tap do |h|
-        h[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
-      end
-    end
+    work.related_links.map(&:to_cocina_hash)
   end
 
-  sig { returns(T::Array[{ type: String, note: T::Array[{ type: String, value: String }] }]) }
+  sig { returns(T::Array[RelatedWork::COCINA_HASH_TYPE]) }
   def related_works
-    work.related_works.map do |rel_work|
-      {
-        type: 'related to',
-        note: [
-          { type: 'preferred citation', value: rel_work.citation }
-        ]
-      }
-    end
+    work.related_works.map(&:to_cocina_hash)
   end
 end
 # rubocop:enable Metrics/ClassLength
