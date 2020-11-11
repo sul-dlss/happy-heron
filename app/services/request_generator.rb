@@ -15,27 +15,23 @@ class RequestGenerator
     @work = work
   end
 
+  sig { returns(Cocina::Models::RequestDRO) }
   def generate_model
-    Cocina::Models::RequestDRO.new(generate)
-  end
-
-  sig { returns(Hash) }
-  def generate
-    {
-      administrative: {
-        hasAdminPolicy: Settings.h2.hydrus_apo
-      },
-      identification: {
-        sourceId: "hydrus:#{work.id}" # TODO: what should this be?
-      },
-      structural: {
-        contains: work.attached_files.map { |af| build_fileset(af) }
-      },
-      label: work.title,
-      type: cocina_type,
-      description: DescriptionGenerator.generate(work: work),
-      version: 0
-    }
+    Cocina::Models::RequestDRO.new({
+                                     administrative: {
+                                       hasAdminPolicy: Settings.h2.hydrus_apo
+                                     },
+                                     identification: {
+                                       sourceId: "hydrus:#{work.id}" # TODO: what should this be?
+                                     },
+                                     structural: {
+                                       contains: work.attached_files.map { |af| build_fileset(af) }
+                                     },
+                                     label: work.title,
+                                     type: cocina_type,
+                                     description: DescriptionGenerator.generate(work: work),
+                                     version: 0
+                                   }, false, false)
   end
 
   private

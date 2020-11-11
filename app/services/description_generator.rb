@@ -6,7 +6,7 @@
 class DescriptionGenerator
   extend T::Sig
 
-  sig { params(work: Work).returns(T::Hash[Symbol, T::Array[T::Hash[String, T.untyped]]]) }
+  sig { params(work: Work).returns(Cocina::Models::Description) }
   def self.generate(work:)
     new(work: work).generate
   end
@@ -16,16 +16,16 @@ class DescriptionGenerator
     @work = work
   end
 
-  sig { returns(T::Hash[Symbol, T::Array[T::Hash[String, T.untyped]]]) }
+  sig { returns(Cocina::Models::Description) }
   def generate
-    {
-      title: title,
-      contributor: contributors,
-      subject: keywords,
-      note: [abstract, citation, contact],
-      event: [created_date, published_date].compact,
-      relatedResource: related_links + related_works
-    }
+    Cocina::Models::Description.new({
+                                      title: title,
+                                      contributor: contributors,
+                                      subject: keywords,
+                                      note: [abstract, citation, contact],
+                                      event: [created_date, published_date].compact,
+                                      relatedResource: related_links + related_works
+                                    }, false, false)
   end
 
   private
@@ -33,48 +33,45 @@ class DescriptionGenerator
   sig { returns(Work) }
   attr_reader :work
 
-  sig { returns(T::Array[T::Hash[String, String]]) }
+  sig { returns(T::Array[Cocina::Models::Title]) }
   def title
     [
-      {
-        "value": work.title
-      }
+      Cocina::Models::Title.new(value: work.title)
     ]
   end
 
-  sig { returns(T::Array[T::Hash[String, String]]) }
+  sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def keywords
     work.keywords.map do |keyword|
-      {
-        "value": keyword.label,
-        "type": 'topic'
-      }
+      Cocina::Models::DescriptiveValue.new(value: T.must(keyword.label), type: 'topic')
     end
   end
 
-  sig { returns(T::Hash[String, String]) }
+  sig { returns(Cocina::Models::DescriptiveValue) }
   def abstract
-    {
-      "value": work.abstract,
-      "type": 'summary'
-    }
+    Cocina::Models::DescriptiveValue.new(
+      value: work.abstract,
+      type: 'summary'
+    )
   end
 
-  sig { returns(T::Hash[String, String]) }
+  sig { returns(T.nilable(Cocina::Models::DescriptiveValue)) }
   def citation
-    {
-      "value": work.citation,
-      "type": 'preferred citation'
-    }
+    return unless work.citation
+
+    Cocina::Models::DescriptiveValue.new(
+      value: T.must(work.citation),
+      type: 'preferred citation'
+    )
   end
 
-  sig { returns(T.nilable(T::Hash[String, T.any(String, T::Array[T.untyped])])) }
+  sig { returns(T.nilable(Cocina::Models::Event)) }
   def created_date
     return unless work.created_edtf
 
-    {
-      "type": 'creation',
-      "date": [
+    Cocina::Models::Event.new(
+      type: 'creation',
+      date: [
         {
           "value": work.created_edtf,
           "encoding": {
@@ -82,16 +79,16 @@ class DescriptionGenerator
           }
         }
       ]
-    }
+    )
   end
 
-  sig { returns(T.nilable(T::Hash[String, T.any(String, T::Array[T.untyped])])) }
+  sig { returns(T.nilable(Cocina::Models::Event)) }
   def published_date
     return unless work.published_edtf
 
-    {
-      "type": 'publication',
-      "date": [
+    Cocina::Models::Event.new(
+      type: 'publication',
+      date: [
         {
           "value": work.published_edtf,
           "encoding": {
@@ -99,96 +96,85 @@ class DescriptionGenerator
           }
         }
       ]
-    }
+    )
   end
 
-  sig { returns(T::Hash[String, String]) }
+  sig { returns(Cocina::Models::DescriptiveValue) }
   def contact
-    {
-      "value": work.contact_email,
-      "type": 'contact',
-      "displayLabel": 'Contact'
-    }
+    Cocina::Models::DescriptiveValue.new(
+      value: work.contact_email,
+      type: 'contact',
+      displayLabel: 'Contact'
+    )
   end
 
-  sig { returns(T::Array[T::Array[Object]]) }
+  sig { returns(T::Array[Cocina::Models::Contributor]) }
   def contributors
-    result = []
-
-    work.contributors.each do |work_form_contributor|
-      result << contributor(work_form_contributor)
+    work.contributors.map do |work_form_contributor|
+      contributor(work_form_contributor)
     end
-
-    result
   end
 
   # in cocina model terms, returns a DescriptiveValue
-  sig do
-    params(work_form_contributor: Contributor)
-      .returns({ name: [{ value: T.untyped }], type: String, role: [{ value: T.untyped }] })
-  end
+  sig { params(work_form_contributor: Contributor).returns(Cocina::Models::Contributor) }
   def contributor(work_form_contributor)
     # TODO: we may know status primary
     if work_form_contributor.person?
-      {
-        "name": [
+      Cocina::Models::Contributor.new(
+        name: [
           {
-            "value": "#{work_form_contributor.last_name}, #{work_form_contributor.first_name}"
+            value: "#{work_form_contributor.last_name}, #{work_form_contributor.first_name}"
           }
         ],
-        "type": 'person',
+        type: work_form_contributor.contributor_type,
         # TODO: we will know code, uri, source code and source uri
-        "role": [
+        role: [
           {
-            "value": work_form_contributor.role
+            value: work_form_contributor.role
           }
         ]
-      }
+      )
     else
-      {
-        "name": [
+      Cocina::Models::Contributor.new(
+        name: [
           {
-            "value": work_form_contributor.full_name
+            value: work_form_contributor.full_name
           }
         ],
-        "type": 'organization',
-        "role": [
+        type: work_form_contributor.contributor_type,
+        # TODO: we will know code, uri, source code and source uri
+        role: [
           {
-            "value": work_form_contributor.role
+            value: work_form_contributor.role
           }
         ]
-      }
+      )
     end
   end
 
-  sig do
-    returns(T::Array[
-      T.any(
-        { type: String, access: { url: T::Array[{ value: String }] } },
-        { type: String, access: { url: T::Array[{ value: String }] }, title: T::Array[{ value: String }] }
-      )
-    ])
-  end
+  sig { returns(T::Array[Cocina::Models::RelatedResource]) }
   def related_links
     work.related_links.map do |rel_link|
-      {
+      resource_attrs = {
         type: 'related to',
-        access: { url: [{ value: rel_link.url }] }
-      }.tap do |h|
-        h[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
-      end
+        access: Cocina::Models::DescriptiveAccessMetadata.new(
+          url: [Cocina::Models::DescriptiveValue.new(value: rel_link.url)]
+        )
+      }
+      resource_attrs[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
+      Cocina::Models::RelatedResource.new(resource_attrs)
     end
   end
 
-  sig { returns(T::Array[{ type: String, note: T::Array[{ type: String, value: String }] }]) }
+  sig { returns(T::Array[Cocina::Models::RelatedResource]) }
   def related_works
     work.related_works.map do |rel_work|
-      {
+      Cocina::Models::RelatedResource.new(
         type: 'related to',
         note: [
-          { type: 'preferred citation', value: rel_work.citation }
+          Cocina::Models::DescriptiveValue.new(type: 'preferred citation', value: rel_work.citation)
         ]
-      }
+      )
     end
   end
 end
