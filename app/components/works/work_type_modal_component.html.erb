@@ -15,8 +15,9 @@
     <div class="row">
       <% types.each do |type| %>
         <div class="col-md-3" style="height: 4rem">
-          <input type="radio" name="work_type" value="<%= type.id %>" id="<%= type.id.dasherize %>" class="toggle" required data-action="work-type#change">
-          <label for="<%= type.id.dasherize %>"><span class="check">✓</span> <span class="fas fa-2x fa-<%= type.icon %>"></span> <div class="work-type-button-text"><%= type.label %></div></label>
+          <%= render CheckboxButtonComponent.new(name: 'work_type', value: type.id, data: { action: "work-type#change" }) do %>
+            <span class="fas fa-2x fa-<%= type.icon %>"></span> <div class="work-type-button-text"><%= type.label %></div>
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -32,7 +33,7 @@
 
     <template data-target="work-type.otherTemplate">
       <div class="col-md-4">
-        <input type="text" name="subtype[]" id="subtype_other">
+        <input type="text" name="subtype[]" class="form-control" id="subtype_other">
       </div>
     </template>
 

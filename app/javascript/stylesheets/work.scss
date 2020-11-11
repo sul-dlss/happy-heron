@@ -1,12 +1,31 @@
 #work {
 
-  header {
+  .approve {
+    height: 15rem;
+    background-color: $stanford-fog-light;
+    padding: 3rem 0;
+    header {
+      @extend h4;
+    }
+
+    label {
+      @extend h5;
+      padding: 1rem;
+      width: 100%;
+    }
+  }
+
+  .title {
     margin-bottom: 1rem;
 
     .header-text {
-      font-size: larger;
-      font-weight: 700;
+      @extend h3;
     }
+  }
+
+  .details {
+    width: 80%;
+    margin: auto;
   }
 
   .table {

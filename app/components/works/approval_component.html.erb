@@ -1,0 +1,25 @@
+<section class="approve mb-4">
+  <%= form_for work, url: work_review_path(work), method: :post, html: { class: "details" } do %>
+    <header class="mb-3">Review all details below, then approve or return this deposit</header>
+    <div class="row mb-4">
+      <div class="col-md-2"></div>
+
+      <div class="col-md-4" style="height: 4rem">
+        <%= render CheckboxButtonComponent.new(name: 'state', value: 'approve') do %>
+          Approve and deposit
+        <% end %>
+      </div>
+      <div class="col-md-4" style="height: 4rem">
+        <%= render CheckboxButtonComponent.new(name: 'state', value: 'return') do %>
+          Return
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 text-right">
+        <%= link_to 'Cancel', dashboard_path, class: 'btn btn-link' %>
+        <%= button_tag 'Submit', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</section>
