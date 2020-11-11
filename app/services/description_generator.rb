@@ -6,7 +6,23 @@
 class DescriptionGenerator
   extend T::Sig
 
-  sig { params(work: Work).returns(T::Hash[Symbol, T::Array[T::Hash[String, T.untyped]]]) }
+  STRING_HASH_TYPE = T.type_alias { T::Hash[String, String] }
+  STRING_HASH_ARRAY_TYPE = T.type_alias { T::Array[STRING_HASH_TYPE] }
+  NILABLE_DATE_TYPE = T.type_alias do
+    T.nilable({ type: String, date: T::Array[{ value: T.nilable(String), encoding: { code: String } }] })
+  end
+  COCINA_DESCRIPTION_TYPE = T.type_alias do
+    {
+      title: STRING_HASH_ARRAY_TYPE,
+      contributor: T::Array[T::Array[Object]],
+      subject: STRING_HASH_ARRAY_TYPE,
+      note: [STRING_HASH_TYPE, STRING_HASH_TYPE, STRING_HASH_TYPE],
+      event: T::Array[NILABLE_DATE_TYPE],
+      relatedResource: T::Array[T.any(RelatedLink::COCINA_HASH_TYPE, RelatedWork::COCINA_HASH_TYPE)]
+    }
+  end
+
+  sig { params(work: Work).returns(COCINA_DESCRIPTION_TYPE) }
   def self.generate(work:)
     new(work: work).generate
   end
@@ -16,7 +32,7 @@ class DescriptionGenerator
     @work = work
   end
 
-  sig { returns(T::Hash[Symbol, T::Array[T::Hash[String, T.untyped]]]) }
+  sig { returns(COCINA_DESCRIPTION_TYPE) }
   def generate
     {
       title: title,
@@ -33,7 +49,7 @@ class DescriptionGenerator
   sig { returns(Work) }
   attr_reader :work
 
-  sig { returns(T::Array[T::Hash[String, String]]) }
+  sig { returns(STRING_HASH_ARRAY_TYPE) }
   def title
     [
       {
@@ -42,7 +58,7 @@ class DescriptionGenerator
     ]
   end
 
-  sig { returns(T::Array[T::Hash[String, String]]) }
+  sig { returns(STRING_HASH_ARRAY_TYPE) }
   def keywords
     work.keywords.map do |keyword|
       {
@@ -52,7 +68,7 @@ class DescriptionGenerator
     end
   end
 
-  sig { returns(T::Hash[String, String]) }
+  sig { returns(STRING_HASH_TYPE) }
   def abstract
     {
       "value": work.abstract,
@@ -60,7 +76,7 @@ class DescriptionGenerator
     }
   end
 
-  sig { returns(T::Hash[String, String]) }
+  sig { returns(STRING_HASH_TYPE) }
   def citation
     {
       "value": work.citation,
@@ -68,7 +84,7 @@ class DescriptionGenerator
     }
   end
 
-  sig { returns(T.nilable(T::Hash[String, T.any(String, T::Array[T.untyped])])) }
+  sig { returns(NILABLE_DATE_TYPE) }
   def created_date
     return unless work.created_edtf
 
@@ -85,7 +101,7 @@ class DescriptionGenerator
     }
   end
 
-  sig { returns(T.nilable(T::Hash[String, T.any(String, T::Array[T.untyped])])) }
+  sig { returns(NILABLE_DATE_TYPE) }
   def published_date
     return unless work.published_edtf
 
@@ -102,7 +118,7 @@ class DescriptionGenerator
     }
   end
 
-  sig { returns(T::Hash[String, String]) }
+  sig { returns(STRING_HASH_TYPE) }
   def contact
     {
       "value": work.contact_email,
