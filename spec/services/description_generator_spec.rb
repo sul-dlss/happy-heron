@@ -7,12 +7,16 @@ RSpec.describe DescriptionGenerator do
   subject(:model) { described_class.generate(work: work) }
 
   let(:work) do
-    build(:work, :with_creation_dates, :published, :with_keywords,
-          :with_contributors, :with_some_untitled_related_links)
+    build(:work, :with_creation_dates, :published, :with_keywords, :with_contributors,
+          :with_some_untitled_related_links, :with_related_works)
   end
   let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}" }
   let(:contrib2_name) { "#{work.contributors[1].last_name}, #{work.contributors[1].first_name}" }
   let(:contrib3_name) { "#{work.contributors.last.last_name}, #{work.contributors.last.first_name}" }
+  let(:citation_value) do
+    'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
+        'Journal of Librarianship and Scholarly Communication, 1(3).'
+  end
 
   it 'creates description cocina model' do
     expect(model).to eq(
@@ -54,6 +58,14 @@ RSpec.describe DescriptionGenerator do
         {
           type: 'related to',
           access: { url: [{ value: 'https://your.awesome.research.ai' }] }
+        },
+        {
+          type: 'related to',
+          note: [{ value: citation_value, type: 'preferred citation' }]
+        },
+        {
+          type: 'related to',
+          note: [{ value: citation_value, type: 'preferred citation' }]
         }
       ]
     )
