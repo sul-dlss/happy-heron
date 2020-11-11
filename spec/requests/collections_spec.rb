@@ -63,19 +63,17 @@ RSpec.describe 'Collections requests' do
       context 'when collection saves' do
         let(:collection_params) do
           {
-            collection: {
-              name: 'My Test Collection',
-              description: 'This is a very good collection.',
-              contact_email: user.email,
-              access: 'world',
-              managers: user.email,
-              depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
-            }
+            name: 'My Test Collection',
+            description: 'This is a very good collection.',
+            contact_email: user.email,
+            access: 'world',
+            managers: user.email,
+            depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
           }
         end
 
         it 'creates a new collection' do
-          post '/collections', params: collection_params
+          post '/collections', params: { collection: collection_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           collection = Collection.last
@@ -94,10 +92,10 @@ RSpec.describe 'Collections requests' do
             }
           end
 
-          before { collection_params[:collection].merge!(review_workflow_params) }
+          before { collection_params.merge!(review_workflow_params) }
 
           it 'sets the managers and reviewers fields' do
-            post '/collections', params: collection_params
+            post '/collections', params: { collection: collection_params, commit: 'Deposit' }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
@@ -115,14 +113,36 @@ RSpec.describe 'Collections requests' do
             }
           end
 
-          before { collection_params[:collection].merge!(review_workflow_params) }
+          before { collection_params.merge!(review_workflow_params) }
 
           it 'nils out the reviewers field' do
-            post '/collections', params: collection_params
+            post '/collections', params: { collection: collection_params, commit: 'Deposit' }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
             expect(collection.reviewers).to be_empty
+          end
+        end
+
+        context 'with empty fields' do
+          let(:draft_collection_params) do
+            {
+              name: '',
+              description: '',
+              contact_email: '',
+              managers: user.email,
+              access: 'world',
+              depositor_sunets: ''
+            }
+          end
+
+          it 'saves the draft collection' do
+            post '/collections', params: { collection: draft_collection_params, commit: 'Save as draft' }
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(dashboard_path)
+            collection = Collection.last
+            expect(collection.name).to be_empty
+            expect(collection.depositors.size).to eq 0
           end
         end
       end
@@ -130,14 +150,12 @@ RSpec.describe 'Collections requests' do
       context 'when collection fails to save' do
         let(:collection_params) do
           {
-            collection: {
-              visibility: 'world'
-            }
+            visibility: 'world'
           }
         end
 
         it 'renders the page again' do
-          post '/collections', params: collection_params
+          post '/collections', params: { collection: collection_params, commit: 'Deposit' }
           expect(response).to have_http_status(:ok)
           expect(response.body).to include 'Create a collection'
         end
@@ -194,19 +212,24 @@ RSpec.describe 'Collections requests' do
       context 'when collection saves' do
         let(:collection_params) do
           {
-            collection: {
-              name: 'My Test Collection',
-              description: 'This is a very good collection.',
-              contact_email: user.email,
-              access: 'world',
-              managers: user.email,
-              depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
-            }
+            name: 'My Test Collection',
+            description: 'This is a very good collection.',
+            contact_email: user.email,
+            access: 'world',
+            managers: user.email,
+            depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
           }
         end
 
-        it 'creates a new collection' do
-          patch "/collections/#{collection.id}", params: collection_params
+        it 'updates the collection via deposit button' do
+          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Deposit' }
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(dashboard_path)
+          expect(collection.depositors.size).to eq 6
+        end
+
+        it 'updates the collection via draft save' do
+          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Save as draft' }
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           expect(collection.depositors.size).to eq 6
@@ -221,10 +244,10 @@ RSpec.describe 'Collections requests' do
             }
           end
 
-          before { collection_params[:collection].merge!(review_workflow_params) }
+          before { collection_params.merge!(review_workflow_params) }
 
           it 'removes the reviewers when the review workflow is set to disabled' do
-            patch "/collections/#{collection.id}", params: collection_params
+            patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Deposit' }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             expect(collection.reload.reviewers).to be_empty
@@ -235,15 +258,13 @@ RSpec.describe 'Collections requests' do
       context 'when collection fails to save' do
         let(:collection_params) do
           {
-            collection: {
-              name: '',
-              depositor_sunets: ''
-            }
+            name: '',
+            depositor_sunets: ''
           }
         end
 
         it 'renders the page again' do
-          patch "/collections/#{collection.id}", params: collection_params
+          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Deposit' }
           expect(response).to have_http_status(:ok)
           expect(response.body).to include('All fields are required, unless otherwise noted.')
         end

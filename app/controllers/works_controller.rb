@@ -117,8 +117,4 @@ class WorksController < ApplicationController
     flash[:error] = errors.join("\n")
     redirect_to dashboard_path
   end
-
-  def deposit?
-    params[:commit] == 'Deposit'
-  end
 end

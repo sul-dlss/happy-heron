@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
 
   private
 
+  sig { returns(T::Boolean) }
+  def deposit?
+    params[:commit] == 'Deposit'
+  end
+
   sig { returns(T::Array[String]) }
   # This looks first in the session for groups, and then to the headers.
   # This allows the application session to outlive the shiboleth session

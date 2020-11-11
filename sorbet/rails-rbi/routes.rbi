@@ -49,6 +49,13 @@ module GeneratedUrlHelpers
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def dashboard_url(*args, **kwargs); end
 
+  # Sigs for route /works/:work_id/review(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def work_review_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def work_review_url(*args, **kwargs); end
+
   # Sigs for route /collections/:collection_id/works(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def collection_works_path(*args, **kwargs); end

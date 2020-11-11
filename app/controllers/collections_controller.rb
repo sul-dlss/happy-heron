@@ -23,14 +23,20 @@ class CollectionsController < ApplicationController
     @form.prepopulate!
   end
 
+  # rubocop:disable Metrics/MethodLength
   def create
     collection = Collection.new(creator: current_user)
     authorize! collection
-    @form = CollectionForm.new(collection)
+
+    @form = if deposit?
+              CollectionForm.new(collection)
+            else
+              CollectionFormDraft.new(collection)
+            end
 
     if @form.validate(collection_params) && @form.save
       # TODO: https://github.com/sul-dlss/happy-heron/issues/92
-      # DepositCollectionJob.perform_later(@collection) if params[:commit] == 'Deposit'
+      # DepositCollectionJob.perform_later(@collection) if deposit?
       redirect_to dashboard_path
     else
       render :new
@@ -40,16 +46,22 @@ class CollectionsController < ApplicationController
   def update
     collection = Collection.find(params[:id])
     authorize! collection
-    @form = CollectionForm.new(collection)
+
+    @form = if deposit?
+              CollectionForm.new(collection)
+            else
+              CollectionFormDraft.new(collection)
+            end
 
     if @form.validate(collection_params) && @form.save
       # TODO: https://github.com/sul-dlss/happy-heron/issues/92
-      # DepositCollectionJob.perform_later(@collection) if params[:commit] == 'Deposit'
+      # DepositCollectionJob.perform_later(@collection) if deposit?
       redirect_to dashboard_path
     else
       render :edit
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 
