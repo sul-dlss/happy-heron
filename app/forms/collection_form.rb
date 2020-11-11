@@ -14,7 +14,7 @@ class CollectionForm < Reform::Form
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
-  property :review_enabled, virtual: true, default: -> { model.reviewers.present? ? 'true' : 'false' }
+  property :review_enabled, virtual: true, default: -> { model.review_enabled? ? 'true' : 'false' }
   property :reviewer_sunets, virtual: true, prepopulator: lambda { |_options|
     self.reviewer_sunets = reviewer_sunets_from_model.join(', ')
   }

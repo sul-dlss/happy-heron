@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 # The endpoint for CRUD about a Work
@@ -25,8 +25,7 @@ class WorksController < ApplicationController
 
     @form = WorkForm.new(work)
     if @form.validate(work_params) && @form.save
-      DepositJob.perform_later(work) if params[:commit] == 'Deposit'
-      redirect_to work
+      after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
       render json: @form.errors, status: :bad_request
@@ -47,8 +46,7 @@ class WorksController < ApplicationController
 
     @form = WorkForm.new(work)
     if @form.validate(work_params) && @form.save
-      DepositJob.perform_later(work) if params[:commit] == 'Deposit'
-      redirect_to work
+      after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
       render json: @form.errors, status: :bad_request
@@ -61,22 +59,35 @@ class WorksController < ApplicationController
 
   private
 
+  sig { params(work: Work).void }
+  def after_save(work)
+    if params[:commit] == 'Deposit'
+      if work.collection.review_enabled?
+        work.submit_for_review!
+      else
+        DepositJob.perform_later(work)
+      end
+    end
+    redirect_to work
+  end
+
   def work_params
-    params.require(:work).permit(:title, :work_type, :contact_email,
-                                 'published(1i)', 'published(2i)', 'published(3i)',
-                                 :creation_type,
-                                 'created(1i)', 'created(2i)', 'created(3i)',
-                                 'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
-                                 'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
-                                 :created_edtf, :abstract, :citation, :access, :license,
-                                 :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
-                                 :agree_to_terms,
-                                 subtype: [],
-                                 attached_files_attributes: %i[_destroy id label hide file],
-                                 contributors_attributes: %i[_destroy id full_name first_name last_name role_term],
-                                 keywords_attributes: %i[_destroy id label uri],
-                                 related_works_attributes: %i[_destroy id citation],
-                                 related_links_attributes: %i[_destroy id link_title url])
+    top_level = T.cast(params.require(:work), ActionController::Parameters)
+    top_level.permit(:title, :work_type, :contact_email,
+                     'published(1i)', 'published(2i)', 'published(3i)',
+                     :creation_type,
+                     'created(1i)', 'created(2i)', 'created(3i)',
+                     'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
+                     'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
+                     :created_edtf, :abstract, :citation, :access, :license,
+                     :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
+                     :agree_to_terms,
+                     subtype: [],
+                     attached_files_attributes: %i[_destroy id label hide file],
+                     contributors_attributes: %i[_destroy id full_name first_name last_name role_term],
+                     keywords_attributes: %i[_destroy id label uri],
+                     related_works_attributes: %i[_destroy id citation],
+                     related_links_attributes: %i[_destroy id link_title url])
   end
 
   def validate_work_types!
