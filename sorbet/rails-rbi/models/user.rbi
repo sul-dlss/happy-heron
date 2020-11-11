@@ -91,6 +91,15 @@ module User::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::Work]).void }
   def deposits=(value); end
 
+  sig { returns(::Collection::ActiveRecord_Associations_CollectionProxy) }
+  def deposits_into; end
+
+  sig { returns(T::Array[Integer]) }
+  def deposits_into_ids; end
+
+  sig { params(value: T::Enumerable[::Collection]).void }
+  def deposits_into=(value); end
+
   sig { returns(::Notification::ActiveRecord_Associations_CollectionProxy) }
   def notifications; end
 
