@@ -41655,6 +41655,11 @@ module RelatedLink::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
+class RelatedLink
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class RelatedWork
   def autosave_associated_records_for_work(*args); end
 end
@@ -41687,6 +41692,11 @@ end
 
 module RelatedWork::GeneratedRelationMethods
   extend ::Mutex_m
+end
+
+class RelatedWork
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module Reline
