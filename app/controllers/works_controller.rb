@@ -3,7 +3,7 @@
 
 # The endpoint for CRUD about a Work
 class WorksController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!
   before_action :ensure_sdr_updatable
   verify_authorized except: [:show]
 
