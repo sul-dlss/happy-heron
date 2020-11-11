@@ -23,7 +23,8 @@ class DescriptionGenerator
       contributor: contributors,
       subject: keywords,
       note: [abstract, citation, contact],
-      event: [created_date, published_date].compact
+      event: [created_date, published_date].compact,
+      relatedResource: related_resource
     }
   end
 
@@ -157,6 +158,25 @@ class DescriptionGenerator
           }
         ]
       }
+    end
+  end
+
+  sig do
+    returns(T::Array[
+      T.any(
+        { type: String, access: { url: T::Array[{ value: String }] } },
+        { type: String, access: { url: T::Array[{ value: String }] }, title: T::Array[{ value: String }] }
+      )
+    ])
+  end
+  def related_resource
+    work.related_links.map do |rel_link|
+      {
+        type: 'related to',
+        access: { url: [{ value: rel_link.url }] }
+      }.tap do |h|
+        h[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
+      end
     end
   end
 end

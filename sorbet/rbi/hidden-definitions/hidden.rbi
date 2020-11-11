@@ -27026,11 +27026,23 @@ class Collection
 
   def after_add_for_collections_depositors?(); end
 
+  def after_add_for_collections_reviewers(); end
+
+  def after_add_for_collections_reviewers=(val); end
+
+  def after_add_for_collections_reviewers?(); end
+
   def after_add_for_depositors(); end
 
   def after_add_for_depositors=(val); end
 
   def after_add_for_depositors?(); end
+
+  def after_add_for_reviewers(); end
+
+  def after_add_for_reviewers=(val); end
+
+  def after_add_for_reviewers?(); end
 
   def after_add_for_works(); end
 
@@ -27044,11 +27056,23 @@ class Collection
 
   def after_remove_for_collections_depositors?(); end
 
+  def after_remove_for_collections_reviewers(); end
+
+  def after_remove_for_collections_reviewers=(val); end
+
+  def after_remove_for_collections_reviewers?(); end
+
   def after_remove_for_depositors(); end
 
   def after_remove_for_depositors=(val); end
 
   def after_remove_for_depositors?(); end
+
+  def after_remove_for_reviewers(); end
+
+  def after_remove_for_reviewers=(val); end
+
+  def after_remove_for_reviewers?(); end
 
   def after_remove_for_works(); end
 
@@ -27058,9 +27082,13 @@ class Collection
 
   def autosave_associated_records_for_collections_depositors(*args); end
 
+  def autosave_associated_records_for_collections_reviewers(*args); end
+
   def autosave_associated_records_for_creator(*args); end
 
   def autosave_associated_records_for_depositors(*args); end
+
+  def autosave_associated_records_for_reviewers(*args); end
 
   def autosave_associated_records_for_works(*args); end
 
@@ -27070,11 +27098,23 @@ class Collection
 
   def before_add_for_collections_depositors?(); end
 
+  def before_add_for_collections_reviewers(); end
+
+  def before_add_for_collections_reviewers=(val); end
+
+  def before_add_for_collections_reviewers?(); end
+
   def before_add_for_depositors(); end
 
   def before_add_for_depositors=(val); end
 
   def before_add_for_depositors?(); end
+
+  def before_add_for_reviewers(); end
+
+  def before_add_for_reviewers=(val); end
+
+  def before_add_for_reviewers?(); end
 
   def before_add_for_works(); end
 
@@ -27088,11 +27128,23 @@ class Collection
 
   def before_remove_for_collections_depositors?(); end
 
+  def before_remove_for_collections_reviewers(); end
+
+  def before_remove_for_collections_reviewers=(val); end
+
+  def before_remove_for_collections_reviewers?(); end
+
   def before_remove_for_depositors(); end
 
   def before_remove_for_depositors=(val); end
 
   def before_remove_for_depositors?(); end
+
+  def before_remove_for_reviewers(); end
+
+  def before_remove_for_reviewers=(val); end
+
+  def before_remove_for_reviewers?(); end
 
   def before_remove_for_works(); end
 
@@ -27102,7 +27154,11 @@ class Collection
 
   def validate_associated_records_for_collections_depositors(*args); end
 
+  def validate_associated_records_for_collections_reviewers(*args); end
+
   def validate_associated_records_for_depositors(*args); end
+
+  def validate_associated_records_for_reviewers(*args); end
 
   def validate_associated_records_for_works(*args); end
 end
@@ -27127,6 +27183,8 @@ module Collection::GeneratedAssociationMethods
 
   def reload_creator(); end
 
+  def reviewer_ids=(ids); end
+
   def work_ids=(ids); end
 end
 
@@ -27148,11 +27206,23 @@ class Collection
 
   def self.after_add_for_collections_depositors?(); end
 
+  def self.after_add_for_collections_reviewers(); end
+
+  def self.after_add_for_collections_reviewers=(val); end
+
+  def self.after_add_for_collections_reviewers?(); end
+
   def self.after_add_for_depositors(); end
 
   def self.after_add_for_depositors=(val); end
 
   def self.after_add_for_depositors?(); end
+
+  def self.after_add_for_reviewers(); end
+
+  def self.after_add_for_reviewers=(val); end
+
+  def self.after_add_for_reviewers?(); end
 
   def self.after_add_for_works(); end
 
@@ -27166,11 +27236,23 @@ class Collection
 
   def self.after_remove_for_collections_depositors?(); end
 
+  def self.after_remove_for_collections_reviewers(); end
+
+  def self.after_remove_for_collections_reviewers=(val); end
+
+  def self.after_remove_for_collections_reviewers?(); end
+
   def self.after_remove_for_depositors(); end
 
   def self.after_remove_for_depositors=(val); end
 
   def self.after_remove_for_depositors?(); end
+
+  def self.after_remove_for_reviewers(); end
+
+  def self.after_remove_for_reviewers=(val); end
+
+  def self.after_remove_for_reviewers?(); end
 
   def self.after_remove_for_works(); end
 
@@ -27184,11 +27266,23 @@ class Collection
 
   def self.before_add_for_collections_depositors?(); end
 
+  def self.before_add_for_collections_reviewers(); end
+
+  def self.before_add_for_collections_reviewers=(val); end
+
+  def self.before_add_for_collections_reviewers?(); end
+
   def self.before_add_for_depositors(); end
 
   def self.before_add_for_depositors=(val); end
 
   def self.before_add_for_depositors?(); end
+
+  def self.before_add_for_reviewers(); end
+
+  def self.before_add_for_reviewers=(val); end
+
+  def self.before_add_for_reviewers?(); end
 
   def self.before_add_for_works(); end
 
@@ -27202,11 +27296,23 @@ class Collection
 
   def self.before_remove_for_collections_depositors?(); end
 
+  def self.before_remove_for_collections_reviewers(); end
+
+  def self.before_remove_for_collections_reviewers=(val); end
+
+  def self.before_remove_for_collections_reviewers?(); end
+
   def self.before_remove_for_depositors(); end
 
   def self.before_remove_for_depositors=(val); end
 
   def self.before_remove_for_depositors?(); end
+
+  def self.before_remove_for_reviewers(); end
+
+  def self.before_remove_for_reviewers=(val); end
+
+  def self.before_remove_for_reviewers?(); end
 
   def self.before_remove_for_works(); end
 
@@ -46984,6 +47090,18 @@ class User
 
   def after_add_for_notifications?(); end
 
+  def after_add_for_reviews_collections(); end
+
+  def after_add_for_reviews_collections=(val); end
+
+  def after_add_for_reviews_collections?(); end
+
+  def after_add_for_reviews_collections_users(); end
+
+  def after_add_for_reviews_collections_users=(val); end
+
+  def after_add_for_reviews_collections_users?(); end
+
   def after_remove_for_deposits(); end
 
   def after_remove_for_deposits=(val); end
@@ -46996,9 +47114,25 @@ class User
 
   def after_remove_for_notifications?(); end
 
+  def after_remove_for_reviews_collections(); end
+
+  def after_remove_for_reviews_collections=(val); end
+
+  def after_remove_for_reviews_collections?(); end
+
+  def after_remove_for_reviews_collections_users(); end
+
+  def after_remove_for_reviews_collections_users=(val); end
+
+  def after_remove_for_reviews_collections_users?(); end
+
   def autosave_associated_records_for_deposits(*args); end
 
   def autosave_associated_records_for_notifications(*args); end
+
+  def autosave_associated_records_for_reviews_collections(*args); end
+
+  def autosave_associated_records_for_reviews_collections_users(*args); end
 
   def before_add_for_deposits(); end
 
@@ -47012,6 +47146,18 @@ class User
 
   def before_add_for_notifications?(); end
 
+  def before_add_for_reviews_collections(); end
+
+  def before_add_for_reviews_collections=(val); end
+
+  def before_add_for_reviews_collections?(); end
+
+  def before_add_for_reviews_collections_users(); end
+
+  def before_add_for_reviews_collections_users=(val); end
+
+  def before_add_for_reviews_collections_users?(); end
+
   def before_remove_for_deposits(); end
 
   def before_remove_for_deposits=(val); end
@@ -47024,6 +47170,18 @@ class User
 
   def before_remove_for_notifications?(); end
 
+  def before_remove_for_reviews_collections(); end
+
+  def before_remove_for_reviews_collections=(val); end
+
+  def before_remove_for_reviews_collections?(); end
+
+  def before_remove_for_reviews_collections_users(); end
+
+  def before_remove_for_reviews_collections_users=(val); end
+
+  def before_remove_for_reviews_collections_users?(); end
+
   def devise_modules(); end
 
   def devise_modules?(); end
@@ -47031,6 +47189,10 @@ class User
   def validate_associated_records_for_deposits(*args); end
 
   def validate_associated_records_for_notifications(*args); end
+
+  def validate_associated_records_for_reviews_collections(*args); end
+
+  def validate_associated_records_for_reviews_collections_users(*args); end
 end
 
 class User::ActiveRecord_AssociationRelation
@@ -47052,6 +47214,8 @@ module User::GeneratedAssociationMethods
   def deposit_ids=(ids); end
 
   def notification_ids=(ids); end
+
+  def reviews_collection_ids=(ids); end
 end
 
 module User::GeneratedAttributeMethods
@@ -47081,6 +47245,18 @@ class User
 
   def self.after_add_for_notifications?(); end
 
+  def self.after_add_for_reviews_collections(); end
+
+  def self.after_add_for_reviews_collections=(val); end
+
+  def self.after_add_for_reviews_collections?(); end
+
+  def self.after_add_for_reviews_collections_users(); end
+
+  def self.after_add_for_reviews_collections_users=(val); end
+
+  def self.after_add_for_reviews_collections_users?(); end
+
   def self.after_remove_for_deposits(); end
 
   def self.after_remove_for_deposits=(val); end
@@ -47092,6 +47268,18 @@ class User
   def self.after_remove_for_notifications=(val); end
 
   def self.after_remove_for_notifications?(); end
+
+  def self.after_remove_for_reviews_collections(); end
+
+  def self.after_remove_for_reviews_collections=(val); end
+
+  def self.after_remove_for_reviews_collections?(); end
+
+  def self.after_remove_for_reviews_collections_users(); end
+
+  def self.after_remove_for_reviews_collections_users=(val); end
+
+  def self.after_remove_for_reviews_collections_users?(); end
 
   def self.before_add_for_deposits(); end
 
@@ -47105,6 +47293,18 @@ class User
 
   def self.before_add_for_notifications?(); end
 
+  def self.before_add_for_reviews_collections(); end
+
+  def self.before_add_for_reviews_collections=(val); end
+
+  def self.before_add_for_reviews_collections?(); end
+
+  def self.before_add_for_reviews_collections_users(); end
+
+  def self.before_add_for_reviews_collections_users=(val); end
+
+  def self.before_add_for_reviews_collections_users?(); end
+
   def self.before_remove_for_deposits(); end
 
   def self.before_remove_for_deposits=(val); end
@@ -47116,6 +47316,18 @@ class User
   def self.before_remove_for_notifications=(val); end
 
   def self.before_remove_for_notifications?(); end
+
+  def self.before_remove_for_reviews_collections(); end
+
+  def self.before_remove_for_reviews_collections=(val); end
+
+  def self.before_remove_for_reviews_collections?(); end
+
+  def self.before_remove_for_reviews_collections_users(); end
+
+  def self.before_remove_for_reviews_collections_users=(val); end
+
+  def self.before_remove_for_reviews_collections_users?(); end
 
   def self.devise_modules(); end
 
@@ -48467,6 +48679,8 @@ end
 
 class Work
   extend ::StateMachines::ClassMethods
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
   def self.after_add_for_attached_files(); end
 
   def self.after_add_for_attached_files=(val); end

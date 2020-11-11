@@ -7,4 +7,10 @@ FactoryBot.define do
     url { 'http://my.awesome.research.io' }
     work
   end
+
+  trait :untitled do
+    link_title { nil }
+    url { 'https://your.awesome.research.ai' }
+    work
+  end
 end
