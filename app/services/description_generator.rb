@@ -24,7 +24,7 @@ class DescriptionGenerator
       subject: keywords,
       note: [abstract, citation, contact],
       event: [created_date, published_date].compact,
-      relatedResource: related_resource
+      relatedResource: related_links + related_works
     }
   end
 
@@ -169,7 +169,7 @@ class DescriptionGenerator
       )
     ])
   end
-  def related_resource
+  def related_links
     work.related_links.map do |rel_link|
       {
         type: 'related to',
@@ -177,6 +177,18 @@ class DescriptionGenerator
       }.tap do |h|
         h[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
       end
+    end
+  end
+
+  sig { returns(T::Array[{ type: String, note: T::Array[{ type: String, value: String }] }]) }
+  def related_works
+    work.related_works.map do |rel_work|
+      {
+        type: 'related to',
+        note: [
+          { type: 'preferred citation', value: rel_work.citation }
+        ]
+      }
     end
   end
 end
