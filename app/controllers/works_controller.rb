@@ -23,7 +23,7 @@ class WorksController < ApplicationController
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
 
-    if submit_type == :deposit
+    if deposit?
       @form = WorkForm.new(work)
       # only validate on deposit, not on draft
       if @form.validate(work_params) && @form.save
@@ -52,7 +52,7 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
     authorize! work
 
-    if submit_type == :deposit
+    if deposit?
       @form = WorkForm.new(work)
       # only validate on deposit, not on draft
       if @form.validate(work_params) && @form.save
@@ -124,11 +124,7 @@ class WorksController < ApplicationController
     redirect_to dashboard_path
   end
 
-  def submit_type
-    if params[:commit] == 'Deposit'
-      :deposit
-    else
-      :draft
-    end
+  def deposit?
+    params[:commit] == 'Deposit'
   end
 end
