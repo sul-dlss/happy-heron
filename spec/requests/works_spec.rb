@@ -22,9 +22,9 @@ RSpec.describe 'Works requests' do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it 'allows GETs to /works/:work_id' do
+    it 'redirects from /works/:work_id to login URL' do
       get "/works/#{work.id}"
-      expect(response).to have_http_status(:ok)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 
