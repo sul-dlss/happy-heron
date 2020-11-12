@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # The form for collection creation and editing
-class CollectionFormDraft < Reform::Form
+class DraftCollectionForm < Reform::Form
   extend T::Sig
 
   property :name

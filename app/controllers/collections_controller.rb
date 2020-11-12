@@ -31,7 +31,7 @@ class CollectionsController < ApplicationController
     @form = if deposit?
               CollectionForm.new(collection)
             else
-              CollectionFormDraft.new(collection)
+              DraftCollectionForm.new(collection)
             end
 
     if @form.validate(collection_params) && @form.save
@@ -50,7 +50,7 @@ class CollectionsController < ApplicationController
     @form = if deposit?
               CollectionForm.new(collection)
             else
-              CollectionFormDraft.new(collection)
+              DraftCollectionForm.new(collection)
             end
 
     if @form.validate(collection_params) && @form.save

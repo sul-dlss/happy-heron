@@ -5,7 +5,7 @@ require 'reform/form/coercion'
 
 # The form for draft work creation and editing
 # rubocop:disable Metrics/ClassLength
-class WorkFormDraft < Reform::Form
+class DraftWorkForm < Reform::Form
   feature Coercion
 
   property :work_type

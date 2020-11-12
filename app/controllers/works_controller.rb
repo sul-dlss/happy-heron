@@ -26,7 +26,7 @@ class WorksController < ApplicationController
     @form = if deposit?
               WorkForm.new(work)
             else
-              WorkFormDraft.new(work)
+              DraftWorkForm.new(work)
             end
 
     if @form.validate(work_params) && @form.save
@@ -52,7 +52,7 @@ class WorksController < ApplicationController
     @form = if deposit?
               WorkForm.new(work)
             else
-              WorkFormDraft.new(work)
+              DraftWorkForm.new(work)
             end
 
     if @form.validate(work_params) && @form.save

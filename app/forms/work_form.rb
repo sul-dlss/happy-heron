@@ -4,7 +4,7 @@
 require 'reform/form/coercion'
 
 # The form for deposit work creation and editing (which includes validation)
-class WorkForm < WorkFormDraft
+class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true
   validates 'created(1i)', 'created_range(1i)', 'created_range(4i)',
             inclusion: { in: Settings.earliest_created_year..Time.zone.today.year },

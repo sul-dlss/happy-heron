@@ -7,6 +7,71 @@ module Event::ActiveRelation_WhereNot
   def not(opts, *rest); end
 end
 
+module Event::GeneratedAttributeMethods
+  sig { returns(ActiveSupport::TimeWithZone) }
+  def created_at; end
+
+  sig { params(value: T.any(Date, Time, ActiveSupport::TimeWithZone)).void }
+  def created_at=(value); end
+
+  sig { returns(T::Boolean) }
+  def created_at?; end
+
+  sig { returns(T.nilable(String)) }
+  def description; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def description=(value); end
+
+  sig { returns(T::Boolean) }
+  def description?; end
+
+  sig { returns(String) }
+  def event_type; end
+
+  sig { params(value: T.any(String, Symbol)).void }
+  def event_type=(value); end
+
+  sig { returns(T::Boolean) }
+  def event_type?; end
+
+  sig { returns(Integer) }
+  def id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def id=(value); end
+
+  sig { returns(T::Boolean) }
+  def id?; end
+
+  sig { returns(ActiveSupport::TimeWithZone) }
+  def updated_at; end
+
+  sig { params(value: T.any(Date, Time, ActiveSupport::TimeWithZone)).void }
+  def updated_at=(value); end
+
+  sig { returns(T::Boolean) }
+  def updated_at?; end
+
+  sig { returns(Integer) }
+  def user_id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def user_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def user_id?; end
+
+  sig { returns(Integer) }
+  def work_id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def work_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def work_id?; end
+end
+
 module Event::GeneratedAssociationMethods
   sig { returns(::User) }
   def user; end
@@ -57,6 +122,7 @@ module Event::CustomFinderMethods
 end
 
 class Event < ApplicationRecord
+  include Event::GeneratedAttributeMethods
   include Event::GeneratedAssociationMethods
   extend Event::CustomFinderMethods
   extend Event::QueryMethodsReturningRelation

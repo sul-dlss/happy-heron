@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # The form for collection creation and editing
-class CollectionForm < CollectionFormDraft
+class CollectionForm < DraftCollectionForm
   extend T::Sig
 
   validates :name, :description, :managers, :access, presence: true

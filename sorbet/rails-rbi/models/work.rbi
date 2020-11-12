@@ -263,7 +263,7 @@ module Work::GeneratedAssociationMethods
   sig { returns(::Event::ActiveRecord_Associations_CollectionProxy) }
   def events; end
 
-  sig { returns(T::Array[T.untyped]) }
+  sig { returns(T::Array[Integer]) }
   def event_ids; end
 
   sig { params(value: T::Enumerable[::Event]).void }
