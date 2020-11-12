@@ -74,7 +74,7 @@ fi
 
 if committed_changes_to 'app/'
 then
-   echo '*** Regenerating Sorbet RBIs for application (as this branch has changed files in app/'
+   echo '*** Regenerating Sorbet RBIs for application (as this branch has changed files in app/)'
    echo
    bundle exec rake rails_rbi:all
    bundle exec srb rbi suggest-typed
