@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # The endpoint for CRUD about a Work
-class WorksController < ApplicationController
+class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
   verify_authorized except: [:show]

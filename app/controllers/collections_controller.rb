@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Handles CRUD for Collections
-class CollectionsController < ApplicationController
+class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
   verify_authorized
