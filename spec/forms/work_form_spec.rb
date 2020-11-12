@@ -57,7 +57,7 @@ RSpec.describe WorkForm do
     let(:current_year) { Time.zone.today.year }
 
     %w[published(1i) created(1i) created_range(1i) created_range(4i)].each do |attribute|
-      before { form.validate(attribute => year, keywords: [{ label: 'foo' }]) }
+      before { form.validate(attribute => year, keywords: [{ label: 'foo' }], attached_files: [{ label: 'bar' }]) }
 
       context "with a four-digit integer <= the current year as #{attribute}" do
         let(:year) { current_year - 1 }

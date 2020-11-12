@@ -57,6 +57,10 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Publication year', with: ''
       # End of client-side validation testing
 
+      page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
+        click_button('Choose files')
+      end
+
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
 

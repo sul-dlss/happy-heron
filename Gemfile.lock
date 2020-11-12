@@ -228,6 +228,8 @@ GEM
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    jbuilder (2.10.1)
+      activesupport (>= 5.0.0)
     json (2.3.1)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -492,6 +494,7 @@ DEPENDENCIES
   edtf
   factory_bot_rails
   honeybadger (~> 4.0)
+  jbuilder
   listen (~> 3.2)
   multi_json
   okcomputer

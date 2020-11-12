@@ -1,4 +1,4 @@
-<div class="keywords" data-controller="keywords" data-action="focusout->keywords#close" data-target="edit-deposit.keywordsField">
+<div class="keywords" data-controller="keywords" data-action="focusout->keywords#close error->keywords#error" data-target="edit-deposit.keywordsField">
   <div class="keywords-container" data-target="keywords.container" data-action="click->keywords#open">
     <span class="selection" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1"
       aria-disabled="false" aria-owns="keyword-results">
@@ -25,7 +25,7 @@
       </span>
     </span>
   </div>
-  <div class="invalid-feedback"></div>
+  <div data-target="keywords.error" class="invalid-feedback"></div>
 <%# -- TODO for autocomplete
   <div class="keywords-container keywords-container-open" data-target="keywords.container">
     <span class="keywords-dropdown select2-dropdown--above">
