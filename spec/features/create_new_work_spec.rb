@@ -60,6 +60,9 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
 
+      select 'Publisher', from: 'Role term'
+      fill_in 'Name', with: 'Best Publisher'
+
       fill_in 'Publication year', with: '2020'
       select 'February', from: 'Publication month'
 
@@ -110,9 +113,12 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       click_button 'Deposit'
 
       expect(page).to have_content('My Title')
+      expect(page).to have_link(Collection.last.name)
+      expect(page).to have_content(user.email)
       expect(page).to have_content('sound')
       expect(page).to have_content('Course/instruction, Musical notation, Poetry reading')
       expect(page).to have_content(user.email)
+      expect(page).to have_content('Best Publisher')
       expect(page).to have_content('2020-03-06/2020-10-30')
       expect(page).to have_content('Whatever')
       expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
@@ -131,8 +137,7 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       check 'I agree to the SDR Terms of Deposit'
       click_button 'Deposit'
 
-      expect(page).not_to have_content('title = My Title')
-      expect(page).not_to have_content('agree_to_terms = true')
+      expect(page).not_to have_content('My Title')
       expect(page).to have_content('Deposit your content')
     end
   end
