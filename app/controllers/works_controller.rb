@@ -23,12 +23,7 @@ class WorksController < ApplicationController
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
 
-    @form = if deposit?
-              WorkForm.new(work)
-            else
-              DraftWorkForm.new(work)
-            end
-
+    @form = work_form(work)
     if @form.validate(work_params) && @form.save
       after_save(work)
     else
@@ -49,12 +44,7 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
     authorize! work
 
-    @form = if deposit?
-              WorkForm.new(work)
-            else
-              DraftWorkForm.new(work)
-            end
-
+    @form = work_form(work)
     if @form.validate(work_params) && @form.save
       after_save(work)
     else
@@ -68,6 +58,13 @@ class WorksController < ApplicationController
   end
 
   private
+
+  sig { params(work: Work).returns(Reform::Form) }
+  def work_form(work)
+    return WorkForm.new(work) if deposit?
+
+    DraftWorkForm.new(work)
+  end
 
   sig { params(work: Work).void }
   def after_save(work)
