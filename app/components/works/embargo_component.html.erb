@@ -1,13 +1,13 @@
 <section id="release">
   <header>Manage release of this deposit for discovery and download after publication</header>
   <p>Select when the files in your deposit will be downloadable from the PURL page.
-     If you select "Immediately", your files will be available shortly after
-     [see options below]. Or you may specify a specific date in the future.</p>
+     If you select "Immediately", your files will be available shortly after you click
+     "Deposit" at the bottom of this page. Or you may specify a specific date in the future.</p>
 
    <div class="mb-3 row">
      <div class="col-sm-2">
        <%= form.radio_button :release, 'immediate', class: 'form-check-input' %>
-       <%= form.label :release_immediate, 'Immediately' %>
+       <%= form.label :release_immediate, 'Immediately once deposit is completed' %>
      </div>
    </div>
 
