@@ -24,23 +24,15 @@
       <% end %>
       <tr>
         <th scope="row">Collection</th>
-        <td><%= @work.collection.name %></td>
+        <td><%= link_to @work.collection.name, @work.collection %></td>
       </tr>
       <tr>
         <th scope="row">Deposit type</th>
         <td><%= @work.work_type %></td>
       </tr>
       <tr>
-        <th scope="row">Deposit subtypes</th>
-        <td><%= @work.subtype.join(', ') %></td>
-      </tr>
-      <tr>
         <th scope="row">Depositor</th>
         <td><%= @work.depositor %></td>
-      </tr>
-      <tr>
-        <th scope="row">Contact</th>
-        <td><%= @work.contact_email %>></td>
       </tr>
       <tr>
         <th scope="row">Version details</th>
@@ -95,7 +87,7 @@
       </tr>
       <tr>
         <th scope="row">Contact</th>
-        <td><%= @work.contact_email %>></td>
+        <td><%= @work.contact_email %></td>
       </tr>
       </tbody>
     </table>
@@ -108,10 +100,14 @@
       </tr>
       </thead>
       <tbody>
-      <% @work.contributors.each do |c| %>
+      <% @work.contributors.each do |contributor| %>
         <tr>
-          <td><%= c.first_name %> <%= c.last_name %></td>
-          <td><%= c.role %></td>
+          <% if contributor.person? %>
+            <td><%= contributor.first_name %> <%= contributor.last_name %></td>
+          <% else %>
+            <td><%= contributor.full_name %></td>
+          <% end %>
+          <td><%= contributor.role %></td>
         </tr>
       <% end %>
       </tbody>
@@ -139,21 +135,6 @@
     <table class="table table-sm mb-5">
       <thead class="table-light">
       <tr>
-        <th scope="col" class="table-title col-3">Collection</th>
-        <th scope="col"></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <th scope="row">Collection</th>
-        <td><%= @work.collection.name %></td>
-      </tr>
-      </tbody>
-    </table>
-
-    <table class="table table-sm mb-5">
-      <thead class="table-light">
-      <tr>
         <th scope="col" class="table-title col-3">Description<%= link_to edit_work_path(@work, anchor: "description"), aria: { label: "Edit description"} do %><span class="fas fa-pencil-alt edit"></span><% end %></th>
         <th scope="col"></th>
       </tr>
@@ -166,6 +147,10 @@
       <tr>
         <th scope="row">Keywords</th>
         <td><%= @work.keywords.map {|keyword| keyword.label}.join(', ') %></td>
+      </tr>
+      <tr>
+        <th scope="row">Deposit subtypes</th>
+        <td><%= @work.subtype.join(', ') %></td>
       </tr>
       <tr>
         <th scope="row">Preferred citation</th>
@@ -227,6 +212,5 @@
       </tr>
       </tbody>
     </table>
-
   </section>
 </div>
