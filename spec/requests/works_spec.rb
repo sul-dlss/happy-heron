@@ -296,6 +296,7 @@ RSpec.describe 'Works requests' do
             work_type: 'text',
             contact_email: 'io@io.io',
             abstract: 'test abstract',
+            attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
@@ -304,12 +305,31 @@ RSpec.describe 'Works requests' do
           }
         end
 
+        let(:upload) do
+          ActiveStorage::Blob.create_after_upload!(
+            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            filename: 'apple-touch-icon.png',
+            content_type: 'image/png'
+          )
+        end
+
+        let(:files) do
+          {
+            '0' => {
+              '_destroy' => 'false',
+              'label' => 'My ICO',
+              'hide' => false,
+              'file' => upload.signed_id
+            }
+          }
+        end
+
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors).to be_empty
-          expect(work.attached_files).to be_empty
+          expect(work.attached_files.size).to eq 1
           expect(work.keywords.size).to eq 1
           expect(work.published_edtf).to be_nil
           expect(work.created_edtf).to be_nil
@@ -328,6 +348,7 @@ RSpec.describe 'Works requests' do
             work_type: 'text',
             contact_email: 'io@io.io',
             abstract: 'test abstract',
+            attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
@@ -336,12 +357,31 @@ RSpec.describe 'Works requests' do
           }
         end
 
+        let(:upload) do
+          ActiveStorage::Blob.create_after_upload!(
+            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            filename: 'apple-touch-icon.png',
+            content_type: 'image/png'
+          )
+        end
+
+        let(:files) do
+          {
+            '0' => {
+              '_destroy' => 'false',
+              'label' => 'My ICO',
+              'hide' => false,
+              'file' => upload.signed_id
+            }
+          }
+        end
+
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors).to be_empty
-          expect(work.attached_files).to be_empty
+          expect(work.attached_files.size).to eq 1
           expect(work.keywords.size).to eq 1
           expect(work.published_edtf).to be_nil
           expect(work.created_edtf).to be_nil
@@ -398,9 +438,11 @@ RSpec.describe 'Works requests' do
         end
 
         it 'returns a validation error in JSON format' do
-          patch "/works/#{work.id}", params: { work: work_params }
+          patch "/works/#{work.id}", params: { work: work_params, format: :json }
           expect(response).to have_http_status(:bad_request)
-          expect(JSON.parse(response.body)['title']).to include("can't be blank")
+          json = JSON.parse(response.body)
+          expect(json['title']).to include("can't be blank")
+          expect(json['file']).to eq ['Please add at least one file.']
         end
       end
     end

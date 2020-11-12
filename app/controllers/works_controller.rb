@@ -28,7 +28,7 @@ class WorksController < ApplicationController
       after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
-      render json: @form.errors, status: :bad_request
+      render 'errors', status: :bad_request
     end
   end
 
@@ -49,7 +49,7 @@ class WorksController < ApplicationController
       after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
-      render json: @form.errors, status: :bad_request
+      render 'errors', status: :bad_request
     end
   end
 
