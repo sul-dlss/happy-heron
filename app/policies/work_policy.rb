@@ -17,4 +17,10 @@ class WorkPolicy < ApplicationPolicy
   def update?
     record.depositor == user
   end
+
+  # The collection reviewers can review a work
+  sig { returns(T::Boolean) }
+  def review?
+    record.pending_approval? && record.collection.reviewers.include?(user)
+  end
 end

@@ -30,4 +30,19 @@ RSpec.describe WorkPolicy do
       before { collection.managers = [user.sunetid] }
     end
   end
+
+  describe_rule :review? do
+    failed 'when user is not a reviewer the collection' do
+      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+    end
+
+    succeed 'when user is a reviewer and status is pending_approval' do
+      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+      before { collection.reviewers = [user] }
+    end
+
+    failed 'when user is a reviewer and status is not pending_approval' do
+      before { collection.reviewers = [user] }
+    end
+  end
 end

@@ -26,7 +26,7 @@
           <tbody>
           <% @presenter.approvals.each do |submission| %>
             <tr>
-              <td><%= link_to submission.title, edit_work_path(submission) %></td>
+              <td><%= link_to submission.title, work_path(submission) %></td>
               <td><%= submission.depositor.sunetid %></td>
               <td><%= submission.collection.name %></td>
               <td><%= submission.state.humanize %></td>

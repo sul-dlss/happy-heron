@@ -19,6 +19,10 @@ FactoryBot.define do
     published_edtf { '2020-02-14' }
   end
 
+  trait :pending_approval do
+    state { 'pending_approval' }
+  end
+
   trait :with_creation_dates do
     created_edtf { '2020-03-04/2020-10-31' }
   end

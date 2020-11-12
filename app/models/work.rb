@@ -35,6 +35,10 @@ class Work < ApplicationRecord
       transition first_draft: :pending_approval
     end
 
+    event :reject do
+      transition pending_approval: :first_draft
+    end
+
     event :new_version do
       transition deposited: :version_draft
     end
