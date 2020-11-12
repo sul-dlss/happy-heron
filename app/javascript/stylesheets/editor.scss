@@ -32,6 +32,25 @@
     padding-bottom: 1rem;
   }
 
+  .release-option {
+    align-items: center;
+    display: flex;
+    font-size: 20px;
+
+    input[type="radio"]:not(:checked) + label {
+      color: $btn-link-disabled-color;
+    }
+    input[type="radio"]:checked + label {
+      font-weight: bold;
+    }
+    label {
+      margin-right: 2rem;
+    }
+    * {
+      margin-right: .3rem;
+    }
+  }
+
   .form-check .invalid-feedback::before {
     background-image: escape-svg($form-feedback-icon-invalid);
     background-repeat: no-repeat;
