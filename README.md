@@ -55,26 +55,26 @@ To do this, create a file named `.git/hooks/pre-push` and add code like the foll
 # Abort push if any commands error out
 set -e
 
-# Check if any changes since last commit
+# Check if any local changes since last commit
 function pending_changes_to {
     git diff --name-only --diff-filter=ACM | grep --quiet "^$1"
 }
 
-# Check if any changes committed
+# Check if any local changes committed
 function committed_changes_to {
     git diff --name-only main | grep --quiet "^$1"
 }
 
 if committed_changes_to 'Gemfile.lock'
 then
-    echo '*** Regenerating RBIs for gem dependencies, which have changed since you branched off main'
+    echo '*** Regenerating Sorbet RBIs for gem dependencies (as this branch has changed Gemfile.lock)'
     echo
     env SRB_YES=1 bundle exec srb rbi gems
 fi
 
 if committed_changes_to 'app/'
 then
-   echo '*** Regenerating RBIs for application, which has changed since you branched off main'
+   echo '*** Regenerating Sorbet RBIs for application (as this branch has changed files in app/)'
    echo
    bundle exec rake rails_rbi:all
    bundle exec srb rbi suggest-typed
