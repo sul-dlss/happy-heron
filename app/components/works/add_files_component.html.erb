@@ -2,7 +2,7 @@
   <header>Add your files</header>
   <p>All file types are accepted. If you have a deposit that is over 10GB, or
     have any trouble with adding your files, contact us.</p>
-  <div class="dropzone dropzone-default dz-clickable">
+  <div class="dropzone dropzone-default">
     <%= form.file_field :files, multiple: true, direct_upload: true,
                         data: { target: 'dropzone.input edit-deposit.fileField',
                                 'progress-step': 'file',
@@ -11,6 +11,7 @@
       <p>Drop files here</p>
     </div>
   </div>
+  <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
   <div class="dropzone-previews" data-target="dropzone.previews">
     <%= form.fields_for :attached_files do |file_form| %>
       <%= render Works::FileRowComponent.new(form: file_form) %>

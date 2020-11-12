@@ -186,6 +186,7 @@ function createDropZone(controller, template) {
     previewsContainer: ".dropzone-previews",
     thumbnailHeight: 42,
     thumbnailWidth: 34,
+    clickable: '.dz-clickable',
 
     autoQueue: false
   });
