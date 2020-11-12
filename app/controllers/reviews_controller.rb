@@ -12,6 +12,7 @@ class ReviewsController < ApplicationController
     if params[:state] == 'approve'
       DepositJob.perform_later(work)
     else
+      Event.create!(work: work, user: current_user, event_type: 'return', description: params[:reason])
       work.reject!
     end
 
