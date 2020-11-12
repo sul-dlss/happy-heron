@@ -47,11 +47,13 @@
       <% if @presenter.collections.present? %>
         <ul class="collections">
           <% @presenter.collections.each do |collection| %>
-            <li>
+            <li class="mb-5">
               <div>
                 <header><%= collection.name %>
-                  <%= link_to edit_collection_path(collection), aria: { label: "Edit #{collection.name}"} do %>
-                    <span class="fas fa-pencil-alt"></span>
+                  <% if allowed_to?(:edit?, collection) %>
+                    <%= link_to edit_collection_path(collection), aria: { label: "Edit #{collection.name}"} do %>
+                      <span class="fas fa-pencil-alt"></span>
+                    <% end %>
                   <% end %>
                 </header>
                 <%= button_tag '+ Deposit to this collection',

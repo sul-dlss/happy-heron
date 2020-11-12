@@ -33,7 +33,7 @@ RSpec.describe 'Dashboard requests' do
     end
   end
 
-  context 'when user is a collection creator' do
+  context 'when user has the collection creator LDAP role' do
     before { sign_in user, groups: ['dlss:hydrus-app-collection-creators'] }
 
     it 'shows links to create in a collection' do
@@ -70,6 +70,23 @@ RSpec.describe 'Dashboard requests' do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'To Review'
       expect(response.body).not_to include 'No Review'
+    end
+  end
+
+  context 'when user is a depositor in a collection' do
+    let(:collection) { create(:collection, :with_depositors) }
+    let(:user) { collection.depositors.first }
+
+    before do
+      create(:work, depositor: user) # Must have a deposit to visit the dashboard
+      sign_in user
+    end
+
+    it 'shows a link to deposit in the collection' do
+      get '/dashboard'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'Deposit to this collection'
+      expect(response.body).not_to include 'Edit'
     end
   end
 end

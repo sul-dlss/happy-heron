@@ -16,6 +16,7 @@ class User < ApplicationRecord
                       dependent: :destroy
 
   has_and_belongs_to_many :reviews_collections, class_name: 'Collection', join_table: 'reviewers'
+  has_and_belongs_to_many :deposits_into, class_name: 'Collection', join_table: 'depositors'
 
   devise :remote_user_authenticatable
 
