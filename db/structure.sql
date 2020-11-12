@@ -223,6 +223,40 @@ CREATE TABLE public.depositors (
 
 
 --
+-- Name: events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.events (
+    id bigint NOT NULL,
+    description character varying,
+    event_type character varying NOT NULL,
+    work_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.events_id_seq OWNED BY public.events.id;
+
+
+--
 -- Name: keywords; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -490,6 +524,13 @@ ALTER TABLE ONLY public.contributors ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.events_id_seq'::regclass);
+
+
+--
 -- Name: keywords id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -577,6 +618,14 @@ ALTER TABLE ONLY public.collections
 
 ALTER TABLE ONLY public.contributors
     ADD CONSTRAINT contributors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
 
 
 --
@@ -685,6 +734,20 @@ CREATE UNIQUE INDEX index_depositors_on_collection_id_and_user_id ON public.depo
 
 
 --
+-- Name: index_events_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_user_id ON public.events USING btree (user_id);
+
+
+--
+-- Name: index_events_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_work_id ON public.events USING btree (work_id);
+
+
+--
 -- Name: index_keywords_on_work_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -766,6 +829,22 @@ CREATE UNIQUE INDEX index_works_on_druid_and_version ON public.works USING btree
 --
 
 CREATE INDEX index_works_on_state ON public.works USING btree (state);
+
+
+--
+-- Name: events fk_rails_0cb5590091; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_0cb5590091 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: events fk_rails_19cce84f7e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_19cce84f7e FOREIGN KEY (work_id) REFERENCES public.works(id);
 
 
 --
@@ -879,6 +958,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201028205711'),
 ('20201105141009'),
 ('20201105191840'),
-('20201110133105');
+('20201110133105'),
+('20201112131704');
 
 

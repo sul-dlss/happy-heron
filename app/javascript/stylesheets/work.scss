@@ -8,10 +8,18 @@
       @extend h4;
     }
 
-    label {
+    .toggle + label {
       @extend h5;
       padding: 1rem;
       width: 100%;
+    }
+
+    .reason {
+      display: flex;
+      align-items: center;
+      input {
+        margin-left: .5rem;
+      }
     }
   }
 

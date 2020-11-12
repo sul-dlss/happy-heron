@@ -13,6 +13,7 @@ class Work < ApplicationRecord
   has_many :related_works, dependent: :destroy
   has_many :attached_files, dependent: :destroy
   has_many :keywords, dependent: :destroy
+  has_many :events, dependent: :destroy
 
   validates :abstract, :access, :state, :title, presence: true
   validates :contact_email, presence: true, format: { with: Devise.email_regexp }
