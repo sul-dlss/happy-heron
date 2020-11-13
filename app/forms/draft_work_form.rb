@@ -5,8 +5,8 @@ require 'reform/form/coercion'
 
 # The form for draft work creation and editing
 class DraftWorkForm < Reform::Form
-  feature Coercion
   feature Edtf
+  feature EmbargoDate
 
   property :work_type
   property :subtype
@@ -22,18 +22,10 @@ class DraftWorkForm < Reform::Form
   property :published_edtf, edtf: true
 
   property :release, virtual: true, default: 'immediate'
-  property 'embargo_date(1i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'embargo_date(2i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'embargo_date(3i)', virtual: true, type: ::Types::Custom::NilableInteger
+  property :embargo_date, embargo_date: true, assign_if: ->(params) { params['release'] == 'embargo' }
 
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true
-
-  def sync(*)
-    model.embargo_date = deserialize_date(:embargo_date) if release == 'embargo'
-
-    super
-  end
 
   collection :contributors,
              populator: ContributorPopulator.new(:contributors, Contributor),
@@ -78,14 +70,5 @@ class DraftWorkForm < Reform::Form
     property :link_title
     property :url
     property :_destroy, virtual: true
-  end
-
-  private
-
-  def deserialize_date(name)
-    year = public_send("#{name}(1i)")
-    month = public_send("#{name}(2i)")
-    day = public_send("#{name}(3i)")
-    Date.new(year, month, day)
   end
 end
