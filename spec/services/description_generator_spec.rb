@@ -6,13 +6,12 @@ require 'rails_helper'
 RSpec.describe DescriptionGenerator do
   subject(:model) { described_class.generate(work: work).to_h }
 
+  let(:contributor) { build(:contributor, :with_org_contributor) }
   let(:work) do
-    build(:work, :with_creation_dates, :published, :with_keywords, :with_contributors,
-          :with_some_untitled_related_links, :with_related_works)
+    build(:work, :with_creation_dates, :published, :with_keywords,
+          :with_some_untitled_related_links, :with_related_works,
+          contributors: [contributor])
   end
-  let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}" }
-  let(:contrib2_name) { "#{work.contributors[1].last_name}, #{work.contributors[1].first_name}" }
-  let(:contrib3_name) { "#{work.contributors.last.last_name}, #{work.contributors.last.first_name}" }
   let(:citation_value) do
     'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
         'Journal of Librarianship and Scholarly Communication, 1(3).'
@@ -36,9 +35,33 @@ RSpec.describe DescriptionGenerator do
       ],
       title: [{ value: 'Test title' }],
       contributor: [
-        { name: [{ value: contrib1_name }], role: [{ value: 'Contributing author' }], type: 'person' },
-        { name: [{ value: contrib2_name }], role: [{ value: 'Contributing author' }], type: 'person' },
-        { name: [{ value: contrib3_name }], role: [{ value: 'Contributing author' }], type: 'person' }
+        {
+          name: [{ value: contributor.full_name }],
+          type: contributor.contributor_type,
+          role: [
+            {
+              value: contributor.role,
+              source: {
+                value: 'Stanford self-deposit contributor types'
+              }
+            },
+            {
+              value: 'sponsor',
+              code: 'spn',
+              uri: 'http://id.loc.gov/vocabulary/relators/spn',
+              source: {
+                code: 'marcrelator',
+                uri: 'http://id.loc.gov/vocabulary/relators/'
+              }
+            },
+            {
+              value: 'Sponsor',
+              source: {
+                value: 'DataCite contributor types'
+              }
+            }
+          ]
+        }
       ],
       relatedResource: [
         {
@@ -67,18 +90,61 @@ RSpec.describe DescriptionGenerator do
           type: 'related to',
           note: [{ value: citation_value, type: 'preferred citation' }]
         }
-      ]
+      ],
+      form: []
     )
   end
 
-  context 'with mixed contributors' do
-    let(:work) do
-      build(:work, :with_mixed_contributors)
+  context 'when contributor of type conference or event' do
+    let(:contributor1) { build(:contributor, :with_org_contributor, role: 'Event') }
+    let(:contributor2) { build(:contributor, role: 'Author') }
+    let(:contributor3) { build(:contributor, :with_org_contributor, role: 'Conference') }
+    let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
+    let(:stanford_self_deposit_source) do
+      {
+        value: 'Stanford self-deposit contributor types'
+      }
     end
-    let(:contrib1_name) { "#{work.contributors.first.last_name}, #{work.contributors.first.first_name}" }
-    let(:contrib2_name) { work.contributors.last.full_name }
+    let(:marc_relator_source) do
+      {
+        code: 'marcrelator',
+        uri: 'http://id.loc.gov/vocabulary/relators/'
+      }
+    end
+    let(:datacite_creator_role) do
+      {
+        value: 'Creator',
+        source: {
+          value: 'DataCite properties'
+        }
+      }
+    end
+    let(:author_roles) do
+      [
+        {
+          value: 'Author',
+          source: stanford_self_deposit_source
+        },
+        {
+          value: 'author',
+          code: 'aut',
+          uri: 'http://id.loc.gov/vocabulary/relators/aut',
+          source: marc_relator_source
+        },
+        datacite_creator_role
+      ]
+    end
+    let(:event_form) do
+      {
+        value: 'Event',
+        type: 'resource types',
+        source: {
+          value: 'DataCite resource types'
+        }
+      }
+    end
 
-    it 'creates description cocina model for org contribtor' do
+    it 'creates forms as well as contributors in description cocina model' do
       expect(model).to eq(
         note: [
           { type: 'summary', value: 'test abstract' },
@@ -87,8 +153,39 @@ RSpec.describe DescriptionGenerator do
         ],
         title: [{ value: 'Test title' }],
         contributor: [
-          { name: [{ value: contrib1_name }], role: [{ value: 'Contributing author' }], type: 'person' },
-          { name: [{ value: contrib2_name }], role: [{ value: 'Sponsor' }], type: 'organization' }
+          {
+            name: [{ value: contributor1.full_name }],
+            type: 'event',
+            role: [
+              {
+                value: 'Event',
+                source: stanford_self_deposit_source
+              }
+            ]
+          },
+          {
+            name: [
+              {
+                value: "#{contributor2.last_name}, #{contributor2.first_name}",
+                type: 'inverted full name'
+              }
+            ],
+            type: 'person',
+            role: author_roles
+          },
+          {
+            name: [{ value: contributor3.full_name }],
+            type: 'conference',
+            role: [
+              {
+                value: 'Conference',
+                source: stanford_self_deposit_source
+              }
+            ]
+          }
+        ],
+        form: [
+          event_form
         ],
         event: [],
         subject: [],
