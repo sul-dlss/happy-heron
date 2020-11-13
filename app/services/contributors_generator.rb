@@ -21,34 +21,27 @@ class ContributorsGenerator
     @work = work
   end
 
-  sig { returns(T::Array[Cocina::Models::Contributor]) }
+  sig { returns(T::Array[T.nilable(Cocina::Models::Contributor)]) }
   def generate
-    result = []
-
-    work.contributors.each do |work_form_contributor|
-      result << contributor(work_form_contributor)
-    end
-
-    result
+    work.contributors.map { |work_form_contributor| contributor(work_form_contributor) }
   end
 
-  FORM_EVENT = Cocina::Models::DescriptiveValue.new(
-    {
-      value: 'Event',
-      type: 'resource types',
-      source: { value: 'DataCite resource types' }
-    }
-  )
+  ROLES_FOR_FORM = %w[Event Conference].freeze
 
+  # when there is an organization role of 'Event' or 'Conference', a form value must be added to descriptive metadata
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def form_from_contributors
-    work.contributors.each do |contributor|
-      next unless contributor.role == 'Conference' || contributor.role == 'Event'
+    return [] if work.contributors.select { |c| ROLES_FOR_FORM.include?(c.role) }.empty?
 
-      return [FORM_EVENT]
-    end
-
-    []
+    [
+      Cocina::Models::DescriptiveValue.new(
+        {
+          value: 'Event',
+          type: 'resource types',
+          source: { value: 'DataCite resource types' }
+        }
+      )
+    ]
   end
 
   private
@@ -110,7 +103,7 @@ class ContributorsGenerator
   def marcrelator_role(role)
     mr_code = ROLE_TO_MARC_RELATOR_CODE[role]
     mr_value = MARC_RELATOR_CODE_TO_VALUE[mr_code]
-    return unless mr_code || mr_value
+    return if !mr_code && !mr_value
 
     Cocina::Models::DescriptiveValue.new(
       value: mr_value,
