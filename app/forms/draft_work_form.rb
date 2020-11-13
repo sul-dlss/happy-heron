@@ -6,7 +6,7 @@ require 'reform/form/coercion'
 # The form for draft work creation and editing
 # rubocop:disable Metrics/ClassLength
 class DraftWorkForm < Reform::Form
-  feature Coercion
+  feature Edtf
 
   property :work_type
   property :subtype
@@ -18,34 +18,18 @@ class DraftWorkForm < Reform::Form
   property :access
   property :license
   property :agree_to_terms
+  property :created_edtf, edtf: true, range: true
+  property :published_edtf, edtf: true
 
-  property 'created(1i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created(2i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created(3i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created_range(1i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created_range(2i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created_range(3i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created_range(4i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created_range(5i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'created_range(6i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'published(1i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'published(2i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property 'published(3i)', virtual: true, type: ::Types::Custom::NilableInteger
-  property :creation_type, virtual: true, default: 'single'
   property :release, virtual: true, default: 'immediate'
   property 'embargo_date(1i)', virtual: true, type: ::Types::Custom::NilableInteger
   property 'embargo_date(2i)', virtual: true, type: ::Types::Custom::NilableInteger
   property 'embargo_date(3i)', virtual: true, type: ::Types::Custom::NilableInteger
 
-  def sync(*)
-    model.created_edtf = case creation_type
-                         when 'range'
-                           deserialize_edtf_range(:created_range)
-                         else
-                           deserialize_edtf(:created)
-                         end
+  validates :created_edtf, created_in_past: true
+  validates :published_edtf, created_in_past: true
 
-    model.published_edtf = deserialize_edtf(:published)
+  def sync(*)
     model.embargo_date = deserialize_date(:embargo_date) if release == 'embargo'
 
     super
@@ -180,33 +164,6 @@ class DraftWorkForm < Reform::Form
     month = public_send("#{name}(2i)")
     day = public_send("#{name}(3i)")
     Date.new(year, month, day)
-  end
-
-  def deserialize_edtf(name, offset = 0)
-    year = public_send("#{name}(#{offset + 1}i)").to_s
-    month = public_send("#{name}(#{offset + 2}i)").to_s
-    day = public_send("#{name}(#{offset + 3}i)").to_s
-    deserialize_edtf_date(year, month, day)
-  end
-
-  def deserialize_edtf_range(name)
-    start = deserialize_edtf(name)
-    finish = deserialize_edtf(name, 3)
-    return unless start && finish
-
-    # Slash is the range separator in EDTF
-    [start, finish].join('/')
-  end
-
-  def deserialize_edtf_date(year, month, day)
-    return if year.blank?
-
-    date = year.dup
-    if month.present?
-      date += "-#{format('%<month>02d', month: month)}"
-      date += "-#{format('%<day>02d', day: day)}" if day.present?
-    end
-    date
   end
 end
 # rubocop:enable Metrics/ClassLength

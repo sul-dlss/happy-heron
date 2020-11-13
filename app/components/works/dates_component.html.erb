@@ -7,8 +7,8 @@
     <div class="col-sm-10">
       <div class="year">
         <label for="work_published_year" class="visually-hidden">Publication year</label>
-        <%= number_field_tag 'work[published(1i)]', nil, id: 'work_published_year', class: "form-control", min: Settings.earliest_publication_year, max: Time.zone.today.year %>
-        <div class="invalid-feedback">Publication year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
+        <%= number_field_tag 'work[published(1i)]', nil, id: 'work_published_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
+        <div class="invalid-feedback">Publication year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
       </div>
       <div class="month">
         <label for="work_published_month" class="visually-hidden">Publication month</label>
@@ -36,8 +36,8 @@
     <div class="col-sm-10">
       <div class="year">
         <label for="work_created_year" class="visually-hidden">Created year</label>
-        <%= number_field_tag 'work[created(1i)]', nil, id: 'work_created_year', class: "form-control", min: Settings.earliest_created_year, max: Time.zone.today.year %>
-        <div class="invalid-feedback">Created year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
+        <%= number_field_tag 'work[created(1i)]', nil, id: 'work_created_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
+        <div class="invalid-feedback">Created year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
       </div>
       <div class="month">
         <label for="work_created_month" class="visually-hidden">Created month</label>
@@ -61,8 +61,8 @@
       <div class="start-date">
         <div class="year">
           <label for="work_created_range_start_year" class="visually-hidden">Created range start year</label>
-          <%= number_field_tag 'work[created_range(1i)]', nil, id: 'work_created_range_start_year', class: "form-control", min: Settings.earliest_created_year, max: Time.zone.today.year %>
-          <div class="invalid-feedback">Created year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
+          <%= number_field_tag 'work[created_range(1i)]', nil, id: 'work_created_range_start_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
+          <div class="invalid-feedback">Created year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
         </div>
         <div class="month">
           <label for="work_created_range_start_month" class="visually-hidden">Created range start month</label>
@@ -81,8 +81,8 @@
       <div class="end-date">
         <div class="year">
           <label for="work_created_range_end_year" class="visually-hidden">Created range end year</label>
-          <%= number_field_tag 'work[created_range(4i)]', nil, id: 'work_created_range_end_year', class: "form-control", min: Settings.earliest_created_year, max: Time.zone.today.year %>
-          <div class="invalid-feedback">Created year must be between <%= Settings.earliest_publication_year %> and <%= Time.zone.today.year %></div>
+          <%= number_field_tag 'work[created_range(4i)]', nil, id: 'work_created_range_end_year', class: "form-control", min: earliest_year, max: Time.zone.today.year %>
+          <div class="invalid-feedback">Created year must be between <%= earliest_year %> and <%= Time.zone.today.year %></div>
         </div>
         <div class="month">
           <label for="work_created_range_end_month" class="visually-hidden">Created range end month</label>
