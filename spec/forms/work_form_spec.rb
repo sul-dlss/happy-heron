@@ -110,42 +110,4 @@ RSpec.describe WorkForm do
       expect(form.errors.messages).not_to include({ subtype: ['is not a valid subtype for work type data'] })
     end
   end
-
-  describe 'year validation' do
-    let(:current_year) { Time.zone.today.year }
-
-    %w[published(1i) created(1i) created_range(1i) created_range(4i)].each do |attribute|
-      before { form.validate(attribute => year, keywords: [{ label: 'foo' }], attached_files: [{ label: 'bar' }]) }
-
-      context "with a four-digit integer <= the current year as #{attribute}" do
-        let(:year) { current_year - 1 }
-
-        it { is_expected.to be_valid }
-      end
-
-      context "with a four-digit integer > the current year as #{attribute}" do
-        let(:year) { current_year + 1 }
-
-        it { is_expected.not_to be_valid }
-      end
-
-      context "with a < four-digit integer as #{attribute}" do
-        let(:year) { 999 }
-
-        it { is_expected.not_to be_valid }
-      end
-
-      context 'with a string' do
-        let(:year) { current_year.to_s }
-
-        it { is_expected.to be_valid }
-      end
-
-      context 'with a float' do
-        let(:year) { current_year.to_f }
-
-        it { is_expected.to be_valid }
-      end
-    end
-  end
 end

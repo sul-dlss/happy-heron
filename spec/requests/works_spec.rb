@@ -261,7 +261,7 @@ RSpec.describe 'Works requests' do
                    related_works_attributes: related_works,
                    related_links_attributes: related_links,
                    'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
-                   creation_type: 'range',
+                   created_type: 'range',
                    'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
                    'created_range(1i)' => '2020', 'created_range(2i)' => '3', 'created_range(3i)' => '4',
                    'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31',
