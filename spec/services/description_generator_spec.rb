@@ -95,6 +95,8 @@ RSpec.describe DescriptionGenerator do
     )
   end
 
+  # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
+  #   examples 5 and 6
   context 'when contributor of type conference or event' do
     let(:contributor1) { build(:contributor, :with_org_contributor, role: 'Event') }
     let(:contributor2) { build(:contributor, role: 'Author') }
