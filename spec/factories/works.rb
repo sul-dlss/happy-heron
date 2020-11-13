@@ -43,10 +43,6 @@ FactoryBot.define do
     contributors { Array.new(contributors_count) { association(:contributor) } }
   end
 
-  trait :with_mixed_contributors do
-    contributors { [association(:contributor), association(:contributor, :with_org_contributor)] }
-  end
-
   trait :with_related_links do
     transient do
       related_links_count { 2 }

@@ -20,11 +20,12 @@ class DescriptionGenerator
   def generate
     Cocina::Models::Description.new({
                                       title: title,
-                                      contributor: contributors,
+                                      contributor: ContributorsGenerator.generate(work: work),
                                       subject: keywords,
                                       note: [abstract, citation, contact],
                                       event: [created_date, published_date].compact,
-                                      relatedResource: related_links + related_works
+                                      relatedResource: related_links + related_works,
+                                      form: ContributorsGenerator.form_from_contributors(work: work)
                                     }, false, false)
   end
 
@@ -106,50 +107,6 @@ class DescriptionGenerator
       type: 'contact',
       displayLabel: 'Contact'
     )
-  end
-
-  sig { returns(T::Array[Cocina::Models::Contributor]) }
-  def contributors
-    work.contributors.map do |work_form_contributor|
-      contributor(work_form_contributor)
-    end
-  end
-
-  # in cocina model terms, returns a DescriptiveValue
-  sig { params(work_form_contributor: Contributor).returns(Cocina::Models::Contributor) }
-  def contributor(work_form_contributor)
-    # TODO: we may know status primary
-    if work_form_contributor.person?
-      Cocina::Models::Contributor.new(
-        name: [
-          {
-            value: "#{work_form_contributor.last_name}, #{work_form_contributor.first_name}"
-          }
-        ],
-        type: work_form_contributor.contributor_type,
-        # TODO: we will know code, uri, source code and source uri
-        role: [
-          {
-            value: work_form_contributor.role
-          }
-        ]
-      )
-    else
-      Cocina::Models::Contributor.new(
-        name: [
-          {
-            value: work_form_contributor.full_name
-          }
-        ],
-        type: work_form_contributor.contributor_type,
-        # TODO: we will know code, uri, source code and source uri
-        role: [
-          {
-            value: work_form_contributor.role
-          }
-        ]
-      )
-    end
   end
 
   sig { returns(T::Array[Cocina::Models::RelatedResource]) }

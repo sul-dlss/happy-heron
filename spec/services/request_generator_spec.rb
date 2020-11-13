@@ -39,7 +39,8 @@ RSpec.describe RequestGenerator do
               displayLabel: 'Contact'
             }
           ],
-          relatedResource: []
+          relatedResource: [],
+          form: []
         },
         identification: {
           sourceId: "hydrus:#{work.id}"
@@ -89,7 +90,8 @@ RSpec.describe RequestGenerator do
               displayLabel: 'Contact'
             }
           ],
-          relatedResource: []
+          relatedResource: [],
+          form: []
         },
         identification: {
           sourceId: "hydrus:#{work.id}"

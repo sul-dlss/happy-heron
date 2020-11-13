@@ -16,8 +16,15 @@ module Cocina::Models
   end
 
   class DescriptiveValue
-    sig { params(value: String, type: String, displayLabel: String).void }
-    def initialize(value:, type: nil, displayLabel: nil); end
+    sig do
+      params(value: T.nilable(String),
+             code: T.nilable(String),
+             uri: T.nilable(String),
+             type: T.nilable(String),
+             source: T.nilable(Object),
+             displayLabel: String).void
+    end
+    def initialize(value: nil, code: nil, uri: nil, type: nil, source: nil, displayLabel: nil); end
   end
 
   class Event
