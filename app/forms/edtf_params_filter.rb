@@ -10,8 +10,7 @@ class EdtfParamsFilter
 
       name = dfn[:name].delete_suffix('_edtf')
 
-      # TODO: derive creation_type from "created"
-      date_attributes[dfn[:name]] = deserialize(params, name, dfn[:range] && params[:creation_type] == 'range')
+      date_attributes[dfn[:name]] = deserialize(params, name, dfn[:range] && params["#{name}_type"] == 'range')
     end
 
     params.merge(date_attributes)

@@ -24,7 +24,7 @@ module Edtf
       property "#{prop_name}_range(4i)", virtual: true
       property "#{prop_name}_range(5i)", virtual: true
       property "#{prop_name}_range(6i)", virtual: true
-      property :creation_type, virtual: true, default: 'single'
+      property "#{prop_name}_type", virtual: true, default: 'single'
     end
   end
 
