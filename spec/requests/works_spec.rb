@@ -347,7 +347,7 @@ RSpec.describe 'Works requests' do
             title: '',
             contact_email: '',
             abstract: '',
-            license: '',
+            license: License.license_list.first,
             work_type: 'text'
           }
         end
@@ -366,6 +366,7 @@ RSpec.describe 'Works requests' do
           expect(work.created_edtf).to be_nil
           expect(work.embargo_date).to be_nil
           expect(work.subtype).to be_empty
+          expect(work.license).to eq License.license_list.first
           expect(work.state).to eq 'first_draft'
           expect(DepositJob).not_to have_received(:perform_later)
         end

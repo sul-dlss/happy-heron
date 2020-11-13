@@ -18,6 +18,7 @@ class Work < ApplicationRecord
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
   validates :state, presence: true
   validates :created_edtf, :published_edtf, edtf: true
+  validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
 

@@ -31,6 +31,11 @@ RSpec.describe Work do
     expect { work.save! }.to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
   end
 
+  it 'allows a blank email' do
+    work.contact_email = ''
+    expect { work.save! }.not_to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
+  end
+
   describe 'created_edtf' do
     let(:work) { build(:work, created_edtf: date_string) }
 
@@ -44,6 +49,32 @@ RSpec.describe Work do
 
     context 'with EDTF value' do
       let(:date_string) { '2019-04-04' }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+  end
+
+  describe 'license validation' do
+    context 'with an empty license' do
+      let(:work) { build(:work, license: nil) }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a bogus license' do
+      let(:work) { build(:work, license: 'Steal all my stuff') }
+
+      it 'does not validate' do
+        expect(work).not_to be_valid
+      end
+    end
+
+    context 'with a valid license' do
+      let(:work) { build(:work, license: License.license_list.first) }
 
       it 'validates' do
         expect(work).to be_valid

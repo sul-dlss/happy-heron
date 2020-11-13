@@ -61,6 +61,25 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'license validation' do
+    it 'does not validate with an invalid license' do
+      form.validate(license: 'Steal my stuff')
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ license: ['is not included in the list'] })
+    end
+
+    it 'does not validate with a missing license' do
+      form.validate(license: '')
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ license: ['can\'t be blank', 'is not included in the list'] })
+    end
+
+    it 'validates' do
+      form.validate(license: License.license_list.first)
+      expect(form.errors.messages).not_to include({ license: ['is not included in the list'] })
+    end
+  end
+
   describe 'type and subtype validation' do
     it 'does not validate with an invalid work type' do
       form.validate(work_type: 'a pile of something')
