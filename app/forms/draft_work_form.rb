@@ -4,7 +4,6 @@
 require 'reform/form/coercion'
 
 # The form for draft work creation and editing
-# rubocop:disable Metrics/ClassLength
 class DraftWorkForm < Reform::Form
   feature Coercion
   feature Edtf
@@ -37,29 +36,7 @@ class DraftWorkForm < Reform::Form
   end
 
   collection :contributors,
-             populator: lambda { |fragment:, **|
-               # The fragment represents one row of the contributor data from the HTML form
-               # find out if incoming Contributor is already added.
-               item = contributors.find_by(id: fragment['id']) if fragment['id'].present?
-
-               if fragment['_destroy'] == '1'
-                 contributors.delete(item)
-                 return skip!
-               elsif fragment['first_name'].blank? && fragment['full_name'].blank?
-                 return skip!
-               end
-
-               # Clear out names that we don't want to store (e.g. first & last name for an organization)
-               # These can get submitted to the server if the user enters a person
-               # name and then switches the type/role to an organization name.
-               if fragment['role_term'].start_with?('person')
-                 fragment['full_name'] = nil
-               else
-                 fragment['first_name'] = nil
-                 fragment['last_name'] = nil
-               end
-               item || contributors.append(Contributor.new)
-             },
+             populator: ContributorPopulator.new(:contributors, Contributor),
              prepopulator: ->(*) { contributors << Contributor.new } do
     property :id
     property :first_name
@@ -69,26 +46,7 @@ class DraftWorkForm < Reform::Form
     property :_destroy, virtual: true
   end
 
-  collection :attached_files,
-             populator: lambda { |fragment:, **|
-               # The fragment represents one row of the attached file data from the HTML form
-               # find out if incoming file is already added.
-               item = attached_files.find_by(id: fragment['id']) if fragment['id'].present?
-
-               if fragment['_destroy'] == '1'
-                 # Remove AttachedFile and associated AS model instances if AF exists
-                 # Else, there is no AF, so remove the AS::Blob directly
-                 if item
-                   attached_files.delete(item)
-                 else
-                   ActiveStorage::Blob.find_signed(fragment['file']).purge_later
-                 end
-                 return skip!
-               end
-               return item if item
-
-               attached_files.append(AttachedFile.new(file: fragment['file']))
-             } do
+  collection :attached_files, populator: AttachedFilesPopulator.new(:attached_files, AttachedFile) do
     property :id
     property :label
     property :hide
@@ -99,18 +57,7 @@ class DraftWorkForm < Reform::Form
     property :_destroy, virtual: true
   end
 
-  collection :keywords,
-             populator: lambda { |fragment:, **|
-               # The fragment represents one row of the attached file data from the HTML form
-               # find out if incoming file is already added.
-               item = keywords.find_by(id: fragment['id']) if fragment['id'].present?
-
-               if fragment['_destroy'] == '1'
-                 keywords.delete(item)
-                 return skip!
-               end
-               item || keywords.append(Keyword.new)
-             } do
+  collection :keywords, populator: KeywordsPopulator.new(:keywords, Keyword) do
     property :id
     property :label
     property :uri
@@ -118,40 +65,15 @@ class DraftWorkForm < Reform::Form
   end
 
   collection :related_works,
-             populator: lambda { |fragment:, **|
-               # The fragment represents one row of the attached file data from the HTML form
-               # find out if incoming file is already added.
-               item = related_works.find_by(id: fragment['id']) if fragment['id'].present?
-
-               if fragment['_destroy'] == '1'
-                 related_works.delete(item)
-                 return skip!
-               elsif fragment['citation'].blank?
-                 return skip!
-               end
-               item || related_works.append(RelatedWork.new)
-             },
+             populator: RelatedWorksPopulator.new(:related_works, RelatedWork),
              prepopulator: ->(*) { related_works << RelatedWork.new } do
     property :id
     property :citation
     property :_destroy, virtual: true
   end
 
-  collection :related_links,
-             populator: lambda { |fragment:, **|
-               # The fragment represents one row of the attached file data from the HTML form
-               # find out if incoming file is already added.
-               item = related_links.find_by(id: fragment['id']) if fragment['id'].present?
-
-               if fragment['_destroy'] == '1'
-                 related_links.delete(item)
-                 return skip!
-               elsif fragment['url'].blank?
-                 return skip!
-               end
-               item || related_links.append(RelatedLink.new)
-             },
-             prepopulator: ->(*) { related_links << RelatedLink.new } do
+  collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
+                             prepopulator: ->(*) { related_links << RelatedLink.new } do
     property :id
     property :link_title
     property :url
@@ -167,4 +89,3 @@ class DraftWorkForm < Reform::Form
     Date.new(year, month, day)
   end
 end
-# rubocop:enable Metrics/ClassLength
