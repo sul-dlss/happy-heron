@@ -53,6 +53,64 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'email validation' do
+    it 'does not validate with an invalid contact email' do
+      form.validate(contact_email: 'notavalidemail')
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ contact_email: ['is invalid'] })
+    end
+  end
+
+  describe 'license validation' do
+    it 'does not validate with an invalid license' do
+      form.validate(license: 'Steal my stuff')
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ license: ['is not included in the list'] })
+    end
+
+    it 'does not validate with a missing license' do
+      form.validate(license: '')
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ license: ['can\'t be blank', 'is not included in the list'] })
+    end
+
+    it 'validates' do
+      form.validate(license: License.license_list.first)
+      expect(form.errors.messages).not_to include({ license: ['is not included in the list'] })
+    end
+  end
+
+  describe 'type and subtype validation' do
+    it 'does not validate with an invalid work type' do
+      form.validate(work_type: 'a pile of something')
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ work_type: ['is not a valid work type'] })
+    end
+
+    it 'does not validate with a missing work type' do
+      form.validate(work_type: '')
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ work_type: ['can\'t be blank', 'is not a valid work type'] })
+    end
+
+    it 'does not validate with an invalid subtype/work_type combo' do
+      form.validate(work_type: 'data', subtype: ['Animation'])
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ subtype: ['is not a valid subtype for work type data'] })
+    end
+
+    it 'does not validate with a work_type that requires a user-supplied subtype and is empty' do
+      form.validate(work_type: 'other', subtype: [])
+      expect(form).not_to be_valid
+      expect(form.errors.messages).to include({ subtype: ['is not a valid subtype for work type other'] })
+    end
+
+    it 'validates with a valid subtype/work_type combo' do
+      form.validate(work_type: 'data', subtype: ['Software/code'])
+      expect(form.errors.messages).not_to include({ subtype: ['is not a valid subtype for work type data'] })
+    end
+  end
+
   describe 'year validation' do
     let(:current_year) { Time.zone.today.year }
 

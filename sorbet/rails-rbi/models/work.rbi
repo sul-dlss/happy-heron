@@ -260,6 +260,15 @@ module Work::GeneratedAssociationMethods
   sig { params(value: ::User).void }
   def depositor=(value); end
 
+  sig { returns(::Event::ActiveRecord_Associations_CollectionProxy) }
+  def events; end
+
+  sig { returns(T::Array[Integer]) }
+  def event_ids; end
+
+  sig { params(value: T::Enumerable[::Event]).void }
+  def events=(value); end
+
   sig { returns(::Keyword::ActiveRecord_Associations_CollectionProxy) }
   def keywords; end
 

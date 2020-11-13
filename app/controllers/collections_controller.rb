@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Handles CRUD for Collections
-class CollectionsController < ApplicationController
+class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
   verify_authorized
@@ -26,11 +26,11 @@ class CollectionsController < ApplicationController
   def create
     collection = Collection.new(creator: current_user)
     authorize! collection
-    @form = CollectionForm.new(collection)
 
+    @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
       # TODO: https://github.com/sul-dlss/happy-heron/issues/92
-      # DepositCollectionJob.perform_later(@collection) if params[:commit] == 'Deposit'
+      # DepositCollectionJob.perform_later(@collection) if deposit?
       redirect_to dashboard_path
     else
       render :new
@@ -40,11 +40,11 @@ class CollectionsController < ApplicationController
   def update
     collection = Collection.find(params[:id])
     authorize! collection
-    @form = CollectionForm.new(collection)
 
+    @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
       # TODO: https://github.com/sul-dlss/happy-heron/issues/92
-      # DepositCollectionJob.perform_later(@collection) if params[:commit] == 'Deposit'
+      # DepositCollectionJob.perform_later(@collection) if deposit?
       redirect_to dashboard_path
     else
       render :edit
@@ -52,6 +52,12 @@ class CollectionsController < ApplicationController
   end
 
   private
+
+  def collection_form(collection)
+    return CollectionForm.new(collection) if deposit?
+
+    DraftCollectionForm.new(collection)
+  end
 
   def collection_params
     params.require(:collection).permit(:name, :description, :contact_email,

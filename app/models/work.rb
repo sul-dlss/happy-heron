@@ -15,8 +15,8 @@ class Work < ApplicationRecord
   has_many :keywords, dependent: :destroy
   has_many :events, dependent: :destroy
 
-  validates :abstract, :access, :state, :title, presence: true
-  validates :contact_email, presence: true, format: { with: Devise.email_regexp }
+  validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
+  validates :state, presence: true
   validates :created_edtf, :published_edtf, edtf: true
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
