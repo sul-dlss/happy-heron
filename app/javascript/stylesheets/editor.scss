@@ -32,6 +32,61 @@
     padding-bottom: 1rem;
   }
 
+  .release-option {
+    align-items: center;
+    display: flex;
+    font-size: 20px;
+
+    input[type="radio"]:not(:checked) + label {
+      color: $btn-link-disabled-color;
+    }
+    input[type="radio"]:checked + label {
+      font-weight: bold;
+    }
+    label {
+      margin-right: 2rem;
+    }
+    * {
+      margin-right: .3rem;
+    }
+  }
+
+  #dates {
+    .year, .month, .day {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .year {
+      width: 6rem;
+      margin-right: 1rem;
+
+      .invalid-feedback {
+        white-space: nowrap;
+      }
+    }
+
+    .month {
+      width: 8rem;
+      margin-right: 1rem;
+    }
+
+    .day {
+      width: 4.9rem;
+    }
+
+    .date-range {
+      display: flex;
+      flex-wrap: wrap;
+
+      .range-separator {
+        width: 1.5rem;
+        margin: .5rem;
+        text-align: center;
+      }
+    }
+  }
+
   .form-check .invalid-feedback::before {
     background-image: escape-svg($form-feedback-icon-invalid);
     background-repeat: no-repeat;

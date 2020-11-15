@@ -9,5 +9,7 @@ module Works
     end
 
     attr_reader :form
+
+    delegate :earliest_year, to: :Settings
   end
 end

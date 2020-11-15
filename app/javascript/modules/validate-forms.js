@@ -9,6 +9,7 @@
     Array.prototype.slice.call(forms)
       .forEach(function (form) {
         form.addEventListener('submit', function (event) {
+          if (event.submitter.id === 'save-draft-button') return // do not run client side validation for saving drafts
           if (!form.checkValidity()) {
             event.preventDefault()
             event.stopPropagation()

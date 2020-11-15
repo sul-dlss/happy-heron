@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # The endpoint for CRUD about a Work
-class WorksController < ApplicationController
+class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
   verify_authorized except: [:show]
@@ -23,7 +23,7 @@ class WorksController < ApplicationController
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
 
-    @form = WorkForm.new(work)
+    @form = work_form(work)
     if @form.validate(work_params) && @form.save
       after_save(work)
     else
@@ -44,7 +44,7 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
     authorize! work
 
-    @form = WorkForm.new(work)
+    @form = work_form(work)
     if @form.validate(work_params) && @form.save
       after_save(work)
     else
@@ -59,9 +59,16 @@ class WorksController < ApplicationController
 
   private
 
+  sig { params(work: Work).returns(Reform::Form) }
+  def work_form(work)
+    return WorkForm.new(work) if deposit?
+
+    DraftWorkForm.new(work)
+  end
+
   sig { params(work: Work).void }
   def after_save(work)
-    if params[:commit] == 'Deposit'
+    if deposit?
       if work.collection.review_enabled?
         work.submit_for_review!
       else
@@ -75,7 +82,7 @@ class WorksController < ApplicationController
     top_level = T.cast(params.require(:work), ActionController::Parameters)
     top_level.permit(:title, :work_type, :contact_email,
                      'published(1i)', 'published(2i)', 'published(3i)',
-                     :creation_type,
+                     :created_type,
                      'created(1i)', 'created(2i)', 'created(3i)',
                      'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
                      'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
