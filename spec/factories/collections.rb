@@ -32,4 +32,12 @@ FactoryBot.define do
 
     reviewers { build_list(:user, reviewer_count) }
   end
+
+  trait :with_depositors do
+    transient do
+      depositor_count { 1 }
+    end
+
+    depositors { build_list(:user, depositor_count) }
+  end
 end
