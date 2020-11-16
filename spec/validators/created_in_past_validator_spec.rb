@@ -29,13 +29,41 @@ RSpec.describe CreatedInPastValidator do
       end
     end
 
-    context 'with a date after the current year' do
+    describe 'validate date is in the past' do
       let(:attribute) { :created_edtf }
-      let(:year) { Time.zone.today.year + 1 }
-      let(:value) { EDTF.parse("#{year}-01-01") }
+      let(:today) { Time.zone.today }
 
-      it 'has errors' do
-        expect(record.errors.full_messages).to eq ['Created edtf must be in the past']
+      context 'with a date after the current year' do
+        let(:year) { today.year + 1 }
+        let(:value) { EDTF.parse(year.to_s) }
+
+        it 'has errors' do
+          expect(record.errors.full_messages).to eq ['Created edtf must be in the past']
+        end
+      end
+
+      context 'with a date after the current month' do
+        let(:year) { today.year }
+        let(:month) { today.month + 1 }
+
+        let(:value) { EDTF.parse("#{year}-#{month}") }
+
+        it 'has errors' do
+          expect(record.errors.full_messages).to eq ['Created edtf must be in the past']
+        end
+      end
+
+      context 'with a date after the current day' do
+        let(:tomorrow) { 1.day.from_now }
+        let(:year) { tomorrow.year }
+        let(:month) { tomorrow.month }
+        let(:day) { tomorrow.day }
+
+        let(:value) { EDTF.parse("#{year}-#{month}-#{day}") }
+
+        it 'has errors' do
+          expect(record.errors.full_messages).to eq ['Created edtf must be in the past']
+        end
       end
     end
   end

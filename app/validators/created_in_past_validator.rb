@@ -20,6 +20,6 @@ class CreatedInPastValidator < ActiveModel::EachValidator
   def validate_date(record, attribute, value, prefix = nil)
     prefix &&= "#{prefix} "
     record.errors.add(attribute, "#{prefix}must have a four digit year") if Settings.earliest_year > value.year
-    record.errors.add(attribute, "#{prefix}must be in the past") if Time.zone.today.year < value.year
+    record.errors.add(attribute, "#{prefix}must be in the past") if Time.zone.today < value
   end
 end
