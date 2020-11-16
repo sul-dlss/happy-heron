@@ -12,8 +12,8 @@ class ContributorsGenerator
   end
 
   sig { params(work: Work).returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def self.form_from_contributors(work:)
-    new(work: work).form_from_contributors
+  def self.form_array_from_contributor_event(work:)
+    new(work: work).form_array_from_contributor_event
   end
 
   sig { params(work: Work).void }
@@ -30,16 +30,14 @@ class ContributorsGenerator
 
   # when there is an organization role of 'Event' or 'Conference', a form value must be added to descriptive metadata
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def form_from_contributors
+  def form_array_from_contributor_event
     return [] if work.contributors.select { |c| ROLES_FOR_FORM.include?(c.role) }.empty?
 
     [
       Cocina::Models::DescriptiveValue.new(
-        {
-          value: 'Event',
-          type: 'resource types',
-          source: { value: 'DataCite resource types' }
-        }
+        value: 'Event',
+        type: 'resource types',
+        source: { value: 'DataCite resource types' }
       )
     ]
   end
@@ -53,9 +51,9 @@ class ContributorsGenerator
   def contributor(contributor)
     # FIXME: TODO: mappings for status (primary) and/or order
     Cocina::Models::Contributor.new(
-      "name": name_descriptive_value(contributor),
-      "type": contributor_type(contributor),
-      "role": cocina_roles(contributor.role)
+      name: name_descriptive_value(contributor),
+      type: contributor_type(contributor),
+      role: cocina_roles(contributor.role)
     )
   end
 
@@ -81,22 +79,23 @@ class ContributorsGenerator
     contributor.contributor_type
   end
 
-  # rubocop:disable Metrics/MethodLength
   sig { params(role: String).returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def cocina_roles(role)
-    result = [
-      Cocina::Models::DescriptiveValue.new(
-        value: role,
-        source: {
-          value: 'Stanford self-deposit contributor types'
-        }
-      )
-    ]
+    result = [h2_role_descriptive_value(role)]
     result << T.must(marcrelator_role(role)) if marcrelator_role(role)
     result << T.must(datacite_role(role)) if datacite_role(role)
     result
   end
-  # rubocop:enable Metrics/MethodLength
+
+  sig { params(role: String).returns(Cocina::Models::DescriptiveValue) }
+  def h2_role_descriptive_value(role)
+    Cocina::Models::DescriptiveValue.new(
+      value: role,
+      source: {
+        value: 'Stanford self-deposit contributor types'
+      }
+    )
+  end
 
   # rubocop:disable Metrics/MethodLength
   sig { params(role: String).returns(T.nilable(Cocina::Models::DescriptiveValue)) }

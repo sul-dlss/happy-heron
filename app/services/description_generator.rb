@@ -43,7 +43,7 @@ class DescriptionGenerator
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def generate_form
-    TypesGenerator.generate(work: work) + ContributorsGenerator.form_from_contributors(work: work)
+    TypesGenerator.generate(work: work) + ContributorsGenerator.form_array_from_contributor_event(work: work)
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
