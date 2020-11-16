@@ -27,7 +27,7 @@ RSpec/EmptyExampleGroup:
 RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:
-  Max: 13
+  Max: 15
 RSpec/NestedGroups:
   Max: 5
 RSpec/ScatteredSetup:

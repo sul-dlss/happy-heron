@@ -59,6 +59,31 @@ RSpec.describe DescriptionGenerator do
       }
     ]
   end
+  let(:stanford_self_deposit_source) do
+    {
+      value: 'Stanford self-deposit contributor types'
+    }
+  end
+  let(:marc_relator_source) do
+    {
+      code: 'marcrelator',
+      uri: 'http://id.loc.gov/vocabulary/relators/'
+    }
+  end
+  let(:publisher_roles) do
+    [
+      {
+        value: 'Publisher',
+        source: stanford_self_deposit_source
+      },
+      {
+        value: 'publisher',
+        code: 'pbl',
+        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+        source: marc_relator_source
+      }
+    ]
+  end
 
   it 'creates description cocina model' do
     expect(model).to eq(
@@ -145,17 +170,6 @@ RSpec.describe DescriptionGenerator do
     let(:contributor2) { build(:contributor, role: 'Author') }
     let(:contributor3) { build(:contributor, :with_org_contributor, role: 'Conference') }
     let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
-    let(:stanford_self_deposit_source) do
-      {
-        value: 'Stanford self-deposit contributor types'
-      }
-    end
-    let(:marc_relator_source) do
-      {
-        code: 'marcrelator',
-        uri: 'http://id.loc.gov/vocabulary/relators/'
-      }
-    end
     let(:datacite_creator_role) do
       {
         value: 'Creator',
@@ -233,6 +247,142 @@ RSpec.describe DescriptionGenerator do
         ],
         form: types_form + event_form,
         event: [],
+        subject: [],
+        relatedResource: []
+      )
+    end
+  end
+
+  # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
+  #   example 12
+  context 'when publisher and publication date are entered by user' do
+    let(:contributor) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+    let(:work) { build(:work, :published, contributors: [contributor]) }
+
+    it 'creates event of type publication with date' do
+      expect(model).to eq(
+        note: [
+          { type: 'summary', value: 'test abstract' },
+          { type: 'preferred citation', value: 'test citation' },
+          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+        ],
+        title: [{ value: 'Test title' }],
+        contributor: [],
+        event: [
+          {
+            type: 'publication',
+            contributor: [
+              {
+                name: [{ value: contributor.full_name }],
+                type: 'organization',
+                role: publisher_roles
+              }
+            ],
+            date: [{ encoding: { code: 'edtf' }, value: '2020-02-14' }]
+          }
+        ],
+        form: types_form,
+        subject: [],
+        relatedResource: []
+      )
+    end
+  end
+
+  # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
+  #   example 13
+  #   Note:  no top level contributor -- publisher is under event
+  context 'when publisher entered by user, no publication date' do
+    let(:contributor) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+    let(:work) { build(:work, contributors: [contributor]) }
+
+    it 'creates event of type publication without date' do
+      expect(model).to eq(
+        note: [
+          { type: 'summary', value: 'test abstract' },
+          { type: 'preferred citation', value: 'test citation' },
+          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+        ],
+        title: [{ value: 'Test title' }],
+        contributor: [],
+        event: [
+          {
+            type: 'publication',
+            contributor: [
+              {
+                name: [{ value: contributor.full_name }],
+                type: 'organization',
+                role: publisher_roles
+              }
+            ]
+          }
+        ],
+        form: types_form,
+        subject: [],
+        relatedResource: []
+      )
+    end
+  end
+
+  # Arcadia to add h2 spec for when there is a person and a publisher
+  context 'when author, publisher and publication date are entered by user' do
+    let(:person_contrib) { build(:contributor, role: 'Author') }
+    let(:pub_contrib) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+    let(:work) { build(:work, :published, contributors: [person_contrib, pub_contrib]) }
+
+    it 'creates event of type publication with date' do
+      expect(model).to eq(
+        note: [
+          { type: 'summary', value: 'test abstract' },
+          { type: 'preferred citation', value: 'test citation' },
+          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+        ],
+        title: [{ value: 'Test title' }],
+        contributor: [
+          {
+            name: [
+              {
+                value: "#{person_contrib.last_name}, #{person_contrib.first_name}",
+                type: 'inverted full name'
+              }
+            ],
+            type: person_contrib.contributor_type,
+            role: [
+              {
+                value: person_contrib.role,
+                source: {
+                  value: 'Stanford self-deposit contributor types'
+                }
+              },
+              {
+                value: 'author',
+                code: 'aut',
+                uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                source: {
+                  code: 'marcrelator',
+                  uri: 'http://id.loc.gov/vocabulary/relators/'
+                }
+              },
+              {
+                value: 'Creator',
+                source: { value: 'DataCite properties' }
+              }
+            ]
+          }
+        ],
+        event: [
+          {
+            type: 'publication',
+            contributor: [
+              {
+                name: [{ value: pub_contrib.full_name }],
+                type: 'organization',
+                role: publisher_roles
+              }
+            ],
+            date: [{ encoding: { code: 'edtf' }, value: '2020-02-14' }]
+          }
+        ],
+        form: types_form,
         subject: [],
         relatedResource: []
       )
