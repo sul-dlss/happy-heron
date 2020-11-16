@@ -16,6 +16,49 @@ RSpec.describe DescriptionGenerator do
     'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
         'Journal of Librarianship and Scholarly Communication, 1(3).'
   end
+  let(:types_form) do
+    [
+      {
+        source: {
+          value: 'Stanford self-deposit resource types'
+        },
+        structuredValue: [
+          {
+            type: 'type',
+            value: 'Text'
+          },
+          {
+            type: 'subtype',
+            value: 'Article'
+          },
+          {
+            type: 'subtype',
+            value: 'Presentation slides'
+          }
+        ],
+        type: 'resource type'
+      },
+      {
+        source: {
+          code: 'aat'
+        },
+        type: 'genre',
+        uri: 'http://vocab.getty.edu/aat/300048715',
+        value: 'articles'
+      },
+      {
+        type: 'genre',
+        value: 'Presentation slides'
+      },
+      {
+        source: {
+          value: 'MODS resource types'
+        },
+        type: 'resource type',
+        value: 'text'
+      }
+    ]
+  end
 
   it 'creates description cocina model' do
     expect(model).to eq(
@@ -91,7 +134,7 @@ RSpec.describe DescriptionGenerator do
           note: [{ value: citation_value, type: 'preferred citation' }]
         }
       ],
-      form: []
+      form: types_form
     )
   end
 
@@ -135,13 +178,15 @@ RSpec.describe DescriptionGenerator do
       ]
     end
     let(:event_form) do
-      {
-        value: 'Event',
-        type: 'resource types',
-        source: {
-          value: 'DataCite resource types'
+      [
+        {
+          value: 'Event',
+          type: 'resource types',
+          source: {
+            value: 'DataCite resource types'
+          }
         }
-      }
+      ]
     end
 
     it 'creates forms as well as contributors in description cocina model' do
@@ -184,9 +229,7 @@ RSpec.describe DescriptionGenerator do
             ]
           }
         ],
-        form: [
-          event_form
-        ],
+        form: types_form + event_form,
         event: [],
         subject: [],
         relatedResource: []

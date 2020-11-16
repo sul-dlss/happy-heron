@@ -5,6 +5,49 @@ require 'rails_helper'
 
 RSpec.describe RequestGenerator do
   let(:model) { described_class.generate_model(work: work) }
+  let(:types_form) do
+    [
+      {
+        source: {
+          value: 'Stanford self-deposit resource types'
+        },
+        structuredValue: [
+          {
+            type: 'type',
+            value: 'Text'
+          },
+          {
+            type: 'subtype',
+            value: 'Article'
+          },
+          {
+            type: 'subtype',
+            value: 'Presentation slides'
+          }
+        ],
+        type: 'resource type'
+      },
+      {
+        source: {
+          code: 'aat'
+        },
+        type: 'genre',
+        uri: 'http://vocab.getty.edu/aat/300048715',
+        value: 'articles'
+      },
+      {
+        type: 'genre',
+        value: 'Presentation slides'
+      },
+      {
+        source: {
+          value: 'MODS resource types'
+        },
+        type: 'resource type',
+        value: 'text'
+      }
+    ]
+  end
 
   context 'when files are not present' do
     let(:expected_model) do
@@ -40,7 +83,7 @@ RSpec.describe RequestGenerator do
             }
           ],
           relatedResource: [],
-          form: []
+          form: types_form
         },
         identification: {
           sourceId: "hydrus:#{work.id}"
@@ -91,7 +134,7 @@ RSpec.describe RequestGenerator do
             }
           ],
           relatedResource: [],
-          form: []
+          form: types_form
         },
         identification: {
           sourceId: "hydrus:#{work.id}"

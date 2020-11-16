@@ -70,6 +70,7 @@ class WorkType
     'Transcript',
     'Unedited recording'
   ].freeze
+
   TEXT_TYPES = [
     'Article',
     'Book',

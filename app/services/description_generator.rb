@@ -25,7 +25,7 @@ class DescriptionGenerator
                                       note: [abstract, citation, contact],
                                       event: [created_date, published_date].compact,
                                       relatedResource: related_links + related_works,
-                                      form: ContributorsGenerator.form_from_contributors(work: work)
+                                      form: generate_form
                                     }, false, false)
   end
 
@@ -39,6 +39,11 @@ class DescriptionGenerator
     [
       Cocina::Models::Title.new(value: work.title)
     ]
+  end
+
+  sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
+  def generate_form
+    TypesGenerator.generate(work: work) + ContributorsGenerator.form_from_contributors(work: work)
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
