@@ -1,5 +1,5 @@
 input[type="radio"].toggle {
-  display: none;
+  opacity: 0;
 }
 
 input[type="radio"].toggle:checked + label {
@@ -15,6 +15,14 @@ input[type="radio"].toggle:checked + label {
   .uncheck {
     display: none;
   }
+}
+
+input[type="radio"].toggle:focus + label {
+  border: 3px solid $primary;
+  background-color: rgba($primary, 0.3);
+  left: -1.5px;
+  position: relative;  
+  top: -1.5px;
 }
 
 input[type="radio"].toggle + label {
