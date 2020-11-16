@@ -48,12 +48,14 @@
   }
 }
 
-
 .dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
   cursor: pointer; }
 .dropzone.dz-started .dz-message {
   display: none; }
 
+.dropzone-previews {
+  padding-top: 2rem;
+}
 
 .dz-preview {
   position: relative;
