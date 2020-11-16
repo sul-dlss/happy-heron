@@ -51,4 +51,15 @@ class Work < ApplicationRecord
 
     File.join(Settings.purl_url, T.must(druid).delete_prefix('druid:'))
   end
+
+  sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }
+  # Ensure that EDTF dates get an EDTF serialization
+  def created_edtf=(edtf)
+    case edtf
+    when nil, EDTF::Interval
+      super
+    when Date
+      super(edtf.to_edtf)
+    end
+  end
 end
