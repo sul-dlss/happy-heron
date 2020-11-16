@@ -22,9 +22,10 @@ module Cocina::Models
              uri: T.nilable(String),
              type: T.nilable(String),
              source: T.nilable(Object),
-             displayLabel: String).void
+             displayLabel: String,
+             structuredValue: T::Array[DescriptiveValue]).void
     end
-    def initialize(value: nil, code: nil, uri: nil, type: nil, source: nil, displayLabel: nil); end
+    def initialize(value: nil, code: nil, uri: nil, type: nil, source: nil, displayLabel: nil, structuredValue: nil); end
   end
 
   class Event

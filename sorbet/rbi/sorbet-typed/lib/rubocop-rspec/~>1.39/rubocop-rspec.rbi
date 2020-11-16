@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/rubocop-rspec/~>1.39/rubocop-rspec.rbi
 #
-# typed: strict
+# typed: ignore
 
 module RuboCop::RSpec
   CONFIG = ::T.let(nil, ::T.untyped)
