@@ -26,32 +26,60 @@ RSpec.describe Work do
     expect(work.attached_files).to be_present
   end
 
-  it 'has a valid contact email' do
-    work.contact_email = 'notavalidemail'
-    expect { work.save! }.to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
-  end
+  describe 'contact_email' do
+    describe 'validation' do
+      subject(:work) { build(:work, contact_email: email) }
 
-  it 'allows a blank email' do
-    work.contact_email = ''
-    expect { work.save! }.not_to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
+      context 'with invalid email' do
+        let(:email) { 'notavalidemail' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'with a blank email' do
+        let(:email) { '' }
+
+        it { is_expected.to be_valid }
+      end
+    end
   end
 
   describe 'created_edtf' do
-    let(:work) { build(:work, created_edtf: date_string) }
+    describe 'validation' do
+      subject(:work) { build(:work, created_edtf: date_string) }
 
-    context 'with non-EDTF value' do
-      let(:date_string) { 'foo bar' }
+      context 'with non-EDTF value' do
+        let(:date_string) { 'foo bar' }
 
-      it 'does not validate' do
-        expect(work).not_to be_valid
+        it 'raises a type error' do
+          expect { work }.to raise_error TypeError
+        end
+      end
+
+      context 'with EDTF value' do
+        let(:date_string) { EDTF.parse('2019-04-04') }
+
+        it { is_expected.to be_valid }
       end
     end
 
-    context 'with EDTF value' do
-      let(:date_string) { '2019-04-04' }
+    describe 'serialization' do
+      subject(:work) { build(:work, created_edtf: date) }
 
-      it 'validates' do
-        expect(work).to be_valid
+      context 'with a single point' do
+        let(:date) { EDTF.parse('2020-11') }
+
+        it 'records an EDTF string' do
+          expect(work.created_edtf).to eq '2020-11'
+        end
+      end
+
+      context 'with an interval' do
+        let(:date) { EDTF.parse('2020-11/2021') }
+
+        it 'records an EDTF string' do
+          expect(work.created_edtf).to eq '2020-11/2021'
+        end
       end
     end
   end

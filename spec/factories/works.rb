@@ -16,7 +16,7 @@ FactoryBot.define do
   end
 
   trait :published do
-    published_edtf { '2020-02-14' }
+    published_edtf { EDTF.parse('2020-02-14') }
   end
 
   trait :pending_approval do
@@ -24,7 +24,7 @@ FactoryBot.define do
   end
 
   trait :with_creation_dates do
-    created_edtf { '2020-03-04/2020-10-31' }
+    created_edtf { EDTF.parse('2020-03-04/2020-10-31') }
   end
 
   trait :with_keywords do
