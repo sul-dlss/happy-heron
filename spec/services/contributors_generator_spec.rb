@@ -20,9 +20,7 @@ RSpec.describe ContributorsGenerator do
   let(:datacite_creator_role) do
     Cocina::Models::DescriptiveValue.new(
       value: 'Creator',
-      source: {
-        value: 'DataCite properties'
-      }
+      source: { value: 'DataCite properties' }
     )
   end
   let(:contributing_author_roles) do
@@ -69,9 +67,7 @@ RSpec.describe ContributorsGenerator do
       ),
       Cocina::Models::DescriptiveValue.new(
         value: 'Sponsor',
-        source: {
-          value: 'DataCite contributor types'
-        }
+        source: { value: 'DataCite contributor types' }
       )
     ]
   end
@@ -79,9 +75,7 @@ RSpec.describe ContributorsGenerator do
     Cocina::Models::DescriptiveValue.new(
       value: 'Event',
       type: 'resource types',
-      source: {
-        value: 'DataCite resource types'
-      }
+      source: { value: 'DataCite resource types' }
     )
   end
 
@@ -129,10 +123,6 @@ RSpec.describe ContributorsGenerator do
     end
   end
 
-  context 'with single name with multiple roles mapping to DataCite creator property' do
-    xit 'TODO: possibly covered with h2 mapping specs ... tune in soon'
-  end
-
   # from https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   describe 'h2 mapping specification examples' do
     context 'with person with single role' do
@@ -175,12 +165,13 @@ RSpec.describe ContributorsGenerator do
         )
       end
 
-      it 'ContributorsGenerator.form_from_contributors returns []' do
-        expect(described_class.form_from_contributors(work: work)).to eq []
+      it 'ContributorsGenerator.form_value_from_contributor_event returns nil' do
+        expect(described_class.form_value_from_contributor_event(work: work)).to eq []
       end
     end
 
     context 'with person with multiple roles, one maps to DataCite creator property' do
+      # FIXME: implement deduping of names to get multiple roles
       xit 'TODO: https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt#L50'
     end
 
@@ -221,6 +212,7 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with organization with multiple roles' do
+      # FIXME: implement deduping of names to get multiple roles
       xit 'TODO: https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt#L150'
     end
 
@@ -246,10 +238,9 @@ RSpec.describe ContributorsGenerator do
         )
       end
 
-      it 'ContributorsGenerator.form_from_contributors returns populated form attribute' do
-        form = described_class.form_from_contributors(work: work)
-
-        expect(form).to eq([event_form])
+      it 'ContributorsGenerator.form_value_from_contributor_event returns populated form attribute' do
+        form = described_class.form_value_from_contributor_event(work: work)
+        expect(form).to eq [event_form]
       end
     end
 
@@ -275,10 +266,9 @@ RSpec.describe ContributorsGenerator do
         )
       end
 
-      it 'ContributorsGenerator.form_from_contributors returns populated form attribute' do
-        form = described_class.form_from_contributors(work: work)
-
-        expect(form).to eq([event_form])
+      it 'ContributorsGenerator.form_value_from_contributor_event returns populated form attribute' do
+        form = described_class.form_value_from_contributor_event(work: work)
+        expect(form).to eq [event_form]
       end
     end
 

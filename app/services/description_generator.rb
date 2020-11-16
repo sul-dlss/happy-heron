@@ -25,7 +25,7 @@ class DescriptionGenerator
                                       note: [abstract, citation, contact],
                                       event: [created_date, published_date].compact,
                                       relatedResource: related_links + related_works,
-                                      form: ContributorsGenerator.form_from_contributors(work: work)
+                                      form: ContributorsGenerator.form_value_from_contributor_event(work: work)
                                     }, false, false)
   end
 
