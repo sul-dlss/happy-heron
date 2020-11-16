@@ -48,23 +48,7 @@
         <ul class="collections">
           <% @presenter.collections.each do |collection| %>
             <li class="mb-5">
-              <div>
-                <header><%= collection.name.presence || 'No Title' %>
-                  <% if allowed_to?(:edit?, collection) %>
-                    <%= link_to edit_collection_path(collection), aria: { label: "Edit #{collection.name}"} do %>
-                      <span class="fas fa-pencil-alt"></span>
-                    <% end %>
-                  <% end %>
-                </header>
-                <%= button_tag '+ Deposit to this collection',
-                      data: {
-                        destination: new_collection_work_path(collection),
-                        toggle: 'modal',
-                        target: '#workTypeModal',
-                        action: "work-type#set_collection"
-                      },
-                      class: "btn btn-primary" %>
-              </div>
+              <%= render Dashboard::CollectionComponent.new(collection: collection) %>
             </li>
           <% end %>
         </ul>

@@ -1,0 +1,54 @@
+<section>
+  <header><%= name %>
+    <% if allowed_to?(:edit?, collection) %>
+      <%= link_to edit_collection_path(collection), aria: { label: "Edit #{name}"} do %>
+        <span class="fas fa-pencil-alt"></span>
+      <% end %>
+    <% end %>
+  </header>
+
+  <table class="table">
+    <thead class="table-light">
+      <tr>
+        <th>Deposits in collection</th>
+        <th><span class="visually-hidden">Actions</span></th>
+        <th>Deposit status</th>
+        <th>Last modified</th>
+        <th>Persistent link</th>
+        <th>Citation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% deposits.take(4).each do |work| %>
+        <tr>
+          <td class="work-title"><%= link_to work.title, work %></td>
+          <td>
+            <% if allowed_to? :edit?, work %>
+              <%= link_to [:edit, work], aria: { label: "Edit #{work.title}" } do %>
+                <span class="fas fa-pencil-alt"></span>
+              <% end %>
+            <% end %>
+          </td>
+          <td><%= work.state.humanize %></td>
+          <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
+          <td><%= link_to work.purl, work.purl if work.purl %></td>
+          <td><span class="fas fa-quote-left"></span> Cite</td>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+
+  <% if deposits.size == 5 %>
+    <div class="mb-3">See all deposits</div>
+  <% end %>
+
+  <%= button_tag '+ Deposit to this collection',
+        data: {
+          destination: new_collection_work_path(collection),
+          toggle: 'modal',
+          target: '#workTypeModal',
+          action: "work-type#set_collection"
+        },
+        class: "btn btn-primary" %>
+</section>

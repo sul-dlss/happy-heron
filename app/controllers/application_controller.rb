@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
   def user_with_groups
     UserWithGroups.new(user: current_user, groups: ldap_groups) if current_user
   end
+  helper_method :user_with_groups
 
   private
 

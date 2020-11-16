@@ -31,6 +31,18 @@ RSpec.describe WorkPolicy do
     end
   end
 
+  describe_rule :update? do
+    failed 'when user is not the depositor'
+
+    succeed 'when user is the depositor and status is not pending_approval' do
+      let(:record) { build_stubbed :work, depositor: user }
+    end
+
+    failed 'when user is the depositor and status is pending_approval' do
+      let(:record) { build_stubbed :work, :pending_approval, depositor: user }
+    end
+  end
+
   describe_rule :review? do
     failed 'when user is not a reviewer the collection' do
       let(:record) { build_stubbed :work, :pending_approval, collection: collection }

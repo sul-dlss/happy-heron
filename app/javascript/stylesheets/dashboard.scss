@@ -16,6 +16,10 @@
       caption-side: top;
       color: $body-color;
     }
+
+    .work-title {
+      width: 28%;
+    }
   }
 
   input[type="radio"].toggle + label {
@@ -29,7 +33,7 @@
     max-width: 60%;
     vertical-align: middle;
   }
-  
+
   margin-top: 1rem;
   max-width: 1140px;
 }
