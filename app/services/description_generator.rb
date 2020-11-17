@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 # This generates a RequestDRO Description for a work
-# rubocop:disable Metrics/ClassLength
 class DescriptionGenerator
   extend T::Sig
 
@@ -145,4 +144,3 @@ class DescriptionGenerator
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

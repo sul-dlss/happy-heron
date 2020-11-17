@@ -120,7 +120,6 @@ class ContributorsGenerator
     )
   end
 
-  # rubocop:disable Metrics/MethodLength
   sig { params(role: String).returns(T.nilable(Cocina::Models::DescriptiveValue)) }
   def marcrelator_role(role)
     mr_code = ROLE_TO_MARC_RELATOR_CODE[role]
@@ -137,9 +136,7 @@ class ContributorsGenerator
       }
     )
   end
-  # rubocop:enable Metrics/MethodLength
 
-  # rubocop:disable Metrics/MethodLength
   sig { params(role: String).returns(T.nilable(Cocina::Models::DescriptiveValue)) }
   def datacite_role(role)
     datacite_role = ROLE_TO_DATA_CITE_VALUE[role]
@@ -160,7 +157,6 @@ class ContributorsGenerator
       }
     )
   end
-  # rubocop:enable Metrics/MethodLength
 
   ROLE_TO_MARC_RELATOR_CODE = {
     # person

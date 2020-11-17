@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 # Represents the list of valid work types
-# rubocop:disable Metrics/ClassLength
 class WorkType
   extend T::Sig
 
@@ -137,7 +136,6 @@ class WorkType
   end
 
   # id is a value acceptable for MODS typeOfResource
-  # rubocop:disable Metrics/MethodLength
   sig { returns(T::Array[WorkType]) }
   def self.all
     [
@@ -159,7 +157,6 @@ class WorkType
           cocina_type: Cocina::Models::Vocab.object)
     ]
   end
-  # rubocop:enable Metrics/MethodLength
 
   sig { returns(T::Array[String]) }
   def self.type_list
@@ -171,4 +168,3 @@ class WorkType
     find(id).subtypes
   end
 end
-# rubocop:enable Metrics/ClassLength
