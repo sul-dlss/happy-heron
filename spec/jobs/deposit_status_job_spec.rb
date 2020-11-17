@@ -16,7 +16,6 @@ RSpec.describe DepositStatusJob do
     allow(SdrClient::Login).to receive(:run).and_return(result)
     allow(SdrClient::BackgroundJobResults).to receive(:show).and_return(background_result)
     allow(Honeybadger).to receive(:notify)
-    allow(StorageMigrator).to receive(:migrate)
   end
 
   context 'when the job is successful' do
@@ -26,7 +25,6 @@ RSpec.describe DepositStatusJob do
       described_class.perform_now(work: work, job_id: job_id)
       expect(work.druid).to eq druid
       expect(work.state_name).to eq :deposited
-      expect(StorageMigrator).to have_received(:migrate).once.with(druid: work.druid)
     end
   end
 

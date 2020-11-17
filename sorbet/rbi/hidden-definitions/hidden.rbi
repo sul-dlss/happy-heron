@@ -46108,10 +46108,6 @@ module StateMachines::Integrations::ActiveRecord
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-class StorageMigrator
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
 
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
