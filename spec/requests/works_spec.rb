@@ -297,6 +297,7 @@ RSpec.describe 'Works requests' do
             contact_email: 'io@io.io',
             abstract: 'test abstract',
             attached_files_attributes: files,
+            contributors_attributes: contributors,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
@@ -311,6 +312,11 @@ RSpec.describe 'Works requests' do
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
+        end
+
+        let(:contributors) do
+          { '999' =>
+            { '_destroy' => 'false', 'full_name' => 'Stanford', 'role_term' => 'organization|Host institution' } }
         end
 
         let(:files) do
@@ -328,7 +334,7 @@ RSpec.describe 'Works requests' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           work = Work.last
-          expect(work.contributors).to be_empty
+          expect(work.contributors.size).to eq 1
           expect(work.attached_files.size).to eq 1
           expect(work.keywords.size).to eq 1
           expect(work.published_edtf).to be_nil
@@ -380,6 +386,7 @@ RSpec.describe 'Works requests' do
             work_type: 'text',
             contact_email: 'io@io.io',
             abstract: 'test abstract',
+            contributors_attributes: contributors,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -387,6 +394,12 @@ RSpec.describe 'Works requests' do
             license: 'CC0-1.0',
             release: 'immediate'
           }
+        end
+
+        let(:contributors) do
+          { '999' =>
+            { '_destroy' => 'false', 'first_name' => 'Naomi',
+              'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
         end
 
         let(:upload) do
@@ -412,7 +425,7 @@ RSpec.describe 'Works requests' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           work = Work.last
-          expect(work.contributors).to be_empty
+          expect(work.contributors.size).to eq 1
           expect(work.attached_files.size).to eq 1
           expect(work.keywords.size).to eq 1
           expect(work.published_edtf).to be_nil

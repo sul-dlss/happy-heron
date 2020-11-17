@@ -1,4 +1,4 @@
-<div class="contributor row inner-container" data-controller="contributor">
+<div class="contributor row inner-container" data-controller="contributor" data-target="edit-deposit.contributorsField">
   <div class="col-md-12">
     <%= button_tag type: 'button', class: 'btn btn-sm float-right', aria: { label: 'Remove' },
         data: { action: "click->nested-form#removeAssociation" } do %>
@@ -20,14 +20,20 @@
   </div>
   <div class="col-md-4" data-target="contributor.personName">
     <%= form.label :first_name, class: 'form-label' %>
-    <%= form.text_field :first_name, class: 'form-control' %>
+    <%= form.text_field :first_name, class: 'form-control', data: { target: 'contributor.personNameInput' }, required: true %>
+    <div class="invalid-feedback">You must provide a first name</div>
   </div>
   <div class="col-md-4" data-target="contributor.personName">
     <%= form.label :last_name, class: 'form-label' %>
-    <%= form.text_field :last_name, class: 'form-control' %>
+    <%= form.text_field :last_name, class: 'form-control', data: { target: 'contributor.personNameInput' }, required: true %>
+    <div class="invalid-feedback">You must provide a last name</div>
   </div>
   <div class="col-md-8" data-target="contributor.organizationName">
     <%= form.label :full_name, 'Name', class: 'form-label' %>
-    <%= form.text_field :full_name, class: 'form-control' %>
+    <%= form.text_field :full_name, class: 'form-control', data: { target: 'contributor.organizationNameInput' }, required: true %>
+    <div class="invalid-feedback">You must provide a name</div>
+  </div>
+  <div class="col-md-12">
+    <div data-target="contributors.error" class="invalid-feedback"></div>
   </div>
 </div>
