@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Edit a draft work', js: true do
-  let(:work) { create(:work, :with_keywords, work_type: 'other', subtype: ['Graphic novel']) }
+  let(:work) { create(:work, :with_keywords, :with_attached_file, work_type: 'other', subtype: ['Graphic novel']) }
   let(:user) { work.depositor }
 
   before do
@@ -22,6 +22,8 @@ RSpec.describe 'Edit a draft work', js: true do
       # TODO: we should be able to remove this once accepting is persisted.
       # See https://github.com/sul-dlss/happy-heron/issues/243
       check 'I agree to the SDR Terms of Deposit'
+
+      expect(page).to have_content(work.attached_files.first.filename.to_s)
 
       # Test validation
       fill_in 'Other', with: ''

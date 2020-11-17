@@ -11,5 +11,12 @@ module Works
 
     sig { returns(ActionView::Helpers::FormBuilder) }
     attr_reader :form
+
+    sig { returns(T.nilable(ActiveStorage::Filename)) }
+    def filename
+      return unless form.object.persisted?
+
+      form.object.model.filename
+    end
   end
 end
