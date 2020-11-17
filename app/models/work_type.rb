@@ -136,6 +136,7 @@ class WorkType
   end
 
   # id is a value acceptable for MODS typeOfResource
+  # rubocop:disable Metrics/MethodLength
   sig { returns(T::Array[WorkType]) }
   def self.all
     [
@@ -157,6 +158,7 @@ class WorkType
           cocina_type: Cocina::Models::Vocab.object)
     ]
   end
+  # rubocop:enable Metrics/MethodLength
 
   sig { returns(T::Array[String]) }
   def self.type_list

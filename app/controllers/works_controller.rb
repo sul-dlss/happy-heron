@@ -78,6 +78,7 @@ class WorksController < ObjectsController
     redirect_to work
   end
 
+  # rubocop:disable Metrics/MethodLength
   def work_params
     top_level = T.cast(params.require(:work), ActionController::Parameters)
     top_level.permit(:title, :work_type, :contact_email,
@@ -96,6 +97,7 @@ class WorksController < ObjectsController
                      related_works_attributes: %i[_destroy id citation],
                      related_links_attributes: %i[_destroy id link_title url])
   end
+  # rubocop:enable Metrics/MethodLength
 
   def validate_work_types!
     errors = []
