@@ -441,7 +441,7 @@ RSpec.describe 'Works requests' do
 
     describe 'update work' do
       context 'with an attachment' do
-        let(:work) { create(:work, :with_attached_file) }
+        let(:work) { create(:work, :with_attached_file, state: 'deposited') }
         let(:user) { work.depositor }
         let(:work_params) do
           {
@@ -462,6 +462,7 @@ RSpec.describe 'Works requests' do
 
         it 'redirects to the work page' do
           patch "/works/#{work.id}", params: { work: work_params }
+          expect(work.reload).to be_version_draft
           expect(response).to redirect_to(work)
         end
       end
