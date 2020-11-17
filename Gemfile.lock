@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/sul-dlss/sdr-client.git
-  revision: e88e4ece87f88d07910f5ffa6e0d85434eae3959
+  revision: d588b5dc15f67dc183cffe1ef1e644602e5150b5
+  branch: response-code
   specs:
     sdr-client (0.36.0)
       activesupport
