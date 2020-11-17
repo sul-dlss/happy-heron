@@ -1,10 +1,14 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["personName", "organizationName", "role", "personNameInput", "organizationNameInput"]
+  static targets = ["personName", "organizationName", "role", "personNameInput", "organizationNameInput", "container", "error"]
 
   connect() {
     this.updateDisplay()
+  }
+
+  inputChanged() {
+    this.containerTarget.classList.remove('is-invalid')
   }
 
   typeChanged() {
@@ -16,6 +20,12 @@ export default class extends Controller {
       this.displayPerson()
     else
       this.displayOrganization()
+  }
+
+  // Triggered when edit-deposit controller sends an error event
+  error(e) {
+    this.containerTarget.classList.add('is-invalid')
+    this.errorTarget.innerHTML = e.detail.join(' ')
   }
 
   displayOrganization() {
