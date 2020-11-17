@@ -7,6 +7,8 @@ class DepositJob < BaseDepositJob
 
   sig { params(work: Work).void }
   def perform(work)
+    work.update(version: work.version + 1)
+
     job_id = deposit(request_dro: RequestGenerator.generate_model(work: work),
                      blobs: work.attached_files.map { |af| af.file.attachment.blob })
     DepositStatusJob.perform_later(work: work, job_id: job_id)

@@ -43,7 +43,7 @@ class RequestGenerator
       label: work.title,
       type: cocina_type,
       description: DescriptionGenerator.generate(work: work),
-      version: 0
+      version: work.version
     }
   end
 
@@ -56,7 +56,7 @@ class RequestGenerator
   def build_fileset(attached_file, offset)
     {
       type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
-      version: 1,
+      version: work.version,
       label: attached_file.label,
       structural: {
         contains: [build_file(attached_file)]
@@ -74,7 +74,7 @@ class RequestGenerator
 
     {
       type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
-      version: 1,
+      version: work.version,
       label: attached_file.label,
       filename: blob.filename.to_s, # File.basename(filename(blob.key)),
       access: {

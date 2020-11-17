@@ -46,7 +46,7 @@ RSpec.describe DepositJob do
   end
 
   context 'when the work has already been accessioned' do
-    let(:work) { build(:work, id: 8, druid: 'druid:bk123gh4567', attached_files: [attached_file]) }
+    let(:work) { build(:work, id: 8, version: 1, druid: 'druid:bk123gh4567', attached_files: [attached_file]) }
 
     before do
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
@@ -58,6 +58,7 @@ RSpec.describe DepositJob do
       described_class.perform_now(work)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       expect(DepositStatusJob).to have_received(:perform_later).with(work: work, job_id: 1234)
+      expect(work.version).to eq 2
     end
   end
 
