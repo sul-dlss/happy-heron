@@ -71,12 +71,137 @@ RSpec.describe ContributorsGenerator do
       )
     ]
   end
+  let(:publisher_roles) do
+    [
+      {
+        value: 'Publisher',
+        source: stanford_self_deposit_source
+      },
+      Cocina::Models::DescriptiveValue.new(
+        value: 'publisher',
+        code: 'pbl',
+        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+        source: marc_relator_source
+      )
+    ]
+  end
   let(:event_form) do
     Cocina::Models::DescriptiveValue.new(
       value: 'Event',
       type: 'resource types',
       source: { value: 'DataCite resource types' }
     )
+  end
+
+  describe '.events_from_publisher_contributors' do
+    context 'with no pub_date' do
+      context 'with no publisher' do
+        let(:contributor) { build(:contributor) }
+        let(:work) { build(:work, contributors: [contributor]) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work) }
+
+        it 'returns empty Array' do
+          expect(cocina_model).to eq []
+        end
+      end
+
+      context 'with multiple publishers' do
+        let(:org_contrib1) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+        let(:org_contrib2) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+        let(:work) { build(:work, contributors: [org_contrib1, org_contrib2]) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work) }
+
+        it 'returns Array of populated cocina model events, one for each publisher' do
+          expect(cocina_model).to eq(
+            [
+              Cocina::Models::Event.new(
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [{ value: org_contrib1.full_name }],
+                    type: 'organization',
+                    role: publisher_roles
+                  }
+                ]
+              ),
+              Cocina::Models::Event.new(
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [{ value: org_contrib2.full_name }],
+                    type: 'organization',
+                    role: publisher_roles
+                  }
+                ]
+              )
+            ]
+          )
+        end
+      end
+    end
+
+    context 'with a pub date' do
+      let(:pub_date_value) do
+        [
+          {
+            value: work.published_edtf,
+            encoding: { code: 'edtf' }
+          }
+        ]
+      end
+      let(:pub_date) do
+        Cocina::Models::Event.new(
+          type: 'publication',
+          date: pub_date_value
+        )
+      end
+
+      context 'with no publisher' do
+        let(:contributor) { build(:contributor) }
+        let(:work) { build(:work, contributors: [contributor]) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work, pub_date: pub_date) }
+
+        it 'returns empty Array' do
+          expect(cocina_model).to eq []
+        end
+      end
+
+      context 'with multiple publishers' do
+        let(:org_contrib1) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+        let(:org_contrib2) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+        let(:work) { build(:work, contributors: [org_contrib1, org_contrib2]) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work, pub_date: pub_date) }
+
+        it 'returns Array of populated cocina model events, one for each publisher' do
+          expect(cocina_model).to eq(
+            [
+              Cocina::Models::Event.new(
+                type: 'publication',
+                date: pub_date_value,
+                contributor: [
+                  {
+                    name: [{ value: org_contrib1.full_name }],
+                    type: 'organization',
+                    role: publisher_roles
+                  }
+                ]
+              ),
+              Cocina::Models::Event.new(
+                type: 'publication',
+                date: pub_date_value,
+                contributor: [
+                  {
+                    name: [{ value: org_contrib2.full_name }],
+                    type: 'organization',
+                    role: publisher_roles
+                  }
+                ]
+              )
+            ]
+          )
+        end
+      end
+    end
   end
 
   context 'without marcrelator mapping' do
@@ -444,10 +569,9 @@ RSpec.describe ContributorsGenerator do
       end
     end
 
-    context 'with publisher and publication date entered by user' do
-      xit 'TODO: https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt#L671'
-    end
+    # see description_generator_spec for example 12 - "Publisher and publication date entered by user"
 
+    # see also description_generator_spec for example 13 - "Publisher entered by user, no publication date"
     context 'with publisher entered by user' do
       let(:contributor) do
         build(:contributor,
@@ -455,28 +579,8 @@ RSpec.describe ContributorsGenerator do
       end
       let(:work) { build(:work, contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor per spec' do
-        # TODO: add status primary
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor.full_name }],
-              type: 'organization',
-              role: [
-                {
-                  value: 'Publisher',
-                  source: stanford_self_deposit_source
-                },
-                {
-                  value: 'publisher',
-                  code: 'pbl',
-                  uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-                  source: marc_relator_source
-                }
-              ]
-            )
-          ]
-        )
+      it 'does not create Cocina::Models::Contributor' do
+        expect(cocina_model).to eq []
       end
     end
   end

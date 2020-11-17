@@ -29,8 +29,12 @@ module Cocina::Models
   end
 
   class Event
-    sig { params(type: String, date: T::Array[T.any(DescriptiveValue, T::Hash[T.untyped, T.untyped])]).void }
-    def initialize(type:, date:); end
+    sig do
+      params(type: String,
+             date: T.nilable(T::Array[T.any(DescriptiveValue, T::Hash[T.untyped, T.untyped])]),
+             contributor: T.nilable(T::Array[T.any(Contributor, T::Hash[T.untyped, T.untyped])])).void
+    end
+    def initialize(type:, date: nil, contributor: nil); end
   end
 
   class DescriptiveAccessMetadata

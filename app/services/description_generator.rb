@@ -23,7 +23,7 @@ class DescriptionGenerator
                                       contributor: ContributorsGenerator.generate(work: work),
                                       subject: keywords,
                                       note: [abstract, citation, contact],
-                                      event: [created_date, published_date].compact,
+                                      event: generate_events,
                                       relatedResource: related_links + related_works,
                                       form: generate_form
                                     }, false, false)
@@ -39,6 +39,15 @@ class DescriptionGenerator
     [
       Cocina::Models::Title.new(value: work.title)
     ]
+  end
+
+  sig { returns(T::Array[Cocina::Models::Event]) }
+  def generate_events
+    pub_events = ContributorsGenerator.events_from_publisher_contributors(work: work, pub_date: published_date)
+    return [T.must(created_date)] + pub_events if pub_events.present? && created_date
+    return pub_events if pub_events.present? # and no created_date
+
+    [created_date, published_date].compact # no pub_events
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
@@ -79,10 +88,8 @@ class DescriptionGenerator
       type: 'creation',
       date: [
         {
-          "value": work.created_edtf,
-          "encoding": {
-            "code": 'edtf'
-          }
+          value: work.created_edtf,
+          encoding: { code: 'edtf' }
         }
       ]
     )
@@ -96,10 +103,8 @@ class DescriptionGenerator
       type: 'publication',
       date: [
         {
-          "value": work.published_edtf,
-          "encoding": {
-            "code": 'edtf'
-          }
+          value: work.published_edtf,
+          encoding: { code: 'edtf' }
         }
       ]
     )

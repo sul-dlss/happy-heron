@@ -16,14 +16,24 @@ class ContributorsGenerator
     new(work: work).form_array_from_contributor_event
   end
 
+  sig do
+    params(work: Work, pub_date: T.nilable(Cocina::Models::Event))
+      .returns(T::Array[Cocina::Models::Event])
+  end
+  def self.events_from_publisher_contributors(work:, pub_date: nil)
+    new(work: work).publication_event_values(pub_date)
+  end
+
   sig { params(work: Work).void }
   def initialize(work:)
     @work = work
   end
 
+  # H2 Publisher becomes a Cocina::Models::Event, not a Contributor.  See events_from_publisher_contributors.
   sig { returns(T::Array[T.nilable(Cocina::Models::Contributor)]) }
   def generate
-    work.contributors.map { |work_form_contributor| contributor(work_form_contributor) }
+    work.contributors.reject { |c| c.role == 'Publisher' }
+        .map { |work_form_contributor| contributor(work_form_contributor) }
   end
 
   ROLES_FOR_FORM = %w[Event Conference].freeze
@@ -42,12 +52,25 @@ class ContributorsGenerator
     ]
   end
 
+  sig { params(pub_date: T.nilable(Cocina::Models::Event)).returns(T::Array[Cocina::Models::Event]) }
+  def publication_event_values(pub_date)
+    work.contributors.select { |c| c.role == 'Publisher' }.map do |publisher|
+      event = {
+        type: 'publication',
+        contributor: [contributor(publisher)]
+      }
+      event[:date] = pub_date.date if pub_date
+
+      Cocina::Models::Event.new(event)
+    end
+  end
+
   private
 
   sig { returns(Work) }
   attr_reader :work
 
-  sig { params(contributor: Contributor).returns(T.nilable(Cocina::Models::Contributor)) }
+  sig { params(contributor: Contributor).returns(Cocina::Models::Contributor) }
   def contributor(contributor)
     # FIXME: TODO: mappings for status (primary) and/or order
     Cocina::Models::Contributor.new(
@@ -224,13 +247,13 @@ class ContributorsGenerator
     'Speaker' => 'Other',
     'Thesis advisor' => 'Other',
     # organization (when not already listed above)
-    'Conference' => nil, # see form_from_contributors
+    'Conference' => nil, # see form_array_from_contributor_event
     'Degree granting institution' => 'Other',
-    'Event' => nil, # see form_from_contributors
+    'Event' => nil, # see form_array_from_contributor_event
     'Funder' => nil,
     'Host institution' => 'HostingInstitution',
     'Issuing body' => 'Distributor',
-    'Publisher' => nil,
+    'Publisher' => nil, # see events_from_publisher_contributors
     'Research group' => 'ResearchGroup',
     'Sponsor' => 'Sponsor'
   }.freeze
