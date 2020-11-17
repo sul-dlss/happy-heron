@@ -21,6 +21,7 @@ class Work < ApplicationRecord
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
+  validates :embargo_date, embargo_date: true
 
   enum access: {
     stanford: 'stanford',
@@ -62,4 +63,12 @@ class Work < ApplicationRecord
       super(edtf.to_edtf)
     end
   end
+
+  # def embargo_date=(my_date)
+  #   if my_date > Time.zone.today + 3.years
+  #     errors.add(:embargo_date, 'Invalid embargo date')
+  #   else
+  #     self[:embargo_date] = my_date
+  #   end
+  # end
 end

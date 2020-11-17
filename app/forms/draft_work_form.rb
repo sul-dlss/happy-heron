@@ -26,6 +26,7 @@ class DraftWorkForm < Reform::Form
 
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true
+  validates :embargo_date, embargo_date: true
 
   collection :contributors,
              populator: ContributorPopulator.new(:contributors, Contributor),
