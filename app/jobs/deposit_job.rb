@@ -16,7 +16,10 @@ class DepositJob < BaseDepositJob
 
   private
 
-  sig { params(request_dro: Cocina::Models::RequestDRO, blobs: T::Array[ActiveStorage::Blob]).returns(Integer) }
+  sig do
+    params(request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO), blobs: T::Array[ActiveStorage::Blob])
+      .returns(Integer)
+  end
   def deposit(request_dro:, blobs:)
     login_result = login
 
@@ -24,11 +27,26 @@ class DepositJob < BaseDepositJob
 
     new_request_dro = SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,
                                                                               upload_responses: upload_responses(blobs))
-    SdrClient::Deposit::UploadResource.run(accession: true,
-                                           metadata: new_request_dro.to_json,
-                                           logger: Rails.logger,
-                                           connection: connection)
+
+    create_or_update(new_request_dro)
   end
+
+  sig { params(new_request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO)).returns(Integer) }
+  # rubocop:disable Metrics/MethodLength
+  def create_or_update(new_request_dro)
+    case new_request_dro
+    when Cocina::Models::RequestDRO
+      SdrClient::Deposit::CreateResource.run(accession: true,
+                                             metadata: new_request_dro,
+                                             logger: Rails.logger,
+                                             connection: connection)
+    when Cocina::Models::DRO
+      SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
+                                             logger: Rails.logger,
+                                             connection: connection)
+    end
+  end
+  # rubocop:enable Metrics/MethodLength
 
   sig { params(blobs: T::Array[ActiveStorage::Blob]).returns(T::Array[SdrClient::Deposit::Files::DirectUploadRequest]) }
   def upload_responses(blobs)

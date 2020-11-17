@@ -35,7 +35,23 @@ RSpec.describe DepositJob do
     before do
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
         .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
-      allow(SdrClient::Deposit::UploadResource).to receive(:run).and_return(1234)
+      allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
+    end
+
+    it 'initiates a DepositStatusJob' do
+      described_class.perform_now(work)
+      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
+      expect(DepositStatusJob).to have_received(:perform_later).with(work: work, job_id: 1234)
+    end
+  end
+
+  context 'when the work has already been accessioned' do
+    let(:work) { build(:work, id: 8, druid: 'druid:bk123gh4567', attached_files: [attached_file]) }
+
+    before do
+      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
+      allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)
     end
 
     it 'initiates a DepositStatusJob' do
@@ -48,7 +64,7 @@ RSpec.describe DepositJob do
   context 'when the deposit request is not successful' do
     before do
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-      allow(SdrClient::Deposit::UploadResource).to receive(:run).and_raise('Deposit failed.')
+      allow(SdrClient::Deposit::CreateResource).to receive(:run).and_raise('Deposit failed.')
     end
 
     it 'notifies' do
