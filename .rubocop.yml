@@ -24,6 +24,12 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
 
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 20
+
 RSpec/DescribeClass:
   Exclude:
     - spec/features/**/*
