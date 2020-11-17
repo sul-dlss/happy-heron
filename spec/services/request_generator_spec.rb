@@ -57,6 +57,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
           label: 'Test title',
           version: 0,
+          access: { access: 'stanford', download: 'stanford' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
@@ -109,7 +110,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
           label: 'Test title',
           version: 0,
-          access: {},
+          access: { access: 'stanford', download: 'stanford' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
@@ -176,13 +177,14 @@ RSpec.describe RequestGenerator do
     end
 
     context 'without a druid' do
-      let(:work) { build(:work, id: 7, attached_files: [attached_file]) }
+      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file]) }
 
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
           label: 'Test title',
-          version: 0,
+          version: 1,
+          access: { access: 'stanford', download: 'stanford' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
@@ -222,7 +224,7 @@ RSpec.describe RequestGenerator do
                 label: 'MyString',
                 structural: { contains: [
                   {
-                    access: { access: 'stanford', download: 'none' },
+                    access: { access: 'stanford', download: 'stanford' },
                     administrative: { sdrPreserve: true, shelve: true },
                     filename: 'sul.svg',
                     hasMessageDigests: [
@@ -250,14 +252,14 @@ RSpec.describe RequestGenerator do
     end
 
     context 'with a druid' do
-      let(:work) { build(:work, id: 7, attached_files: [attached_file], druid: 'druid:bk123gh4567') }
+      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file], druid: 'druid:bk123gh4567') }
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
           label: 'Test title',
-          version: 0,
+          version: 1,
           externalIdentifier: 'druid:bk123gh4567',
-          access: { access: 'dark', download: 'none' },
+          access: { access: 'stanford', download: 'stanford' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
@@ -297,7 +299,7 @@ RSpec.describe RequestGenerator do
                 label: 'MyString',
                 structural: { contains: [
                   {
-                    access: { access: 'stanford', download: 'none' },
+                    access: { access: 'stanford', download: 'stanford' },
                     administrative: { sdrPreserve: true, shelve: true },
                     filename: 'sul.svg',
                     hasMessageDigests: [

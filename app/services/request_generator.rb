@@ -31,15 +31,14 @@ class RequestGenerator
   sig { returns(Hash) }
   def model_attributes
     {
+      access: { access: 'stanford', download: 'stanford' },
       administrative: {
         hasAdminPolicy: Settings.h2.hydrus_apo
       },
       identification: {
         sourceId: "hydrus:#{work.id}" # TODO: what should this be?
       },
-      structural: {
-        contains: work.attached_files.map.with_index(1) { |af, n| build_fileset(af, n) }
-      },
+      structural: structural,
       label: work.title,
       type: cocina_type,
       description: DescriptionGenerator.generate(work: work),
@@ -50,6 +49,22 @@ class RequestGenerator
   sig { returns(String) }
   def cocina_type
     WorkType.find(work.work_type).cocina_type
+  end
+
+  sig { returns(Hash) }
+  # TODO: This varies based on what the user selected
+  def access
+    {
+      access: 'stanford',
+      download: 'stanford'
+    }
+  end
+
+  sig { returns(Hash) }
+  def structural
+    {
+      contains: work.attached_files.map.with_index(1) { |af, n| build_fileset(af, n) }
+    }
   end
 
   sig { params(attached_file: AttachedFile, offset: Integer).returns(Hash) }
@@ -77,9 +92,7 @@ class RequestGenerator
       version: work.version,
       label: attached_file.label,
       filename: blob.filename.to_s, # File.basename(filename(blob.key)),
-      access: {
-        access: 'stanford' # TODO: This varies based on what the user selected
-      },
+      access: access,
       administrative: {
         sdrPreserve: true,
         shelve: !attached_file.hide?
