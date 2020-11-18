@@ -316,7 +316,8 @@ RSpec.describe 'Works requests' do
 
         let(:contributors) do
           { '999' =>
-            { '_destroy' => 'false', 'full_name' => 'Stanford', 'role_term' => 'organization|Host institution' } }
+            { '_destroy' => 'false', 'first_name' => '', 'last_name' => '',
+              'full_name' => 'Stanford', 'role_term' => 'organization|Host institution' } }
         end
 
         let(:files) do
@@ -398,7 +399,7 @@ RSpec.describe 'Works requests' do
 
         let(:contributors) do
           { '999' =>
-            { '_destroy' => 'false', 'first_name' => 'Naomi',
+            { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
         end
 
