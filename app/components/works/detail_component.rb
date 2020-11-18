@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 module Works
@@ -17,8 +17,6 @@ module Works
              :published_edtf, :created_edtf,
              :depositor, :attached_files, :contributors,
              :related_works, :related_links, to: :work
-
-    delegate :link_to, :edit_work_path, :tag, to: :helpers
 
     sig { returns(String) }
     def created_at
