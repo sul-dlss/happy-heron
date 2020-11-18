@@ -9,7 +9,7 @@ module Works
       @work = work
     end
 
-    attr_reader :work, :current_user
+    attr_reader :work
 
     sig { returns(T::Boolean) }
     def render?

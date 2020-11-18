@@ -29,6 +29,11 @@
     .header-text {
       @extend h3;
     }
+
+    .state {
+      @extend .font-italic;
+      margin-left: 30px;
+    }
   }
 
   .details {
