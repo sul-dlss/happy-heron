@@ -64,6 +64,9 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'Title of deposit', with: 'My Title'
       fill_in 'Contact email', with: user.email
 
+      fill_in 'First name', with: 'Contributor First Name'
+      fill_in 'Last name', with: 'Contributor Last Name'
+
       select 'Publisher', from: 'Role term'
       fill_in 'Name', with: 'Best Publisher'
 

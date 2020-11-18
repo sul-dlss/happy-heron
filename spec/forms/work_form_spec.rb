@@ -53,11 +53,36 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'contributors validation' do
+    let(:contributor_error) { { contributors: ['Please add at least one contributor.'] } }
+
+    context 'with no contributors' do
+      it 'does not validate' do
+        expect(form).not_to be_valid
+        expect(form.errors.messages).to include(contributor_error)
+      end
+    end
+
+    context 'with contributors' do
+      let(:work) { build(:work, :with_contributors, :with_attached_file, :with_keywords) }
+
+      it 'validates' do
+        expect(form).to be_valid
+        expect(form.errors.messages).not_to include(contributor_error)
+      end
+    end
+  end
+
   describe 'email validation' do
     it 'does not validate with an invalid contact email' do
       form.validate(contact_email: 'notavalidemail')
       expect(form).not_to be_valid
       expect(form.errors.messages).to include({ contact_email: ['is invalid'] })
+    end
+
+    it 'validates with a correct contact email' do
+      form.validate(contact_email: 'avalidemail@test.com')
+      expect(form.errors.messages).not_to include({ contact_email: ['is invalid'] })
     end
   end
 

@@ -1,5 +1,5 @@
-<div class="contributor row inner-container" data-controller="contributor">
-  <div class="col-md-12">
+<div class="row inner-container" data-controller="contributors" data-action="error->contributors#error" data-target="edit-deposit.contributorsField">
+  <div class="contributors-container col-md-12" data-target="contributors.container">
     <%= button_tag type: 'button', class: 'btn btn-sm float-right', aria: { label: 'Remove' },
         data: { action: "click->nested-form#removeAssociation" } do %>
       <span class="far fa-trash-alt"></span>
@@ -11,23 +11,27 @@
     <%= form.select :role_term, grouped_options_for_select(Contributor.grouped_options),
                     {}, class: 'form-select',
                     data: {
-                      action: 'change->contributor#typeChanged',
-                      target: 'contributor.role'
+                      action: 'change->contributors#typeChanged',
+                      target: 'contributors.role'
                     } %>
   </div>
   <div class="col-md-1 role-prefix">
     is
   </div>
-  <div class="col-md-4" data-target="contributor.personName">
+  <div class="col-md-4" data-target="contributors.personName">
     <%= form.label :first_name, class: 'form-label' %>
-    <%= form.text_field :first_name, class: 'form-control' %>
+    <%= form.text_field :first_name, class: 'form-control', data: { action: 'change->contributors#inputChanged', target: 'contributors.personNameInput' }, required: true %>
+    <div class="invalid-feedback">You must provide a first name</div>
   </div>
-  <div class="col-md-4" data-target="contributor.personName">
+  <div class="col-md-4" data-target="contributors.personName">
     <%= form.label :last_name, class: 'form-label' %>
-    <%= form.text_field :last_name, class: 'form-control' %>
+    <%= form.text_field :last_name, class: 'form-control', data: { action: 'change->contributors#inputChanged', target: 'contributors.personNameInput' }, required: true %>
+    <div class="invalid-feedback">You must provide a last name</div>
   </div>
-  <div class="col-md-8" data-target="contributor.organizationName">
+  <div class="col-md-8" data-target="contributors.organizationName">
     <%= form.label :full_name, 'Name', class: 'form-label' %>
-    <%= form.text_field :full_name, class: 'form-control' %>
+    <%= form.text_field :full_name, class: 'form-control', data: { action: 'change->contributors#inputChanged', target: 'contributors.organizationNameInput' }, required: true %>
+    <div class="invalid-feedback">You must provide a name</div>
   </div>
+  <div data-target="contributors.error" class="invalid-feedback"></div>
 </div>
