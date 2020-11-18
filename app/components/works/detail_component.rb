@@ -60,5 +60,10 @@ module Works
     def keywords
       work.keywords.map(&:label).join(', ')
     end
+
+    sig { returns(T::Boolean) }
+    def display_approval?
+      work.pending_approval? && !helpers.allowed_to?(:review?, work)
+    end
   end
 end
