@@ -24,3 +24,4 @@ import '@fortawesome/fontawesome-free/js/all.js';
 // const imagePath = (name) => images(name, true)
 
 require('modules/validate-forms')
+require('modules/prevent-submit')
