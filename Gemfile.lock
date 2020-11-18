@@ -66,6 +66,7 @@ GEM
       capybara (~> 3.13, < 4)
       websocket-driver (>= 0.6.5)
     ast (2.4.1)
+    attr_extras (6.2.4)
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.5.0)
@@ -276,6 +277,8 @@ GEM
       sorbet-runtime (>= 0.5)
     parser (2.7.2.0)
       ast (~> 2.4.1)
+    patience_diff (1.1.0)
+      trollop (~> 1.16)
     pg (1.2.3)
     polyfill (1.8.0)
     psych (3.2.0)
@@ -441,8 +444,13 @@ GEM
     state_machines-activerecord (0.6.0)
       activerecord (>= 4.1)
       state_machines-activemodel (>= 0.5.0)
+    super_diff (0.5.2)
+      attr_extras (>= 6.2.4)
+      diff-lcs
+      patience_diff
     thor (1.0.1)
     thread_safe (0.3.6)
+    trollop (1.16.2)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -521,6 +529,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   state_machines-activerecord
+  super_diff
   turbolinks (~> 5)
   view_component (~> 2.18)
   web-console (>= 3.3.0)
