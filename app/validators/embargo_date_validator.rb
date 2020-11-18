@@ -7,6 +7,6 @@ class EmbargoDateValidator < ActiveModel::EachValidator
     return if value.nil?
     return if value <= Time.zone.today + 3.years
 
-    record.errors[attribute] << 'is not a valid embargo date'
+    record.errors[attribute] << 'must be less than 3 years in the future'
   end
 end

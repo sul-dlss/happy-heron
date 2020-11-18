@@ -3,7 +3,8 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["title", "titleField",
                     "file", "fileField",
-                    "keywordsField", "contributorsField"];
+                    "keywordsField", "contributorsField",
+                    "embargo_dateField"];
 
   connect() {
     // TODO see what of the things are already valid
@@ -29,7 +30,7 @@ export default class extends Controller {
   displayErrors(event) {
     const [data, _status, _xhr] = event.detail;
     for (const [fieldName, errorList] of Object.entries(data)) {
-      const key = `${fieldName}Field`
+      const key = `${fieldName.replace("_", "-")}Field`
       const target = this.targets.find(key)
       if (target)
         target.dispatchEvent(new CustomEvent('error', { detail: errorList }))
