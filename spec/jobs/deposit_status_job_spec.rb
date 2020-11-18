@@ -8,7 +8,7 @@ RSpec.describe DepositStatusJob do
 
   let(:client) { instance_double(Dor::Services::Client, objects: objects) }
   let(:druid) { 'druid:bc123df4567' }
-  let(:work) { build(:work) }
+  let(:work) { build(:work, state: 'depositing') }
   let(:result) { Success() }
   let(:job_id) { 1234 }
 
@@ -34,7 +34,7 @@ RSpec.describe DepositStatusJob do
     it 'notifies' do
       described_class.perform_now(work: work, job_id: job_id)
       expect(work.druid).to be_nil
-      expect(work.state_name).to eq :first_draft
+      expect(work.state_name).to eq :depositing
       expect(Honeybadger).to have_received(:notify)
     end
   end

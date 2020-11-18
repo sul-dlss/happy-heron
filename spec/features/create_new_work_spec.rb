@@ -129,7 +129,6 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       expect(page).to have_content('2020-03-06/2020-10-30')
       expect(page).to have_content('Whatever')
       expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
-      expect(page).to have_content('Draft - Not deposited')
     end
   end
 

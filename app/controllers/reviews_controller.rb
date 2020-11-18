@@ -10,6 +10,7 @@ class ReviewsController < ApplicationController
     work = Work.find(params[:work_id])
     authorize! work, to: :review?
     if params[:state] == 'approve'
+      work.begin_deposit!
       DepositJob.perform_later(work)
     else
       Event.create!(work: work, user: current_user, event_type: 'return', description: params[:reason])

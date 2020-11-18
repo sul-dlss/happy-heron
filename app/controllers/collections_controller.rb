@@ -30,7 +30,7 @@ class CollectionsController < ObjectsController
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
       # TODO: https://github.com/sul-dlss/happy-heron/issues/92
-      # DepositCollectionJob.perform_later(@collection) if deposit?
+      # DepositCollectionJob.perform_later(@collection) if deposit_button_pushed?
       redirect_to dashboard_path
     else
       render :new
@@ -44,7 +44,7 @@ class CollectionsController < ObjectsController
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
       # TODO: https://github.com/sul-dlss/happy-heron/issues/92
-      # DepositCollectionJob.perform_later(@collection) if deposit?
+      # DepositCollectionJob.perform_later(@collection) if deposit_button_pushed?
       redirect_to dashboard_path
     else
       render :edit
@@ -54,7 +54,7 @@ class CollectionsController < ObjectsController
   private
 
   def collection_form(collection)
-    return CollectionForm.new(collection) if deposit?
+    return CollectionForm.new(collection) if deposit_button_pushed?
 
     DraftCollectionForm.new(collection)
   end

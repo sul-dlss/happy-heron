@@ -5,7 +5,7 @@
 class ObjectsController < ApplicationController
   protected
 
-  def deposit?
+  def deposit_button_pushed?
     params[:commit] == 'Deposit'
   end
 end

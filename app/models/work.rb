@@ -28,8 +28,12 @@ class Work < ApplicationRecord
   }
 
   state_machine initial: :first_draft do
-    event :deposit do
-      transition first_draft: :deposited, version_draft: :deposited
+    event :begin_deposit do
+      transition first_draft: :depositing, version_draft: :depositing, pending_approval: :depositing
+    end
+
+    event :deposit_complete do
+      transition depositing: :deposited
     end
 
     event :submit_for_review do
