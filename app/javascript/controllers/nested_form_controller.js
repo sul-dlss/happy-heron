@@ -12,6 +12,7 @@ export default class extends Controller {
   removeAssociation(event) {
     event.preventDefault()
     const item = event.target.closest(".inner-container")
+    item.querySelectorAll('input').forEach((element) => element.required = false)
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
   }
