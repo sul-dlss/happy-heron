@@ -106,6 +106,7 @@ RSpec.describe DescriptionGenerator do
         {
           name: [{ value: contributor.full_name }],
           type: contributor.contributor_type,
+          status: 'primary',
           role: [
             {
               value: contributor.role,
@@ -217,6 +218,7 @@ RSpec.describe DescriptionGenerator do
           {
             name: [{ value: contributor1.full_name }],
             type: 'event',
+            status: 'primary',
             role: [
               {
                 value: 'Event',
@@ -346,6 +348,7 @@ RSpec.describe DescriptionGenerator do
               }
             ],
             type: person_contrib.contributor_type,
+            status: 'primary',
             role: [
               {
                 value: person_contrib.role,
