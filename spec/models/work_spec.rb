@@ -188,19 +188,20 @@ RSpec.describe Work do
       expect(work.state).to eq('first_draft')
     end
 
-    context 'with deposit event' do
+    context 'with begin_deposit event' do
       before do
-        work.deposit!
+        work.begin_deposit!
       end
 
       it 'transitions to deposited' do
-        expect(work.state).to eq('deposited')
+        expect(work.state).to eq('depositing')
       end
     end
 
     context 'with new version event' do
       before do
-        work.deposit!
+        work.begin_deposit!
+        work.deposit_complete!
         work.new_version!
       end
 

@@ -62,17 +62,18 @@ class WorksController < ObjectsController
 
   sig { params(work: Work).returns(Reform::Form) }
   def work_form(work)
-    return WorkForm.new(work) if deposit?
+    return WorkForm.new(work) if deposit_button_pushed?
 
     DraftWorkForm.new(work)
   end
 
   sig { params(work: Work).void }
   def after_save(work)
-    if deposit?
+    if deposit_button_pushed?
       if work.collection.review_enabled?
         work.submit_for_review!
       else
+        work.begin_deposit!
         DepositJob.perform_later(work)
       end
     end

@@ -284,7 +284,7 @@ RSpec.describe 'Works requests' do
           expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
           expect(work.subtype).to eq ['Article', 'Presentation slides']
           expect(DepositJob).to have_received(:perform_later).with(work)
-          expect(work.state).to eq 'first_draft'
+          expect(work.state).to eq 'depositing'
         end
       end
 
@@ -342,7 +342,7 @@ RSpec.describe 'Works requests' do
           expect(work.created_edtf).to be_nil
           expect(work.embargo_date).to be_nil
           expect(work.subtype).to be_empty
-          expect(work.state).to eq 'first_draft'
+          expect(work.state).to eq 'depositing'
           expect(DepositJob).to have_received(:perform_later)
         end
       end

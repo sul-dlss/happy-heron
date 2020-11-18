@@ -13,7 +13,7 @@ class DepositStatusJob < BaseDepositJob
 
     if result.success?
       work.druid = result.value!
-      work.deposit!
+      work.deposit_complete!
     else
       Honeybadger.notify("Job #{job_id} for work #{work.id} failed with: #{result.failure}")
     end

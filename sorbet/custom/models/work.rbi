@@ -6,6 +6,9 @@ class Work
   sig { void }
   def new_version!; end
 
+  sig { void }
+  def begin_deposit!; end
+
   sig { returns(T::Boolean) }
   def deposited?; end
 
