@@ -448,7 +448,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 CREATE TABLE public.works (
     id bigint NOT NULL,
     druid character varying,
-    version integer,
+    version integer DEFAULT 0,
     title character varying NOT NULL,
     work_type character varying NOT NULL,
     contact_email character varying NOT NULL,
@@ -959,6 +959,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105141009'),
 ('20201105191840'),
 ('20201110133105'),
-('20201112131704');
+('20201112131704'),
+('20201117205532');
 
 

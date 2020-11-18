@@ -7,13 +7,25 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-0.36.0
+# sdr-client-e88e4ece87f8
 
 module SdrClient
 end
 module SdrClient::Deposit
   def self.model_run(request_dro:, url:, accession:, files: nil, logger: nil); end
   def self.run(apo:, source_id:, url:, label: nil, type: nil, viewing_direction: nil, access: nil, download: nil, use_statement: nil, copyright: nil, collection: nil, catkey: nil, embargo_release_date: nil, embargo_access: nil, files: nil, files_metadata: nil, accession: nil, grouping_strategy: nil, logger: nil); end
+end
+class SdrClient::Deposit::CreateResource
+  def accession?; end
+  def connection; end
+  def initialize(accession:, metadata:, logger:, connection:); end
+  def logger; end
+  def metadata; end
+  def metadata_request; end
+  def path; end
+  def run; end
+  def self.run(accession:, metadata:, logger:, connection:); end
+  def unexpected_response(response); end
 end
 class SdrClient::Deposit::SingleFileGroupingStrategy
   def self.run(uploads: nil); end
@@ -156,6 +168,17 @@ class SdrClient::Deposit::Process
   def mime_types; end
   def run; end
 end
+class SdrClient::Deposit::UpdateResource
+  def connection; end
+  def initialize(metadata:, logger:, connection:); end
+  def logger; end
+  def metadata; end
+  def metadata_request; end
+  def path(metadata); end
+  def run; end
+  def self.run(metadata:, logger:, connection:); end
+  def unexpected_response(response); end
+end
 class SdrClient::Deposit::UpdateDroWithFileIdentifiers
   def self.signed_id_map(upload_responses); end
   def self.update(request_dro:, upload_responses:); end
@@ -182,18 +205,6 @@ class SdrClient::Deposit::UploadFilesMetadataBuilder
   def mime_type_for(file_path); end
   def mime_types; end
   def self.build(files:, mime_types:); end
-end
-class SdrClient::Deposit::UploadResource
-  def accession?; end
-  def connection; end
-  def initialize(accession:, metadata:, logger:, connection:); end
-  def logger; end
-  def metadata; end
-  def metadata_request; end
-  def path; end
-  def run; end
-  def self.run(accession:, metadata:, logger:, connection:); end
-  def unexpected_response(response); end
 end
 class SdrClient::Credentials
   def self.credentials_file; end

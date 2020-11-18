@@ -1207,13 +1207,13 @@ class ActionController::API
   include ::AbstractController::Logger
   include ::ActiveSupport::Benchmarkable
   include ::ActionController::Redirecting
+  include ::ActionView::Rendering
   include ::ActionController::ApiRendering
   include ::ActionController::Rendering
   include ::ActionController::Renderers
   include ::ActionController::Renderers::All
   include ::ActionController::ConditionalGet
   include ::ActionController::Head
-  include ::ActionController::BasicImplicitRender
   include ::ActionController::StrongParameters
   include ::ActiveSupport::Callbacks
   include ::AbstractController::Callbacks
@@ -1227,6 +1227,10 @@ class ActionController::API
   include ::ActionController::RespondWith
   include ::ActionDispatch::Routing::RouteSet::MountedHelpers
   include ::ActiveRecord::Railties::ControllerRuntime
+  include ::AbstractController::Helpers
+  include ::ActionController::Helpers
+  include ::ActionController::ImplicitRender
+  include ::ActionController::BasicImplicitRender
   include ::Devise::Controllers::Helpers
   include ::Devise::Controllers::SignInOut
   include ::Devise::Controllers::StoreLocation
@@ -1236,6 +1240,18 @@ class ActionController::API
   def __callbacks(); end
 
   def __callbacks?(); end
+
+  def _helper_methods(); end
+
+  def _helper_methods=(val); end
+
+  def _helper_methods?(); end
+
+  def _helpers(); end
+
+  def _helpers=(val); end
+
+  def _helpers?(); end
 
   def _process_action_callbacks(); end
 
@@ -1264,6 +1280,18 @@ class ActionController::API
   def etaggers=(val); end
 
   def etaggers?(); end
+
+  def helpers_path(); end
+
+  def helpers_path=(val); end
+
+  def helpers_path?(); end
+
+  def include_all_helpers(); end
+
+  def include_all_helpers=(val); end
+
+  def include_all_helpers?(); end
 
   def logger(); end
 
@@ -1301,11 +1329,23 @@ class ActionController::API
   extend ::ActionController::ParamsWrapper::ClassMethods
   extend ::ActionController::RespondWith::ClassMethods
   extend ::ActionController::Railties::Helpers
+  extend ::AbstractController::Helpers::ClassMethods
+  extend ::ActionController::Helpers::ClassMethods
   def self.__callbacks(); end
 
   def self.__callbacks=(val); end
 
   def self.__callbacks?(); end
+
+  def self._helper_methods(); end
+
+  def self._helper_methods=(val); end
+
+  def self._helper_methods?(); end
+
+  def self._helpers=(val); end
+
+  def self._helpers?(); end
 
   def self._process_action_callbacks(); end
 
@@ -1334,6 +1374,18 @@ class ActionController::API
   def self.etaggers=(val); end
 
   def self.etaggers?(); end
+
+  def self.helpers_path(); end
+
+  def self.helpers_path=(val); end
+
+  def self.helpers_path?(); end
+
+  def self.include_all_helpers(); end
+
+  def self.include_all_helpers=(val); end
+
+  def self.include_all_helpers?(); end
 
   def self.logger(); end
 
@@ -1381,12 +1433,6 @@ class ActionController::Base
   include ::ActiveRecord::Railties::ControllerRuntime
   include ::ViewComponent::RenderingComponentHelper
   include ::ViewComponent::RenderComponentToStringHelper
-  include ::Devise::Controllers::Helpers
-  include ::Devise::Controllers::SignInOut
-  include ::Devise::Controllers::StoreLocation
-  include ::Devise::Controllers::UrlHelpers
-  include ::Turbolinks::Controller
-  include ::Turbolinks::Redirection
   include ::ActionPolicy::Controller
   include ::ActionPolicy::Behaviour
   include ::ActionPolicy::Behaviours::PolicyFor
@@ -1397,6 +1443,12 @@ class ActionController::Base
   include ::ActionPolicy::Behaviours::ThreadMemoized::InstanceMethods
   include ::ActionPolicy::Behaviours::Memoized::InstanceMethods
   include ::ActionPolicy::Behaviours::Namespaced::InstanceMethods
+  include ::Devise::Controllers::Helpers
+  include ::Devise::Controllers::SignInOut
+  include ::Devise::Controllers::StoreLocation
+  include ::Devise::Controllers::UrlHelpers
+  include ::Turbolinks::Controller
+  include ::Turbolinks::Redirection
   include ::ViewComponent::RenderingMonkeyPatch
   include ::ViewComponent::RenderToStringMonkeyPatch
   def authorize_count=(authorize_count); end
@@ -26269,9 +26321,6 @@ class Cocina::Models::Contributor
   def type(); end
 end
 
-class Cocina::Models::Contributor
-end
-
 class Cocina::Models::DRO
   include ::Cocina::Models::Checkable
   def access(); end
@@ -26376,9 +26425,6 @@ class Cocina::Models::DescriptiveAccessMetadata
   def physicalLocation(); end
 
   def url(); end
-end
-
-class Cocina::Models::DescriptiveAccessMetadata
 end
 
 class Cocina::Models::DescriptiveAdminMetadata
@@ -26490,9 +26536,6 @@ class Cocina::Models::DescriptiveValue
   def valueLanguage(); end
 end
 
-class Cocina::Models::DescriptiveValue
-end
-
 class Cocina::Models::DescriptiveValueLanguage
   def code(); end
 
@@ -26539,9 +26582,6 @@ class Cocina::Models::Event
   def structuredValue(); end
 
   def type(); end
-end
-
-class Cocina::Models::Event
 end
 
 class Cocina::Models::File
@@ -26722,9 +26762,6 @@ class Cocina::Models::RelatedResource
   def type(); end
 
   def version(); end
-end
-
-class Cocina::Models::RelatedResource
 end
 
 class Cocina::Models::ReleaseTag
@@ -26956,9 +26993,6 @@ class Cocina::Models::Title
   def value(); end
 
   def valueLanguage(); end
-end
-
-class Cocina::Models::Title
 end
 
 class Cocina::Models::Validator
@@ -27200,6 +27234,8 @@ module Collection::GeneratedRelationMethods
 end
 
 class Collection
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
   def self.after_add_for_collections_depositors(); end
 
   def self.after_add_for_collections_depositors=(val); end
@@ -27321,13 +27357,8 @@ class Collection
   def self.before_remove_for_works?(); end
 end
 
-class CollectionForm
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class CollectionPolicy
-  def __scoping__active_record_relation__default(relation); end
+  def __scoping__deposit__default(relation); end
 end
 
 class Collections::FormComponent
@@ -27506,6 +27537,11 @@ module Contributor::GeneratedRelationMethods
 end
 
 class Contributor
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class ContributorsGenerator
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -27741,6 +27777,11 @@ DRbIdConv = DRb::DRbIdConv
 DRbObject = DRb::DRbObject
 
 DRbUndumped = DRb::DRbUndumped
+
+class Dashboard::CollectionComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
 
 class DashboardPresenter
   extend ::T::Private::Methods::MethodHooks
@@ -29787,10 +29828,6 @@ class Disposable::Twin
   INVALID_PROPERTY_NAMES = ::T.let(nil, ::T.untyped)
 end
 
-module Disposable::Twin::Coercion
-  DRY_TYPES_VERSION = ::T.let(nil, ::T.untyped)
-end
-
 class Disposable::Twin
   extend ::Uber::Delegates
 end
@@ -30202,6 +30239,30 @@ end
 module Dor
 end
 
+class DraftCollectionForm
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class DraftWorkForm
+  include ::Edtf
+  include ::EmbargoDate
+  def attached_files_attributes=(); end
+
+  def contributors_attributes=(); end
+
+  def keywords_attributes=(); end
+
+  def related_links_attributes=(); end
+
+  def related_works_attributes=(); end
+end
+
+class DraftWorkForm
+  extend ::Edtf::ClassMethods
+  extend ::EmbargoDate::ClassMethods
+end
+
 module DruidTools
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -30528,25 +30589,6 @@ module EDTF
 end
 
 class EDTF::Parser
-  def _reduce_110(val, _values, result); end
-
-  def _reduce_130(val, _values, result); end
-
-  def _reduce_132(val, _values, result); end
-
-  def _reduce_146(val, _values, result); end
-
-  def _reduce_154(val, _values, result); end
-
-  def _reduce_163(val, _values, result); end
-
-  def _reduce_165(val, _values, result); end
-
-  def _reduce_167(val, _values, result); end
-
-  def _reduce_171(val, _values, result); end
-
-  def _reduce_179(val, _values, result); end
   Racc_arg = ::T.let(nil, ::T.untyped)
   Racc_debug_parser = ::T.let(nil, ::T.untyped)
   Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
@@ -30894,6 +30936,44 @@ class Etc::Passwd
   def self.each(&blk); end
 
   def self.members(); end
+end
+
+class Event
+  def autosave_associated_records_for_user(*args); end
+
+  def autosave_associated_records_for_work(*args); end
+end
+
+class Event::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Event::GeneratedRelationMethods
+end
+
+class Event::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Event::GeneratedRelationMethods
+end
+
+class Event::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::Event::GeneratedRelationMethods
+end
+
+module Event::GeneratedAssociationMethods
+  def reload_user(); end
+
+  def reload_work(); end
+end
+
+module Event::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module Event::GeneratedRelationMethods
+end
+
+module Event::GeneratedRelationMethods
+  extend ::Mutex_m
 end
 
 class Exception
@@ -34369,6 +34449,22 @@ JSON::State = JSON::Ext::Generator::State
 
 JSON::UnparserError = JSON::GeneratorError
 
+class Jbuilder
+  BLANK = ::T.let(nil, ::T.untyped)
+  NON_ENUMERABLES = ::T.let(nil, ::T.untyped)
+end
+
+class Jbuilder::DependencyTracker
+end
+
+module Jbuilder::DependencyTrackerMethods
+  DIRECT_RENDERS = ::T.let(nil, ::T.untyped)
+  INDIRECT_RENDERS = ::T.let(nil, ::T.untyped)
+end
+
+class Jbuilder::Railtie
+end
+
 module Kernel
   def class_eval(*args, &block); end
 
@@ -36956,6 +37052,7 @@ module PG::Constants
   PG_DIAG_STATEMENT_POSITION = ::T.let(nil, ::T.untyped)
   PG_DIAG_TABLE_NAME = ::T.let(nil, ::T.untyped)
   PQERRORS_DEFAULT = ::T.let(nil, ::T.untyped)
+  PQERRORS_SQLSTATE = ::T.let(nil, ::T.untyped)
   PQERRORS_TERSE = ::T.let(nil, ::T.untyped)
   PQERRORS_VERBOSE = ::T.let(nil, ::T.untyped)
   PQPING_NO_ATTEMPT = ::T.let(nil, ::T.untyped)
@@ -38556,12 +38653,6 @@ module Parallel
   Version = ::T.let(nil, ::T.untyped)
 end
 
-class Parallel::Break
-  def initialize(value=T.unsafe(nil)); end
-
-  def value(); end
-end
-
 class Parallel::UserInterruptHandler
   INTERRUPT_SIGNAL = ::T.let(nil, ::T.untyped)
 end
@@ -38665,40 +38756,40 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M11560
-end
-
-module Polyfill::Module::M11560
-end
-
-module Polyfill::Module::M11580
-end
-
-module Polyfill::Module::M11580
-end
-
-module Polyfill::Module::M11600
-end
-
-module Polyfill::Module::M11600
-end
-
-module Polyfill::Module::M11620
-end
-
-module Polyfill::Module::M11620
-end
-
 module Polyfill::Module::M11640
 end
 
 module Polyfill::Module::M11640
 end
 
+module Polyfill::Module::M11660
+end
+
+module Polyfill::Module::M11660
+end
+
 module Polyfill::Module::M11680
 end
 
 module Polyfill::Module::M11680
+end
+
+module Polyfill::Module::M11700
+end
+
+module Polyfill::Module::M11700
+end
+
+module Polyfill::Module::M11720
+end
+
+module Polyfill::Module::M11720
+end
+
+module Polyfill::Module::M11760
+end
+
+module Polyfill::Module::M11760
 end
 
 class Proc
@@ -41390,14 +41481,6 @@ Regexp::Expression::Anchor::EOS = Regexp::Expression::Anchor::EndOfString
 
 Regexp::Expression::Anchor::EOSobEOL = Regexp::Expression::Anchor::EndOfStringOrBeforeEndOfLine
 
-class Regexp::Expression::Base
-  include ::RuboCop::Ext::RegexpParser::Expression::Base
-end
-
-class Regexp::Expression::CharacterSet
-  include ::RuboCop::Ext::RegexpParser::Expression::CharacterSet
-end
-
 Regexp::Expression::CharacterSet::Intersection::OPERAND = Regexp::Expression::CharacterSet::IntersectedSequence
 
 Regexp::Expression::MatchLength = Regexp::MatchLength
@@ -43916,14 +43999,6 @@ class RuboCop::CLI::Command::ExecuteRunner
   INTEGRATION_FORMATTERS = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Config
-  def loaded_features(); end
-end
-
-class RuboCop::ConfigLoader
-  def self.loaded_features(); end
-end
-
 class RuboCop::ConfigRegeneration
   AUTO_GENERATED_FILE = ::T.let(nil, ::T.untyped)
   COMMAND_REGEX = ::T.let(nil, ::T.untyped)
@@ -43935,12 +44010,7 @@ module RuboCop::Cop::ActiveRecordHelper
 end
 
 class RuboCop::Cop::Base
-  def callbacks_needed(); end
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Base
-  def self.callbacks_needed(); end
 end
 
 class RuboCop::Cop::Bundler::GemComment
@@ -44018,15 +44088,7 @@ class RuboCop::Cop::Lint::DuplicateMethods
 end
 
 class RuboCop::Cop::Lint::DuplicateRegexpCharacterClassElement
-  include ::RuboCop::Cop::RangeHelp
-  def each_repeated_character_class_element_loc(node); end
-
-  def on_regexp(node); end
   MSG_REPEATED_ELEMENT = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::DuplicateRegexpCharacterClassElement
-  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::DuplicateRequire
@@ -44043,20 +44105,8 @@ class RuboCop::Cop::Lint::EachWithObjectArgument
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::ElseLayout
-  include ::RuboCop::Cop::RangeHelp
-end
-
-class RuboCop::Cop::Lint::ElseLayout
-  extend ::RuboCop::Cop::AutoCorrector
-end
-
 class RuboCop::Cop::Lint::EmptyBlock
-  def on_block(node); end
   MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::EmptyBlock
 end
 
 class RuboCop::Cop::Lint::EmptyConditionalBody
@@ -44114,24 +44164,14 @@ class RuboCop::Cop::Lint::MultipleComparison
 end
 
 class RuboCop::Cop::Lint::NoReturnInBeginEndBlocks
-  def on_lvasgn(node); end
-
-  def on_op_asgn(node); end
-
-  def on_or_asgn(node); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::NoReturnInBeginEndBlocks
-end
-
 class RuboCop::Cop::Lint::NumberConversion
-  include ::RuboCop::Cop::IgnoredMethods
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::OutOfRangeRegexpRef
-  def after_send(node); end
   MSG = ::T.let(nil, ::T.untyped)
   REGEXP_ARGUMENT_METHODS = ::T.let(nil, ::T.untyped)
   REGEXP_CAPTURE_METHODS = ::T.let(nil, ::T.untyped)
@@ -44171,18 +44211,8 @@ class RuboCop::Cop::Lint::StructNewOverride
 end
 
 class RuboCop::Cop::Lint::ToEnumArguments
-  def enum_conversion_call?(param0=T.unsafe(nil)); end
-
-  def method_name?(param0=T.unsafe(nil), param1); end
-
-  def on_send(node); end
-
-  def passing_keyword_arg?(param0=T.unsafe(nil), param1); end
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::ToEnumArguments
 end
 
 class RuboCop::Cop::Lint::TopLevelReturnWithArgument
@@ -44194,22 +44224,8 @@ class RuboCop::Cop::Lint::TrailingCommaInAttributeDeclaration
 end
 
 class RuboCop::Cop::Lint::UnmodifiedReduceAccumulator
-  def accumulator_index?(param0=T.unsafe(nil), param1); end
-
-  def element_modified?(param0, param1); end
-
-  def expression_values(param0); end
-
-  def lvar_used?(param0=T.unsafe(nil), param1); end
-
-  def on_block(node); end
-
-  def reduce_with_block?(param0=T.unsafe(nil)); end
   MSG = ::T.let(nil, ::T.untyped)
   MSG_INDEX = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::UnmodifiedReduceAccumulator
 end
 
 class RuboCop::Cop::Lint::UnreachableLoop
@@ -44230,10 +44246,6 @@ class RuboCop::Cop::Lint::UselessMethodDefinition
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::UselessSetterCall
-  extend ::RuboCop::Cop::AutoCorrector
-end
-
 class RuboCop::Cop::Lint::UselessTimes
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
@@ -44250,30 +44262,6 @@ end
 
 class RuboCop::Cop::Naming::BinaryOperatorParameterName
   EXCLUDED = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::BinaryOperatorParameterName
-  extend ::RuboCop::Cop::AutoCorrector
-end
-
-class RuboCop::Cop::Naming::HeredocDelimiterCase
-  extend ::RuboCop::Cop::AutoCorrector
-end
-
-class RuboCop::Cop::Naming::MemoizedInstanceVariableName
-  def defined_memoized?(param0=T.unsafe(nil), param1); end
-
-  def on_defined?(node); end
-
-  def on_or_asgn(node); end
-end
-
-class RuboCop::Cop::Naming::VariableNumber
-  def on_def(node); end
-
-  def on_defs(node); end
-
-  def on_sym(node); end
 end
 
 class RuboCop::Cop::Offense
@@ -44340,96 +44328,357 @@ class RuboCop::Cop::Performance::Sum
   MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::RSpec::AlignLeftLetBrace
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::AlignRightLetBrace
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::AnyInstance
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::AroundBlock
+  MSG_NO_ARG = ::T.let(nil, ::T.untyped)
+  MSG_UNUSED_ARG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Be
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::BeEql
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::BeforeAfterAll
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Capybara::CurrentPathExpectation
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Capybara::FeatureMethods
+  MAP = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::RSpec::Capybara::VisibilityMatcher
   CAPYBARA_MATCHER_METHODS = ::T.let(nil, ::T.untyped)
+  MSG_FALSE = ::T.let(nil, ::T.untyped)
+  MSG_TRUE = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ContextMethod
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ContextWording
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::DescribeClass
-  include ::RuboCop::Cop::RSpec::TopLevelGroup
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::DescribeMethod
-  include ::RuboCop::Cop::RSpec::TopLevelGroup
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::DescribeSymbol
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::DescribedClass
+  DESCRIBED_CLASS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::DescribedClassModuleWrapping
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Dialect
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::EmptyExampleGroup
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::EmptyHook
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::EmptyLineAfterExample
-  include ::RuboCop::Cop::RSpec::EmptyLineSeparation
-  include ::RuboCop::Cop::RSpec::FinalEndLocation
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::EmptyLineAfterExampleGroup
-  include ::RuboCop::Cop::RSpec::EmptyLineSeparation
-  include ::RuboCop::Cop::RSpec::FinalEndLocation
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::EmptyLineAfterFinalLet
-  include ::RuboCop::Cop::RSpec::EmptyLineSeparation
-  include ::RuboCop::Cop::RSpec::FinalEndLocation
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::EmptyLineAfterHook
-  include ::RuboCop::Cop::RSpec::EmptyLineSeparation
-  include ::RuboCop::Cop::RSpec::FinalEndLocation
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::EmptyLineAfterSubject
-  include ::RuboCop::Cop::RSpec::EmptyLineSeparation
-  include ::RuboCop::Cop::RSpec::FinalEndLocation
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop::RSpec::EmptyLineSeparation
-  include ::RuboCop::Cop::RSpec::FinalEndLocation
-  include ::RuboCop::Cop::RangeHelp
-  def last_child?(node); end
-
-  def missing_separating_line(node); end
-
-  def missing_separating_line_offense(node); end
-
-  def offending_loc(last_line); end
+class RuboCop::Cop::RSpec::ExampleLength
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop::RSpec::EmptyLineSeparation
+class RuboCop::Cop::RSpec::ExampleWithoutDescription
+  MSG_ADD_DESCRIPTION = ::T.let(nil, ::T.untyped)
+  MSG_DEFAULT_ARGUMENT = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ExampleWording
+  IT_PREFIX = ::T.let(nil, ::T.untyped)
+  MSG_IT = ::T.let(nil, ::T.untyped)
+  MSG_SHOULD = ::T.let(nil, ::T.untyped)
+  SHOULD_PREFIX = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ExpectActual
+  COMPLEX_LITERALS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+  SIMPLE_LITERALS = ::T.let(nil, ::T.untyped)
+  SUPPORTED_MATCHERS = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ExpectChange
+  MSG_BLOCK = ::T.let(nil, ::T.untyped)
+  MSG_CALL = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ExpectInHook
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ExpectOutput
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+module RuboCop::Cop::RSpec::ExplicitHelper
+  BUILT_IN_MATCHERS = ::T.let(nil, ::T.untyped)
+  MSG_EXPLICIT = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::FactoryBot::AttributeDefinedStatically
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::FactoryBot::CreateList
+  MSG_CREATE_LIST = ::T.let(nil, ::T.untyped)
+  MSG_N_TIMES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::FactoryBot::FactoryClassName
+  ALLOWED_CONSTANTS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::FilePath
-  include ::RuboCop::Cop::RSpec::TopLevelGroup
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop::RSpec::FinalEndLocation
-  def final_end_location(start_node); end
+class RuboCop::Cop::RSpec::Focus
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop::RSpec::FinalEndLocation
+class RuboCop::Cop::RSpec::HookArgument
+  EXPLICIT_MSG = ::T.let(nil, ::T.untyped)
+  IMPLICIT_MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::HooksBeforeExamples
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ImplicitBlockExpectation
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ImplicitExpect
+  ENFORCED_REPLACEMENTS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ImplicitSubject
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+module RuboCop::Cop::RSpec::InflectedHelper
+  MSG_INFLECTED = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::InstanceSpy
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::InstanceVariable
-  include ::RuboCop::Cop::RSpec::TopLevelGroup
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ItBehavesLike
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::IteratedExpectation
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::LeadingSubject
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::LeakyConstantDeclaration
+  MSG_CLASS = ::T.let(nil, ::T.untyped)
+  MSG_CONST = ::T.let(nil, ::T.untyped)
+  MSG_MODULE = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::LetBeforeExamples
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::LetSetup
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::MessageChain
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::MessageExpectation
+  MSG = ::T.let(nil, ::T.untyped)
+  SUPPORTED_STYLES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::MessageSpies
+  MSG_HAVE_RECEIVED = ::T.let(nil, ::T.untyped)
+  MSG_RECEIVE = ::T.let(nil, ::T.untyped)
+  SUPPORTED_STYLES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::MissingExampleGroupArgument
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::MultipleDescribes
-  include ::RuboCop::Cop::RSpec::TopLevelGroup
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::MultipleExpectations
   ANYTHING = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
   TRUE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::MultipleMemoizedHelpers
-  include ::RuboCop::Cop::RSpec::Variable
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::MultipleSubjects
   MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::NamedSubject
-  def example_or_hook_block?(param0=T.unsafe(nil)); end
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::NestedGroups
-  include ::RuboCop::Cop::RSpec::TopLevelGroup
+  DEPRECATED_MAX_KEY = ::T.let(nil, ::T.untyped)
+  DEPRECATION_WARNING = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::NotToNot
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::OverwritingSetup
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Pending
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Rails::HttpStatus::NumericStyleChecker
+  ALLOWED_STATUSES = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Rails::HttpStatus::SymbolicStyleChecker
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ReceiveCounts
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ReceiveNever
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::RepeatedDescription
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::RepeatedExample
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::RepeatedExampleGroupBody
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::RepeatedExampleGroupDescription
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::RepeatedIncludeExample
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ReturnFromStub
+  MSG_AND_RETURN = ::T.let(nil, ::T.untyped)
+  MSG_BLOCK = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ReturnFromStub::BlockBodyCorrector
+  NULL_BLOCK_BODY = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ScatteredLet
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::ScatteredSetup
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::SharedContext
+  MSG_CONTEXT = ::T.let(nil, ::T.untyped)
+  MSG_EXAMPLES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::SharedExamples::Checker
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::SingleArgumentMessageChain
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -44438,21 +44687,11 @@ class RuboCop::Cop::RSpec::StubbedMock
 end
 
 class RuboCop::Cop::RSpec::SubjectStub
-  include ::RuboCop::Cop::RSpec::TopLevelGroup
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop::RSpec::TopLevelGroup
-  def on_new_investigation(); end
-
-  def top_level_groups(); end
-end
-
-module RuboCop::Cop::RSpec::TopLevelGroup
-  extend ::RuboCop::AST::NodePattern::Macros
-end
-
-module RuboCop::Cop::RSpec::Variable
-  def variable_definition?(param0=T.unsafe(nil)); end
+class RuboCop::Cop::RSpec::UnspecifiedException
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Cop::RSpec::Variable::Helpers
@@ -44467,19 +44706,25 @@ end
 
 module RuboCop::Cop::RSpec::Variable::Subjects
   def self.all(element); end
-end
-
-module RuboCop::Cop::RSpec::Variable
-  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Cop::RSpec::VariableDefinition
-  include ::RuboCop::Cop::RSpec::Variable
   MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::VariableName
-  include ::RuboCop::Cop::RSpec::Variable
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::VerifiedDoubles
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::VoidExpect
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Yield
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -44643,22 +44888,7 @@ class RuboCop::Cop::Style::Alias
 end
 
 class RuboCop::Cop::Style::ArgumentsForwarding
-  include ::RuboCop::Cop::RangeHelp
-  def forwarding_method_arguments?(param0=T.unsafe(nil), param1, param2, param3); end
-
-  def on_def(node); end
-
-  def on_defs(node); end
-
-  def only_rest_arguments?(param0=T.unsafe(nil), param1); end
-
-  def use_rest_arguments?(param0=T.unsafe(nil)); end
   MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::ArgumentsForwarding
-  extend ::RuboCop::Cop::AutoCorrector
-  extend ::RuboCop::Cop::TargetRubyVersion
 end
 
 class RuboCop::Cop::Style::ArrayCoercion
@@ -44709,18 +44939,8 @@ class RuboCop::Cop::Style::ClassVars
 end
 
 class RuboCop::Cop::Style::CollectionCompact
-  include ::RuboCop::Cop::RangeHelp
-  def on_send(node); end
-
-  def reject_method?(param0=T.unsafe(nil)); end
-
-  def select_method?(param0=T.unsafe(nil)); end
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::CollectionCompact
-  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::CombinableLoops
@@ -44737,20 +44957,12 @@ class RuboCop::Cop::Style::Dir
 end
 
 class RuboCop::Cop::Style::DocumentDynamicEvalDefinition
-  def on_send(node); end
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::DocumentDynamicEvalDefinition
-end
-
 class RuboCop::Cop::Style::DoubleNegation
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::DoubleNegation
-  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EmptyLiteral
@@ -44807,18 +45019,6 @@ class RuboCop::Cop::Style::LambdaCall
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::MethodCallWithArgsParentheses
-  include ::RuboCop::Cop::Style::MethodCallWithArgsParentheses::RequireParentheses
-  include ::RuboCop::Cop::Style::MethodCallWithArgsParentheses::OmitParentheses
-  def on_csend(node); end
-
-  def on_send(node); end
-
-  def on_super(node); end
-
-  def on_yield(node); end
-end
-
 class RuboCop::Cop::Style::MixinUsage
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -44828,24 +45028,9 @@ class RuboCop::Cop::Style::MultilineMemoization
   KEYWORD_MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::MultipleComparison
-  def simple_comparison_lhs?(param0=T.unsafe(nil)); end
-
-  def simple_comparison_rhs?(param0=T.unsafe(nil)); end
-end
-
-class RuboCop::Cop::Style::MultipleComparison
-  extend ::RuboCop::Cop::AutoCorrector
-end
-
 class RuboCop::Cop::Style::NegatedIfElseCondition
-  def on_if(node); end
   MSG = ::T.let(nil, ::T.untyped)
   NEGATED_EQUALITY_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NegatedIfElseCondition
-  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::NilComparison
@@ -44906,10 +45091,6 @@ class RuboCop::Cop::Style::RedundantFreeze
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::RedundantParentheses
-  def interpolation?(param0=T.unsafe(nil)); end
-end
-
 class RuboCop::Cop::Style::RedundantRegexpCharacterClass
   REQUIRES_ESCAPE_OUTSIDE_CHAR_CLASS_CHARS = ::T.let(nil, ::T.untyped)
 end
@@ -44967,24 +45148,8 @@ class RuboCop::Cop::Style::Strip
 end
 
 class RuboCop::Cop::Style::SwapValues
-  include ::RuboCop::Cop::RangeHelp
-  def on_asgn(node); end
-
-  def on_casgn(node); end
-
-  def on_cvasgn(node); end
-
-  def on_gvasgn(node); end
-
-  def on_ivasgn(node); end
-
-  def on_lvasgn(node); end
   MSG = ::T.let(nil, ::T.untyped)
   SIMPLE_ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::SwapValues
-  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::UnpackFirst
@@ -44995,76 +45160,12 @@ class RuboCop::Cop::Style::ZeroLengthPredicate
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop::Util
-  def self.indent(node); end
-end
-
 module RuboCop::Cop::VisibilityHelp
   VISIBILITY_SCOPES = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Ext::RegexpNode
-  def assign_properties(*_); end
-end
-
-module RuboCop::Ext::RegexpParser
-end
-
-module RuboCop::Ext::RegexpParser::Expression
-end
-
-module RuboCop::Ext::RegexpParser::Expression::Base
-  def expression(); end
-
-  def loc(); end
-
-  def origin(); end
-
-  def origin=(origin); end
-
-  def source(); end
-
-  def source=(source); end
-
-  def start_index(); end
-end
-
-module RuboCop::Ext::RegexpParser::Expression::Base
-end
-
-module RuboCop::Ext::RegexpParser::Expression::CharacterSet
-  def build_location(); end
-end
-
-module RuboCop::Ext::RegexpParser::Expression::CharacterSet
-end
-
-module RuboCop::Ext::RegexpParser::Expression
-end
-
-class RuboCop::Ext::RegexpParser::Map
-  def begin(); end
-
-  def body(); end
-
-  def end(); end
-
-  def initialize(expression, body:, quantifier: T.unsafe(nil), begin_l: T.unsafe(nil), end_l: T.unsafe(nil)); end
-
-  def quantifier(); end
-end
-
-class RuboCop::Ext::RegexpParser::Map
-end
-
-module RuboCop::Ext::RegexpParser
-end
-
 class RuboCop::Formatter::GitHubActionsFormatter
   ESCAPE_MAP = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Formatter::GitHubActionsFormatter
 end
 
 class RuboCop::AST::NodePattern
@@ -45093,41 +45194,8 @@ end
 
 RuboCop::ProcessedSource = RuboCop::AST::ProcessedSource
 
-class RuboCop::RSpec::AlignLetBrace
-  include ::RuboCop::RSpec::Language
-end
-
-class RuboCop::RSpec::Corrector::MoveNode
-  include ::RuboCop::Cop::RSpec::FinalEndLocation
-end
-
-module RuboCop::RSpec::Language
-  def example?(param0=T.unsafe(nil)); end
-
-  def example_group?(param0=T.unsafe(nil)); end
-
-  def example_group_with_body?(param0=T.unsafe(nil)); end
-
-  def hook?(param0=T.unsafe(nil)); end
-
-  def include?(param0=T.unsafe(nil)); end
-
-  def let?(param0=T.unsafe(nil)); end
-
-  def rspec?(param0=T.unsafe(nil)); end
-
-  def shared_group?(param0=T.unsafe(nil)); end
-
-  def spec_group?(param0=T.unsafe(nil)); end
-
-  def subject?(param0=T.unsafe(nil)); end
-end
-
-module RuboCop::RSpec::Language
-  extend ::RuboCop::AST::NodePattern::Macros
-  def self.config(); end
-
-  def self.config=(config); end
+module RuboCop::RSpec::Version
+  STRING = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Sorbet
@@ -45143,12 +45211,6 @@ RuboCop::Token = RuboCop::AST::Token
 
 module RuboCop::Version
   CANONICAL_FEATURE_NAMES = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Version
-  def self.extension_versions(env); end
-
-  def self.feature_version(feature); end
 end
 
 module Ruby::Enum
@@ -45322,6 +45384,17 @@ end
 
 module SdrClient::Deposit
   BOOK_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::CreateResource
+  def initialize(accession:, metadata:, logger:, connection:); end
+
+  def run(); end
+  DRO_PATH = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::CreateResource
+  def self.run(accession:, metadata:, logger:, connection:); end
 end
 
 class SdrClient::Deposit::File
@@ -45529,6 +45602,17 @@ class SdrClient::Deposit::UpdateDroWithFileIdentifiers
   def self.update(request_dro:, upload_responses:); end
 end
 
+class SdrClient::Deposit::UpdateResource
+  def initialize(metadata:, logger:, connection:); end
+
+  def run(); end
+  DRO_PATH = ::T.let(nil, ::T.untyped)
+end
+
+class SdrClient::Deposit::UpdateResource
+  def self.run(metadata:, logger:, connection:); end
+end
+
 class SdrClient::Deposit::UploadFiles
   def initialize(file_metadata:, logger:, connection:); end
 
@@ -45556,17 +45640,6 @@ end
 
 class SdrClient::Deposit::UploadFilesMetadataBuilder
   def self.build(files:, mime_types:); end
-end
-
-class SdrClient::Deposit::UploadResource
-  def initialize(accession:, metadata:, logger:, connection:); end
-
-  def run(); end
-  DRO_PATH = ::T.let(nil, ::T.untyped)
-end
-
-class SdrClient::Deposit::UploadResource
-  def self.run(accession:, metadata:, logger:, connection:); end
 end
 
 module SdrClient::Deposit
@@ -46035,10 +46108,6 @@ module StateMachines::Integrations::ActiveRecord
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-class StorageMigrator
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
 
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
@@ -46154,149 +46223,9 @@ class SynchronizedDelegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
 end
 
-class TZInfo::AbsoluteDayOfYearTransitionRule
-  def get_day(year); end
-
-  def initialize(day, transition_at=T.unsafe(nil)); end
-
-  def is_always_first_day_of_year?(); end
-
-  def is_always_last_day_of_year?(); end
-end
-
-class TZInfo::AbsoluteDayOfYearTransitionRule
-end
-
-class TZInfo::AnnualRules
-  def dst_end_rule(); end
-
-  def dst_offset(); end
-
-  def dst_start_rule(); end
-
-  def initialize(std_offset, dst_offset, dst_start_rule, dst_end_rule); end
-
-  def std_offset(); end
-
-  def transitions(year); end
-end
-
-class TZInfo::AnnualRules::Transition
-  def at(); end
-
-  def at=(_); end
-
-  def offset(); end
-
-  def offset=(_); end
-
-  def previous_offset(); end
-
-  def previous_offset=(_); end
-end
-
-class TZInfo::AnnualRules::Transition
-  def self.[](*_); end
-
-  def self.members(); end
-end
-
-class TZInfo::AnnualRules
-end
-
-class TZInfo::DayOfMonthTransitionRule
-  def get_day(year); end
-
-  def initialize(month, week, day_of_week, transition_at=T.unsafe(nil)); end
-
-  def offset_start(); end
-end
-
-class TZInfo::DayOfMonthTransitionRule
-end
-
-class TZInfo::DayOfWeekTransitionRule
-  def day_of_week(); end
-
-  def initialize(month, day_of_week, transition_at); end
-
-  def is_always_first_day_of_year?(); end
-
-  def is_always_last_day_of_year?(); end
-
-  def month(); end
-end
-
-class TZInfo::DayOfWeekTransitionRule
-end
-
-class TZInfo::DayOfYearTransitionRule
-  def initialize(day, transition_at); end
-
-  def seconds(); end
-end
-
-class TZInfo::DayOfYearTransitionRule
-end
-
-class TZInfo::InvalidPosixTimeZone
-end
-
-class TZInfo::InvalidPosixTimeZone
-end
-
 class TZInfo::JulianDayOfYearTransitionRule
-  def get_day(year); end
-
-  def initialize(day, transition_at=T.unsafe(nil)); end
-
-  def is_always_first_day_of_year?(); end
-
-  def is_always_last_day_of_year?(); end
   LEAP = ::T.let(nil, ::T.untyped)
   YEAR = ::T.let(nil, ::T.untyped)
-end
-
-class TZInfo::JulianDayOfYearTransitionRule
-end
-
-class TZInfo::LastDayOfMonthTransitionRule
-  def get_day(year); end
-
-  def initialize(month, day_of_week, transition_at=T.unsafe(nil)); end
-end
-
-class TZInfo::LastDayOfMonthTransitionRule
-end
-
-class TZInfo::PosixTimeZoneParser
-  def parse(tz_string); end
-end
-
-class TZInfo::PosixTimeZoneParser
-end
-
-class TZInfo::TimeOrDateTime
-  def wday(); end
-end
-
-class TZInfo::TransitionRule
-  def ==(r); end
-
-  def at(offset, year); end
-
-  def eql?(r); end
-
-  def hash_args(); end
-
-  def initialize(transition_at); end
-
-  def new_time_or_datetime(year, month=T.unsafe(nil), day=T.unsafe(nil)); end
-
-  def transition_at(); end
-end
-
-class TZInfo::TransitionRule
 end
 
 class TZInfo::ZoneinfoTimezoneInfo
@@ -46913,9 +46842,9 @@ class TypeCoerce::Converter
   PRIMITIVE_TYPES = ::T.let(nil, ::T.untyped)
 end
 
-module Types
-  extend ::Dry::Types::BuilderMethods
-  extend ::Dry::Core::Deprecations::Interface
+class TypesGenerator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module URI
@@ -47084,6 +47013,18 @@ class User
 
   def after_add_for_deposits?(); end
 
+  def after_add_for_deposits_into(); end
+
+  def after_add_for_deposits_into=(val); end
+
+  def after_add_for_deposits_into?(); end
+
+  def after_add_for_deposits_into_users(); end
+
+  def after_add_for_deposits_into_users=(val); end
+
+  def after_add_for_deposits_into_users?(); end
+
   def after_add_for_notifications(); end
 
   def after_add_for_notifications=(val); end
@@ -47108,6 +47049,18 @@ class User
 
   def after_remove_for_deposits?(); end
 
+  def after_remove_for_deposits_into(); end
+
+  def after_remove_for_deposits_into=(val); end
+
+  def after_remove_for_deposits_into?(); end
+
+  def after_remove_for_deposits_into_users(); end
+
+  def after_remove_for_deposits_into_users=(val); end
+
+  def after_remove_for_deposits_into_users?(); end
+
   def after_remove_for_notifications(); end
 
   def after_remove_for_notifications=(val); end
@@ -47128,6 +47081,10 @@ class User
 
   def autosave_associated_records_for_deposits(*args); end
 
+  def autosave_associated_records_for_deposits_into(*args); end
+
+  def autosave_associated_records_for_deposits_into_users(*args); end
+
   def autosave_associated_records_for_notifications(*args); end
 
   def autosave_associated_records_for_reviews_collections(*args); end
@@ -47139,6 +47096,18 @@ class User
   def before_add_for_deposits=(val); end
 
   def before_add_for_deposits?(); end
+
+  def before_add_for_deposits_into(); end
+
+  def before_add_for_deposits_into=(val); end
+
+  def before_add_for_deposits_into?(); end
+
+  def before_add_for_deposits_into_users(); end
+
+  def before_add_for_deposits_into_users=(val); end
+
+  def before_add_for_deposits_into_users?(); end
 
   def before_add_for_notifications(); end
 
@@ -47164,6 +47133,18 @@ class User
 
   def before_remove_for_deposits?(); end
 
+  def before_remove_for_deposits_into(); end
+
+  def before_remove_for_deposits_into=(val); end
+
+  def before_remove_for_deposits_into?(); end
+
+  def before_remove_for_deposits_into_users(); end
+
+  def before_remove_for_deposits_into_users=(val); end
+
+  def before_remove_for_deposits_into_users?(); end
+
   def before_remove_for_notifications(); end
 
   def before_remove_for_notifications=(val); end
@@ -47187,6 +47168,10 @@ class User
   def devise_modules?(); end
 
   def validate_associated_records_for_deposits(*args); end
+
+  def validate_associated_records_for_deposits_into(*args); end
+
+  def validate_associated_records_for_deposits_into_users(*args); end
 
   def validate_associated_records_for_notifications(*args); end
 
@@ -47212,6 +47197,14 @@ end
 
 module User::GeneratedAssociationMethods
   def deposit_ids=(ids); end
+
+  def deposits_into(); end
+
+  def deposits_into=(value); end
+
+  def deposits_into_ids(); end
+
+  def deposits_into_ids=(ids); end
 
   def notification_ids=(ids); end
 
@@ -47239,6 +47232,18 @@ class User
 
   def self.after_add_for_deposits?(); end
 
+  def self.after_add_for_deposits_into(); end
+
+  def self.after_add_for_deposits_into=(val); end
+
+  def self.after_add_for_deposits_into?(); end
+
+  def self.after_add_for_deposits_into_users(); end
+
+  def self.after_add_for_deposits_into_users=(val); end
+
+  def self.after_add_for_deposits_into_users?(); end
+
   def self.after_add_for_notifications(); end
 
   def self.after_add_for_notifications=(val); end
@@ -47262,6 +47267,18 @@ class User
   def self.after_remove_for_deposits=(val); end
 
   def self.after_remove_for_deposits?(); end
+
+  def self.after_remove_for_deposits_into(); end
+
+  def self.after_remove_for_deposits_into=(val); end
+
+  def self.after_remove_for_deposits_into?(); end
+
+  def self.after_remove_for_deposits_into_users(); end
+
+  def self.after_remove_for_deposits_into_users=(val); end
+
+  def self.after_remove_for_deposits_into_users?(); end
 
   def self.after_remove_for_notifications(); end
 
@@ -47287,6 +47304,18 @@ class User
 
   def self.before_add_for_deposits?(); end
 
+  def self.before_add_for_deposits_into(); end
+
+  def self.before_add_for_deposits_into=(val); end
+
+  def self.before_add_for_deposits_into?(); end
+
+  def self.before_add_for_deposits_into_users(); end
+
+  def self.before_add_for_deposits_into_users=(val); end
+
+  def self.before_add_for_deposits_into_users?(); end
+
   def self.before_add_for_notifications(); end
 
   def self.before_add_for_notifications=(val); end
@@ -47310,6 +47339,18 @@ class User
   def self.before_remove_for_deposits=(val); end
 
   def self.before_remove_for_deposits?(); end
+
+  def self.before_remove_for_deposits_into(); end
+
+  def self.before_remove_for_deposits_into=(val); end
+
+  def self.before_remove_for_deposits_into?(); end
+
+  def self.before_remove_for_deposits_into_users(); end
+
+  def self.before_remove_for_deposits_into_users=(val); end
+
+  def self.before_remove_for_deposits_into_users?(); end
 
   def self.before_remove_for_notifications(); end
 
@@ -48495,6 +48536,12 @@ class Work
 
   def after_add_for_contributors?(); end
 
+  def after_add_for_events(); end
+
+  def after_add_for_events=(val); end
+
+  def after_add_for_events?(); end
+
   def after_add_for_keywords(); end
 
   def after_add_for_keywords=(val); end
@@ -48525,6 +48572,12 @@ class Work
 
   def after_remove_for_contributors?(); end
 
+  def after_remove_for_events(); end
+
+  def after_remove_for_events=(val); end
+
+  def after_remove_for_events?(); end
+
   def after_remove_for_keywords(); end
 
   def after_remove_for_keywords=(val); end
@@ -48551,6 +48604,8 @@ class Work
 
   def autosave_associated_records_for_depositor(*args); end
 
+  def autosave_associated_records_for_events(*args); end
+
   def autosave_associated_records_for_keywords(*args); end
 
   def autosave_associated_records_for_related_links(*args); end
@@ -48568,6 +48623,12 @@ class Work
   def before_add_for_contributors=(val); end
 
   def before_add_for_contributors?(); end
+
+  def before_add_for_events(); end
+
+  def before_add_for_events=(val); end
+
+  def before_add_for_events?(); end
 
   def before_add_for_keywords(); end
 
@@ -48599,6 +48660,12 @@ class Work
 
   def before_remove_for_contributors?(); end
 
+  def before_remove_for_events(); end
+
+  def before_remove_for_events=(val); end
+
+  def before_remove_for_events?(); end
+
   def before_remove_for_keywords(); end
 
   def before_remove_for_keywords=(val); end
@@ -48620,6 +48687,8 @@ class Work
   def validate_associated_records_for_attached_files(*args); end
 
   def validate_associated_records_for_contributors(*args); end
+
+  def validate_associated_records_for_events(*args); end
 
   def validate_associated_records_for_keywords(*args); end
 
@@ -48647,6 +48716,8 @@ module Work::GeneratedAssociationMethods
   def attached_file_ids=(ids); end
 
   def contributor_ids=(ids); end
+
+  def event_ids=(ids); end
 
   def keyword_ids=(ids); end
 
@@ -48693,6 +48764,12 @@ class Work
 
   def self.after_add_for_contributors?(); end
 
+  def self.after_add_for_events(); end
+
+  def self.after_add_for_events=(val); end
+
+  def self.after_add_for_events?(); end
+
   def self.after_add_for_keywords(); end
 
   def self.after_add_for_keywords=(val); end
@@ -48722,6 +48799,12 @@ class Work
   def self.after_remove_for_contributors=(val); end
 
   def self.after_remove_for_contributors?(); end
+
+  def self.after_remove_for_events(); end
+
+  def self.after_remove_for_events=(val); end
+
+  def self.after_remove_for_events?(); end
 
   def self.after_remove_for_keywords(); end
 
@@ -48753,6 +48836,12 @@ class Work
 
   def self.before_add_for_contributors?(); end
 
+  def self.before_add_for_events(); end
+
+  def self.before_add_for_events=(val); end
+
+  def self.before_add_for_events?(); end
+
   def self.before_add_for_keywords(); end
 
   def self.before_add_for_keywords=(val); end
@@ -48783,6 +48872,12 @@ class Work
 
   def self.before_remove_for_contributors?(); end
 
+  def self.before_remove_for_events(); end
+
+  def self.before_remove_for_events=(val); end
+
+  def self.before_remove_for_events?(); end
+
   def self.before_remove_for_keywords(); end
 
   def self.before_remove_for_keywords=(val); end
@@ -48802,20 +48897,16 @@ class Work
   def self.before_remove_for_related_works?(); end
 end
 
-class WorkForm
-  include ::Disposable::Twin::Coercion
-  def attached_files_attributes=(); end
-
-  def contributors_attributes=(); end
-
-  def keywords_attributes=(); end
-
-  def related_links_attributes=(); end
-
-  def related_works_attributes=(); end
+class WorkPolicy
+  def __scoping__active_record_relation__depositor(scope); end
 end
 
 class WorkType
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::ApprovalComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end

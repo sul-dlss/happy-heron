@@ -50,122 +50,113 @@ RSpec.describe RequestGenerator do
   end
 
   context 'when files are not present' do
-    let(:expected_model) do
-      {
-        type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
-        label: 'Test title',
-        version: 0,
-        administrative: {
-          hasAdminPolicy: 'druid:zx485kb6348'
-        },
-        description: {
-          title: [
-            {
-              value: 'Test title'
-            }
-          ],
-          contributor: [],
-          event: [],
-          subject: [],
-          note: [
-            {
-              value: 'test abstract',
-              type: 'summary'
-            },
-            {
-              value: 'test citation',
-              type: 'preferred citation'
-            },
-            {
-              value: 'io@io.io',
-              type: 'contact',
-              displayLabel: 'Contact'
-            }
-          ],
-          relatedResource: [],
-          form: types_form
-        },
-        identification: {
-          sourceId: "hydrus:#{work.id}"
-        },
-        structural: {
-          contains: []
+    context 'without a druid' do
+      let(:work) { build(:work, id: 7, work_type: 'text') }
+      let(:expected_model) do
+        {
+          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          label: 'Test title',
+          version: 0,
+          access: { access: 'stanford', download: 'stanford' },
+          administrative: {
+            hasAdminPolicy: 'druid:zx485kb6348'
+          },
+          description: {
+            title: [
+              {
+                value: 'Test title'
+              }
+            ],
+            contributor: [],
+            event: [],
+            subject: [],
+            note: [
+              {
+                value: 'test abstract',
+                type: 'summary'
+              },
+              {
+                value: 'test citation',
+                type: 'preferred citation'
+              },
+              {
+                value: 'io@io.io',
+                type: 'contact',
+                displayLabel: 'Contact'
+              }
+            ],
+            relatedResource: [],
+            form: types_form
+          },
+          identification: {
+            sourceId: "hydrus:#{work.id}"
+          },
+          structural: {
+            contains: []
+          }
         }
-      }
-    end
-    let(:work) { build(:work, id: 7, work_type: 'text') }
+      end
 
-    it 'generates the model' do
-      expect(model.to_h).to eq(expected_model)
+      it 'generates the model' do
+        expect(model).to eq Cocina::Models::RequestDRO.new(expected_model)
+      end
+    end
+
+    context 'with a druid' do
+      let(:work) { build(:work, id: 7, work_type: 'text', druid: 'druid:bk123gh4567') }
+      let(:expected_model) do
+        {
+          externalIdentifier: 'druid:bk123gh4567',
+          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          label: 'Test title',
+          version: 0,
+          access: { access: 'stanford', download: 'stanford' },
+          administrative: {
+            hasAdminPolicy: 'druid:zx485kb6348'
+          },
+          description: {
+            title: [
+              {
+                value: 'Test title'
+              }
+            ],
+            contributor: [],
+            event: [],
+            subject: [],
+            note: [
+              {
+                value: 'test abstract',
+                type: 'summary'
+              },
+              {
+                value: 'test citation',
+                type: 'preferred citation'
+              },
+              {
+                value: 'io@io.io',
+                type: 'contact',
+                displayLabel: 'Contact'
+              }
+            ],
+            relatedResource: [],
+            form: types_form
+          },
+          identification: {
+            sourceId: "hydrus:#{work.id}"
+          },
+          structural: {
+            contains: []
+          }
+        }
+      end
+
+      it 'generates the model' do
+        expect(model).to eq Cocina::Models::DRO.new(expected_model)
+      end
     end
   end
 
   context 'when a file is present' do
-    let(:expected_model) do
-      {
-        type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
-        label: 'Test title',
-        version: 0,
-        administrative: {
-          hasAdminPolicy: 'druid:zx485kb6348'
-        },
-        description: {
-          title: [
-            {
-              value: 'Test title'
-            }
-          ],
-          event: [],
-          contributor: [],
-          subject: [],
-          note: [
-            {
-              value: 'test abstract',
-              type: 'summary'
-            },
-            {
-              value: 'test citation',
-              type: 'preferred citation'
-            },
-            {
-              value: 'io@io.io',
-              type: 'contact',
-              displayLabel: 'Contact'
-            }
-          ],
-          relatedResource: [],
-          form: types_form
-        },
-        identification: {
-          sourceId: "hydrus:#{work.id}"
-        },
-        structural: {
-          contains: [
-            {
-              label: 'MyString',
-              structural: { contains: [
-                {
-                  access: { access: 'stanford', download: 'none' },
-                  administrative: { sdrPreserve: true, shelve: true },
-                  filename: 'sul.svg',
-                  hasMessageDigests: [
-                    { digest: 'f5eff9e28f154f79f7a11261bc0d4b30', type: 'md5' },
-                    { digest: '2046f6584c2f0f5e9c0df7e8070d14d1ec65f382', type: 'sha1' }
-                  ],
-                  hasMimeType: 'image/svg+xml',
-                  label: 'MyString',
-                  size: 17_675,
-                  type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
-                  version: 1
-                }
-              ] },
-              type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
-              version: 1
-            }
-          ]
-        }
-      }
-    end
     let!(:blob) do
       ActiveStorage::Blob.create_after_upload!(
         io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
@@ -174,7 +165,6 @@ RSpec.describe RequestGenerator do
       )
     end
     let(:attached_file) { build(:attached_file) }
-    let(:work) { build(:work, id: 7, attached_files: [attached_file]) }
 
     before do
       # rubocop:disable RSpec/MessageChain
@@ -186,8 +176,157 @@ RSpec.describe RequestGenerator do
       blob.destroy
     end
 
-    it 'generates the model' do
-      expect(model.to_h).to eq(expected_model)
+    context 'without a druid' do
+      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file]) }
+
+      let(:expected_model) do
+        {
+          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          label: 'Test title',
+          version: 1,
+          access: { access: 'stanford', download: 'stanford' },
+          administrative: {
+            hasAdminPolicy: 'druid:zx485kb6348'
+          },
+          description: {
+            title: [
+              {
+                value: 'Test title'
+              }
+            ],
+            event: [],
+            contributor: [],
+            subject: [],
+            note: [
+              {
+                value: 'test abstract',
+                type: 'summary'
+              },
+              {
+                value: 'test citation',
+                type: 'preferred citation'
+              },
+              {
+                value: 'io@io.io',
+                type: 'contact',
+                displayLabel: 'Contact'
+              }
+            ],
+            relatedResource: [],
+            form: types_form
+          },
+          identification: {
+            sourceId: "hydrus:#{work.id}"
+          },
+          structural: {
+            contains: [
+              {
+                label: 'MyString',
+                structural: { contains: [
+                  {
+                    access: { access: 'stanford', download: 'stanford' },
+                    administrative: { sdrPreserve: true, shelve: true },
+                    filename: 'sul.svg',
+                    hasMessageDigests: [
+                      { digest: 'f5eff9e28f154f79f7a11261bc0d4b30', type: 'md5' },
+                      { digest: '2046f6584c2f0f5e9c0df7e8070d14d1ec65f382', type: 'sha1' }
+                    ],
+                    hasMimeType: 'image/svg+xml',
+                    label: 'MyString',
+                    size: 17_675,
+                    type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
+                    version: 1
+                  }
+                ] },
+                type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
+                version: 1
+              }
+            ]
+          }
+        }
+      end
+
+      it 'generates the model' do
+        expect(model).to eq Cocina::Models::RequestDRO.new(expected_model)
+      end
+    end
+
+    context 'with a druid' do
+      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file], druid: 'druid:bk123gh4567') }
+      let(:expected_model) do
+        {
+          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          label: 'Test title',
+          version: 1,
+          externalIdentifier: 'druid:bk123gh4567',
+          access: { access: 'stanford', download: 'stanford' },
+          administrative: {
+            hasAdminPolicy: 'druid:zx485kb6348'
+          },
+          description: {
+            title: [
+              {
+                value: 'Test title'
+              }
+            ],
+            event: [],
+            contributor: [],
+            subject: [],
+            note: [
+              {
+                value: 'test abstract',
+                type: 'summary'
+              },
+              {
+                value: 'test citation',
+                type: 'preferred citation'
+              },
+              {
+                value: 'io@io.io',
+                type: 'contact',
+                displayLabel: 'Contact'
+              }
+            ],
+            relatedResource: [],
+            form: types_form
+          },
+          identification: {
+            sourceId: "hydrus:#{work.id}"
+          },
+          structural: {
+            contains: [
+              {
+                label: 'MyString',
+                structural: { contains: [
+                  {
+                    access: { access: 'stanford', download: 'stanford' },
+                    administrative: { sdrPreserve: true, shelve: true },
+                    filename: 'sul.svg',
+                    hasMessageDigests: [
+                      { digest: 'f5eff9e28f154f79f7a11261bc0d4b30', type: 'md5' },
+                      { digest: '2046f6584c2f0f5e9c0df7e8070d14d1ec65f382', type: 'sha1' }
+                    ],
+                    hasMimeType: 'image/svg+xml',
+                    label: 'MyString',
+                    size: 17_675,
+                    type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
+                    externalIdentifier: 'druid:bk123gh4567/sul.svg',
+                    version: 1
+                  }
+                ] },
+                type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
+                externalIdentifier: 'bk123gh4567_1',
+                version: 1
+              }
+            ]
+          }
+        }
+      end
+
+      it 'generates the model' do
+        # expect(model).to eq Cocina::Models::DRO.new(expected_model)
+        expect(model.to_h).to eq expected_model
+      end
     end
   end
 end

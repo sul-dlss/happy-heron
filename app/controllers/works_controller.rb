@@ -46,6 +46,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work)
     if @form.validate(work_params) && @form.save
+      work.new_version! if work.deposited?
       after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
