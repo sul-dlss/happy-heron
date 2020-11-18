@@ -34,7 +34,6 @@ class DepositJob < BaseDepositJob
   end
 
   sig { params(new_request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO)).returns(Integer) }
-  # rubocop:disable Metrics/MethodLength
   def create_or_update(new_request_dro)
     case new_request_dro
     when Cocina::Models::RequestDRO
@@ -48,7 +47,6 @@ class DepositJob < BaseDepositJob
                                              connection: connection)
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   sig { params(blobs: T::Array[ActiveStorage::Blob]).returns(T::Array[SdrClient::Deposit::Files::DirectUploadRequest]) }
   def upload_responses(blobs)
