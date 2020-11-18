@@ -6,35 +6,20 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
+# Offense count: 2
 # Configuration parameters: IgnoredMethods, Max.
 Metrics/AbcSize:
   Exclude:
     - 'app/controllers/works_controller.rb'
-    - 'app/models/license.rb'
     - 'app/services/storage_migrator.rb'
 
-# Offense count: 5
+# Offense count: 1
 # Configuration parameters: CountComments, Max, CountAsOne, ExcludedMethods.
 Metrics/MethodLength:
   Exclude:
-    - 'app/controllers/works_controller.rb'
-    - 'app/services/description_generator.rb'
     - 'app/services/request_generator.rb'
-    - 'app/services/storage_migrator.rb'
 
 # Offense count: 1
 RSpec/AnyInstance:
   Exclude:
     - 'spec/channels/application_cable/connection_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: SuggestedStrictness, Include.
-# Include: **/*.rb, **/*.rbi, **/*.rake, **/*.ru
-Sorbet/FalseSigil:
-  Exclude:
-    - 'bin/**/*'
-    - 'db/**/*.rb'
-    - 'script/**/*'
-    - 'config/initializers/dry_types.rb'

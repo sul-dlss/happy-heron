@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 # Represents the list of valid work types
-# rubocop:disable Metrics/ClassLength
 class WorkType
   extend T::Sig
 
@@ -171,4 +170,3 @@ class WorkType
     find(id).subtypes
   end
 end
-# rubocop:enable Metrics/ClassLength
