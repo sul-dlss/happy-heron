@@ -29,7 +29,7 @@ class DraftWorkForm < Reform::Form
 
   collection :contributors,
              populator: ContributorPopulator.new(:contributors, Contributor),
-             prepopulator: ->(*) { contributors << Contributor.new } do
+             prepopulator: ->(*) { contributors << Contributor.new if contributors.blank? } do
     property :id
     property :first_name
     property :last_name
@@ -58,14 +58,14 @@ class DraftWorkForm < Reform::Form
 
   collection :related_works,
              populator: RelatedWorksPopulator.new(:related_works, RelatedWork),
-             prepopulator: ->(*) { related_works << RelatedWork.new } do
+             prepopulator: ->(*) { related_works << RelatedWork.new if related_works.blank? } do
     property :id
     property :citation
     property :_destroy, virtual: true
   end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
-                             prepopulator: ->(*) { related_links << RelatedLink.new } do
+                             prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? } do
     property :id
     property :link_title
     property :url
