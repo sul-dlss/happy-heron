@@ -21,7 +21,6 @@ class Work < ApplicationRecord
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
-  validates :embargo_date, embargo_date: true
 
   enum access: {
     stanford: 'stanford',

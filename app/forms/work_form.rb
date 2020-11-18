@@ -14,5 +14,4 @@ class WorkForm < DraftWorkForm
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
   validates :contributors, length: { minimum: 1, message: 'Please add at least one contributor.' }
-  validates :embargo_date, embargo_date: true
 end
