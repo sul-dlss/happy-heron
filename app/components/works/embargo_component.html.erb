@@ -11,8 +11,8 @@
      </div>
    </div>
 
-   <div class="embargo_date" data-controller="embargo_date" data-action="error->embargo_date#error" data-target="edit-deposit.embargo_dateField">
-   <div class="mb-5 row" data-target="embargo_date.container">
+   <div class="embargo-date" data-controller="embargo-date" data-action="error->embargo-date#error" data-target="edit-deposit.embargo-dateField">
+   <div class="mb-5 row" data-target="embargo-date.container">
      <div class="col-sm-10 release-option">
           <%= form.radio_button :release, 'embargo', class: 'form-check-input' %>
           <%= form.label :release_embargo, 'On this date' %>
@@ -32,9 +32,9 @@
             <%= select_day nil, { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day'}, id: 'work_embargo_day', class: "form-control" %>
           </div>
         </div>
-        <div data-target="embargo_date.error" class="invalid-feedback">blah</div>
       </div>
-   </div>
+      <div data-target="embargo-date.error" class="invalid-feedback"></div>
+      </div>
 
   <p>Select which audience you would like to have access to download your files once they are available.</p>
   <div class="mb-3 row">

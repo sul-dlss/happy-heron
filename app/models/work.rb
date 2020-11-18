@@ -63,12 +63,4 @@ class Work < ApplicationRecord
       super(edtf.to_edtf)
     end
   end
-
-  # def embargo_date=(my_date)
-  #   if my_date > Time.zone.today + 3.years
-  #     errors.add(:embargo_date, 'Invalid embargo date')
-  #   else
-  #     self[:embargo_date] = my_date
-  #   end
-  # end
 end
