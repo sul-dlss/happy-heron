@@ -29,6 +29,13 @@ export default class extends Controller {
     this.containerTarget.classList.remove('is-invalid')
   }
 
+  checkForEnter(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault() // prevent form submission
+      this.add(event);
+    }
+  }
+
   removeAssociation(event) {
     const item = event.target.closest(".selection-choice")
     item.querySelector("input[name*='_destroy']").value = 1
