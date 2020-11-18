@@ -38,12 +38,15 @@
               <% end %>
             </div>
 
-            <a class="nav-link" href="#">Help</a>
+            <%= link_to('Help', '#contactUsModal',
+                        class: 'nav-link',
+                        data: { toggle: 'modal',
+                                target: '#contactUsModal' }) %>
           </nav>
         </header>
 
         <%= render 'shared/flashes' %>
-
+        <%= render Help::FormComponent.new(user: current_user) %>
         <%= yield %>
 
       </div>
