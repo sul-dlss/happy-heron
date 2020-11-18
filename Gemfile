@@ -16,6 +16,7 @@ group :development, :test do
   gem 'rubocop-sorbet', require: false
   # CodeClimate is not compatible with 0.18+. See https://github.com/codeclimate/test-reporter/issues/413
   gem 'simplecov', '~> 0.17.1', require: false
+  gem 'super_diff', require: false
 end
 
 group :development do
