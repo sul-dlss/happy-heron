@@ -7,9 +7,10 @@ class HelpsMailer < ApplicationMailer
     @email = email
     @subject = subject
     @body = body
-    mail(to: 'sdr-contact@lists.stanford.edu',
-         from: @email,
-         subject: @subject,
-         body: @body)
+    message = mail(to: 'sdr-support@jirasul.stanford.edu',
+                   from: @email,
+                   subject: @subject,
+                   body: @body)
+    message.deliver!
   end
 end
