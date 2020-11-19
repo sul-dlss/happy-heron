@@ -12,8 +12,8 @@ class DepositStatusJob < BaseDepositJob
     raise TryAgainLater, "No result yet for job #{job_id}" if result.nil?
 
     if result.success?
-      work.druid = result.value!
-      work.deposit_complete!
+      work.update!(druid: result.value!)
+      EventService.deposit_complete(work: work)
     else
       Honeybadger.notify("Job #{job_id} for work #{work.id} failed with: #{result.failure}")
     end

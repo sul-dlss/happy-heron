@@ -9,6 +9,12 @@ class Work
   sig { void }
   def begin_deposit!; end
 
+  sig { void }
+  def reject!; end
+
+  sig { void }
+  def deposit_complete!; end
+
   sig { returns(T::Boolean) }
   def deposited?; end
 

@@ -10,11 +10,10 @@ class ReviewsController < ApplicationController
     work = Work.find(params[:work_id])
     authorize! work, to: :review?
     if params[:state] == 'approve'
-      work.begin_deposit!
+      EventService.begin_deposit(work: work, user: current_user)
       DepositJob.perform_later(work)
     else
-      Event.create!(work: work, user: current_user, event_type: 'return', description: params[:reason])
-      work.reject!
+      EventService.reject(work: work, user: current_user, description: params[:reason])
     end
 
     redirect_to dashboard_path
