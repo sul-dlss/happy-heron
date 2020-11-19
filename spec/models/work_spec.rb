@@ -211,7 +211,7 @@ RSpec.describe Work do
     end
   end
 
-  describe 'purl' do
+  describe '#purl' do
     context 'with a druid' do
       it 'constructs purl' do
         work.update(druid: 'druid:hb093rg5848')
@@ -223,6 +223,12 @@ RSpec.describe Work do
       it 'returns nil' do
         expect(work.purl).to eq(nil)
       end
+    end
+  end
+
+  describe '#current_state_display_label' do
+    it 'returns the label as a string' do
+      expect(work.current_state_display_label).to eq('Draft - Not deposited')
     end
   end
 end

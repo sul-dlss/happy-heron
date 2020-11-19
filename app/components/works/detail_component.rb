@@ -16,7 +16,8 @@ module Works
              :contact_email,  :abstract, :citation,
              :published_edtf, :created_edtf,
              :depositor, :attached_files, :contributors,
-             :related_works, :related_links, to: :work
+             :related_works, :related_links, :current_state_display_label,
+             to: :work
 
     sig { returns(String) }
     def created_at
@@ -58,11 +59,6 @@ module Works
     sig { returns(String) }
     def keywords
       work.keywords.map(&:label).join(', ')
-    end
-
-    sig { returns(T::Boolean) }
-    def draft?
-      work.first_draft?
     end
   end
 end

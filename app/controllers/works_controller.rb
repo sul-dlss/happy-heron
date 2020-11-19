@@ -46,7 +46,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work)
     if @form.validate(work_params) && @form.save
-      work.new_version! if work.deposited?
+      EventService.new_version(work: work, user: current_user) if work.deposited?
       after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
@@ -71,9 +71,9 @@ class WorksController < ObjectsController
   def after_save(work)
     if deposit_button_pushed?
       if work.collection.review_enabled?
-        work.submit_for_review!
+        EventService.submit_for_review(work: work, user: current_user)
       else
-        work.begin_deposit!
+        EventService.begin_deposit(work: work, user: current_user)
         DepositJob.perform_later(work)
       end
     end

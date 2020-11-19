@@ -1,4 +1,4 @@
-<div class="container" id="work">
+<div class="container" id="work" data-controller="work-updates" data-work-updates-work-id="<%= @work.id %>">
   <%= render Works::ApprovalComponent.new(work: @work) %>
 
   <%= render Works::DetailComponent.new(work: @work) %>
