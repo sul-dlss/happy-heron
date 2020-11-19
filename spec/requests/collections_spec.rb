@@ -155,9 +155,10 @@ RSpec.describe 'Collections requests' do
         end
 
         it 'renders the page again' do
-          post '/collections', params: { collection: collection_params, commit: 'Deposit' }
-          expect(response).to have_http_status(:ok)
-          expect(response.body).to include 'Create a collection'
+          post '/collections', params: { collection: collection_params, format: :json, commit: 'Deposit' }
+          expect(response).to have_http_status(:bad_request)
+          json = JSON.parse(response.body)
+          expect(json['name']).to eq ["can't be blank"]
         end
       end
     end
@@ -259,14 +260,18 @@ RSpec.describe 'Collections requests' do
         let(:collection_params) do
           {
             name: '',
-            depositor_sunets: ''
+            review_enabled: 'true',
+            reviewer_sunets: ''
           }
         end
 
         it 'renders the page again' do
-          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Deposit' }
-          expect(response).to have_http_status(:ok)
-          expect(response.body).to include('All fields are required, unless otherwise noted.')
+          patch "/collections/#{collection.id}",
+                params: { collection: collection_params, format: :json, commit: 'Deposit' }
+          expect(response).to have_http_status(:bad_request)
+          json = JSON.parse(response.body)
+          expect(json['name']).to eq ["can't be blank"]
+          expect(json['reviewerSunets']).to eq ['must be provided when review is enabled']
         end
       end
     end

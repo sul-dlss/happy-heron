@@ -19,6 +19,8 @@ class DraftCollectionForm < Reform::Form
     self.reviewer_sunets = reviewer_sunets_from_model.join(', ')
   }
 
+  validate :reviewable_form
+
   def sync(*)
     update_depositors
     update_reviewers
@@ -27,6 +29,13 @@ class DraftCollectionForm < Reform::Form
   end
 
   private
+
+  sig { void }
+  def reviewable_form
+    return if review_enabled != 'true' || reviewer_sunets.present?
+
+    errors.add(:reviewer_sunets, 'must be provided when review is enabled')
+  end
 
   sig { void }
   def update_depositors
