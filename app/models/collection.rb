@@ -14,4 +14,23 @@ class Collection < ApplicationRecord
   def review_enabled?
     reviewers.present?
   end
+
+  state_machine initial: :first_draft do
+    after_transition on: :begin_deposit do |collection, _transition|
+      DepositCollectionJob.perform_later(collection)
+    end
+
+    event :begin_deposit do
+      transition %i[first_draft version_draft deposited] => :depositing
+    end
+
+    event :deposit_complete do
+      transition depositing: :deposited
+    end
+
+    event :update_metadata do
+      transition deposited: :version_draft
+      transition %i[first_draft version_draft] => same
+    end
+  end
 end

@@ -11,7 +11,7 @@ class DepositJob < BaseDepositJob
 
     job_id = deposit(request_dro: RequestGenerator.generate_model(work: work),
                      blobs: work.attached_files.map { |af| af.file.attachment.blob })
-    DepositStatusJob.perform_later(work: work, job_id: job_id)
+    DepositStatusJob.perform_later(object: work, job_id: job_id)
   rescue StandardError => e
     Honeybadger.notify(e)
   end

@@ -5,17 +5,22 @@
 class DepositStatusJob < BaseDepositJob
   queue_as :default
 
-  sig { params(work: Work, job_id: Integer).void }
-  def perform(work:, job_id:)
+  sig { params(object: T.any(Work, Collection), job_id: Integer).void }
+  def perform(object:, job_id:)
     result = status(job_id: job_id)
     # This will force a recheck of status (and should be ignored by Honeybadger)
     raise TryAgainLater, "No result yet for job #{job_id}" if result.nil?
 
     if result.success?
-      work.update!(druid: result.value!)
-      EventService.deposit_complete(work: work)
+      object.update!(druid: result.value!)
+      case object
+      when Work
+        EventService.deposit_complete(work: object)
+      else
+        object.deposit_complete!
+      end
     else
-      Honeybadger.notify("Job #{job_id} for work #{work.id} failed with: #{result.failure}")
+      Honeybadger.notify("Job #{job_id} for #{object.class} #{object.id} failed with: #{result.failure}")
     end
   end
 

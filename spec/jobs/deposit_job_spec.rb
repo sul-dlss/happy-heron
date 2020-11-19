@@ -41,7 +41,7 @@ RSpec.describe DepositJob do
     it 'initiates a DepositStatusJob' do
       described_class.perform_now(work)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(work: work, job_id: 1234)
+      expect(DepositStatusJob).to have_received(:perform_later).with(object: work, job_id: 1234)
     end
   end
 
@@ -57,7 +57,7 @@ RSpec.describe DepositJob do
     it 'initiates a DepositStatusJob' do
       described_class.perform_now(work)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(work: work, job_id: 1234)
+      expect(DepositStatusJob).to have_received(:perform_later).with(object: work, job_id: 1234)
       expect(work.version).to eq 2
     end
   end
