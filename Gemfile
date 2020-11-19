@@ -31,7 +31,10 @@ end
 
 group :test do
   gem 'apparition'
-  gem 'capybara', '>= 2.15'
+  # Pinned to git until 3.34.0 is released which disables smooth scrolling
+  # Using smooth scrolling is a feature of bootstrap 5.0.0-alpha3, which causes
+  # capybara to be unable to find elements below the fold.
+  gem 'capybara', github: 'teamcapybara/capybara'
   gem 'rspec-sorbet'
 end
 
