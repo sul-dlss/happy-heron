@@ -1020,24 +1020,52 @@ class ActionView::Base
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::UrlHelper
 end
-class ActionView::CacheExpiry
-  def all_view_paths; end
-  def clear_cache; end
-  def clear_cache_if_necessary; end
-  def dirs_to_watch; end
-  def initialize(watcher:); end
+class ActionView::PathSet
+  def +(array); end
+  def <<(*args); end
+  def [](**, &&); end
+  def _find_all(path, prefixes, args); end
+  def compact; end
+  def concat(*args); end
+  def each(**, &&); end
+  def exists?(path, prefixes, *args); end
+  def find(*args); end
+  def find_all(path, prefixes = nil, *args); end
+  def find_all_with_query(query); end
+  def find_file(*args, &block); end
+  def include?(**, &&); end
+  def initialize(paths = nil); end
+  def initialize_copy(other); end
+  def insert(*args); end
+  def paths; end
+  def pop(**, &&); end
+  def push(*args); end
+  def size(**, &&); end
+  def to_ary; end
+  def typecast(paths); end
+  def unshift(*args); end
+  include Enumerable
 end
-class ActionView::CacheExpiry::Executor
-  def before(target); end
-  def initialize(watcher:); end
+class ActionView::DependencyTracker
+  def self.find_dependencies(name, template, view_paths = nil); end
+  def self.register_tracker(extension, tracker); end
+  def self.remove_tracker(handler); end
 end
-module ActionView::RoutingUrlFor
-  def _generate_paths_by_default; end
-  def _routes_context; end
-  def ensure_only_path_option(options); end
-  def optimize_routes_generation?; end
-  def url_for(options = nil); end
-  def url_options; end
+class ActionView::DependencyTracker::ERBTracker
+  def add_dependencies(render_dependencies, arguments, pattern); end
+  def add_dynamic_dependency(dependencies, dependency); end
+  def add_static_dependency(dependencies, dependency); end
+  def dependencies; end
+  def directory; end
+  def explicit_dependencies; end
+  def initialize(name, template, view_paths = nil); end
+  def name; end
+  def render_dependencies; end
+  def resolve_directories(wildcard_dependencies); end
+  def self.call(name, template, view_paths = nil); end
+  def self.supports_view_paths?; end
+  def source; end
+  def template; end
 end
 module ActionView::ViewPaths
   def _prefixes; end
@@ -1095,6 +1123,25 @@ module ActionView::Rendering::ClassMethods
   def build_view_context_class(klass, supports_path, routes, helpers); end
   def view_context_class; end
 end
+class ActionView::CacheExpiry
+  def all_view_paths; end
+  def clear_cache; end
+  def clear_cache_if_necessary; end
+  def dirs_to_watch; end
+  def initialize(watcher:); end
+end
+class ActionView::CacheExpiry::Executor
+  def before(target); end
+  def initialize(watcher:); end
+end
+module ActionView::RoutingUrlFor
+  def _generate_paths_by_default; end
+  def _routes_context; end
+  def ensure_only_path_option(options); end
+  def optimize_routes_generation?; end
+  def url_for(options = nil); end
+  def url_options; end
+end
 module ActionView::Layouts
   def _conditional_layout?; end
   def _default_layout(lookup_context, formats, require_layout = nil); end
@@ -1118,53 +1165,6 @@ module ActionView::Layouts::ClassMethods
 end
 module ActionView::Layouts::ClassMethods::LayoutConditions
   def _conditional_layout?; end
-end
-class ActionView::PathSet
-  def +(array); end
-  def <<(*args); end
-  def [](**, &&); end
-  def _find_all(path, prefixes, args); end
-  def compact; end
-  def concat(*args); end
-  def each(**, &&); end
-  def exists?(path, prefixes, *args); end
-  def find(*args); end
-  def find_all(path, prefixes = nil, *args); end
-  def find_all_with_query(query); end
-  def find_file(*args, &block); end
-  def include?(**, &&); end
-  def initialize(paths = nil); end
-  def initialize_copy(other); end
-  def insert(*args); end
-  def paths; end
-  def pop(**, &&); end
-  def push(*args); end
-  def size(**, &&); end
-  def to_ary; end
-  def typecast(paths); end
-  def unshift(*args); end
-  include Enumerable
-end
-class ActionView::DependencyTracker
-  def self.find_dependencies(name, template, view_paths = nil); end
-  def self.register_tracker(extension, tracker); end
-  def self.remove_tracker(handler); end
-end
-class ActionView::DependencyTracker::ERBTracker
-  def add_dependencies(render_dependencies, arguments, pattern); end
-  def add_dynamic_dependency(dependencies, dependency); end
-  def add_static_dependency(dependencies, dependency); end
-  def dependencies; end
-  def directory; end
-  def explicit_dependencies; end
-  def initialize(name, template, view_paths = nil); end
-  def name; end
-  def render_dependencies; end
-  def resolve_directories(wildcard_dependencies); end
-  def self.call(name, template, view_paths = nil); end
-  def self.supports_view_paths?; end
-  def source; end
-  def template; end
 end
 class ActionView::Digestor
   def self.digest(name:, finder:, format: nil, dependencies: nil); end

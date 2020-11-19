@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.21.0
+# view_component-2.22.1
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -118,6 +118,7 @@ class ViewComponent::Base < ActionView::Base
   def view_context; end
   def virtual_path; end
   def with(area, content = nil, &block); end
+  def with_variant(variant); end
   extend ActiveSupport::Configurable::ClassMethods
   include ActiveSupport::Configurable
   include ViewComponent::Previewable

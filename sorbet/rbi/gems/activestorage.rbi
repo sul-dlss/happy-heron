@@ -226,27 +226,6 @@ class ActiveStorage::Attached
   def name; end
   def record; end
 end
-class ActiveStorage::LogSubscriber < ActiveSupport::LogSubscriber
-end
-class ActiveStorage::Service
-  def content_disposition_with(filename:, type: nil); end
-  def delete(key); end
-  def delete_prefixed(prefix); end
-  def download(key); end
-  def download_chunk(key, range); end
-  def exist?(key); end
-  def headers_for_direct_upload(key, filename:, content_type:, content_length:, checksum:); end
-  def instrument(operation, payload = nil, &block); end
-  def open(*args, **options, &block); end
-  def self.build(configurator:, service: nil, **service_config); end
-  def self.configure(service_name, configurations); end
-  def service_name; end
-  def update_metadata(key, **metadata); end
-  def upload(key, io, checksum: nil, **options); end
-  def url(key, expires_in:, disposition:, filename:, content_type:); end
-  def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:); end
-  extend ActiveSupport::Autoload
-end
 module ActiveStorage::SetCurrent
   extend ActiveSupport::Concern
 end
@@ -480,6 +459,27 @@ module ActiveStorage::Blob::Representable
   def variable?; end
   def variant(transformations); end
   extend ActiveSupport::Concern
+end
+class ActiveStorage::LogSubscriber < ActiveSupport::LogSubscriber
+end
+class ActiveStorage::Service
+  def content_disposition_with(filename:, type: nil); end
+  def delete(key); end
+  def delete_prefixed(prefix); end
+  def download(key); end
+  def download_chunk(key, range); end
+  def exist?(key); end
+  def headers_for_direct_upload(key, filename:, content_type:, content_length:, checksum:); end
+  def instrument(operation, payload = nil, &block); end
+  def open(*args, **options, &block); end
+  def self.build(configurator:, service: nil, **service_config); end
+  def self.configure(service_name, configurations); end
+  def service_name; end
+  def update_metadata(key, **metadata); end
+  def upload(key, io, checksum: nil, **options); end
+  def url(key, expires_in:, disposition:, filename:, content_type:); end
+  def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:); end
+  extend ActiveSupport::Autoload
 end
 class ActiveStorage::Service::Configurator
   def build(service_name); end

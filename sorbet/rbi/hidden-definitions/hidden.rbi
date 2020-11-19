@@ -16391,9 +16391,6 @@ end
 class ActiveStorage::Service::DiskService
 end
 
-class ActiveStorage::Service::DruidDiskService
-end
-
 class ActiveStorage::Service
   extend ::ActiveSupport::Autoload
   def self.build(configurator:, service: T.unsafe(nil), **service_config); end
@@ -20338,6 +20335,14 @@ end
 
 module AttachedFile::GeneratedRelationMethods
   extend ::Mutex_m
+end
+
+module AttrExtras
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class AttrExtras::AttrInitialize::ParamsBuilder
+  REQUIRED_SIGN = ::T.let(nil, ::T.untyped)
 end
 
 class BCrypt::Engine
@@ -30861,6 +30866,7 @@ class Errno::ESHLIBVERS
 end
 
 module Erubi
+  MATCH_METHOD = ::T.let(nil, ::T.untyped)
   RANGE_ALL = ::T.let(nil, ::T.untyped)
   RANGE_FIRST = ::T.let(nil, ::T.untyped)
   RANGE_LAST = ::T.let(nil, ::T.untyped)
@@ -34570,8 +34576,8 @@ class Listen::Adapter::Windows
   OS_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
-module Listen::FSM
-  DEFAULT_STATE = ::T.let(nil, ::T.untyped)
+class Listen::Event::Loop
+  MAX_STARTUP_SECONDS = ::T.let(nil, ::T.untyped)
 end
 
 class Listen::Listener::Config
@@ -37052,7 +37058,6 @@ module PG::Constants
   PG_DIAG_STATEMENT_POSITION = ::T.let(nil, ::T.untyped)
   PG_DIAG_TABLE_NAME = ::T.let(nil, ::T.untyped)
   PQERRORS_DEFAULT = ::T.let(nil, ::T.untyped)
-  PQERRORS_SQLSTATE = ::T.let(nil, ::T.untyped)
   PQERRORS_TERSE = ::T.let(nil, ::T.untyped)
   PQERRORS_VERBOSE = ::T.let(nil, ::T.untyped)
   PQPING_NO_ATTEMPT = ::T.let(nil, ::T.untyped)
@@ -38752,44 +38757,49 @@ class Pathname
   def make_symlink(_); end
 end
 
+module PatienceDiff
+  TEMPLATE_PATH = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M11640
+module Polyfill::Module::M11780
 end
 
-module Polyfill::Module::M11640
+module Polyfill::Module::M11780
 end
 
-module Polyfill::Module::M11660
+module Polyfill::Module::M11800
 end
 
-module Polyfill::Module::M11660
+module Polyfill::Module::M11800
 end
 
-module Polyfill::Module::M11680
+module Polyfill::Module::M11820
 end
 
-module Polyfill::Module::M11680
+module Polyfill::Module::M11820
 end
 
-module Polyfill::Module::M11700
+module Polyfill::Module::M11840
 end
 
-module Polyfill::Module::M11700
+module Polyfill::Module::M11840
 end
 
-module Polyfill::Module::M11720
+module Polyfill::Module::M11860
 end
 
-module Polyfill::Module::M11720
+module Polyfill::Module::M11860
 end
 
-module Polyfill::Module::M11760
+module Polyfill::Module::M11900
 end
 
-module Polyfill::Module::M11760
+module Polyfill::Module::M11900
 end
 
 class Proc
@@ -43863,7 +43873,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_COUNT_LENGTH_SIZE = ::T.let(nil, ::T.untyped)
   SET_CREATED_AT_UPDATED_AT = ::T.let(nil, ::T.untyped)
   SET_CREATED_AT_UPDATED_AT_2 = ::T.let(nil, ::T.untyped)
-  SET_DEBUGGER_BYEBUG_REMOTE_BYEBUG = ::T.let(nil, ::T.untyped)
   SET_DEFINE_METHOD_DEFINE_SINGLETON_METHOD = ::T.let(nil, ::T.untyped)
   SET_DESCRIBE_FEATURE = ::T.let(nil, ::T.untyped)
   SET_DOUBLE_SPY = ::T.let(nil, ::T.untyped)
@@ -43913,7 +43922,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_PRIVATE_PROTECTED_PUBLIC = ::T.let(nil, ::T.untyped)
   SET_PROC_LAMBDA = ::T.let(nil, ::T.untyped)
   SET_PROP_CONST = ::T.let(nil, ::T.untyped)
-  SET_PRY_REMOTE_PRY_PRY_REMOTE_CONSOLE = ::T.let(nil, ::T.untyped)
   SET_PUBLIC_CONSTANT_PRIVATE_CONSTANT = ::T.let(nil, ::T.untyped)
   SET_PUBLIC_PROTECTED_PRIVATE_MODULE_FUNCTION = ::T.let(nil, ::T.untyped)
   SET_RAISE_ERROR_RAISE_EXCEPTION = ::T.let(nil, ::T.untyped)
@@ -43929,7 +43937,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_RENDER_REDIRECT_TO = ::T.let(nil, ::T.untyped)
   SET_REQUIRE_REQUIRE_RELATIVE = ::T.let(nil, ::T.untyped)
   SET_RETURNING_UNIQUE_BY = ::T.let(nil, ::T.untyped)
-  SET_SAVE_AND_OPEN_PAGE_SAVE_AND_OPEN_SCREENSHOT = ::T.let(nil, ::T.untyped)
   SET_SELECT_FILTER_FIND_ALL_REJECT = ::T.let(nil, ::T.untyped)
   SET_SELECT_SELECT = ::T.let(nil, ::T.untyped)
   SET_SEND_PUBLIC_SEND___SEND__ = ::T.let(nil, ::T.untyped)
@@ -43967,6 +43974,7 @@ module RuboCop::AST::NodePattern::Sets
   SET___6 = ::T.let(nil, ::T.untyped)
   SET___7 = ::T.let(nil, ::T.untyped)
   SET___8 = ::T.let(nil, ::T.untyped)
+  SET___METHOD_____CALLEE__ = ::T.let(nil, ::T.untyped)
   SET____ = ::T.let(nil, ::T.untyped)
   SET____ETC = ::T.let(nil, ::T.untyped)
   SET____ETC_2 = ::T.let(nil, ::T.untyped)
@@ -44079,6 +44087,10 @@ class RuboCop::Cop::Lint::DeprecatedClassMethods
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Lint::DuplicateBranch
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Lint::DuplicateElsifCondition
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -44107,6 +44119,11 @@ end
 
 class RuboCop::Cop::Lint::EmptyBlock
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::EmptyClass
+  CLASS_MSG = ::T.let(nil, ::T.untyped)
+  METACLASS_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::EmptyConditionalBody
@@ -44957,6 +44974,8 @@ class RuboCop::Cop::Style::Dir
 end
 
 class RuboCop::Cop::Style::DocumentDynamicEvalDefinition
+  BLOCK_COMMENT_REGEXP = ::T.let(nil, ::T.untyped)
+  COMMENT_REGEXP = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -45035,6 +45054,10 @@ end
 
 class RuboCop::Cop::Style::NilComparison
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::NilLambda
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::NonNilCheck
@@ -45134,6 +45157,10 @@ class RuboCop::Cop::Style::SoleNestedConditional
   MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Style::StaticClass
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Style::StderrPuts
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -45205,6 +45232,10 @@ end
 
 class RuboCop::TargetFinder
   HIDDEN_PATH_SUBSTRING = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::TargetRuby::GemspecFile
+  GEMSPEC_EXTENSION = ::T.let(nil, ::T.untyped)
 end
 
 RuboCop::Token = RuboCop::AST::Token
@@ -45593,6 +45624,13 @@ end
 
 class SdrClient::Deposit::SingleFileGroupingStrategy
   def self.run(uploads: T.unsafe(nil)); end
+end
+
+class SdrClient::Deposit::UnexpectedResponse
+end
+
+class SdrClient::Deposit::UnexpectedResponse
+  def self.call(response); end
 end
 
 class SdrClient::Deposit::UpdateDroWithFileIdentifiers
@@ -46108,7 +46146,6 @@ module StateMachines::Integrations::ActiveRecord
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
   def ext(newext=T.unsafe(nil)); end
@@ -46218,6 +46255,1030 @@ end
 Struct::Passwd = Etc::Passwd
 
 Struct::Tms = Process::Tms
+
+module SuperDiff
+  COLORS = ::T.let(nil, ::T.untyped)
+end
+
+module SuperDiff::ColorizedDocumentExtensions
+  def alpha(*args, **opts, &block); end
+
+  def beta(*args, **opts, &block); end
+end
+
+module SuperDiff::ColorizedDocumentExtensions
+  def self.extended(extendee); end
+end
+
+class SuperDiff::Configuration
+  def add_extra_diff_formatter_class(*classes); end
+
+  def add_extra_diff_formatter_classes(*classes); end
+
+  def add_extra_differ_class(*classes); end
+
+  def add_extra_differ_classes(*classes); end
+
+  def add_extra_inspector_class(*classes); end
+
+  def add_extra_inspector_classes(*classes); end
+
+  def add_extra_operation_tree_builder_class(*classes); end
+
+  def add_extra_operation_tree_builder_classes(*classes); end
+
+  def add_extra_operation_tree_class(*classes); end
+
+  def add_extra_operation_tree_classes(*classes); end
+
+  def extra_diff_formatter_classes(); end
+
+  def extra_differ_classes(); end
+
+  def extra_inspector_classes(); end
+
+  def extra_operation_tree_builder_classes(); end
+
+  def extra_operation_tree_classes(); end
+end
+
+class SuperDiff::Configuration
+end
+
+module SuperDiff::Csi
+end
+
+class SuperDiff::Csi::BoldSequence
+end
+
+class SuperDiff::Csi::BoldSequence
+end
+
+class SuperDiff::Csi::Color
+  def background?(); end
+
+  def foreground?(); end
+
+  def interpret_layer!(layer); end
+
+  def layer(); end
+
+  def to_foreground(); end
+end
+
+class SuperDiff::Csi::Color
+  def self.exists?(name); end
+
+  def self.resolve(value, layer:); end
+
+  def self.sub_colorized_areas_in(text); end
+end
+
+class SuperDiff::Csi::ColorSequenceBlock
+  include ::Enumerable
+  def <<(color); end
+
+  def each(&block); end
+
+  def initialize(colors=T.unsafe(nil)); end
+
+  def push(color); end
+end
+
+class SuperDiff::Csi::ColorSequenceBlock
+end
+
+class SuperDiff::Csi::ColorizedDocument
+  def colorize_block(colors, opts, &block); end
+
+  def colorize_inline(contents, colors, opts); end
+end
+
+class SuperDiff::Csi::ColorizedDocument
+end
+
+class SuperDiff::Csi::Document
+  include ::Enumerable
+  def add_part(part); end
+
+  def bold(*args, **opts, &block); end
+
+  def colored(*args, **opts, &block); end
+
+  def colorize(*args, **opts, &block); end
+
+  def derive_request_from(name); end
+
+  def each(&block); end
+
+  def evaluate_block(&block); end
+
+  def indent(by:, &block); end
+
+  def indentation_stack(); end
+
+  def initialize(&block); end
+
+  def line(*contents, indent_by: T.unsafe(nil), &block); end
+
+  def method_missing(name, *args, **opts, &block); end
+
+  def newline(); end
+
+  def parts(); end
+
+  def plain(*contents, **_, &block); end
+
+  def text(*contents, **_, &block); end
+end
+
+class SuperDiff::Csi::Document::ColorRequest
+  def resolve(doc, args, opts, &block); end
+end
+
+class SuperDiff::Csi::Document::ColorRequest
+end
+
+class SuperDiff::Csi::Document::MethodRequest
+  def resolve(doc, args, opts, &block); end
+end
+
+class SuperDiff::Csi::Document::MethodRequest
+end
+
+class SuperDiff::Csi::Document::Request
+  def for_line?(); end
+
+  def initialize(name:, line:); end
+
+  def name(); end
+
+  def wrapper(); end
+end
+
+class SuperDiff::Csi::Document::Request
+end
+
+class SuperDiff::Csi::Document
+end
+
+class SuperDiff::Csi::EightBitColor
+  def initialize(value=T.unsafe(nil), layer: T.unsafe(nil), red: T.unsafe(nil), green: T.unsafe(nil), blue: T.unsafe(nil), type: T.unsafe(nil), index: T.unsafe(nil)); end
+  LAYERS_BY_LEADING_CODE = ::T.let(nil, ::T.untyped)
+  LEADING_CODES_BY_LAYER = ::T.let(nil, ::T.untyped)
+  OPENING_REGEX = ::T.let(nil, ::T.untyped)
+  SERIAL_CODE = ::T.let(nil, ::T.untyped)
+  STARTING_INDICES = ::T.let(nil, ::T.untyped)
+  VALID_CODES_BY_NAME = ::T.let(nil, ::T.untyped)
+  VALID_CODE_RANGE = ::T.let(nil, ::T.untyped)
+  VALID_COMPONENT_RANGE = ::T.let(nil, ::T.untyped)
+  VALID_PAIR_INDEX_RANGES = ::T.let(nil, ::T.untyped)
+  VALID_PAIR_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Csi::EightBitColor
+  def self.opening_regex(); end
+end
+
+class SuperDiff::Csi::FourBitColor
+  def initialize(value, layer: T.unsafe(nil)); end
+  COLORS_BY_CODE = ::T.let(nil, ::T.untyped)
+  OPENING_REGEX = ::T.let(nil, ::T.untyped)
+  VALID_CODES_BY_NAME = ::T.let(nil, ::T.untyped)
+  VALID_CODE_RANGES = ::T.let(nil, ::T.untyped)
+  VALID_NAMES = ::T.let(nil, ::T.untyped)
+  VALID_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Csi::FourBitColor
+  def self.opening_regex(); end
+end
+
+class SuperDiff::Csi::ResetSequence
+end
+
+class SuperDiff::Csi::ResetSequence
+end
+
+class SuperDiff::Csi::TwentyFourBitColor
+  def initialize(value=T.unsafe(nil), layer: T.unsafe(nil), red: T.unsafe(nil), green: T.unsafe(nil), blue: T.unsafe(nil)); end
+  LAYERS_BY_LEADING_CODE = ::T.let(nil, ::T.untyped)
+  LEADING_CODES_BY_LAYER = ::T.let(nil, ::T.untyped)
+  OPENING_REGEX = ::T.let(nil, ::T.untyped)
+  SERIAL_CODE = ::T.let(nil, ::T.untyped)
+  VALID_COMPONENT_RANGE = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Csi::TwentyFourBitColor::Triplet
+  def blue(); end
+
+  def green(); end
+
+  def initialize(red:, green:, blue:); end
+
+  def red(); end
+end
+
+class SuperDiff::Csi::TwentyFourBitColor::Triplet
+end
+
+class SuperDiff::Csi::TwentyFourBitColor
+  def self.opening_regex(); end
+end
+
+class SuperDiff::Csi::UncolorizedDocument
+  def colorize_block(*_, &block); end
+
+  def colorize_inline(contents, *_); end
+end
+
+class SuperDiff::Csi::UncolorizedDocument
+end
+
+module SuperDiff::Csi
+  def self.already_colorized?(text); end
+
+  def self.color_enabled=(color_enabled); end
+
+  def self.color_enabled?(); end
+
+  def self.colorize(*args, **opts, &block); end
+
+  def self.decolorize(text); end
+
+  def self.inspect_colors_in(text); end
+
+  def self.reset_sequence(); end
+end
+
+module SuperDiff::DiffFormatters
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::DiffFormatters::Array
+end
+
+class SuperDiff::DiffFormatters::Array
+  def self.applies_to?(operation_tree); end
+end
+
+class SuperDiff::DiffFormatters::Base
+  include ::SuperDiff::ImplementationChecks
+  def add_comma?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::DiffFormatters::Base
+  def self.applies_to?(*_); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::DiffFormatters::Collection
+  def add_comma?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+  ICONS = ::T.let(nil, ::T.untyped)
+  STYLES = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::DiffFormatters::Collection
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::DiffFormatters::CustomObject
+end
+
+class SuperDiff::DiffFormatters::CustomObject
+end
+
+class SuperDiff::DiffFormatters::DefaultObject
+  def initialize(operation_tree, value_class: T.unsafe(nil), **rest); end
+
+  def value_class(); end
+end
+
+class SuperDiff::DiffFormatters::DefaultObject
+  def self.applies_to?(operation_tree); end
+end
+
+class SuperDiff::DiffFormatters::Hash
+end
+
+class SuperDiff::DiffFormatters::Hash
+  def self.applies_to?(operation_tree); end
+end
+
+class SuperDiff::DiffFormatters::Main
+  def add_comma?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::DiffFormatters::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::DiffFormatters::MultilineString
+end
+
+class SuperDiff::DiffFormatters::MultilineString
+  def self.applies_to?(operation_tree); end
+end
+
+module SuperDiff::DiffFormatters
+end
+
+module SuperDiff::Differs
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Differs::Array
+end
+
+class SuperDiff::Differs::Array
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::Base
+  include ::SuperDiff::ImplementationChecks
+  def call(); end
+
+  def indentation(); end
+
+  def initialize(*values); end
+
+  def operation_tree_builder_class(); end
+end
+
+class SuperDiff::Differs::Base
+  extend ::SuperDiff::ImplementationChecks
+  def self.applies_to?(_expected, _actual); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::Differs::CustomObject
+end
+
+class SuperDiff::Differs::CustomObject
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::DefaultObject
+end
+
+class SuperDiff::Differs::DefaultObject
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::Empty
+end
+
+class SuperDiff::Differs::Empty
+end
+
+class SuperDiff::Differs::Hash
+end
+
+class SuperDiff::Differs::Hash
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::Main
+  def call(); end
+
+  def initialize(*values); end
+
+  def omit_empty?(); end
+end
+
+class SuperDiff::Differs::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::Differs::MultilineString
+end
+
+class SuperDiff::Differs::MultilineString
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::TimeLike
+end
+
+class SuperDiff::Differs::TimeLike
+  def self.applies_to?(expected, actual); end
+end
+
+module SuperDiff::Differs
+end
+
+module SuperDiff::EqualityMatchers
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::EqualityMatchers::Array
+  def diff(); end
+end
+
+class SuperDiff::EqualityMatchers::Array
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::Base
+  def call(); end
+
+  def fail(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::EqualityMatchers::Base
+  def self.applies_to?(_value); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::EqualityMatchers::Default
+  def actual_line(); end
+
+  def diff(); end
+
+  def diff_section(); end
+
+  def expected_line(); end
+end
+
+class SuperDiff::EqualityMatchers::Default
+end
+
+class SuperDiff::EqualityMatchers::Hash
+  def diff(); end
+end
+
+class SuperDiff::EqualityMatchers::Hash
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::Main
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::EqualityMatchers::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::EqualityMatchers::MultilineString
+end
+
+class SuperDiff::EqualityMatchers::MultilineString
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::Primitive
+end
+
+class SuperDiff::EqualityMatchers::Primitive
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::SinglelineString
+end
+
+class SuperDiff::EqualityMatchers::SinglelineString
+  def self.applies_to?(value); end
+end
+
+module SuperDiff::EqualityMatchers
+end
+
+module SuperDiff::Errors
+end
+
+class SuperDiff::Errors::NoDiffFormatterAvailableError
+  def initialize(); end
+
+  def operation_tree(); end
+
+  def operation_tree=(operation_tree); end
+end
+
+class SuperDiff::Errors::NoDiffFormatterAvailableError
+  def self.create(operation_tree); end
+end
+
+class SuperDiff::Errors::NoDifferAvailableError
+  def actual(); end
+
+  def actual=(actual); end
+
+  def expected(); end
+
+  def expected=(expected); end
+
+  def initialize(); end
+end
+
+class SuperDiff::Errors::NoDifferAvailableError
+  def self.create(expected, actual); end
+end
+
+module SuperDiff::Errors
+end
+
+module SuperDiff::Helpers
+end
+
+module SuperDiff::Helpers
+  def self.plural_type_for(value); end
+
+  def self.style(*args, color_enabled: T.unsafe(nil), **opts, &block); end
+end
+
+module SuperDiff::ImplementationChecks
+  def unimplemented_class_method!(); end
+
+  def unimplemented_instance_method!(); end
+end
+
+module SuperDiff::ImplementationChecks
+end
+
+module SuperDiff::ObjectInspection
+end
+
+class SuperDiff::ObjectInspection::InspectionTree
+  include ::Enumerable
+  def add_break(*args, &block); end
+
+  def add_inspection_of(value=T.unsafe(nil), &block); end
+
+  def add_text(*args, &block); end
+
+  def apply_tree(tree); end
+
+  def before_each_callbacks(); end
+
+  def each(&block); end
+
+  def evaluate(object, as_single_line:, indent_level:); end
+
+  def evaluate_block(object, &block); end
+
+  def initialize(&block); end
+
+  def insert_array_inspection_of(array); end
+
+  def insert_hash_inspection_of(hash, initial_break: T.unsafe(nil)); end
+
+  def insert_separated_list(enumerable, separator: T.unsafe(nil)); end
+
+  def nested(&block); end
+
+  def when_empty(&block); end
+
+  def when_multiline(&block); end
+
+  def when_non_empty(&block); end
+
+  def when_singleline(&block); end
+end
+
+class SuperDiff::ObjectInspection::InspectionTree::BlockArgument
+  def as_single_line(); end
+
+  def as_single_line?(); end
+
+  def initialize(*values); end
+
+  def object(); end
+end
+
+class SuperDiff::ObjectInspection::InspectionTree::BlockArgument
+end
+
+class SuperDiff::ObjectInspection::InspectionTree
+end
+
+module SuperDiff::ObjectInspection::Inspectors
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Array
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Array
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Base
+  def as_single_line?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+
+  def inspection_tree(); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Base
+  extend ::SuperDiff::ImplementationChecks
+  def self.applies_to?(_value); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::CustomObject
+end
+
+class SuperDiff::ObjectInspection::Inspectors::CustomObject
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::DefaultObject
+end
+
+class SuperDiff::ObjectInspection::Inspectors::DefaultObject
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Hash
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Hash
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Main
+  def as_single_line?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Primitive
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Primitive
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::String
+end
+
+class SuperDiff::ObjectInspection::Inspectors::String
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::TimeLike
+  TIME_FORMAT = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::ObjectInspection::Inspectors::TimeLike
+  def self.applies_to?(value); end
+end
+
+module SuperDiff::ObjectInspection::Inspectors
+end
+
+module SuperDiff::ObjectInspection::Nodes
+end
+
+class SuperDiff::ObjectInspection::Nodes::Base
+  def clone_with(tree: T.unsafe(nil), immediate_value: T.unsafe(nil), block: T.unsafe(nil)); end
+
+  def evaluate(object, indent_level:, as_single_line:); end
+
+  def initialize(tree, *args, &block); end
+
+  def pretty_print(pp); end
+
+  def type(); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::Base
+end
+
+class SuperDiff::ObjectInspection::Nodes::Break
+  def evaluate(_object, indent_level:, as_single_line:); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::Break
+end
+
+class SuperDiff::ObjectInspection::Nodes::Inspection
+end
+
+class SuperDiff::ObjectInspection::Nodes::Inspection
+end
+
+class SuperDiff::ObjectInspection::Nodes::Nesting
+end
+
+class SuperDiff::ObjectInspection::Nodes::Nesting
+end
+
+class SuperDiff::ObjectInspection::Nodes::Text
+  def evaluate(object, **_); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::Text
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenMultiline
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenMultiline
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenNonEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenNonEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenSingleline
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenSingleline
+end
+
+module SuperDiff::ObjectInspection::Nodes
+  def self.fetch(type); end
+
+  def self.registry(); end
+end
+
+module SuperDiff::ObjectInspection
+  def self.inspect(object, as_single_line:, indent_level: T.unsafe(nil)); end
+end
+
+module SuperDiff::OperationTreeBuilders
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTreeBuilders::Array
+end
+
+class SuperDiff::OperationTreeBuilders::Array::LcsCallbacks
+  def change(event); end
+
+  def discard_a(event); end
+
+  def discard_b(event); end
+
+  def initialize(*values); end
+
+  def match(event); end
+
+  def operation_tree(); end
+end
+
+class SuperDiff::OperationTreeBuilders::Array::LcsCallbacks
+end
+
+class SuperDiff::OperationTreeBuilders::Array
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::Base
+  include ::SuperDiff::ImplementationChecks
+  def build_operation_tree(); end
+
+  def call(); end
+
+  def initialize(*values); end
+
+  def unary_operations(); end
+end
+
+class SuperDiff::OperationTreeBuilders::Base
+  def self.applies_to?(_expected, _actual); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::OperationTreeBuilders::CustomObject
+end
+
+class SuperDiff::OperationTreeBuilders::CustomObject
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::DefaultObject
+  def attribute_names(); end
+
+  def find_operation_tree_for(value); end
+
+  def initialize(*args); end
+end
+
+class SuperDiff::OperationTreeBuilders::DefaultObject
+end
+
+class SuperDiff::OperationTreeBuilders::Hash
+end
+
+class SuperDiff::OperationTreeBuilders::Hash
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::Main
+  def all_or_nothing?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::OperationTreeBuilders::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::OperationTreeBuilders::MultilineString
+  def initialize(*args); end
+end
+
+class SuperDiff::OperationTreeBuilders::MultilineString
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::TimeLike
+end
+
+class SuperDiff::OperationTreeBuilders::TimeLike
+end
+
+module SuperDiff::OperationTreeBuilders
+end
+
+module SuperDiff::OperationTrees
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Array
+  def to_diff(indent_level:, collection_prefix:, add_comma:); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Array
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::OperationTrees::Base
+  def pretty_print(pp); end
+
+  def to_diff(indent_level:, add_comma: T.unsafe(nil), collection_prefix: T.unsafe(nil)); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Base
+  extend ::SuperDiff::ImplementationChecks
+  def self.applies_to?(_value); end
+end
+
+class SuperDiff::OperationTrees::CustomObject
+  def to_diff(indent_level:, add_comma: T.unsafe(nil), collection_prefix: T.unsafe(nil)); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::CustomObject
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::OperationTrees::DefaultObject
+  def initialize(collection, value_class:); end
+
+  def to_diff(indent_level:, add_comma: T.unsafe(nil), **_rest); end
+
+  def value_class(); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::DefaultObject
+end
+
+class SuperDiff::OperationTrees::Hash
+  def to_diff(indent_level:, collection_prefix:, add_comma:); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Hash
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::OperationTrees::Main
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::OperationTrees::Main
+  def self.call(*args, &block); end
+end
+
+class SuperDiff::OperationTrees::MultilineString
+  def to_diff(indent_level:, collection_prefix:, add_comma:); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::MultilineString
+  def self.applies_to?(value); end
+end
+
+module SuperDiff::OperationTrees
+end
+
+module SuperDiff::Operations
+end
+
+class SuperDiff::Operations::BinaryOperation
+  def child_operations(); end
+
+  def initialize(*values); end
+
+  def left_collection(); end
+
+  def left_index(); end
+
+  def left_key(); end
+
+  def left_value(); end
+
+  def name(); end
+
+  def right_collection(); end
+
+  def right_index(); end
+
+  def right_key(); end
+
+  def right_value(); end
+
+  def should_add_comma_after_displaying?(); end
+end
+
+class SuperDiff::Operations::BinaryOperation
+end
+
+class SuperDiff::Operations::UnaryOperation
+  def collection(); end
+
+  def index(); end
+
+  def index_in_collection(); end
+
+  def initialize(name:, collection:, key:, value:, index:, index_in_collection: T.unsafe(nil)); end
+
+  def key(); end
+
+  def name(); end
+
+  def should_add_comma_after_displaying?(); end
+
+  def value(); end
+end
+
+class SuperDiff::Operations::UnaryOperation
+end
+
+module SuperDiff::Operations
+end
+
+module SuperDiff::RecursionGuard
+  PLACEHOLDER = ::T.let(nil, ::T.untyped)
+  RECURSION_GUARD_KEY = ::T.let(nil, ::T.untyped)
+end
+
+module SuperDiff::RecursionGuard
+  def self.already_seen_object_ids(); end
+
+  def self.already_seen_objects(); end
+
+  def self.guarding_recursion_of(*objects, &block); end
+
+  def self.substituting_recursion_of(*objects); end
+end
 
 class SynchronizedDelegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
@@ -47198,12 +48259,6 @@ end
 module User::GeneratedAssociationMethods
   def deposit_ids=(ids); end
 
-  def deposits_into(); end
-
-  def deposits_into=(value); end
-
-  def deposits_into_ids(); end
-
   def deposits_into_ids=(ids); end
 
   def notification_ids=(ids); end
@@ -47473,6 +48528,8 @@ class ViewComponent::Base
   def virtual_path(); end
 
   def with(area, content=T.unsafe(nil), &block); end
+
+  def with_variant(variant); end
 end
 
 class ViewComponent::Base
@@ -48917,6 +49974,11 @@ class Works::ContributorRowComponent
 end
 
 class Works::ContributorsComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::DetailComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end

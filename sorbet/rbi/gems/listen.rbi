@@ -7,21 +7,14 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/listen/all/listen.rbi
 #
-# listen-3.2.1
+# listen-3.3.1
 
 module Listen
+  def self.default_logger; end
   def self.logger; end
-  def self.logger=(logger); end
-  def self.setup_default_logger_if_unset; end
+  def self.logger=(arg0); end
   def self.stop; end
   def self.to(*args, &block); end
-end
-class Listen::Logger
-  def self.debug(*args, &block); end
-  def self.error(*args, &block); end
-  def self.fatal(*args, &block); end
-  def self.info(*args, &block); end
-  def self.warn(*args, &block); end
 end
 class Listen::Options
   def initialize(opts, defaults); end
@@ -33,6 +26,7 @@ class Listen::Record
   def _fast_try_file(entry); end
   def _fast_unset_path(dirname, basename); end
   def _fast_update_file(dirname, basename, data); end
+  def _sub_tree(rel_path); end
   def add_dir(rel_path); end
   def build; end
   def dir_entries(rel_path); end
@@ -85,14 +79,18 @@ class Listen::Change::Config
   def queue(*args); end
   def silenced?(path, type); end
 end
+module Listen::Thread
+  def self._exception_with_causes(ex); end
+  def self._log_exception(ex, thread_name, caller_stack: nil); end
+  def self.new(name, &block); end
+  def self.rescue_and_log(method_name, *args, caller_stack: nil); end
+end
 module Listen::Adapter
-  def self._log(type, message); end
   def self._usable_adapter_class; end
   def self._warn_polling_fallback(options); end
   def self.select(options = nil); end
 end
 class Listen::Adapter::Base
-  def _log(*args, &block); end
   def _log_exception(msg, caller_stack); end
   def _queue_change(type, dir, rel_path, options); end
   def _stop; end
@@ -101,7 +99,6 @@ class Listen::Adapter::Base
   def configure; end
   def initialize(config); end
   def options; end
-  def self._log(*args, &block); end
   def self.usable?; end
   def start; end
   def started?; end
@@ -118,18 +115,12 @@ class Listen::Adapter::BSD < Listen::Adapter::Base
   def _watch_for_new_file(event); end
   def self.usable?; end
 end
-module Listen::Internals
-end
-module Listen::Internals::ThreadPool
-  def self.add(&block); end
-  def self.stop; end
-end
 class Listen::Adapter::Darwin < Listen::Adapter::Base
   def _configure(dir, &callback); end
   def _process_changes(dirs); end
   def _process_event(dir, path); end
   def _run; end
-  def _run_worker(worker); end
+  def _stop; end
   def self.usable?; end
 end
 class Listen::Adapter::Linux < Listen::Adapter::Base
@@ -204,25 +195,23 @@ class Listen::QueueOptimizer::Config
 end
 module Listen::FSM
   def current_state; end
-  def current_state_name; end
-  def default_state; end
-  def initialize; end
+  def initialize_fsm; end
   def self.included(klass); end
   def state; end
-  def states; end
-  def transition!(state_name); end
-  def transition(state_name); end
-  def transition_with_callbacks!(state_name); end
-  def validate_and_sanitize_new_state(state_name); end
+  def transition!(new_state_name); end
+  def transition(new_state_name); end
+  def transition_with_callbacks!(new_state); end
+  def validate_and_sanitize_new_state(new_state_name); end
+  def wait_for_state(*wait_for_states, timeout: nil); end
 end
 module Listen::FSM::ClassMethods
-  def default_state(new_default = nil); end
-  def state(*args, &block); end
+  def start_state(new_start_state = nil); end
+  def state(state_name, to: nil, &block); end
   def states; end
 end
 class Listen::FSM::State
   def call(obj); end
-  def initialize(name, transitions = nil, &block); end
+  def initialize(name, transitions, &block); end
   def name; end
   def transitions; end
   def valid_transition?(new_state); end
@@ -233,10 +222,10 @@ class Listen::Event::Processor
   def _check_stopped; end
   def _deadline; end
   def _flush_wakeup_reasons; end
-  def _process_changes; end
+  def _process_changes(event); end
   def _remember_time_of_first_unprocessed_event; end
   def _reset_no_unprocessed_events; end
-  def _sleep(_local_reason, *args); end
+  def _sleep(seconds); end
   def _timestamp; end
   def _wait_until_events; end
   def _wait_until_events_calm_down; end
@@ -248,24 +237,17 @@ end
 class Listen::Event::Processor::Stopped < RuntimeError
 end
 class Listen::Event::Loop
-  def _nice_error(ex); end
-  def _sleep(*args); end
-  def _wait_for_changes(ready_queue, config); end
-  def _wait_until_resumed(ready_queue); end
+  def _process_changes; end
   def _wakeup(reason); end
-  def config; end
   def initialize(config); end
   def pause; end
-  def paused?; end
-  def processing?; end
-  def resume; end
-  def setup; end
-  def state; end
-  def state=(arg0); end
+  def start; end
+  def started?; end
+  def stop; end
   def stopped?; end
-  def teardown; end
-  def wait_thread; end
   def wakeup_on_event; end
+  extend Listen::FSM::ClassMethods
+  include Listen::FSM
 end
 class Listen::Event::Loop::Error < RuntimeError
 end
@@ -274,11 +256,11 @@ end
 class Listen::Event::Queue
   def <<(args); end
   def _safe_relative_from_cwd(dir); end
-  def block; end
+  def close(*args, &block); end
   def config; end
   def empty?(*args, &block); end
   def event_queue; end
-  def initialize(config, &block); end
+  def initialize(config); end
   def pop(*args, &block); end
   extend Forwardable
 end
@@ -294,13 +276,10 @@ class Listen::Event::Config
   def listener; end
   def min_delay_between_events; end
   def optimize_changes(changes); end
-  def paused?; end
-  def sleep(*args); end
-  def stopped?; end
+  def sleep(seconds); end
   def timestamp; end
 end
 class Listen::Listener
-  def backend; end
   def ignore!(regexps); end
   def ignore(regexps); end
   def initialize(*dirs, &block); end
@@ -308,9 +287,9 @@ class Listen::Listener
   def pause; end
   def paused?; end
   def processing?; end
-  def processor; end
   def start; end
   def stop; end
+  def stopped?; end
   extend Listen::FSM::ClassMethods
   include Listen::FSM
 end
