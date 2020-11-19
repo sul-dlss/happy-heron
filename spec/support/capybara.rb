@@ -11,3 +11,4 @@ require 'capybara/rspec'
 # end
 
 Capybara.javascript_driver = :apparition
+Capybara.disable_animation = true
