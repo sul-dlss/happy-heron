@@ -13,9 +13,11 @@ RSpec.describe WorkPolicy do
   let(:context) do
     {
       user: user,
-      user_with_groups: UserWithGroups.new(user: user, groups: [])
+      user_with_groups: UserWithGroups.new(user: user, groups: groups)
     }
   end
+
+  let(:groups) { [] }
 
   describe_rule :create? do
     failed 'when user is neither a depositor or manager for the collection'
@@ -29,6 +31,10 @@ RSpec.describe WorkPolicy do
     succeed 'when user is a collection manager' do
       before { collection.managers = [user.sunetid] }
     end
+
+    succeed 'when user is an admin' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+    end
   end
 
   describe_rule :update? do
@@ -41,10 +47,24 @@ RSpec.describe WorkPolicy do
     failed 'when user is the depositor and status is pending_approval' do
       let(:record) { build_stubbed :work, :pending_approval, depositor: user }
     end
+
+    succeed 'when user is an admin and status is not pending_approval' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+    end
+
+    failed 'when user is an admin and status is pending_approval' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      let(:record) { build_stubbed :work, :pending_approval }
+    end
   end
 
   describe_rule :review? do
     failed 'when user is not a reviewer the collection' do
+      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+    end
+
+    succeed 'when user is an admin' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
       let(:record) { build_stubbed :work, :pending_approval, collection: collection }
     end
 
@@ -55,6 +75,10 @@ RSpec.describe WorkPolicy do
 
     failed 'when user is a reviewer and status is not pending_approval' do
       before { collection.reviewers = [user] }
+    end
+
+    failed 'when user is an admin and status is not pending_approval' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
   end
 end
