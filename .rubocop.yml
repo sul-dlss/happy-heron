@@ -67,6 +67,8 @@ Lint/ConstantDefinitionInBlock: # (new in 0.91)
   Enabled: true
 Lint/DeprecatedOpenSSLConstant: # (new in 0.84)
   Enabled: true
+Lint/DuplicateBranch: # (new in 1.3)
+  Enabled: true
 Lint/DuplicateElsifCondition: # (new in 0.88)
   Enabled: true
 Lint/DuplicateRegexpCharacterClassElement: # (new in 1.1)
@@ -76,6 +78,8 @@ Lint/DuplicateRequire: # (new in 0.90)
 Lint/DuplicateRescueException: # (new in 0.89)
   Enabled: true
 Lint/EmptyBlock: # (new in 1.1)
+  Enabled: true
+Lint/EmptyClass: # (new in 1.3)
   Enabled: true
 Lint/EmptyConditionalBody: # (new in 0.89)
   Enabled: true
@@ -88,6 +92,8 @@ Lint/HashCompareByIdentity: # (new in 0.93)
 Lint/IdentityComparison: # (new in 0.91)
   Enabled: true
 Lint/MixedRegexpCaptureTypes: # (new in 0.85)
+  Enabled: true
+Style/NilLambda: # (new in 1.3)
   Enabled: true
 Lint/NoReturnInBeginEndBlocks: # (new in 1.2)
   Enabled: true
