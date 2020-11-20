@@ -198,15 +198,21 @@ RSpec.describe Work do
       end
     end
 
-    context 'with new version event' do
+    context 'with update_metadata event' do
       before do
-        work.begin_deposit!
-        work.deposit_complete!
-        work.new_version!
+        allow(WorkUpdatesChannel).to receive(:broadcast_to)
       end
 
+      let(:work) { create(:work, :deposited) }
+
       it 'transitions to version draft' do
-        expect(work.state).to eq('version_draft')
+        expect { work.update_metadata! }
+          .to change(work, :state)
+          .from('deposited').to('version_draft')
+          .and change(Event, :count).by(1)
+        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+          .with(work, state: 'New version draft - Not deposited')
+          .once
       end
     end
   end

@@ -33,13 +33,6 @@ class EventService
   end
 
   sig { params(work: Work, user: User).returns(T.nilable(Integer)) }
-  def self.new_version(work:, user:)
-    work.new_version!
-    Event.create!(work: work, user: user, event_type: 'new_version')
-    WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
-  end
-
-  sig { params(work: Work, user: User).returns(T.nilable(Integer)) }
   def self.submit_for_review(work:, user:)
     work.submit_for_review!
     Event.create!(work: work, user: user, event_type: 'submit_for_review')
