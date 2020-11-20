@@ -88,8 +88,25 @@ RSpec.describe DescriptionGenerator do
   it 'creates description cocina model' do
     expect(model).to eq(
       event: [
-        { date: [{ encoding: { code: 'edtf' }, value: '2020-03-04/2020-10-31' }], type: 'creation' },
-        { date: [{ encoding: { code: 'edtf' }, value: '2020-02-14' }], type: 'publication' }
+        {
+          date: [
+            {
+              encoding: { code: 'edtf' },
+              value: '2020-03-04/2020-10-31'
+            }
+          ],
+          type: 'creation'
+        },
+        {
+          date: [
+            {
+              encoding: { code: 'edtf' },
+              value: '2020-02-14',
+              status: 'primary'
+            }
+          ],
+          type: 'publication'
+        }
       ],
       subject: [
         { type: 'topic', value: 'MyString' },
@@ -280,7 +297,13 @@ RSpec.describe DescriptionGenerator do
                 role: publisher_roles
               }
             ],
-            date: [{ encoding: { code: 'edtf' }, value: '2020-02-14' }]
+            date: [
+              {
+                encoding: { code: 'edtf' },
+                value: '2020-02-14',
+                status: 'primary'
+              }
+            ]
           }
         ],
         form: types_form,
@@ -325,7 +348,7 @@ RSpec.describe DescriptionGenerator do
     end
   end
 
-  # Arcadia to add h2 spec for when there is a person and a publisher
+  # NOTE: Arcadia to add h2 mapping spec for when there is a person and a publisher
   context 'when author, publisher and publication date are entered by user' do
     let(:person_contrib) { build(:contributor, role: 'Author') }
     let(:pub_contrib) { build(:contributor, :with_org_contributor, role: 'Publisher') }
@@ -382,7 +405,13 @@ RSpec.describe DescriptionGenerator do
                 role: publisher_roles
               }
             ],
-            date: [{ encoding: { code: 'edtf' }, value: '2020-02-14' }]
+            date: [
+              {
+                encoding: { code: 'edtf' },
+                value: '2020-02-14',
+                status: 'primary'
+              }
+            ]
           }
         ],
         form: types_form,
