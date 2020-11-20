@@ -1,5 +1,9 @@
 <header>All fields are required, unless otherwise noted.</header>
 <%= form_with model: collection_form,
+    data: {
+      controller: 'edit-collection',
+      action: 'ajax:error->edit-collection#displayErrors'
+    },
     html: { class: 'needs-validation row', novalidate: true, multipart: true } do |form| %>
   <section>
     <header>Details</header>
@@ -94,11 +98,11 @@
 
     <!-- TODO: only display sunet entry field if reviewer workflow is enabled -->
     <p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
-    <div class="mb-3 row">
+    <div class="mb-3 row" data-controller="reviewer-sunets" data-action="error->reviewer-sunets#error" data-target="edit-collection.reviewerSunetsField">
       <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-sm-2 col-form-label' %>
       <div class="col-sm-10 col-xl-8">
-        <%= form.text_field :reviewer_sunets, class: "form-control", required: false %> <!-- TODO: should prob have at least one required if enabled? -->
-        <div class="invalid-feedback">You must provide managers</div>
+        <%= form.text_field :reviewer_sunets, class: "form-control", required: false, data: { target: 'reviewer-sunets.container' } %> <!-- TODO: should prob have at least one required if enabled? -->
+        <div data-target="reviewer-sunets.error" class="invalid-feedback">You must provide reviewers</div>
       </div>
     </div>
   </section>

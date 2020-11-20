@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -6,7 +6,7 @@ module Collections
   class FormComponent < ApplicationComponent
     attr_reader :collection_form
 
-    sig { params(collection_form: CollectionForm).void }
+    sig { params(collection_form: DraftCollectionForm).void }
     def initialize(collection_form:)
       @collection_form = collection_form
     end

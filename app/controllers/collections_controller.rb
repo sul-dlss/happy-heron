@@ -33,7 +33,8 @@ class CollectionsController < ObjectsController
       # DepositCollectionJob.perform_later(@collection) if deposit_button_pushed?
       redirect_to dashboard_path
     else
-      render :new
+      # Send form errors to client in JSON format to be parsed and rendered there
+      render 'errors', status: :bad_request
     end
   end
 
@@ -47,7 +48,8 @@ class CollectionsController < ObjectsController
       # DepositCollectionJob.perform_later(@collection) if deposit_button_pushed?
       redirect_to dashboard_path
     else
-      render :edit
+      # Send form errors to client in JSON format to be parsed and rendered there
+      render 'errors', status: :bad_request
     end
   end
 
