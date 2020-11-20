@@ -2,7 +2,7 @@
   <header class="title">
     <span class="header-text"><%= title %></span>
     <%= link_to edit_work_path(@work), aria: { label: "Edit #{title}"} do %><span class="fas fa-pencil-alt edit"></span><% end %>
-    <span data-target="work-updates.state" class="state"><%= current_state_display_label %></span>
+    <span data-target="work-updates.state" class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
   </header>
 
   <table class="table table-sm mb-5">

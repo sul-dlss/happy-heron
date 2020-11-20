@@ -16,7 +16,7 @@ module Works
              :contact_email,  :abstract, :citation,
              :published_edtf, :created_edtf,
              :depositor, :attached_files, :contributors,
-             :related_works, :related_links, :current_state_display_label,
+             :related_works, :related_links,
              to: :work
 
     sig { returns(String) }
