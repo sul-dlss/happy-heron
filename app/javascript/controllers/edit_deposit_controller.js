@@ -3,7 +3,8 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["title", "titleField",
                     "file", "fileField",
-                    "keywordsField", "contributorsField"];
+                    "keywordsField", "contributorsField",
+                    "embargo-dateField"];
 
   connect() {
     // TODO see what of the things are already valid

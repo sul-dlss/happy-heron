@@ -58,6 +58,14 @@ class WorksController < ObjectsController
     @work = Work.find(params[:id])
   end
 
+  def normalize_key(key)
+    keys = { attached_files: 'file', embargo_date: 'embargo-date' }
+    return key unless keys.key? key
+
+    keys[key]
+  end
+  helper_method :normalize_key
+
   private
 
   sig { params(work: Work).returns(Reform::Form) }
