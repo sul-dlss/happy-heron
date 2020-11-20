@@ -8,7 +8,6 @@ RSpec.describe DepositStatusJob do
 
   let(:client) { instance_double(Dor::Services::Client, objects: objects) }
   let(:druid) { 'druid:bc123df4567' }
-  let(:work) { build(:work, state: 'depositing') }
   let(:result) { Success() }
   let(:job_id) { 1234 }
 
@@ -18,11 +17,23 @@ RSpec.describe DepositStatusJob do
     allow(Honeybadger).to receive(:notify)
   end
 
-  context 'when the job is successful' do
+  context 'when the job is a successful work' do
+    let(:work) { build(:work, state: 'depositing') }
     let(:background_result) { { status: 'complete', output: { druid: druid } } }
 
     it 'updates the work' do
-      described_class.perform_now(work: work, job_id: job_id)
+      described_class.perform_now(object: work, job_id: job_id)
+      expect(work.druid).to eq druid
+      expect(work.state_name).to eq :deposited
+    end
+  end
+
+  context 'when the job is successful collection' do
+    let(:work) { build(:collection, state: 'depositing') }
+    let(:background_result) { { status: 'complete', output: { druid: druid } } }
+
+    it 'updates the work' do
+      described_class.perform_now(object: work, job_id: job_id)
       expect(work.druid).to eq druid
       expect(work.state_name).to eq :deposited
     end
@@ -30,9 +41,10 @@ RSpec.describe DepositStatusJob do
 
   context 'when the job is not successful' do
     let(:background_result) { { status: 'complete', output: { errors: [{ title: 'something went wrong' }] } } }
+    let(:work) { build(:work, state: 'depositing') }
 
     it 'notifies' do
-      described_class.perform_now(work: work, job_id: job_id)
+      described_class.perform_now(object: work, job_id: job_id)
       expect(work.druid).to be_nil
       expect(work.state_name).to eq :depositing
       expect(Honeybadger).to have_received(:notify)
@@ -41,9 +53,10 @@ RSpec.describe DepositStatusJob do
 
   context 'when the job is not completed' do
     let(:background_result) { { status: 'incomplete' } }
+    let(:work) { build(:work, state: 'depositing') }
 
     it 'raises a custom exception (so it can be ignored by Honeybadger)' do
-      expect { described_class.perform_now(work: work, job_id: job_id) }.to raise_error(
+      expect { described_class.perform_now(object: work, job_id: job_id) }.to raise_error(
         TryAgainLater, 'No result yet for job 1234'
       )
     end

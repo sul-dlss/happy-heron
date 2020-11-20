@@ -153,7 +153,10 @@ CREATE TABLE public.collections (
     managers character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    creator_id bigint NOT NULL
+    creator_id bigint NOT NULL,
+    state character varying DEFAULT 'first_draft'::character varying NOT NULL,
+    druid character varying,
+    version integer DEFAULT 0 NOT NULL
 );
 
 
@@ -720,6 +723,20 @@ CREATE INDEX index_collections_on_creator_id ON public.collections USING btree (
 
 
 --
+-- Name: index_collections_on_druid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_collections_on_druid ON public.collections USING btree (druid);
+
+
+--
+-- Name: index_collections_on_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_collections_on_state ON public.collections USING btree (state);
+
+
+--
 -- Name: index_contributors_on_work_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -960,6 +977,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105191840'),
 ('20201110133105'),
 ('20201112131704'),
-('20201117205532');
+('20201117205532'),
+('20201119215418'),
+('20201119215854');
 
 
