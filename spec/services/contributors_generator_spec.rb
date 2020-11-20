@@ -214,6 +214,7 @@ RSpec.describe ContributorsGenerator do
           Cocina::Models::Contributor.new(
             name: [{ value: contributor.full_name }],
             type: 'conference',
+            status: 'primary',
             role: [
               {
                 value: 'Conference',
@@ -241,6 +242,7 @@ RSpec.describe ContributorsGenerator do
               }
             ],
             type: 'person',
+            status: 'primary',
             role: contributing_author_roles
           )
         ]
@@ -254,8 +256,6 @@ RSpec.describe ContributorsGenerator do
       let(:contributor) { build(:contributor, role: 'Data collector') }
       let(:work) { build(:work, contributors: [contributor]) }
 
-      # TODO: add status primary
-
       it 'creates Cocina::Models::Contributor with DataCite role' do
         expect(cocina_model).to eq(
           [
@@ -267,6 +267,7 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              status: 'primary',
               role: [
                 {
                   value: 'Data collector',
@@ -296,7 +297,7 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with person with multiple roles, one maps to DataCite creator property' do
-      # FIXME: implement deduping of names to get multiple roles
+      # NOTE: deduping of names to get multiple roles has been officially postponed by Amy and Arcadia
       xit 'TODO: https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt#L50'
     end
 
@@ -304,14 +305,13 @@ RSpec.describe ContributorsGenerator do
       let(:contributor) { build(:contributor, :with_org_contributor, role: 'Host institution') }
       let(:work) { build(:work, contributors: [contributor]) }
 
-      # TODO: add status primary
-
       it 'creates Cocina::Models::Contributor without marc relator role' do
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
               name: [{ value: contributor.full_name }],
               type: 'organization',
+              status: 'primary',
               role: [
                 {
                   value: 'Host institution',
@@ -337,7 +337,7 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with organization with multiple roles' do
-      # FIXME: implement deduping of names to get multiple roles
+      # NOTE: deduping of names to get multiple roles has been officially postponed by Amy and Arcadia
       xit 'TODO: https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt#L150'
     end
 
@@ -346,12 +346,12 @@ RSpec.describe ContributorsGenerator do
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor' do
-        # TODO: add status primary
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
               name: [{ value: contributor.full_name }],
               type: 'conference',
+              status: 'primary',
               role: [
                 {
                   value: 'Conference',
@@ -374,12 +374,12 @@ RSpec.describe ContributorsGenerator do
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor with DataCite role' do
-        # TODO: add status primary
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
               name: [{ value: contributor.full_name }],
               type: 'event',
+              status: 'primary',
               role: [
                 {
                   value: 'Event',
@@ -402,8 +402,9 @@ RSpec.describe ContributorsGenerator do
       let(:contributor2) { build(:contributor, role: 'Author') }
       let(:work) { build(:work, contributors: [contributor1, contributor2]) }
 
+      # TODO: implement order
+
       it 'creates array of Cocina::Models::Contributor, one for each person contributor' do
-        # TODO: add order
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
@@ -414,6 +415,8 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              status: 'primary',
+              # order: 1,
               role: author_roles
             ),
             Cocina::Models::Contributor.new(
@@ -424,6 +427,7 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              # order: 2,
               role: author_roles
             )
           ]
@@ -437,7 +441,6 @@ RSpec.describe ContributorsGenerator do
       let(:work) { build(:work, contributors: [contributor1, contributor2]) }
 
       it 'creates array of Cocina::Models::Contributors' do
-        # TODO: add status primary / order
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
@@ -448,6 +451,7 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              status: 'primary',
               role: author_roles
             ),
             Cocina::Models::Contributor.new(
@@ -466,8 +470,9 @@ RSpec.describe ContributorsGenerator do
       let(:contributor3) { build(:contributor, role: 'Author') }
       let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
 
+      # TODO: implement order
+
       it 'creates array of Cocina::Models::Contributors' do
-        # TODO: add status primary / order
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
@@ -478,11 +483,14 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              status: 'primary',
+              # order: 1,
               role: author_roles
             ),
             Cocina::Models::Contributor.new(
               name: [{ value: contributor2.full_name }],
               type: 'organization',
+              # order: 2,
               role: author_roles
             ),
             Cocina::Models::Contributor.new(
@@ -493,6 +501,7 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              # order: 3,
               role: author_roles
             )
           ]
@@ -506,8 +515,9 @@ RSpec.describe ContributorsGenerator do
       let(:contributor3) { build(:contributor, role: 'Author') }
       let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
 
+      # TODO: implement order
+
       it 'creates array of Cocina::Models::Contributors' do
-        # TODO: add status primary / order
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
@@ -518,6 +528,8 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              status: 'primary',
+              # order: 1,
               role: author_roles
             ),
             Cocina::Models::Contributor.new(
@@ -533,6 +545,7 @@ RSpec.describe ContributorsGenerator do
                 }
               ],
               type: 'person',
+              # order: 2,
               role: author_roles
             )
           ]
@@ -545,12 +558,12 @@ RSpec.describe ContributorsGenerator do
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor per spec' do
-        # TODO: add status primary
         expect(cocina_model).to eq(
           [
             Cocina::Models::Contributor.new(
               name: [{ value: contributor.full_name }],
               type: 'organization',
+              status: 'primary',
               role: [
                 {
                   value: 'Funder',

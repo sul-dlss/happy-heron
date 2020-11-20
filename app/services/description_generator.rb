@@ -103,7 +103,8 @@ class DescriptionGenerator
       date: [
         {
           value: work.published_edtf,
-          encoding: { code: 'edtf' }
+          encoding: { code: 'edtf' },
+          status: 'primary'
         }
       ]
     )

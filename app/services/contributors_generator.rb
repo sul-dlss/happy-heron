@@ -32,8 +32,14 @@ class ContributorsGenerator
   # H2 Publisher becomes a Cocina::Models::Event, not a Contributor.  See events_from_publisher_contributors.
   sig { returns(T::Array[T.nilable(Cocina::Models::Contributor)]) }
   def generate
+    count = 0
     work.contributors.reject { |c| c.role == 'Publisher' }
-        .map { |work_form_contributor| contributor(work_form_contributor) }
+        .map do |work_form_contributor|
+          count += 1
+          # First entered contributor is always status: "primary" (except for Publisher)
+          primary = count == 1
+          contributor(work_form_contributor, primary)
+        end
   end
 
   ROLES_FOR_FORM = %w[Event Conference].freeze
@@ -57,7 +63,7 @@ class ContributorsGenerator
     work.contributors.select { |c| c.role == 'Publisher' }.map do |publisher|
       event = {
         type: 'publication',
-        contributor: [contributor(publisher)]
+        contributor: [contributor(publisher, false)]
       }
       event[:date] = pub_date.date if pub_date
 
@@ -70,14 +76,15 @@ class ContributorsGenerator
   sig { returns(Work) }
   attr_reader :work
 
-  sig { params(contributor: Contributor).returns(Cocina::Models::Contributor) }
-  def contributor(contributor)
-    # FIXME: TODO: mappings for status (primary) and/or order
-    Cocina::Models::Contributor.new(
+  sig { params(contributor: Contributor, primary: T::Boolean).returns(Cocina::Models::Contributor) }
+  def contributor(contributor, primary)
+    contrib_hash = {
       name: name_descriptive_value(contributor),
       type: contributor_type(contributor),
       role: cocina_roles(contributor.role)
-    )
+    }
+    contrib_hash[:status] = 'primary' if primary
+    Cocina::Models::Contributor.new(contrib_hash)
   end
 
   sig { params(contributor: Contributor).returns(T::Array[Cocina::Models::DescriptiveValue]) }
