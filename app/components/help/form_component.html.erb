@@ -1,12 +1,12 @@
-<div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+<div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="help-prompt" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered ">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Help</h3>
+        <h3 class="modal-title" id="help-prompt">Help</h3>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" data-controller="help">
-        <%= form_with(url: "#{help_path}.json",
+        <%= form_with(url: help_path,
                       method: 'post',
                       data: {
                         target: 'help.form',
@@ -69,10 +69,14 @@
                </div>
             </div>
           </div>
-        <small>You may also email us directly at sdr-contact@lists.stanford.edu</small>
+        <small>You may also email us directly at
+          <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a></small>
         <% end %>
-        <div data-target="help.results"></div>
-
+        <div data-target="help.results" hidden="true">
+          <h2>Help request successfully sent</h2>
+          <p>You should receive a response from our team within 48 hours.</p>
+          <%= button_tag 'Close', class: 'btn btn-primary', 'data-dismiss': 'modal' %>
+        </div>
       </div>
     </div>
   </div>

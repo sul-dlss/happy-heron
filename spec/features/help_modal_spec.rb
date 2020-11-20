@@ -3,13 +3,12 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Help modal' do
+RSpec.describe 'Help modal', js: true do
   let(:user) { create(:user) }
 
   context 'when authenticated' do
     before do
       sign_in user
-      allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
     end
 
     it 'opens modal, enters text, and submits query' do
@@ -24,7 +23,7 @@ RSpec.describe 'Help modal' do
       select 'I want to ask a question', from: 'How can we help you?*'
       fill_in 'Describe your issue, question, or what you would like to deposit', with: 'A question for the ages'
       click_button 'Submit'
-      expect(page).to have_content '{"status":"success"}'
+      expect(page).to have_content 'You should receive a response from our team within 48 hours.'
     end
   end
 
@@ -45,7 +44,7 @@ RSpec.describe 'Help modal' do
       fill_in 'What is your Stanford affiliation/department?', with: 'Lane Medical Library'
       fill_in 'Describe your issue, question, or what you would like to deposit', with: reason
       click_button 'Submit'
-      expect(page).to have_content '{"status":"success"}'
+      expect(page).to have_content 'You should receive a response from our team within 48 hours.'
     end
   end
 end
