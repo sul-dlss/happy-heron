@@ -48,7 +48,8 @@ RSpec.describe EventService do
 
     it 'broadcasts the state change' do
       described_class.begin_deposit(work: work, user: depositor)
-      expect(WorkUpdatesChannel).to have_received(:broadcast_to).with(work, state: 'Deposit in progress').once
+      expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+        .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>').once
     end
   end
 

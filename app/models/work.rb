@@ -10,7 +10,7 @@ class Work < ApplicationRecord
       'first_draft' => 'Draft - Not deposited',
       'version_draft' => 'New version draft - Not deposited',
       'pending_approval' => 'Pending approval - Not deposited',
-      'depositing' => 'Deposit in progress',
+      'depositing' => 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>'.html_safe,
       'deposited' => 'Deposited'
     }.freeze,
     T::Hash[String, String]
