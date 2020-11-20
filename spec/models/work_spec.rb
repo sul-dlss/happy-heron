@@ -225,10 +225,4 @@ RSpec.describe Work do
       end
     end
   end
-
-  describe '#current_state_display_label' do
-    it 'returns the label as a string' do
-      expect(work.current_state_display_label).to eq('Draft - Not deposited')
-    end
-  end
 end

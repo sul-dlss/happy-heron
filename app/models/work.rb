@@ -5,17 +5,6 @@
 class Work < ApplicationRecord
   extend T::Sig
 
-  STATE_DISPLAY_LABELS = T.let(
-    {
-      'first_draft' => 'Draft - Not deposited',
-      'version_draft' => 'New version draft - Not deposited',
-      'pending_approval' => 'Pending approval - Not deposited',
-      'depositing' => 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>'.html_safe,
-      'deposited' => 'Deposited'
-    }.freeze,
-    T::Hash[String, String]
-  )
-
   belongs_to :collection
   belongs_to :depositor, class_name: 'User'
 
@@ -76,10 +65,5 @@ class Work < ApplicationRecord
     when Date
       super(edtf.to_edtf)
     end
-  end
-
-  sig { returns(T.nilable(String)) }
-  def current_state_display_label
-    STATE_DISPLAY_LABELS[state]
   end
 end
