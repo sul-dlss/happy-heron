@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :help, only: :create
+
   # @note Only admins should be able to access the Sidekiq web UI.  But this is accomplished by Puppet
   # configuration restricting access using a shib workgroup, so the request doesn't reach the app if the user
   # isn't authorized (because ApplicationController#current_user doesn't get called until after this runs).

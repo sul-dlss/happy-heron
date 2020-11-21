@@ -1,0 +1,83 @@
+<div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="help-prompt" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="help-prompt">Help</h3>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" data-controller="help">
+        <%= form_with(url: help_path,
+                      method: 'post',
+                      data: {
+                        target: 'help.form',
+                        action: 'ajax:success->help#displaySuccess'
+                      }) do |form| %>
+          <strong><sup>*</sup>Required fields</strong>
+          <div class="container-fluid">
+            <div class="row">
+               <div class="col-md-9">
+                 <div class="form-group">
+                   <%= form.label(:name, 'What is your name?') %>
+                   <%= form.text_field(:name, class: 'form-control') %>
+                 </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-9">
+                 <div class="form-group">
+                   <%= form.label(:email, 'What is your email address?*') %>
+                   <%= form.text_field(:email, value: @email, class: 'form-control', required: true )%>
+                 </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-9">
+                 <div class="form-group">
+                   <%= form.label(:affiliation, 'What is your Stanford affiliation/department?')  %>
+                   <%= form.text_field(:affiliation, class: 'form-control') %>
+                 </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-9">
+                 <div class="form-group">
+                   <%= form.label(:help_how, 'How can we help you?*') %>
+                   <%= form.select(:help_how,
+                                   options_for_select(['I want to become an SDR depositor',
+                                                       'I want to report a problem',
+                                                       'I want to ask a question',
+                                                       'I want to provide feedback'],
+                                                       @help_how_value),
+                                   { include_blank: 'Select...'},
+                                   class: 'form-select',
+                                   required: true) %>
+                 </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                 <div class="form-group">
+                   <%= form.label(:why_contact, 'Describe your issue, question, or what you would like to deposit') %><sup>*</sup>
+                   <%= form.text_area(:why_contact, class: 'form-control', required: true) %>
+                 </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-5 offset-md-7 mt-2">
+                 <%= button_tag 'Cancel', class: 'btn btn-default', 'data-dismiss': 'modal' %>
+                 <%= button_tag 'Submit', class: 'btn btn-primary' %>
+               </div>
+            </div>
+          </div>
+        <small>You may also email us directly at
+          <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a></small>
+        <% end %>
+        <div data-target="help.results" hidden="true">
+          <h2>Help request successfully sent</h2>
+          <p>You should receive a response from our team within 48 hours.</p>
+          <%= button_tag 'Close', class: 'btn btn-primary', 'data-dismiss': 'modal' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
