@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 # Models the deposit of an digital repository object in H2.
@@ -28,6 +28,12 @@ class Work < ApplicationRecord
   }
 
   state_machine initial: :first_draft do
+    after_transition deposited: :version_draft do |work, _transition|
+      Event.create!(work: work, user: work.depositor, event_type: 'new_version')
+      display = Works::StateDisplayComponent.new(work: work).call
+      WorkUpdatesChannel.broadcast_to(work, state: display)
+    end
+
     event :begin_deposit do
       transition first_draft: :depositing, version_draft: :depositing, pending_approval: :depositing
     end
@@ -44,8 +50,9 @@ class Work < ApplicationRecord
       transition pending_approval: :first_draft
     end
 
-    event :new_version do
+    event :update_metadata do
       transition deposited: :version_draft
+      transition %i[first_draft version_draft] => same
     end
   end
 

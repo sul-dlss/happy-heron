@@ -4,7 +4,7 @@ class Work
   def submit_for_review!; end
 
   sig { void }
-  def new_version!; end
+  def update_metadata!; end
 
   sig { void }
   def begin_deposit!; end

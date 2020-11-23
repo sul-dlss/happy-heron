@@ -80,29 +80,6 @@ RSpec.describe EventService do
     end
   end
 
-  describe '.new_version' do
-    let(:work) { create(:work, :deposited, depositor: depositor) }
-
-    it 'adds a new version of the work' do
-      expect { described_class.new_version(work: work, user: depositor) }
-        .to change(work, :state)
-        .from('deposited').to('version_draft')
-    end
-
-    it 'creates an event' do
-      expect { described_class.new_version(work: work, user: depositor) }
-        .to change(Event, :count)
-        .by(1)
-    end
-
-    it 'broadcasts the state change' do
-      described_class.new_version(work: work, user: depositor)
-      expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-        .with(work, state: 'New version draft - Not deposited')
-        .once
-    end
-  end
-
   describe '.submit_for_review' do
     let(:work) { create(:work, :first_draft, depositor: depositor) }
 
