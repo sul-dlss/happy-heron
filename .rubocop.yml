@@ -93,8 +93,6 @@ Lint/IdentityComparison: # (new in 0.91)
   Enabled: true
 Lint/MixedRegexpCaptureTypes: # (new in 0.85)
   Enabled: true
-Style/NilLambda: # (new in 1.3)
-  Enabled: true
 Lint/NoReturnInBeginEndBlocks: # (new in 1.2)
   Enabled: true
 Lint/OutOfRangeRegexpRef: # (new in 0.89)
@@ -124,7 +122,17 @@ Lint/UselessTimes: # (new in 0.91)
 
 Performance/AncestorsInclude: # (new in 1.7)
   Enabled: true
+Performance/ArraySemiInfiniteRangeSlice: # (new in 1.9)
+  Enabled: true
 Performance/BigDecimalWithNumericArgument: # (new in 1.7)
+  Enabled: true
+Performance/BlockGivenWithExplicitBlock: # (new in 1.9)
+  Enabled: true
+Performance/CollectionLiteralInLoop: # (new in 1.8)
+  Enabled: true
+Performance/ConstantRegexp: # (new in 1.9)
+  Enabled: true
+Performance/MethodObjectAsBlock: # (new in 1.9)
   Enabled: true
 Performance/RedundantSortBlock: # (new in 1.7)
   Enabled: true
@@ -214,7 +222,11 @@ Style/KeywordParametersOrder: # (new in 0.90)
   Enabled: true
 Style/NegatedIfElseCondition: # (new in 1.2)
   Enabled: true
+Style/NilLambda: # (new in 1.3)
+  Enabled: true
 Style/OptionalBooleanParameter: # (new in 0.89)
+  Enabled: true
+Style/RedundantArgument: # (new in 1.4)
   Enabled: true
 Style/RedundantAssignment: # (new in 0.87)
   Enabled: true
