@@ -17,10 +17,9 @@ class AccessGenerator
 
   sig { returns(Hash) }
   def generate
-    {
-      access: work.access,
-      download: work.access
-    }
+    return { access: work.access, download: work.access } unless work.embargo_date
+
+    { access: 'citation-only', download: 'none', embargo: { access: 'world', releaseDate: work.embargo_date.iso8601 } }
   end
 
   private

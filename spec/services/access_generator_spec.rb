@@ -21,4 +21,13 @@ RSpec.describe AccessGenerator do
       expect(model).to eq(access: 'stanford', download: 'stanford')
     end
   end
+
+  context 'when embargoed' do
+    let(:work) { build(:work, :embargoed, access: 'stanford') }
+
+    it 'generates the model' do
+      expect(model).to eq(access: 'citation-only', download: 'none',
+                          embargo: { releaseDate: '2040-09-03', access: 'world' })
+    end
+  end
 end

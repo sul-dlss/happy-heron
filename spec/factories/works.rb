@@ -19,6 +19,10 @@ FactoryBot.define do
     published_edtf { EDTF.parse('2020-02-14') }
   end
 
+  trait :embargoed do
+    embargo_date { '2040-09-03' }
+  end
+
   trait :pending_approval do
     state { 'pending_approval' }
   end
