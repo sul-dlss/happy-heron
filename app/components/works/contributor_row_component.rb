@@ -11,5 +11,10 @@ module Works
 
     sig { returns(ActionView::Helpers::FormBuilder) }
     attr_reader :form
+
+    sig { returns(T::Boolean) }
+    def not_first_contributor?
+      form.index != 0
+    end
   end
 end
