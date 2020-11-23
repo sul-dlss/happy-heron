@@ -24,6 +24,8 @@ RSpec.describe 'Edit a draft work', js: true do
       check 'I agree to the SDR Terms of Deposit'
 
       expect(page).to have_content(work.attached_files.first.filename.to_s)
+      # File removal should not raise an error
+      find('button.dz-remove').click
 
       # Test validation
       fill_in 'Other', with: ''
@@ -35,6 +37,8 @@ RSpec.describe 'Edit a draft work', js: true do
       click_button 'Deposit'
 
       expect(page).to have_content('Test title')
+      # Attached file should now be gone
+      expect(page).not_to have_content(work.attached_files.first.filename.to_s)
     end
   end
 end
