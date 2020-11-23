@@ -14,9 +14,14 @@ module Works
 
     sig { returns(T.nilable(ActiveStorage::Filename)) }
     def filename
-      return unless form.object.persisted?
+      return unless uploaded?
 
       form.object.model.filename
+    end
+
+    sig { returns(T::Boolean) }
+    def uploaded?
+      form.object.persisted?
     end
   end
 end

@@ -62,6 +62,15 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def description?; end
 
+  sig { returns(T.nilable(String)) }
+  def druid; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def druid=(value); end
+
+  sig { returns(T::Boolean) }
+  def druid?; end
+
   sig { returns(T.nilable(T::Boolean)) }
   def email_when_participants_changed; end
 
@@ -134,6 +143,15 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def required_license?; end
 
+  sig { returns(String) }
+  def state; end
+
+  sig { params(value: T.any(String, Symbol)).void }
+  def state=(value); end
+
+  sig { returns(T::Boolean) }
+  def state?; end
+
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
 
@@ -142,6 +160,15 @@ module Collection::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def updated_at?; end
+
+  sig { returns(Integer) }
+  def version; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def version=(value); end
+
+  sig { returns(T::Boolean) }
+  def version?; end
 end
 
 module Collection::GeneratedAssociationMethods
