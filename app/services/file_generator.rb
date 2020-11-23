@@ -1,0 +1,98 @@
+# typed: true
+# frozen_string_literal: true
+
+# This generates a File for a work
+class FileGenerator
+  extend T::Sig
+
+  sig do
+    params(
+      work: Work,
+      attached_file: AttachedFile
+    ).returns(T.nilable(T.any(Cocina::Models::File, Cocina::Models::RequestFile)))
+  end
+  def self.generate(work:, attached_file:)
+    new(work: work, attached_file: attached_file).generate
+  end
+
+  sig { params(work: Work, attached_file: AttachedFile).void }
+  def initialize(work:, attached_file:)
+    @work = work
+    @attached_file = attached_file
+  end
+
+  attr_reader :work, :attached_file
+
+  sig { returns(T.nilable(T.any(Cocina::Models::File, Cocina::Models::RequestFile))) }
+  def generate
+    return nil unless blob
+
+    if work.druid
+      Cocina::Models::File.new(file_attributes)
+    else
+      Cocina::Models::RequestFile.new(request_file_attributes)
+    end
+  end
+
+  def request_file_attributes
+    {
+      type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
+      version: work.version,
+      label: attached_file.label,
+      filename: filename,
+      access: access,
+      administrative: administrative,
+      hasMimeType: blob.content_type,
+      hasMessageDigests: message_digests,
+      size: blob.byte_size
+    }
+  end
+
+  def file_attributes
+    request_file_attributes.merge(externalIdentifier: external_identifier)
+  end
+
+  def filename
+    blob.filename.to_s # File.basename(filename(blob.key))
+  end
+
+  def external_identifier
+    "#{work.druid}/#{filename}" if work.druid
+  end
+
+  def administrative
+    {
+      sdrPreserve: true,
+      shelve: !attached_file.hide?
+    }
+  end
+
+  def message_digests
+    [
+      { type: 'md5', digest: base64_to_hexdigest(blob.checksum) },
+      { type: 'sha1', digest: Digest::SHA1.file(file_path(blob.key)).hexdigest }
+    ]
+  end
+
+  def blob
+    @blob ||= attached_file.file&.attachment&.blob
+  end
+
+  sig { returns(Hash) }
+  # TODO: This varies based on what the user selected
+  def access
+    {
+      access: 'stanford',
+      download: 'stanford'
+    }
+  end
+
+  sig { params(key: String).returns(String) }
+  def file_path(key)
+    ActiveStorage::Blob.service.path_for(key)
+  end
+
+  def base64_to_hexdigest(base64)
+    Base64.decode64(base64).unpack1('H*')
+  end
+end

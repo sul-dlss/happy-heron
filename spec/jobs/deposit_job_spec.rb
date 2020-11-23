@@ -15,7 +15,8 @@ RSpec.describe DepositJob do
     )
   end
   let(:attached_file) { build(:attached_file) }
-  let(:work) { build(:work, id: 8, attached_files: [attached_file]) }
+  let(:work) { build(:work, id: 8, attached_files: [attached_file], collection: collection) }
+  let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
 
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
@@ -46,7 +47,10 @@ RSpec.describe DepositJob do
   end
 
   context 'when the work has already been accessioned' do
-    let(:work) { build(:work, id: 8, version: 1, druid: 'druid:bk123gh4567', attached_files: [attached_file]) }
+    let(:work) do
+      build(:work, id: 8, version: 1, druid: 'druid:bk123gh4567',
+                   attached_files: [attached_file], collection: collection)
+    end
 
     before do
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
