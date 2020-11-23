@@ -1,4 +1,11 @@
 <section class="details">
+  <% if display_approval? %>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      Your deposit has been sent for approval. You will receive an email once your deposit has been approved.
+      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
   <header class="title">
     <span class="header-text"><%= title %></span>
     <%= link_to edit_work_path(@work), aria: { label: "Edit #{title}"} do %><span class="fas fa-pencil-alt edit"></span><% end %>
