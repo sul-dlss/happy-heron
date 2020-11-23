@@ -228,7 +228,7 @@ RSpec.describe RequestGenerator do
                 label: 'MyString',
                 structural: { contains: [
                   {
-                    access: { access: 'stanford', download: 'stanford' },
+                    access: { access: 'world', download: 'world' },
                     administrative: { sdrPreserve: true, shelve: true },
                     filename: 'sul.svg',
                     hasMessageDigests: [
@@ -309,7 +309,7 @@ RSpec.describe RequestGenerator do
                 structural: {
                   contains: [
                     {
-                      access: { access: 'stanford', download: 'stanford' },
+                      access: { access: 'world', download: 'world' },
                       administrative: { sdrPreserve: true, shelve: true },
                       filename: 'sul.svg',
                       hasMessageDigests: [

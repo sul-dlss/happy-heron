@@ -79,12 +79,12 @@ class FileGenerator
   end
 
   sig { returns(Hash) }
-  # TODO: This varies based on what the user selected
   def access
-    {
-      access: 'stanford',
-      download: 'stanford'
-    }
+    if attached_file.hide?
+      { access: 'dark', download: 'none' }
+    else
+      { access: 'world', download: 'world' }
+    end
   end
 
   sig { params(key: String).returns(String) }
