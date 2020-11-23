@@ -51,4 +51,48 @@ module Cocina::Models
     end
     def initialize(type:, access: nil, title: nil, note: nil); end
   end
+
+  class DROStructural
+    sig { params(contains: T::Array[T::Hash[T.untyped, T.untyped]], isMemberOf: T::Array[String]).void }
+    def initialize(contains:, isMemberOf:); end
+  end
+
+  class RequestDROStructural
+    sig { params(contains: T::Array[T::Hash[T.untyped, T.untyped]], isMemberOf: T::Array[String]).void }
+    def initialize(contains:, isMemberOf:); end
+  end
+
+  class File
+    sig do
+      params(
+        access: T::Hash[T.untyped, T.untyped],
+        administrative: T::Hash[T.untyped, T.untyped],
+        filename: String,
+        hasMessageDigests: T::Array[T::Hash[T.untyped, T.untyped]],
+        hasMimeType: String,
+        label: String,
+        size: String,
+        type: String,
+        version: Integer
+      ).void
+    end
+    def initialize(access:, administrative:, filename:, hasMessageDigests:, hasMimeType:, label:, size:, type:, version:); end
+  end
+
+  class RequestFile
+    sig do
+      params(
+        access: T::Hash[T.untyped, T.untyped],
+        administrative: T::Hash[T.untyped, T.untyped],
+        filename: String,
+        hasMessageDigests: T::Array[T::Hash[T.untyped, T.untyped]],
+        hasMimeType: String,
+        label: String,
+        size: String,
+        type: String,
+        version: Integer
+      ).void
+    end
+    def initialize(access:, administrative:, filename:, hasMessageDigests:, hasMimeType:, label:, size:, type:, version:); end
+  end
 end

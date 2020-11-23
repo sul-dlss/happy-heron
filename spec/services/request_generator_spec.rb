@@ -5,6 +5,8 @@ require 'rails_helper'
 
 RSpec.describe RequestGenerator do
   let(:model) { described_class.generate_model(work: work) }
+  let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
+
   let(:types_form) do
     [
       {
@@ -51,7 +53,7 @@ RSpec.describe RequestGenerator do
 
   context 'when files are not present' do
     context 'without a druid' do
-      let(:work) { build(:work, id: 7, work_type: 'text') }
+      let(:work) { build(:work, id: 7, work_type: 'text', collection: collection) }
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
@@ -92,7 +94,8 @@ RSpec.describe RequestGenerator do
             sourceId: "hydrus:#{work.id}"
           },
           structural: {
-            contains: []
+            contains: [],
+            isMemberOf: [collection.druid]
           }
         }
       end
@@ -103,7 +106,7 @@ RSpec.describe RequestGenerator do
     end
 
     context 'with a druid' do
-      let(:work) { build(:work, id: 7, work_type: 'text', druid: 'druid:bk123gh4567') }
+      let(:work) { build(:work, id: 7, work_type: 'text', druid: 'druid:bk123gh4567', collection: collection) }
       let(:expected_model) do
         {
           externalIdentifier: 'druid:bk123gh4567',
@@ -145,7 +148,8 @@ RSpec.describe RequestGenerator do
             sourceId: "hydrus:#{work.id}"
           },
           structural: {
-            contains: []
+            contains: [],
+            isMemberOf: [collection.druid]
           }
         }
       end
@@ -177,7 +181,7 @@ RSpec.describe RequestGenerator do
     end
 
     context 'without a druid' do
-      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file]) }
+      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file], collection: collection) }
 
       let(:expected_model) do
         {
@@ -241,7 +245,8 @@ RSpec.describe RequestGenerator do
                 type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
                 version: 1
               }
-            ]
+            ],
+            isMemberOf: [collection.druid]
           }
         }
       end
@@ -252,7 +257,11 @@ RSpec.describe RequestGenerator do
     end
 
     context 'with a druid' do
-      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file], druid: 'druid:bk123gh4567') }
+      let(:work) do
+        build(:work, id: 7, version: 1, attached_files: [attached_file],
+                     druid: 'druid:bk123gh4567',
+                     collection: collection)
+      end
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
@@ -297,28 +306,31 @@ RSpec.describe RequestGenerator do
             contains: [
               {
                 label: 'MyString',
-                structural: { contains: [
-                  {
-                    access: { access: 'stanford', download: 'stanford' },
-                    administrative: { sdrPreserve: true, shelve: true },
-                    filename: 'sul.svg',
-                    hasMessageDigests: [
-                      { digest: 'f5eff9e28f154f79f7a11261bc0d4b30', type: 'md5' },
-                      { digest: '2046f6584c2f0f5e9c0df7e8070d14d1ec65f382', type: 'sha1' }
-                    ],
-                    hasMimeType: 'image/svg+xml',
-                    label: 'MyString',
-                    size: 17_675,
-                    type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
-                    externalIdentifier: 'druid:bk123gh4567/sul.svg',
-                    version: 1
-                  }
-                ] },
+                structural: {
+                  contains: [
+                    {
+                      access: { access: 'stanford', download: 'stanford' },
+                      administrative: { sdrPreserve: true, shelve: true },
+                      filename: 'sul.svg',
+                      hasMessageDigests: [
+                        { digest: 'f5eff9e28f154f79f7a11261bc0d4b30', type: 'md5' },
+                        { digest: '2046f6584c2f0f5e9c0df7e8070d14d1ec65f382', type: 'sha1' }
+                      ],
+                      hasMimeType: 'image/svg+xml',
+                      label: 'MyString',
+                      size: 17_675,
+                      type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
+                      externalIdentifier: 'druid:bk123gh4567/sul.svg',
+                      version: 1
+                    }
+                  ]
+                },
                 type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
                 externalIdentifier: 'bk123gh4567_1',
                 version: 1
               }
-            ]
+            ],
+            isMemberOf: [collection.druid]
           }
         }
       end
