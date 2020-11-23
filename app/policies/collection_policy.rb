@@ -3,6 +3,8 @@
 
 # Authorization policy for Collection objects
 class CollectionPolicy < ApplicationPolicy
+  NO_DEPOSIT_STATUS = %w[first_draft depositing].freeze
+
   # Return the relation defining the collections you can deposit into.
   scope_for :deposit do |relation|
     if administrator?
@@ -23,6 +25,11 @@ class CollectionPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def update?
     administrator? || manages_collection?(record)
+  end
+
+  sig { returns(T::Boolean) }
+  def deposit?
+    NO_DEPOSIT_STATUS.exclude? record.state
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups
