@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Works requests' do
+RSpec.describe 'Create a new work' do
   let(:work) { create(:work) }
   let(:collection) { create(:collection) }
 
@@ -21,11 +21,6 @@ RSpec.describe 'Works requests' do
       expect(response).to have_http_status(:found)
       expect(response).to redirect_to(new_user_session_path)
     end
-
-    it 'redirects from /works/:work_id to login URL' do
-      get "/works/#{work.id}"
-      expect(response).to redirect_to(new_user_session_path)
-    end
   end
 
   context 'with an authenticated user' do
@@ -33,13 +28,6 @@ RSpec.describe 'Works requests' do
 
     before do
       sign_in user, groups: ['dlss:hydrus-app-collection-creators']
-    end
-
-    describe 'show a work' do
-      it 'displays the work' do
-        get "/works/#{work.id}"
-        expect(response).to have_http_status(:ok)
-      end
     end
 
     describe 'new work form' do
@@ -436,69 +424,6 @@ RSpec.describe 'Works requests' do
           expect(work.state).to eq 'pending_approval'
           expect(DepositJob).not_to have_received(:perform_later)
         end
-      end
-    end
-
-    describe 'update work' do
-      context 'with an attachment' do
-        let(:work) { create(:work, :with_attached_file, state: 'deposited') }
-        let(:user) { work.depositor }
-        let(:work_params) do
-          {
-            title: 'New title',
-            work_type: 'text',
-            contact_email: 'io@io.io',
-            abstract: 'test abstract',
-            attached_files_attributes: {
-              '0' => { 'label' => 'two', '_destroy' => '', 'hide' => '0', 'id' => work.attached_files.first.id }
-            },
-            keywords_attributes: {
-              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
-            },
-            license: 'CC0-1.0',
-            release: 'immediate'
-          }
-        end
-
-        it 'redirects to the work page' do
-          patch "/works/#{work.id}", params: { work: work_params }
-          expect(work.reload).to be_version_draft
-          expect(response).to redirect_to(work)
-        end
-      end
-
-      context 'with a validation problem' do
-        let(:work) { create(:work) }
-        let(:user) { work.depositor }
-        let(:work_params) do
-          {
-            title: '',
-            work_type: 'text',
-            contact_email: 'io@io.io',
-            abstract: 'test abstract',
-            keywords_attributes: {
-              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
-            },
-            license: 'CC0-1.0',
-            release: 'immediate'
-          }
-        end
-
-        it 'returns a validation error in JSON format' do
-          patch "/works/#{work.id}", params: { work: work_params, format: :json, commit: 'Deposit' }
-          expect(response).to have_http_status(:bad_request)
-          json = JSON.parse(response.body)
-          expect(json['title']).to include("can't be blank")
-          expect(json['file']).to eq ['Please add at least one file.']
-        end
-      end
-    end
-
-    describe 'view work' do
-      it 'renders the view' do
-        get "/works/#{work.id}"
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include work.title
       end
     end
   end
