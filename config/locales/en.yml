@@ -2,3 +2,10 @@ en:
   date:
     formats:
       abbr_month: '%b %d, %Y'
+  time:
+    formats:
+      abbr_month: '%b %d, %Y %-I:%M %p'
+  event:
+    type:
+      return: Changes requested
+      begin_deposit: Deposited
