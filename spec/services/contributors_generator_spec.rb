@@ -96,7 +96,7 @@ RSpec.describe ContributorsGenerator do
   describe '.events_from_publisher_contributors' do
     context 'with no pub_date' do
       context 'with no publisher' do
-        let(:contributor) { build(:contributor) }
+        let(:contributor) { build(:person_contributor) }
         let(:work) { build(:work, contributors: [contributor]) }
         let(:cocina_model) { described_class.events_from_publisher_contributors(work: work) }
 
@@ -106,8 +106,8 @@ RSpec.describe ContributorsGenerator do
       end
 
       context 'with multiple publishers' do
-        let(:org_contrib1) { build(:contributor, :with_org_contributor, role: 'Publisher') }
-        let(:org_contrib2) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+        let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
+        let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
         let(:work) { build(:work, contributors: [org_contrib1, org_contrib2]) }
         let(:cocina_model) { described_class.events_from_publisher_contributors(work: work) }
 
@@ -157,7 +157,7 @@ RSpec.describe ContributorsGenerator do
       end
 
       context 'with no publisher' do
-        let(:contributor) { build(:contributor) }
+        let(:contributor) { build(:person_contributor) }
         let(:work) { build(:work, contributors: [contributor]) }
         let(:cocina_model) { described_class.events_from_publisher_contributors(work: work, pub_date: pub_date) }
 
@@ -167,8 +167,8 @@ RSpec.describe ContributorsGenerator do
       end
 
       context 'with multiple publishers' do
-        let(:org_contrib1) { build(:contributor, :with_org_contributor, role: 'Publisher') }
-        let(:org_contrib2) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+        let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
+        let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
         let(:work) { build(:work, contributors: [org_contrib1, org_contrib2]) }
         let(:cocina_model) { described_class.events_from_publisher_contributors(work: work, pub_date: pub_date) }
 
@@ -205,7 +205,7 @@ RSpec.describe ContributorsGenerator do
   end
 
   context 'without marcrelator mapping' do
-    let(:contributor) { build(:contributor, :with_org_contributor, role: 'Conference') }
+    let(:contributor) { build(:org_contributor, role: 'Conference') }
     let(:work) { build(:work, contributors: [contributor]) }
 
     it 'creates Cocina::Models::Contributor without marc relator role' do
@@ -228,7 +228,7 @@ RSpec.describe ContributorsGenerator do
   end
 
   context 'with DataCite creator mapping for role' do
-    let(:contributor) { build(:contributor) }
+    let(:contributor) { build(:person_contributor) }
     let(:work) { build(:work, contributors: [contributor]) }
 
     it 'creates Cocina::Models::Contributor with DataCite role' do
@@ -253,7 +253,7 @@ RSpec.describe ContributorsGenerator do
   # from https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   describe 'h2 mapping specification examples' do
     context 'with person with single role' do
-      let(:contributor) { build(:contributor, role: 'Data collector') }
+      let(:contributor) { build(:person_contributor, role: 'Data collector') }
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor with DataCite role' do
@@ -302,7 +302,7 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with organization with single role' do
-      let(:contributor) { build(:contributor, :with_org_contributor, role: 'Host institution') }
+      let(:contributor) { build(:org_contributor, role: 'Host institution') }
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor without marc relator role' do
@@ -342,7 +342,7 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with conference as contributor' do
-      let(:contributor) { build(:contributor, :with_org_contributor, role: 'Conference') }
+      let(:contributor) { build(:org_contributor, role: 'Conference') }
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor' do
@@ -370,7 +370,7 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with event as contributor' do
-      let(:contributor) { build(:contributor, :with_org_contributor, role: 'Event') }
+      let(:contributor) { build(:org_contributor, role: 'Event') }
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor with DataCite role' do
@@ -398,8 +398,8 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with multiple person contributors' do
-      let(:contributor1) { build(:contributor, role: 'Author') }
-      let(:contributor2) { build(:contributor, role: 'Author') }
+      let(:contributor1) { build(:person_contributor, role: 'Author') }
+      let(:contributor2) { build(:person_contributor, role: 'Author') }
       let(:work) { build(:work, contributors: [contributor1, contributor2]) }
 
       # TODO: implement order
@@ -436,8 +436,8 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with multiple contributors - person and organization' do
-      let(:contributor1) { build(:contributor, role: 'Author') }
-      let(:contributor2) { build(:contributor, :with_org_contributor, role: 'Sponsor') }
+      let(:contributor1) { build(:person_contributor, role: 'Author') }
+      let(:contributor2) { build(:org_contributor, role: 'Sponsor') }
       let(:work) { build(:work, contributors: [contributor1, contributor2]) }
 
       it 'creates array of Cocina::Models::Contributors' do
@@ -465,9 +465,9 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with multipe person contributors and organization as author' do
-      let(:contributor1) { build(:contributor, role: 'Author') }
-      let(:contributor2) { build(:contributor, :with_org_contributor, role: 'Author') }
-      let(:contributor3) { build(:contributor, role: 'Author') }
+      let(:contributor1) { build(:person_contributor, role: 'Author') }
+      let(:contributor2) { build(:org_contributor, role: 'Author') }
+      let(:contributor3) { build(:person_contributor, role: 'Author') }
       let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
 
       # TODO: implement order
@@ -510,9 +510,9 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with multipe person contributors and organization as non-author' do
-      let(:contributor1) { build(:contributor, role: 'Author') }
-      let(:contributor2) { build(:contributor, :with_org_contributor, role: 'Sponsor') }
-      let(:contributor3) { build(:contributor, role: 'Author') }
+      let(:contributor1) { build(:person_contributor, role: 'Author') }
+      let(:contributor2) { build(:org_contributor, role: 'Sponsor') }
+      let(:contributor3) { build(:person_contributor, role: 'Author') }
       let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
 
       # TODO: implement order
@@ -554,7 +554,7 @@ RSpec.describe ContributorsGenerator do
     end
 
     context 'with organization as funder' do
-      let(:contributor) { build(:contributor, :with_org_contributor, full_name: 'Stanford University', role: 'Funder') }
+      let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Funder') }
       let(:work) { build(:work, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor per spec' do
@@ -587,8 +587,7 @@ RSpec.describe ContributorsGenerator do
     # see also description_generator_spec for example 13 - "Publisher entered by user, no publication date"
     context 'with publisher entered by user' do
       let(:contributor) do
-        build(:contributor,
-              :with_org_contributor, full_name: 'Stanford University Press', role: 'Publisher')
+        build(:org_contributor, full_name: 'Stanford University Press', role: 'Publisher')
       end
       let(:work) { build(:work, contributors: [contributor]) }
 

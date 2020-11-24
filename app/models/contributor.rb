@@ -4,13 +4,7 @@
 # Models a contributor to a Work
 class Contributor < ApplicationRecord
   extend T::Sig
-
   SEPARATOR = '|'
-
-  ROLE_LABEL = {
-    'person' => 'Individual',
-    'organization' => 'Organization'
-  }.freeze
 
   GROUPED_ROLES = {
     'person' =>
@@ -69,24 +63,16 @@ class Contributor < ApplicationRecord
     contributor_type == 'person'
   end
 
-  # used by work_form
+  # used by DraftWorkForm
   sig { returns(String) }
   def role_term
     [contributor_type, role].join(SEPARATOR)
   end
 
-  # used by work_controller for setting values from the form.
+  # used by DraftWorkForm for setting values from the form.
   sig { params(val: String).void }
   def role_term=(val)
     contributor_type, role = val.split(SEPARATOR)
     self.attributes = { contributor_type: contributor_type, role: role }
-  end
-
-  # list for work_form pulldown
-  sig { returns(T::Array[T::Array[T.any(String, T::Array[String])]]) }
-  def self.grouped_options
-    ROLE_LABEL.map do |key, label|
-      [label, GROUPED_ROLES.fetch(key).map { |role| [role, [key, role].join(SEPARATOR)] }]
-    end
   end
 end

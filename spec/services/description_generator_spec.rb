@@ -6,7 +6,7 @@ require 'rails_helper'
 RSpec.describe DescriptionGenerator do
   subject(:model) { described_class.generate(work: work).to_h }
 
-  let(:contributor) { build(:contributor, :with_org_contributor) }
+  let(:contributor) { build(:org_contributor) }
   let(:work) do
     build(:work, :with_creation_date_range, :published, :with_keywords,
           :with_some_untitled_related_links, :with_related_works,
@@ -184,9 +184,9 @@ RSpec.describe DescriptionGenerator do
   # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   #   examples 5 and 6
   context 'when contributor of type conference or event' do
-    let(:contributor1) { build(:contributor, :with_org_contributor, role: 'Event') }
-    let(:contributor2) { build(:contributor, role: 'Author') }
-    let(:contributor3) { build(:contributor, :with_org_contributor, role: 'Conference') }
+    let(:contributor1) { build(:org_contributor, role: 'Event') }
+    let(:contributor2) { build(:person_contributor, role: 'Author') }
+    let(:contributor3) { build(:org_contributor, role: 'Conference') }
     let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
     let(:datacite_creator_role) do
       {
@@ -275,7 +275,7 @@ RSpec.describe DescriptionGenerator do
   # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   #   example 12
   context 'when publisher and publication date are entered by user' do
-    let(:contributor) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+    let(:contributor) { build(:org_contributor, role: 'Publisher') }
     let(:work) { build(:work, :published, contributors: [contributor]) }
 
     it 'creates event of type publication with date' do
@@ -317,7 +317,7 @@ RSpec.describe DescriptionGenerator do
   #   example 13
   #   Note:  no top level contributor -- publisher is under event
   context 'when publisher entered by user, no publication date' do
-    let(:contributor) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+    let(:contributor) { build(:org_contributor, role: 'Publisher') }
     let(:work) { build(:work, contributors: [contributor]) }
 
     it 'creates event of type publication without date' do
@@ -350,8 +350,8 @@ RSpec.describe DescriptionGenerator do
 
   # NOTE: Arcadia to add h2 mapping spec for when there is a person and a publisher
   context 'when author, publisher and publication date are entered by user' do
-    let(:person_contrib) { build(:contributor, role: 'Author') }
-    let(:pub_contrib) { build(:contributor, :with_org_contributor, role: 'Publisher') }
+    let(:person_contrib) { build(:person_contributor, role: 'Author') }
+    let(:pub_contrib) { build(:org_contributor, role: 'Publisher') }
     let(:work) { build(:work, :published, contributors: [person_contrib, pub_contrib]) }
 
     it 'creates event of type publication with date' do

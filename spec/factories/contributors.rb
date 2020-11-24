@@ -3,26 +3,27 @@
 
 FactoryBot.define do
   factory :contributor do
-    sequence :first_name do |n|
-      "First#{n}"
-    end
-
-    sequence :last_name do |n|
-      "Last#{n}"
-    end
-
     work
-    contributor_type { 'person' }
-    role { 'Contributing author' }
-  end
 
-  trait :with_org_contributor do
-    sequence :full_name do |n|
-      "organization#{n}"
+    factory :person_contributor do
+      sequence :first_name do |n|
+        "First#{n}"
+      end
+
+      sequence :last_name do |n|
+        "Last#{n}"
+      end
+
+      contributor_type { 'person' }
+      role { 'Contributing author' }
     end
 
-    work
-    contributor_type { 'organization' }
-    role { 'Sponsor' }
+    factory :org_contributor do
+      sequence :full_name do |n|
+        "organization#{n}"
+      end
+      contributor_type { 'organization' }
+      role { 'Sponsor' }
+    end
   end
 end

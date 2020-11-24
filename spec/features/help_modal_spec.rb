@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Help modal', js: true do
-  let(:user) { create(:user) }
+  let(:user) { build(:user) }
 
   context 'when authenticated' do
     before do

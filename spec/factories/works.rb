@@ -51,7 +51,7 @@ FactoryBot.define do
       contributors_count { 3 }
     end
 
-    contributors { Array.new(contributors_count) { association(:contributor) } }
+    contributors { Array.new(contributors_count) { association(:person_contributor) } }
   end
 
   trait :with_related_links do
