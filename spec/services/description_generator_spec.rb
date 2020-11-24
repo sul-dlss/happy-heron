@@ -8,7 +8,7 @@ RSpec.describe DescriptionGenerator do
 
   let(:contributor) { build(:contributor, :with_org_contributor) }
   let(:work) do
-    build(:work, :with_creation_dates, :published, :with_keywords,
+    build(:work, :with_creation_date_range, :published, :with_keywords,
           :with_some_untitled_related_links, :with_related_works,
           contributors: [contributor])
   end

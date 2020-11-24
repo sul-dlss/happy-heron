@@ -70,7 +70,7 @@ RSpec.describe Work do
         let(:date) { EDTF.parse('2020-11') }
 
         it 'records an EDTF string' do
-          expect(work.created_edtf).to eq '2020-11'
+          expect(work.created_edtf.to_edtf).to eq '2020-11'
         end
       end
 
@@ -78,7 +78,7 @@ RSpec.describe Work do
         let(:date) { EDTF.parse('2020-11/2021') }
 
         it 'records an EDTF string' do
-          expect(work.created_edtf).to eq '2020-11/2021'
+          expect(work.created_edtf.to_s).to eq '2020-11/2021'
         end
       end
     end
