@@ -18,6 +18,34 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     )
   end
 
+  context 'with a new, first draft collection' do
+    let(:collection) { create(:collection, :first_draft) }
+
+    it 'does not render the deposit button' do
+      expect(rendered.to_html).not_to include '+ Deposit to this collection'
+    end
+  end
+
+  context 'with a collection currently in the process of depositing' do
+    let(:collection) { create(:collection, :depositing) }
+
+    it 'does not render the deposit button' do
+      expect(rendered.to_html).not_to include '+ Deposit to this collection'
+    end
+  end
+
+  context 'with a deposit ready collection' do
+    before do
+      allow(controller).to receive_messages(allowed_to?: true)
+    end
+
+    let(:collection) { create(:collection) }
+
+    it 'does renders the deposit button' do
+      expect(rendered.to_html).to include '+ Deposit to this collection'
+    end
+  end
+
   context 'with 4 works' do
     before do
       create_list(:work, 4, collection: collection, depositor: user)

@@ -14,6 +14,7 @@ FactoryBot.define do
     default_license { 'MyString' }
     email_when_participants_changed { false }
     managers { 'maya.aguirre, jcairns' }
+    state { 'deposited' }
     creator
   end
 

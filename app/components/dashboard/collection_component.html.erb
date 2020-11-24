@@ -43,12 +43,14 @@
     <div class="mb-3">See all deposits</div>
   <% end %>
 
-  <%= button_tag '+ Deposit to this collection',
-        data: {
-          destination: new_collection_work_path(collection),
-          toggle: 'modal',
-          target: '#workTypeModal',
-          action: "work-type#set_collection"
-        },
-        class: "btn btn-primary" %>
+  <% if allowed_to?(:deposit?, collection) %>
+    <%= button_tag '+ Deposit to this collection',
+          data: {
+            destination: new_collection_work_path(collection),
+            toggle: 'modal',
+            target: '#workTypeModal',
+            action: "work-type#set_collection"
+          },
+          class: "btn btn-primary" %>
+  <% end %>
 </section>

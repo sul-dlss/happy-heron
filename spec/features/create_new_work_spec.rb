@@ -3,8 +3,9 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create a new collection and deposit to it', js: true do
+RSpec.describe 'Create a new work in a deposited collection', js: true do
   let(:user) { create(:user) }
+  let!(:collection) { create(:collection, depositors: [user]) }
 
   before do
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
@@ -16,14 +17,6 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
 
     it 'deposits and renders work show page' do
       visit dashboard_path
-
-      click_link '+ Create a new collection'
-
-      fill_in 'Collection name', with: collection_attrs.fetch(:name)
-      fill_in 'Description', with: collection_attrs.fetch(:description)
-      fill_in 'Contact email', with: collection_attrs.fetch(:contact_email)
-
-      click_button 'Deposit'
 
       click_button '+ Deposit to this collection' # , match: :first
 
