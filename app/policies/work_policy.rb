@@ -15,7 +15,8 @@ class WorkPolicy < ApplicationPolicy
     return true if administrator?
 
     collection = record.collection
-    collection.depositor_ids.include?(user.id) || manages_collection?(collection)
+    allowed_to?(:deposit?, collection) &&
+      (collection.depositor_ids.include?(user.id) || manages_collection?(collection))
   end
 
   # Only the depositor may edit/update a work if it is not in review

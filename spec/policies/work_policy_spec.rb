@@ -28,6 +28,12 @@ RSpec.describe WorkPolicy do
       before { collection.depositors = [user] }
     end
 
+    failed 'when user is a depositor but the collection is depositing' do
+      let(:collection) { build_stubbed :collection, state: 'depositing' }
+
+      before { collection.depositors = [user] }
+    end
+
     succeed 'when user is a collection manager' do
       before { collection.managers = [user.sunetid] }
     end
