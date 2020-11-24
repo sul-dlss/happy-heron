@@ -28,7 +28,18 @@ export default class extends Controller {
   }
 
   displayErrors(event) {
-    const [data, _status, _xhr] = event.detail;
+    const [data, _status, xhr] = event.detail;
+    switch (xhr.status) {
+      case 400:
+        this.parseErrors(data)
+        break
+      default:
+        alert("There was an error with your request.")
+        break
+    }
+  }
+
+  parseErrors(data) {
     for (const [fieldName, errorList] of Object.entries(data)) {
       const key = `${fieldName}Field`
       const target = this.targets.find(key)
@@ -37,5 +48,6 @@ export default class extends Controller {
       else
         console.error(`unable to find target for ${key}`)
     }
+    window.scrollTo(0, 80)
   }
 }
