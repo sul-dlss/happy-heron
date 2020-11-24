@@ -1,0 +1,20 @@
+# typed: false
+# frozen_string_literal: true
+
+FactoryBot.define do
+  trait :pending_approval do
+    state { 'pending_approval' }
+  end
+
+  trait :first_draft do
+    state { 'first_draft' }
+  end
+
+  trait :depositing do
+    state { 'depositing' }
+  end
+
+  trait :deposited do
+    state { 'deposited' }
+  end
+end
