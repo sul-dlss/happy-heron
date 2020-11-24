@@ -23,22 +23,6 @@ FactoryBot.define do
     embargo_date { '2040-09-03' }
   end
 
-  trait :pending_approval do
-    state { 'pending_approval' }
-  end
-
-  trait :first_draft do
-    state { 'first_draft' }
-  end
-
-  trait :depositing do
-    state { 'depositing' }
-  end
-
-  trait :deposited do
-    state { 'deposited' }
-  end
-
   trait :with_creation_date_range do
     created_edtf { EDTF.parse('2020-03-04/2020-10-31') }
   end
