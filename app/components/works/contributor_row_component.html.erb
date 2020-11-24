@@ -1,10 +1,12 @@
 <div class="row inner-container" data-controller="contributors" data-action="error->contributors#error" data-target="edit-deposit.contributorsField">
   <div class="contributors-container col-md-12" data-target="contributors.container">
-    <%= button_tag type: 'button', class: 'btn btn-sm float-right', aria: { label: 'Remove' },
-        data: { action: "click->nested-form#removeAssociation" } do %>
-      <span class="far fa-trash-alt"></span>
+    <% if not_first_contributor? %>
+      <%= button_tag type: 'button', class: 'btn btn-sm float-right', aria: { label: 'Remove' },
+                     data: { action: "click->nested-form#removeAssociation" } do %>
+        <span class="far fa-trash-alt"></span>
+      <% end %>
+      <%= form.hidden_field :_destroy %>
     <% end %>
-    <%= form.hidden_field :_destroy %>
   </div>
   <div class="col-md-3">
     <%= form.label :role_term, class: 'form-label' %>

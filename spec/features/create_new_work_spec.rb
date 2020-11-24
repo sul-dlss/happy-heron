@@ -67,6 +67,13 @@ RSpec.describe 'Create a new collection and deposit to it', js: true do
       fill_in 'First name', with: 'Contributor First Name'
       fill_in 'Last name', with: 'Contributor Last Name'
 
+      # This is the div that contains the contributor remove button. The button
+      # should NOT be rendered since there's one and only one contributor at
+      # this point, which is not removable.
+      within('div.contributors-container') do
+        expect(page).not_to have_selector('button')
+      end
+
       select 'Publisher', from: 'Role term'
       fill_in 'Name', with: 'Best Publisher'
 
