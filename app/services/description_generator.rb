@@ -81,13 +81,14 @@ class DescriptionGenerator
 
   sig { returns(T.nilable(Cocina::Models::Event)) }
   def created_date
-    return unless work.created_edtf
+    date = work.created_edtf
+    return unless date
 
     Cocina::Models::Event.new(
       type: 'creation',
       date: [
         {
-          value: work.created_edtf,
+          value: date.respond_to?(:to_edtf) ? date.to_edtf : date.to_s,
           encoding: { code: 'edtf' }
         }
       ]
@@ -96,13 +97,14 @@ class DescriptionGenerator
 
   sig { returns(T.nilable(Cocina::Models::Event)) }
   def published_date
-    return unless work.published_edtf
+    date = work.published_edtf
+    return unless date
 
     Cocina::Models::Event.new(
       type: 'publication',
       date: [
         {
-          value: work.published_edtf,
+          value: date.respond_to?(:to_edtf) ? date.to_edtf : date.to_s,
           encoding: { code: 'edtf' },
           status: 'primary'
         }

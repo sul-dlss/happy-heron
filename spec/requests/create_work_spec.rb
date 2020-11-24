@@ -267,8 +267,8 @@ RSpec.describe 'Create a new work' do
           expect(work.keywords.size).to eq 2
           expect(work.related_works.size).to eq 2
           expect(work.related_links.size).to eq 2
-          expect(work.published_edtf).to eq '2020-02-14'
-          expect(work.created_edtf).to eq '2020-03-04/2020-10-31'
+          expect(work.published_edtf.to_edtf).to eq '2020-02-14'
+          expect(work.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
           expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
           expect(work.subtype).to eq ['Article', 'Presentation slides']
           expect(DepositJob).to have_received(:perform_later).with(work)

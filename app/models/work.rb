@@ -17,7 +17,6 @@ class Work < ApplicationRecord
 
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
   validates :state, presence: true
-  validates :created_edtf, :published_edtf, edtf: true
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
@@ -72,5 +71,13 @@ class Work < ApplicationRecord
     when Date
       super(edtf.to_edtf)
     end
+  end
+
+  def published_edtf
+    EDTF.parse(super)
+  end
+
+  def created_edtf
+    EDTF.parse(super)
   end
 end

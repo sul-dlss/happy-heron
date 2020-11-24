@@ -4,21 +4,27 @@
 require 'rails_helper'
 
 RSpec.describe 'Updating an existing work' do
-  let(:work) { create(:work) }
-  let(:collection) { create(:collection) }
-
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
 
   context 'with an authenticated user' do
-    let(:user) { create(:user) }
+    let(:user) { work.depositor }
 
     before do
       sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     end
 
-    describe 'update work' do
+    describe 'display the form' do
+      let(:work) { create(:work, :published, :with_creation_date_range) }
+
+      it 'shows the form' do
+        get "/works/#{work.id}/edit"
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    describe 'submit the form' do
       context 'with an attachment' do
         let(:work) { create(:work, :with_attached_file, state: 'deposited') }
         let(:user) { work.depositor }
