@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/zeitwerk/all/zeitwerk.rbi
 #
-# zeitwerk-2.4.1
+# zeitwerk-2.4.2
 
 module Zeitwerk::RealModName
   def real_mod_name(mod); end
@@ -16,6 +16,7 @@ module Zeitwerk::Loader::Callbacks
   def on_dir_autoloaded(dir); end
   def on_file_autoloaded(file); end
   def on_namespace_loaded(namespace); end
+  def run_on_load_callbacks(cpath); end
   include Zeitwerk::RealModName
 end
 module Zeitwerk
@@ -59,6 +60,8 @@ class Zeitwerk::Loader
   def manages?(dir); end
   def mutex2; end
   def mutex; end
+  def on_load(cpath, &block); end
+  def on_load_callbacks; end
   def preload(*paths); end
   def preloads; end
   def promote_namespace_from_implicit_to_explicit(dir:, file:, parent:, cname:); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/reform-rails/all/reform-rails.rbi
 #
-# reform-rails-0.2.0
+# reform-rails-0.2.1
 
 module Reform
 end
@@ -103,6 +103,11 @@ class Reform::Form::ActiveModel::Validations::Result::ResultErrors < Reform::Con
   def [](k); end
   def add(key, error_text); end
   def empty?; end
+  def full_messages; end
+  def full_messages_for_nested_fields(form_fields); end
+  def full_messages_for_twin(object); end
+  def get_amv_errors(object); end
+  def get_collection_errors(twin_collection); end
   def initialize(a, b, success, amv_errors); end
   def method_missing(m, *args, &block); end
   def respond_to?(method); end

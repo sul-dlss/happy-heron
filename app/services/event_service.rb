@@ -9,21 +9,21 @@ class EventService
     include ActionView::Helpers::UrlHelper
   end
 
-  sig { params(work: Work, user: User, description: String).returns(T.nilable(Integer)) }
+  sig { params(work: Work, user: User, description: String).returns(T.untyped) }
   def self.reject(work:, user:, description:)
     work.reject!
     Event.create!(work: work, user: user, event_type: 'reject', description: description)
     WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
   end
 
-  sig { params(work: Work, user: User, description: String).returns(T.nilable(Integer)) }
+  sig { params(work: Work, user: User, description: String).returns(T.untyped) }
   def self.begin_deposit(work:, user:, description: '')
     work.begin_deposit!
     Event.create!(work: work, user: user, event_type: 'begin_deposit', description: description)
     WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
   end
 
-  sig { params(work: Work).returns(T.nilable(Integer)) }
+  sig { params(work: Work).returns(T.untyped) }
   def self.deposit_complete(work:)
     work.deposit_complete!
     Event.create!(work: work, user: work.depositor, event_type: 'deposit_complete')
@@ -32,7 +32,7 @@ class EventService
                                     purl: link_to(T.must(work.purl), T.must(work.purl)))
   end
 
-  sig { params(work: Work, user: User).returns(T.nilable(Integer)) }
+  sig { params(work: Work, user: User).returns(T.untyped) }
   def self.submit_for_review(work:, user:)
     work.submit_for_review!
     Event.create!(work: work, user: user, event_type: 'submit_for_review')

@@ -34,7 +34,7 @@ class Work < ApplicationRecord
     end
 
     event :begin_deposit do
-      transition first_draft: :depositing, version_draft: :depositing, pending_approval: :depositing
+      transition %i[first_draft version_draft pending_approval] => :depositing
     end
 
     event :deposit_complete do
@@ -42,11 +42,12 @@ class Work < ApplicationRecord
     end
 
     event :submit_for_review do
-      transition first_draft: :pending_approval
+      transition %i[first_draft version_draft] => :pending_approval
     end
 
     event :reject do
-      transition pending_approval: :first_draft
+      transition pending_approval: :first_draft, if: ->(work) { work.druid.blank? }
+      transition pending_approval: :version_draft, if: ->(work) { work.druid.present? }
     end
 
     event :update_metadata do

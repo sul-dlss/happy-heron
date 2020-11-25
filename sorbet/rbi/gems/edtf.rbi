@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/edtf/all/edtf.rbi
 #
-# edtf-3.0.5
+# edtf-3.0.6
 
 class DateTime < Date
   def edtf; end
@@ -144,7 +144,7 @@ class EDTF::Epoch
   def bsearch(*args, &block); end
   def count(*args, &block); end
   def cover?(other); end
-  def each; end
+  def each(&block); end
   def edtf; end
   def end(*args, &block); end
   def entries(*args, &block); end
@@ -315,7 +315,7 @@ class EDTF::Set
   def choice=(arg0); end
   def choice?; end
   def dates; end
-  def each; end
+  def each(&block); end
   def earlier!; end
   def earlier; end
   def earlier=(arg0); end
@@ -359,7 +359,7 @@ class EDTF::Parser < Racc::Parser
   def _reduce_108(val, _values, result); end
   def _reduce_109(val, _values, result); end
   def _reduce_11(val, _values, result); end
-  def _reduce_111(val, _values, result); end
+  def _reduce_110(val, _values, result); end
   def _reduce_112(val, _values, result); end
   def _reduce_113(val, _values, result); end
   def _reduce_114(val, _values, result); end
@@ -379,13 +379,13 @@ class EDTF::Parser < Racc::Parser
   def _reduce_127(val, _values, result); end
   def _reduce_128(val, _values, result); end
   def _reduce_129(val, _values, result); end
-  def _reduce_131(val, _values, result); end
+  def _reduce_130(val, _values, result); end
+  def _reduce_132(val, _values, result); end
   def _reduce_14(val, _values, result); end
-  def _reduce_142(val, _values, result); end
   def _reduce_143(val, _values, result); end
   def _reduce_144(val, _values, result); end
   def _reduce_145(val, _values, result); end
-  def _reduce_147(val, _values, result); end
+  def _reduce_146(val, _values, result); end
   def _reduce_148(val, _values, result); end
   def _reduce_149(val, _values, result); end
   def _reduce_15(val, _values, result); end
@@ -393,25 +393,26 @@ class EDTF::Parser < Racc::Parser
   def _reduce_151(val, _values, result); end
   def _reduce_152(val, _values, result); end
   def _reduce_153(val, _values, result); end
-  def _reduce_157(val, _values, result); end
+  def _reduce_154(val, _values, result); end
   def _reduce_158(val, _values, result); end
   def _reduce_159(val, _values, result); end
   def _reduce_16(val, _values, result); end
   def _reduce_160(val, _values, result); end
   def _reduce_161(val, _values, result); end
   def _reduce_162(val, _values, result); end
-  def _reduce_164(val, _values, result); end
-  def _reduce_166(val, _values, result); end
-  def _reduce_168(val, _values, result); end
+  def _reduce_163(val, _values, result); end
+  def _reduce_165(val, _values, result); end
+  def _reduce_167(val, _values, result); end
   def _reduce_169(val, _values, result); end
   def _reduce_17(val, _values, result); end
   def _reduce_170(val, _values, result); end
-  def _reduce_173(val, _values, result); end
+  def _reduce_171(val, _values, result); end
   def _reduce_174(val, _values, result); end
   def _reduce_175(val, _values, result); end
   def _reduce_176(val, _values, result); end
   def _reduce_177(val, _values, result); end
   def _reduce_178(val, _values, result); end
+  def _reduce_179(val, _values, result); end
   def _reduce_19(val, _values, result); end
   def _reduce_20(val, _values, result); end
   def _reduce_21(val, _values, result); end
