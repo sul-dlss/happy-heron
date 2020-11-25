@@ -29,33 +29,27 @@ class Work < ApplicationRecord
   state_machine initial: :first_draft do
     after_transition deposited: :version_draft do |work, _transition|
       Event.create!(work: work, user: work.depositor, event_type: 'new_version')
-      display = Works::StateDisplayComponent.new(work: work).call
-      WorkUpdatesChannel.broadcast_to(work, state: display)
+      BroadcastStateChange.call(work: work)
     end
 
     after_transition on: :deposit_complete do |work, _transition|
       Event.create!(work: work, user: work.depositor, event_type: 'deposit_complete')
-      display = Works::StateDisplayComponent.new(work: work).call
-      purl_link = "<a href=\"#{work.purl}\">#{work.purl}</a>"
-      WorkUpdatesChannel.broadcast_to(work, state: display, purl: purl_link)
+      BroadcastStateChange.with_purl(work: work)
     end
 
     after_transition on: :submit_for_review do |work, _transition|
       Event.create!(work: work, user: work.depositor, event_type: 'submit_for_review')
-      display = Works::StateDisplayComponent.new(work: work).call
-      WorkUpdatesChannel.broadcast_to(work, state: display)
+      BroadcastStateChange.call(work: work)
     end
 
     after_transition on: :begin_deposit do |work, _transition|
       Event.create!(work: work, user: work.depositor, event_type: 'begin_deposit')
-      display = Works::StateDisplayComponent.new(work: work).call
-      WorkUpdatesChannel.broadcast_to(work, state: display)
+      BroadcastStateChange.call(work: work)
       DepositJob.perform_later(work)
     end
 
     after_transition on: :reject do |work, _transition|
-      display = Works::StateDisplayComponent.new(work: work).call
-      WorkUpdatesChannel.broadcast_to(work, state: display)
+      BroadcastStateChange.call(work: work)
     end
 
     event :begin_deposit do
