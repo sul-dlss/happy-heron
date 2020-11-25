@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
     if params[:state] == 'approve'
       work.begin_deposit!
     else
-      work.events.create!(user: current_user, event_type: 'reject', description: params[:reason])
+      work.event_context = { description: params[:reason], user: current_user }
       work.reject!
     end
 

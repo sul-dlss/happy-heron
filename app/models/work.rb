@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 # Models the deposit of an digital repository object in H2.
@@ -26,30 +26,26 @@ class Work < ApplicationRecord
     world: 'world'
   }
 
+  # Events are logged after state transitions, if the description or user is set, it will be added to the event
+  sig { params(event_context: T::Hash[Symbol, String]).returns(T::Hash[Symbol, String]) }
+  attr_writer :event_context
+
+  sig { returns(T::Hash[Symbol, String]) }
+  def event_context
+    @event_context || { user: depositor }
+  end
+
   state_machine initial: :first_draft do
-    after_transition deposited: :version_draft do |work, _transition|
-      work.events.create!(user: work.depositor, event_type: 'new_version')
-      BroadcastStateChange.call(work: work)
-    end
-
-    after_transition on: :deposit_complete do |work, _transition|
-      work.events.create!(user: work.depositor, event_type: 'deposit_complete')
-      BroadcastStateChange.with_purl(work: work)
-    end
-
-    after_transition on: :submit_for_review do |work, _transition|
-      work.events.create!(user: work.depositor, event_type: 'submit_for_review')
-      BroadcastStateChange.call(work: work)
+    before_transition do |work, transition|
+      work.events.build(work.event_context.merge(event_type: transition.to))
     end
 
     after_transition on: :begin_deposit do |work, _transition|
-      work.events.create!(user: work.depositor, event_type: 'begin_deposit')
-      BroadcastStateChange.call(work: work)
       DepositJob.perform_later(work)
     end
 
-    after_transition on: :reject do |work, _transition|
-      BroadcastStateChange.call(work: work)
+    after_transition do |work, transition|
+      BroadcastWorkChange.call(work: work, state: transition.to_name)
     end
 
     event :begin_deposit do
