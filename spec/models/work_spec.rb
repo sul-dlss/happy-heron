@@ -234,6 +234,24 @@ RSpec.describe Work do
           .once
       end
     end
+
+    describe 'a submit_for_review event' do
+      before do
+        allow(WorkUpdatesChannel).to receive(:broadcast_to)
+      end
+
+      let(:work) { create(:work, :first_draft) }
+
+      it 'transitions to pending_approval' do
+        expect { work.submit_for_review! }
+          .to change(work, :state)
+          .to('pending_approval')
+          .and change(Event, :count).by(1)
+        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+          .with(work, state: 'Pending approval - Not deposited')
+          .once
+      end
+    end
   end
 
   describe '#purl' do

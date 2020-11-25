@@ -52,27 +52,4 @@ RSpec.describe EventService do
         .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>').once
     end
   end
-
-  describe '.submit_for_review' do
-    let(:work) { create(:work, :first_draft, depositor: depositor) }
-
-    it 'submits the work for review' do
-      expect { described_class.submit_for_review(work: work, user: depositor) }
-        .to change(work, :state)
-        .from('first_draft').to('pending_approval')
-    end
-
-    it 'creates an event' do
-      expect { described_class.submit_for_review(work: work, user: depositor) }
-        .to change(Event, :count)
-        .by(1)
-    end
-
-    it 'broadcasts the state change' do
-      described_class.submit_for_review(work: work, user: depositor)
-      expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-        .with(work, state: 'Pending approval - Not deposited')
-        .once
-    end
-  end
 end

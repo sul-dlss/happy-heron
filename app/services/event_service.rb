@@ -23,13 +23,6 @@ class EventService
     WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
   end
 
-  sig { params(work: Work, user: User).returns(T.nilable(Integer)) }
-  def self.submit_for_review(work:, user:)
-    work.submit_for_review!
-    Event.create!(work: work, user: user, event_type: 'submit_for_review')
-    WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
-  end
-
   sig { params(work: Work).returns(T.nilable(String)) }
   def self.current_state_display_label(work)
     Works::StateDisplayComponent.new(work: work).call

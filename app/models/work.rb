@@ -40,6 +40,13 @@ class Work < ApplicationRecord
       WorkUpdatesChannel.broadcast_to(work, state: display, purl: purl_link)
     end
 
+    after_transition on: :submit_for_review do |work, _transition|
+      Event.create!(work: work, user: work.depositor, event_type: 'submit_for_review')
+      display = Works::StateDisplayComponent.new(work: work).call
+      WorkUpdatesChannel.broadcast_to(work, state: display)
+    end
+
+
     event :begin_deposit do
       transition first_draft: :depositing, version_draft: :depositing, pending_approval: :depositing
     end
