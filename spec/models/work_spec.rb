@@ -184,25 +184,31 @@ RSpec.describe Work do
   end
 
   describe 'state machine flow' do
+    before do
+      allow(WorkUpdatesChannel).to receive(:broadcast_to)
+    end
+
     it 'starts in first draft' do
       expect(work.state).to eq('first_draft')
     end
 
     describe 'a begin_deposit event' do
       before do
-        work.begin_deposit!
+        allow(DepositJob).to receive(:perform_later)
       end
 
-      it 'transitions to deposited' do
-        expect(work.state).to eq('depositing')
+      it 'transitions to depositing' do
+        expect { work.begin_deposit! }
+          .to change(work, :state)
+          .to('depositing')
+          .and change(Event, :count).by(1)
+        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+          .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>')
+        expect(DepositJob).to have_received(:perform_later).with(work)
       end
     end
 
     describe 'a update_metadata event' do
-      before do
-        allow(WorkUpdatesChannel).to receive(:broadcast_to)
-      end
-
       let(:work) { create(:work, :deposited) }
 
       it 'transitions to version draft' do
@@ -212,15 +218,10 @@ RSpec.describe Work do
           .and change(Event, :count).by(1)
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)
           .with(work, state: 'New version draft - Not deposited')
-          .once
       end
     end
 
     describe 'a deposit_complete event' do
-      before do
-        allow(WorkUpdatesChannel).to receive(:broadcast_to)
-      end
-
       let(:work) { create(:work, :depositing, druid: 'druid:foo') }
 
       it 'transitions to deposited' do
@@ -231,15 +232,10 @@ RSpec.describe Work do
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)
           .with(work, state: 'Deposited',
                       purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
-          .once
       end
     end
 
     describe 'a submit_for_review event' do
-      before do
-        allow(WorkUpdatesChannel).to receive(:broadcast_to)
-      end
-
       let(:work) { create(:work, :first_draft) }
 
       it 'transitions to pending_approval' do
@@ -249,7 +245,6 @@ RSpec.describe Work do
           .and change(Event, :count).by(1)
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)
           .with(work, state: 'Pending approval - Not deposited')
-          .once
       end
     end
   end

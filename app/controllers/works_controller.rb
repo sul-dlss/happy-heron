@@ -82,8 +82,7 @@ class WorksController < ObjectsController
       if work.collection.review_enabled?
         work.submit_for_review!
       else
-        EventService.begin_deposit(work: work, user: current_user)
-        DepositJob.perform_later(work)
+        work.begin_deposit!
       end
     end
     redirect_to work

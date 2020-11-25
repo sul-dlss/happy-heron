@@ -16,13 +16,6 @@ class EventService
     WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
   end
 
-  sig { params(work: Work, user: User, description: String).returns(T.nilable(Integer)) }
-  def self.begin_deposit(work:, user:, description: '')
-    work.begin_deposit!
-    Event.create!(work: work, user: user, event_type: 'begin_deposit', description: description)
-    WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
-  end
-
   sig { params(work: Work).returns(T.nilable(String)) }
   def self.current_state_display_label(work)
     Works::StateDisplayComponent.new(work: work).call

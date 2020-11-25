@@ -30,26 +30,4 @@ RSpec.describe EventService do
       expect(WorkUpdatesChannel).to have_received(:broadcast_to).with(work, state: 'Draft - Not deposited').once
     end
   end
-
-  describe '.begin_deposit' do
-    let(:work) { create(:work, :first_draft, depositor: depositor) }
-
-    it 'begins depositing the work' do
-      expect { described_class.begin_deposit(work: work, user: depositor) }
-        .to change(work, :state)
-        .from('first_draft').to('depositing')
-    end
-
-    it 'creates an event' do
-      expect { described_class.begin_deposit(work: work, user: depositor) }
-        .to change(Event, :count)
-        .by(1)
-    end
-
-    it 'broadcasts the state change' do
-      described_class.begin_deposit(work: work, user: depositor)
-      expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-        .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>').once
-    end
-  end
 end

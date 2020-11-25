@@ -10,8 +10,7 @@ class ReviewsController < ApplicationController
     work = Work.find(params[:work_id])
     authorize! work, to: :review?
     if params[:state] == 'approve'
-      EventService.begin_deposit(work: work, user: current_user)
-      DepositJob.perform_later(work)
+      work.begin_deposit!
     else
       EventService.reject(work: work, user: current_user, description: params[:reason])
     end

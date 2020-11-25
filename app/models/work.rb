@@ -46,6 +46,12 @@ class Work < ApplicationRecord
       WorkUpdatesChannel.broadcast_to(work, state: display)
     end
 
+    after_transition on: :begin_deposit do |work, _transition|
+      Event.create!(work: work, user: work.depositor, event_type: 'begin_deposit')
+      display = Works::StateDisplayComponent.new(work: work).call
+      WorkUpdatesChannel.broadcast_to(work, state: display)
+      DepositJob.perform_later(work)
+    end
 
     event :begin_deposit do
       transition first_draft: :depositing, version_draft: :depositing, pending_approval: :depositing
