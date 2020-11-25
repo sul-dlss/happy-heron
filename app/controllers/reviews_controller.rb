@@ -12,7 +12,8 @@ class ReviewsController < ApplicationController
     if params[:state] == 'approve'
       work.begin_deposit!
     else
-      EventService.reject(work: work, user: current_user, description: params[:reason])
+      Event.create!(work: work, user: current_user, event_type: 'reject', description: params[:reason])
+      work.reject!
     end
 
     redirect_to dashboard_path

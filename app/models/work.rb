@@ -53,6 +53,11 @@ class Work < ApplicationRecord
       DepositJob.perform_later(work)
     end
 
+    after_transition on: :reject do |work, _transition|
+      display = Works::StateDisplayComponent.new(work: work).call
+      WorkUpdatesChannel.broadcast_to(work, state: display)
+    end
+
     event :begin_deposit do
       transition first_draft: :depositing, version_draft: :depositing, pending_approval: :depositing
     end

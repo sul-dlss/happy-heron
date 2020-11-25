@@ -247,6 +247,18 @@ RSpec.describe Work do
           .with(work, state: 'Pending approval - Not deposited')
       end
     end
+
+    describe 'a reject event' do
+      let(:work) { create(:work, :pending_approval) }
+
+      it 'transitions to pending_approval' do
+        expect { work.reject! }
+          .to change(work, :state)
+          .to('first_draft')
+        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+          .with(work, state: 'Draft - Not deposited')
+      end
+    end
   end
 
   describe '#purl' do
