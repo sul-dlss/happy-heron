@@ -33,6 +33,13 @@ class Work < ApplicationRecord
       WorkUpdatesChannel.broadcast_to(work, state: display)
     end
 
+    after_transition on: :deposit_complete do |work, _transition|
+      Event.create!(work: work, user: work.depositor, event_type: 'deposit_complete')
+      display = Works::StateDisplayComponent.new(work: work).call
+      purl_link = "<a href=\"#{work.purl}\">#{work.purl}</a>"
+      WorkUpdatesChannel.broadcast_to(work, state: display, purl: purl_link)
+    end
+
     event :begin_deposit do
       transition first_draft: :depositing, version_draft: :depositing, pending_approval: :depositing
     end

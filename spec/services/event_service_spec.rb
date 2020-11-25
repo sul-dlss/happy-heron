@@ -53,33 +53,6 @@ RSpec.describe EventService do
     end
   end
 
-  describe '.deposit_complete' do
-    let(:work) { create(:work, :depositing, depositor: depositor, druid: 'druid:bk875mg9867') }
-
-    it 'completes depositing the work' do
-      expect { described_class.deposit_complete(work: work) }
-        .to change(work, :state)
-        .from('depositing').to('deposited')
-    end
-
-    it 'creates an event' do
-      expect { described_class.deposit_complete(work: work) }
-        .to change(Event, :count)
-        .by(1)
-    end
-
-    it 'broadcasts the state change' do
-      described_class.deposit_complete(work: work)
-      expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-        .with(
-          work,
-          state: 'Deposited',
-          purl: '<a href="https://purl.stanford.edu/bk875mg9867">https://purl.stanford.edu/bk875mg9867</a>'
-        )
-        .once
-    end
-  end
-
   describe '.submit_for_review' do
     let(:work) { create(:work, :first_draft, depositor: depositor) }
 

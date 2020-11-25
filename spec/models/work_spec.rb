@@ -188,7 +188,7 @@ RSpec.describe Work do
       expect(work.state).to eq('first_draft')
     end
 
-    context 'with begin_deposit event' do
+    describe 'a begin_deposit event' do
       before do
         work.begin_deposit!
       end
@@ -198,7 +198,7 @@ RSpec.describe Work do
       end
     end
 
-    context 'with update_metadata event' do
+    describe 'a update_metadata event' do
       before do
         allow(WorkUpdatesChannel).to receive(:broadcast_to)
       end
@@ -212,6 +212,25 @@ RSpec.describe Work do
           .and change(Event, :count).by(1)
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)
           .with(work, state: 'New version draft - Not deposited')
+          .once
+      end
+    end
+
+    describe 'a deposit_complete event' do
+      before do
+        allow(WorkUpdatesChannel).to receive(:broadcast_to)
+      end
+
+      let(:work) { create(:work, :depositing, druid: 'druid:foo') }
+
+      it 'transitions to deposited' do
+        expect { work.deposit_complete! }
+          .to change(work, :state)
+          .to('deposited')
+          .and change(Event, :count).by(1)
+        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+          .with(work, state: 'Deposited',
+                      purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
           .once
       end
     end

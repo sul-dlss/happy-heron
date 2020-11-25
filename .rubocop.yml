@@ -23,6 +23,8 @@ Lint/MissingSuper: # (new in 0.89)
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+  ExcludedMethods:
+    - state_machine
 
 Metrics/ClassLength:
   Max: 150

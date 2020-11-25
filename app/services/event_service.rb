@@ -23,15 +23,6 @@ class EventService
     WorkUpdatesChannel.broadcast_to(work, state: current_state_display_label(work))
   end
 
-  sig { params(work: Work).returns(T.nilable(Integer)) }
-  def self.deposit_complete(work:)
-    work.deposit_complete!
-    Event.create!(work: work, user: work.depositor, event_type: 'deposit_complete')
-    WorkUpdatesChannel.broadcast_to(work,
-                                    state: current_state_display_label(work),
-                                    purl: link_to(T.must(work.purl), T.must(work.purl)))
-  end
-
   sig { params(work: Work, user: User).returns(T.nilable(Integer)) }
   def self.submit_for_review(work:, user:)
     work.submit_for_review!
