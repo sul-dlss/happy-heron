@@ -28,22 +28,22 @@ class Work < ApplicationRecord
 
   state_machine initial: :first_draft do
     after_transition deposited: :version_draft do |work, _transition|
-      Event.create!(work: work, user: work.depositor, event_type: 'new_version')
+      work.events.create!(user: work.depositor, event_type: 'new_version')
       BroadcastStateChange.call(work: work)
     end
 
     after_transition on: :deposit_complete do |work, _transition|
-      Event.create!(work: work, user: work.depositor, event_type: 'deposit_complete')
+      work.events.create!(user: work.depositor, event_type: 'deposit_complete')
       BroadcastStateChange.with_purl(work: work)
     end
 
     after_transition on: :submit_for_review do |work, _transition|
-      Event.create!(work: work, user: work.depositor, event_type: 'submit_for_review')
+      work.events.create!(user: work.depositor, event_type: 'submit_for_review')
       BroadcastStateChange.call(work: work)
     end
 
     after_transition on: :begin_deposit do |work, _transition|
-      Event.create!(work: work, user: work.depositor, event_type: 'begin_deposit')
+      work.events.create!(user: work.depositor, event_type: 'begin_deposit')
       BroadcastStateChange.call(work: work)
       DepositJob.perform_later(work)
     end
