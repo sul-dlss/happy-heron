@@ -6,6 +6,6 @@ FactoryBot.define do
     description { 'MyString' }
     event_type { 'MyString' }
     work { nil }
-    user { nil }
+    user
   end
 end

@@ -47,4 +47,12 @@ RSpec.describe Works::DetailComponent, type: :component do
       end
     end
   end
+
+  describe 'events' do
+    let(:work) { build_stubbed(:work, events: [build_stubbed(:event, description: 'Add more keywords')]) }
+
+    it 'renders the event' do
+      expect(rendered.css('#events').to_html).to include 'Add more keywords'
+    end
+  end
 end
