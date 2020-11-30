@@ -38,9 +38,12 @@ RSpec.describe 'Works requests' do
 
     describe 'rejecting a deposit' do
       it 'returns the deposit and records the reason' do
-        post "/works/#{work.id}/review", params: { state: 'reject', reason: 'Add more stuff' }
+        expect do
+          post "/works/#{work.id}/review", params: { state: 'reject', reason: 'Add more stuff' }
+        end.to change(Event, :count).by(1)
         expect(response).to redirect_to(dashboard_path)
         expect(DepositJob).not_to have_received(:perform_later)
+
         expect(work.reload).to be_first_draft
         expect(work.events.last.description).to eq 'Add more stuff'
       end

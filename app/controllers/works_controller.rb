@@ -80,10 +80,9 @@ class WorksController < ObjectsController
   def after_save(work)
     if deposit_button_pushed?
       if work.collection.review_enabled?
-        EventService.submit_for_review(work: work, user: current_user)
+        work.submit_for_review!
       else
-        EventService.begin_deposit(work: work, user: current_user)
-        DepositJob.perform_later(work)
+        work.begin_deposit!
       end
     end
     redirect_to work
