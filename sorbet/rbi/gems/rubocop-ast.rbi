@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-ast/all/rubocop-ast.rbi
 #
-# rubocop-ast-1.1.0
+# rubocop-ast-1.2.0
 
 module RuboCop
 end
@@ -21,6 +21,8 @@ module RuboCop::AST::Ext::Range
 end
 class Parser::Source::Range
   include RuboCop::AST::Ext::Range
+end
+module RuboCop::AST::Ext::RangeMinMax
 end
 class RuboCop::AST::NodePattern
   def ==(other); end
@@ -287,19 +289,14 @@ class RuboCop::AST::NodePattern::Node::AnyOrder < RuboCop::AST::NodePattern::Nod
   def term_nodes; end
   include RuboCop::AST::NodePattern::Node::ForbidInSeqHead
 end
-module RuboCop::AST::NodePattern::Node::MapMinMax
-  def map_min_max(enum); end
-end
 class RuboCop::AST::NodePattern::Node::Subsequence < RuboCop::AST::NodePattern::Node
   def arity; end
   def in_sequence_head; end
   include RuboCop::AST::NodePattern::Node::ForbidInSeqHead
-  include RuboCop::AST::NodePattern::Node::MapMinMax
 end
 class RuboCop::AST::NodePattern::Node::Union < RuboCop::AST::NodePattern::Node
   def arity; end
   def in_sequence_head; end
-  include RuboCop::AST::NodePattern::Node::MapMinMax
 end
 class RuboCop::AST::NodePattern::Parser < Racc::Parser
   def _reduce_10(val, _values); end
@@ -867,7 +864,13 @@ class RuboCop::AST::AndNode < RuboCop::AST::Node
   include RuboCop::AST::BinaryOperatorNode
   include RuboCop::AST::PredicateOperatorNode
 end
+class RuboCop::AST::ArgNode < RuboCop::AST::Node
+  def default?; end
+  def default_value; end
+  def name; end
+end
 class RuboCop::AST::ArgsNode < RuboCop::AST::Node
+  def argument_list; end
   def empty_and_without_delimiters?; end
   include RuboCop::AST::CollectionNode
 end
@@ -879,6 +882,7 @@ class RuboCop::AST::ArrayNode < RuboCop::AST::Node
   def values; end
 end
 class RuboCop::AST::BlockNode < RuboCop::AST::Node
+  def argument_list; end
   def arguments; end
   def arguments?; end
   def body; end
@@ -889,6 +893,7 @@ class RuboCop::AST::BlockNode < RuboCop::AST::Node
   def lambda?; end
   def method_name; end
   def multiline?; end
+  def numbered_arguments; end
   def opening_delimiter; end
   def send_node; end
   def single_line?; end
@@ -1054,6 +1059,9 @@ class RuboCop::AST::PairNode < RuboCop::AST::Node
   def inverse_delimiter(*deprecated, with_spacing: nil); end
   def value_on_new_line?; end
   include RuboCop::AST::HashElementNode
+end
+class RuboCop::AST::Procarg0Node < RuboCop::AST::ArgNode
+  def name; end
 end
 class RuboCop::AST::RangeNode < RuboCop::AST::Node
   def begin; end

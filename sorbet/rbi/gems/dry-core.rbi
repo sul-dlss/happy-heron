@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-core/all/dry-core.rbi
 #
-# dry-core-0.4.9
+# dry-core-0.4.10
 
 module Dry
 end
@@ -26,7 +26,7 @@ class Dry::Core::InvalidClassAttributeValue < StandardError
   def initialize(name, value); end
 end
 module Dry::Core::ClassAttributes
-  def defines(*args, type: nil); end
+  def defines(*args, type: nil, coerce: nil); end
   include Dry::Core::Constants
 end
 module Dry::Core::Deprecations

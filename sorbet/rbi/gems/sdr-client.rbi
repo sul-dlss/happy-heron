@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-e88e4ece87f8
+# sdr-client-0.38.0
 
 module SdrClient
 end
@@ -25,7 +25,6 @@ class SdrClient::Deposit::CreateResource
   def path; end
   def run; end
   def self.run(accession:, metadata:, logger:, connection:); end
-  def unexpected_response(response); end
 end
 class SdrClient::Deposit::SingleFileGroupingStrategy
   def self.run(uploads: nil); end
@@ -168,6 +167,9 @@ class SdrClient::Deposit::Process
   def mime_types; end
   def run; end
 end
+class SdrClient::Deposit::UnexpectedResponse
+  def self.call(response); end
+end
 class SdrClient::Deposit::UpdateResource
   def connection; end
   def initialize(metadata:, logger:, connection:); end
@@ -177,7 +179,6 @@ class SdrClient::Deposit::UpdateResource
   def path(metadata); end
   def run; end
   def self.run(metadata:, logger:, connection:); end
-  def unexpected_response(response); end
 end
 class SdrClient::Deposit::UpdateDroWithFileIdentifiers
   def self.signed_id_map(upload_responses); end

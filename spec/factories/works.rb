@@ -13,6 +13,13 @@ FactoryBot.define do
     depositor { association(:user) }
     access { 'world' }
     collection
+
+    factory :valid_deposited_work do
+      deposited
+      with_keywords
+      with_contributors
+      with_attached_file
+    end
   end
 
   trait :published do

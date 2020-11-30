@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rspec-sorbet/all/rspec-sorbet.rbi
 #
-# rspec-sorbet-1.5.0
+# rspec-sorbet-1.7.0
 
 module RSpec
 end
@@ -21,4 +21,5 @@ module RSpec::Sorbet::Doubles
   def double_message_with_ellipsis?(message); end
   def inline_type_error_handler(error); end
   def typed_array_message?(message); end
+  def unable_to_check_type_for_message?(message); end
 end
