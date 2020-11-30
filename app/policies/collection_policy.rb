@@ -27,6 +27,7 @@ class CollectionPolicy < ApplicationPolicy
     administrator? || manages_collection?(record)
   end
 
+  # Can works be deposited into this collection
   sig { returns(T::Boolean) }
   def deposit?
     NO_DEPOSIT_STATUS.exclude? record.state
