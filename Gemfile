@@ -35,6 +35,7 @@ group :test do
   # Using smooth scrolling is a feature of bootstrap 5.0.0-alpha3, which causes
   # capybara to be unable to find elements below the fold.
   gem 'capybara', github: 'teamcapybara/capybara'
+  gem 'capybara-screenshot'
   gem 'rspec-sorbet'
 end
 

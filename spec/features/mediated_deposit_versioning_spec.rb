@@ -28,7 +28,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       expect(page).to have_content('Pending approval - Not deposited')
 
       visit dashboard_path
-      within('section#approvals') do
+      within_table('Approvals') do
         click_link(new_work_title)
       end
       expect(page).to have_content('Review all details below, then approve or return this deposit')
