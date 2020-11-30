@@ -5567,6 +5567,17 @@ class ActiveRecord::Associations::Builder::HasMany < ActiveRecord::Associations:
   def self.valid_dependent_options; end
   def self.valid_options(options); end
 end
+class ActiveRecord::Associations::Builder::HasAndBelongsToMany
+  def association_name; end
+  def belongs_to_options(options); end
+  def initialize(association_name, lhs_model, options); end
+  def lhs_model; end
+  def middle_options(join_model); end
+  def middle_reflection(join_model); end
+  def options; end
+  def table_name; end
+  def through_model; end
+end
 class ActiveRecord::Associations::Builder::SingularAssociation < ActiveRecord::Associations::Builder::Association
   def self.define_accessors(model, reflection); end
   def self.define_constructors(mixin, name); end
@@ -5583,17 +5594,6 @@ class ActiveRecord::Associations::Builder::BelongsTo < ActiveRecord::Association
   def self.touch_record(o, changes, foreign_key, name, touch, touch_method); end
   def self.valid_dependent_options; end
   def self.valid_options(options); end
-end
-class ActiveRecord::Associations::Builder::HasAndBelongsToMany
-  def association_name; end
-  def belongs_to_options(options); end
-  def initialize(association_name, lhs_model, options); end
-  def lhs_model; end
-  def middle_options(join_model); end
-  def middle_reflection(join_model); end
-  def options; end
-  def table_name; end
-  def through_model; end
 end
 class ActiveRecord::Associations::Builder::HasOne < ActiveRecord::Associations::Builder::SingularAssociation
   def self.add_destroy_callbacks(model, reflection); end

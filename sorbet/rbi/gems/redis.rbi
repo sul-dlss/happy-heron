@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/redis/all/redis.rbi
 #
-# redis-4.2.2
+# redis-4.2.5
 
 class Redis
   def _bpop(cmd, args, &blk); end
@@ -304,12 +304,11 @@ module Redis::Connection::CommandHelper
 end
 module Redis::Connection::SocketMixin
   def _read_from_socket(nbytes); end
-  def _write_to_socket(data); end
   def gets; end
   def initialize(*args); end
   def read(nbytes); end
   def timeout=(timeout); end
-  def write(data); end
+  def write(buffer); end
   def write_timeout=(timeout); end
 end
 class Redis::Connection::TCPSocket < Socket
@@ -323,6 +322,8 @@ class Redis::Connection::UNIXSocket < Socket
 end
 class Redis::Connection::SSLSocket < OpenSSL::SSL::SSLSocket
   def self.connect(host, port, timeout, ssl_params); end
+  def wait_readable(timeout = nil); end
+  def wait_writable(timeout = nil); end
   include Redis::Connection::SocketMixin
 end
 class Redis::Connection::Ruby

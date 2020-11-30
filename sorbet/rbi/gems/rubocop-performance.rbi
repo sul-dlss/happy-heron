@@ -7,13 +7,14 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-performance/all/rubocop-performance.rbi
 #
-# rubocop-performance-1.8.1
+# rubocop-performance-1.9.1
 
 module RuboCop
 end
 module RuboCop::Performance
 end
 module RuboCop::Performance::Version
+  def self.document_version; end
 end
 module RuboCop::Performance::Inject
   def self.defaults!; end
@@ -47,6 +48,15 @@ class RuboCop::Cop::Performance::AncestorsInclude < RuboCop::Cop::Base
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::RangeHelp
 end
+class RuboCop::Cop::Performance::ArraySemiInfiniteRangeSlice < RuboCop::Cop::Base
+  def correction(receiver, range_node); end
+  def endless_range?(param0 = nil); end
+  def endless_range_slice?(param0 = nil); end
+  def on_send(node); end
+  extend RuboCop::Cop::AutoCorrector
+  extend RuboCop::Cop::TargetRubyVersion
+  include RuboCop::Cop::RangeHelp
+end
 class RuboCop::Cop::Performance::BigDecimalWithNumericArgument < RuboCop::Cop::Base
   def big_decimal_with_numeric_argument?(param0 = nil); end
   def on_send(node); end
@@ -63,12 +73,17 @@ class RuboCop::Cop::Performance::BindCall < RuboCop::Cop::Base
   extend RuboCop::Cop::TargetRubyVersion
   include RuboCop::Cop::RangeHelp
 end
+class RuboCop::Cop::Performance::BlockGivenWithExplicitBlock < RuboCop::Cop::Base
+  def on_send(node); end
+  def reassigns_block_arg?(param0 = nil, param1); end
+  extend RuboCop::Cop::AutoCorrector
+end
 class RuboCop::Cop::Performance::Caller < RuboCop::Cop::Base
   def caller_with_scope_method?(param0 = nil); end
   def int_value(node); end
-  def message(node); end
   def on_send(node); end
   def slow_caller?(param0 = nil); end
+  extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Performance::CaseWhenSplat < RuboCop::Cop::Base
   def autocorrect(corrector, when_node); end
@@ -122,6 +137,13 @@ class RuboCop::Cop::Performance::CompareWithBlock < RuboCop::Cop::Base
   def slow_compare?(method, args_a, args_b); end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::RangeHelp
+end
+class RuboCop::Cop::Performance::ConstantRegexp < RuboCop::Cop::Base
+  def include_interpolated_const?(node); end
+  def on_regexp(node); end
+  def regexp_escape?(param0 = nil); end
+  def within_const_assignment?(node); end
+  extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Performance::Count < RuboCop::Cop::Base
   def autocorrect(corrector, node, selector_node, selector); end
@@ -207,6 +229,10 @@ class RuboCop::Cop::Performance::InefficientHashSearch < RuboCop::Cop::Base
   def use_long_method; end
   extend RuboCop::Cop::AutoCorrector
 end
+class RuboCop::Cop::Performance::MethodObjectAsBlock < RuboCop::Cop::Base
+  def method_object_as_argument?(param0 = nil); end
+  def on_block_pass(node); end
+end
 class RuboCop::Cop::Performance::OpenStruct < RuboCop::Cop::Base
   def on_send(node); end
   def open_struct(param0 = nil); end
@@ -222,7 +248,6 @@ class RuboCop::Cop::Performance::IoReadlines < RuboCop::Cop::Base
   def build_call_args(call_args_node); end
   def build_good_method(enumerable_call); end
   def correction_range(enumerable_call, readlines_call); end
-  def enumerable_method?(node); end
   def offense_range(enumerable_call, readlines_call); end
   def on_send(node); end
   def readlines_on_class?(param0 = nil); end
@@ -292,7 +317,6 @@ class RuboCop::Cop::Performance::RedundantStringChars < RuboCop::Cop::Base
   def offense_range(receiver, node); end
   def on_send(node); end
   def redundant_chars_call?(param0 = nil); end
-  def replaceable_method?(method_name); end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::RangeHelp
 end
@@ -395,17 +419,26 @@ class RuboCop::Cop::Performance::StringReplacement < RuboCop::Cop::Base
 end
 class RuboCop::Cop::Performance::Sum < RuboCop::Cop::Base
   def acc_plus_elem?(param0 = nil, param1, param2); end
+  def array_literal?(node); end
   def autocorrect(corrector, init, range); end
+  def autocorrect_sum_map(corrector, sum, map, init); end
   def build_block_bad_method(method, init, var_acc, var_elem, body); end
   def build_block_message(send, init, var_acc, var_elem, body); end
-  def build_good_method(init); end
+  def build_good_method(init, block_pass = nil); end
   def build_method_bad_method(init, method, operation); end
-  def build_method_message(method, init, operation); end
+  def build_method_message(node, method, init, operation); end
+  def build_sum_map_message(method, init); end
   def elem_plus_acc?(param0 = nil, param1, param2); end
+  def empty_array_literal?(node); end
+  def handle_sum_candidate(node); end
+  def handle_sum_map_candidate(node); end
+  def method_call_with_args_range(node); end
   def on_block(node); end
   def on_send(node); end
   def sum_block_range(send, node); end
   def sum_candidate?(param0 = nil); end
+  def sum_map_candidate?(param0 = nil); end
+  def sum_map_range(map, sum); end
   def sum_method_range(node); end
   def sum_with_block_candidate?(param0 = nil); end
   extend RuboCop::Cop::AutoCorrector
@@ -423,6 +456,8 @@ class RuboCop::Cop::Performance::UnfreezeString < RuboCop::Cop::Base
   def dup_string?(param0 = nil); end
   def on_send(node); end
   def string_new?(param0 = nil); end
+  def string_value(node); end
+  extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Performance::UriDefaultParser < RuboCop::Cop::Base
   def on_send(node); end
@@ -430,7 +465,7 @@ class RuboCop::Cop::Performance::UriDefaultParser < RuboCop::Cop::Base
   extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Performance::ChainArrayAllocation < RuboCop::Cop::Base
-  def flat_map_candidate?(param0 = nil); end
+  def chain_array_allocation?(param0 = nil); end
   def on_send(node); end
   include RuboCop::Cop::RangeHelp
 end

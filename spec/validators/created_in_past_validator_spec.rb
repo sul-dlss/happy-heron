@@ -59,7 +59,7 @@ RSpec.describe CreatedInPastValidator do
         let(:month) { tomorrow.month }
         let(:day) { tomorrow.day }
 
-        let(:value) { EDTF.parse("#{year}-#{month}-#{day}") }
+        let(:value) { EDTF.parse(format('%<year>d-%<month>02d-%<day>02d', year: year, month: month, day: day)) }
 
         it 'has errors' do
           expect(record.errors.full_messages).to eq ['Created edtf must be in the past']
