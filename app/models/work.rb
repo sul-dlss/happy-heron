@@ -78,6 +78,13 @@ class Work < ApplicationRecord
     File.join(Settings.purl_url, T.must(druid).delete_prefix('druid:'))
   end
 
+  sig { void }
+  def add_purl_to_citation
+    return unless citation
+
+    self.citation = T.must(citation).gsub(/:link:/, T.must(purl))
+  end
+
   sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }
   # Ensure that EDTF dates get an EDTF serialization
   def created_edtf=(edtf)

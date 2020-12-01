@@ -12,15 +12,20 @@ class DepositStatusJob < BaseDepositJob
     raise TryAgainLater, "No result yet for job #{job_id}" if result.nil?
 
     if result.success?
-      object.druid = result.value!
-      object.citation = object.citation.gsub(/:link:/, object.purl) if object.respond_to?(:citation)
-      object.deposit_complete!
+      complete_deposit(object, result.value!)
     else
       Honeybadger.notify("Job #{job_id} for #{object.class} #{object.id} failed with: #{result.failure}")
     end
   end
 
   private
+
+  # Assigns druid, adds the purl to the citation (if one exists), updates the state and saves.
+  def complete_deposit(object, druid)
+    object.druid = druid
+    object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
+    object.deposit_complete!
+  end
 
   sig { params(job_id: Integer).returns(T.nilable(Dry::Monads::Result)) }
   def status(job_id:)
