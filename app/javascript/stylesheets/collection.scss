@@ -1,0 +1,55 @@
+#collection {
+  .title {
+    margin-bottom: 1rem;
+
+    .header-text {
+      @extend h3;
+    }
+
+    .state {
+      @extend .fst-italic;
+      margin-left: 30px;
+    }
+  }
+
+  .details {
+    width: 95%;
+    margin: auto;
+
+    // hide the duplicate header and edit button on the deposits tab
+    #collectionTabs{
+      #deposits {
+        header {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .table {
+    p {
+      // For citation and links
+      margin-bottom: 0rem;
+    }
+
+    .table-title {
+      font-weight: 700;
+      font-size: large;
+    }
+  }
+
+  // The pencil icon
+  .edit {
+    margin-left: 10px;
+  }
+
+  .collection-nav {
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    .nav {
+      .active {
+        border-bottom: 3px solid black;
+      }
+    }
+  }
+}

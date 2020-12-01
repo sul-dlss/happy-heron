@@ -1,2 +1,23 @@
 <div class="container" id="collection" data-controller="collection-updates" dat-collection-updates-collection-id="<%= @collection.id %>">
+  <%= render 'nav' %>
+  <section class="details">
+    <header class="title">
+      <span class="header-text"><%= @collection.name %></span>
+    </header>
+
+    <div class="tab-content" id="collectionTabs">
+      <div id="details" class="tab-pane fade show active">
+        <%= render Collections::InformationComponent.new(collection: @collection) %>
+        <%= render Collections::DetailComponent.new(collection: @collection) %>
+        <%= render Collections::ReleaseComponent.new(collection: @collection) %>
+        <%= render Collections::TermsOfUseComponent.new(collection: @collection) %>
+        <%= render Collections::ParticipantsComponent.new(collection: @collection) %>
+        <%= render Collections::WorkflowReviewComponent.new(collection: @collection) %>
+      </div>
+
+      <div id="deposits" class="tab-pane fade">
+        <%= render Dashboard::CollectionComponent.new(collection: @collection) %>
+      </div>
+    </div>
+  </section>
 </div>
