@@ -9,7 +9,8 @@ RUN apk add --update --no-cache \
   postgresql-dev \
   postgresql-client \
   tzdata \
-  yarn
+  yarn \
+  git
 
 # Get bundler 2.0
 RUN gem install bundler
