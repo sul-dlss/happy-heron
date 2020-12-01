@@ -25,6 +25,8 @@ class WorkPolicy < ApplicationPolicy
   # Only the depositor may edit/update a work if it is not in review
   sig { returns(T::Boolean) }
   def update?
+    return false unless record.can_update_metadata?
+
     !record.pending_approval? && (administrator? || record.depositor == user)
   end
 
@@ -32,12 +34,6 @@ class WorkPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def review?
     record.pending_approval? && (administrator? || record.collection.reviewers.include?(user))
-  end
-
-  # Can this work be deposited
-  sig { returns(T::Boolean) }
-  def deposit?
-    record.can_begin_deposit? || record.can_update_metadata?
   end
 
   delegate :administrator?, to: :user_with_groups

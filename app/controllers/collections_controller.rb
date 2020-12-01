@@ -54,7 +54,6 @@ class CollectionsController < ObjectsController
   sig { params(collection: Collection).void }
   def after_save(collection)
     if deposit_button_pushed?
-      authorize! collection, to: :deposit?
       collection.begin_deposit!
     else
       collection.update_metadata!

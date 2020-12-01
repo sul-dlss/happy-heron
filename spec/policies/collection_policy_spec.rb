@@ -40,6 +40,10 @@ RSpec.describe CollectionPolicy do
       let(:record) { build_stubbed(:collection, managers: [user]) }
     end
 
+    failed 'when user is a collection manager and status is depositing' do
+      let(:record) { build_stubbed :collection, :depositing, managers: [user] }
+    end
+
     succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end

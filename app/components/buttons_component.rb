@@ -8,8 +8,4 @@ class ButtonsComponent < ApplicationComponent
   end
 
   attr_reader :form
-
-  def depositable?
-    helpers.allowed_to?(:deposit?, form.object.model)
-  end
 end
