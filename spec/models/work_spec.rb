@@ -197,7 +197,7 @@ RSpec.describe Work do
         allow(DepositJob).to receive(:perform_later)
       end
 
-      it 'transitions to depositing' do
+      it 'transitions from first_draft to depositing' do
         expect { work.begin_deposit! }
           .to change(work, :state)
           .to('depositing')
@@ -206,9 +206,23 @@ RSpec.describe Work do
           .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>')
         expect(DepositJob).to have_received(:perform_later).with(work)
       end
+
+      context 'with pending_approval on a work' do
+        let(:work) { create(:work, :pending_approval) }
+
+        it 'transitions to depositing' do
+          expect { work.begin_deposit! }
+            .to change(work, :state)
+            .to('depositing')
+            .and change(Event, :count).by(1)
+          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+            .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>')
+          expect(DepositJob).to have_received(:perform_later).with(work)
+        end
+      end
     end
 
-    describe 'a update_metadata event' do
+    describe 'an update_metadata event' do
       let(:work) { create(:work, :deposited) }
 
       it 'transitions to version draft' do
@@ -236,27 +250,42 @@ RSpec.describe Work do
     end
 
     describe 'a submit_for_review event' do
-      let(:work) { create(:work, :first_draft) }
+      context 'when work is first_draft' do
+        let(:work) { create(:work, :first_draft) }
 
-      it 'transitions to pending_approval' do
-        expect { work.submit_for_review! }
-          .to change(work, :state)
-          .to('pending_approval')
-          .and change(Event, :count).by(1)
-        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-          .with(work, state: 'Pending approval - Not deposited')
+        it 'transitions to pending_approval' do
+          expect { work.submit_for_review! }
+            .to change(work, :state)
+            .to('pending_approval')
+            .and change(Event, :count).by(1)
+          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+            .with(work, state: 'Pending approval - Not deposited')
+        end
+      end
+
+      context 'when work was rejected' do
+        let(:work) { create(:work, :rejected) }
+
+        it 'transitions to pending_approval' do
+          expect { work.submit_for_review! }
+            .to change(work, :state)
+            .to('pending_approval')
+            .and change(Event, :count).by(1)
+          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+            .with(work, state: 'Pending approval - Not deposited')
+        end
       end
     end
 
     describe 'a reject event' do
       let(:work) { create(:work, :pending_approval) }
 
-      it 'transitions to pending_approval' do
+      it 'transitions to rejected' do
         expect { work.reject! }
           .to change(work, :state)
-          .to('first_draft')
+          .to('rejected')
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-          .with(work, state: 'Draft - Not deposited')
+          .with(work, state: 'Returned')
       end
     end
   end

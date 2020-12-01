@@ -48,6 +48,9 @@ class Work < ApplicationRecord
       BroadcastWorkChange.call(work: work, state: transition.to_name)
     end
 
+    # NOTE: there is no approval "event" because when a work is approved in review, it goes
+    # directly to begin_deposit event, which will transition it to depositing
+
     event :begin_deposit do
       transition %i[first_draft version_draft pending_approval] => :depositing
     end
@@ -57,12 +60,11 @@ class Work < ApplicationRecord
     end
 
     event :submit_for_review do
-      transition %i[first_draft version_draft] => :pending_approval
+      transition %i[first_draft version_draft rejected] => :pending_approval
     end
 
     event :reject do
-      transition pending_approval: :first_draft, if: ->(work) { work.druid.blank? }
-      transition pending_approval: :version_draft, if: ->(work) { work.druid.present? }
+      transition pending_approval: :rejected
     end
 
     event :update_metadata do

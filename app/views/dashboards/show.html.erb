@@ -29,7 +29,7 @@
               <td><%= link_to submission.title, work_path(submission) %></td>
               <td><%= submission.depositor.sunetid %></td>
               <td><%= submission.collection.name %></td>
-              <td><%= submission.state.humanize %></td>
+              <td><%= render Works::StateDisplayComponent.new(work: submission) %></td>
               <td><%= I18n.l(submission.updated_at.to_date, format: :abbr_month) %></td>
             </tr>
           <% end %>

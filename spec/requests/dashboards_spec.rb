@@ -73,7 +73,7 @@ RSpec.describe 'Dashboard requests' do
     end
   end
 
-  context 'when user is a depositor in a collection' do
+  context 'when user is a depositor in a collection with reviewers' do
     let(:collection) { create(:collection, :with_depositors) }
     let(:user) { collection.depositors.first }
 
@@ -87,6 +87,33 @@ RSpec.describe 'Dashboard requests' do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Deposit to this collection'
       expect(response.body).not_to include 'Edit'
+    end
+  end
+
+  context 'when collection has reviewers' do
+    let(:collection) { create(:collection, :with_reviewers, :with_depositors) }
+    let(:user) { collection.depositors.first }
+
+    before do
+      create(:work, depositor: user, collection: collection, state: 'pending_approval', title: 'To Review')
+      create(:work, depositor: user, collection: collection, state: 'first_draft', title: 'No Review')
+      create(:work, depositor: user, collection: collection, state: 'rejected', title: 'Rejected Upon Review')
+      sign_in user
+    end
+
+    it 'shows a link to deposit in the collection' do
+      get '/dashboard'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'Deposit to this collection'
+      expect(response.body).to include 'Edit'
+    end
+
+    it 'shows statuses Pending Approval, Returned, First Draft' do
+      get '/dashboard'
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include Works::StateDisplayComponent::STATE_DISPLAY_LABELS['pending_approval']
+      expect(response.body).to include Works::StateDisplayComponent::STATE_DISPLAY_LABELS['first_draft']
+      expect(response.body).to include Works::StateDisplayComponent::STATE_DISPLAY_LABELS['rejected']
     end
   end
 end
