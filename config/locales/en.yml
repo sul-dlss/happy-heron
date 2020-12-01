@@ -9,6 +9,12 @@ en:
     type:
       return: Changes requested
       begin_deposit: Deposited
+      rejected: Changes requested
+      pending_approval: Waiting for review
+      first_draft: First draft
+      version_draft: Version draft
+      depositing: Deposited
+      deposited: Deposited
   contributor:
     roles:
       person: Individual
