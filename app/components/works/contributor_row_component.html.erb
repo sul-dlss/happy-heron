@@ -35,7 +35,11 @@
   </div>
   <div class="col-md-8" data-target="contributors.organizationName">
     <%= form.label :full_name, 'Name', class: 'form-label' %>
-    <%= form.text_field :full_name, class: 'form-control', data: { action: 'change->contributors#inputChanged', target: 'contributors.organizationNameInput' }, required: true %>
+    <%= form.text_field :full_name, class: 'form-control',
+        data: {
+          action: 'change->contributors#inputChanged change->auto-citation#updateDisplay',
+          target: 'contributors.organizationNameInput auto-citation.contributorOrg'
+        }, required: true %>
     <div class="invalid-feedback">You must provide a name</div>
   </div>
   <div data-target="contributors.error" class="invalid-feedback"></div>

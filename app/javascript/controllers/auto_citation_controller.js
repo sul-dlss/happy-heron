@@ -1,8 +1,9 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["titleField", "contributorFirst", "contributorLast", "contributorRole",
-    "year", "month", "day", "manual", "auto", "switch"];
+  static targets = ["titleField", "manual", "auto", "switch",
+    "contributorFirst", "contributorLast", "contributorRole", "contributorOrg",
+    "year", "month", "day"];
 
   connect() {
     this.purl = this.data.get("purl") || ":link:" // Use a real purl on a persisted item or a placeholder
@@ -32,10 +33,12 @@ export default class extends Controller {
 
   get authors() {
     return this.contributorRoleTargets.map((roleField, index) => {
-      const firstInitial = `${this.contributorFirstTargets[index].value.charAt(0)}.`
-      const surname = this.contributorLastTargets[index].value
-
-      return `${surname}, ${firstInitial}`
+      if (roleField.value.startsWith('person')) {
+        const firstInitial = `${this.contributorFirstTargets[index].value.charAt(0)}.`
+        const surname = this.contributorLastTargets[index].value
+        return `${surname}, ${firstInitial}`
+      }
+      return this.contributorOrgTargets[index].value
     })
   }
 
