@@ -43,10 +43,11 @@ RSpec.describe CreatedInPastValidator do
       end
 
       context 'with a date after the current month' do
-        let(:year) { today.year }
-        let(:month) { today.month + 1 }
+        let(:next_month) { 1.month.from_now }
+        let(:year) { next_month.year }
+        let(:month) { next_month.month }
 
-        let(:value) { EDTF.parse("#{year}-#{month}") }
+        let(:value) { EDTF.parse(format('%<year>d-%<month>02d', year: year, month: month)) }
 
         it 'has errors' do
           expect(record.errors.full_messages).to eq ['Created edtf must be in the past']
