@@ -15,6 +15,11 @@ class Collection < ApplicationRecord
     reviewers.present?
   end
 
+  sig { returns(T::Boolean) }
+  def accessioned?
+    %w[first_draft depositing].exclude?(state)
+  end
+
   state_machine initial: :first_draft do
     after_transition on: :begin_deposit do |collection, _transition|
       DepositCollectionJob.perform_later(collection)

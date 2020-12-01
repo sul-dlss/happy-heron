@@ -25,6 +25,7 @@ RSpec.describe 'Create a new collection', js: true do
       click_button 'Deposit'
 
       expect(page).to have_content(collection_attrs.fetch(:name))
+      # The deposit button is not present until the collection is accessioned
       expect(page).not_to have_content('+ Deposit to this collection')
     end
   end

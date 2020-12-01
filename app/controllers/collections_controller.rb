@@ -53,7 +53,12 @@ class CollectionsController < ObjectsController
 
   sig { params(collection: Collection).void }
   def after_save(collection)
-    deposit_button_pushed? ? collection.begin_deposit! : collection.update_metadata!
+    if deposit_button_pushed?
+      authorize! collection, to: :deposit?
+      collection.begin_deposit!
+    else
+      collection.update_metadata!
+    end
 
     redirect_to dashboard_path
   end
