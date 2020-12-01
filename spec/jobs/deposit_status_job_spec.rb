@@ -18,14 +18,27 @@ RSpec.describe DepositStatusJob do
   end
 
   context 'when the job is a successful work' do
-    let(:work) { build(:work, state: 'depositing', citation: 'Zappa, F. (2013) :link:') }
     let(:background_result) { { status: 'complete', output: { druid: druid } } }
 
-    it 'updates the work' do
-      described_class.perform_now(object: work, job_id: job_id)
-      expect(work.druid).to eq druid
-      expect(work.citation).to eq 'Zappa, F. (2013) https://purl.stanford.edu/bc123df4567'
-      expect(work.state_name).to eq :deposited
+    context 'with a citation' do
+      let(:work) { build(:work, state: 'depositing', citation: 'Zappa, F. (2013) :link:') }
+
+      it 'updates the work' do
+        described_class.perform_now(object: work, job_id: job_id)
+        expect(work.druid).to eq druid
+        expect(work.citation).to eq 'Zappa, F. (2013) https://purl.stanford.edu/bc123df4567'
+        expect(work.state_name).to eq :deposited
+      end
+    end
+
+    context 'without a citation' do
+      let(:work) { build(:work, state: 'depositing', citation: nil) }
+
+      it 'updates the work' do
+        described_class.perform_now(object: work, job_id: job_id)
+        expect(work.druid).to eq druid
+        expect(work.state_name).to eq :deposited
+      end
     end
   end
 
