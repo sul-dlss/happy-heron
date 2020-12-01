@@ -7,6 +7,7 @@ class Collection < ApplicationRecord
   belongs_to :creator, class_name: 'User'
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
   has_and_belongs_to_many :reviewers, class_name: 'User', join_table: 'reviewers'
+  has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
 
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
 

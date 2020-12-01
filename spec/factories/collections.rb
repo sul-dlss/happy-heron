@@ -13,7 +13,6 @@ FactoryBot.define do
     required_license { 'MyString' }
     default_license { 'MyString' }
     email_when_participants_changed { false }
-    managers { 'maya.aguirre, jcairns' }
     state { 'deposited' }
     creator
   end
@@ -32,6 +31,14 @@ FactoryBot.define do
     end
 
     reviewers { build_list(:user, reviewer_count) }
+  end
+
+  trait :with_managers do
+    transient do
+      manager_count { 2 }
+    end
+
+    managers { build_list(:user, manager_count) }
   end
 
   trait :with_depositors do

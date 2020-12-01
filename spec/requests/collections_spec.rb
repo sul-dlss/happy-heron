@@ -67,7 +67,7 @@ RSpec.describe 'Collections requests' do
             description: 'This is a very good collection.',
             contact_email: user.email,
             access: 'world',
-            managers: user.email,
+            manager_sunets: user.sunetid,
             depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
           }
         end
@@ -80,13 +80,13 @@ RSpec.describe 'Collections requests' do
           expect(collection.depositors.size).to eq 6
           expect(collection.depositors).to all(be_kind_of(User))
           expect(collection.depositors).to include(User.find_by!(email: 'maya.aguirre@stanford.edu'))
-          expect(collection.managers).to eq user.email
+          expect(collection.managers).to eq [user]
         end
 
         context 'when overriding manager list and review workflow defaults' do
           let(:review_workflow_params) do
             {
-              managers: 'maya.aguirre,jcairns',
+              manager_sunets: 'maya.aguirre,jcairns',
               review_enabled: 'true',
               reviewer_sunets: 'maya.aguirre, jcairns,faridz'
             }
@@ -99,7 +99,7 @@ RSpec.describe 'Collections requests' do
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
-            expect(collection.managers).to eq 'maya.aguirre,jcairns'
+            expect(collection.managers.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
             expect(collection.reviewers.map(&:email)).to eq %w[maya.aguirre@stanford.edu
                                                                jcairns@stanford.edu faridz@stanford.edu]
           end
@@ -130,7 +130,7 @@ RSpec.describe 'Collections requests' do
               name: '',
               description: '',
               contact_email: '',
-              managers: user.email,
+              manager_sunets: user.sunetid,
               access: 'world',
               depositor_sunets: ''
             }
@@ -196,7 +196,7 @@ RSpec.describe 'Collections requests' do
 
   context 'with an authenticated collection manager' do
     let(:user) { create(:user) }
-    let(:collection) { create(:collection, managers: [user.sunetid]) }
+    let(:collection) { create(:collection, managers: [user]) }
 
     before do
       sign_in user
@@ -217,7 +217,7 @@ RSpec.describe 'Collections requests' do
             description: 'This is a very good collection.',
             contact_email: user.email,
             access: 'world',
-            managers: user.email,
+            manager_sunets: user.sunetid,
             depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
           }
         end
@@ -237,7 +237,7 @@ RSpec.describe 'Collections requests' do
         end
 
         context 'when collection has reviewers specified' do
-          let(:collection) { create(:collection, :with_reviewers, managers: [user.sunetid]) }
+          let(:collection) { create(:collection, :with_reviewers, managers: [user]) }
           let(:review_workflow_params) do
             {
               review_enabled: 'false',

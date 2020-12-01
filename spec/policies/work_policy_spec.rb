@@ -35,7 +35,7 @@ RSpec.describe WorkPolicy do
     end
 
     succeed 'when user is a collection manager' do
-      before { collection.managers = [user.sunetid] }
+      before { collection.managers = [user] }
     end
 
     succeed 'when user is an admin' do

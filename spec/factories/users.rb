@@ -4,7 +4,7 @@
 FactoryBot.define do
   factory :user, aliases: [:creator] do
     sequence :email do |n|
-      "user#{n}@example.org"
+      "user#{n}@stanford.edu"
     end
   end
 end
