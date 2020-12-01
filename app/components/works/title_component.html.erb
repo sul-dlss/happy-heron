@@ -4,9 +4,9 @@
      <%= form.label :title, 'Title of deposit', class: 'col-sm-2 col-form-label' %>
      <div class="col-sm-10">
        <%= form.text_field :title, class: "form-control", required: true,
-                           data: { action: "change->progress#check",
+                           data: { action: "change->auto-citation#updateDisplay change->progress#check",
                                    'progress-step': 'title',
-                                   target: 'edit-deposit.titleField' } %>
+                                   target: 'edit-deposit.titleField auto-citation.titleField' } %>
        <div class="invalid-feedback">You must provide a title</div>
      </div>
    </div>

@@ -24,6 +24,6 @@ module Works
 
     delegate :model, to: :work_form
 
-    delegate :persisted?, to: :model
+    delegate :persisted?, :purl, to: :model
   end
 end

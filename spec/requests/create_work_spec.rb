@@ -248,6 +248,7 @@ RSpec.describe 'Create a new work' do
                    keywords_attributes: keywords,
                    related_works_attributes: related_works,
                    related_links_attributes: related_links,
+                   default_citation: false,
                    'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
                    created_type: 'range',
                    'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
@@ -267,6 +268,7 @@ RSpec.describe 'Create a new work' do
           expect(work.keywords.size).to eq 2
           expect(work.related_works.size).to eq 2
           expect(work.related_links.size).to eq 2
+          expect(work.citation).to eq 'test citation'
           expect(work.published_edtf.to_edtf).to eq '2020-02-14'
           expect(work.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
           expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
@@ -361,6 +363,44 @@ RSpec.describe 'Create a new work' do
           expect(work.created_edtf).to be_nil
           expect(work.embargo_date).to be_nil
           expect(work.subtype).to be_empty
+          expect(work.license).to eq License.license_list.first
+          expect(work.state).to eq 'first_draft'
+          expect(DepositJob).not_to have_received(:perform_later)
+        end
+      end
+
+      context 'with automatic citation' do
+        let(:collection) { create(:collection, depositors: [user]) }
+        let(:work_params) do
+          {
+            title: '',
+            contact_email: '',
+            abstract: '',
+            license: License.license_list.first,
+            work_type: 'text',
+            citation: 'manual one',
+            citation_auto: 'Zappa, F. (2020). Test publication yy/mm date in past. ' \
+              'Stanford Digital Repository. Available at :link:',
+            default_citation: true
+          }
+        end
+
+        it 'saves and then displays the draft work' do
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Save as draft' }
+          expect(response).to have_http_status(:found)
+          work = Work.last
+          expect(work.title).to be_empty
+          expect(work.contact_email).to be_empty
+          expect(work.abstract).to be_empty
+          expect(work.contributors).to be_empty
+          expect(work.attached_files).to be_empty
+          expect(work.keywords.size).to eq 0
+          expect(work.published_edtf).to be_nil
+          expect(work.created_edtf).to be_nil
+          expect(work.embargo_date).to be_nil
+          expect(work.subtype).to be_empty
+          expect(work.citation).to eq 'Zappa, F. (2020). Test publication yy/mm ' \
+            'date in past. Stanford Digital Repository. Available at :link:'
           expect(work.license).to eq License.license_list.first
           expect(work.state).to eq 'first_draft'
           expect(DepositJob).not_to have_received(:perform_later)

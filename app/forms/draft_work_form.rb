@@ -14,6 +14,8 @@ class DraftWorkForm < Reform::Form
   property :contact_email
   property :abstract
   property :citation
+  property :default_citation, virtual: true, default: true
+  property :citation_auto, virtual: true
   property :collection_id
   property :access
   property :license
@@ -27,6 +29,12 @@ class DraftWorkForm < Reform::Form
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true
   validates :embargo_date, embargo_date: true
+
+  def deserialize!(params)
+    # Choose between using the user provided citation and the auto-generated citation
+    params['citation'] = params.delete('citation_auto') if params['default_citation'] == 'true'
+    super(params)
+  end
 
   collection :contributors,
              populator: ContributorPopulator.new(:contributors, Contributor),

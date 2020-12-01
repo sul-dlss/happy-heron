@@ -13,6 +13,7 @@ class DepositStatusJob < BaseDepositJob
 
     if result.success?
       object.druid = result.value!
+      object.citation = object.citation.gsub(/:link:/, object.purl) if object.respond_to?(:citation)
       object.deposit_complete!
     else
       Honeybadger.notify("Job #{job_id} for #{object.class} #{object.id} failed with: #{result.failure}")
