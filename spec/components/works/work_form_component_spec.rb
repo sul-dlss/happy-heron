@@ -10,6 +10,10 @@ RSpec.describe Works::WorkFormComponent do
   let(:work_form) { WorkForm.new(work) }
   let(:rendered) { render_inline(component) }
 
+  before do
+    allow(controller).to receive(:allowed_to?).and_return(true)
+  end
+
   it 'renders the component' do
     expect(rendered.to_html)
       .to include('Deposit your content', 'File', 'Add your files',

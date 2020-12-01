@@ -43,7 +43,7 @@
     <div class="mb-3">See all deposits</div>
   <% end %>
 
-  <% if allowed_to?(:deposit?, collection) %>
+  <% if allowed_to?(:create?, Work.new(collection: collection)) %>
     <%= button_tag '+ Deposit to this collection',
           data: {
             destination: new_collection_work_path(collection),
