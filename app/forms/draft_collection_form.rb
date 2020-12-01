@@ -8,9 +8,11 @@ class DraftCollectionForm < Reform::Form
   property :name
   property :description
   property :contact_email
-  property :managers, default: -> { model.creator.sunetid }
   property :access, default: 'world'
   property :creator, writable: false
+  property :manager_sunets, virtual: true, prepopulator: lambda { |_options|
+    self.manager_sunets = manager_sunets_from_model.join(', ')
+  }
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
@@ -24,6 +26,7 @@ class DraftCollectionForm < Reform::Form
   def sync(*)
     update_depositors
     update_reviewers
+    update_managers
 
     super
   end
@@ -40,6 +43,11 @@ class DraftCollectionForm < Reform::Form
   sig { void }
   def update_depositors
     model.depositors = field_to_users(depositor_sunets)
+  end
+
+  sig { void }
+  def update_managers
+    model.managers = field_to_users(manager_sunets)
   end
 
   sig { void }
@@ -68,5 +76,10 @@ class DraftCollectionForm < Reform::Form
   sig { returns(T::Array[String]) }
   def reviewer_sunets_from_model
     model.reviewers.map(&:sunetid)
+  end
+
+  sig { returns(T::Array[String]) }
+  def manager_sunets_from_model
+    (model.managers.presence || [model.creator]).map(&:sunetid)
   end
 end

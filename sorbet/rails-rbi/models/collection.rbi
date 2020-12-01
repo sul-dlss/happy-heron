@@ -90,15 +90,6 @@ module Collection::GeneratedAttributeMethods
   def id?; end
 
   sig { returns(String) }
-  def managers; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def managers=(value); end
-
-  sig { returns(T::Boolean) }
-  def managers?; end
-
-  sig { returns(String) }
   def name; end
 
   sig { params(value: T.any(String, Symbol)).void }
@@ -195,6 +186,15 @@ module Collection::GeneratedAssociationMethods
 
   sig { params(value: T::Enumerable[::User]).void }
   def depositors=(value); end
+
+  sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
+  def managers; end
+
+  sig { returns(T::Array[Integer]) }
+  def manager_ids; end
+
+  sig { params(value: T::Enumerable[::User]).void }
+  def managers=(value); end
 
   sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
   def reviewers; end

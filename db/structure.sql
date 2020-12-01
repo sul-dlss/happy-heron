@@ -150,7 +150,6 @@ CREATE TABLE public.collections (
     required_license character varying,
     default_license character varying,
     email_when_participants_changed boolean,
-    managers character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
@@ -290,6 +289,16 @@ CREATE SEQUENCE public.keywords_id_seq
 --
 
 ALTER SEQUENCE public.keywords_id_seq OWNED BY public.keywords.id;
+
+
+--
+-- Name: managers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.managers (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
 
 
 --
@@ -772,6 +781,13 @@ CREATE INDEX index_keywords_on_work_id ON public.keywords USING btree (work_id);
 
 
 --
+-- Name: index_managers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_managers_on_collection_id_and_user_id ON public.managers USING btree (collection_id, user_id);
+
+
+--
 -- Name: index_notifications_on_opened_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -979,6 +995,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201112131704'),
 ('20201117205532'),
 ('20201119215418'),
-('20201119215854');
+('20201119215854'),
+('20201201203229');
 
 

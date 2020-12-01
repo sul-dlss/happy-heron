@@ -169,6 +169,11 @@ module AbstractController
   extend ::ActiveSupport::Autoload
 end
 
+class AccessGenerator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 module ActionCable
   INTERNAL = ::T.let(nil, ::T.untyped)
 end
@@ -16391,9 +16396,6 @@ end
 class ActiveStorage::Service::DiskService
 end
 
-class ActiveStorage::Service::DruidDiskService
-end
-
 class ActiveStorage::Service
   extend ::ActiveSupport::Autoload
   def self.build(configurator:, service: T.unsafe(nil), **service_config); end
@@ -20340,6 +20342,14 @@ module AttachedFile::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
+module AttrExtras
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class AttrExtras::AttrInitialize::ParamsBuilder
+  REQUIRED_SIGN = ::T.let(nil, ::T.untyped)
+end
+
 class BCrypt::Engine
   DEFAULT_COST = ::T.let(nil, ::T.untyped)
   MAX_COST = ::T.let(nil, ::T.untyped)
@@ -20437,6 +20447,11 @@ module Bootsnap::LoadPathCache::PathScanner
   BUNDLE_PATH = ::T.let(nil, ::T.untyped)
   NORMALIZE_NATIVE_EXTENSIONS = ::T.let(nil, ::T.untyped)
   REQUIRABLE_EXTENSIONS = ::T.let(nil, ::T.untyped)
+end
+
+class BroadcastWorkChange
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Bundler::Dependency
@@ -23010,7 +23025,7 @@ class Capybara::Config
 
   def default_set_options=(*args, &block); end
 
-  def deprecate(method, alternate_method, once=T.unsafe(nil)); end
+  def deprecate(method, alternate_method, once: T.unsafe(nil)); end
 
   def disable_animation(*args, &block); end
 
@@ -23276,6 +23291,8 @@ module Capybara::DSL
 
   def select(*_, &_1); end
 
+  def send_keys(*_, &_1); end
+
   def source(*_, &_1); end
 
   def status_code(*_, &_1); end
@@ -23389,6 +23406,8 @@ class Capybara::Driver::Base
   def response_headers(); end
 
   def save_screenshot(path, **options); end
+
+  def send_keys(*_); end
 
   def session=(session); end
 
@@ -23533,6 +23552,8 @@ end
 module Capybara::Helpers
   def self.declension(singular, plural, count); end
 
+  def self.filter_backtrace(trace); end
+
   def self.inject_asset_host(html, host: T.unsafe(nil)); end
 
   def self.monotonic_time(); end
@@ -23542,6 +23563,8 @@ module Capybara::Helpers
   def self.timer(expire_in:); end
 
   def self.to_regexp(text, exact: T.unsafe(nil), all_whitespace: T.unsafe(nil), options: T.unsafe(nil)); end
+
+  def self.warn(message, uplevel: T.unsafe(nil)); end
 end
 
 class Capybara::InfiniteRedirectError
@@ -23564,11 +23587,11 @@ module Capybara::Minitest::Assertions
 
   def assert_checked_field(*args, &optional_filter_block); end
 
-  def assert_content(*args, **kwargs); end
+  def assert_content(*args, **kwargs, &optional_filter_block); end
 
   def assert_css(*args, &optional_filter_block); end
 
-  def assert_current_path(*args, **kwargs); end
+  def assert_current_path(*args, **kwargs, &optional_filter_block); end
 
   def assert_field(*args, &optional_filter_block); end
 
@@ -23588,11 +23611,11 @@ module Capybara::Minitest::Assertions
 
   def assert_no_checked_field(*args, &optional_filter_block); end
 
-  def assert_no_content(*args, **kwargs); end
+  def assert_no_content(*args, **kwargs, &optional_filter_block); end
 
   def assert_no_css(*args, &optional_filter_block); end
 
-  def assert_no_current_path(*args, **kwargs); end
+  def assert_no_current_path(*args, **kwargs, &optional_filter_block); end
 
   def assert_no_field(*args, &optional_filter_block); end
 
@@ -23606,9 +23629,9 @@ module Capybara::Minitest::Assertions
 
   def assert_no_table(*args, &optional_filter_block); end
 
-  def assert_no_text(*args, **kwargs); end
+  def assert_no_text(*args, **kwargs, &optional_filter_block); end
 
-  def assert_no_title(*args, **kwargs); end
+  def assert_no_title(*args, **kwargs, &optional_filter_block); end
 
   def assert_no_unchecked_field(*args, &optional_filter_block); end
 
@@ -23630,9 +23653,9 @@ module Capybara::Minitest::Assertions
 
   def assert_table(*args, &optional_filter_block); end
 
-  def assert_text(*args, **kwargs); end
+  def assert_text(*args, **kwargs, &optional_filter_block); end
 
-  def assert_title(*args, **kwargs); end
+  def assert_title(*args, **kwargs, &optional_filter_block); end
 
   def assert_unchecked_field(*args, &optional_filter_block); end
 
@@ -23644,11 +23667,11 @@ module Capybara::Minitest::Assertions
 
   def refute_checked_field(*args, &optional_filter_block); end
 
-  def refute_content(*args, **kwargs); end
+  def refute_content(*args, **kwargs, &optional_filter_block); end
 
   def refute_css(*args, &optional_filter_block); end
 
-  def refute_current_path(*args, **kwargs); end
+  def refute_current_path(*args, **kwargs, &optional_filter_block); end
 
   def refute_field(*args, &optional_filter_block); end
 
@@ -23668,9 +23691,9 @@ module Capybara::Minitest::Assertions
 
   def refute_table(*args, &optional_filter_block); end
 
-  def refute_text(*args, **kwargs); end
+  def refute_text(*args, **kwargs, &optional_filter_block); end
 
-  def refute_title(*args, **kwargs); end
+  def refute_title(*args, **kwargs, &optional_filter_block); end
 
   def refute_unchecked_field(*args, &optional_filter_block); end
 
@@ -23894,7 +23917,7 @@ module Capybara::Node::Matchers
 
   def assert_matches_selector(*args, &optional_filter_block); end
 
-  def assert_matches_style(styles, **options); end
+  def assert_matches_style(styles=T.unsafe(nil), **options); end
 
   def assert_no_ancestor(*args, &optional_filter_block); end
 
@@ -23912,7 +23935,7 @@ module Capybara::Node::Matchers
 
   def assert_sibling(*args, &optional_filter_block); end
 
-  def assert_style(styles, **options); end
+  def assert_style(styles=T.unsafe(nil), **options); end
 
   def assert_text(type_or_text, *args, **opts); end
 
@@ -23964,7 +23987,7 @@ module Capybara::Node::Matchers
 
   def has_sibling?(*args, **options, &optional_filter_block); end
 
-  def has_style?(styles, **options); end
+  def has_style?(styles=T.unsafe(nil), **options); end
 
   def has_table?(locator=T.unsafe(nil), **options, &optional_filter_block); end
 
@@ -23978,7 +24001,7 @@ module Capybara::Node::Matchers
 
   def matches_selector?(*args, **options, &optional_filter_block); end
 
-  def matches_style?(styles, **options); end
+  def matches_style?(styles=T.unsafe(nil), **options); end
 
   def matches_xpath?(xpath, **options, &optional_filter_block); end
 
@@ -24017,6 +24040,8 @@ class Capybara::Node::Simple
   def native(); end
 
   def path(); end
+
+  def readonly?(); end
 
   def selected?(); end
 
@@ -24084,7 +24109,7 @@ class Capybara::Queries::BaseQuery
 end
 
 class Capybara::Queries::CurrentPathQuery
-  def initialize(expected_path, **options); end
+  def initialize(expected_path, **options, &optional_filter_block); end
 
   def resolves_for?(session); end
 end
@@ -24217,7 +24242,7 @@ module Capybara::RSpecMatchers
 
   def have_css(expr, **options, &optional_filter_block); end
 
-  def have_current_path(path, **options); end
+  def have_current_path(path, **options, &optional_filter_block); end
 
   def have_field(locator=T.unsafe(nil), **options, &optional_filter_block); end
 
@@ -24263,7 +24288,7 @@ module Capybara::RSpecMatchers
 
   def have_sibling(*args, **kw_args, &optional_filter_block); end
 
-  def have_style(styles, **options); end
+  def have_style(styles=T.unsafe(nil), **options); end
 
   def have_table(locator=T.unsafe(nil), **options, &optional_filter_block); end
 
@@ -24279,7 +24304,7 @@ module Capybara::RSpecMatchers
 
   def match_selector(*args, **kw_args, &optional_filter_block); end
 
-  def match_style(styles, **options); end
+  def match_style(styles=T.unsafe(nil), **options); end
 
   def match_xpath(expr, **options, &optional_filter_block); end
 
@@ -24476,6 +24501,7 @@ class Capybara::RSpecMatchers::Matchers::HaveSibling
 end
 
 class Capybara::RSpecMatchers::Matchers::HaveStyle
+  def initialize(*args, **kw_args, &filter_block); end
 end
 
 class Capybara::RSpecMatchers::Matchers::HaveStyle
@@ -24517,6 +24543,8 @@ class Capybara::RSpecMatchers::Matchers::MatchStyle
   def does_not_match?(_actual); end
 
   def element_matches?(el); end
+
+  def initialize(styles=T.unsafe(nil), **kw_args, &filter_block); end
 end
 
 class Capybara::RSpecMatchers::Matchers::MatchStyle
@@ -25214,6 +25242,8 @@ class Capybara::Selenium::Driver
 
   def save_screenshot(path, **_options); end
 
+  def send_keys(*args); end
+
   def title(); end
   DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
   SPECIAL_OPTIONS = ::T.let(nil, ::T.untyped)
@@ -25395,6 +25425,7 @@ module Capybara::Selenium::Scroll
   def scroll_by(x, y); end
 
   def scroll_to(element, location, position=T.unsafe(nil)); end
+  SCROLL_POSITIONS = ::T.let(nil, ::T.untyped)
 end
 
 module Capybara::Selenium::Scroll
@@ -25670,6 +25701,8 @@ class Capybara::Session
 
   def select(*_, &_1); end
 
+  def send_keys(*args, **kw_args); end
+
   def server(); end
 
   def server_url(); end
@@ -25694,7 +25727,7 @@ class Capybara::Session
 
   def unselect(*_, &_1); end
 
-  def using_wait_time(seconds); end
+  def using_wait_time(seconds, &block); end
 
   def visit(visit_uri); end
 
@@ -25706,11 +25739,11 @@ class Capybara::Session
 
   def within_element(*args, **kw_args); end
 
-  def within_fieldset(locator); end
+  def within_fieldset(locator, &block); end
 
   def within_frame(*args, **kw_args); end
 
-  def within_table(locator); end
+  def within_table(locator, &block); end
 
   def within_window(window_or_proc); end
   DOCUMENT_METHODS = ::T.let(nil, ::T.untyped)
@@ -25839,13 +25872,13 @@ class Capybara::SessionConfig
 end
 
 module Capybara::SessionMatchers
-  def assert_current_path(path, **options); end
+  def assert_current_path(path, **options, &optional_filter_block); end
 
-  def assert_no_current_path(path, **options); end
+  def assert_no_current_path(path, **options, &optional_filter_block); end
 
-  def has_current_path?(path, **options); end
+  def has_current_path?(path, **options, &optional_filter_block); end
 
-  def has_no_current_path?(path, **options); end
+  def has_no_current_path?(path, **options, &optional_filter_block); end
 end
 
 module Capybara::SessionMatchers
@@ -26067,6 +26100,8 @@ module Capybara
 
   def self.using_driver(driver); end
 
+  def self.using_session(name_or_session, &block); end
+
   def self.using_wait_time(seconds); end
 
   def self.visible_text_only(*args, &block); end
@@ -26076,6 +26111,10 @@ module Capybara
   def self.w3c_click_offset(*args, &block); end
 
   def self.w3c_click_offset=(*args, &block); end
+end
+
+module CapybaraScreenshot::Helpers
+  COLORS = ::T.let(nil, ::T.untyped)
 end
 
 class Class
@@ -26314,6 +26353,8 @@ class Cocina::Models::Contributor
 
   def note(); end
 
+  def order(); end
+
   def role(); end
 
   def status(); end
@@ -26376,9 +26417,6 @@ class Cocina::Models::DROStructural
   def hasMemberOrders(); end
 
   def isMemberOf(); end
-end
-
-class Cocina::Models::DROStructural
 end
 
 class Cocina::Models::Description
@@ -26612,9 +26650,6 @@ class Cocina::Models::File
   TYPES = ::T.let(nil, ::T.untyped)
 end
 
-class Cocina::Models::File
-end
-
 class Cocina::Models::FileAccess
   def access(); end
 
@@ -26735,6 +26770,8 @@ end
 class Cocina::Models::RelatedResource
   def access(); end
 
+  def adminMetadata(); end
+
   def contributor(); end
 
   def displayLabel(); end
@@ -26749,7 +26786,11 @@ class Cocina::Models::RelatedResource
 
   def note(); end
 
+  def order(); end
+
   def purl(); end
+
+  def relatedResource(); end
 
   def standard(); end
 
@@ -26855,9 +26896,6 @@ class Cocina::Models::RequestDROStructural
   def isMemberOf(); end
 end
 
-class Cocina::Models::RequestDROStructural
-end
-
 class Cocina::Models::RequestFile
   include ::Cocina::Models::Checkable
   def access(); end
@@ -26884,9 +26922,6 @@ class Cocina::Models::RequestFile
 
   def version(); end
   TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class Cocina::Models::RequestFile
 end
 
 class Cocina::Models::RequestFileSet
@@ -27054,11 +27089,18 @@ class Cocina::Models::Vocab
 end
 
 class Collection
+  include ::StateMachines::InstanceMethods
   def after_add_for_collections_depositors(); end
 
   def after_add_for_collections_depositors=(val); end
 
   def after_add_for_collections_depositors?(); end
+
+  def after_add_for_collections_managers(); end
+
+  def after_add_for_collections_managers=(val); end
+
+  def after_add_for_collections_managers?(); end
 
   def after_add_for_collections_reviewers(); end
 
@@ -27071,6 +27113,12 @@ class Collection
   def after_add_for_depositors=(val); end
 
   def after_add_for_depositors?(); end
+
+  def after_add_for_managers(); end
+
+  def after_add_for_managers=(val); end
+
+  def after_add_for_managers?(); end
 
   def after_add_for_reviewers(); end
 
@@ -27090,6 +27138,12 @@ class Collection
 
   def after_remove_for_collections_depositors?(); end
 
+  def after_remove_for_collections_managers(); end
+
+  def after_remove_for_collections_managers=(val); end
+
+  def after_remove_for_collections_managers?(); end
+
   def after_remove_for_collections_reviewers(); end
 
   def after_remove_for_collections_reviewers=(val); end
@@ -27101,6 +27155,12 @@ class Collection
   def after_remove_for_depositors=(val); end
 
   def after_remove_for_depositors?(); end
+
+  def after_remove_for_managers(); end
+
+  def after_remove_for_managers=(val); end
+
+  def after_remove_for_managers?(); end
 
   def after_remove_for_reviewers(); end
 
@@ -27116,11 +27176,15 @@ class Collection
 
   def autosave_associated_records_for_collections_depositors(*args); end
 
+  def autosave_associated_records_for_collections_managers(*args); end
+
   def autosave_associated_records_for_collections_reviewers(*args); end
 
   def autosave_associated_records_for_creator(*args); end
 
   def autosave_associated_records_for_depositors(*args); end
+
+  def autosave_associated_records_for_managers(*args); end
 
   def autosave_associated_records_for_reviewers(*args); end
 
@@ -27131,6 +27195,12 @@ class Collection
   def before_add_for_collections_depositors=(val); end
 
   def before_add_for_collections_depositors?(); end
+
+  def before_add_for_collections_managers(); end
+
+  def before_add_for_collections_managers=(val); end
+
+  def before_add_for_collections_managers?(); end
 
   def before_add_for_collections_reviewers(); end
 
@@ -27143,6 +27213,12 @@ class Collection
   def before_add_for_depositors=(val); end
 
   def before_add_for_depositors?(); end
+
+  def before_add_for_managers(); end
+
+  def before_add_for_managers=(val); end
+
+  def before_add_for_managers?(); end
 
   def before_add_for_reviewers(); end
 
@@ -27162,6 +27238,12 @@ class Collection
 
   def before_remove_for_collections_depositors?(); end
 
+  def before_remove_for_collections_managers(); end
+
+  def before_remove_for_collections_managers=(val); end
+
+  def before_remove_for_collections_managers?(); end
+
   def before_remove_for_collections_reviewers(); end
 
   def before_remove_for_collections_reviewers=(val); end
@@ -27173,6 +27255,12 @@ class Collection
   def before_remove_for_depositors=(val); end
 
   def before_remove_for_depositors?(); end
+
+  def before_remove_for_managers(); end
+
+  def before_remove_for_managers=(val); end
+
+  def before_remove_for_managers?(); end
 
   def before_remove_for_reviewers(); end
 
@@ -27188,9 +27276,13 @@ class Collection
 
   def validate_associated_records_for_collections_depositors(*args); end
 
+  def validate_associated_records_for_collections_managers(*args); end
+
   def validate_associated_records_for_collections_reviewers(*args); end
 
   def validate_associated_records_for_depositors(*args); end
+
+  def validate_associated_records_for_managers(*args); end
 
   def validate_associated_records_for_reviewers(*args); end
 
@@ -27215,6 +27307,8 @@ end
 module Collection::GeneratedAssociationMethods
   def depositor_ids=(ids); end
 
+  def manager_ids=(ids); end
+
   def reload_creator(); end
 
   def reviewer_ids=(ids); end
@@ -27236,11 +27330,18 @@ end
 class Collection
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::StateMachines::ClassMethods
   def self.after_add_for_collections_depositors(); end
 
   def self.after_add_for_collections_depositors=(val); end
 
   def self.after_add_for_collections_depositors?(); end
+
+  def self.after_add_for_collections_managers(); end
+
+  def self.after_add_for_collections_managers=(val); end
+
+  def self.after_add_for_collections_managers?(); end
 
   def self.after_add_for_collections_reviewers(); end
 
@@ -27253,6 +27354,12 @@ class Collection
   def self.after_add_for_depositors=(val); end
 
   def self.after_add_for_depositors?(); end
+
+  def self.after_add_for_managers(); end
+
+  def self.after_add_for_managers=(val); end
+
+  def self.after_add_for_managers?(); end
 
   def self.after_add_for_reviewers(); end
 
@@ -27272,6 +27379,12 @@ class Collection
 
   def self.after_remove_for_collections_depositors?(); end
 
+  def self.after_remove_for_collections_managers(); end
+
+  def self.after_remove_for_collections_managers=(val); end
+
+  def self.after_remove_for_collections_managers?(); end
+
   def self.after_remove_for_collections_reviewers(); end
 
   def self.after_remove_for_collections_reviewers=(val); end
@@ -27283,6 +27396,12 @@ class Collection
   def self.after_remove_for_depositors=(val); end
 
   def self.after_remove_for_depositors?(); end
+
+  def self.after_remove_for_managers(); end
+
+  def self.after_remove_for_managers=(val); end
+
+  def self.after_remove_for_managers?(); end
 
   def self.after_remove_for_reviewers(); end
 
@@ -27302,6 +27421,12 @@ class Collection
 
   def self.before_add_for_collections_depositors?(); end
 
+  def self.before_add_for_collections_managers(); end
+
+  def self.before_add_for_collections_managers=(val); end
+
+  def self.before_add_for_collections_managers?(); end
+
   def self.before_add_for_collections_reviewers(); end
 
   def self.before_add_for_collections_reviewers=(val); end
@@ -27313,6 +27438,12 @@ class Collection
   def self.before_add_for_depositors=(val); end
 
   def self.before_add_for_depositors?(); end
+
+  def self.before_add_for_managers(); end
+
+  def self.before_add_for_managers=(val); end
+
+  def self.before_add_for_managers?(); end
 
   def self.before_add_for_reviewers(); end
 
@@ -27332,6 +27463,12 @@ class Collection
 
   def self.before_remove_for_collections_depositors?(); end
 
+  def self.before_remove_for_collections_managers(); end
+
+  def self.before_remove_for_collections_managers=(val); end
+
+  def self.before_remove_for_collections_managers?(); end
+
   def self.before_remove_for_collections_reviewers(); end
 
   def self.before_remove_for_collections_reviewers=(val); end
@@ -27344,6 +27481,12 @@ class Collection
 
   def self.before_remove_for_depositors?(); end
 
+  def self.before_remove_for_managers(); end
+
+  def self.before_remove_for_managers=(val); end
+
+  def self.before_remove_for_managers?(); end
+
   def self.before_remove_for_reviewers(); end
 
   def self.before_remove_for_reviewers=(val); end
@@ -27355,6 +27498,11 @@ class Collection
   def self.before_remove_for_works=(val); end
 
   def self.before_remove_for_works?(); end
+end
+
+class CollectionGenerator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class CollectionPolicy
@@ -30281,6 +30429,7 @@ module Dry::Configurable
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30320,6 +30469,7 @@ module Dry::Core::ClassAttributes
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30330,6 +30480,7 @@ module Dry::Core::Constants
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30358,6 +30509,7 @@ class Dry::Logic::Operations::Abstract
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30368,6 +30520,7 @@ class Dry::Logic::Result
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   SUCCESS = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
@@ -30379,6 +30532,7 @@ class Dry::Logic::Rule
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30393,6 +30547,7 @@ class Dry::Logic::RuleCompiler
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30403,6 +30558,7 @@ module Dry::Monads
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
   Unit = ::T.let(nil, ::T.untyped)
@@ -30425,6 +30581,7 @@ module Dry::Schema
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   LIST_SEPARATOR = ::T.let(nil, ::T.untyped)
   QUESTION_MARK = ::T.let(nil, ::T.untyped)
   STEPS_IN_ORDER = ::T.let(nil, ::T.untyped)
@@ -30479,6 +30636,7 @@ class Dry::Struct
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
@@ -30493,6 +30651,7 @@ module Dry::Types
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Inflector = ::T.let(nil, ::T.untyped)
   KERNEL_COERCIBLE = ::T.let(nil, ::T.untyped)
   METHOD_COERCIBLE = ::T.let(nil, ::T.untyped)
@@ -30512,6 +30671,7 @@ module Dry::Types::Builder
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30522,6 +30682,7 @@ module Dry::Types::Coercions
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
 end
@@ -30571,6 +30732,7 @@ module Dry::Validation
   EMPTY_OPTS = ::T.let(nil, ::T.untyped)
   EMPTY_SET = ::T.let(nil, ::T.untyped)
   EMPTY_STRING = ::T.let(nil, ::T.untyped)
+  IDENTITY = ::T.let(nil, ::T.untyped)
   ROOT_PATH = ::T.let(nil, ::T.untyped)
   Self = ::T.let(nil, ::T.untyped)
   Undefined = ::T.let(nil, ::T.untyped)
@@ -30861,6 +31023,7 @@ class Errno::ESHLIBVERS
 end
 
 module Erubi
+  MATCH_METHOD = ::T.let(nil, ::T.untyped)
   RANGE_ALL = ::T.let(nil, ::T.untyped)
   RANGE_FIRST = ::T.let(nil, ::T.untyped)
   RANGE_LAST = ::T.let(nil, ::T.untyped)
@@ -32552,6 +32715,11 @@ class File
   def self.probe_stat_in(dir); end
 end
 
+class FileGenerator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 module FileUtils
   include ::FileUtils::StreamUtils_
   def ruby(*args, **options, &block); end
@@ -33103,7 +33271,10 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
+  def removed_method_calls(); end
+
   def to_ruby(); end
+  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -33381,6 +33552,11 @@ class Hash
   def self.ruby2_keywords_hash?(_); end
 
   def self.try_convert(_); end
+end
+
+class Help::FormComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module Honeybadger
@@ -34217,6 +34393,12 @@ class IRB::Context
 
   def newline_before_multiline_output?(); end
 
+  def omit_on_assignment(); end
+
+  def omit_on_assignment=(omit_on_assignment); end
+
+  def omit_on_assignment?(); end
+
   def use_colorize(); end
 
   def use_colorize?(); end
@@ -34264,6 +34446,8 @@ module IRB::ExtendCommandBundle
 
   def irb_help(*opts, &b); end
 
+  def irb_info(*opts, &b); end
+
   def irb_jobs(*opts, &b); end
 
   def irb_kill(*opts, &b); end
@@ -34305,6 +34489,8 @@ end
 
 class IRB::InputMethod
   def initialize(file=T.unsafe(nil)); end
+
+  def winsize(); end
 end
 
 class IRB::Inspector
@@ -34318,7 +34504,7 @@ class IRB::Irb
 
   def initialize(workspace=T.unsafe(nil), input_method=T.unsafe(nil)); end
 
-  def output_value(); end
+  def output_value(omit=T.unsafe(nil)); end
 
   def prompt(prompt, ltype, indent, line_no); end
   ASSIGNMENT_NODE_TYPES = ::T.let(nil, ::T.untyped)
@@ -34367,6 +34553,10 @@ end
 
 class IRB::ReadlineInputMethod
   def initialize(); end
+end
+
+class IRB::ReadlineInputMethod
+  def self.initialize_readline(); end
 end
 
 class IRB::ReidlineInputMethod
@@ -34523,6 +34713,16 @@ module Keyword::GeneratedRelationMethods
   extend ::Mutex_m
 end
 
+module Launchy
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Launchy::Version
+  MAJOR = ::T.let(nil, ::T.untyped)
+  MINOR = ::T.let(nil, ::T.untyped)
+  PATCH = ::T.let(nil, ::T.untyped)
+end
+
 class License
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -34570,8 +34770,8 @@ class Listen::Adapter::Windows
   OS_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
-module Listen::FSM
-  DEFAULT_STATE = ::T.let(nil, ::T.untyped)
+class Listen::Event::Loop
+  MAX_STARTUP_SECONDS = ::T.let(nil, ::T.untyped)
 end
 
 class Listen::Listener::Config
@@ -38752,44 +38952,49 @@ class Pathname
   def make_symlink(_); end
 end
 
+module PatienceDiff
+  TEMPLATE_PATH = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-module Polyfill::Module::M11640
+module Polyfill::Module::M11900
 end
 
-module Polyfill::Module::M11640
+module Polyfill::Module::M11900
 end
 
-module Polyfill::Module::M11660
+module Polyfill::Module::M11920
 end
 
-module Polyfill::Module::M11660
+module Polyfill::Module::M11920
 end
 
-module Polyfill::Module::M11680
+module Polyfill::Module::M11940
 end
 
-module Polyfill::Module::M11680
+module Polyfill::Module::M11940
 end
 
-module Polyfill::Module::M11700
+module Polyfill::Module::M11960
 end
 
-module Polyfill::Module::M11700
+module Polyfill::Module::M11960
 end
 
-module Polyfill::Module::M11720
+module Polyfill::Module::M11980
 end
 
-module Polyfill::Module::M11720
+module Polyfill::Module::M11980
 end
 
-module Polyfill::Module::M11760
+module Polyfill::Module::M12020
 end
 
-module Polyfill::Module::M11760
+module Polyfill::Module::M12020
 end
 
 class Proc
@@ -41861,6 +42066,10 @@ class Reline::Config
 
   def editing_mode_is?(*val); end
 
+  def emacs_mode_string(); end
+
+  def emacs_mode_string=(emacs_mode_string); end
+
   def enable_keypad(); end
 
   def enable_keypad=(enable_keypad); end
@@ -41945,6 +42154,8 @@ class Reline::Config
 
   def reset_default_key_bindings(); end
 
+  def retrieve_string(str); end
+
   def show_all_if_ambiguous(); end
 
   def show_all_if_ambiguous=(show_all_if_ambiguous); end
@@ -41953,12 +42164,23 @@ class Reline::Config
 
   def show_all_if_unmodified=(show_all_if_unmodified); end
 
+  def show_mode_in_prompt(); end
+
+  def show_mode_in_prompt=(show_mode_in_prompt); end
+
   def test_mode(); end
+
+  def vi_cmd_mode_icon(); end
+
+  def vi_cmd_mode_icon=(vi_cmd_mode_icon); end
+
+  def vi_ins_mode_icon(); end
+
+  def vi_ins_mode_icon=(vi_ins_mode_icon); end
 
   def visible_stats(); end
 
   def visible_stats=(visible_stats); end
-  DEFAULT_PATH = ::T.let(nil, ::T.untyped)
   KEYSEQ_PATTERN = ::T.let(nil, ::T.untyped)
   VARIABLE_NAMES = ::T.let(nil, ::T.untyped)
   VARIABLE_NAME_SYMBOLS = ::T.let(nil, ::T.untyped)
@@ -42357,12 +42579,7 @@ class Reline::LineEditor
   def whole_buffer(); end
 
   def whole_lines(index: T.unsafe(nil), line: T.unsafe(nil)); end
-  CSI_REGEXP = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
-  OSC_REGEXP = ::T.let(nil, ::T.untyped)
   VI_MOTIONS = ::T.let(nil, ::T.untyped)
-  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 Reline::LineEditor::CompletionJourneyData = Struct::CompletionJourneyData
@@ -42385,8 +42602,13 @@ class Reline::LineEditor
 end
 
 class Reline::Unicode
+  CSI_REGEXP = ::T.let(nil, ::T.untyped)
   EscapedChars = ::T.let(nil, ::T.untyped)
   EscapedPairs = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
+  OSC_REGEXP = ::T.let(nil, ::T.untyped)
+  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 class Reline::Unicode::EastAsianWidth
@@ -42402,6 +42624,8 @@ class Reline::Unicode::EastAsianWidth
 end
 
 class Reline::Unicode
+  def self.calculate_width(str, allow_escape_code=T.unsafe(nil)); end
+
   def self.ed_transpose_words(line, byte_pointer); end
 
   def self.em_backward_word(line, byte_pointer); end
@@ -42421,6 +42645,8 @@ class Reline::Unicode
   def self.get_next_mbchar_size(line, byte_pointer); end
 
   def self.get_prev_mbchar_size(line, byte_pointer); end
+
+  def self.split_by_width(str, max_width, encoding=T.unsafe(nil)); end
 
   def self.vi_backward_word(line, byte_pointer); end
 
@@ -43857,13 +44083,11 @@ module RuboCop::AST::NodePattern::Sets
   SET_CLASS_EVAL_MODULE_EVAL = ::T.let(nil, ::T.untyped)
   SET_CLASS_MODULE = ::T.let(nil, ::T.untyped)
   SET_CLASS_MODULE_STRUCT = ::T.let(nil, ::T.untyped)
-  SET_COLLECT_COMPACT_FLATTEN_ETC = ::T.let(nil, ::T.untyped)
   SET_CONSTANTIZE_CONSTANTS_CONST_GET = ::T.let(nil, ::T.untyped)
   SET_CONTEXT_SHARED_CONTEXT = ::T.let(nil, ::T.untyped)
   SET_COUNT_LENGTH_SIZE = ::T.let(nil, ::T.untyped)
   SET_CREATED_AT_UPDATED_AT = ::T.let(nil, ::T.untyped)
   SET_CREATED_AT_UPDATED_AT_2 = ::T.let(nil, ::T.untyped)
-  SET_DEBUGGER_BYEBUG_REMOTE_BYEBUG = ::T.let(nil, ::T.untyped)
   SET_DEFINE_METHOD_DEFINE_SINGLETON_METHOD = ::T.let(nil, ::T.untyped)
   SET_DESCRIBE_FEATURE = ::T.let(nil, ::T.untyped)
   SET_DOUBLE_SPY = ::T.let(nil, ::T.untyped)
@@ -43877,7 +44101,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_EXECUTE_REMOVE_BELONGS_TO = ::T.let(nil, ::T.untyped)
   SET_EXPECT_ALLOW = ::T.let(nil, ::T.untyped)
   SET_FACTORYGIRL_FACTORYBOT = ::T.let(nil, ::T.untyped)
-  SET_FIRST_LAST_POP_ETC = ::T.let(nil, ::T.untyped)
   SET_FIRST_LAST__ETC = ::T.let(nil, ::T.untyped)
   SET_FIRST_TAKE = ::T.let(nil, ::T.untyped)
   SET_FIXNUM_BIGNUM = ::T.let(nil, ::T.untyped)
@@ -43913,7 +44136,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_PRIVATE_PROTECTED_PUBLIC = ::T.let(nil, ::T.untyped)
   SET_PROC_LAMBDA = ::T.let(nil, ::T.untyped)
   SET_PROP_CONST = ::T.let(nil, ::T.untyped)
-  SET_PRY_REMOTE_PRY_PRY_REMOTE_CONSOLE = ::T.let(nil, ::T.untyped)
   SET_PUBLIC_CONSTANT_PRIVATE_CONSTANT = ::T.let(nil, ::T.untyped)
   SET_PUBLIC_PROTECTED_PRIVATE_MODULE_FUNCTION = ::T.let(nil, ::T.untyped)
   SET_RAISE_ERROR_RAISE_EXCEPTION = ::T.let(nil, ::T.untyped)
@@ -43929,7 +44151,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_RENDER_REDIRECT_TO = ::T.let(nil, ::T.untyped)
   SET_REQUIRE_REQUIRE_RELATIVE = ::T.let(nil, ::T.untyped)
   SET_RETURNING_UNIQUE_BY = ::T.let(nil, ::T.untyped)
-  SET_SAVE_AND_OPEN_PAGE_SAVE_AND_OPEN_SCREENSHOT = ::T.let(nil, ::T.untyped)
   SET_SELECT_FILTER_FIND_ALL_REJECT = ::T.let(nil, ::T.untyped)
   SET_SELECT_SELECT = ::T.let(nil, ::T.untyped)
   SET_SEND_PUBLIC_SEND___SEND__ = ::T.let(nil, ::T.untyped)
@@ -43967,12 +44188,11 @@ module RuboCop::AST::NodePattern::Sets
   SET___6 = ::T.let(nil, ::T.untyped)
   SET___7 = ::T.let(nil, ::T.untyped)
   SET___8 = ::T.let(nil, ::T.untyped)
+  SET___METHOD_____CALLEE__ = ::T.let(nil, ::T.untyped)
   SET____ = ::T.let(nil, ::T.untyped)
   SET____ETC = ::T.let(nil, ::T.untyped)
   SET____ETC_2 = ::T.let(nil, ::T.untyped)
   SET____ETC_3 = ::T.let(nil, ::T.untyped)
-  SET____ETC_4 = ::T.let(nil, ::T.untyped)
-  SET____ETC_5 = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::AST::ProcessedSource
@@ -44079,6 +44299,10 @@ class RuboCop::Cop::Lint::DeprecatedClassMethods
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Lint::DuplicateBranch
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Lint::DuplicateElsifCondition
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -44107,6 +44331,11 @@ end
 
 class RuboCop::Cop::Lint::EmptyBlock
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::EmptyClass
+  CLASS_MSG = ::T.let(nil, ::T.untyped)
+  METACLASS_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::EmptyConditionalBody
@@ -44154,7 +44383,6 @@ class RuboCop::Cop::Lint::MissingSuper
   CLASS_LIFECYCLE_CALLBACKS = ::T.let(nil, ::T.untyped)
   CONSTRUCTOR_MSG = ::T.let(nil, ::T.untyped)
   METHOD_LIFECYCLE_CALLBACKS = ::T.let(nil, ::T.untyped)
-  OBJECT_LIFECYCLE_CALLBACKS = ::T.let(nil, ::T.untyped)
   STATELESS_CLASSES = ::T.let(nil, ::T.untyped)
 end
 
@@ -44270,10 +44498,40 @@ end
 
 class RuboCop::Cop::Performance::AncestorsInclude
   MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::ArraySemiInfiniteRangeSlice
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+  SLICE_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::BigDecimalWithNumericArgument
   MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::BindCall
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::BlockGivenWithExplicitBlock
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::Caller
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::Casecmp
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::ChainArrayAllocation
+  RETURNS_NEW_ARRAY = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::CollectionLiteralInLoop
@@ -44287,15 +44545,68 @@ class RuboCop::Cop::Performance::CollectionLiteralInLoop
   POST_CONDITION_LOOP_TYPES = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Performance::ConstantRegexp
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::Count
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::DeletePrefix
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::DeleteSuffix
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Performance::Detect
   CANDIDATE_METHODS = ::T.let(nil, ::T.untyped)
   INDEX_MSG = ::T.let(nil, ::T.untyped)
   INDEX_REVERSE_MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::EndWith
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::FixedSize
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::FlatMap
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::InefficientHashSearch
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::IoReadlines
-  ENUMERABLE_METHODS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::MethodObjectAsBlock
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::OpenStruct
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::RangeInclude
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::RedundantMatch
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::RedundantMerge
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::RedundantSortBlock
@@ -44304,11 +44615,20 @@ end
 
 class RuboCop::Cop::Performance::RedundantStringChars
   MSG = ::T.let(nil, ::T.untyped)
-  REPLACEABLE_METHODS = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::ReverseEach
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::ReverseFirst
   MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::Size
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::SortReverse
@@ -44318,14 +44638,38 @@ end
 class RuboCop::Cop::Performance::Squeeze
   MSG = ::T.let(nil, ::T.untyped)
   PREFERRED_METHODS = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::StartWith
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::StringInclude
   MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::StringReplacement
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Performance::Sum
   MSG = ::T.let(nil, ::T.untyped)
+  MSG_IF_NO_INIT_VALUE = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::TimesMap
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::UnfreezeString
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::UriDefaultParser
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::AlignLeftLetBrace
@@ -44957,6 +45301,8 @@ class RuboCop::Cop::Style::Dir
 end
 
 class RuboCop::Cop::Style::DocumentDynamicEvalDefinition
+  BLOCK_COMMENT_REGEXP = ::T.let(nil, ::T.untyped)
+  COMMENT_REGEXP = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -45037,6 +45383,10 @@ class RuboCop::Cop::Style::NilComparison
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Style::NilLambda
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Style::NonNilCheck
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -45064,6 +45414,10 @@ end
 
 class RuboCop::Cop::Style::RandomWithOffset
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::RedundantArgument
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RedundantAssignment
@@ -45131,6 +45485,10 @@ class RuboCop::Cop::Style::SlicingWithRange
 end
 
 class RuboCop::Cop::Style::SoleNestedConditional
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::StaticClass
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -45207,6 +45565,10 @@ class RuboCop::TargetFinder
   HIDDEN_PATH_SUBSTRING = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::TargetRuby::GemspecFile
+  GEMSPEC_EXTENSION = ::T.let(nil, ::T.untyped)
+end
+
 RuboCop::Token = RuboCop::AST::Token
 
 module RuboCop::Version
@@ -45259,6 +45621,7 @@ class RubyLex::TerminateLineInput
 end
 
 class RubyLex
+  def self.compile_with_errors_suppressed(code); end
 end
 
 module RubyNext
@@ -45593,6 +45956,13 @@ end
 
 class SdrClient::Deposit::SingleFileGroupingStrategy
   def self.run(uploads: T.unsafe(nil)); end
+end
+
+class SdrClient::Deposit::UnexpectedResponse
+end
+
+class SdrClient::Deposit::UnexpectedResponse
+  def self.call(response); end
 end
 
 class SdrClient::Deposit::UpdateDroWithFileIdentifiers
@@ -46108,7 +46478,6 @@ module StateMachines::Integrations::ActiveRecord
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
   def ext(newext=T.unsafe(nil)); end
@@ -46218,6 +46587,1035 @@ end
 Struct::Passwd = Etc::Passwd
 
 Struct::Tms = Process::Tms
+
+class StructuralGenerator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module SuperDiff
+  COLORS = ::T.let(nil, ::T.untyped)
+end
+
+module SuperDiff::ColorizedDocumentExtensions
+  def alpha(*args, **opts, &block); end
+
+  def beta(*args, **opts, &block); end
+end
+
+module SuperDiff::ColorizedDocumentExtensions
+  def self.extended(extendee); end
+end
+
+class SuperDiff::Configuration
+  def add_extra_diff_formatter_class(*classes); end
+
+  def add_extra_diff_formatter_classes(*classes); end
+
+  def add_extra_differ_class(*classes); end
+
+  def add_extra_differ_classes(*classes); end
+
+  def add_extra_inspector_class(*classes); end
+
+  def add_extra_inspector_classes(*classes); end
+
+  def add_extra_operation_tree_builder_class(*classes); end
+
+  def add_extra_operation_tree_builder_classes(*classes); end
+
+  def add_extra_operation_tree_class(*classes); end
+
+  def add_extra_operation_tree_classes(*classes); end
+
+  def extra_diff_formatter_classes(); end
+
+  def extra_differ_classes(); end
+
+  def extra_inspector_classes(); end
+
+  def extra_operation_tree_builder_classes(); end
+
+  def extra_operation_tree_classes(); end
+end
+
+class SuperDiff::Configuration
+end
+
+module SuperDiff::Csi
+end
+
+class SuperDiff::Csi::BoldSequence
+end
+
+class SuperDiff::Csi::BoldSequence
+end
+
+class SuperDiff::Csi::Color
+  def background?(); end
+
+  def foreground?(); end
+
+  def interpret_layer!(layer); end
+
+  def layer(); end
+
+  def to_foreground(); end
+end
+
+class SuperDiff::Csi::Color
+  def self.exists?(name); end
+
+  def self.resolve(value, layer:); end
+
+  def self.sub_colorized_areas_in(text); end
+end
+
+class SuperDiff::Csi::ColorSequenceBlock
+  include ::Enumerable
+  def <<(color); end
+
+  def each(&block); end
+
+  def initialize(colors=T.unsafe(nil)); end
+
+  def push(color); end
+end
+
+class SuperDiff::Csi::ColorSequenceBlock
+end
+
+class SuperDiff::Csi::ColorizedDocument
+  def colorize_block(colors, opts, &block); end
+
+  def colorize_inline(contents, colors, opts); end
+end
+
+class SuperDiff::Csi::ColorizedDocument
+end
+
+class SuperDiff::Csi::Document
+  include ::Enumerable
+  def add_part(part); end
+
+  def bold(*args, **opts, &block); end
+
+  def colored(*args, **opts, &block); end
+
+  def colorize(*args, **opts, &block); end
+
+  def derive_request_from(name); end
+
+  def each(&block); end
+
+  def evaluate_block(&block); end
+
+  def indent(by:, &block); end
+
+  def indentation_stack(); end
+
+  def initialize(&block); end
+
+  def line(*contents, indent_by: T.unsafe(nil), &block); end
+
+  def method_missing(name, *args, **opts, &block); end
+
+  def newline(); end
+
+  def parts(); end
+
+  def plain(*contents, **_, &block); end
+
+  def text(*contents, **_, &block); end
+end
+
+class SuperDiff::Csi::Document::ColorRequest
+  def resolve(doc, args, opts, &block); end
+end
+
+class SuperDiff::Csi::Document::ColorRequest
+end
+
+class SuperDiff::Csi::Document::MethodRequest
+  def resolve(doc, args, opts, &block); end
+end
+
+class SuperDiff::Csi::Document::MethodRequest
+end
+
+class SuperDiff::Csi::Document::Request
+  def for_line?(); end
+
+  def initialize(name:, line:); end
+
+  def name(); end
+
+  def wrapper(); end
+end
+
+class SuperDiff::Csi::Document::Request
+end
+
+class SuperDiff::Csi::Document
+end
+
+class SuperDiff::Csi::EightBitColor
+  def initialize(value=T.unsafe(nil), layer: T.unsafe(nil), red: T.unsafe(nil), green: T.unsafe(nil), blue: T.unsafe(nil), type: T.unsafe(nil), index: T.unsafe(nil)); end
+  LAYERS_BY_LEADING_CODE = ::T.let(nil, ::T.untyped)
+  LEADING_CODES_BY_LAYER = ::T.let(nil, ::T.untyped)
+  OPENING_REGEX = ::T.let(nil, ::T.untyped)
+  SERIAL_CODE = ::T.let(nil, ::T.untyped)
+  STARTING_INDICES = ::T.let(nil, ::T.untyped)
+  VALID_CODES_BY_NAME = ::T.let(nil, ::T.untyped)
+  VALID_CODE_RANGE = ::T.let(nil, ::T.untyped)
+  VALID_COMPONENT_RANGE = ::T.let(nil, ::T.untyped)
+  VALID_PAIR_INDEX_RANGES = ::T.let(nil, ::T.untyped)
+  VALID_PAIR_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Csi::EightBitColor
+  def self.opening_regex(); end
+end
+
+class SuperDiff::Csi::FourBitColor
+  def initialize(value, layer: T.unsafe(nil)); end
+  COLORS_BY_CODE = ::T.let(nil, ::T.untyped)
+  OPENING_REGEX = ::T.let(nil, ::T.untyped)
+  VALID_CODES_BY_NAME = ::T.let(nil, ::T.untyped)
+  VALID_CODE_RANGES = ::T.let(nil, ::T.untyped)
+  VALID_NAMES = ::T.let(nil, ::T.untyped)
+  VALID_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Csi::FourBitColor
+  def self.opening_regex(); end
+end
+
+class SuperDiff::Csi::ResetSequence
+end
+
+class SuperDiff::Csi::ResetSequence
+end
+
+class SuperDiff::Csi::TwentyFourBitColor
+  def initialize(value=T.unsafe(nil), layer: T.unsafe(nil), red: T.unsafe(nil), green: T.unsafe(nil), blue: T.unsafe(nil)); end
+  LAYERS_BY_LEADING_CODE = ::T.let(nil, ::T.untyped)
+  LEADING_CODES_BY_LAYER = ::T.let(nil, ::T.untyped)
+  OPENING_REGEX = ::T.let(nil, ::T.untyped)
+  SERIAL_CODE = ::T.let(nil, ::T.untyped)
+  VALID_COMPONENT_RANGE = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Csi::TwentyFourBitColor::Triplet
+  def blue(); end
+
+  def green(); end
+
+  def initialize(red:, green:, blue:); end
+
+  def red(); end
+end
+
+class SuperDiff::Csi::TwentyFourBitColor::Triplet
+end
+
+class SuperDiff::Csi::TwentyFourBitColor
+  def self.opening_regex(); end
+end
+
+class SuperDiff::Csi::UncolorizedDocument
+  def colorize_block(*_, &block); end
+
+  def colorize_inline(contents, *_); end
+end
+
+class SuperDiff::Csi::UncolorizedDocument
+end
+
+module SuperDiff::Csi
+  def self.already_colorized?(text); end
+
+  def self.color_enabled=(color_enabled); end
+
+  def self.color_enabled?(); end
+
+  def self.colorize(*args, **opts, &block); end
+
+  def self.decolorize(text); end
+
+  def self.inspect_colors_in(text); end
+
+  def self.reset_sequence(); end
+end
+
+module SuperDiff::DiffFormatters
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::DiffFormatters::Array
+end
+
+class SuperDiff::DiffFormatters::Array
+  def self.applies_to?(operation_tree); end
+end
+
+class SuperDiff::DiffFormatters::Base
+  include ::SuperDiff::ImplementationChecks
+  def add_comma?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::DiffFormatters::Base
+  def self.applies_to?(*_); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::DiffFormatters::Collection
+  def add_comma?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+  ICONS = ::T.let(nil, ::T.untyped)
+  STYLES = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::DiffFormatters::Collection
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::DiffFormatters::CustomObject
+end
+
+class SuperDiff::DiffFormatters::CustomObject
+end
+
+class SuperDiff::DiffFormatters::DefaultObject
+  def initialize(operation_tree, value_class: T.unsafe(nil), **rest); end
+
+  def value_class(); end
+end
+
+class SuperDiff::DiffFormatters::DefaultObject
+  def self.applies_to?(operation_tree); end
+end
+
+class SuperDiff::DiffFormatters::Hash
+end
+
+class SuperDiff::DiffFormatters::Hash
+  def self.applies_to?(operation_tree); end
+end
+
+class SuperDiff::DiffFormatters::Main
+  def add_comma?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::DiffFormatters::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::DiffFormatters::MultilineString
+end
+
+class SuperDiff::DiffFormatters::MultilineString
+  def self.applies_to?(operation_tree); end
+end
+
+module SuperDiff::DiffFormatters
+end
+
+module SuperDiff::Differs
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Differs::Array
+end
+
+class SuperDiff::Differs::Array
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::Base
+  include ::SuperDiff::ImplementationChecks
+  def call(); end
+
+  def indentation(); end
+
+  def initialize(*values); end
+
+  def operation_tree_builder_class(); end
+end
+
+class SuperDiff::Differs::Base
+  extend ::SuperDiff::ImplementationChecks
+  def self.applies_to?(_expected, _actual); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::Differs::CustomObject
+end
+
+class SuperDiff::Differs::CustomObject
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::DefaultObject
+end
+
+class SuperDiff::Differs::DefaultObject
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::Empty
+end
+
+class SuperDiff::Differs::Empty
+end
+
+class SuperDiff::Differs::Hash
+end
+
+class SuperDiff::Differs::Hash
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::Main
+  def call(); end
+
+  def initialize(*values); end
+
+  def omit_empty?(); end
+end
+
+class SuperDiff::Differs::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::Differs::MultilineString
+end
+
+class SuperDiff::Differs::MultilineString
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::Differs::TimeLike
+end
+
+class SuperDiff::Differs::TimeLike
+  def self.applies_to?(expected, actual); end
+end
+
+module SuperDiff::Differs
+end
+
+module SuperDiff::EqualityMatchers
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::EqualityMatchers::Array
+  def diff(); end
+end
+
+class SuperDiff::EqualityMatchers::Array
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::Base
+  def call(); end
+
+  def fail(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::EqualityMatchers::Base
+  def self.applies_to?(_value); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::EqualityMatchers::Default
+  def actual_line(); end
+
+  def diff(); end
+
+  def diff_section(); end
+
+  def expected_line(); end
+end
+
+class SuperDiff::EqualityMatchers::Default
+end
+
+class SuperDiff::EqualityMatchers::Hash
+  def diff(); end
+end
+
+class SuperDiff::EqualityMatchers::Hash
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::Main
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::EqualityMatchers::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::EqualityMatchers::MultilineString
+end
+
+class SuperDiff::EqualityMatchers::MultilineString
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::Primitive
+end
+
+class SuperDiff::EqualityMatchers::Primitive
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::EqualityMatchers::SinglelineString
+end
+
+class SuperDiff::EqualityMatchers::SinglelineString
+  def self.applies_to?(value); end
+end
+
+module SuperDiff::EqualityMatchers
+end
+
+module SuperDiff::Errors
+end
+
+class SuperDiff::Errors::NoDiffFormatterAvailableError
+  def initialize(); end
+
+  def operation_tree(); end
+
+  def operation_tree=(operation_tree); end
+end
+
+class SuperDiff::Errors::NoDiffFormatterAvailableError
+  def self.create(operation_tree); end
+end
+
+class SuperDiff::Errors::NoDifferAvailableError
+  def actual(); end
+
+  def actual=(actual); end
+
+  def expected(); end
+
+  def expected=(expected); end
+
+  def initialize(); end
+end
+
+class SuperDiff::Errors::NoDifferAvailableError
+  def self.create(expected, actual); end
+end
+
+module SuperDiff::Errors
+end
+
+module SuperDiff::Helpers
+end
+
+module SuperDiff::Helpers
+  def self.plural_type_for(value); end
+
+  def self.style(*args, color_enabled: T.unsafe(nil), **opts, &block); end
+end
+
+module SuperDiff::ImplementationChecks
+  def unimplemented_class_method!(); end
+
+  def unimplemented_instance_method!(); end
+end
+
+module SuperDiff::ImplementationChecks
+end
+
+module SuperDiff::ObjectInspection
+end
+
+class SuperDiff::ObjectInspection::InspectionTree
+  include ::Enumerable
+  def add_break(*args, &block); end
+
+  def add_inspection_of(value=T.unsafe(nil), &block); end
+
+  def add_text(*args, &block); end
+
+  def apply_tree(tree); end
+
+  def before_each_callbacks(); end
+
+  def each(&block); end
+
+  def evaluate(object, as_single_line:, indent_level:); end
+
+  def evaluate_block(object, &block); end
+
+  def initialize(&block); end
+
+  def insert_array_inspection_of(array); end
+
+  def insert_hash_inspection_of(hash, initial_break: T.unsafe(nil)); end
+
+  def insert_separated_list(enumerable, separator: T.unsafe(nil)); end
+
+  def nested(&block); end
+
+  def when_empty(&block); end
+
+  def when_multiline(&block); end
+
+  def when_non_empty(&block); end
+
+  def when_singleline(&block); end
+end
+
+class SuperDiff::ObjectInspection::InspectionTree::BlockArgument
+  def as_single_line(); end
+
+  def as_single_line?(); end
+
+  def initialize(*values); end
+
+  def object(); end
+end
+
+class SuperDiff::ObjectInspection::InspectionTree::BlockArgument
+end
+
+class SuperDiff::ObjectInspection::InspectionTree
+end
+
+module SuperDiff::ObjectInspection::Inspectors
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Array
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Array
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Base
+  def as_single_line?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+
+  def inspection_tree(); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Base
+  extend ::SuperDiff::ImplementationChecks
+  def self.applies_to?(_value); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::CustomObject
+end
+
+class SuperDiff::ObjectInspection::Inspectors::CustomObject
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::DefaultObject
+end
+
+class SuperDiff::ObjectInspection::Inspectors::DefaultObject
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Hash
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Hash
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Main
+  def as_single_line?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Primitive
+end
+
+class SuperDiff::ObjectInspection::Inspectors::Primitive
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::String
+end
+
+class SuperDiff::ObjectInspection::Inspectors::String
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::ObjectInspection::Inspectors::TimeLike
+  TIME_FORMAT = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::ObjectInspection::Inspectors::TimeLike
+  def self.applies_to?(value); end
+end
+
+module SuperDiff::ObjectInspection::Inspectors
+end
+
+module SuperDiff::ObjectInspection::Nodes
+end
+
+class SuperDiff::ObjectInspection::Nodes::Base
+  def clone_with(tree: T.unsafe(nil), immediate_value: T.unsafe(nil), block: T.unsafe(nil)); end
+
+  def evaluate(object, indent_level:, as_single_line:); end
+
+  def initialize(tree, *args, &block); end
+
+  def pretty_print(pp); end
+
+  def type(); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::Base
+end
+
+class SuperDiff::ObjectInspection::Nodes::Break
+  def evaluate(_object, indent_level:, as_single_line:); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::Break
+end
+
+class SuperDiff::ObjectInspection::Nodes::Inspection
+end
+
+class SuperDiff::ObjectInspection::Nodes::Inspection
+end
+
+class SuperDiff::ObjectInspection::Nodes::Nesting
+end
+
+class SuperDiff::ObjectInspection::Nodes::Nesting
+end
+
+class SuperDiff::ObjectInspection::Nodes::Text
+  def evaluate(object, **_); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::Text
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenMultiline
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenMultiline
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenNonEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenNonEmpty
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenSingleline
+end
+
+class SuperDiff::ObjectInspection::Nodes::WhenSingleline
+end
+
+module SuperDiff::ObjectInspection::Nodes
+  def self.fetch(type); end
+
+  def self.registry(); end
+end
+
+module SuperDiff::ObjectInspection
+  def self.inspect(object, as_single_line:, indent_level: T.unsafe(nil)); end
+end
+
+module SuperDiff::OperationTreeBuilders
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTreeBuilders::Array
+end
+
+class SuperDiff::OperationTreeBuilders::Array::LcsCallbacks
+  def change(event); end
+
+  def discard_a(event); end
+
+  def discard_b(event); end
+
+  def initialize(*values); end
+
+  def match(event); end
+
+  def operation_tree(); end
+end
+
+class SuperDiff::OperationTreeBuilders::Array::LcsCallbacks
+end
+
+class SuperDiff::OperationTreeBuilders::Array
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::Base
+  include ::SuperDiff::ImplementationChecks
+  def build_operation_tree(); end
+
+  def call(); end
+
+  def initialize(*values); end
+
+  def unary_operations(); end
+end
+
+class SuperDiff::OperationTreeBuilders::Base
+  def self.applies_to?(_expected, _actual); end
+
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::OperationTreeBuilders::CustomObject
+end
+
+class SuperDiff::OperationTreeBuilders::CustomObject
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::DefaultObject
+  def attribute_names(); end
+
+  def find_operation_tree_for(value); end
+
+  def initialize(*args); end
+end
+
+class SuperDiff::OperationTreeBuilders::DefaultObject
+end
+
+class SuperDiff::OperationTreeBuilders::Hash
+end
+
+class SuperDiff::OperationTreeBuilders::Hash
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::Main
+  def all_or_nothing?(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::OperationTreeBuilders::Main
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::OperationTreeBuilders::MultilineString
+  def initialize(*args); end
+end
+
+class SuperDiff::OperationTreeBuilders::MultilineString
+  def self.applies_to?(expected, actual); end
+end
+
+class SuperDiff::OperationTreeBuilders::TimeLike
+end
+
+class SuperDiff::OperationTreeBuilders::TimeLike
+end
+
+module SuperDiff::OperationTreeBuilders
+end
+
+module SuperDiff::OperationTrees
+  DEFAULTS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Array
+  def to_diff(indent_level:, collection_prefix:, add_comma:); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Array
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::OperationTrees::Base
+  def pretty_print(pp); end
+
+  def to_diff(indent_level:, add_comma: T.unsafe(nil), collection_prefix: T.unsafe(nil)); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Base
+  extend ::SuperDiff::ImplementationChecks
+  def self.applies_to?(_value); end
+end
+
+class SuperDiff::OperationTrees::CustomObject
+  def to_diff(indent_level:, add_comma: T.unsafe(nil), collection_prefix: T.unsafe(nil)); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::CustomObject
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::OperationTrees::DefaultObject
+  def initialize(collection, value_class:); end
+
+  def to_diff(indent_level:, add_comma: T.unsafe(nil), **_rest); end
+
+  def value_class(); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::DefaultObject
+end
+
+class SuperDiff::OperationTrees::Hash
+  def to_diff(indent_level:, collection_prefix:, add_comma:); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::Hash
+  def self.applies_to?(value); end
+end
+
+class SuperDiff::OperationTrees::Main
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::OperationTrees::Main
+  def self.call(*args, &block); end
+end
+
+class SuperDiff::OperationTrees::MultilineString
+  def to_diff(indent_level:, collection_prefix:, add_comma:); end
+  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::OperationTrees::MultilineString
+  def self.applies_to?(value); end
+end
+
+module SuperDiff::OperationTrees
+end
+
+module SuperDiff::Operations
+end
+
+class SuperDiff::Operations::BinaryOperation
+  def child_operations(); end
+
+  def initialize(*values); end
+
+  def left_collection(); end
+
+  def left_index(); end
+
+  def left_key(); end
+
+  def left_value(); end
+
+  def name(); end
+
+  def right_collection(); end
+
+  def right_index(); end
+
+  def right_key(); end
+
+  def right_value(); end
+
+  def should_add_comma_after_displaying?(); end
+end
+
+class SuperDiff::Operations::BinaryOperation
+end
+
+class SuperDiff::Operations::UnaryOperation
+  def collection(); end
+
+  def index(); end
+
+  def index_in_collection(); end
+
+  def initialize(name:, collection:, key:, value:, index:, index_in_collection: T.unsafe(nil)); end
+
+  def key(); end
+
+  def name(); end
+
+  def should_add_comma_after_displaying?(); end
+
+  def value(); end
+end
+
+class SuperDiff::Operations::UnaryOperation
+end
+
+module SuperDiff::Operations
+end
+
+module SuperDiff::RecursionGuard
+  PLACEHOLDER = ::T.let(nil, ::T.untyped)
+  RECURSION_GUARD_KEY = ::T.let(nil, ::T.untyped)
+end
+
+module SuperDiff::RecursionGuard
+  def self.already_seen_object_ids(); end
+
+  def self.already_seen_objects(); end
+
+  def self.guarding_recursion_of(*objects, &block); end
+
+  def self.substituting_recursion_of(*objects); end
+end
 
 class SynchronizedDelegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
@@ -47198,12 +48596,6 @@ end
 module User::GeneratedAssociationMethods
   def deposit_ids=(ids); end
 
-  def deposits_into(); end
-
-  def deposits_into=(value); end
-
-  def deposits_into_ids(); end
-
   def deposits_into_ids=(ids); end
 
   def notification_ids=(ids); end
@@ -47473,6 +48865,8 @@ class ViewComponent::Base
   def virtual_path(); end
 
   def with(area, content=T.unsafe(nil), &block); end
+
+  def with_variant(variant); end
 end
 
 class ViewComponent::Base
@@ -48749,9 +50143,9 @@ module Work::GeneratedRelationMethods
 end
 
 class Work
-  extend ::StateMachines::ClassMethods
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::StateMachines::ClassMethods
   def self.after_add_for_attached_files(); end
 
   def self.after_add_for_attached_files=(val); end
@@ -48906,6 +50300,11 @@ class WorkType
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class WorkUpdatesChannel
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Works::ApprovalComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -48921,7 +50320,22 @@ class Works::ContributorsComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Works::DatesComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::DetailComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Works::FileRowComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::StateDisplayComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end

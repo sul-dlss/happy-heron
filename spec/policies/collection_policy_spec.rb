@@ -37,7 +37,7 @@ RSpec.describe CollectionPolicy do
     end
 
     succeed 'when user is a collection manager' do
-      let(:record) { build_stubbed(:collection, managers: [user.sunetid]) }
+      let(:record) { build_stubbed(:collection, managers: [user]) }
     end
 
     succeed 'when user is an admin' do
