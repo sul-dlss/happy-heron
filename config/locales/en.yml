@@ -9,3 +9,7 @@ en:
     type:
       return: Changes requested
       begin_deposit: Deposited
+  contributor:
+    roles:
+      person: Individual
+      organization: Organization

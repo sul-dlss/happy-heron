@@ -10,12 +10,7 @@
   </div>
   <div class="col-md-3">
     <%= form.label :role_term, class: 'form-label' %>
-    <%= form.select :role_term, grouped_options_for_select(Contributor.grouped_options),
-                    {}, class: 'form-select',
-                    data: {
-                      action: 'change->contributors#typeChanged',
-                      target: 'contributors.role'
-                    } %>
+    <%= select_role %>
   </div>
   <div class="col-md-1 role-prefix">
     is
