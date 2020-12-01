@@ -14,7 +14,7 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
   end
 
-  context 'when deposted' do
+  context 'when deposited' do
     let(:work) { build_stubbed(:work, state: 'deposited') }
 
     it 'renders the draft title' do
@@ -45,6 +45,23 @@ RSpec.describe Works::DetailComponent, type: :component do
       it 'renders the messge about review' do
         expect(rendered.css('.alert-warning').to_html).to be_blank
       end
+    end
+  end
+
+  context 'when rejected' do
+    let(:rejection_reason) { 'Why did you die your hair chartreuse?' }
+    let(:work) do
+      build_stubbed(:work,
+                    state: 'rejected',
+                    events: [build_stubbed(:event, description: rejection_reason, event_type: 'rejected')])
+    end
+
+    before do
+      allow(controller).to receive(:allowed_to?).and_return(true)
+    end
+
+    it 'renders the rejection alert' do
+      expect(rendered.css('.alert-danger').to_html).to include(rejection_reason)
     end
   end
 

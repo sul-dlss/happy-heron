@@ -69,7 +69,7 @@ class Work < ApplicationRecord
 
     event :update_metadata do
       transition deposited: :version_draft
-      transition %i[first_draft version_draft] => same
+      transition %i[first_draft version_draft rejected] => same
     end
   end
 
