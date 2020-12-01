@@ -5,7 +5,7 @@
 class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized
+  verify_authorized except: [:show]
 
   def new
     collection = Collection.new(creator: current_user)
@@ -49,6 +49,10 @@ class CollectionsController < ObjectsController
       # Send form errors to client in JSON format to be parsed and rendered there
       render 'errors', status: :bad_request
     end
+  end
+
+  def show
+    @collection = Collection.find(params[:id])
   end
 
   private
