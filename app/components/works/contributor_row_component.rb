@@ -17,13 +17,15 @@ module Works
       form.index != 0
     end
 
+    delegate :grouped_collection_select, to: :form
+
     def select_role
-      form.grouped_collection_select :role_term, grouped_options, :roles, :label, :key, :label,
-                                     {}, class: 'form-select',
-                                         data: {
-                                           action: 'change->contributors#typeChanged',
-                                           target: 'contributors.role auto-citation.contributorRole'
-                                         }
+      grouped_collection_select :role_term, grouped_options, :roles, :label, :key, :label,
+                                {}, class: 'form-select',
+                                    data: {
+                                      action: 'change->contributors#typeChanged change->auto-citation#updateDisplay',
+                                      target: 'contributors.role auto-citation.contributorRole'
+                                    }
     end
 
     # Represents the type of contributor top level option for the role select

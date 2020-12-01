@@ -11,7 +11,7 @@ RSpec.describe Works::ContributorRowComponent do
 
     it 'makes groups with headings' do
       expected = <<~HTML
-        <select class="form-select" data-action="change-&gt;contributors#typeChanged" data-target="contributors.role auto-citation.contributorRole" name="role_term" id="role_term"><optgroup label="Individual"><option value="person|Author">Author</option>
+        <select class="form-select" data-action="change-&gt;contributors#typeChanged change-&gt;auto-citation#updateDisplay" data-target="contributors.role auto-citation.contributorRole" name="role_term" id="role_term"><optgroup label="Individual"><option value="person|Author">Author</option>
         <option value="person|Composer">Composer</option>
         <option value="person|Contributing author">Contributing author</option>
         <option value="person|Copyright holder">Copyright holder</option>
