@@ -13,6 +13,7 @@ class DraftCollectionForm < Reform::Form
   property :manager_sunets, virtual: true, prepopulator: lambda { |_options|
     self.manager_sunets = manager_sunets_from_model.join(', ')
   }
+  property :email_when_participants_changed
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
