@@ -25,6 +25,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work)
     if @form.validate(work_params) && @form.save
+      work.event_context = { user: current_user }
       after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
@@ -46,6 +47,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work)
     if @form.validate(work_params) && @form.save
+      work.event_context = { user: current_user }
       work.update_metadata!
 
       after_save(work)

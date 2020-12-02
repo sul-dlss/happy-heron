@@ -112,6 +112,13 @@ module GeneratedUrlHelpers
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def collection_url(*args, **kwargs); end
 
+  # Sigs for route /contact_form(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def contact_form_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def contact_form_url(*args, **kwargs); end
+
   # Sigs for route /help(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def help_path(*args, **kwargs); end

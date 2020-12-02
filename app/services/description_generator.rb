@@ -88,7 +88,7 @@ class DescriptionGenerator
       type: 'creation',
       date: [
         {
-          value: date.respond_to?(:to_edtf) ? date.to_edtf : date.to_s,
+          value: date.respond_to?(:edtf) ? date.edtf : date.to_s,
           encoding: { code: 'edtf' }
         }
       ]
@@ -104,7 +104,7 @@ class DescriptionGenerator
       type: 'publication',
       date: [
         {
-          value: date.respond_to?(:to_edtf) ? date.to_edtf : date.to_s,
+          value: date.respond_to?(:edtf) ? date.edtf : date.to_s,
           encoding: { code: 'edtf' },
           status: 'primary'
         }

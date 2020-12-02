@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Create a new work in a deposited collection', js: true do
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, depositors: [user]) }
+  let!(:collection) { create(:collection, :deposited, depositors: [user]) }
 
   before do
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
@@ -134,7 +134,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
   end
 
   context 'when unsuccessful' do
-    let(:collection) { create(:collection, depositors: [user]) }
+    let(:collection) { create(:collection, :deposited, depositors: [user]) }
 
     it 'does not submit' do
       visit "/collections/#{collection.id}/works/new?work_type=text"

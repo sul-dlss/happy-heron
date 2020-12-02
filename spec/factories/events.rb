@@ -4,8 +4,8 @@
 FactoryBot.define do
   factory :event do
     description { 'MyString' }
-    event_type { 'MyString' }
-    work { nil }
+    event_type { 'update_metadata' }
+    eventable { nil }
     user
   end
 end

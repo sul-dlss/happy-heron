@@ -29,4 +29,46 @@ RSpec.describe Collection do
       end
     end
   end
+
+  describe 'state machine flow' do
+    it 'starts in first draft' do
+      expect(collection.state).to eq('first_draft')
+    end
+
+    describe 'a begin_deposit event' do
+      before do
+        allow(DepositCollectionJob).to receive(:perform_later)
+      end
+
+      it 'transitions from first_draft to depositing' do
+        expect { collection.begin_deposit! }
+          .to change(collection, :state)
+          .to('depositing')
+          .and change(Event, :count).by(1)
+        expect(DepositCollectionJob).to have_received(:perform_later).with(collection)
+      end
+    end
+
+    describe 'an update_metadata event' do
+      let(:collection) { create(:collection, :deposited) }
+
+      it 'transitions to version draft' do
+        expect { collection.update_metadata! }
+          .to change(collection, :state)
+          .from('deposited').to('version_draft')
+          .and change(Event, :count).by(1)
+      end
+    end
+
+    describe 'a deposit_complete event' do
+      let(:collection) { create(:collection, :depositing, druid: 'druid:foo') }
+
+      it 'transitions to deposited' do
+        expect { collection.deposit_complete! }
+          .to change(collection, :state)
+          .to('deposited')
+          .and change(Event, :count).by(1)
+      end
+    end
+  end
 end

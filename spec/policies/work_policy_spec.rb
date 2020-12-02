@@ -7,7 +7,7 @@ RSpec.describe WorkPolicy do
   let(:user) { build_stubbed :user }
   # `record` must be defined - it is the authorization target
   let(:record) { build_stubbed :work, collection: collection }
-  let(:collection) { build_stubbed :collection }
+  let(:collection) { build_stubbed :collection, :deposited }
 
   # `context` is the authorization context
   let(:context) do
@@ -29,7 +29,7 @@ RSpec.describe WorkPolicy do
     end
 
     failed 'when user is a depositor but the collection is depositing' do
-      let(:collection) { build_stubbed :collection, state: 'depositing' }
+      let(:collection) { build_stubbed :collection, :depositing }
 
       before { collection.depositors = [user] }
     end
