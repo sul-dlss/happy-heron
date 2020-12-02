@@ -65,5 +65,10 @@ module Works
     def display_approval?
       work.pending_approval? && !helpers.allowed_to?(:review?, work)
     end
+
+    sig { returns(String) }
+    def rejection_reason
+      work.events.reverse.find { |e| e.event_type == 'rejected' }.description
+    end
   end
 end

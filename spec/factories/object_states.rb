@@ -17,4 +17,8 @@ FactoryBot.define do
   trait :deposited do
     state { 'deposited' }
   end
+
+  trait :rejected do
+    state { 'rejected' }
+  end
 end

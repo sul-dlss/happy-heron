@@ -5,6 +5,14 @@
       <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
+  <% if work.rejected? %>
+    <div class="alert alert-danger alert-dismissible text-dark" role="alert">
+      <h3>Approver has returned your deposit</h3>
+      <p>Fix the following and then submit it again for approval.</p>
+      <div class="p-3"><%= rejection_reason %></div>
+      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
 
   <header class="title">
     <span class="header-text"><%= title %></span>
@@ -81,7 +89,6 @@
       <% end %>
     </tbody>
   </table>
-
 
   <table class="table table-sm mb-5">
     <thead class="table-light">

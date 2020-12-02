@@ -44,7 +44,7 @@ RSpec.describe 'Works requests' do
         expect(response).to redirect_to(dashboard_path)
         expect(DepositJob).not_to have_received(:perform_later)
 
-        expect(work.reload).to be_first_draft
+        expect(work.reload).to be_rejected
         expect(work.events.last.description).to eq 'Add more stuff'
       end
     end

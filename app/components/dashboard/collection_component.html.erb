@@ -29,7 +29,7 @@
               <% end %>
             <% end %>
           </td>
-          <td><%= work.state.humanize %></td>
+          <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
           <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
           <td><%= link_to work.purl, work.purl if work.purl %></td>
           <td><span class="fas fa-quote-left"></span> Cite</td>

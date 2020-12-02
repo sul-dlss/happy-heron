@@ -9,6 +9,7 @@ module Works
         'first_draft' => 'Draft - Not deposited',
         'version_draft' => 'New version draft - Not deposited',
         'pending_approval' => 'Pending approval - Not deposited',
+        'rejected' => 'Returned',
         'depositing' => 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>'.html_safe,
         'deposited' => 'Deposited'
       }.freeze,
