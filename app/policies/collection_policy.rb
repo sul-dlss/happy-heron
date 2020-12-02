@@ -22,13 +22,9 @@ class CollectionPolicy < ApplicationPolicy
 
   sig { returns(T::Boolean) }
   def update?
-    administrator? || manages_collection?(record)
-  end
+    return false unless record.can_update_metadata?
 
-  # Can this collection be deposited
-  sig { returns(T::Boolean) }
-  def deposit?
-    record.can_begin_deposit?
+    administrator? || manages_collection?(record)
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups

@@ -50,8 +50,12 @@ RSpec.describe WorkPolicy do
       let(:record) { build_stubbed :work, depositor: user }
     end
 
-    failed 'when user is the depositor and status is pending_approval' do
+    failed 'when user is a depositor and status is pending_approval' do
       let(:record) { build_stubbed :work, :pending_approval, depositor: user }
+    end
+
+    failed 'when user is a depositor and status is depositing' do
+      let(:record) { build_stubbed :work, :depositing, depositor: user }
     end
 
     succeed 'when user is an admin and status is not pending_approval' do

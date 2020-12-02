@@ -10,23 +10,11 @@ RSpec.describe ButtonsComponent do
   let(:work_form) { WorkForm.new(work) }
   let(:rendered) { render_inline(component) }
 
-  before do
-    allow(controller).to receive(:allowed_to?).and_return(depositable)
+  it 'renders the deposit button' do
+    expect(rendered.css('input[value="Deposit"]')).to be_present
   end
 
-  context 'when allowed to deposit' do
-    let(:depositable) { true }
-
-    it 'renders the deposit button' do
-      expect(rendered.css('input[value="Deposit"]')).to be_present
-    end
-  end
-
-  context 'when not allowed to deposit' do
-    let(:depositable) { false }
-
-    it "doesn't render the deposit button" do
-      expect(rendered.css('input[value="Deposit"]')).not_to be_present
-    end
+  it 'renders the save draft button' do
+    expect(rendered.css('input[value="Save as draft"]')).to be_present
   end
 end

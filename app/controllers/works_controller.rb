@@ -79,7 +79,6 @@ class WorksController < ObjectsController
   sig { params(work: Work).void }
   def after_save(work)
     if deposit_button_pushed?
-      authorize! work, to: :deposit?
       if work.collection.review_enabled?
         work.submit_for_review!
       else
