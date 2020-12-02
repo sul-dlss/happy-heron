@@ -9,6 +9,7 @@ class CollectionPolicy < ApplicationPolicy
   end
 
   alias_rule :edit?, to: :update?
+  alias_rule :delete?, to: :destroy?
 
   # Those who are members of the LDAP collection group may create collections
   sig { returns(T::Boolean) }
@@ -29,6 +30,11 @@ class CollectionPolicy < ApplicationPolicy
       record.managers.include?(user) ||
       record.reviewers.include?(user) ||
       record.depositor_ids.include?(user.id)
+  end
+
+  sig { returns(T::Boolean) }
+  def destroy?
+    (administrator? || collection_creator?) && record.state == 'first_draft' && record.works.count.zero?
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups

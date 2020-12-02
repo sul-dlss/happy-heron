@@ -56,6 +56,15 @@ class CollectionsController < ObjectsController
     authorize! @collection
   end
 
+  def destroy
+    collection = Collection.find(params[:id])
+    authorize! collection
+
+    collection.destroy
+
+    redirect_to dashboard_path
+  end
+
   private
 
   sig { params(collection: Collection).void }

@@ -4,6 +4,7 @@
 # Authorization policy for Work objects
 class WorkPolicy < ApplicationPolicy
   alias_rule :edit?, to: :update?
+  alias_rule :delete?, to: :destroy?
 
   relation_scope :edits do |scope|
     scope.where(depositor: user)
@@ -44,6 +45,11 @@ class WorkPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def review?
     record.pending_approval? && (administrator? || record.collection.reviewers.include?(user))
+  end
+
+  sig { returns(T::Boolean) }
+  def destroy?
+    (administrator? || record.depositor == user) && record.state == 'first_draft'
   end
 
   delegate :administrator?, to: :user_with_groups

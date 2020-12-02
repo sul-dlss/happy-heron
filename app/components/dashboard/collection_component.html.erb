@@ -5,6 +5,12 @@
         <span class="fas fa-pencil-alt"></span>
       <% end %>
     <% end %>
+
+    <% if allowed_to?(:delete?, collection) %>
+      <%= link_to collection_path(collection), method: :delete, aria: { label: "Delete #{name}"}, data: {confirm: "Are you sure you want to delete this draft collection? It cannot be undone."} do %>
+        <span class="far fa-trash-alt"></span>
+      <% end %>
+    <% end %>
   </header>
 
   <table class="table">
@@ -26,6 +32,12 @@
             <% if allowed_to? :edit?, work %>
               <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work: work).title}" } do %>
                 <span class="fas fa-pencil-alt"></span>
+              <% end %>
+            <% end %>
+
+            <% if allowed_to?(:delete?, work) %>
+              <%= link_to work_path(work), method: :delete, aria: { label: "Delete #{work.title}"}, data: {confirm: "Are you sure you want to delete this draft work? It cannot be undone."} do %>
+                <span class="far fa-trash-alt"></span>
               <% end %>
             <% end %>
           </td>
