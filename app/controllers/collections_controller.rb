@@ -42,6 +42,8 @@ class CollectionsController < ObjectsController
 
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
+      collection.update_metadata!
+
       after_save(collection)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
