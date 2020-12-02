@@ -68,7 +68,9 @@ RSpec.describe 'Collections requests' do
             contact_email: user.email,
             access: 'world',
             manager_sunets: user.sunetid,
-            depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
+            depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
+            email_when_participants_changed: true,
+            email_depositors_status_changed: true
           }
         end
 
@@ -81,6 +83,8 @@ RSpec.describe 'Collections requests' do
           expect(collection.depositors).to all(be_kind_of(User))
           expect(collection.depositors).to include(User.find_by!(email: 'maya.aguirre@stanford.edu'))
           expect(collection.managers).to eq [user]
+          expect(collection.email_when_participants_changed).to eq true
+          expect(collection.email_depositors_status_changed).to eq true
         end
 
         context 'when overriding manager list and review workflow defaults' do
@@ -218,7 +222,8 @@ RSpec.describe 'Collections requests' do
             contact_email: user.email,
             access: 'world',
             manager_sunets: user.sunetid,
-            depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
+            depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
+            email_depositors_status_changed: true
           }
         end
 
@@ -227,6 +232,8 @@ RSpec.describe 'Collections requests' do
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           expect(collection.depositors.size).to eq 6
+          collection.reload
+          expect(collection.email_depositors_status_changed).to be true
         end
 
         it 'updates the collection via draft save' do

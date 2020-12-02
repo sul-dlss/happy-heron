@@ -73,6 +73,8 @@ class CollectionsController < ObjectsController
   def collection_params
     params.require(:collection).permit(:name, :description, :contact_email,
                                        :access, :manager_sunets, :depositor_sunets,
-                                       :review_enabled, :reviewer_sunets)
+                                       :review_enabled, :reviewer_sunets,
+                                       :email_when_participants_changed,
+                                       :email_depositors_status_changed)
   end
 end
