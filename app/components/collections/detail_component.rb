@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Collections
-  # Renders the details about the work (show page)
+  # Renders the details section of the collection (show page)
   class DetailComponent < ApplicationComponent
     sig { params(collection: Collection).void }
     def initialize(collection:)
