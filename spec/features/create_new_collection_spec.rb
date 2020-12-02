@@ -21,6 +21,9 @@ RSpec.describe 'Create a new collection', js: true do
       fill_in 'Collection name', with: collection_attrs.fetch(:name)
       fill_in 'Description', with: collection_attrs.fetch(:description)
       fill_in 'Contact email', with: collection_attrs.fetch(:contact_email)
+      check 'Send email to collection Managers and Reviewers when participants are added/removed.'
+
+      expect(page).to have_content('Send email to Depositors whose status has changed.')
 
       click_button 'Deposit'
 
