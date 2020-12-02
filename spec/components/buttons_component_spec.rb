@@ -10,8 +10,18 @@ RSpec.describe ButtonsComponent do
   let(:work_form) { WorkForm.new(work) }
   let(:rendered) { render_inline(component) }
 
-  it 'renders the deposit button' do
-    expect(rendered.css('input[value="Deposit"]')).to be_present
+  context 'when collection does not require reviews' do
+    it 'renders submit button as "Deposit"' do
+      expect(rendered.css('input[value="Deposit"]')).to be_present
+    end
+  end
+
+  context 'when collection requires reviews' do
+    let(:work) { build(:work, collection: build(:collection, :with_reviewers, id: 8)) }
+
+    it 'renders submit button as "Submit for approval"' do
+      expect(rendered.css('input[value="Submit for approval"]')).to be_present
+    end
   end
 
   it 'renders the save draft button' do

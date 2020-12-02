@@ -23,7 +23,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       find("a[aria-label='Edit #{work.title}']").click
       fill_in 'Title of deposit', with: new_work_title
       check 'I agree to the SDR Terms of Deposit'
-      click_button 'Deposit'
+      click_button 'Submit for approval'
 
       expect(page).to have_content(new_work_title)
       expect(page).to have_content('Pending approval - Not deposited')
@@ -41,11 +41,10 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       click_link new_work_title
       expect(page).to have_content(rejection_reason)
 
-      # TODO: ask Amy if rejection should show up on the edit page
       find("a[aria-label='Edit #{new_work_title}']").click
       fill_in 'Title of deposit', with: newest_work_title
       check 'I agree to the SDR Terms of Deposit'
-      click_button 'Deposit'
+      click_button 'Submit for approval'
 
       expect(page).to have_content(newest_work_title)
       expect(page).to have_content('Pending approval - Not deposited')
@@ -56,7 +55,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       end
       expect(page).to have_content('Review all details below, then approve or return this deposit')
       find('label', text: 'Approve and deposit').click
-      click_button('Submit')
+      click_button 'Submit'
 
       expect(page).to have_link(newest_work_title)
       click_link(newest_work_title)
