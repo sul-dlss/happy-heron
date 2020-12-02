@@ -1,4 +1,4 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+// JavaScript to disable form submissions if there are invalid fields
 (function () {
   'use strict'
   window.addEventListener('turbolinks:load', function() {
