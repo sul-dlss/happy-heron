@@ -1,6 +1,6 @@
 #collection {
   .title {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 
     .header-text {
       @extend h3;
@@ -9,6 +9,11 @@
     .state {
       @extend .fst-italic;
       margin-left: 30px;
+    }
+
+    .deposit-button {
+      float: right;
+      margin-bottom: 5px;
     }
   }
 

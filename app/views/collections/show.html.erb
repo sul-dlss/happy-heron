@@ -3,6 +3,18 @@
   <section class="details">
     <header class="title">
       <span class="header-text"><%= @collection.name %></span>
+      <span class="deposit-button">
+        <% if allowed_to?(:deposit?, @collection) %>
+          <%= button_tag '+ Deposit to this collection',
+                data: {
+                  destination: new_collection_work_path(collection_id: @collection.id),
+                  toggle: 'modal',
+                  target: '#workTypeModal',
+                  action: "work-type#set_collection"
+                },
+                class: "btn btn-primary" %>
+        <% end %>
+      </span
     </header>
 
     <div class="tab-content" id="collectionTabs">
@@ -17,6 +29,16 @@
 
       <div id="deposits" class="tab-pane fade">
         <%= render Dashboard::CollectionComponent.new(collection: @collection) %>
+      </div>
+    </div>
+  </section>
+
+  <section data-controller="work-type">
+    <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <%= render Works::WorkTypeModalComponent.new %>
+        </div>
       </div>
     </div>
   </section>
