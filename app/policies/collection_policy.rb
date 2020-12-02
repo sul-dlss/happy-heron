@@ -4,7 +4,7 @@
 # Authorization policy for Collection objects
 class CollectionPolicy < ApplicationPolicy
   # Return the relation defining the collections you can deposit into, manage or review.
-  scope_for :deposit do |relation|
+  relation_scope :deposit do |relation|
     relation.where(id: user.deposits_into_ids + user.manages_collection_ids + user.reviews_collection_ids)
   end
 

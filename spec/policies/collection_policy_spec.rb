@@ -50,7 +50,7 @@ RSpec.describe CollectionPolicy do
   end
 
   describe 'scope' do
-    subject(:scope) { policy.apply_scope(Collection, type: :deposit) }
+    subject(:scope) { policy.apply_scope(Collection, type: :active_record_relation, name: :deposit) }
 
     let(:policy) { described_class.new context }
     let!(:collection) { create(:collection) }
