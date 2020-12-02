@@ -48,4 +48,33 @@ RSpec.describe CollectionPolicy do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
   end
+
+  describe 'scope' do
+    subject(:scope) { policy.apply_scope(Collection, type: :deposit) }
+
+    let(:policy) { described_class.new context }
+    let!(:collection) { create(:collection) }
+
+    context 'when the user is not affiliated' do
+      it { is_expected.not_to include(collection) }
+    end
+
+    context 'when the user is a manager' do
+      let!(:collection) { create(:collection, managers: [user]) }
+
+      it { is_expected.to include(collection) }
+    end
+
+    context 'when the user is a reviewer' do
+      let!(:collection) { create(:collection, reviewers: [user]) }
+
+      it { is_expected.to include(collection) }
+    end
+
+    context 'when the user is a depositor' do
+      let!(:collection) { create(:collection, depositors: [user]) }
+
+      it { is_expected.to include(collection) }
+    end
+  end
 end

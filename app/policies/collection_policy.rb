@@ -3,13 +3,9 @@
 
 # Authorization policy for Collection objects
 class CollectionPolicy < ApplicationPolicy
-  # Return the relation defining the collections you can deposit into.
+  # Return the relation defining the collections you can deposit into, manage or review.
   scope_for :deposit do |relation|
-    if administrator?
-      relation.all
-    else
-      relation.where(creator: user_with_groups.user).or(relation.where(id: user.deposits_into_ids))
-    end
+    relation.where(id: user.deposits_into_ids + user.manages_collection_ids + user.reviews_collection_ids)
   end
 
   alias_rule :edit?, to: :update?
