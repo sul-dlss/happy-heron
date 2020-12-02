@@ -61,15 +61,13 @@ RSpec.describe 'Dashboard requests' do
 
     before do
       create(:work, collection: collection, state: 'pending_approval', title: 'To Review')
-      create(:work, collection: collection, state: 'first_draft', title: 'No Review')
       sign_in user
     end
 
-    it 'shows a link to create collections' do
+    it 'shows the collection to review' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'To Review'
-      expect(response.body).not_to include 'No Review'
     end
   end
 

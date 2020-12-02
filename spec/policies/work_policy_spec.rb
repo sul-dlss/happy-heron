@@ -91,4 +91,35 @@ RSpec.describe WorkPolicy do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
   end
+
+  describe 'scope' do
+    subject(:scope) { policy.apply_scope(collection.works, type: :active_record_relation, name: :edits) }
+
+    let(:policy) { described_class.new context }
+    let(:collection) { create(:collection) }
+    let(:work) { create(:work, collection: collection) }
+
+    context 'when the user is not affiliated' do
+      it { is_expected.to be_empty }
+    end
+
+    context 'when the user is the depositor' do
+      let(:user) { create(:user) }
+      let(:work) { create(:work, collection: collection, depositor: user) }
+
+      it { is_expected.to include(work) }
+    end
+
+    context 'when the user is a reviewer' do
+      let(:collection) { create(:collection, reviewers: [user]) }
+
+      it { is_expected.to include(work) }
+    end
+
+    context 'when the user is a manager' do
+      let(:collection) { create(:collection, managers: [user]) }
+
+      it { is_expected.to include(work) }
+    end
+  end
 end

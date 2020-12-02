@@ -9,7 +9,7 @@ class DashboardsController < ApplicationController
   def show
     authorize! :dashboard
     @presenter = DashboardPresenter.new(
-      collections: authorized_scope(Collection, type: :deposit),
+      collections: authorized_scope(Collection.all, as: :deposit),
       approvals: Work.with_state(:pending_approval)
                       .joins(collection: :reviewers)
                       .where('reviewers.user_id' => current_user),

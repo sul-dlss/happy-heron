@@ -21,7 +21,7 @@ module Dashboard
     sig { returns(ActiveRecord::Relation) }
     def deposits
       policy = WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
-      policy.authorized_scope(collection.works.limit(5), as: :depositor)
+      policy.authorized_scope(collection.works.limit(5), as: :edits)
     end
   end
 end

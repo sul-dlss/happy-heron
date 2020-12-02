@@ -5,8 +5,9 @@
 class WorkPolicy < ApplicationPolicy
   alias_rule :edit?, to: :update?
 
-  relation_scope :depositor do |scope|
+  relation_scope :edits do |scope|
     scope.where(depositor: user)
+         .or(scope.where(collection_id: [user.manages_collection_ids + user.reviews_collection_ids]))
   end
 
   # Can deposit a work iff:
