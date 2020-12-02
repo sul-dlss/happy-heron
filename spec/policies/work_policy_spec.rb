@@ -66,6 +66,10 @@ RSpec.describe WorkPolicy do
       let(:collection) { build_stubbed :collection, managers: [user] }
     end
 
+    succeed 'when user is a collection reviewer and status is not pending_approval' do
+      let(:collection) { build_stubbed :collection, reviewers: [user] }
+    end
+
     failed 'when user is an admin and status is pending_approval' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
       let(:record) { build_stubbed :work, :pending_approval }
