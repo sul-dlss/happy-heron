@@ -49,7 +49,7 @@ class WorkPolicy < ApplicationPolicy
 
   sig { returns(T::Boolean) }
   def destroy?
-    (administrator? || record.depositor == user) && record.state == 'first_draft'
+    (administrator? || record.depositor == user) && record.first_draft?
   end
 
   delegate :administrator?, to: :user_with_groups
