@@ -103,4 +103,11 @@ class Work < ApplicationRecord
   def created_edtf
     EDTF.parse(super)
   end
+
+  # This ensures that action-policy doesn't think that every 'Work.new' is the same.
+  # This supports the following:
+  #   allowed_to :create?, Work.new(collection:collection)
+  def policy_cache_key
+    persisted? ? cache_key : object_id
+  end
 end
