@@ -27,7 +27,7 @@ class Collection < ApplicationRecord
     end
 
     event :begin_deposit do
-      transition %i[first_draft version_draft deposited] => :depositing
+      transition %i[first_draft version_draft] => :depositing
     end
 
     event :deposit_complete do
