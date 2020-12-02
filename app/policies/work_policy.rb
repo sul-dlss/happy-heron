@@ -22,12 +22,14 @@ class WorkPolicy < ApplicationPolicy
     (collection.depositor_ids.include?(user.id) || manages_collection?(collection))
   end
 
-  # Only the depositor may edit/update a work if it is not in review
+  # Can edit a work iff:
+  #   1. The work is in a state where it can be updated (e.g. not depositing)
+  #   2. The user is an administrator, the depositor of the work, or a manager of the collection the work is in.
   sig { returns(T::Boolean) }
   def update?
     return false unless record.can_update_metadata?
 
-    !record.pending_approval? && (administrator? || record.depositor == user)
+    administrator? || record.depositor == user || record.collection.managers.include?(user)
   end
 
   # The collection reviewers can review a work
