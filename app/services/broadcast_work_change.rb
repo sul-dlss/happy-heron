@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 # Sends messages about a work changing state to the WorkUpdatesChannel

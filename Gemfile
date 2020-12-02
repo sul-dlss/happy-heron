@@ -26,6 +26,7 @@ group :development do
   gem 'sorbet', '0.5.5981' # pin until https://github.com/sorbet/sorbet/issues/3561 is resolved
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'state_machines-graphviz'
   gem 'web-console', '>= 3.3.0'
 end
 

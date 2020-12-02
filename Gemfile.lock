@@ -399,6 +399,8 @@ GEM
       rubocop
     ruby-enum (0.8.0)
       i18n
+    ruby-graphviz (1.2.5)
+      rexml
     ruby-next-core (0.10.5)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
@@ -454,6 +456,9 @@ GEM
     state_machines-activerecord (0.6.0)
       activerecord (>= 4.1)
       state_machines-activemodel (>= 0.5.0)
+    state_machines-graphviz (0.0.2)
+      ruby-graphviz
+      state_machines
     super_diff (0.5.2)
       attr_extras (>= 6.2.4)
       diff-lcs
@@ -540,6 +545,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   state_machines-activerecord
+  state_machines-graphviz
   super_diff
   turbolinks (~> 5)
   view_component (~> 2.18)

@@ -378,7 +378,7 @@ class StateMachines::Machine
   def define_state_accessor; end
   def define_state_initializer; end
   def define_state_predicate; end
-  def draw(*arg0); end
+  def draw(graph_options = nil); end
   def dynamic_initial_state?; end
   def errors_for(_object); end
   def event(*names, &block); end
@@ -408,7 +408,7 @@ class StateMachines::Machine
   def run_scope(scope, machine, klass, states); end
   def self.default_messages; end
   def self.default_messages=(arg0); end
-  def self.draw(*arg0); end
+  def self.draw(class_names, options = nil); end
   def self.find_or_create(owner_class, *args, &block); end
   def self.ignore_method_conflicts; end
   def self.ignore_method_conflicts=(arg0); end
