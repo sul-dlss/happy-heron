@@ -15,9 +15,15 @@ class ButtonsComponent < ApplicationComponent
 
   private
 
-  def work_in_reviewed_coll?
-    return false if form.object.instance_of?(CollectionForm)
+  delegate :object, to: :form
 
-    form.object.model.collection.review_enabled?
+  sig { returns(T.nilable(Work)) }
+  def maybe_work
+    object.model if object.model.is_a?(Work)
+  end
+
+  sig { returns(T.nilable(T::Boolean)) }
+  def work_in_reviewed_coll?
+    maybe_work&.collection&.review_enabled?
   end
 end
