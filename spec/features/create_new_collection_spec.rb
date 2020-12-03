@@ -30,6 +30,9 @@ RSpec.describe 'Create a new collection', js: true do
       expect(page).to have_content(collection_attrs.fetch(:name))
       # The deposit button is not present until the collection is accessioned
       expect(page).not_to have_content('+ Deposit to this collection')
+
+      # We should not see the delete button for this collection since it is not a draft
+      expect(page).not_to have_selector("#remove-collection-#{Collection.last.id}")
     end
   end
 end

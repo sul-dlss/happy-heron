@@ -7,7 +7,7 @@
     <% end %>
 
     <% if allowed_to?(:delete?, collection) %>
-      <%= link_to collection_path(collection), method: :delete, aria: { label: "Delete #{name}"}, data: {confirm: "Are you sure you want to delete this draft collection? It cannot be undone."} do %>
+      <%= link_to collection_path(collection), method: :delete, id: "remove-collection-#{collection.id}", aria: { label: "Delete #{name}"}, data: {confirm: "Are you sure you want to delete this draft collection? It cannot be undone."} do %>
         <span class="far fa-trash-alt"></span>
       <% end %>
     <% end %>
