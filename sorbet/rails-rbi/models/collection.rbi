@@ -90,6 +90,15 @@ module Collection::GeneratedAttributeMethods
   def id?; end
 
   sig { returns(String) }
+  def managers; end
+
+  sig { params(value: T.any(String, Symbol)).void }
+  def managers=(value); end
+
+  sig { returns(T::Boolean) }
+  def managers?; end
+
+  sig { returns(String) }
   def name; end
 
   sig { params(value: T.any(String, Symbol)).void }

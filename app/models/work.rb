@@ -74,11 +74,6 @@ class Work < ApplicationRecord
   end
 
   sig { returns(T.nilable(String)) }
-  def name
-    title.presence || 'No title'
-  end
-
-  sig { returns(T.nilable(String)) }
   def purl
     return nil unless druid
 

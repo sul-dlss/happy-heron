@@ -7,26 +7,6 @@ module User::HABTM_ManagesCollections::ActiveRelation_WhereNot
   def not(opts, *rest); end
 end
 
-module User::HABTM_ManagesCollections::GeneratedAttributeMethods
-  sig { returns(Integer) }
-  def collection_id; end
-
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def collection_id=(value); end
-
-  sig { returns(T::Boolean) }
-  def collection_id?; end
-
-  sig { returns(Integer) }
-  def user_id; end
-
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def user_id=(value); end
-
-  sig { returns(T::Boolean) }
-  def user_id?; end
-end
-
 module User::HABTM_ManagesCollections::GeneratedAssociationMethods
   sig { returns(T.nilable(::User)) }
   def left_side; end
@@ -43,7 +23,7 @@ module User::HABTM_ManagesCollections::GeneratedAssociationMethods
   sig { params(value: T.nilable(::User)).void }
   def left_side=(value); end
 
-  sig { returns(::Collection) }
+  sig { returns(T.nilable(::Collection)) }
   def manages_collection; end
 
   sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
@@ -55,7 +35,7 @@ module User::HABTM_ManagesCollections::GeneratedAssociationMethods
   sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Collection).void)).returns(::Collection) }
   def create_manages_collection!(*args, &block); end
 
-  sig { params(value: ::Collection).void }
+  sig { params(value: T.nilable(::Collection)).void }
   def manages_collection=(value); end
 end
 
@@ -77,7 +57,6 @@ module User::HABTM_ManagesCollections::CustomFinderMethods
 end
 
 class User::HABTM_ManagesCollections < ActiveRecord::Base
-  include User::HABTM_ManagesCollections::GeneratedAttributeMethods
   include User::HABTM_ManagesCollections::GeneratedAssociationMethods
   extend User::HABTM_ManagesCollections::CustomFinderMethods
   extend User::HABTM_ManagesCollections::QueryMethodsReturningRelation

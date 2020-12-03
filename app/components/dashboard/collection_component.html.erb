@@ -21,10 +21,10 @@
     <tbody>
       <% deposits.take(4).each do |work| %>
         <tr>
-          <td class="work-title"><%= link_to work.name, work %></td>
+          <td class="work-title"><%= link_to Works::DetailComponent.new(work: work).title, work %></td>
           <td>
             <% if allowed_to? :edit?, work %>
-              <%= link_to [:edit, work], aria: { label: "Edit #{work.name}" } do %>
+              <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work: work).title}" } do %>
                 <span class="fas fa-pencil-alt"></span>
               <% end %>
             <% end %>
