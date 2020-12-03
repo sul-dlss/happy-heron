@@ -4,7 +4,7 @@
       <header>Deposits in progress</header>
       <% @presenter.drafts.each do |draft| %>
         <div>
-          <%= draft.collection.name %> &gt; <%= link_to Works::DetailComponent.new(work: draft).title, edit_work_path(draft) %>
+          <%= Dashboard::CollectionComponent.new(collection: draft.collection).name %> &gt; <%= link_to Works::DetailComponent.new(work: draft).title, edit_work_path(draft) %>
         </div>
       <% end %>
     </section>
