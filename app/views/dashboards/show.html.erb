@@ -10,34 +10,7 @@
       <% end %>
     </section>
 
-    <% if @presenter.approvals.any? %>
-      <section class="mb-5">
-        <table class="table table-sm">
-          <caption>Approvals</caption>
-
-          <thead class="table-light">
-            <tr>
-              <th>Deposit</th>
-              <th>Depositor</th>
-              <th>Collection</th>
-              <th>Deposit status</th>
-              <th>Last modified</th>
-            </tr>
-          </thead>
-          <tbody>
-          <% @presenter.approvals.each do |submission| %>
-            <tr>
-              <td><%= link_to Works::DetailComponent.new(work: submission).title, work_path(submission) %></td>
-              <td><%= submission.depositor.sunetid %></td>
-              <td><%= submission.collection.name %></td>
-              <td><%= render Works::StateDisplayComponent.new(work: submission) %></td>
-              <td><%= I18n.l(submission.updated_at.to_date, format: :abbr_month) %></td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </section>
-    <% end %>
+    <%= render Dashboard::ApprovalsComponent.new(presenter: @presenter) %>
 
     <section data-controller="work-type">
       <header>Your collections
