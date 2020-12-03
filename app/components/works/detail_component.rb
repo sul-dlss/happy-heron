@@ -12,12 +12,17 @@ module Works
     sig { returns(Work) }
     attr_reader :work
 
-    delegate :title, :purl, :collection, :version, :work_type,
+    delegate :purl, :collection, :version, :work_type,
              :contact_email,  :abstract, :citation,
              :published_edtf, :created_edtf,
              :depositor, :attached_files, :contributors,
              :related_works, :related_links, :events,
              to: :work
+
+    sig { returns(String) }
+    def title
+      work.title.presence || 'No title'
+    end
 
     sig { returns(String) }
     def created_at

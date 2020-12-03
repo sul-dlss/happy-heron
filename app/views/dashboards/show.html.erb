@@ -4,7 +4,7 @@
       <header>Deposits in progress</header>
       <% @presenter.drafts.each do |draft| %>
         <div>
-          <%= draft.collection.name %> &gt; <%= link_to draft.title.presence || 'No title', edit_work_path(draft) %>
+          <%= draft.collection.name %> &gt; <%= link_to Works::DetailComponent.new(work: draft).title, edit_work_path(draft) %>
         </div>
       <% end %>
     </section>
@@ -26,7 +26,7 @@
           <tbody>
           <% @presenter.approvals.each do |submission| %>
             <tr>
-              <td><%= link_to submission.title, work_path(submission) %></td>
+              <td><%= link_to Works::DetailComponent.new(work: submission).title, work_path(submission) %></td>
               <td><%= submission.depositor.sunetid %></td>
               <td><%= submission.collection.name %></td>
               <td><%= render Works::StateDisplayComponent.new(work: submission) %></td>

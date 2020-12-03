@@ -33,6 +33,21 @@ RSpec.describe 'Dashboard requests' do
     end
   end
 
+  context 'when user has a draft deposit with no title' do
+    before do
+      sign_in user
+      create(:work, depositor: user, title: '')
+      create(:work, title: 'Secret')
+    end
+
+    it 'shows the deposits that belong to the user with the default title' do
+      get '/dashboard'
+      expect(response).to be_successful
+      expect(response.body).to include 'No title' # this is the default title when none is provided for a draft
+      expect(response.body).not_to include 'Secret'
+    end
+  end
+
   context 'when user has the collection creator LDAP role' do
     before { sign_in user, groups: ['dlss:hydrus-app-collection-creators'] }
 
