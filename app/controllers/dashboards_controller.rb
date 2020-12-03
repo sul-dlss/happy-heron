@@ -15,5 +15,7 @@ class DashboardsController < ApplicationController
                       .where('reviewers.user_id' => current_user),
       drafts: Work.with_state(:first_draft).where(depositor: current_user)
     )
+
+    @presenter.work_stats = StatBuilder.build_stats if user_with_groups.administrator?
   end
 end

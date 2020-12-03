@@ -62,5 +62,7 @@
         </div>
       </div>
     </section>
+
+    <%= render Dashboard::AllCollectionsComponent.new(stats: @presenter.work_stats) %>
   </div>
 </main>
