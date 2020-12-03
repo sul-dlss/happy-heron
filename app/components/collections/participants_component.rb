@@ -12,11 +12,14 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :managers, to: :collection
-
     sig { returns(T.nilable(String)) }
     def depositors
       collection.depositors.pluck(:email).join(', ')
+    end
+
+    sig { returns(T.nilable(String)) }
+    def managers
+      collection.managers.pluck(:email).join(', ')
     end
   end
 end

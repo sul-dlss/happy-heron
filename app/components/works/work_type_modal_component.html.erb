@@ -11,7 +11,7 @@
   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-  <form method="get" action="/collections/1/work/new" data-target="work-type.form">
+  <form method="get" action="<%= collection_path %>" data-target="work-type.form">
     <div class="row">
       <% types.each do |type| %>
         <div class="col-md-3" style="height: 4rem">

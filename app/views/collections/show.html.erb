@@ -4,10 +4,10 @@
     <header class="title">
       <span class="header-text"><%= @collection.name %></span>
       <span class="deposit-button">
-        <% if allowed_to?(:deposit?, @collection) %>
+        <% if allowed_to?(:create?, Work.new(collection: @collection)) %>
           <%= button_tag '+ Deposit to this collection',
                 data: {
-                  destination: new_collection_work_path(collection_id: @collection.id),
+                  destination: new_collection_work_path(@collection),
                   toggle: 'modal',
                   target: '#workTypeModal',
                   action: "work-type#set_collection"
@@ -31,15 +31,15 @@
         <%= render Dashboard::CollectionComponent.new(collection: @collection) %>
       </div>
     </div>
-  </section>
 
-  <section data-controller="work-type">
-    <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <%= render Works::WorkTypeModalComponent.new %>
+    <section data-controller="work-type">
+      <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <%= render Works::WorkTypeModalComponent.new collection: @collection%>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </section>
 </div>

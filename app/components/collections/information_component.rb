@@ -12,7 +12,7 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :creator, :druid, :version,
+    delegate :creator, :druid, :version, :purl,
              to: :collection
 
     sig { returns(String) }
@@ -25,17 +25,10 @@ module Collections
       format_date_string(collection.updated_at)
     end
 
-    sig { returns(T.nilable(String)) }
-    def purl
-      return if collection.druid.nil?
-
-      "https://purl.stanford.edu/#{collection.druid.gsub(/druid:/, '')}"
-    end
-
     private
 
     def format_date_string(date)
-      date.strftime('%B %e, %Y %I:%M%p')
+      I18n.l(date, format: :abbr_month)
     end
   end
 end
