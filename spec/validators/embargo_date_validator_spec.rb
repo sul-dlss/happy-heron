@@ -36,7 +36,13 @@ RSpec.describe EmbargoDateValidator do
     let(:value) { Time.zone.today + 3.years + 1.day }
 
     it 'has errors' do
+      byebug
       expect(record.errors.full_messages).to eq ['Embargo date Must be less than 3 years in the future']
     end
+  end
+
+  context 'with an invalid month' do
+    let(:attribute) { :embargo_date }
+    let(:value) { }
   end
 end

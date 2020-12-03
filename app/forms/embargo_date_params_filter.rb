@@ -19,6 +19,6 @@ class EmbargoDateParamsFilter
     year = params.delete("#{date_attribute}(1i)").to_i
     month = params.delete("#{date_attribute}(2i)").to_i
     day = params.delete("#{date_attribute}(3i)").to_i
-    Date.new(year, month, day)
+    Date.new(year, month, day) if Date.valid_date?(year, month, day)
   end
 end
