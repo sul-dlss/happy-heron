@@ -5,7 +5,6 @@ require 'rails_helper'
 
 RSpec.describe 'Show a work detail' do
   let(:work) { create(:work) }
-  let(:work_with_no_title) { create(:work, title: '') }
   let(:collection) { create(:collection) }
 
   context 'with unauthenticated user' do
@@ -19,23 +18,41 @@ RSpec.describe 'Show a work detail' do
     end
   end
 
-  context 'with an authenticated user' do
+  context 'with an unauthorized user' do
     let(:user) { create(:user) }
 
     before do
-      sign_in user, groups: ['dlss:hydrus-app-collection-creators']
+      sign_in user
+    end
+
+    it 'redirects from /works/:work_id to the root path' do
+      get "/works/#{work.id}"
+      expect(response).to redirect_to(root_path)
+      follow_redirect!
+      expect(response.body).to include 'You are not authorized to perform the requested action'
+    end
+  end
+
+  context 'with an authorized user' do
+    let(:user) { work.depositor }
+
+    before do
+      sign_in user
+      get "/works/#{work.id}"
     end
 
     it 'displays the work' do
-      get "/works/#{work.id}"
       expect(response).to have_http_status(:ok)
       expect(response.body).to include work.title
     end
 
-    it 'displays a default title for a work when it is blank' do
-      get "/works/#{work_with_no_title.id}"
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include 'No title'
+    context 'when the work has a blank title' do
+      let(:work) { create(:work, title: '') }
+
+      it 'displays a default title for a work when it is blank' do
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include 'No title'
+      end
     end
   end
 end

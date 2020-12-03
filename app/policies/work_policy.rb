@@ -41,6 +41,19 @@ class WorkPolicy < ApplicationPolicy
       record.collection.reviewers.include?(user)
   end
 
+  # Can show a work iff any one of the following is true:
+  #   1. The user is an administrator
+  #   2. The user is the depositor of the work
+  #   3. The user is a manager of the collection the work is in
+  #   4. The user is a reviewer of the collection the work is in
+  sig { returns(T::Boolean) }
+  def show?
+    administrator? ||
+      record.depositor == user ||
+      record.collection.managers.include?(user) ||
+      record.collection.reviewers.include?(user)
+  end
+
   # The collection reviewers can review a work
   sig { returns(T::Boolean) }
   def review?

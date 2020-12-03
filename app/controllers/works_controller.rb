@@ -5,7 +5,7 @@
 class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized except: [:show]
+  verify_authorized
 
   def new
     validate_work_types!
@@ -59,6 +59,7 @@ class WorksController < ObjectsController
 
   def show
     @work = Work.find(params[:id])
+    authorize! @work
   end
 
   def destroy
