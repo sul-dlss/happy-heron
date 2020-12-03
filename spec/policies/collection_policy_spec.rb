@@ -49,6 +49,26 @@ RSpec.describe CollectionPolicy do
     end
   end
 
+  describe_rule :show? do
+    failed 'when user is not allowed to view the collection'
+
+    succeed 'when the user is a depositor to the collection' do
+      let(:record) { build_stubbed(:collection, depositors: [user]) }
+    end
+
+    succeed 'when the user is an admin' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+    end
+
+    succeed 'when the user manages the collection' do
+      let(:record) { build_stubbed(:collection, managers: [user]) }
+    end
+
+    succeed 'when the user is a collection reviewer' do
+      let(:record) { build_stubbed(:collection, reviewers: [user]) }
+    end
+  end
+
   describe 'scope' do
     subject(:scope) { policy.apply_scope(Collection, type: :active_record_relation, name: :deposit) }
 

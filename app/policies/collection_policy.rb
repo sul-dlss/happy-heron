@@ -23,5 +23,13 @@ class CollectionPolicy < ApplicationPolicy
     administrator? || manages_collection?(record)
   end
 
+  sig { returns(T::Boolean) }
+  def show?
+    administrator? ||
+      record.managers.include?(user) ||
+      record.reviewers.include?(user) ||
+      record.depositor_ids.include?(user.id)
+  end
+
   delegate :administrator?, :collection_creator?, to: :user_with_groups
 end

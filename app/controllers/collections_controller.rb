@@ -5,7 +5,7 @@
 class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized except: [:show]
+  verify_authorized
 
   def new
     collection = Collection.new(creator: current_user)
@@ -53,6 +53,7 @@ class CollectionsController < ObjectsController
 
   def show
     @collection = Collection.find(params[:id])
+    authorize! @collection
   end
 
   private
