@@ -5,6 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Show a work detail' do
   let(:work) { create(:work) }
+  let(:work_with_no_title) { create(:work, title: '') }
   let(:collection) { create(:collection) }
 
   context 'with unauthenticated user' do
@@ -29,6 +30,12 @@ RSpec.describe 'Show a work detail' do
       get "/works/#{work.id}"
       expect(response).to have_http_status(:ok)
       expect(response.body).to include work.title
+    end
+
+    it 'displays a default title for a work when it is blank' do
+      get "/works/#{work_with_no_title.id}"
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'No title'
     end
   end
 end

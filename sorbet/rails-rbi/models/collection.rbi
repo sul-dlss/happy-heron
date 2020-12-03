@@ -72,6 +72,15 @@ module Collection::GeneratedAttributeMethods
   def druid?; end
 
   sig { returns(T.nilable(T::Boolean)) }
+  def email_depositors_status_changed; end
+
+  sig { params(value: T.nilable(T::Boolean)).void }
+  def email_depositors_status_changed=(value); end
+
+  sig { returns(T::Boolean) }
+  def email_depositors_status_changed?; end
+
+  sig { returns(T.nilable(T::Boolean)) }
   def email_when_participants_changed; end
 
   sig { params(value: T.nilable(T::Boolean)).void }
@@ -88,15 +97,6 @@ module Collection::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def id?; end
-
-  sig { returns(String) }
-  def managers; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def managers=(value); end
-
-  sig { returns(T::Boolean) }
-  def managers?; end
 
   sig { returns(String) }
   def name; end

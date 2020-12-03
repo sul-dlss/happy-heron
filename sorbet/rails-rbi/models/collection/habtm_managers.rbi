@@ -7,6 +7,26 @@ module Collection::HABTM_Managers::ActiveRelation_WhereNot
   def not(opts, *rest); end
 end
 
+module Collection::HABTM_Managers::GeneratedAttributeMethods
+  sig { returns(Integer) }
+  def collection_id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def collection_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def collection_id?; end
+
+  sig { returns(Integer) }
+  def user_id; end
+
+  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  def user_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def user_id?; end
+end
+
 module Collection::HABTM_Managers::GeneratedAssociationMethods
   sig { returns(T.nilable(::Collection)) }
   def left_side; end
@@ -23,7 +43,7 @@ module Collection::HABTM_Managers::GeneratedAssociationMethods
   sig { params(value: T.nilable(::Collection)).void }
   def left_side=(value); end
 
-  sig { returns(T.nilable(::User)) }
+  sig { returns(::User) }
   def manager; end
 
   sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
@@ -35,7 +55,7 @@ module Collection::HABTM_Managers::GeneratedAssociationMethods
   sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::User).void)).returns(::User) }
   def create_manager!(*args, &block); end
 
-  sig { params(value: T.nilable(::User)).void }
+  sig { params(value: ::User).void }
   def manager=(value); end
 end
 
@@ -57,6 +77,7 @@ module Collection::HABTM_Managers::CustomFinderMethods
 end
 
 class Collection::HABTM_Managers < ActiveRecord::Base
+  include Collection::HABTM_Managers::GeneratedAttributeMethods
   include Collection::HABTM_Managers::GeneratedAssociationMethods
   extend Collection::HABTM_Managers::CustomFinderMethods
   extend Collection::HABTM_Managers::QueryMethodsReturningRelation
