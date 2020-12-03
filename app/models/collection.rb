@@ -21,6 +21,13 @@ class Collection < ApplicationRecord
     %w[first_draft depositing].exclude?(state)
   end
 
+  sig { returns(T.nilable(String)) }
+  def purl
+    return nil unless druid
+
+    File.join(Settings.purl_url, T.must(druid).delete_prefix('druid:'))
+  end
+
   state_machine initial: :first_draft do
     after_transition on: :begin_deposit do |collection, _transition|
       DepositCollectionJob.perform_later(collection)

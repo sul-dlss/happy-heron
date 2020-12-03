@@ -51,6 +51,11 @@ class CollectionsController < ObjectsController
     end
   end
 
+  def show
+    @collection = Collection.find(params[:id])
+    authorize! @collection
+  end
+
   private
 
   sig { params(collection: Collection).void }

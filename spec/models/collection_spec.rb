@@ -14,4 +14,19 @@ RSpec.describe Collection do
     collection.contact_email = 'notavalidemail'
     expect { collection.save! }.to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
   end
+
+  describe '#purl' do
+    context 'with a druid' do
+      it 'constructs purl' do
+        collection.update(druid: 'druid:hb093rg5848')
+        expect(collection.purl).to eq('https://purl.stanford.edu/hb093rg5848')
+      end
+    end
+
+    context 'with no druid' do
+      it 'returns nil' do
+        expect(collection.purl).to eq(nil)
+      end
+    end
+  end
 end

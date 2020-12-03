@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   root to: 'welcome#show'
   resource :dashboard, only: :show
 
-  resources :collections, only: %i[new create edit update] do
+  resources :collections, only: %i[new create show edit update] do
     resources :works, shallow: true, only: %i[new create show edit update] do
       resource :review, only: :create
     end

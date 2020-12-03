@@ -1,0 +1,30 @@
+<table class="table table-sm mb-5">
+  <thead class="table-light">
+    <tr>
+      <th scope="col" class="table-title col-3">Collection information</th>
+      <td scope="col"></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>PURL</th>
+      <td><%= link_to purl, purl unless purl.nil? %></td>
+    </tr>
+    <tr>
+      <th>Version details</th>
+      <td><%= version %></td>
+    </tr>
+    <tr>
+      <th>Created by</th>
+      <td><%= creator %></td>
+    </tr>
+    <tr>
+      <th>Collection created</th>
+      <td><%= created %></td>
+    </tr>
+    <tr>
+      <th>Last Saved</th>
+      <td><%= last_saved %></td>
+    </tr>
+  </tbody>
+</table>
