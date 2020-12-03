@@ -1,45 +1,47 @@
-<div class="container" id="collection" data-controller="collection-updates" dat-collection-updates-collection-id="<%= @collection.id %>">
-  <%= render 'nav' %>
-  <section class="details">
-    <header class="title">
-      <span class="header-text"><%= @collection.name %></span>
-      <span class="deposit-button">
-        <% if allowed_to?(:create?, Work.new(collection: @collection)) %>
-          <%= button_tag '+ Deposit to this collection',
-                data: {
-                  destination: new_collection_work_path(@collection),
-                  toggle: 'modal',
-                  target: '#workTypeModal',
-                  action: "work-type#set_collection"
-                },
-                class: "btn btn-primary" %>
-        <% end %>
-      </span
-    </header>
+<main id="content" class="mb-3 mb-md-5">
+  <div id="dashboard" class="container px-4 px-md-3">
+    <div id="collection">
+      <%= render 'nav' %>
+      <section class="details" data-controller="work-type">
+        <header class="title">
+          <span class="header-text"><%= @collection.name %></span>
+          <span class="deposit-button">
+            <% if allowed_to?(:create?, Work.new(collection: @collection)) %>
+              <%= button_tag '+ Deposit to this collection',
+                    data: {
+                      destination: new_collection_work_path(@collection),
+                      toggle: 'modal',
+                      target: '#workTypeModal',
+                      action: "work-type#set_collection"
+                    },
+                    class: "btn btn-primary" %>
+            <% end %>
+          </span>
+        </header>
 
-    <div class="tab-content" id="collectionTabs">
-      <div id="details" class="tab-pane fade show active">
-        <%= render Collections::InformationComponent.new(collection: @collection) %>
-        <%= render Collections::DetailComponent.new(collection: @collection) %>
-        <%= render Collections::ReleaseComponent.new(collection: @collection) %>
-        <%= render Collections::TermsOfUseComponent.new(collection: @collection) %>
-        <%= render Collections::ParticipantsComponent.new(collection: @collection) %>
-        <%= render Collections::WorkflowReviewComponent.new(collection: @collection) %>
-      </div>
+        <div class="tab-content" id="collectionTabs">
+          <div id="details" class="tab-pane fade show active">
+            <%= render Collections::InformationComponent.new(collection: @collection) %>
+            <%= render Collections::DetailComponent.new(collection: @collection) %>
+            <%= render Collections::ReleaseComponent.new(collection: @collection) %>
+            <%= render Collections::TermsOfUseComponent.new(collection: @collection) %>
+            <%= render Collections::ParticipantsComponent.new(collection: @collection) %>
+            <%= render Collections::WorkflowReviewComponent.new(collection: @collection) %>
+          </div>
 
-      <div id="deposits" class="tab-pane fade">
-        <%= render Dashboard::CollectionComponent.new(collection: @collection) %>
-      </div>
-    </div>
-
-    <section data-controller="work-type">
-      <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
-            <%= render Works::WorkTypeModalComponent.new collection: @collection%>
+          <div id="deposits" class="tab-pane fade">
+            <%= render Dashboard::CollectionComponent.new(collection: @collection) %>
           </div>
         </div>
-      </div>
-    </section>
-  </section>
+
+        <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <%= render Works::WorkTypeModalComponent.new %>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
