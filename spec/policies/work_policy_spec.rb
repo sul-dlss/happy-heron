@@ -76,6 +76,26 @@ RSpec.describe WorkPolicy do
     end
   end
 
+  describe_rule :show? do
+    failed 'when user is not the depositor'
+
+    succeed 'when user is the depositor' do
+      let(:record) { build_stubbed :work, depositor: user }
+    end
+
+    succeed 'when user is an admin' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+    end
+
+    succeed 'when user is a collection manager' do
+      let(:collection) { build_stubbed :collection, managers: [user] }
+    end
+
+    succeed 'when user is a collection reviewer' do
+      let(:collection) { build_stubbed :collection, reviewers: [user] }
+    end
+  end
+
   describe_rule :review? do
     failed 'when user is not a reviewer the collection' do
       let(:record) { build_stubbed :work, :pending_approval, collection: collection }
