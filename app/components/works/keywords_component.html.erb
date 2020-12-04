@@ -1,14 +1,14 @@
-<div class="keywords" data-controller="keywords" data-action="focusout->keywords#close error->keywords#error" data-target="edit-deposit.keywordsField">
-  <div class="keywords-container" data-target="keywords.container" data-action="click->keywords#open">
+<div class="keywords" data-controller="keywords" data-action="focusout->keywords#close error->keywords#error" data-edit-deposit-target="keywordsField">
+  <div class="keywords-container" data-keywords-target="container" data-action="click->keywords#open">
     <span class="selection" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1"
       aria-disabled="false" aria-owns="keyword-results">
-      <ul class="rendered" id="keyword-container" data-target="keywords.addItem">
+      <ul class="rendered" id="keyword-container" data-keywords-target="addItem">
         <%= form.fields_for :keywords do |keyword_form| %>
           <%= render Works::SelectedKeywordComponent.new(form: keyword_form) %>
         <% end %>
       </ul>
 
-      <template data-target='keywords.selectedTemplate'>
+      <template data-keywords-target='selectedTemplate'>
         <%= form.fields_for :keywords, Keyword.new(label: 'TEMPLATE_LABEL'), child_index: 'TEMPLATE_RECORD' do |file_form| %>
           <%= render Works::SelectedKeywordComponent.new(form: file_form) %>
         <% end %>
@@ -16,7 +16,7 @@
 
       <span class="search">
         <input class="search-field" type="search" tabindex="0" autocorrect="off"
-               data-target="keywords.search" autocapitalize="none" spellcheck="false"
+               data-keywords-target="search" autocapitalize="none" spellcheck="false"
                role="searchbox" aria-autocomplete="list" autocomplete="off"
                id="work_keywords"
                aria-describedby="keyword-container"
@@ -25,9 +25,9 @@
       </span>
     </span>
   </div>
-  <div data-target="keywords.error" class="invalid-feedback"></div>
+  <div data-keywords-target="error" class="invalid-feedback"></div>
 <%# -- TODO for autocomplete
-  <div class="keywords-container keywords-container-open" data-target="keywords.container">
+  <div class="keywords-container keywords-container-open" data-keywords-target="container">
     <span class="keywords-dropdown select2-dropdown--above">
       <span class="keywords-results">
         <ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="keyword-results" aria-expanded="true" aria-hidden="false">

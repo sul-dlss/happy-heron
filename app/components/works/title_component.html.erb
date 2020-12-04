@@ -6,7 +6,8 @@
        <%= form.text_field :title, class: "form-control", required: true,
                            data: { action: "change->auto-citation#updateDisplay change->progress#check",
                                    'progress-step': 'title',
-                                   target: 'edit-deposit.titleField auto-citation.titleField' } %>
+                                   auto_citation_target: 'titleField',
+                                   edit_deposit_target: 'titleField' } %>
        <div class="invalid-feedback">You must provide a title</div>
      </div>
    </div>

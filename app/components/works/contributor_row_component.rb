@@ -24,7 +24,8 @@ module Works
                                 {}, class: 'form-select',
                                     data: {
                                       action: 'change->contributors#typeChanged change->auto-citation#updateDisplay',
-                                      target: 'contributors.role auto-citation.contributorRole'
+                                      contributors_target: 'role',
+                                      auto_citation_target: 'contributorRole'
                                     }
     end
 

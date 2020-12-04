@@ -17,7 +17,7 @@
   <header class="title">
     <span class="header-text"><%= title %></span>
     <%= link_to edit_work_path(@work), aria: { label: "Edit #{title}"} do %><span class="fas fa-pencil-alt edit"></span><% end %>
-    <span data-target="work-updates.state" class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
+    <span data-work-updates-target="state" class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
   </header>
 
   <table class="table table-sm mb-5">
@@ -30,7 +30,7 @@
     <tbody>
       <tr>
         <th scope="row">Persistent link</th>
-        <td data-target="work-updates.purl">
+        <td data-work-updates-target="url">
           <% if purl %>
             <%= link_to purl, purl %>
           <% else %>

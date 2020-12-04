@@ -11,7 +11,7 @@
   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-  <form method="get" action="/collections/1/work/new" data-target="work-type.form">
+  <form method="get" action="/collections/1/work/new" data-work-type-target="form">
     <div class="row">
       <% types.each do |type| %>
         <div class="col-md-3" style="height: 4rem">
@@ -22,7 +22,7 @@
       <% end %>
     </div>
 
-    <template data-target="work-type.template">
+    <template data-work-type-target="template">
       <div class="col-md-4">
         <div class="form-check">
           <input type="checkbox" name="subtype[]" value="SUBTYPE_LABEL" id="subtype_SUBTYPE_ID" class="form-check-input">
@@ -31,15 +31,15 @@
       </div>
     </template>
 
-    <template data-target="work-type.otherTemplate">
+    <template data-work-type-target="otherTemplate">
       <div class="col-md-4">
         <input type="text" name="subtype[]" class="form-control" id="subtype_other">
       </div>
     </template>
 
-    <div class="row" data-target="work-type.area" hidden></div>
+    <div class="row" data-work-type-target="area" hidden></div>
 
-    <div class="row mb-4" data-target="work-type.subtype"></div>
+    <div class="row mb-4" data-work-type-target="subtype"></div>
 
     <button type="submit" class="btn btn-primary mx-auto d-block">Continue</button>
   </form>
