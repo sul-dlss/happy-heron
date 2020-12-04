@@ -41,7 +41,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
     let(:collection) { create(:collection) }
 
-    it 'does renders the deposit button' do
+    it 'renders the deposit button' do
       expect(rendered.to_html).to include '+ Deposit to this collection'
     end
   end

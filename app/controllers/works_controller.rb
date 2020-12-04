@@ -61,6 +61,15 @@ class WorksController < ObjectsController
     @work = Work.find(params[:id])
   end
 
+  def destroy
+    work = Work.find(params[:id])
+    authorize! work
+
+    work.destroy
+
+    redirect_to dashboard_path
+  end
+
   def normalize_key(key)
     keys = { attached_files: 'file', embargo_date: 'embargo-date' }
     return key unless keys.key? key

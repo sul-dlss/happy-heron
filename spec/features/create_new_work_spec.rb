@@ -130,6 +130,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       expect(page).to have_content('2020-03-06/2020-10-30')
       expect(page).to have_content('Whatever')
       expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
+
+      visit dashboard_path
+
+      # We should not see the delete button for this work since it is not a draft
+      expect(page).not_to have_selector("[aria-label='Delete #{Work.last.title}']")
     end
   end
 

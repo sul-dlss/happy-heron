@@ -1,0 +1,3 @@
+<%= link_to work_path(work), method: :delete, aria: { label: "Delete #{work.title}" }, data: { confirm: "Are you sure you want to delete this draft work? It cannot be undone." } do %>
+  <span class="far fa-trash-alt"></span>
+<% end %>

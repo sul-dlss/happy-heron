@@ -5,6 +5,7 @@
         <span class="fas fa-pencil-alt"></span>
       <% end %>
     <% end %>
+    <%= render Collections::DeleteComponent.new(collection: collection) %>
   </header>
 
   <table class="table">
@@ -28,6 +29,7 @@
                 <span class="fas fa-pencil-alt"></span>
               <% end %>
             <% end %>
+            <%= render Works::DeleteComponent.new(work: work) %>
           </td>
           <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
           <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
