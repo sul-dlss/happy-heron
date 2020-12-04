@@ -73,7 +73,7 @@ module Works
 
     sig { returns(String) }
     def rejection_reason
-      work.events.reverse.find { |e| e.event_type == 'rejected' }.description
+      work.last_rejection_description
     end
   end
 end

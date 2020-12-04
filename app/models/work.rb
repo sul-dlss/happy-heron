@@ -48,6 +48,11 @@ class Work < ApplicationRecord
       BroadcastWorkChange.call(work: work, state: transition.to_name)
     end
 
+    after_transition on: :reject do |work, _transition|
+      NotificationMailer.with(user: work.depositor, work: work)
+                        .reject_email.deliver_later
+    end
+
     # NOTE: there is no approval "event" because when a work is approved in review, it goes
     # directly to begin_deposit event, which will transition it to depositing
 
@@ -112,4 +117,10 @@ class Work < ApplicationRecord
   def policy_cache_key
     persisted? ? cache_key : object_id
   end
+
+  def last_rejection_description
+    events.reverse.find { |e| e.event_type == 'rejected' }&.description
+  end
+
+  delegate :name, to: :collection, prefix: true
 end

@@ -3,6 +3,6 @@
 
 # Base class for all mailers in the application.
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: 'no-reply@sdr.stanford.edu'
   layout 'mailer'
 end

@@ -1,0 +1,12 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>Your deposit, “<%= @work.title %>” to the <%= @work.collection_name %>
+  collection in the Stanford Digital Repository, has been returned to you with the following comments:</p>
+
+<p><%= @work.last_rejection_description %></p>
+
+<p>Click <%= link_to edit_work_url(@work), edit_work_url(@work) %> to revisit your deposit.</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>

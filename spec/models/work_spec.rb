@@ -284,6 +284,10 @@ RSpec.describe Work do
         expect { work.reject! }
           .to change(work, :state)
           .to('rejected')
+          .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                 'NotificationMailer', 'reject_email', 'deliver_now',
+                 { params: { user: work.depositor, work: work }, args: [] }
+               ))
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)
           .with(work, state: 'Returned')
       end
