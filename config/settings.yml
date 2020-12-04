@@ -32,4 +32,4 @@ file_uploads_root: tmp/uploads
 
 purl_url: https://purl.stanford.edu
 
-host: <%= (`echo $HOSTNAME`) %>
+host: <%= Socket.gethostname %>
