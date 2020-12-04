@@ -32,4 +32,10 @@ class NotificationMailer < ApplicationMailer
     @work = params[:work]
     mail(to: @user.email, subject: "A Depositor has submitted a deposit in the #{@work.collection_name} collection")
   end
+
+  def invitation_to_deposit_email
+    @user = params[:user]
+    @collection = params[:collection]
+    mail(to: @user.email, subject: "Invitation to deposit to the #{@collection.name} collection in the SDR")
+  end
 end

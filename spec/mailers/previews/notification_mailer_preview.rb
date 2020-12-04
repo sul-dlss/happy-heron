@@ -8,6 +8,11 @@ class NotificationMailerPreview < ActionMailer::Preview
     NotificationMailer.with(user: work.depositor, work: work).reject_email
   end
 
+  def invitation_to_deposit_email
+    collection = Collection.first
+    NotificationMailer.with(user: collection.creator, collection: collection).invitation_to_deposit_email
+  end
+
   def approved_email
     work = Work.first
     NotificationMailer.with(user: work.depositor, work: work).approved_email

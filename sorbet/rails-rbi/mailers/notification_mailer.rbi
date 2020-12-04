@@ -12,6 +12,9 @@ class NotificationMailer
   def self.new_version_deposited_email; end
 
   sig { returns(ActionMailer::MessageDelivery) }
+  def self.invitation_to_deposit_email; end
+
+  sig { returns(ActionMailer::MessageDelivery) }
   def self.reject_email; end
 
   sig { returns(ActionMailer::MessageDelivery) }
