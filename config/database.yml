@@ -1,7 +1,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  database: "<%= ENV.fetch('DATABASE_NAME', 'h2') %>"
   username: "<%= ENV.fetch('DATABASE_USERNAME', 'postgres') %>"
   password: "<%= ENV.fetch('DATABASE_PASSWORD', 'postgres') %>"
   host: "<%= ENV.fetch('DATABASE_HOSTNAME', 'localhost') %>"
@@ -11,9 +10,12 @@ default: &default
 
 development:
   <<: *default
+  database: "<%= ENV.fetch('DATABASE_NAME', 'h2_development') %>"
 
 test:
   <<: *default
+  database: "<%= ENV.fetch('DATABASE_NAME', 'h2_test') %>"
 
 production:
   <<: *default
+  database: "<%= ENV.fetch('DATABASE_NAME', 'h2_production') %>"
