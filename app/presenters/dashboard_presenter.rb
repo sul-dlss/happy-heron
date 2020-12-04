@@ -24,4 +24,7 @@ class DashboardPresenter
 
   sig { returns(ActiveRecord::Relation) }
   attr_reader :collections
+
+  sig { returns(T.nilable(T::Hash[Collection, T::Hash[String, Integer]])) }
+  attr_accessor :work_stats
 end

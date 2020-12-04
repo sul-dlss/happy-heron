@@ -10,6 +10,10 @@ FactoryBot.define do
     state { 'first_draft' }
   end
 
+  trait :version_draft do
+    state { 'version_draft' }
+  end
+
   trait :depositing do
     state { 'depositing' }
   end

@@ -60,13 +60,34 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user is an application admin' do
-    before { sign_in user, groups: ['dlss:hydrus-app-administrators'] }
+    let(:collection) { create(:collection, creator: user, updated_at: '2020-12-02') }
 
-    it 'shows a link to create collections' do
+    before do
+      sign_in user, groups: ['dlss:hydrus-app-administrators']
+      create(:work, :deposited, collection: collection, depositor: user)
+      create(:work, :first_draft, collection: collection, depositor: user)
+      create(:work, :version_draft, collection: collection, depositor: user)
+      create(:work, :pending_approval, collection: collection, depositor: user)
+      create(:work, :rejected, collection: collection, depositor: user)
+    end
+
+    it 'shows a link to create collections and the all collections table' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Your collections'
       expect(response.body).to include '+ Create a new collection'
+      expect(response.body).to include <<-HTML
+      <tr>
+        <td><a href=\"#{collection_path(collection)}\">MyString</a></td>
+        <td>5</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>Dec 02, 2020</td>
+      </tr>
+      HTML
     end
   end
 
