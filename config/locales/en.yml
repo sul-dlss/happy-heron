@@ -16,4 +16,12 @@ en:
     roles:
       person: Individual
       organization: Organization
+  work:
+    state:
+      first_draft: Draft - Not deposited
+      version_draft: New version draft - Not deposited
+      pending_approval: Pending approval - Not deposited
+      rejected: Returned
+      depositing: Deposit in progress
+      deposited: Deposited
   terms_of_use: User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the depositor.
