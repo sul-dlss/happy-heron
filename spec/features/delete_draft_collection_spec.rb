@@ -24,7 +24,7 @@ RSpec.describe 'Delete a draft collection', js: true do
       collection = Collection.last
       expect(collection).to be_first_draft
       accept_confirm do
-        find("#remove-collection-#{collection.id}").click
+        click_link "Delete #{collection.name}"
       end
       expect(Collection.find_by(id: collection.id)).to be(nil)
     end

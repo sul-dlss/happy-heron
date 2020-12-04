@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Delete a draft work', js: true do
-  let(:work) { create(:work) }
+  let(:work) { create(:work, title: 'Delete me') }
   let(:user) { work.depositor }
 
   before do
@@ -16,7 +16,7 @@ RSpec.describe 'Delete a draft work', js: true do
       expect(work).to be_first_draft
       visit dashboard_path
       accept_confirm do
-        find("#remove-work-#{work.id}").click
+        click_link "Delete #{work.title}"
       end
       expect(Work.find_by(id: work.id)).to be(nil)
     end
