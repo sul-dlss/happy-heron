@@ -40,8 +40,11 @@
 
             <%= link_to('Help', '#contactUsModal',
                         class: 'nav-link',
-                        data: { toggle: 'modal',
-                                target: '#contactUsModal' }) %>
+                        data: {
+                          toggle: 'modal',
+                          target: '#contactUsModal',
+                          controller: 'contact-us'
+                        }) %>
           </nav>
         </header>
 

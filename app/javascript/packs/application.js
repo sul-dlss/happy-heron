@@ -10,7 +10,7 @@ require("channels")
 import 'controllers'
 
 import 'popper.js'
-import 'bootstrap'
+window.bootstrap = require("bootstrap") // Required for contact_us_controller
 require.context('../images', true)
 import 'stylesheets/main'
 import '@fortawesome/fontawesome-free/css/all.css';
