@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
+  # TODO: fix in https://github.com/sul-dlss/happy-heron/issues/672
+  get 'contact_form', to: 'welcome#show'
   resource :help, only: :create
 
   # @note Only admins should be able to access the Sidekiq web UI.  But this is accomplished by Puppet

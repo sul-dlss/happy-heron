@@ -20,5 +20,6 @@ FactoryBot.define do
 
   trait :rejected do
     state { 'rejected' }
+    events { [build(:event, event_type: 'rejected', description: 'Add something to make it pop.')] }
   end
 end

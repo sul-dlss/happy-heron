@@ -39,5 +39,7 @@ module HappyHeron
 
     # Mount the ActionCable server at a known path
     config.action_cable.mount_path = '/cable'
+
+    config.action_mailer.default_url_options = { host: Settings.host }
   end
 end
