@@ -58,7 +58,7 @@
               {
                 data: {
                   action: 'change->auto-citation#switchChanged',
-                  target: 'auto-citation.switch'
+                  auto_citation_target: 'switch'
                 },
                 class: 'form-check-input'
               },
@@ -70,10 +70,10 @@
     <div class='col-sm-2'></div>
     <div class="col-sm-10">
       <%= form.text_area :citation, class: "form-control",
-                         data: { target: 'auto-citation.manual' } %>
+                         data: { auto_citation_target: 'manual' } %>
       <%= form.text_area :citation_auto,
                          class: "form-control", disabled: true,
-                         data: { target: 'auto-citation.auto' } %>
+                         data: { auto_citation_target: 'auto' } %>
     </div>
   </div>
   <div class="mb-5 row">

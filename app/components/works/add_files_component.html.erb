@@ -4,7 +4,8 @@
     have any trouble with adding your files, contact us.</p>
   <div class="dropzone dropzone-default" data-target="files.container">
     <%= form.file_field :files, multiple: true, direct_upload: true,
-                        data: { target: 'dropzone.input edit-deposit.fileField',
+                        data: { dropzone_target: 'input',
+                                edit_deposit_target: 'fileField',
                                 'progress-step': 'file',
                                 action: "change->progress#check error->files#error" } %>
     <div class="dz-message needsclick text-secondary">
@@ -12,14 +13,14 @@
     </div>
   </div>
   <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
-  <div class="invalid-feedback" data-target="files.error"></div>
-  <div class="dropzone-previews" data-target="dropzone.previews">
+  <div class="invalid-feedback" data-files-target="error"></div>
+  <div class="dropzone-previews" data-dropzone-target="previews">
     <%= form.fields_for :attached_files do |file_form| %>
       <%= render Works::FileRowComponent.new(form: file_form) %>
     <% end %>
   </div>
 
-  <template data-target='dropzone.template'>
+  <template data-dropzone-target='template'>
     <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
       <%= render Works::FileRowComponent.new(form: file_form) %>
     <% end %>

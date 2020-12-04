@@ -1,5 +1,5 @@
-<div class="row inner-container" data-controller="contributors" data-action="error->contributors#error" data-target="edit-deposit.contributorsField">
-  <div class="contributors-container col-md-12" data-target="contributors.container">
+<div class="row inner-container" data-controller="contributors" data-action="error->contributors#error" data-edit-deposit-target="contributorsField">
+  <div class="contributors-container col-md-12" data-contributors-target="container">
     <% if not_first_contributor? %>
       <%= button_tag type: 'button', class: 'btn btn-sm float-right', aria: { label: 'Remove' },
                      data: { action: "click->nested-form#removeAssociation" } do %>
@@ -15,32 +15,35 @@
   <div class="col-md-1 role-prefix">
     is
   </div>
-  <div class="col-md-4" data-target="contributors.personName">
+  <div class="col-md-4" data-contributors-target="personName">
     <%= form.label :first_name, class: 'form-label' %>
     <%= form.text_field :first_name, class: 'form-control',
         data: {
           action: 'change->contributors#inputChanged change->auto-citation#updateDisplay',
-          target: 'contributors.personNameInput auto-citation.contributorFirst'
+          auto_citation_target: 'contributorFirst',
+          contributors_target: 'personNameInput',
         }, required: true %>
     <div class="invalid-feedback">You must provide a first name</div>
   </div>
-  <div class="col-md-4" data-target="contributors.personName">
+  <div class="col-md-4" data-contributors-target="personName">
     <%= form.label :last_name, class: 'form-label' %>
     <%= form.text_field :last_name, class: 'form-control',
         data: {
           action: 'change->contributors#inputChanged change->auto-citation#updateDisplay',
-          target: 'contributors.personNameInput auto-citation.contributorLast'
+          auto_citation_target: 'contributorLast',
+          contributors_target: 'personNameInput'
         }, required: true %>
     <div class="invalid-feedback">You must provide a last name</div>
   </div>
-  <div class="col-md-8" data-target="contributors.organizationName">
+  <div class="col-md-8" data-contributors-target="organizationName">
     <%= form.label :full_name, 'Name', class: 'form-label' %>
     <%= form.text_field :full_name, class: 'form-control',
         data: {
           action: 'change->contributors#inputChanged change->auto-citation#updateDisplay',
-          target: 'contributors.organizationNameInput auto-citation.contributorOrg'
+          auto_citation_target: 'contributorOrg',
+          contributors_target: 'organizationNameInput'
         }, required: true %>
     <div class="invalid-feedback">You must provide a name</div>
   </div>
-  <div data-target="contributors.error" class="invalid-feedback"></div>
+  <div data-contributors-target="error" class="invalid-feedback"></div>
 </div>

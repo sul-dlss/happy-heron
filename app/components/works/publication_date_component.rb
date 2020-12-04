@@ -27,7 +27,7 @@ module Works
     def year_field
       number_field_tag 'work[published(1i)]', published_year,
                        data: {
-                         target: 'auto-citation.year',
+                         auto_citation_target: 'year',
                          action: 'change->auto-citation#updateDisplay'
                        },
                        id: 'work_published_year',
@@ -40,7 +40,7 @@ module Works
       select_month published_month,
                    { prefix: 'work', field_name: 'published(2i)', prompt: 'month' },
                    data: {
-                     target: 'auto-citation.month',
+                     auto_citation_target: 'month',
                      action: 'change->auto-citation#updateDisplay'
                    },
                    id: 'work_published_month',
@@ -51,7 +51,7 @@ module Works
       select_day published_day,
                  { prefix: 'work', field_name: 'published(3i)', prompt: 'day' },
                  data: {
-                   target: 'auto-citation.day',
+                   auto_citation_target: 'day',
                    action: 'change->auto-citation#updateDisplay'
                  },
                  id: 'work_published_day',
