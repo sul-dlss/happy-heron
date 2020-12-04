@@ -92,7 +92,7 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user is a reviewer' do
-    let(:collection) { create(:collection, :with_reviewers) }
+    let(:collection) { create(:collection, :deposited, :with_reviewers) }
     let(:user) { collection.reviewers.first }
 
     before do
@@ -108,7 +108,7 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user is a depositor in a collection with reviewers' do
-    let(:collection) { create(:collection, :with_depositors) }
+    let(:collection) { create(:collection, :deposited, :with_depositors) }
     let(:user) { collection.depositors.first }
 
     before do
@@ -125,7 +125,7 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when collection has reviewers' do
-    let(:collection) { create(:collection, :with_reviewers, :with_depositors) }
+    let(:collection) { create(:collection, :deposited, :with_reviewers, :with_depositors) }
     let(:user) { collection.depositors.first }
 
     before do

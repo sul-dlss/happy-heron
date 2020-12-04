@@ -196,6 +196,15 @@ module Collection::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::User]).void }
   def depositors=(value); end
 
+  sig { returns(::Event::ActiveRecord_Associations_CollectionProxy) }
+  def events; end
+
+  sig { returns(T::Array[Integer]) }
+  def event_ids; end
+
+  sig { params(value: T::Enumerable[::Event]).void }
+  def events=(value); end
+
   sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
   def managers; end
 

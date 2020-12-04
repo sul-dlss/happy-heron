@@ -3,7 +3,10 @@
 
 # Models a collection in the database
 class Collection < ApplicationRecord
+  include Eventable
+
   has_many :works, dependent: :destroy
+  has_many :events, as: :eventable, dependent: :destroy
   belongs_to :creator, class_name: 'User'
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
   has_and_belongs_to_many :reviewers, class_name: 'User', join_table: 'reviewers'
@@ -29,6 +32,10 @@ class Collection < ApplicationRecord
   end
 
   state_machine initial: :first_draft do
+    before_transition do |collection, transition|
+      collection.events.build(collection.event_context.merge(event_type: transition.event))
+    end
+
     after_transition on: :begin_deposit do |collection, _transition|
       DepositCollectionJob.perform_later(collection)
     end
@@ -45,5 +52,12 @@ class Collection < ApplicationRecord
       transition deposited: :version_draft
       transition %i[first_draft version_draft] => same
     end
+  end
+
+  private
+
+  sig { override.returns(T::Hash[Symbol, String]) }
+  def default_event_context
+    { user: creator }
   end
 end

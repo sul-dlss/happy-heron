@@ -35,6 +35,24 @@ module Event::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def event_type?; end
 
+  sig { returns(T.nilable(Integer)) }
+  def eventable_id; end
+
+  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
+  def eventable_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def eventable_id?; end
+
+  sig { returns(T.nilable(String)) }
+  def eventable_type; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def eventable_type=(value); end
+
+  sig { returns(T::Boolean) }
+  def eventable_type?; end
+
   sig { returns(Integer) }
   def id; end
 
@@ -61,18 +79,24 @@ module Event::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def user_id?; end
-
-  sig { returns(Integer) }
-  def work_id; end
-
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def work_id=(value); end
-
-  sig { returns(T::Boolean) }
-  def work_id?; end
 end
 
 module Event::GeneratedAssociationMethods
+  sig { returns(T.untyped) }
+  def eventable; end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
+  def build_eventable(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
+  def create_eventable(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
+  def create_eventable!(*args, &block); end
+
+  sig { params(value: T.untyped).void }
+  def eventable=(value); end
+
   sig { returns(::User) }
   def user; end
 
@@ -87,21 +111,6 @@ module Event::GeneratedAssociationMethods
 
   sig { params(value: ::User).void }
   def user=(value); end
-
-  sig { returns(::Work) }
-  def work; end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def build_work(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def create_work(*args, &block); end
-
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def create_work!(*args, &block); end
-
-  sig { params(value: ::Work).void }
-  def work=(value); end
 end
 
 module Event::CustomFinderMethods

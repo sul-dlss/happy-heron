@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Create a new work' do
   let(:work) { create(:work) }
-  let(:collection) { create(:collection) }
+  let(:collection) { create(:collection, :deposited) }
 
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
@@ -31,7 +31,7 @@ RSpec.describe 'Create a new work' do
     end
 
     describe 'new work form' do
-      let(:collection) { create(:collection, depositors: [user]) }
+      let(:collection) { create(:collection, :deposited, depositors: [user]) }
 
       it 'renders the form' do
         get "/collections/#{collection.id}/works/new?work_type=video"
@@ -109,7 +109,7 @@ RSpec.describe 'Create a new work' do
 
     describe 'allowing content changes' do
       let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
-      let(:collection) { create(:collection, depositors: [user]) }
+      let(:collection) { create(:collection, :deposited, depositors: [user]) }
 
       context 'when false' do
         before do
@@ -144,7 +144,7 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with everything' do
-        let(:collection) { create(:collection, depositors: [user]) }
+        let(:collection) { create(:collection, :deposited, depositors: [user]) }
 
         let(:contributors) do
           { '0' =>
@@ -279,7 +279,7 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with a minimal set' do
-        let(:collection) { create(:collection, depositors: [user]) }
+        let(:collection) { create(:collection, :deposited, depositors: [user]) }
         let(:work_params) do
           {
             title: 'Test title',
@@ -338,7 +338,7 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with empty draft' do
-        let(:collection) { create(:collection, depositors: [user]) }
+        let(:collection) { create(:collection, :deposited, depositors: [user]) }
         let(:work_params) do
           {
             title: '',
@@ -370,7 +370,7 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with automatic citation' do
-        let(:collection) { create(:collection, depositors: [user]) }
+        let(:collection) { create(:collection, :deposited, depositors: [user]) }
         let(:work_params) do
           {
             title: '',
@@ -408,7 +408,7 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with a moderated collection' do
-        let(:collection) { create(:collection, :with_reviewers, depositors: [user]) }
+        let(:collection) { create(:collection, :with_reviewers, :deposited, depositors: [user]) }
         let(:work_params) do
           {
             title: 'Test title',

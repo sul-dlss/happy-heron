@@ -1,9 +1,9 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 # Models the deposit of an digital repository object in H2.
 class Work < ApplicationRecord
-  extend T::Sig
+  include Eventable
 
   belongs_to :collection
   belongs_to :depositor, class_name: 'User'
@@ -13,7 +13,7 @@ class Work < ApplicationRecord
   has_many :related_works, dependent: :destroy
   has_many :attached_files, dependent: :destroy
   has_many :keywords, dependent: :destroy
-  has_many :events, dependent: :destroy
+  has_many :events, as: :eventable, dependent: :destroy
 
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
   validates :state, presence: true
@@ -26,18 +26,9 @@ class Work < ApplicationRecord
     world: 'world'
   }
 
-  # Events are logged after state transitions, if the description or user is set, it will be added to the event
-  sig { params(event_context: T::Hash[Symbol, String]).returns(T::Hash[Symbol, String]) }
-  attr_writer :event_context
-
-  sig { returns(T::Hash[Symbol, String]) }
-  def event_context
-    @event_context || { user: depositor }
-  end
-
   state_machine initial: :first_draft do
     before_transition do |work, transition|
-      work.events.build(work.event_context.merge(event_type: transition.to))
+      work.events.build(work.event_context.merge(event_type: transition.event))
     end
 
     after_transition on: :begin_deposit do |work, _transition|
@@ -103,10 +94,12 @@ class Work < ApplicationRecord
     end
   end
 
+  sig { returns(T.nilable(T.any(EDTF::Interval, Date))) }
   def published_edtf
     EDTF.parse(super)
   end
 
+  sig { returns(T.nilable(T.any(EDTF::Interval, Date))) }
   def created_edtf
     EDTF.parse(super)
   end
@@ -114,13 +107,22 @@ class Work < ApplicationRecord
   # This ensures that action-policy doesn't think that every 'Work.new' is the same.
   # This supports the following:
   #   allowed_to :create?, Work.new(collection:collection)
+  sig { returns(T.any(String, Integer)) }
   def policy_cache_key
     persisted? ? cache_key : object_id
   end
 
+  sig { returns(T.nilable(String)) }
   def last_rejection_description
-    events.reverse.find { |e| e.event_type == 'rejected' }&.description
+    events.latest_by_type('reject')&.description
   end
 
   delegate :name, to: :collection, prefix: true
+
+  private
+
+  sig { override.returns(T::Hash[Symbol, String]) }
+  def default_event_context
+    { user: depositor }
+  end
 end

@@ -49,15 +49,12 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   context 'when rejected' do
-    let(:rejection_reason) { 'Why did you die your hair chartreuse?' }
-    let(:work) do
-      build_stubbed(:work,
-                    state: 'rejected',
-                    events: [build_stubbed(:event, description: rejection_reason, event_type: 'rejected')])
-    end
+    let(:rejection_reason) { 'Why did you dye your hair chartreuse?' }
+    let(:work) { create(:work, :rejected) }
 
     before do
       allow(controller).to receive(:allowed_to?).and_return(true)
+      create(:event, description: rejection_reason, event_type: 'reject', eventable: work)
     end
 
     it 'renders the rejection alert' do

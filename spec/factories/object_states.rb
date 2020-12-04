@@ -24,6 +24,9 @@ FactoryBot.define do
 
   trait :rejected do
     state { 'rejected' }
-    events { [build(:event, event_type: 'rejected', description: 'Add something to make it pop.')] }
+
+    after(:create) do |work|
+      create(:event, event_type: 'reject', description: 'Add something to make it pop.', eventable: work)
+    end
   end
 end

@@ -17,39 +17,40 @@ RSpec.describe DepositStatusJob do
     allow(Honeybadger).to receive(:notify)
   end
 
-  context 'when the job is a successful work' do
+  context 'when the job is successful' do
     let(:background_result) { { status: 'complete', output: { druid: druid } } }
 
-    context 'with a citation' do
-      let(:work) { build(:work, state: 'depositing', citation: 'Zappa, F. (2013) :link:') }
+    context 'with a work' do
+      context 'with a citation' do
+        let(:work) { build(:work, :depositing, citation: 'Zappa, F. (2013) :link:') }
 
-      it 'updates the work' do
-        described_class.perform_now(object: work, job_id: job_id)
-        expect(work.druid).to eq druid
-        expect(work.citation).to eq 'Zappa, F. (2013) https://purl.stanford.edu/bc123df4567'
-        expect(work.state_name).to eq :deposited
+        it 'updates the work' do
+          described_class.perform_now(object: work, job_id: job_id)
+          expect(work.druid).to eq druid
+          expect(work.citation).to eq 'Zappa, F. (2013) https://purl.stanford.edu/bc123df4567'
+          expect(work.state_name).to eq :deposited
+        end
+      end
+
+      context 'without a citation' do
+        let(:work) { build(:work, :depositing, citation: nil) }
+
+        it 'adds a druid and transitions to deposited state' do
+          described_class.perform_now(object: work, job_id: job_id)
+          expect(work.druid).to eq druid
+          expect(work.state_name).to eq :deposited
+        end
       end
     end
 
-    context 'without a citation' do
-      let(:work) { build(:work, state: 'depositing', citation: nil) }
+    context 'with a collection' do
+      let(:collection) { build(:collection, :depositing) }
 
-      it 'updates the work' do
-        described_class.perform_now(object: work, job_id: job_id)
-        expect(work.druid).to eq druid
-        expect(work.state_name).to eq :deposited
+      it 'adds a druid and transitions to deposited state' do
+        described_class.perform_now(object: collection, job_id: job_id)
+        expect(collection.druid).to eq druid
+        expect(collection.state_name).to eq :deposited
       end
-    end
-  end
-
-  context 'when the job is successful collection' do
-    let(:work) { build(:collection, state: 'depositing') }
-    let(:background_result) { { status: 'complete', output: { druid: druid } } }
-
-    it 'updates the work' do
-      described_class.perform_now(object: work, job_id: job_id)
-      expect(work.druid).to eq druid
-      expect(work.state_name).to eq :deposited
     end
   end
 

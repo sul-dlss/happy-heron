@@ -233,10 +233,11 @@ CREATE TABLE public.events (
     id bigint NOT NULL,
     description character varying,
     event_type character varying NOT NULL,
-    work_id bigint NOT NULL,
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    eventable_type character varying,
+    eventable_id bigint
 );
 
 
@@ -761,17 +762,17 @@ CREATE UNIQUE INDEX index_depositors_on_collection_id_and_user_id ON public.depo
 
 
 --
+-- Name: index_events_on_eventable_type_and_eventable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_events_on_eventable_type_and_eventable_id ON public.events USING btree (eventable_type, eventable_id);
+
+
+--
 -- Name: index_events_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_events_on_user_id ON public.events USING btree (user_id);
-
-
---
--- Name: index_events_on_work_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_events_on_work_id ON public.events USING btree (work_id);
 
 
 --
@@ -871,14 +872,6 @@ CREATE INDEX index_works_on_state ON public.works USING btree (state);
 
 ALTER TABLE ONLY public.events
     ADD CONSTRAINT fk_rails_0cb5590091 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: events fk_rails_19cce84f7e; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT fk_rails_19cce84f7e FOREIGN KEY (work_id) REFERENCES public.works(id);
 
 
 --
@@ -998,6 +991,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201119215418'),
 ('20201119215854'),
 ('20201201203229'),
-('20201202161823');
-
-
+('20201202161823'),
+('20201202195426');

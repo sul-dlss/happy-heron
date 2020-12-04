@@ -119,6 +119,8 @@ Lint/UnreachableLoop: # (new in 0.89)
   Enabled: true
 Lint/UselessMethodDefinition: # (new in 0.90)
   Enabled: true
+  Exclude:
+    - app/models/concerns/eventable.rb
 Lint/UselessTimes: # (new in 0.91)
   Enabled: true
 
