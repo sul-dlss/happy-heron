@@ -23,6 +23,8 @@ earliest_year: 1000
 allow_sdr_content_changes: true
 
 authorization_group_header: HTTP_X_GROUPS
+name_header: HTTP_X_PERSON_NAME
+
 # mappings from authorization role to workgroup name
 authorization_workgroup_names:
   administrators: 'dlss:hydrus-app-administrators'

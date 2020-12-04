@@ -432,7 +432,8 @@ CREATE TABLE public.users (
     reset_password_sent_at timestamp without time zone,
     remember_created_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    name character varying
 );
 
 
@@ -992,4 +993,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201119215854'),
 ('20201201203229'),
 ('20201202161823'),
-('20201202195426');
+('20201202195426'),
+('20201204214055');
+
+

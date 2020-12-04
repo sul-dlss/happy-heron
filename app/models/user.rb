@@ -30,10 +30,4 @@ class User < ApplicationRecord
   def sunetid
     email.delete_suffix('@stanford.edu')
   end
-
-  sig { returns(String) }
-  # TODO: replace when doing https://github.com/sul-dlss/happy-heron/issues/671
-  def name
-    '[preferred name in directory]'
-  end
 end
