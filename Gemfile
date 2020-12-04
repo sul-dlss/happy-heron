@@ -20,6 +20,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'faker'
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false # needed to update RBIs after adding reform-rails
   gem 'puma', '~> 4.1'
