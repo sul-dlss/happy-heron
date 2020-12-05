@@ -106,7 +106,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       # End of remote form validation
 
       uncheck 'Use default citation'
-      fill_in 'Citation for this deposit (optional)', with: 'Whatever'
+      fill_in 'Provided citation', with: 'Whatever'
 
       click_link 'Terms of Deposit'
       expect(page).to have_content(

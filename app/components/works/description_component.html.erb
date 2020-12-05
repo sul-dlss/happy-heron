@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="mb-3 row">
+  <div class="mb-5 row">
     <% if other_type? %>
       <%= form.label :subtype, 'Other', class: 'col-sm-2 col-form-label' %>
       <div class="col-sm-10">
@@ -44,42 +44,43 @@
     <% end %>
   </div>
 
-  <div class="mb-3 row">
-    <%= form.label :citation, 'Citation for this deposit (optional)', class: 'h5' %>
-  </div>
-  <p>This is the text that others can use when they want to cite this deposit. We highly recommend that you provide the text of that citation here to make it easier for them to cite your work and give you proper credit.</p>
+  <fieldset class="mb-5">
+    <legend class='h5'>Citation for this deposit (optional)</legend>
 
-  <div class="mb-3 row">
-    <%= form.label :default_citation, 'Use default citation', class: "form-check-label col-sm-2" %>
+    <p>This is the text that others can use when they want to cite this deposit. We highly recommend that you provide the text of that citation here to make it easier for them to cite your work and give you proper credit.</p>
 
-    <div class="col-sm-3">
-      <div class="form-check form-switch">
-        <%= form.check_box :default_citation,
-              {
-                data: {
-                  action: 'change->auto-citation#switchChanged',
-                  auto_citation_target: 'switch'
+    <div class="mb-3 row">
+      <%= form.label :default_citation, 'Use default citation', class: "form-check-label col-sm-2" %>
+
+      <div class="col-sm-3">
+        <div class="form-check form-switch">
+          <%= form.check_box :default_citation,
+                {
+                  data: {
+                    action: 'change->auto-citation#switchChanged',
+                    auto_citation_target: 'switch'
+                  },
+                  class: 'form-check-input'
                 },
-                class: 'form-check-input'
-              },
-              'true', 'false' %>
+                'true', 'false' %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="mb-3 row">
-    <div class='col-sm-2'></div>
-    <div class="col-sm-10">
-      <%= form.text_area :citation, class: "form-control",
-                         data: { auto_citation_target: 'manual' } %>
-      <%= form.text_area :citation_auto,
-                         class: "form-control", disabled: true,
-                         data: { auto_citation_target: 'auto' } %>
+    <div class="mb-3 row">
+      <div class='col-sm-2'></div>
+      <div class="col-sm-10">
+        <%= form.text_area :citation, class: "form-control",
+                           aria: { label: 'Provided citation' },
+                           data: { auto_citation_target: 'manual' } %>
+        <%= form.text_area :citation_auto,
+                           class: "form-control", disabled: true,
+                           aria: { label: 'Automatically generated citation' },
+                           data: { auto_citation_target: 'auto' } %>
+      </div>
     </div>
-  </div>
-  <div class="mb-5 row">
-    <div class="col-sm-10">
-    </div>
-  </div>
+  </fieldset>
+
+
   <%= render Works::RelatedWorkComponent.new(form: form) %>
 
   <%= render Works::RelatedLinkComponent.new(form: form) %>
