@@ -37,7 +37,7 @@
         <div class="col-sm-4">
           <div class="form-check">
             <%= form.check_box :subtype, { multiple: true, class: 'form-check-input' }, subtype, nil %>
-            <%= form.label "subtype_#{subtype.parameterize(separator: '_')}", subtype, class: 'form-check-label' %>
+            <%= form.label "subtype_#{sanitized_value(subtype)}", subtype, class: 'form-check-label' %>
           </div>
         </div>
       <% end %>
