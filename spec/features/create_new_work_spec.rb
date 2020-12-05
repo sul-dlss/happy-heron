@@ -13,8 +13,6 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
   end
 
   context 'when successful deposit' do
-    let(:collection_attrs) { attributes_for(:collection) }
-
     it 'deposits and renders work show page' do
       visit dashboard_path
 
@@ -35,7 +33,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       expect(page).to have_content 'Deposit your content'
 
       # Test client-side validation messages
-      fill_in 'Publication year', with: '2021'
+      fill_in 'Publication year', with: '2049'
       fill_in 'Created year', with: '999'
       click_button 'Deposit'
       expect(page).to have_content(
@@ -86,7 +84,6 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       fill_in 'Abstract', with: 'Whatever'
       check 'Musical notation'
 
-      # fill_in 'Citation', with: 'Whatever'
       check 'I agree to the SDR Terms of Deposit'
 
       # Test remote form validation which only happens once client-side validation passes
@@ -125,7 +122,6 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       expect(page).to have_content(user.email)
       expect(page).to have_content('sound')
       expect(page).to have_content('Course/instruction, Musical notation, Poetry reading')
-      expect(page).to have_content(user.email)
       expect(page).to have_content('Best Publisher')
       expect(page).to have_content('2020-03-06/2020-10-30')
       expect(page).to have_content('Whatever')

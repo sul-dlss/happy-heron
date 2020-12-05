@@ -31,6 +31,7 @@ export default class extends Controller {
     const [data, _status, xhr] = event.detail;
     switch (xhr.status) {
       case 400:
+        this.clearErrors()
         this.parseErrors(data)
         break
       default:
@@ -42,12 +43,27 @@ export default class extends Controller {
   parseErrors(data) {
     for (const [fieldName, errorList] of Object.entries(data)) {
       const key = `${fieldName}Field`
-      const target = this.targets.find(key)
-      if (target)
-        target.dispatchEvent(new CustomEvent('error', { detail: errorList }))
-      else
-        console.error(`unable to find target for ${key}`)
+      this.dispatchError(key, errorList)
     }
     window.scrollTo(0, 80)
+  }
+
+  clearErrors() {
+    const clearErrorsTargets = ["titleField", "fileField",
+                                "keywordsField", "contributorsField",
+                                "embargo-dateField"];
+
+    for (const key of clearErrorsTargets) {
+      this.dispatchError(key, [])
+    }
+  }
+
+  dispatchError(key, errorList) {
+    const target = this.targets.find(key)
+    if (target)
+      target.dispatchEvent(new CustomEvent('error', { detail: errorList }))
+    else
+      console.error(`unable to find target for ${key}`)
+
   }
 }
