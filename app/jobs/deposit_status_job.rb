@@ -18,14 +18,14 @@ class DepositStatusJob < BaseDepositJob
     end
   end
 
-  private
-
   # Assigns druid, adds the purl to the citation (if one exists), updates the state and saves.
   def complete_deposit(object, druid)
     object.druid = druid
     object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
     object.deposit_complete!
   end
+
+  private
 
   sig { params(job_id: Integer).returns(T.nilable(Dry::Monads::Result)) }
   def status(job_id:)
