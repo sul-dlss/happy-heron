@@ -31,7 +31,7 @@ class RequestGenerator
   sig { returns(Hash) }
   def model_attributes
     {
-      access: access,
+      access: AccessGenerator.generate(work: work),
       administrative: {
         hasAdminPolicy: Settings.h2.hydrus_apo
       },

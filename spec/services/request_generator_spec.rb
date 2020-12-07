@@ -59,7 +59,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
           label: 'Test title',
           version: 0,
-          access: { access: 'stanford', download: 'stanford' },
+          access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
@@ -113,7 +113,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
           label: 'Test title',
           version: 0,
-          access: { access: 'stanford', download: 'stanford' },
+          access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
@@ -188,7 +188,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
           label: 'Test title',
           version: 1,
-          access: { access: 'stanford', download: 'stanford' },
+          access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
@@ -268,7 +268,7 @@ RSpec.describe RequestGenerator do
           label: 'Test title',
           version: 1,
           externalIdentifier: 'druid:bk123gh4567',
-          access: { access: 'stanford', download: 'stanford' },
+          access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348'
           },
