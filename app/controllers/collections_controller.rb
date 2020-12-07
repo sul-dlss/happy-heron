@@ -91,6 +91,7 @@ class CollectionsController < ObjectsController
                                        :access, :manager_sunets, :depositor_sunets,
                                        :review_enabled, :reviewer_sunets,
                                        :email_when_participants_changed,
-                                       :email_depositors_status_changed)
+                                       :email_depositors_status_changed,
+                                       related_links_attributes: %i[_destroy id link_title url])
   end
 end

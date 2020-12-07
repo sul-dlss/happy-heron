@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe RelatedLink do
-  subject(:related_link) { build(:related_link, work: work) }
+  subject(:related_link) { build(:related_link, linkable: work) }
 
   let(:work) { build(:work) }
 
@@ -17,6 +17,6 @@ RSpec.describe RelatedLink do
   end
 
   it 'belongs to a work' do
-    expect(related_link.work).to be_a(Work)
+    expect(related_link.linkable).to eq work
   end
 end

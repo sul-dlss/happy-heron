@@ -1,0 +1,22 @@
+<table class="table table-sm mb-5">
+  <thead class="table-light">
+    <tr>
+      <th class="table-title col-3">Links to related information</th>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Related links</th>
+      <% if related_links.empty? %>
+        <td>None provided</td>
+      <% else %>
+        <td>
+          <% related_links.each do |link| %>
+            <p><%= link_to link.link_title, link.url %></p>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

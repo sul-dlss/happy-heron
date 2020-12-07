@@ -23,6 +23,14 @@ class DraftCollectionForm < Reform::Form
     self.reviewer_sunets = reviewer_sunets_from_model.join(', ')
   }
 
+  collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
+                             prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? } do
+    property :id
+    property :link_title
+    property :url
+    property :_destroy, virtual: true
+  end
+
   validate :reviewable_form
 
   def sync(*)
