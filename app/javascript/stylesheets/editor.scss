@@ -15,10 +15,11 @@
   }
 
   .inner-container {
+    @extend .col-md-12;
+    @extend .mb-3;
     border: 1px solid gray;
     border-radius: .25rem;
     background-color: $silver-sand;
-    margin: 1rem;
     padding: 1rem;
 
     .role-prefix {
