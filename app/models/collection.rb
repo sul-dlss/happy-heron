@@ -6,6 +6,7 @@ class Collection < ApplicationRecord
   include Eventable
 
   has_many :works, dependent: :destroy
+  has_many :related_links, as: :linkable, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
   belongs_to :creator, class_name: 'User'
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'

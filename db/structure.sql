@@ -342,11 +342,12 @@ ALTER SEQUENCE public.notifications_id_seq OWNED BY public.notifications.id;
 
 CREATE TABLE public.related_links (
     id bigint NOT NULL,
-    work_id bigint NOT NULL,
     link_title character varying,
     url character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    linkable_type character varying,
+    linkable_id bigint
 );
 
 
@@ -805,10 +806,10 @@ CREATE INDEX index_notifications_on_user_id ON public.notifications USING btree 
 
 
 --
--- Name: index_related_links_on_work_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_related_links_on_linkable_type_and_linkable_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_related_links_on_work_id ON public.related_links USING btree (work_id);
+CREATE INDEX index_related_links_on_linkable_type_and_linkable_id ON public.related_links USING btree (linkable_type, linkable_id);
 
 
 --
@@ -908,14 +909,6 @@ ALTER TABLE ONLY public.attached_files
 
 
 --
--- Name: related_links fk_rails_85852d9d42; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.related_links
-    ADD CONSTRAINT fk_rails_85852d9d42 FOREIGN KEY (work_id) REFERENCES public.works(id);
-
-
---
 -- Name: collections fk_rails_ab2fec83b3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -994,6 +987,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201201203229'),
 ('20201202161823'),
 ('20201202195426'),
-('20201204214055');
+('20201204214055'),
+('20201207223546');
 
 
