@@ -2,7 +2,7 @@
   <legend class="h5">Related works (optional)</legend>
 
   <div class="mb-3" data-controller="nested-form">
-    <template data-target='nested-form.template'>
+    <template data-nested-form-target='template'>
       <%= form.fields_for :related_works, RelatedWork.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
         <%= render Works::RelatedWorkRowComponent.new(form: contributor_form) %>
       <% end %>
@@ -12,7 +12,7 @@
       <%= render Works::RelatedWorkRowComponent.new(form: contributor_form) %>
     <% end %>
 
-    <div data-target="nested-form.add_item">
+    <div data-nested-form-target="add_item">
       <%= button_tag '+ Add another related work', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
     </div>
   </div>
