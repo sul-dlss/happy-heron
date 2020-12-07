@@ -231,7 +231,7 @@ RSpec.describe Work do
           .from('deposited').to('version_draft')
           .and change(Event, :count).by(1)
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-          .with(work, state: 'New version draft - Not deposited')
+          .with(work, state: 'New version in draft')
       end
     end
 
@@ -259,7 +259,7 @@ RSpec.describe Work do
             .to('pending_approval')
             .and change(Event, :count).by(1)
           expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Pending approval - Not deposited')
+            .with(work, state: 'Pending approval')
         end
       end
 
@@ -272,7 +272,7 @@ RSpec.describe Work do
             .to('pending_approval')
             .and change(Event, :count).by(1)
           expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Pending approval - Not deposited')
+            .with(work, state: 'Pending approval')
         end
       end
     end

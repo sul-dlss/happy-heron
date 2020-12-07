@@ -145,7 +145,7 @@ RSpec.describe 'Dashboard requests' do
     it 'shows statuses Pending Approval, Returned, First Draft' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include 'Pending approval - Not deposited'
+      expect(response.body).to include 'Pending approval'
       expect(response.body).to include 'Draft - Not deposited'
       expect(response.body).to include 'Returned'
     end

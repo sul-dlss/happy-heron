@@ -26,7 +26,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       click_button 'Submit for approval'
 
       expect(page).to have_content(new_work_title)
-      expect(page).to have_content('Pending approval - Not deposited')
+      expect(page).to have_content('Pending approval')
 
       visit dashboard_path
       within_table('Approvals') do
@@ -47,7 +47,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       click_button 'Submit for approval'
 
       expect(page).to have_content(newest_work_title)
-      expect(page).to have_content('Pending approval - Not deposited')
+      expect(page).to have_content('Pending approval')
 
       visit dashboard_path
       within_table('Approvals') do

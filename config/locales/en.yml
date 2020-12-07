@@ -19,8 +19,8 @@ en:
   work:
     state:
       first_draft: Draft - Not deposited
-      version_draft: New version draft - Not deposited
-      pending_approval: Pending approval - Not deposited
+      version_draft: New version in draft
+      pending_approval: Pending approval
       rejected: Returned
       depositing: Deposit in progress
       deposited: Deposited
