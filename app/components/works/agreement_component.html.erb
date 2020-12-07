@@ -2,7 +2,7 @@
   <div class="form-check col-auto">
     <%= form.check_box :agree_to_terms, required: true, class: 'form-check-input' %>
     <%= form.label :agree_to_terms,
-     "I agree to the #{link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { toggle: 'modal', target: '#termsOfDepositModal'}}".html_safe,
+     "I agree to the #{link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'}}".html_safe,
      class: 'form-check-label' %>
      <div class="invalid-feedback">You must agree to the Terms of Deposit.</div>
   </div>
@@ -13,7 +13,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title" id="content-type-prompt">Terms of Deposit</h3>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <p>

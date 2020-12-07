@@ -2,31 +2,31 @@
   <div class="flashes">
     <% if flash[:success] %>
       <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <%= flash[:success] %>
       </div>
     <% end %>
     <% if flash[:notice] %>
       <div class="alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <%= flash[:notice] %>
       </div>
     <% end %>
     <% if flash[:multi_line_notice] %>
       <div class="alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <%= flash[:multi_line_notice].join("<br/>").html_safe %>
       </div>
     <% end %>
     <% if flash[:warning] %>
       <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <%= flash[:warning] %>
       </div>
     <% end %>
     <% if flash[:error] %>
       <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <%= flash[:error] %>
       </div>
     <% end %>

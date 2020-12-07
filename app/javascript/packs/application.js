@@ -9,7 +9,7 @@ require("@rails/activestorage").start()
 require("channels")
 import 'controllers'
 
-import 'popper.js'
+import '@popperjs/core'
 window.bootstrap = require("bootstrap") // Required for contact_us_controller
 require.context('../images', true)
 import 'stylesheets/main'
