@@ -1,0 +1,40 @@
+<main id="content" class="mb-3 mb-md-5">
+  <div class="container px-4 px-md-3" id="collection">
+    <%= render Collections::TabsComponent.new(collection: @collection) %>
+    <section data-controller="work-type">
+      <%= render Collections::HeaderComponent.new(collection: @collection) %>
+
+      <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th>Deposits in collection</th>
+            <th><span class="visually-hidden">Actions</span></th>
+            <th>Deposit status</th>
+            <th>Last modified</th>
+            <th>Persistent link</th>
+            <th>Citation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @works.each do |work| %>
+            <tr>
+              <td class="work-title"><%= link_to Works::DetailComponent.new(work: work).title, work %></td>
+              <td>
+                <% if allowed_to? :edit?, work %>
+                  <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work: work).title}" } do %>
+                    <span class="fas fa-pencil-alt"></span>
+                  <% end %>
+                <% end %>
+                <%= render Works::DeleteComponent.new(work: work) %>
+              </td>
+              <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
+              <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
+              <td><%= link_to work.purl, work.purl if work.purl %></td>
+              <td><span class="fas fa-quote-left"></span> Cite</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</main>

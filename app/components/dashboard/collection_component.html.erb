@@ -42,7 +42,7 @@
   </table>
 
   <% if deposits.size == 5 %>
-    <div class="mb-3">See all deposits</div>
+    <div class="mb-3"><%= link_to 'See all deposits', collection_works_path(collection) %></div>
   <% end %>
 
   <% if allowed_to?(:create?, Work.new(collection: collection)) %>

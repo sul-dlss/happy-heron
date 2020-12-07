@@ -10,7 +10,8 @@ RSpec.describe DescriptionGenerator do
   let(:work) do
     build(:work, :with_creation_date_range, :published, :with_keywords,
           :with_some_untitled_related_links, :with_related_works,
-          contributors: [contributor])
+          contributors: [contributor],
+          title: 'Test title')
   end
   let(:citation_value) do
     'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
@@ -187,7 +188,10 @@ RSpec.describe DescriptionGenerator do
     let(:contributor1) { build(:org_contributor, role: 'Event') }
     let(:contributor2) { build(:person_contributor, role: 'Author') }
     let(:contributor3) { build(:org_contributor, role: 'Conference') }
-    let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
+    let(:work) do
+      build(:work, contributors: [contributor1, contributor2, contributor3],
+                   title: 'Test title')
+    end
     let(:datacite_creator_role) do
       {
         value: 'Creator',
@@ -276,7 +280,10 @@ RSpec.describe DescriptionGenerator do
   #   example 12
   context 'when publisher and publication date are entered by user' do
     let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work) { build(:work, :published, contributors: [contributor]) }
+    let(:work) do
+      build(:work, :published, contributors: [contributor],
+                               title: 'Test title')
+    end
 
     it 'creates event of type publication with date' do
       expect(model).to eq(
@@ -318,7 +325,7 @@ RSpec.describe DescriptionGenerator do
   #   Note:  no top level contributor -- publisher is under event
   context 'when publisher entered by user, no publication date' do
     let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work) { build(:work, contributors: [contributor]) }
+    let(:work) { build(:work, contributors: [contributor], title: 'Test title') }
 
     it 'creates event of type publication without date' do
       expect(model).to eq(
@@ -352,7 +359,9 @@ RSpec.describe DescriptionGenerator do
   context 'when author, publisher and publication date are entered by user' do
     let(:person_contrib) { build(:person_contributor, role: 'Author') }
     let(:pub_contrib) { build(:org_contributor, role: 'Publisher') }
-    let(:work) { build(:work, :published, contributors: [person_contrib, pub_contrib]) }
+    let(:work) do
+      build(:work, :published, contributors: [person_contrib, pub_contrib], title: 'Test title')
+    end
 
     it 'creates event of type publication with date' do
       expect(model).to eq(

@@ -3,7 +3,9 @@
 
 FactoryBot.define do
   factory :work do
-    title { 'Test title' }
+    sequence :title do |n|
+      "Test title #{n}"
+    end
     work_type { 'text' }
     subtype { ['Article', 'Presentation slides'] } # Subtype values intentionally include an item with whitespace
     contact_email { 'io@io.io' }

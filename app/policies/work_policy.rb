@@ -7,8 +7,12 @@ class WorkPolicy < ApplicationPolicy
   alias_rule :delete?, to: :destroy?
 
   relation_scope :edits do |scope|
-    scope.where(depositor: user)
-         .or(scope.where(collection_id: [user.manages_collection_ids + user.reviews_collection_ids]))
+    if administrator?
+      scope
+    else
+      scope.where(depositor: user)
+           .or(scope.where(collection_id: [user.manages_collection_ids + user.reviews_collection_ids]))
+    end
   end
 
   # Can deposit a work iff:
