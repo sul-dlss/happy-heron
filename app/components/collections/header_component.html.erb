@@ -5,8 +5,8 @@
       <%= button_tag '+ Deposit to this collection',
             data: {
               destination: new_collection_work_path(@collection),
-              toggle: 'modal',
-              target: '#workTypeModal',
+              bs_toggle: 'modal',
+              bs_target: '#workTypeModal',
               action: "work-type#set_collection"
             },
             class: "btn btn-primary" %>

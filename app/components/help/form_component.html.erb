@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title" id="help-prompt">Help</h3>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" data-controller="help">
         <%= form_with(url: help_path,
@@ -64,7 +64,7 @@
             </div>
             <div class="row">
                <div class="col-md-5 offset-md-7 mt-2">
-                 <%= button_tag 'Cancel', class: 'btn btn-default', 'data-dismiss': 'modal' %>
+                 <%= button_tag 'Cancel', class: 'btn btn-default', data: { bs_dismiss: 'modal' } %>
                  <%= button_tag 'Submit', class: 'btn btn-primary' %>
                </div>
             </div>
@@ -75,7 +75,7 @@
         <div data-help-target="results" hidden="true">
           <h2>Help request successfully sent</h2>
           <p>You should receive a response from our team within 48 hours.</p>
-          <%= button_tag 'Close', class: 'btn btn-primary', 'data-dismiss': 'modal' %>
+          <%= button_tag 'Close', class: 'btn btn-primary', data: { bs_dismiss: 'modal' } %>
         </div>
       </div>
     </div>

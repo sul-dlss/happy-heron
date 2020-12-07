@@ -2,7 +2,7 @@
   <% if display_approval? %>
     <div class="alert alert-warning alert-dismissible" role="alert">
       Your deposit has been sent for approval. You will receive an email once your deposit has been approved.
-      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
   <% if work.rejected? %>
@@ -10,7 +10,7 @@
       <h3>Approver has returned your deposit</h3>
       <p>Fix the following and then submit it again for approval.</p>
       <div class="p-3"><%= rejection_reason %></div>
-      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
 
