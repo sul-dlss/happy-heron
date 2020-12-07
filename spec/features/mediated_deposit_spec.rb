@@ -33,7 +33,7 @@ RSpec.describe 'Create a work in a collection using mediated deposit', js: true 
       click_button 'Deposit'
 
       expect(page).to have_content(work_title)
-      expect(page).to have_content('Pending approval - Not deposited')
+      expect(page).to have_content('Pending approval')
 
       visit dashboard_path
       within_table('Approvals') do

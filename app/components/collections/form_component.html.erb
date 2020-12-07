@@ -117,11 +117,11 @@
 
     <!-- TODO: only display sunet entry field if reviewer workflow is enabled -->
     <p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
-    <div class="mb-3 row" data-controller="reviewer-sunets" data-action="error->reviewer-sunets#error" data-target="edit-collection.reviewerSunetsField">
+    <div class="mb-3 row" data-controller="reviewer-sunets" data-action="error->reviewer-sunets#error" data-edit-collection-target="reviewerSunetsField">
       <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-sm-2 col-form-label' %>
       <div class="col-sm-10 col-xl-8">
-        <%= form.text_field :reviewer_sunets, class: "form-control", required: false, data: { target: 'reviewer-sunets.container' } %> <!-- TODO: should prob have at least one required if enabled? -->
-        <div data-target="reviewer-sunets.error" class="invalid-feedback">You must provide reviewers</div>
+        <%= form.text_field :reviewer_sunets, class: "form-control", required: false, data: { reviewer_sunets_target: 'container' } %> <!-- TODO: should prob have at least one required if enabled? -->
+        <div data-reviewer-sunets-target="error" class="invalid-feedback">You must provide reviewers</div>
       </div>
     </div>
   </section>

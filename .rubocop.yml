@@ -23,7 +23,7 @@ Lint/MissingSuper: # (new in 0.89)
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
-  ExcludedMethods:
+  IgnoredMethods:
     - state_machine
 
 Metrics/ClassLength:
@@ -112,6 +112,8 @@ Lint/ToEnumArguments: # (new in 1.1)
 Lint/TopLevelReturnWithArgument: # (new in 0.89)
   Enabled: true
 Lint/TrailingCommaInAttributeDeclaration: # (new in 0.90)
+  Enabled: true
+Lint/UnexpectedBlockArity: # (new in 1.5)
   Enabled: true
 Lint/UnmodifiedReduceAccumulator: # (new in 1.1)
   Enabled: true
