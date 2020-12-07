@@ -1,0 +1,23 @@
+<header class="title">
+  <span class="header-text"><%= @collection.name %></span>
+  <% if helpers.allowed_to?(:create?, Work.new(collection: @collection)) %>
+    <span class="deposit-button" data-controller="work-type">
+      <%= button_tag '+ Deposit to this collection',
+            data: {
+              destination: new_collection_work_path(@collection),
+              toggle: 'modal',
+              target: '#workTypeModal',
+              action: "work-type#set_collection"
+            },
+            class: "btn btn-primary" %>
+
+      <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <%= render Works::WorkTypeModalComponent.new %>
+          </div>
+        </div>
+      </div>
+    </span>
+  <% end %>
+</header>

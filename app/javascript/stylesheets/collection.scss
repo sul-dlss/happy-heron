@@ -1,4 +1,7 @@
 #collection {
+  margin-top: 1rem;
+  max-width: 1140px;
+
   .title {
     margin-bottom: 1.5rem;
 
@@ -14,20 +17,6 @@
     .deposit-button {
       float: right;
       margin-bottom: 5px;
-    }
-  }
-
-  .details {
-    width: 95%;
-    margin: auto;
-
-    // hide the duplicate header and edit button on the deposits tab
-    #collectionTabs{
-      #deposits {
-        header {
-          display: none;
-        }
-      }
     }
   }
 

@@ -53,7 +53,9 @@ RSpec.describe RequestGenerator do
 
   context 'when files are not present' do
     context 'without a druid' do
-      let(:work) { build(:work, id: 7, work_type: 'text', collection: collection) }
+      let(:work) do
+        build(:work, id: 7, work_type: 'text', collection: collection, title: 'Test title')
+      end
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
@@ -106,7 +108,10 @@ RSpec.describe RequestGenerator do
     end
 
     context 'with a druid' do
-      let(:work) { build(:work, id: 7, work_type: 'text', druid: 'druid:bk123gh4567', collection: collection) }
+      let(:work) do
+        build(:work, id: 7, work_type: 'text', druid: 'druid:bk123gh4567',
+                     title: 'Test title', collection: collection)
+      end
       let(:expected_model) do
         {
           externalIdentifier: 'druid:bk123gh4567',
@@ -181,8 +186,9 @@ RSpec.describe RequestGenerator do
     end
 
     context 'without a druid' do
-      let(:work) { build(:work, id: 7, version: 1, attached_files: [attached_file], collection: collection) }
-
+      let(:work) do
+        build(:work, id: 7, version: 1, attached_files: [attached_file], collection: collection, title: 'Test title')
+      end
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
@@ -260,7 +266,8 @@ RSpec.describe RequestGenerator do
       let(:work) do
         build(:work, id: 7, version: 1, attached_files: [attached_file],
                      druid: 'druid:bk123gh4567',
-                     collection: collection)
+                     collection: collection,
+                     title: 'Test title')
       end
       let(:expected_model) do
         {
