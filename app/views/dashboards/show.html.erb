@@ -15,7 +15,7 @@
     <section data-controller="work-type">
       <header>Your collections
         <% if allowed_to?(:create?, Collection) %>
-          <%= link_to '+ Create a new collection', new_collection_path, class: "btn btn-outline-primary float-right" %>
+          <%= link_to '+ Create a new collection', new_collection_path, class: "btn btn-outline-primary float-end" %>
         <% end %>
       </header>
       <% if @presenter.collections.present? %>
