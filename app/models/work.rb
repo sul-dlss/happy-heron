@@ -36,10 +36,9 @@ class Work < ApplicationRecord
     end
 
     after_transition on: :deposit_complete do |work, _transition|
-      if work.collection.review_enabled?
-        NotificationMailer.with(user: work.depositor, work: work)
-                          .approved_email.deliver_later
-      end
+      mailer = NotificationMailer.with(user: work.depositor, work: work)
+      job =  work.collection.review_enabled? ? mailer.approved_email : mailer.deposited_email
+      job.deliver_later
     end
 
     after_transition do |work, transition|

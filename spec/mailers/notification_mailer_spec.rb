@@ -20,6 +20,24 @@ RSpec.describe NotificationMailer, type: :mailer do
     end
   end
 
+  describe 'deposited_email' do
+    let(:user) { work.depositor }
+    let(:mail) { described_class.with(user: user, work: work).deposited_email }
+    let(:work) { create(:work, :deposited, title: 'Photo booth activated charcoal', collection: collection) }
+    let(:collection) { build(:collection, name: 'gastropub humblebrag taiyaki') }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Your deposit, Photo booth activated charcoal, is published in the SDR'
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to have_content('“Photo booth activated charcoal”')
+      expect(mail.body.encoded).to have_content('gastropub humblebrag taiyaki collection')
+    end
+  end
+
   describe 'approved_email' do
     let(:user) { work.depositor }
     let(:mail) { described_class.with(user: user, work: work).approved_email }
