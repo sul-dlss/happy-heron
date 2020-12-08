@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body" data-controller="help">
         <%= form_with(url: help_path,
-                      method: 'post',
+                      remote: true,
                       data: {
                         help_target: 'form',
                         action: 'ajax:success->help#displaySuccess'
