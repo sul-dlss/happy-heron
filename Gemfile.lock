@@ -142,7 +142,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-remote-user (1.0.0)
+    devise-remote-user (1.1.0)
       devise
     diff-lcs (1.4.4)
     disposable (0.4.7)
