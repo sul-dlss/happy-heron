@@ -1,0 +1,9 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>The Depositor <%= @work.depositor_name %> has submitted a deposit for review in the <%= @work.collection_name %> collection.</p>
+
+<p>Please see the list of pending approvals at the top of the dashboard page for this collection at <%= link_to dashboard_url, dashboard_url %>, where you will be able to select items to review and approve.</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>
