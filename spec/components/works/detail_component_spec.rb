@@ -15,7 +15,7 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   context 'when deposited' do
-    let(:work) { build_stubbed(:work, state: 'deposited') }
+    let(:work) { build_stubbed(:work, :deposited) }
 
     it 'renders the draft title' do
       expect(rendered.css('.state').to_html).not_to include('Not deposited')
