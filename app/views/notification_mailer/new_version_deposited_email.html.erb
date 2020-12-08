@@ -1,0 +1,21 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>A new version of your deposit, “<%= @work.title %>” is now published in the <%= @work.collection_name %> collection
+  in the Stanford Digital Repository. The persistent URL (PURL) for this deposit is
+  <%= link_to @work.purl, @work.purl %>. Please use this when citing your work.</p>
+
+
+<p>You selected the following options:<br>
+License: <%= @work.license %><br>
+Access level: <%= @work.access %><br>
+Release:  <%= @work.embargo_date.presence || 'now available' %></p>
+
+<p>If you need to make changes to your deposit, you can do so at <%= link_to root_url, root_url %>.</p>
+
+<p>Your deposit will be available soon in SearchWorks, the library catalog.
+   SearchWorks serves as the discovery point for others who are interested in
+   finding and viewing your deposit as well as other deposits in the Stanford Digital Repository.</p>
+
+ <p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+ <p>The Stanford Digital Repository Team</p>
