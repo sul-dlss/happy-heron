@@ -57,8 +57,10 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       find('label', text: 'Approve and deposit').click
       click_button 'Submit'
 
-      expect(page).to have_link(newest_work_title)
-      click_link(newest_work_title)
+      within_table(collection.name) do
+        expect(page).to have_link(newest_work_title)
+        click_link(newest_work_title)
+      end
       expect(page).to have_content('Deposit in progress')
     end
   end
