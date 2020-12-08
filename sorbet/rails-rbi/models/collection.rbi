@@ -45,15 +45,6 @@ module Collection::GeneratedAttributeMethods
   def default_license?; end
 
   sig { returns(T.nilable(String)) }
-  def description; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def description=(value); end
-
-  sig { returns(T::Boolean) }
-  def description?; end
-
-  sig { returns(T.nilable(String)) }
   def druid; end
 
   sig { params(value: T.nilable(T.any(String, Symbol))).void }
@@ -80,6 +71,15 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def email_when_participants_changed?; end
 
+  sig { returns(T.nilable(Integer)) }
+  def head_id; end
+
+  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
+  def head_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def head_id?; end
+
   sig { returns(Integer) }
   def id; end
 
@@ -97,24 +97,6 @@ module Collection::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def license_option?; end
-
-  sig { returns(String) }
-  def name; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def name=(value); end
-
-  sig { returns(T::Boolean) }
-  def name?; end
-
-  sig { returns(T.nilable(Date)) }
-  def release_date; end
-
-  sig { params(value: T.nilable(Date)).void }
-  def release_date=(value); end
-
-  sig { returns(T::Boolean) }
-  def release_date?; end
 
   sig { returns(T.nilable(String)) }
   def release_duration; end
@@ -152,15 +134,6 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def review_enabled?; end
 
-  sig { returns(String) }
-  def state; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def state=(value); end
-
-  sig { returns(T::Boolean) }
-  def state?; end
-
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
 
@@ -169,26 +142,17 @@ module Collection::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def updated_at?; end
-
-  sig { returns(Integer) }
-  def version; end
-
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def version=(value); end
-
-  sig { returns(T::Boolean) }
-  def version?; end
 end
 
 module Collection::GeneratedAssociationMethods
-  sig { returns(::ContactEmail::ActiveRecord_Associations_CollectionProxy) }
-  def contact_emails; end
+  sig { returns(::CollectionVersion::ActiveRecord_Associations_CollectionProxy) }
+  def collection_versions; end
 
   sig { returns(T::Array[Integer]) }
-  def contact_email_ids; end
+  def collection_version_ids; end
 
-  sig { params(value: T::Enumerable[::ContactEmail]).void }
-  def contact_emails=(value); end
+  sig { params(value: T::Enumerable[::CollectionVersion]).void }
+  def collection_versions=(value); end
 
   sig { returns(::User) }
   def creator; end
@@ -223,6 +187,21 @@ module Collection::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::Event]).void }
   def events=(value); end
 
+  sig { returns(T.nilable(::CollectionVersion)) }
+  def head; end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::CollectionVersion).void)).returns(::CollectionVersion) }
+  def build_head(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::CollectionVersion).void)).returns(::CollectionVersion) }
+  def create_head(*args, &block); end
+
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::CollectionVersion).void)).returns(::CollectionVersion) }
+  def create_head!(*args, &block); end
+
+  sig { params(value: T.nilable(::CollectionVersion)).void }
+  def head=(value); end
+
   sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
   def managed_by; end
 
@@ -231,15 +210,6 @@ module Collection::GeneratedAssociationMethods
 
   sig { params(value: T::Enumerable[::User]).void }
   def managed_by=(value); end
-
-  sig { returns(::RelatedLink::ActiveRecord_Associations_CollectionProxy) }
-  def related_links; end
-
-  sig { returns(T::Array[Integer]) }
-  def related_link_ids; end
-
-  sig { params(value: T::Enumerable[::RelatedLink]).void }
-  def related_links=(value); end
 
   sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
   def reviewed_by; end

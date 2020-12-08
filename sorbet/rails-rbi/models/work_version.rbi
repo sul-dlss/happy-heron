@@ -293,6 +293,9 @@ class WorkVersion < ApplicationRecord
   def self.accesses; end
 
   sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_Relation) }
+  def self.awaiting_review_by(*args); end
+
+  sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_Relation) }
   def self.not_stanford(*args); end
 
   sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_Relation) }
@@ -318,6 +321,9 @@ class WorkVersion::ActiveRecord_Relation < ActiveRecord::Relation
   Elem = type_member(fixed: WorkVersion)
 
   sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_Relation) }
+  def awaiting_review_by(*args); end
+
+  sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_Relation) }
   def not_stanford(*args); end
 
   sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_Relation) }
@@ -337,6 +343,9 @@ class WorkVersion::ActiveRecord_AssociationRelation < ActiveRecord::AssociationR
   Elem = type_member(fixed: WorkVersion)
 
   sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_AssociationRelation) }
+  def awaiting_review_by(*args); end
+
+  sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_AssociationRelation) }
   def not_stanford(*args); end
 
   sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_AssociationRelation) }
@@ -353,6 +362,9 @@ class WorkVersion::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Ass
   include WorkVersion::CustomFinderMethods
   include WorkVersion::QueryMethodsReturningAssociationRelation
   Elem = type_member(fixed: WorkVersion)
+
+  sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_AssociationRelation) }
+  def awaiting_review_by(*args); end
 
   sig { params(args: T.untyped).returns(WorkVersion::ActiveRecord_AssociationRelation) }
   def not_stanford(*args); end

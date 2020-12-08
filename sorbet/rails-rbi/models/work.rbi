@@ -126,6 +126,15 @@ module Work::GeneratedAssociationMethods
 
   sig { params(value: T.nilable(::WorkVersion)).void }
   def head=(value); end
+
+  sig { returns(::WorkVersion::ActiveRecord_Associations_CollectionProxy) }
+  def work_versions; end
+
+  sig { returns(T::Array[Integer]) }
+  def work_version_ids; end
+
+  sig { params(value: T::Enumerable[::WorkVersion]).void }
+  def work_versions=(value); end
 end
 
 module Work::CustomFinderMethods
