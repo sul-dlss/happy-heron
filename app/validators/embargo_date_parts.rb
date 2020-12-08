@@ -4,7 +4,8 @@
 # Validates embargo month and day
 class EmbargoDateParts < ActiveModel::Validator
   def validate(record)
-    return if record.send('embargo_date').instance_of?(Date)
+    return if record.embargo_date.instance_of?(Date)
+    return if record.release == 'immediate'
 
     month = record.send('embargo_date(2i)')
     day = record.send('embargo_date(3i)')

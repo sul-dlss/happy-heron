@@ -259,7 +259,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors.size).to eq 2
@@ -322,7 +324,7 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit', format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors.size).to eq 1
@@ -350,7 +352,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'saves and then displays the draft work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Save as draft' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Save as draft',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
@@ -386,7 +390,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'saves and then displays the draft work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Save as draft' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Save as draft',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
@@ -451,7 +457,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors.size).to eq 1

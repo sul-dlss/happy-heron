@@ -46,7 +46,7 @@ RSpec.describe 'Updating an existing work' do
         end
 
         it 'redirects to the work page' do
-          patch "/works/#{work.id}", params: { work: work_params }
+          patch "/works/#{work.id}", params: { work: work_params, format: :json }
           expect(work.reload).to be_version_draft
           expect(response).to redirect_to(work)
         end
