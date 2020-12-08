@@ -41,8 +41,7 @@ class CollectionsController < ObjectsController
   def update
     collection = Collection.find(params[:id])
     authorize! collection
-    previous_depositors = collection.clone.depositors
-
+    previous_depositors = collection.depositors.to_a # this .to_a ensures we have a frozen copy of the depositors
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
       collection.update_metadata!
@@ -71,6 +70,7 @@ class CollectionsController < ObjectsController
 
   private
 
+  sig { params(collection: Collection).void }
   def after_save(collection)
     collection.event_context = { user: current_user }
     if deposit_button_pushed?
@@ -82,7 +82,7 @@ class CollectionsController < ObjectsController
     end
   end
 
-  def send_depositor_notifications(collection, new_depositors)
+  def send_depositor_notifications(collection, depositors)
     # we only send notifications if we press submit deposit
     # (i.e. not saving as a draft) OR if this >v1 of the collection
     # this allows us to save/update drafts of a brand new collection *without* sending notifications
@@ -90,7 +90,7 @@ class CollectionsController < ObjectsController
     # newly added depositors on *any* save (draft or deposit) of future versions
     return unless deposit_button_pushed? || collection.version_draft?
 
-    new_depositors.each do |depositor|
+    depositors.each do |depositor|
       NotificationMailer.with(collection: collection, user: depositor)
                         .invitation_to_deposit_email.deliver_later
     end
