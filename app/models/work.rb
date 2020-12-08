@@ -51,6 +51,13 @@ class Work < ApplicationRecord
                         .reject_email.deliver_later
     end
 
+    after_transition on: :submit_for_review do |work, _transition|
+      (work.collection.reviewers + work.collection.managers - [work.depositor]).each do |recipient|
+        NotificationMailer.with(user: recipient, work: work)
+                          .submitted_for_review_email.deliver_later
+      end
+    end
+
     # NOTE: there is no approval "event" because when a work is approved in review, it goes
     # directly to begin_deposit event, which will transition it to depositing
 
@@ -125,6 +132,7 @@ class Work < ApplicationRecord
   end
 
   delegate :name, to: :collection, prefix: true
+  delegate :name, to: :depositor, prefix: true
 
   private
 
