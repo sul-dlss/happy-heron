@@ -47,4 +47,12 @@ FactoryBot.define do
 
     depositors { build_list(:user, depositor_count) }
   end
+
+  trait :with_events do
+    transient do
+      event_count { 3 }
+    end
+
+    events { build_list(:event, event_count) }
+  end
 end

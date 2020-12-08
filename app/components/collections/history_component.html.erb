@@ -1,0 +1,20 @@
+<table class="table table-sm mb-5" id="events">
+  <thead class="table-light">
+    <tr>
+      <th scope="col" class="table-title col-3">History</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% events.each do |event| %>
+      <tr>
+        <td><%= I18n.t event.event_type, scope: 'event.type' %></td>
+        <td><%= event.user.sunetid %></td>
+        <td><%= I18n.l(event.created_at, format: :abbr_month) %></td>
+        <td><%= event.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
