@@ -20,6 +20,7 @@ FactoryBot.define do
 
   trait :deposited do
     state { 'deposited' }
+    druid { 'druid:bc123df4567' }
   end
 
   trait :rejected do

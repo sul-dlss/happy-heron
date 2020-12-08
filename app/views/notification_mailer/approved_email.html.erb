@@ -1,0 +1,13 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>Your deposit, “<%= @work.title %>” to the <%= @work.collection_name %> collection
+  in the Stanford Digital Repository, has been approved and is now published
+  in the Stanford Digital Repository.
+</p>
+
+<p>The persistent URL (PURL) for this deposit, <%= link_to @work.purl, @work.purl %>,
+  is now active and available for sharing.</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>

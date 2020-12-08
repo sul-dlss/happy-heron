@@ -236,16 +236,35 @@ RSpec.describe Work do
     end
 
     describe 'a deposit_complete event' do
-      let(:work) { create(:work, :depositing, druid: 'druid:foo') }
+      let(:work) { create(:work, :depositing, druid: 'druid:foo', collection: collection) }
+      let(:collection) { create(:collection, :with_reviewers) }
 
-      it 'transitions to deposited' do
-        expect { work.deposit_complete! }
-          .to change(work, :state)
-          .to('deposited')
-          .and change(Event, :count).by(1)
-        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-          .with(work, state: 'Deposited',
-                      purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
+      context 'when in a non-reviewed collection' do
+        it 'transitions to deposited' do
+          expect { work.deposit_complete! }
+            .to change(work, :state)
+            .to('deposited')
+            .and change(Event, :count).by(1)
+          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+            .with(work, state: 'Deposited',
+                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
+        end
+      end
+
+      context 'when in a reviewed collection' do
+        it 'transitions to deposited' do
+          expect { work.deposit_complete! }
+            .to change(work, :state)
+            .to('deposited')
+            .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                   'NotificationMailer', 'approved_email', 'deliver_now',
+                   { params: { user: work.depositor, work: work }, args: [] }
+                 ))
+            .and change(Event, :count).by(1)
+          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+            .with(work, state: 'Deposited',
+                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
+        end
       end
     end
 

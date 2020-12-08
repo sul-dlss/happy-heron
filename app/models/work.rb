@@ -35,6 +35,13 @@ class Work < ApplicationRecord
       DepositJob.perform_later(work)
     end
 
+    after_transition on: :deposit_complete do |work, _transition|
+      if work.collection.review_enabled?
+        NotificationMailer.with(user: work.depositor, work: work)
+                          .approved_email.deliver_later
+      end
+    end
+
     after_transition do |work, transition|
       BroadcastWorkChange.call(work: work, state: transition.to_name)
     end
