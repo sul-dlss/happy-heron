@@ -19,7 +19,7 @@ module Collections
 
     sig { returns(T.nilable(String)) }
     def reviewers
-      collection.reviewers.pluck(:email).join(', ')
+      collection.reviewers.map(&:sunetid).join(', ')
     end
   end
 end

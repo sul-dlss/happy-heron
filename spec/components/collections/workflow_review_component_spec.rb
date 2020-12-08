@@ -7,7 +7,7 @@ RSpec.describe Collections::WorkflowReviewComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
   context 'when displaying a collection' do
-    let(:reviewers) { collection.reviewers.pluck(:email).join(', ') }
+    let(:reviewers) { collection.reviewers.map(&:sunetid).join(', ') }
     let(:collection) { build_stubbed(:collection, :with_reviewers) }
 
     it 'renders the workflow review component' do

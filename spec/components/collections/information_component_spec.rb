@@ -8,7 +8,7 @@ RSpec.describe Collections::InformationComponent, type: :component do
 
   context 'when displaying a collection' do
     let(:version) { collection.version.to_s }
-    let(:creator) { collection.creator.to_s }
+    let(:creator) { collection.creator.sunetid }
     let(:collection) { build_stubbed(:collection) }
 
     it 'renders the information component' do
