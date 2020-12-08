@@ -1,7 +1,7 @@
 <div class="row inner-container" data-controller="contributors" data-action="error->contributors#error" data-edit-deposit-target="contributorsField">
   <div class="contributors-container col-md-12" data-contributors-target="container">
     <% if not_first_contributor? %>
-      <%= button_tag type: 'button', class: 'btn btn-sm float-right', aria: { label: 'Remove' },
+      <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: 'Remove' },
                      data: { action: "click->nested-form#removeAssociation" } do %>
         <span class="far fa-trash-alt"></span>
       <% end %>
