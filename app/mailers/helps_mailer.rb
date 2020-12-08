@@ -3,11 +3,16 @@
 
 # The endpoint for the help modal
 class HelpsMailer < ApplicationMailer
-  def send_jira(email, subject, body)
-    message = mail(to: 'sdr-support@jirasul.stanford.edu',
-                   from: email,
-                   subject: subject,
-                   body: body)
-    message.deliver!
+  def jira_email
+    email = params[:email]
+    subject = params[:help_how]
+
+    @name = params[:name]
+    @affiliation = params[:affiliation]
+    @why_contact = params[:why_contact]
+
+    mail(to: 'sdr-support@jirasul.stanford.edu',
+         from: email,
+         subject: subject)
   end
 end
