@@ -9,8 +9,11 @@
           <tr>
             <th>Deposits in collection</th>
             <th><span class="visually-hidden">Actions</span></th>
+            <th>Depositor</th>
             <th>Deposit status</th>
             <th>Last modified</th>
+            <th># of files</th>
+            <th>Deposit size</th>
             <th>Persistent link</th>
             <th>Citation</th>
           </tr>
@@ -27,8 +30,11 @@
                 <% end %>
                 <%= render Works::DeleteComponent.new(work: work) %>
               </td>
+              <td><%= work.depositor.sunetid %></td>
               <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
               <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
+              <td><%= work.attached_files.count %></td>
+              <td><%= work.attached_files.sum(&:byte_size) %></td>
               <td><%= link_to work.purl, work.purl if work.purl %></td>
               <td><span class="fas fa-quote-left"></span> Cite</td>
             </tr>
