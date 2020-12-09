@@ -123,7 +123,29 @@ RSpec.describe 'Create a collection' do
           end
         end
 
-        context 'with mostly empty fields' do
+        context 'with empty fields' do
+          let(:draft_collection_params) do
+            {
+              name: '',
+              description: '',
+              contact_email: '',
+              manager_sunets: user.sunetid,
+              access: 'world',
+              depositor_sunets: ''
+            }
+          end
+
+          it 'saves the draft collection' do
+            post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
+            collection = Collection.last
+            expect(collection.name).to be_empty
+            expect(collection.depositors.size).to eq 0
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection_path(collection))
+          end
+        end
+
+        context 'with depositors filled in' do
           let(:draft_collection_params) do
             {
               name: '',
@@ -135,16 +157,7 @@ RSpec.describe 'Create a collection' do
             }
           end
 
-          it 'saves the draft collection' do
-            post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
-            collection = Collection.last
-            expect(collection.name).to be_empty
-            expect(collection.depositors.size).to eq 6
-            expect(response).to have_http_status(:found)
-            expect(response).to redirect_to(collection_path(collection))
-          end
-
-          it 'does not send emails to depositors when a new collection is created and saved as draft' do
+          it 'does not send depositor emails when a new collection is created and saved as draft' do
             expect { post '/collections', params: { collection: draft_collection_params, commit: save_draft_button } }
               .to change { ActionMailer::Base.deliveries.count }.by(0) # NO depositor emails sent
           end

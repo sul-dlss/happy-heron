@@ -91,8 +91,8 @@ class CollectionsController < ObjectsController
     return unless deposit_button_pushed? || collection.version_draft?
 
     depositors.each do |depositor|
-      NotificationMailer.with(collection: collection, user: depositor)
-                        .invitation_to_deposit_email.deliver_later
+      CollectionsMailer.with(collection: collection, user: depositor)
+                       .invitation_to_deposit_email.deliver_later
     end
   end
 
