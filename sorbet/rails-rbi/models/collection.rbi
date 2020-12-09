@@ -214,6 +214,15 @@ module Collection::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::User]).void }
   def managers=(value); end
 
+  sig { returns(::RelatedLink::ActiveRecord_Associations_CollectionProxy) }
+  def related_links; end
+
+  sig { returns(T::Array[Integer]) }
+  def related_link_ids; end
+
+  sig { params(value: T::Enumerable[::RelatedLink]).void }
+  def related_links=(value); end
+
   sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
   def reviewers; end
 

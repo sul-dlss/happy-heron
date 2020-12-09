@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Show the collection detail page' do
-  let(:collection) { create(:collection, :with_managers, :with_depositors) }
+  let(:collection) { create(:collection, :with_managers, :with_depositors, :with_events) }
   let(:collection2) { create(:collection, :with_reviewers) }
 
   context 'with an admin user' do
@@ -24,6 +24,8 @@ RSpec.describe 'Show the collection detail page' do
       expect(response.body).to include depositors
       expect(response.body).to include managers
       expect(response.body).to include 'Off'
+      expect(response.body).to include 'History'
+      expect(response.body).to include(/Updated by user/).exactly(3).times # verifies event history is rendered
     end
 
     it 'displays the collection detail page with reviews enabled' do

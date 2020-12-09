@@ -3,5 +3,11 @@
 # Please rerun bundle exec rake rails_rbi:mailers to regenerate.
 class NotificationMailer
   sig { returns(ActionMailer::MessageDelivery) }
+  def self.approved_email; end
+
+  sig { returns(ActionMailer::MessageDelivery) }
   def self.reject_email; end
+
+  sig { returns(ActionMailer::MessageDelivery) }
+  def self.submitted_for_review_email; end
 end

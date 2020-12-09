@@ -35,6 +35,24 @@ module RelatedLink::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def link_title?; end
 
+  sig { returns(T.nilable(Integer)) }
+  def linkable_id; end
+
+  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
+  def linkable_id=(value); end
+
+  sig { returns(T::Boolean) }
+  def linkable_id?; end
+
+  sig { returns(T.nilable(String)) }
+  def linkable_type; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def linkable_type=(value); end
+
+  sig { returns(T::Boolean) }
+  def linkable_type?; end
+
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
 
@@ -52,32 +70,23 @@ module RelatedLink::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def url?; end
-
-  sig { returns(Integer) }
-  def work_id; end
-
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def work_id=(value); end
-
-  sig { returns(T::Boolean) }
-  def work_id?; end
 end
 
 module RelatedLink::GeneratedAssociationMethods
-  sig { returns(::Work) }
-  def work; end
+  sig { returns(T.untyped) }
+  def linkable; end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def build_work(*args, &block); end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
+  def build_linkable(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def create_work(*args, &block); end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
+  def create_linkable(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def create_work!(*args, &block); end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: T.untyped).void)).returns(T.untyped) }
+  def create_linkable!(*args, &block); end
 
-  sig { params(value: ::Work).void }
-  def work=(value); end
+  sig { params(value: T.untyped).void }
+  def linkable=(value); end
 end
 
 module RelatedLink::CustomFinderMethods
