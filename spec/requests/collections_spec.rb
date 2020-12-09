@@ -123,7 +123,7 @@ RSpec.describe 'Collections requests' do
         it 'updates the collection via draft save' do
           patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Save as draft' }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(dashboard_path)
+          expect(response).to redirect_to(collection_path(collection))
           expect(collection.depositors.size).to eq 6
         end
 

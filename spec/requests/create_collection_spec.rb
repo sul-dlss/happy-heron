@@ -130,11 +130,11 @@ RSpec.describe 'Create a collection' do
 
           it 'saves the draft collection' do
             post '/collections', params: { collection: draft_collection_params, commit: 'Save as draft' }
-            expect(response).to have_http_status(:found)
-            expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
             expect(collection.name).to be_empty
             expect(collection.depositors.size).to eq 0
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection_path(collection))
           end
         end
       end

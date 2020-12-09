@@ -23,6 +23,9 @@ RSpec.describe 'Delete a draft collection', js: true do
 
       collection = Collection.last
       expect(collection).to be_first_draft
+
+      visit dashboard_path
+
       accept_confirm do
         click_link "Delete #{collection.name}"
       end
