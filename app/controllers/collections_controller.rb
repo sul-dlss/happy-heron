@@ -29,7 +29,8 @@ class CollectionsController < ObjectsController
 
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
-      collection.event_context = { user: current_user }
+      # for the first time creation of a collection, send notifications to all depositors
+      send_depositor_notifications(collection, collection.depositors)
       after_save(collection)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
@@ -40,12 +41,12 @@ class CollectionsController < ObjectsController
   def update
     collection = Collection.find(params[:id])
     authorize! collection
-
+    previous_depositors = collection.depositors.to_a # this .to_a ensures we have a frozen copy of the depositors
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
-      collection.event_context = { user: current_user }
       collection.update_metadata!
-
+      # for an update of an existing collection, we will send notifications to only newly added depositors
+      send_depositor_notifications(collection, collection.depositors - previous_depositors)
       after_save(collection)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
@@ -71,12 +72,27 @@ class CollectionsController < ObjectsController
 
   sig { params(collection: Collection).void }
   def after_save(collection)
+    collection.event_context = { user: current_user }
     if deposit_button_pushed?
       collection.begin_deposit!
       redirect_to dashboard_path
     else
       collection.update_metadata!
       redirect_to collection_path(collection)
+    end
+  end
+
+  def send_depositor_notifications(collection, depositors)
+    # we only send notifications if we press submit deposit
+    # (i.e. not saving as a draft) OR if this >v1 of the collection
+    # this allows us to save/update drafts of a brand new collection *without* sending notifications
+    # until the user deposits for the first time, and also allows us to send notifications for
+    # newly added depositors on *any* save (draft or deposit) of future versions
+    return unless deposit_button_pushed? || collection.version_draft?
+
+    depositors.each do |depositor|
+      CollectionsMailer.with(collection: collection, user: depositor)
+                       .invitation_to_deposit_email.deliver_later
     end
   end
 

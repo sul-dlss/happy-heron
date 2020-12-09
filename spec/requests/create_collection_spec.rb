@@ -5,6 +5,8 @@ require 'rails_helper'
 
 RSpec.describe 'Create a collection' do
   let(:collection) { create(:collection) }
+  let(:deposit_button) { 'Deposit' }
+  let(:save_draft_button) { 'Save as draft' }
 
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
@@ -61,7 +63,7 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'creates a new collection' do
-          post '/collections', params: { collection: collection_params, commit: 'Deposit' }
+          post '/collections', params: { collection: collection_params, commit: deposit_button }
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           collection = Collection.last
@@ -73,6 +75,11 @@ RSpec.describe 'Create a collection' do
           expect(collection.email_depositors_status_changed).to eq true
           expect(collection.related_links.size).to eq 2
           expect(collection.related_links).to all(be_kind_of(RelatedLink))
+        end
+
+        it 'sends emails to depositors when a new collection is created and deposited' do
+          expect { post '/collections', params: { collection: collection_params, commit: deposit_button } }
+            .to change { ActionMailer::Base.deliveries.count }.by(collection.depositors.size) # depositor emails sent
         end
 
         context 'when overriding manager list and review workflow defaults' do
@@ -87,7 +94,7 @@ RSpec.describe 'Create a collection' do
           before { collection_params.merge!(review_workflow_params) }
 
           it 'sets the managers and reviewers fields' do
-            post '/collections', params: { collection: collection_params, commit: 'Deposit' }
+            post '/collections', params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
@@ -108,7 +115,7 @@ RSpec.describe 'Create a collection' do
           before { collection_params.merge!(review_workflow_params) }
 
           it 'nils out the reviewers field' do
-            post '/collections', params: { collection: collection_params, commit: 'Deposit' }
+            post '/collections', params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
@@ -129,12 +136,30 @@ RSpec.describe 'Create a collection' do
           end
 
           it 'saves the draft collection' do
-            post '/collections', params: { collection: draft_collection_params, commit: 'Save as draft' }
+            post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
             collection = Collection.last
             expect(collection.name).to be_empty
             expect(collection.depositors.size).to eq 0
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(collection_path(collection))
+          end
+        end
+
+        context 'with depositors filled in' do
+          let(:draft_collection_params) do
+            {
+              name: '',
+              description: '',
+              contact_email: '',
+              manager_sunets: user.sunetid,
+              access: 'world',
+              depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
+            }
+          end
+
+          it 'does not send depositor emails when a new collection is created and saved as draft' do
+            expect { post '/collections', params: { collection: draft_collection_params, commit: save_draft_button } }
+              .to change { ActionMailer::Base.deliveries.count }.by(0) # NO depositor emails sent
           end
         end
       end
@@ -147,7 +172,7 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'renders the page again' do
-          post '/collections', params: { collection: collection_params, format: :json, commit: 'Deposit' }
+          post '/collections', params: { collection: collection_params, format: :json, commit: deposit_button }
           expect(response).to have_http_status(:bad_request)
           json = JSON.parse(response.body)
           expect(json['name']).to eq ["can't be blank"]

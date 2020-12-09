@@ -5,6 +5,8 @@ require 'rails_helper'
 
 RSpec.describe 'Collections requests' do
   let(:collection) { create(:collection) }
+  let(:deposit_button) { 'Deposit' }
+  let(:save_draft_button) { 'Save as draft' }
 
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
@@ -112,7 +114,7 @@ RSpec.describe 'Collections requests' do
         end
 
         it 'updates the collection via deposit button' do
-          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Deposit' }
+          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           expect(collection.depositors.size).to eq 6
@@ -121,7 +123,7 @@ RSpec.describe 'Collections requests' do
         end
 
         it 'updates the collection via draft save' do
-          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Save as draft' }
+          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: save_draft_button }
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(collection_path(collection))
           expect(collection.depositors.size).to eq 6
@@ -139,7 +141,7 @@ RSpec.describe 'Collections requests' do
           before { collection_params.merge!(review_workflow_params) }
 
           it 'removes the reviewers when the review workflow is set to disabled' do
-            patch "/collections/#{collection.id}", params: { collection: collection_params, commit: 'Deposit' }
+            patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             expect(collection.reload.reviewers).to be_empty
@@ -158,7 +160,7 @@ RSpec.describe 'Collections requests' do
 
         it 'renders the page again' do
           patch "/collections/#{collection.id}",
-                params: { collection: collection_params, format: :json, commit: 'Deposit' }
+                params: { collection: collection_params, format: :json, commit: deposit_button }
           expect(response).to have_http_status(:bad_request)
           json = JSON.parse(response.body)
           expect(json['name']).to eq ["can't be blank"]

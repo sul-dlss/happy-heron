@@ -1,0 +1,8 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>You have been invited to deposit to the <%= @collection.name %> collection in the Stanford Digital Repository.
+  Start your deposit at <%= link_to collection_url(@collection), collection_url(@collection, anchor: 'deposits') %>.</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>
