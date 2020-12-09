@@ -22,12 +22,13 @@ module Dashboard
 
     sig { returns(ActiveRecord::Relation) }
     def visible_deposits
-      policy.authorized_scope(collection.works.limit(MAX_DEPOSITS_TO_SHOW), as: :edits)
-    end
-
-    sig { returns(Integer) }
-    def total_deposits_count
-      policy.authorized_scope(collection.works, as: :edits).count
+      # This component only displays MAX_DEPOSITS_TO_SHOW works but we query for
+      # one more as a way to flag to the user that they should click through to
+      # the collection works page to see more. We could query for the four
+      # displayable works and add another query to get the overall count, but
+      # that would double the number of queries run for each instance of this
+      # component.
+      policy.authorized_scope(collection.works.limit(MAX_DEPOSITS_TO_SHOW + 1), as: :edits)
     end
 
     private
