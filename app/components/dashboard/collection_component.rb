@@ -4,6 +4,8 @@
 module Dashboard
   # Renders a collection and a summary table of works in the collection
   class CollectionComponent < ApplicationComponent
+    MAX_DEPOSITS_TO_SHOW = 4
+
     sig { params(collection: Collection).void }
     def initialize(collection:)
       @collection = collection
@@ -19,9 +21,20 @@ module Dashboard
     end
 
     sig { returns(ActiveRecord::Relation) }
-    def deposits
-      policy = WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
-      policy.authorized_scope(collection.works.limit(5), as: :edits)
+    def visible_deposits
+      policy.authorized_scope(collection.works.limit(MAX_DEPOSITS_TO_SHOW), as: :edits)
+    end
+
+    sig { returns(Integer) }
+    def total_deposits_count
+      policy.authorized_scope(collection.works, as: :edits).count
+    end
+
+    private
+
+    sig { returns(WorkPolicy) }
+    def policy
+      WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
     end
   end
 end
