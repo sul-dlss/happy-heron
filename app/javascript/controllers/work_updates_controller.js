@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 import consumer from '../channels/consumer'
 
 export default class extends Controller {
-  static targets = ['state', 'purl']
+  static targets = ['state', 'purl', 'citation']
 
   connect() {
     let workUpdatesController = this

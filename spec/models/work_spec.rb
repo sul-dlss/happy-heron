@@ -252,7 +252,8 @@ RSpec.describe Work do
             .and change(Event, :count).by(1)
           expect(WorkUpdatesChannel).to have_received(:broadcast_to)
             .with(work, state: 'Deposited',
-                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
+                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>',
+                        citation: 'test citation')
         end
       end
 
@@ -271,7 +272,8 @@ RSpec.describe Work do
             .and change(Event, :count).by(1)
           expect(WorkUpdatesChannel).to have_received(:broadcast_to)
             .with(work, state: 'Deposited',
-                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
+                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>',
+                        citation: 'test citation')
         end
       end
 
@@ -289,7 +291,8 @@ RSpec.describe Work do
             .and change(Event, :count).by(1)
           expect(WorkUpdatesChannel).to have_received(:broadcast_to)
             .with(work, state: 'Deposited',
-                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>')
+                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>',
+                        citation: 'test citation')
         end
       end
     end

@@ -29,7 +29,7 @@
     <tbody>
       <tr>
         <th scope="row">Persistent link</th>
-        <td data-work-updates-target="url">
+        <td data-work-updates-target="purl">
           <% if purl %>
             <%= link_to purl, purl %>
           <% else %>
@@ -166,7 +166,9 @@
     </tr>
     <tr>
       <th scope="row">Preferred citation</th>
-      <td><%= citation %></td>
+      <td data-work-updates-target="citation">
+        <%= citation %>
+      </td>
     </tr>
     <tr>
       <th scope="row">Related published work</th>
