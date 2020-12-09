@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <% deposits.take(4).each do |work| %>
+      <% visible_deposits.each do |work| %>
         <tr>
           <td class="work-title"><%= link_to Works::DetailComponent.new(work: work).title, work %></td>
           <td>
@@ -40,7 +40,7 @@
     </tbody>
   </table>
 
-  <% if deposits.size == 5 %>
+  <% if total_deposits_count > MAX_DEPOSITS_TO_SHOW %>
     <div class="mb-3"><%= link_to 'See all deposits', collection_works_path(collection) %></div>
   <% end %>
 
