@@ -73,11 +73,11 @@ class CollectionsController < ObjectsController
   def after_save(collection)
     if deposit_button_pushed?
       collection.begin_deposit!
+      redirect_to dashboard_path
     else
       collection.update_metadata!
+      redirect_to collection_path(collection)
     end
-
-    redirect_to dashboard_path
   end
 
   def collection_form(collection)
