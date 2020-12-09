@@ -6,8 +6,7 @@ FactoryBot.define do
     name { 'MyString' }
     description { 'MyString' }
     contact_email { 'email@example.com' }
-    release_option { 'MyString' }
-    release_duration { 'MyString' }
+    release_option { 'immediate' }
     release_date { '2020-10-09' }
     access { 'MyString' }
     required_license { 'MyString' }

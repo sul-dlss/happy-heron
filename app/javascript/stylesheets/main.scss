@@ -4,9 +4,14 @@
 @import 'bootstrapOverrides';
 @import 'suNavbar';
 @import 'sulFooter';
-@import 'editor';
 @import 'toggle';
 @import 'dashboard';
 @import 'alert';
-@import 'work';
+@import 'mixins';
 @import 'collection';
+@import 'collectionEditor';
+@import 'work';
+@import 'workEditor';
+@import 'depositProgress';
+@import "dropzone";
+@import "keywords";

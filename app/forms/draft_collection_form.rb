@@ -4,6 +4,7 @@
 # The form for collection creation and editing
 class DraftCollectionForm < Reform::Form
   extend T::Sig
+  feature EmbargoDate
 
   property :name
   property :description
@@ -15,6 +16,11 @@ class DraftCollectionForm < Reform::Form
   }
   property :email_when_participants_changed
   property :email_depositors_status_changed
+
+  property :release_option, default: 'immediate'
+  property :release_duration
+  property :release_date, embargo_date: true, assign_if: ->(params) { params['release_option'] == 'delay' }
+
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
@@ -32,6 +38,11 @@ class DraftCollectionForm < Reform::Form
   end
 
   validate :reviewable_form
+  validates :release_date, embargo_date: true
+  validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
+  validates :release_duration, inclusion: {
+    in: ['1 month', '2 months', '6 months', '1 year', '2 years', '3 years']
+  }, allow_blank: true
 
   def sync(*)
     update_depositors
