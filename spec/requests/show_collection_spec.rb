@@ -9,9 +9,9 @@ RSpec.describe 'Show the collection detail page' do
 
   context 'with an admin user' do
     let(:user) { create(:user) }
-    let(:depositors) { collection.depositors.pluck(:email).join(', ') }
-    let(:managers) { collection.managers.pluck(:email).join(', ') }
-    let(:reviewers) { collection2.reviewers.pluck(:email).join(', ') }
+    let(:depositors) { collection.depositors.map(&:sunetid).join(', ') }
+    let(:managers) { collection.managers.map(&:sunetid).join(', ') }
+    let(:reviewers) { collection2.reviewers.map(&:sunetid).join(', ') }
 
     before do
       sign_in user, groups: [Settings.authorization_workgroup_names.administrators]

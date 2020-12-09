@@ -14,12 +14,12 @@ module Collections
 
     sig { returns(T.nilable(String)) }
     def depositors
-      collection.depositors.pluck(:email).join(', ')
+      collection.depositors.map(&:sunetid).join(', ')
     end
 
     sig { returns(T.nilable(String)) }
     def managers
-      collection.managers.pluck(:email).join(', ')
+      collection.managers.map(&:sunetid).join(', ')
     end
   end
 end

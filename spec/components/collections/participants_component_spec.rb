@@ -7,8 +7,8 @@ RSpec.describe Collections::ParticipantsComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
   context 'when displaying a collection' do
-    let(:depositors) { collection.depositors.pluck(:email).join(', ') }
-    let(:managers) { collection.managers.pluck(:email).join(', ') }
+    let(:depositors) { collection.depositors.map(&:sunetid).join(', ') }
+    let(:managers) { collection.managers.map(&:sunetid).join(', ') }
     let(:collection) { build_stubbed(:collection, :with_managers, :with_depositors) }
 
     it 'renders the participant component' do
