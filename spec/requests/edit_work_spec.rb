@@ -26,7 +26,7 @@ RSpec.describe 'Updating an existing work' do
 
     describe 'submit the form' do
       context 'with an attachment' do
-        let(:work) { create(:work, :with_attached_file, state: 'deposited') }
+        let(:work) { create(:work, :with_attached_file, :deposited) }
         let(:user) { work.depositor }
         let(:work_params) do
           {
