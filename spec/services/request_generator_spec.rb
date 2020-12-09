@@ -58,7 +58,7 @@ RSpec.describe RequestGenerator do
       end
       let(:expected_model) do
         {
-          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 0,
           access: { access: 'world', download: 'world' },
@@ -115,7 +115,7 @@ RSpec.describe RequestGenerator do
       let(:expected_model) do
         {
           externalIdentifier: 'druid:bk123gh4567',
-          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 0,
           access: { access: 'world', download: 'world' },
@@ -191,7 +191,7 @@ RSpec.describe RequestGenerator do
       end
       let(:expected_model) do
         {
-          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
           access: { access: 'world', download: 'world' },
@@ -271,7 +271,7 @@ RSpec.describe RequestGenerator do
       end
       let(:expected_model) do
         {
-          type: 'http://cocina.sul.stanford.edu/models/document.jsonld',
+          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
           externalIdentifier: 'druid:bk123gh4567',
