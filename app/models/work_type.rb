@@ -141,7 +141,7 @@ class WorkType
   def self.all
     [
       new(id: 'text', label: 'Text', icon: 'book-open', subtypes: TEXT_TYPES,
-          cocina_type: Cocina::Models::Vocab.document),
+          cocina_type: Cocina::Models::Vocab.object),
       new(id: 'data', label: 'Data', icon: 'chart-bar', subtypes: DATA_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'software, multimedia', label: 'Software or Code', icon: 'mouse', subtypes: SOFTWARE_TYPES,
