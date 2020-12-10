@@ -246,7 +246,7 @@ RSpec.describe Work do
             .to change(work, :state)
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                   'NotificationMailer', 'deposited_email', 'deliver_now',
+                   'WorksMailer', 'deposited_email', 'deliver_now',
                    { params: { user: work.depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
@@ -265,7 +265,7 @@ RSpec.describe Work do
             .to change(work, :state)
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                   'NotificationMailer', 'new_version_deposited_email', 'deliver_now',
+                   'WorksMailer', 'new_version_deposited_email', 'deliver_now',
                    { params: { user: work.depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
@@ -283,7 +283,7 @@ RSpec.describe Work do
             .to change(work, :state)
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                   'NotificationMailer', 'approved_email', 'deliver_now',
+                   'WorksMailer', 'approved_email', 'deliver_now',
                    { params: { user: work.depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
@@ -307,7 +307,7 @@ RSpec.describe Work do
             .to change(work, :state)
             .to('pending_approval')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                   'NotificationMailer', 'submitted_for_review_email', 'deliver_now',
+                   'WorksMailer', 'submitted_for_review_email', 'deliver_now',
                    { params: { user: reviewer, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
@@ -324,7 +324,7 @@ RSpec.describe Work do
             .to change(work, :state)
             .to('pending_approval')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                   'NotificationMailer', 'submitted_for_review_email', 'deliver_now',
+                   'WorksMailer', 'submitted_for_review_email', 'deliver_now',
                    { params: { user: reviewer, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
@@ -342,7 +342,7 @@ RSpec.describe Work do
           .to change(work, :state)
           .to('rejected')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                 'NotificationMailer', 'reject_email', 'deliver_now',
+                 'WorksMailer', 'reject_email', 'deliver_now',
                  { params: { user: work.depositor, work: work }, args: [] }
                ))
         expect(WorkUpdatesChannel).to have_received(:broadcast_to)

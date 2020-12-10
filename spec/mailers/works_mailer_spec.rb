@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe NotificationMailer, type: :mailer do
+RSpec.describe WorksMailer, type: :mailer do
   describe 'reject_email' do
     let(:user) { work.depositor }
     let(:mail) { described_class.with(user: user, work: work).reject_email }
