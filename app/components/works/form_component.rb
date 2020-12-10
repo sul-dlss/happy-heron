@@ -3,7 +3,7 @@
 
 module Works
   # The component that renders the form for editing or creating a work.
-  class WorkFormComponent < ApplicationComponent
+  class FormComponent < ApplicationComponent
     sig { returns(WorkForm) }
     attr_reader :work_form
 
