@@ -437,7 +437,7 @@ Video:
       uri: http://id.loc.gov/authorities/genreForms/gf2017027265
       source:
         code: lcgft
-Mixed materials:
+Mixed Materials:
   Data:
     - type: genre
       value: dataset

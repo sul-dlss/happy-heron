@@ -62,7 +62,10 @@ class TypesGenerator
     return [] if work_type == 'Other'
 
     subtypes.flat_map do |subtype|
-      types_to_genres.dig(work_type, subtype).map do |genre|
+      genres = types_to_genres.dig(work_type, subtype)
+      raise "Genre not found for #{work_type}, #{subtype} in types_to_genre.yml" unless genres
+
+      genres.map do |genre|
         Cocina::Models::DescriptiveValue.new(genre)
       end
     end
