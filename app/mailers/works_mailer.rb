@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Sends email notifications about works
-class NotificationMailer < ApplicationMailer
+class WorksMailer < ApplicationMailer
   def approved_email
     @user = params[:user]
     @work = params[:work]

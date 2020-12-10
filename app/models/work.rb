@@ -36,7 +36,7 @@ class Work < ApplicationRecord
     end
 
     after_transition on: :deposit_complete do |work, _transition|
-      mailer = NotificationMailer.with(user: work.depositor, work: work)
+      mailer = WorksMailer.with(user: work.depositor, work: work)
       job = if work.collection.review_enabled?
               mailer.approved_email
             elsif work.version > 1
@@ -52,14 +52,14 @@ class Work < ApplicationRecord
     end
 
     after_transition on: :reject do |work, _transition|
-      NotificationMailer.with(user: work.depositor, work: work)
-                        .reject_email.deliver_later
+      WorksMailer.with(user: work.depositor, work: work)
+                 .reject_email.deliver_later
     end
 
     after_transition on: :submit_for_review do |work, _transition|
       (work.collection.reviewers + work.collection.managers - [work.depositor]).each do |recipient|
-        NotificationMailer.with(user: recipient, work: work)
-                          .submitted_for_review_email.deliver_later
+        WorksMailer.with(user: recipient, work: work)
+                   .submitted_for_review_email.deliver_later
       end
     end
 
