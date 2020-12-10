@@ -35,3 +35,8 @@ file_uploads_root: tmp/uploads
 purl_url: https://purl.stanford.edu
 
 host: <%= Socket.gethostname %>
+
+notifications:
+  first_draft_reminder:
+    first_interval: 14 # delay before initial first draft reminder, in days
+    subsequent_interval: 28 # delay between reminders after the initial, also in days

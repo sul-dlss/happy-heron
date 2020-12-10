@@ -20,4 +20,7 @@ class Work
 
   sig { returns(T::Boolean) }
   def first_draft?; end
+
+  sig { params(args: Symbol).returns(ActiveRecord::Relation) }
+  def self.with_state(*args); end
 end
