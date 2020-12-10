@@ -6,7 +6,7 @@ require 'rails_helper'
 RSpec.describe Works::FormComponent do
   let(:component) { described_class.new(work_form: work_form) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:work) { build(:work, collection: build(:collection, id: 7)) }
+  let(:work) { create(:work, collection: build(:collection, id: 7)) }
   let(:work_form) { WorkForm.new(work) }
   let(:rendered) { render_inline(component) }
 
@@ -16,7 +16,7 @@ RSpec.describe Works::FormComponent do
 
   it 'renders the component' do
     expect(rendered.to_html)
-      .to include('Deposit your content', 'File', 'Add your files',
+      .to include('Deposit', 'Save as draft', 'Discard draft', 'File', 'Add your files',
                   'Title of deposit and contact information',
                   'List authors and contributors',
                   'Enter dates related to your deposit',
