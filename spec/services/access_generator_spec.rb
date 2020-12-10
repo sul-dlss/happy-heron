@@ -27,7 +27,7 @@ RSpec.describe AccessGenerator do
 
     it 'generates the model' do
       expect(model).to eq(access: 'citation-only', download: 'none',
-                          embargo: { releaseDate: '2040-09-03', access: 'world' })
+                          embargo: { releaseDate: work.embargo_date.to_s, access: 'world' })
     end
   end
 end

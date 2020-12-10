@@ -19,17 +19,17 @@
 
         <div class="year">
           <label for="work_embargo_year" class="visually-hidden">Embargo year</label>
-          <%= select_year Time.zone.today, { prefix: 'work', field_name: 'embargo_date(1i)', start_year: Time.zone.today.year, end_year: 3.years.from_now.year }, id: 'work_embargo_year', class: "form-control" %>
+          <%= year_field %>
         </div>
 
         <div class="month">
           <label for="work_embargo_month" class="visually-hidden">Embargo month</label>
-          <%= select_month nil, { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month'}, id: 'work_embargo_month', class: "form-control" %>
+          <%= month_field %>
         </div>
 
         <div class="day">
           <label for="work_embargo_day" class="visually-hidden">Embargo day</label>
-          <%= select_day nil, { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day'}, id: 'work_embargo_day', class: "form-control" %>
+          <%= day_field %>
         </div>
       </div>
     </div>
