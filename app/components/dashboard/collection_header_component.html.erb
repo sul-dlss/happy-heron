@@ -3,5 +3,9 @@
   <%= link_to edit_collection_path(collection), aria: { label: "Edit #{name}"} do %>
     <span class="fas fa-pencil-alt"></span>
   <% end %>
+<% elsif depositing? %>
+  <span class="state">
+    Depositing <%= spinner %>
+  </span>
 <% end %>
 <%= render Collections::DeleteComponent.new(collection: collection) %>

@@ -4,13 +4,26 @@
 require 'rails_helper'
 
 RSpec.describe Dashboard::CollectionHeaderComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  before do
+    allow(controller).to receive_messages(allowed_to?: false)
+  end
+
+  context 'with a new, first draft collection' do
+    let(:collection) { create(:collection, :first_draft) }
+
+    it 'does not render the spinner' do
+      expect(rendered.to_html).not_to include 'fa-spinner'
+    end
+  end
+
+  context 'with a depositing collection' do
+    let(:collection) { create(:collection, :depositing) }
+
+    it 'does not render the spinner' do
+      expect(rendered.to_html).to include 'Depositing'
+      expect(rendered.to_html).to include 'fas fa-spinner fa-pulse'
+    end
+  end
 end
