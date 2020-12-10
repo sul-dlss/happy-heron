@@ -473,6 +473,31 @@ RSpec.describe 'Create a new work' do
           expect(DepositJob).not_to have_received(:perform_later)
         end
       end
+
+      context 'with missing embargo month and day' do
+        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+        let(:work_params) do
+          {
+            title: 'A title of great import',
+            contact_email: '',
+            abstract: 'A work',
+            license: License.license_list.first,
+            work_type: 'text',
+            release: 'embargo',
+            'embargo(1i)': 2020,
+            'embargo(2i)': '',
+            'embargo(3i)': ''
+          }
+        end
+
+        it 'returns an error' do
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit',
+                                                                format: :json }
+          expect(response).to have_http_status(:bad_request)
+          expect(response.body).to include 'Must provide all parts'
+        end
+      end
     end
   end
 end

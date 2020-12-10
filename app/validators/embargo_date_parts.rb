@@ -4,11 +4,10 @@
 # Validates embargo month and day
 class EmbargoDateParts < ActiveModel::Validator
   def validate(record)
+    # If we've already successfully deserialized the date, there's no point to continuing
     return if record.embargo_date.instance_of?(Date)
-    return if record.release == 'immediate'
 
-    month = record.send('embargo_date(2i)')
-    day = record.send('embargo_date(3i)')
-    record.errors.add('embargo-date', 'Must provide all parts') if month.nil? || day.nil?
+    # Adds error because embargo date is nil (may be missing month and day values in form)
+    record.errors.add('embargo-date', 'Must provide all parts')
   end
 end
