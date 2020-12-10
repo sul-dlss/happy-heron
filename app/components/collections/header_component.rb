@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -11,5 +11,21 @@ module Collections
 
     sig { returns(Collection) }
     attr_reader :collection
+
+    delegate :depositing?, to: :collection
+
+    sig { returns(String) }
+    def name
+      collection.name.presence || 'No Title'
+    end
+
+    sig { returns(String) }
+    def spinner
+      tag.span class: 'fas fa-spinner fa-pulse'
+    end
+
+    def can_create_work?
+      helpers.allowed_to?(:create?, Work.new(collection: collection))
+    end
   end
 end

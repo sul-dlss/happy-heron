@@ -1,6 +1,11 @@
 <header class="title">
-  <span class="header-text"><%= @collection.name %></span>
-  <% if helpers.allowed_to?(:create?, Work.new(collection: @collection)) %>
+  <span class="header-text"><%= name %></span>
+  <% if depositing? %>
+    <span class="state">
+      Depositing <%= spinner %>
+    </span>
+  <% end %>
+  <% if can_create_work? %>
     <span class="deposit-button" data-controller="work-type">
       <%= button_tag '+ Deposit to this collection',
             data: {
