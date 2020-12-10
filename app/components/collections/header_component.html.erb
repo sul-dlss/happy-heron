@@ -1,7 +1,7 @@
 <header class="title">
   <span class="header-text"><%= name %></span>
   <% if depositing? %>
-    <span class="state">
+    <span data-state-updates-target="state" class="state">
       Depositing <%= spinner %>
     </span>
   <% end %>

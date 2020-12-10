@@ -8,7 +8,13 @@
   <tbody>
     <tr>
       <th>PURL</th>
-      <td><%= link_to purl, purl unless purl.nil? %></td>
+      <td data-state-updates-target="purl">
+        <% if purl %>
+          <%= link_to purl, purl %>
+        <% else %>
+          <em>Link will become available once the collection has been deposited.</em>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <th>Version details</th>
