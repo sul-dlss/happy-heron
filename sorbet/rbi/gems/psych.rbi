@@ -382,7 +382,7 @@ class Psych::Visitors::DepthFirst < Psych::Visitors::Visitor
   def visit_Psych_Nodes_Sequence(o); end
   def visit_Psych_Nodes_Stream(o); end
 end
-class Anonymous_Struct_1 < Struct
+class Anonymous_Struct_2 < Struct
   def column; end
   def column=(_); end
   def index; end
@@ -394,7 +394,7 @@ class Anonymous_Struct_1 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Psych::Parser::Mark < Anonymous_Struct_1
+class Psych::Parser::Mark < Anonymous_Struct_2
 end
 class Psych::Coder
   def [](k); end

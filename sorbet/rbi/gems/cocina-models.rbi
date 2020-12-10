@@ -28,20 +28,20 @@ class Cocina::Models::Struct < Dry::Struct
   extend Dry::Core::DescendantsTracker
 end
 module Cocina::Models::Types
-  extend Anonymous_Dry_Core_Deprecations_Tagged_50
-  extend Anonymous_Module_51
+  extend Anonymous_Dry_Core_Deprecations_Tagged_51
+  extend Anonymous_Module_52
   extend Dry::Core::Deprecations::Interface
   extend Dry::Types::BuilderMethods
-  include Anonymous_Dry_Types_Module_52
+  include Anonymous_Dry_Types_Module_53
 end
 module Cocina::Models::Types::Definition
 end
-module Anonymous_Dry_Types_Module_52
+module Anonymous_Dry_Types_Module_53
   def self.included(base); end
   extend Dry::Types::BuilderMethods
 end
-module Anonymous_Dry_Core_Deprecations_Tagged_50
+module Anonymous_Dry_Core_Deprecations_Tagged_51
 end
-module Anonymous_Module_51
+module Anonymous_Module_52
   def const_missing(missing); end
 end

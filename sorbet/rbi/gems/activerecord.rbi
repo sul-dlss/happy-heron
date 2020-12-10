@@ -147,7 +147,7 @@ end
 module Arel::Attributes
   def self.for(column); end
 end
-class Anonymous_Struct_20 < Struct
+class Anonymous_Struct_21 < Struct
   def name; end
   def name=(_); end
   def relation; end
@@ -157,7 +157,7 @@ class Anonymous_Struct_20 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Arel::Attributes::Attribute < Anonymous_Struct_20
+class Arel::Attributes::Attribute < Anonymous_Struct_21
   def able_to_type_cast?; end
   def lower; end
   def type_cast_for_database(value); end
@@ -636,7 +636,7 @@ class Arel::Visitors::Dot::Node
   def name; end
   def name=(arg0); end
 end
-class Anonymous_Struct_21 < Struct
+class Anonymous_Struct_22 < Struct
   def from; end
   def from=(_); end
   def name; end
@@ -648,7 +648,7 @@ class Anonymous_Struct_21 < Struct
   def to; end
   def to=(_); end
 end
-class Arel::Visitors::Dot::Edge < Anonymous_Struct_21
+class Arel::Visitors::Dot::Edge < Anonymous_Struct_22
 end
 class Arel::Visitors::IBM_DB < Arel::Visitors::ToSql
   def collect_optimizer_hints(o, collector); end
@@ -2837,7 +2837,7 @@ class ActiveRecord::Type::Time < ActiveModel::Type::Time
   def serialize(value); end
   include ActiveRecord::Type::Internal::Timezone
 end
-class ActiveRecord::Type::Time::Value < Anonymous_Delegator_22
+class ActiveRecord::Type::Time::Value < Anonymous_Delegator_23
 end
 class ActiveRecord::Type::Text < ActiveModel::Type::String
   def type; end
@@ -2846,7 +2846,7 @@ class ActiveRecord::Type::UnsignedInteger < ActiveModel::Type::Integer
   def max_value; end
   def min_value; end
 end
-class ActiveRecord::Type::Serialized < Anonymous_Delegator_23
+class ActiveRecord::Type::Serialized < Anonymous_Delegator_24
   def accessor; end
   def assert_valid_value(value); end
   def changed_in_place?(raw_old_value, value); end
@@ -2988,7 +2988,7 @@ module ActiveRecord::Core::ClassMethods
   def table_metadata; end
   def type_caster; end
 end
-class ActiveRecord::Core::InspectionMask < Anonymous_Delegator_24
+class ActiveRecord::Core::InspectionMask < Anonymous_Delegator_25
   def pretty_print(pp); end
 end
 class ActiveRecord::ConnectionTimeoutError < ActiveRecord::ConnectionNotEstablished
@@ -3384,7 +3384,7 @@ module ActiveRecord::Locking::Optimistic::ClassMethods
   def reset_locking_column; end
   def update_counters(id, counters); end
 end
-class ActiveRecord::Locking::LockingType < Anonymous_Delegator_25
+class ActiveRecord::Locking::LockingType < Anonymous_Delegator_26
   def deserialize(value); end
   def encode_with(coder); end
   def init_with(coder); end
@@ -3449,7 +3449,7 @@ end
 module ActiveRecord::AttributeMethods::TimeZoneConversion
   extend ActiveSupport::Concern
 end
-class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter < Anonymous_Delegator_26
+class ActiveRecord::AttributeMethods::TimeZoneConversion::TimeZoneConverter < Anonymous_Delegator_27
   def cast(value); end
   def convert_time_to_time_zone(value); end
   def deserialize(value); end
@@ -4459,7 +4459,7 @@ module ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
   def validate_constraint(table_name, constraint_name); end
   def validate_foreign_key(from_table, to_table = nil, **options); end
 end
-class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata < Anonymous_Delegator_27
+class ActiveRecord::ConnectionAdapters::PostgreSQL::TypeMetadata < Anonymous_Delegator_28
   def ==(other); end
   def eql?(other); end
   def fmod; end

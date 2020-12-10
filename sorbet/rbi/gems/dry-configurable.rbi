@@ -38,10 +38,10 @@ class Dry::Configurable::Config
   def to_hash; end
   def update(values); end
   def values; end
-  include Anonymous_Dry_Equalizer_53
+  include Anonymous_Dry_Equalizer_54
   include Dry::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_53
+module Anonymous_Dry_Equalizer_54
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
@@ -65,10 +65,10 @@ class Dry::Configurable::Setting
   def with(new_opts); end
   def writer?(meth); end
   def writer_name; end
-  include Anonymous_Dry_Equalizer_54
+  include Anonymous_Dry_Equalizer_55
   include Dry::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_54
+module Anonymous_Dry_Equalizer_55
   def cmp?(comparator, other); end
   def hash; end
 end
@@ -87,11 +87,11 @@ class Dry::Configurable::Settings
   def key?(name); end
   def keys; end
   def pristine; end
-  include Anonymous_Dry_Equalizer_55
+  include Anonymous_Dry_Equalizer_56
   include Dry::Equalizer::Methods
   include Enumerable
 end
-module Anonymous_Dry_Equalizer_55
+module Anonymous_Dry_Equalizer_56
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end

@@ -373,7 +373,7 @@ class Rails::SourceAnnotationExtractor
   def self.enumerate(tag = nil, options = nil); end
   def tag; end
 end
-class Anonymous_Struct_2 < Struct
+class Anonymous_Struct_3 < Struct
   def line; end
   def line=(_); end
   def self.[](*arg0); end
@@ -385,7 +385,7 @@ class Anonymous_Struct_2 < Struct
   def text; end
   def text=(_); end
 end
-class Rails::SourceAnnotationExtractor::Annotation < Anonymous_Struct_2
+class Rails::SourceAnnotationExtractor::Annotation < Anonymous_Struct_3
   def self.directories; end
   def self.extensions; end
   def self.notes_task_deprecation_warning; end
@@ -565,9 +565,9 @@ class Rails::ApplicationController < ActionController::Base
   def self.helpers_path; end
   def self.middleware_stack; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_3
+  include Anonymous_Module_4
 end
-module Anonymous_Module_3
+module Anonymous_Module_4
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -579,9 +579,9 @@ module Anonymous_Module_3
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_4
   extend Anonymous_Module_5
+  extend Anonymous_Module_6
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_4
   include Anonymous_Module_5
+  include Anonymous_Module_6
 end

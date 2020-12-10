@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rspec-sorbet/all/rspec-sorbet.rbi
 #
-# rspec-sorbet-1.7.0
+# rspec-sorbet-1.8.0
 
 module RSpec
 end
