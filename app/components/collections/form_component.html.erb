@@ -182,13 +182,5 @@
       </div>
     </div>
   </section>
-
-  <div class="row justify-content-between">
-    <div class="col-auto">
-      <%= render Collections::DeleteComponent.new(collection: collection_form.model, style: :button) %>
-    </div>
-    <div class="col-auto">
-      <%= render ButtonsComponent.new(form: form) %>
-    </div>
-  </div>
+  <%= render ButtonsComponent.new(form: form) %>
 <% end %>

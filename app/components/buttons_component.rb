@@ -17,6 +17,11 @@ class ButtonsComponent < ApplicationComponent
 
   delegate :object, to: :form
 
+  sig { returns(T.nilable(String)) }
+  def model_type
+    object.model.class.to_s
+  end
+
   sig { returns(T.nilable(Work)) }
   def maybe_work
     object.model if object.model.is_a?(Work)
