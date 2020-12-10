@@ -29,6 +29,7 @@ class DraftWorkForm < Reform::Form
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true
   validates :embargo_date, embargo_date: true
+  validates_with EmbargoDateParts, unless: proc { |form| form.release == 'immediate' }
 
   def deserialize!(params)
     # Choose between using the user provided citation and the auto-generated citation

@@ -64,7 +64,8 @@ RSpec.describe WorkForm do
     end
 
     context 'with contributors' do
-      let(:work) { build(:work, :with_contributors, :with_attached_file, :with_keywords) }
+      let(:embargo) { { embargo_date: Date.new } }
+      let(:work) { build(:work, :with_contributors, :with_attached_file, :with_keywords, embargo) }
 
       it 'validates' do
         expect(form).to be_valid

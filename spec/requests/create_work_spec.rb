@@ -259,7 +259,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors.size).to eq 2
@@ -322,7 +324,7 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit', format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors.size).to eq 1
@@ -350,7 +352,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'saves and then displays the draft work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Save as draft' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Save as draft',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
@@ -386,7 +390,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'saves and then displays the draft work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Save as draft' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Save as draft',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
@@ -451,7 +457,9 @@ RSpec.describe 'Create a new work' do
         end
 
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit',
+                                                                format: :json }
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.contributors.size).to eq 1
@@ -463,6 +471,31 @@ RSpec.describe 'Create a new work' do
           expect(work.subtype).to be_empty
           expect(work.state).to eq 'pending_approval'
           expect(DepositJob).not_to have_received(:perform_later)
+        end
+      end
+
+      context 'with missing embargo month and day' do
+        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+        let(:work_params) do
+          {
+            title: 'A title of great import',
+            contact_email: '',
+            abstract: 'A work',
+            license: License.license_list.first,
+            work_type: 'text',
+            release: 'embargo',
+            'embargo(1i)': 2020,
+            'embargo(2i)': '',
+            'embargo(3i)': ''
+          }
+        end
+
+        it 'returns an error' do
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit',
+                                                                format: :json }
+          expect(response).to have_http_status(:bad_request)
+          expect(response.body).to include 'Must provide all parts'
         end
       end
     end
