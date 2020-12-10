@@ -9,8 +9,18 @@ class ButtonsComponent < ApplicationComponent
 
   attr_reader :form
 
+  sig { returns(T.nilable(String)) }
   def submit_button_label
     work_in_reviewed_coll? ? 'Submit for approval' : 'Deposit'
+  end
+
+  sig { returns(T.nilable(String)) }
+  def delete_button
+    if model_type == 'Work'
+      render Works::DeleteComponent.new(work: object.model, style: :button)
+    else
+      render Collections::DeleteComponent.new(collection: object.model, style: :button)
+    end
   end
 
   private

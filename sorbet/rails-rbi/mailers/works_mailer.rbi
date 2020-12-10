@@ -15,5 +15,5 @@ class WorksMailer
   def self.reject_email; end
 
   sig { returns(ActionMailer::MessageDelivery) }
-  def self.submitted_for_review_email; end
+  def self.submitted_email; end
 end

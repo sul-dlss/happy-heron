@@ -13,21 +13,19 @@ RSpec.describe 'Delete a draft work', js: true do
 
   context 'when draft' do
     it 'allow users to delete the work and destroys the model from the dashboard' do
-      expect(work).to be_first_draft
       visit dashboard_path
       accept_confirm do
         click_link "Delete #{work.title}"
       end
-      expect(Work.find_by(id: work.id)).to be(nil)
+      expect(Work.exists?(work.id)).to be false
     end
 
     it 'allow users to delete the work and destroys the model from the work edit page' do
-      expect(work).to be_first_draft
       visit edit_work_path(work)
       accept_confirm do
         click_link 'Discard draft'
       end
-      expect(Work.find_by(id: work.id)).to be(nil)
+      expect(Work.exists?(work.id)).to be false
     end
   end
 end

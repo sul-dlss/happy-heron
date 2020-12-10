@@ -14,6 +14,11 @@ module Collections
     attr_reader :collection
 
     sig { returns(T::Boolean) }
+    def icon?
+      @style == :icon
+    end
+
+    sig { returns(T::Boolean) }
     def render?
       helpers.allowed_to?(:delete?, collection)
     end

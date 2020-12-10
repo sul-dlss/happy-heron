@@ -14,6 +14,11 @@ module Works
     attr_reader :work
 
     sig { returns(T::Boolean) }
+    def icon?
+      @style == :icon
+    end
+
+    sig { returns(T::Boolean) }
     def render?
       helpers.allowed_to?(:delete?, work)
     end

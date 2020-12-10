@@ -1,10 +1,6 @@
 <div class="row justify-content-between">
   <div class="col-auto">
-    <% if model_type == 'Work' %>
-      <%= render Works::DeleteComponent.new(work: object.model, style: :button) %>
-    <% else %>
-      <%= render Collections::DeleteComponent.new(collection: object.model, style: :button) %>
-    <% end %>
+    <%= delete_button %>
   </div>
   <div class="col-auto">
     <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button' %>
