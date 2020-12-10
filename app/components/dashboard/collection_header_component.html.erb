@@ -4,7 +4,7 @@
     <span class="fas fa-pencil-alt"></span>
   <% end %>
 <% elsif depositing? %>
-  <span class="state">
+  <span class="state" data-controller="state-updates" data-state-updates-collection-id="<%= collection.id %>" data-state-updates-target="state">
     Depositing <%= spinner %>
   </span>
 <% end %>
