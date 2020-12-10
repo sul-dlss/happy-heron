@@ -29,7 +29,7 @@ FactoryBot.define do
   end
 
   trait :embargoed do
-    embargo_date { '2040-09-03' }
+    embargo_date { 30.months.from_now }
   end
 
   trait :with_creation_date_range do
