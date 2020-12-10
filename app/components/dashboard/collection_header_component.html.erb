@@ -1,0 +1,7 @@
+<%= link_to name, collection %>
+<% if allowed_to?(:edit?, collection) %>
+  <%= link_to edit_collection_path(collection), aria: { label: "Edit #{name}"} do %>
+    <span class="fas fa-pencil-alt"></span>
+  <% end %>
+<% end %>
+<%= render Collections::DeleteComponent.new(collection: collection) %>
