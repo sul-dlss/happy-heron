@@ -22,6 +22,11 @@ class DepositStatusJob < BaseDepositJob
   def complete_deposit(object, druid)
     object.druid = druid
     object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
+    # Force a save because state_machine-activerecord wraps its update in a transaction.
+    # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
+    # It's possible the mailer job is started before the transaction in the main thread is completed,
+    # which means the mailer may not have access to the druid.
+    object.save!
     object.deposit_complete!
   end
 
