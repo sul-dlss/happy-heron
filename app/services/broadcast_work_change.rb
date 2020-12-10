@@ -11,7 +11,7 @@ class BroadcastWorkChange
     case state
     when :deposited
       purl_link = "<a href=\"#{work.purl}\">#{work.purl}</a>"
-      WorkUpdatesChannel.broadcast_to(work, state: display, purl: purl_link)
+      WorkUpdatesChannel.broadcast_to(work, state: display, purl: purl_link, citation: work.citation)
     else
       WorkUpdatesChannel.broadcast_to(work, state: display)
     end
