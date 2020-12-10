@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::WorkFormComponent do
+RSpec.describe Works::FormComponent do
   let(:component) { described_class.new(work_form: work_form) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:work) { build(:work, collection: build(:collection, id: 7)) }

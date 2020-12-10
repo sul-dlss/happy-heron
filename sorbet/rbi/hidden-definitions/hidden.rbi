@@ -50340,7 +50340,7 @@ class Works::StateDisplayComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class Works::WorkFormComponent
+class Works::FormComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
