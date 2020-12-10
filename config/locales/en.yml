@@ -25,3 +25,13 @@ en:
       depositing: Deposit in progress
       deposited: Deposited
   terms_of_use: User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the depositor.
+  collection:
+    actions: Actions
+    citation: Citation
+    depositor: Depositor
+    deposits: Deposits in collection
+    deposit_status: Deposit status
+    deposit_size: Deposit size
+    last_modified: Last modified
+    number_of_files: '# of files'
+    persistent_link: Persistent link
