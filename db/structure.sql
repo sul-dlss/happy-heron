@@ -848,6 +848,13 @@ CREATE INDEX index_works_on_collection_id ON public.works USING btree (collectio
 
 
 --
+-- Name: index_works_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_created_at ON public.works USING btree (created_at);
+
+
+--
 -- Name: index_works_on_depositor_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -866,6 +873,13 @@ CREATE UNIQUE INDEX index_works_on_druid_and_version ON public.works USING btree
 --
 
 CREATE INDEX index_works_on_state ON public.works USING btree (state);
+
+
+--
+-- Name: index_works_on_updated_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_updated_at ON public.works USING btree (updated_at);
 
 
 --
@@ -988,6 +1002,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201202161823'),
 ('20201202195426'),
 ('20201204214055'),
-('20201207223546');
+('20201207223546'),
+('20201211051829');
 
 

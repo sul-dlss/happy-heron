@@ -99,7 +99,7 @@ RSpec.describe WorkReminderGenerator do
     end
 
     it 'allows the caller to override the default reminder intervals' do
-      expect { described_class.send_first_draft_reminders(first_interval: 3.days, subsequent_interval: 4.days) }
+      expect { described_class.send_first_draft_reminders(first_interval: 3, subsequent_interval: 4) }
         .to(have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
               'WorksMailer', 'first_draft_reminder_email', 'deliver_now',
