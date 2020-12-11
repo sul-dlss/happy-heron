@@ -74,21 +74,25 @@ RSpec.describe WorksMailer, type: :mailer do
     end
   end
 
-  describe 'submitted_for_review_email' do
+  describe 'submitted_email' do
     let(:user) { build(:user, name: 'Al Dente') }
-    let(:mail) { described_class.with(user: user, work: work).submitted_for_review_email }
-    let(:work) { build(:work, :pending_approval, collection: collection, depositor: user) }
+    let(:mail) { described_class.with(user: user, work: work).submitted_email }
+    let(:work) do
+      build(:work, :pending_approval, title: 'Tiramisu lemon drops chocolate cake',
+                                      collection: collection, depositor: user)
+    end
     let(:collection) { build(:collection, :with_reviewers, name: 'small batch organic') }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq 'A Depositor has submitted a deposit in the small batch organic collection'
+      expect(mail.subject).to eq 'Your deposit is submitted and waiting for approval'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 
     it 'renders the reason' do
-      expect(mail.body.encoded).to match 'The Depositor Al Dente has submitted a ' \
-        'deposit for review in the small batch organic collection.'
+      expect(mail.body.encoded).to match 'Your deposit, “Tiramisu lemon drops chocolate cake” to the ' \
+        "small batch organic\r\n  collection in the Stanford Digital Repository, " \
+        'is now waiting for review by a collection Manager.'
     end
   end
 end
