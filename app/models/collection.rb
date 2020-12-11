@@ -34,7 +34,7 @@ class Collection < ApplicationRecord
 
   state_machine initial: :first_draft do
     before_transition do |collection, transition|
-      # filters out bits of the context that don't go into the event, e.g.: :added_depositors
+      # filters out bits of the context that don't go into the event, e.g.: :change_set
       event_params = collection.event_context.slice(:user)
       collection.events.build(event_params.merge(event_type: transition.event))
     end
@@ -45,22 +45,31 @@ class Collection < ApplicationRecord
           CollectionsMailer.with(collection: collection, user: depositor)
                            .invitation_to_deposit_email.deliver_later
         end
+
+        collection.reviewers.each do |reviewer|
+          CollectionsMailer.with(collection: collection, user: reviewer)
+                           .review_access_granted_email.deliver_later
+        end
       end
       DepositCollectionJob.perform_later(collection)
     end
 
     after_transition on: :update_metadata do |collection, transition|
-      if transition.to == 'version_draft'
-        new_depositors = collection.event_context.fetch(:added_depositors)
-        new_depositors.each do |depositor|
+      if transition.to == 'version_draft' # only send these emails when the collection is already pubished
+        change_set = collection.event_context.fetch(:change_set)
+        change_set.added_depositors.each do |depositor|
           CollectionsMailer.with(collection: collection, user: depositor)
                            .invitation_to_deposit_email.deliver_later
         end
 
-        removed_depositors = collection.event_context.fetch(:removed_depositors)
-        removed_depositors.each do |depositor|
+        change_set.removed_depositors.each do |depositor|
           CollectionsMailer.with(collection: collection, user: depositor)
                            .deposit_access_removed_email.deliver_later
+        end
+
+        change_set.added_reviewers.each do |reviewer|
+          CollectionsMailer.with(collection: collection, user: reviewer)
+                           .review_access_granted_email.deliver_later
         end
       end
     end

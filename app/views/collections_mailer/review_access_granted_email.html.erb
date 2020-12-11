@@ -1,0 +1,12 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>You have been invited to review new deposits to the <%= @collection.name %> collection in the
+   Stanford Digital Repository. When a Depositor submits a deposit, you will receive an email
+   notification with a direct link to the deposit to be reviewed.</p>
+
+<p>To visit the collection where deposits are made, and for more information about SDR repository services,
+  please visit <%= link_to root_url, root_url %>.</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>

@@ -109,6 +109,36 @@ RSpec.describe 'Updating an existing collection' do
             expect(response).to redirect_to(collection)
           end
         end
+
+        context 'when reviewers are added to a collection' do
+          let(:collection) { create(:collection, :deposited, managers: [user]) }
+          let(:reviewer) { create(:user) }
+          let(:collection_params) do
+            {
+              name: 'My Test Collection',
+              description: 'This is a very good collection.',
+              contact_email: user.email,
+              access: 'world',
+              manager_sunets: user.sunetid,
+              depositor_sunets: '',
+              email_depositors_status_changed: true,
+              review_enabled: 'true',
+              reviewer_sunets: reviewer.sunetid
+            }
+          end
+
+          it 'sends emails to those removed' do
+            expect do
+              patch "/collections/#{collection.id}",
+                    params: { collection: collection_params, commit: save_draft_button }
+            end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+              'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
+              { params: { user: reviewer, collection: collection }, args: [] }
+            )
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection)
+          end
+        end
       end
 
       context 'when collection fails to save' do

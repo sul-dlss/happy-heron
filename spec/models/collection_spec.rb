@@ -51,9 +51,10 @@ RSpec.describe Collection do
 
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :deposited) }
+      let(:change_set) { CollectionChangeSet.from(collection).to(collection) }
 
       before do
-        collection.event_context = { user: collection.creator, added_depositors: [], removed_depositors: [] }
+        collection.event_context = { user: collection.creator, change_set: change_set }
       end
 
       it 'transitions to version draft' do
