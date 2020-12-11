@@ -34,11 +34,35 @@ class Collection < ApplicationRecord
 
   state_machine initial: :first_draft do
     before_transition do |collection, transition|
-      collection.events.build(collection.event_context.merge(event_type: transition.event))
+      # filters out bits of the context that don't go into the event, e.g.: :added_depositors
+      event_params = collection.event_context.slice(:user)
+      collection.events.build(event_params.merge(event_type: transition.event))
     end
 
-    after_transition on: :begin_deposit do |collection, _transition|
+    after_transition on: :begin_deposit do |collection, transition|
+      if transition.from == 'first_draft'
+        collection.depositors.each do |depositor|
+          CollectionsMailer.with(collection: collection, user: depositor)
+                           .invitation_to_deposit_email.deliver_later
+        end
+      end
       DepositCollectionJob.perform_later(collection)
+    end
+
+    after_transition on: :update_metadata do |collection, transition|
+      if transition.to == 'version_draft'
+        new_depositors = collection.event_context.fetch(:added_depositors)
+        new_depositors.each do |depositor|
+          CollectionsMailer.with(collection: collection, user: depositor)
+                           .invitation_to_deposit_email.deliver_later
+        end
+
+        removed_depositors = collection.event_context.fetch(:removed_depositors)
+        removed_depositors.each do |depositor|
+          CollectionsMailer.with(collection: collection, user: depositor)
+                           .deposit_access_removed_email.deliver_later
+        end
+      end
     end
 
     after_transition do |collection, transition|

@@ -8,4 +8,11 @@ class CollectionsMailer < ApplicationMailer
     @collection = params[:collection]
     mail(to: @user.email, subject: "Invitation to deposit to the #{@collection.name} collection in the SDR")
   end
+
+  def deposit_access_removed_email
+    @user = params[:user]
+    @collection = params[:collection]
+    mail(to: @user.email, subject: "Your Depositor permissions for the #{@collection.name} " \
+      'collection in the SDR have been removed')
+  end
 end

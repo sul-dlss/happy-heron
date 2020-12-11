@@ -3,85 +3,12 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Collections requests' do
-  let(:collection) { create(:collection) }
+RSpec.describe 'Updating an existing collection' do
   let(:deposit_button) { 'Deposit' }
   let(:save_draft_button) { 'Save as draft' }
 
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
-  end
-
-  context 'with unauthenticated user' do
-    before do
-      sign_out
-    end
-
-    it 'redirects from /collections/new to login URL' do
-      get '/collections/new'
-      expect(response).to have_http_status(:found)
-      expect(response).to redirect_to(new_user_session_path)
-    end
-  end
-
-  context 'with an authenticated user who is not in any application workgroups' do
-    let(:user) { create(:user) }
-    let(:alert_text) { 'You are not authorized to perform the requested action' }
-
-    before do
-      sign_in user, groups: ['sdr:baz']
-    end
-
-    it 'does not authorize GETs to /collections/new' do
-      get '/collections/new'
-      expect(response).to redirect_to(:root)
-      follow_redirect!
-      expect(response).to be_successful
-      expect(response.body).to include alert_text
-    end
-  end
-
-  context 'with an authenticated collection creator' do
-    let(:user) { create(:user) }
-
-    before do
-      sign_in user, groups: ['dlss:hydrus-app-collection-creators']
-    end
-
-    it 'allows GETs to /collections/new' do
-      get '/collections/new'
-      expect(response).to have_http_status(:ok)
-    end
-
-    describe 'allowing content changes' do
-      let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
-
-      context 'when false' do
-        before do
-          allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
-        end
-
-        it 'redirects and displays alert' do
-          get '/collections/new'
-          expect(response).to redirect_to(:root)
-          follow_redirect!
-          expect(response).to have_http_status(:ok)
-          expect(response.body).to include alert_text
-        end
-      end
-
-      context 'when true' do
-        before do
-          allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
-        end
-
-        it 'does NOT display alert' do
-          get '/collections/new'
-          expect(response).to have_http_status(:ok)
-          expect(response.body).not_to include alert_text
-        end
-      end
-    end
   end
 
   context 'with an authenticated collection manager' do
@@ -92,14 +19,14 @@ RSpec.describe 'Collections requests' do
       sign_in user
     end
 
-    describe 'edit' do
+    describe 'show the form for an existing object' do
       it 'allows GETs to /collections/{id}/edit' do
         get "/collections/#{collection.id}/edit"
         expect(response).to have_http_status(:ok)
       end
     end
 
-    describe 'update' do
+    describe 'submit the form' do
       context 'when collection saves' do
         let(:collection_params) do
           {
@@ -129,22 +56,57 @@ RSpec.describe 'Collections requests' do
           expect(collection.depositors.size).to eq 6
         end
 
-        context 'when collection has reviewers specified' do
+        context 'when the review workflow is set to disabled' do
           let(:collection) { create(:collection, :with_reviewers, managers: [user]) }
-          let(:review_workflow_params) do
+
+          let(:collection_params) do
             {
+              name: 'My Test Collection',
+              description: 'This is a very good collection.',
+              contact_email: user.email,
+              access: 'world',
+              manager_sunets: user.sunetid,
+              depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
+              email_depositors_status_changed: true,
               review_enabled: 'false',
               reviewer_sunets: 'asdf'
             }
           end
 
-          before { collection_params.merge!(review_workflow_params) }
-
-          it 'removes the reviewers when the review workflow is set to disabled' do
+          it 'removes the reviewers' do
             patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             expect(collection.reload.reviewers).to be_empty
+          end
+        end
+
+        context 'when depositors are removed from a collection' do
+          let(:collection) { create(:collection, :deposited, :with_depositors, depositor_count: 2, managers: [user]) }
+          let(:collection_params) do
+            {
+              name: 'My Test Collection',
+              description: 'This is a very good collection.',
+              contact_email: user.email,
+              access: 'world',
+              manager_sunets: user.sunetid,
+              depositor_sunets: collection.depositors.first.sunetid,
+              email_depositors_status_changed: true,
+              review_enabled: 'false',
+              reviewer_sunets: ''
+            }
+          end
+
+          it 'sends emails to those removed' do
+            expect do
+              patch "/collections/#{collection.id}",
+                    params: { collection: collection_params, commit: save_draft_button }
+            end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+              'CollectionsMailer', 'deposit_access_removed_email', 'deliver_now',
+              { params: { user: collection.depositors.last, collection: collection }, args: [] }
+            )
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection)
           end
         end
       end
