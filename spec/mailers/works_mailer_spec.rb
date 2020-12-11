@@ -23,7 +23,7 @@ RSpec.describe WorksMailer, type: :mailer do
   describe 'deposited_email' do
     let(:user) { work.depositor }
     let(:mail) { described_class.with(user: user, work: work).deposited_email }
-    let(:work) { create(:work, :deposited, title: 'Photo booth activated charcoal', collection: collection) }
+    let(:work) { build_stubbed(:work, :deposited, title: 'Photo booth activated charcoal', collection: collection) }
     let(:collection) { build(:collection, name: 'gastropub humblebrag taiyaki') }
 
     it 'renders the headers' do
@@ -41,7 +41,7 @@ RSpec.describe WorksMailer, type: :mailer do
   describe 'new_version_deposited_email' do
     let(:user) { work.depositor }
     let(:mail) { described_class.with(user: user, work: work).new_version_deposited_email }
-    let(:work) { create(:work, :deposited, title: 'twee retro man braid', collection: collection) }
+    let(:work) { build_stubbed(:work, :deposited, title: 'twee retro man braid', collection: collection) }
     let(:collection) { build(:collection, name: 'listicle fam ramps flannel') }
 
     it 'renders the headers' do
@@ -59,7 +59,7 @@ RSpec.describe WorksMailer, type: :mailer do
   describe 'approved_email' do
     let(:user) { work.depositor }
     let(:mail) { described_class.with(user: user, work: work).approved_email }
-    let(:work) { create(:work, :deposited, title: 'Hammock kombucha mustache', collection: collection) }
+    let(:work) { build_stubbed(:work, :deposited, title: 'Hammock kombucha mustache', collection: collection) }
     let(:collection) { build(:collection, :with_reviewers, name: 'Farm-to-table beard aesthetic') }
 
     it 'renders the headers' do
