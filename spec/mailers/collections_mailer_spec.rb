@@ -7,7 +7,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
   describe '#invitation_to_deposit_email' do
     let(:user) { collection.depositors.first }
     let(:mail) { described_class.with(user: user, collection: collection).invitation_to_deposit_email }
-    let(:collection) { create(:collection, :with_depositors) }
+    let(:collection) { build_stubbed(:collection, :with_depositors) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq "Invitation to deposit to the #{collection.name} collection in the SDR"
