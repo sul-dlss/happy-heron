@@ -34,7 +34,7 @@ class CollectionPolicy < ApplicationPolicy
 
   sig { returns(T::Boolean) }
   def destroy?
-    (administrator? || collection_creator?) && record.first_draft?
+    (administrator? || collection_creator?) && record.persisted? && record.first_draft?
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups
