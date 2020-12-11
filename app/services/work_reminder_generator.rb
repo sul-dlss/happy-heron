@@ -27,7 +27,7 @@ class WorkReminderGenerator
   private_class_method def self.eligible_works(first_interval, subsequent_interval)
     Work
       .with_state(:first_draft)
-      .where('(((CURRENT_DATE - CAST(updated_at AS DATE)) - :first_interval) % :subsequent_interval) = 0',
+      .where('(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0',
              first_interval: first_interval, subsequent_interval: subsequent_interval)
   end
 end

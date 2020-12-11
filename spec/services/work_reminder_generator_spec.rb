@@ -13,13 +13,13 @@ RSpec.describe WorkReminderGenerator do
     let(:work_d) { create(:work, :rejected) }
     let(:work_e) { create(:work, :version_draft) }
     let(:work1) { create(:work, :first_draft) }
-    let(:work2) { create(:work, :first_draft, updated_at: 3.days.ago) }
-    let(:work3) { create(:work, :first_draft, updated_at: 7.days.ago) }
-    let(:work4) { create(:work, :first_draft, updated_at: 14.days.ago) } # 1st reminder at 14 days by default
-    let(:work5) { create(:work, :first_draft, updated_at: 28.days.ago) }
-    let(:work6) { create(:work, :first_draft, updated_at: 42.days.ago) } # then 2nd reminder 28 days after 1st
-    let(:work7) { create(:work, :first_draft, updated_at: 47.days.ago) }
-    let(:work8) { create(:work, :first_draft, updated_at: 70.days.ago) } # every 28 days from there
+    let(:work2) { create(:work, :first_draft, created_at: 3.days.ago) }
+    let(:work3) { create(:work, :first_draft, created_at: 7.days.ago) }
+    let(:work4) { create(:work, :first_draft, created_at: 14.days.ago) } # 1st reminder at 14 days by default
+    let(:work5) { create(:work, :first_draft, created_at: 28.days.ago) }
+    let(:work6) { create(:work, :first_draft, created_at: 42.days.ago) } # then 2nd reminder 28 days after 1st
+    let(:work7) { create(:work, :first_draft, created_at: 47.days.ago) }
+    let(:work8) { create(:work, :first_draft, created_at: 70.days.ago) } # every 28 days from there
 
     it 'queues an email for each draft work that needs a notification sent' do
       expect { described_class.send_first_draft_reminders }
