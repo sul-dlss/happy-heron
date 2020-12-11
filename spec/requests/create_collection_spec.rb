@@ -58,6 +58,11 @@ RSpec.describe 'Create a collection' do
             depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
             email_when_participants_changed: true,
             email_depositors_status_changed: true,
+            'release_option' => 'delay',
+            'release_date(1i)' => '2020',
+            'release_date(2i)' => '7',
+            'release_date(3i)' => '14',
+            'release_duration' => '1 month',
             related_links_attributes: related_links
           }
         end
@@ -75,6 +80,8 @@ RSpec.describe 'Create a collection' do
           expect(collection.email_depositors_status_changed).to eq true
           expect(collection.related_links.size).to eq 2
           expect(collection.related_links).to all(be_kind_of(RelatedLink))
+          expect(collection.release_option).to eq 'delay'
+          expect(collection.release_date).to eq Date.parse('2020-7-14')
         end
 
         it 'sends emails to depositors when a new collection is created and deposited' do

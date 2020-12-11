@@ -4,7 +4,7 @@
       controller: 'edit-collection',
       action: 'ajax:error->edit-collection#displayErrors'
     },
-    html: { class: 'needs-validation row', novalidate: true, multipart: true } do |form| %>
+    html: { class: 'needs-validation row collection-editor', novalidate: true, multipart: true } do |form| %>
   <section>
     <header>Details</header>
     <div class="mb-3 row">
@@ -37,25 +37,78 @@
 
   <section>
     <header>Manage release of deposits for discovery and download</header>
-    <p>Who will have permission to download files for deposits to this collection?</p>
-    <div class="form-check">
-      <%= form.radio_button :access, 'world', class: "form-check-input" %>
-      <%= form.label class: "form-check-label", for: "collection_access_world" do %>
-        Everyone &mdash; anyone in the world will be able to download the files for all deposits in this collection.
-      <% end %>
-    </div>
-    <div class="form-check">
-      <%= form.radio_button :access, 'stanford', class: "form-check-input" %>
-      <%= form.label  class: "form-check-label", for: "collection_access_stanford" do %>
-        Stanford community &mdash; only members of the Stanford community will be able to download the files for all deposits in this collection.
-      <% end %>
-    </div>
-    <div class="form-check">
-      <%= form.radio_button :access, 'depositor-selects', class: "form-check-input" %>
-      <%= form.label class: "form-check-label", for: "collection_access_depositor-selects" do %>
-        Depositor selects &mdash; default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.
-      <% end %>
-    </div>
+
+    <fieldset class="mb-5 release-option">
+      <legend class="h5">When will files on deposits to this collection be downloadable?</legend>
+      <div class="form-check">
+        <%= form.radio_button :release_option, 'immediate', class: "form-check-input" %>
+        <%= form.label 'release_option_immediate', class: "form-check-label" do %>
+          Immediately
+        <% end %>
+      </div>
+
+      <div class="form-check">
+        <%= form.radio_button :release_option, 'delay', class: "form-check-input" %>
+        <%= form.label 'release_option_delay', class: "form-check-label" do %>
+          Delay release until
+        <% end %>
+        <div class="year">
+          <label for="collection_release_date_year" class="visually-hidden">Embargo year</label>
+          <%= select_year release_date_year, { prefix: 'collection', field_name: 'release_date(1i)', start_year: Time.zone.today.year, end_year: 3.years.from_now.year }, id: 'collection_release_date_year', class: "form-control" %>
+        </div>
+
+        <div class="month">
+          <label for="collection_release_date_month" class="visually-hidden">Embargo month</label>
+          <%= select_month release_date_month, { prefix: 'collection', field_name: 'release_date(2i)', prompt: 'month'}, id: 'collection_release_date_month', class: "form-control" %>
+        </div>
+
+        <div class="day">
+          <label for="collection_release_date_day" class="visually-hidden">Embargo day</label>
+          <%= select_day release_date_day, { prefix: 'collection', field_name: 'release_date(3i)', prompt: 'day'}, id: 'collection_release_date_day', class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-check">
+        <%= form.radio_button :release_option, 'depositor-selects', class: "form-check-input" %>
+        <%= form.label 'release_option_depositor-selects', class: "form-check-label" do %>
+          Depositor selects a date
+        <% end %>
+        <%= form.label :release_duration, class: "form-check-label" do %>
+          between date of deposit and
+        <% end %>
+        <%= form.select :release_duration,
+          options_for_select([['1 month from date of deposit', '1 month'],
+                              ['3 months from date of deposit', '3 month'],
+                              ['6 months from date of deposit', '6 month'],
+                              ['1 year from date of deposit', '1 year'],
+                              ['2 years from date of deposit', '2 years'],
+                              ['3 years from date of deposit', '3 years']]),
+                              {},
+                              class: 'form-select release-duration' %>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend class="h5">Who will have permission to download files for deposits to this collection?</legend>
+      <div class="form-check">
+        <%= form.radio_button :access, 'world', class: "form-check-input" %>
+        <%= form.label 'access_world', class: "form-check-label" do %>
+          Everyone &mdash; anyone in the world will be able to download the files for all deposits in this collection.
+        <% end %>
+      </div>
+      <div class="form-check">
+        <%= form.radio_button :access, 'stanford', class: "form-check-input" %>
+        <%= form.label 'access_stanford', class: "form-check-label" do %>
+          Stanford community &mdash; only members of the Stanford community will be able to download the files for all deposits in this collection.
+        <% end %>
+      </div>
+      <div class="form-check">
+        <%= form.radio_button :access, 'depositor-selects', class: "form-check-input" %>
+        <%= form.label 'access_depositor-selects', class: "form-check-label" do %>
+          Depositor selects &mdash; default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.
+        <% end %>
+      </div>
+    </fieldset>
   </section>
 
   <section>

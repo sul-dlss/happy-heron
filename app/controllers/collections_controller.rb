@@ -108,6 +108,8 @@ class CollectionsController < ObjectsController
                                        :review_enabled, :reviewer_sunets,
                                        :email_when_participants_changed,
                                        :email_depositors_status_changed,
+                                       :release_option, :release_duration,
+                                       'release_date(1i)', 'release_date(2i)', 'release_date(3i)',
                                        related_links_attributes: %i[_destroy id link_title url])
   end
 end

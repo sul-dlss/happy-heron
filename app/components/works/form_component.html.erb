@@ -1,24 +1,22 @@
-<div id="editor">
-  <h1 class="row"><%= page_title %></h1>
-  <%= form_with model: work_form, url: url, remote: true,
-      data: {
-        controller: 'edit-deposit auto-citation',
-        action: 'ajax:error->edit-deposit#displayErrors',
-        auto_citation_purl: purl
-      },
-      html: { class: "needs-validation row #{'was-validated' if work_form.errors.present?}", novalidate: true, multipart: true } do |f| %>
-    <%= f.hidden_field :work_type %>
-    <%= render Works::DepositProgressComponent.new %>
-    <%= render Works::AddFilesComponent.new(form: f) %>
-    <%= render Works::TitleComponent.new(form: f) %>
-    <%= render Works::ContributorsComponent.new(form: f) %>
-    <%= render Works::DatesComponent.new(form: f,
-                                         min_year: Settings.earliest_year,
-                                         max_year: Time.zone.today.year) %>
-    <%= render Works::DescriptionComponent.new(form: f) %>
-    <%= render Works::EmbargoComponent.new(form: f) %>
-    <%= render Works::LicenseComponent.new(form: f) %>
-    <%= render Works::AgreementComponent.new(form: f) %>
-    <%= render ButtonsComponent.new(form: f) %>
-  <% end %>
-</div>
+<h1 class="row"><%= page_title %></h1>
+<%= form_with model: work_form, url: url, remote: true,
+    data: {
+      controller: 'edit-deposit auto-citation',
+      action: 'ajax:error->edit-deposit#displayErrors',
+      auto_citation_purl: purl
+    },
+    html: { class: "needs-validation row work-editor #{'was-validated' if work_form.errors.present?}", novalidate: true, multipart: true } do |f| %>
+  <%= f.hidden_field :work_type %>
+  <%= render Works::DepositProgressComponent.new %>
+  <%= render Works::AddFilesComponent.new(form: f) %>
+  <%= render Works::TitleComponent.new(form: f) %>
+  <%= render Works::ContributorsComponent.new(form: f) %>
+  <%= render Works::DatesComponent.new(form: f,
+                                       min_year: Settings.earliest_year,
+                                       max_year: Time.zone.today.year) %>
+  <%= render Works::DescriptionComponent.new(form: f) %>
+  <%= render Works::EmbargoComponent.new(form: f) %>
+  <%= render Works::LicenseComponent.new(form: f) %>
+  <%= render Works::AgreementComponent.new(form: f) %>
+  <%= render ButtonsComponent.new(form: f) %>
+<% end %>

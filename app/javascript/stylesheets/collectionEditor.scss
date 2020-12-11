@@ -1,0 +1,21 @@
+.collection-editor {
+  @include editor;
+
+  .release-option {
+    .form-check {
+      @include embargo;
+    }
+
+    .form-check-input {
+      margin-top: .55rem;
+    }
+
+    label {
+      margin: 0.25rem 0 0.4rem 0;
+    }
+
+    .release-duration {
+      width: auto;
+    }
+  }
+}
