@@ -177,9 +177,9 @@ class ViewComponentsController < Rails::ApplicationController
   def set_locale; end
   def show_previews?; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_37
+  include Anonymous_Module_38
 end
-module Anonymous_Module_37
+module Anonymous_Module_38
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -191,11 +191,11 @@ module Anonymous_Module_37
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_4
   extend Anonymous_Module_5
+  extend Anonymous_Module_6
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_4
   include Anonymous_Module_5
+  include Anonymous_Module_6
 end
 module ViewComponent::TestHelpers
   def controller; end

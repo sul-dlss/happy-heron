@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/devise-remote-user/all/devise-remote-user.rbi
 #
-# devise-remote-user-1.0.0
+# devise-remote-user-1.1.0
 
 module DeviseRemoteUser
   def self.attribute_map; end

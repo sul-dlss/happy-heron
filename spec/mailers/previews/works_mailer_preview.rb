@@ -20,4 +20,9 @@ class WorksMailerPreview < ActionMailer::Preview
     work = Work.first
     WorksMailer.with(user: work.depositor, work: work)
   end
+
+  def first_draft_reminder_email
+    work = Work.first
+    WorksMailer.with(work: work).first_draft_reminder_email
+  end
 end

@@ -15,6 +15,15 @@ class WorksMailer < ApplicationMailer
     mail(to: @user.email, subject: "Your deposit, #{@work.title}, is published in the SDR")
   end
 
+  def first_draft_reminder_email
+    @work = params[:work]
+    @user = @work.depositor
+
+    subject = "Reminder: New version of a deposit to the #{@work.collection_name} collection in the SDR is in progress"
+
+    mail(to: @user.email, subject: subject)
+  end
+
   def new_version_deposited_email
     @user = params[:user]
     @work = params[:work]

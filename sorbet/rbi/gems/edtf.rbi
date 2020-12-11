@@ -20,30 +20,6 @@ module EDTF
   def self.parse!(input, options = nil); end
   def self.parse(input, options = nil); end
 end
-class Anonymous_Struct_94 < Struct
-  def day; end
-  def day=(_); end
-  def month; end
-  def month=(_); end
-  def self.[](*arg0); end
-  def self.inspect; end
-  def self.members; end
-  def self.new(*arg0); end
-  def year; end
-  def year=(_); end
-end
-class EDTF::Uncertainty < Anonymous_Struct_94
-  def certain!(parts = nil); end
-  def certain?(parts = nil); end
-  def eql?(other); end
-  def hash; end
-  def hash_base; end
-  def hash_base=(base); end
-  def hash_map; end
-  def initialize(year = nil, month = nil, day = nil, hash_base = nil); end
-  def uncertain!(parts = nil); end
-  def uncertain?(parts = nil); end
-end
 class Anonymous_Struct_95 < Struct
   def day; end
   def day=(_); end
@@ -56,7 +32,31 @@ class Anonymous_Struct_95 < Struct
   def year; end
   def year=(_); end
 end
-class EDTF::Unspecified < Anonymous_Struct_95
+class EDTF::Uncertainty < Anonymous_Struct_95
+  def certain!(parts = nil); end
+  def certain?(parts = nil); end
+  def eql?(other); end
+  def hash; end
+  def hash_base; end
+  def hash_base=(base); end
+  def hash_map; end
+  def initialize(year = nil, month = nil, day = nil, hash_base = nil); end
+  def uncertain!(parts = nil); end
+  def uncertain?(parts = nil); end
+end
+class Anonymous_Struct_96 < Struct
+  def day; end
+  def day=(_); end
+  def month; end
+  def month=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
+  def year; end
+  def year=(_); end
+end
+class EDTF::Unspecified < Anonymous_Struct_96
   def day=(_); end
   def initialize; end
   def mask(values); end

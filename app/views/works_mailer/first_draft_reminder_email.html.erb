@@ -1,0 +1,9 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>We noticed you haven’t finished the new version of your deposit. When you are ready to
+  complete your deposit submission, click <%= link_to edit_work_url(@work), edit_work_url(@work) %>
+  to go directly to your draft.</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>

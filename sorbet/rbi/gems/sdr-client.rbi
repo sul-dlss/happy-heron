@@ -217,9 +217,9 @@ class SdrClient::Credentials::NoCredentialsError < StandardError
 end
 module SdrClient::Login
   def self.run(url:, login_service: nil, credential_store: nil); end
-  extend Anonymous_Module_106
+  extend Anonymous_Module_107
 end
-module Anonymous_Module_106
+module Anonymous_Module_107
   include Dry::Monads::Result::Mixin
 end
 module SdrClient::LoginPrompt
@@ -240,7 +240,7 @@ class SdrClient::Connection
   def put(**, &&); end
   def token; end
   def url; end
-  include Anonymous_Module_106
+  include Anonymous_Module_107
 end
 module SdrClient::BackgroundJobResults
   def self.show(url:, job_id:); end

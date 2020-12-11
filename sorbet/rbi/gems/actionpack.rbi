@@ -1956,7 +1956,7 @@ class ActionDispatch::Session::CookieStore < ActionDispatch::Session::AbstractSe
   def unpacked_cookie_data(req); end
   def write_session(req, sid, session_data, options); end
 end
-class ActionDispatch::Session::CookieStore::SessionId < Anonymous_Delegator_6
+class ActionDispatch::Session::CookieStore::SessionId < Anonymous_Delegator_7
   def cookie_value; end
   def initialize(session_id, cookie_value = nil); end
 end
@@ -2090,7 +2090,7 @@ class ActionDispatch::Response
   include MonitorMixin
   include Rack::Response::Helpers
 end
-class ActionDispatch::Response::Header < Anonymous_Delegator_7
+class ActionDispatch::Response::Header < Anonymous_Delegator_8
   def []=(k, v); end
   def initialize(response, header); end
   def merge(other); end
@@ -2259,7 +2259,7 @@ module ActionController::ParamsWrapper
   def process_action(*args); end
   extend ActiveSupport::Concern
 end
-class Anonymous_Struct_8 < Struct
+class Anonymous_Struct_9 < Struct
   def exclude; end
   def exclude=(_); end
   def format; end
@@ -2277,7 +2277,7 @@ class Anonymous_Struct_8 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class ActionController::ParamsWrapper::Options < Anonymous_Struct_8
+class ActionController::ParamsWrapper::Options < Anonymous_Struct_9
   def _default_wrap_model; end
   def include; end
   def initialize(name, format, include, exclude, klass, model); end
@@ -2885,7 +2885,7 @@ class ActionController::API < ActionController::Metal
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
-  extend Anonymous_Module_9
+  extend Anonymous_Module_10
   extend Devise::Controllers::Helpers::ClassMethods
   include AbstractController::Callbacks
   include AbstractController::Callbacks
@@ -3143,7 +3143,7 @@ class ActionController::Base < ActionController::Metal
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
-  extend Anonymous_Module_10
+  extend Anonymous_Module_11
   extend Devise::Controllers::Helpers::ClassMethods
   extend Responders::ControllerMethod
   extend Responders::ControllerMethod
@@ -3218,7 +3218,7 @@ class ActionController::Base < ActionController::Metal
   include ViewComponent::RenderingComponentHelper
   include ViewComponent::RenderingComponentHelper
 end
-module Anonymous_Module_9
+module Anonymous_Module_10
   def inherited(klass); end
 end
 module ActionView::RoutingUrlFor
@@ -3227,7 +3227,7 @@ module ActionView::RoutingUrlFor
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::Routing::UrlFor
 end
-module Anonymous_Module_10
+module Anonymous_Module_11
   def inherited(klass); end
 end
 class ActionDispatch::TestRequest < ActionDispatch::Request

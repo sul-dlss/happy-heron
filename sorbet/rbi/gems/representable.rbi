@@ -106,14 +106,14 @@ class Representable::Binding
   def setup_exec_context!; end
   def skipable_empty_value?(value); end
   extend Uber::Delegates
-  include Anonymous_Module_102
+  include Anonymous_Module_103
   include Representable::Binding::Deprecatable
   include Representable::Binding::EvaluateOption
   include Representable::Binding::Factories
 end
 class Representable::Binding::FragmentNotFound
 end
-module Anonymous_Module_102
+module Anonymous_Module_103
   def array?(*args, &block); end
   def has_default?(*args, &block); end
   def representable?(*args, &block); end

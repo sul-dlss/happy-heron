@@ -37,9 +37,9 @@ module OkComputer
 end
 class OkComputer::Engine < Rails::Engine
 end
-module Anonymous_Module_96
-end
 module Anonymous_Module_97
+end
+module Anonymous_Module_98
 end
 class OkComputer::Check
   def <=>(check); end
@@ -339,9 +339,9 @@ class OkComputer::OkComputerController < ActionController::Base
   def show; end
   def status_code(check); end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_98
+  include Anonymous_Module_99
 end
-module Anonymous_Module_98
+module Anonymous_Module_99
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -353,9 +353,9 @@ module Anonymous_Module_98
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_96
   extend Anonymous_Module_97
+  extend Anonymous_Module_98
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_96
   include Anonymous_Module_97
+  include Anonymous_Module_98
 end

@@ -95,4 +95,21 @@ RSpec.describe WorksMailer, type: :mailer do
         'is now waiting for review by a collection Manager.'
     end
   end
+
+  describe 'first_draft_reminder_email' do
+    let(:work) { create(:work) }
+    let(:mail) { described_class.with(work: work).first_draft_reminder_email }
+
+    it 'renders the headers' do
+      collection_name = work.collection.name
+      exp_subj = "Reminder: New version of a deposit to the #{collection_name} collection in the SDR is in progress"
+      expect(mail.subject).to eq exp_subj
+      expect(mail.to).to eq [work.depositor.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders a link to edit the draft in the body' do
+      expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
+    end
+  end
 end

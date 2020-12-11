@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/puma/all/puma.rbi
 #
-# puma-4.3.6
+# puma-4.3.7
 
 module Puma
   def self.jruby?; end
@@ -348,6 +348,7 @@ class Puma::Client
   def timeout_at; end
   def to_io; end
   def try_to_finish; end
+  def write_chunk(str); end
   def write_error(status_code); end
   extend Forwardable
   include Puma::Const

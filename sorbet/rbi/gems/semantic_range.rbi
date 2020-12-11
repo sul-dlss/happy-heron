@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/semantic_range/all/semantic_range.rbi
 #
-# semantic_range-2.3.0
+# semantic_range-2.3.1
 
 module SemanticRange
   def self.clean(version, loose = nil); end
@@ -17,6 +17,7 @@ module SemanticRange
   def self.diff(a, b); end
   def self.eq(a, b, loose = nil); end
   def self.eq?(a, b, loose = nil); end
+  def self.filter(versions, range, loose = nil, platform = nil); end
   def self.gt(a, b, loose = nil); end
   def self.gt?(a, b, loose = nil); end
   def self.gte(a, b, loose = nil); end
