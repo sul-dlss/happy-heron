@@ -1,12 +1,7 @@
 <section>
   <table class="table">
-    <caption><%= link_to name, collection %>
-      <% if allowed_to?(:edit?, collection) %>
-        <%= link_to edit_collection_path(collection), aria: { label: "Edit #{name}"} do %>
-          <span class="fas fa-pencil-alt"></span>
-        <% end %>
-      <% end %>
-      <%= render Collections::DeleteComponent.new(collection: collection) %>
+    <caption>
+      <%= render Dashboard::CollectionHeaderComponent.new collection: collection %>
     </caption>
     <thead class="table-light">
       <tr>
@@ -30,7 +25,12 @@
             <% end %>
             <%= render Works::DeleteComponent.new(work: work) %>
           </td>
-          <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
+          <% if work.depositing? %>
+            <td data-controller="state-updates" data-state-updates-work-id="<%= work.id %>" data-state-updates-target="state">
+          <% else %>
+            <td>
+          <% end %>
+          <%= render Works::StateDisplayComponent.new(work: work) %></td>
           <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
           <td><%= link_to work.purl, work.purl if work.purl %></td>
           <td><span class="fas fa-quote-left"></span> Cite</td>

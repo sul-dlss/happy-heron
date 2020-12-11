@@ -15,11 +15,6 @@ module Dashboard
 
     delegate :allowed_to?, :current_user, :user_with_groups, to: :helpers
 
-    sig { returns(String) }
-    def name
-      collection.name.presence || 'No Title'
-    end
-
     sig { returns(ActiveRecord::Relation) }
     def visible_deposits
       # This component only displays MAX_DEPOSITS_TO_SHOW works but we query for

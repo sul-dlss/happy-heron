@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Collections::HeaderComponent, type: :component do
+RSpec.describe Dashboard::CollectionHeaderComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
   before do

@@ -41,6 +41,10 @@ class Collection < ApplicationRecord
       DepositCollectionJob.perform_later(collection)
     end
 
+    after_transition do |collection, transition|
+      BroadcastCollectionChange.call(collection: collection, state: transition.to_name)
+    end
+
     event :begin_deposit do
       transition %i[first_draft version_draft] => :depositing
     end

@@ -5,13 +5,17 @@ export default class extends Controller {
   static targets = ['state', 'purl', 'citation']
 
   connect() {
-    let workUpdatesController = this
-
+    let controller = this
+    const workId = this.data.get('workId')
+    const collectionId = this.data.get('collectionId')
+    let args = {}
+    if (workId) {
+      args = { channel: 'WorkUpdatesChannel', workId: workId }
+    } else if (collectionId) {
+      args = { channel: 'CollectionUpdatesChannel', id: collectionId }
+    }
     this.subscription = consumer.subscriptions.create(
-      {
-        channel: 'WorkUpdatesChannel',
-        workId: this.data.get('workId')
-      },
+      args,
       {
         connected() {
           // Called when the subscription is ready for use on the server
@@ -21,7 +25,7 @@ export default class extends Controller {
         },
         received(data) {
           // Called when there's incoming data on the websocket for this channel
-          workUpdatesController.renderUpdates(data)
+          controller.renderUpdates(data)
         }
       }
     )
