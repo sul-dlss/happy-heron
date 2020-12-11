@@ -47,9 +47,6 @@ class WorksController < ObjectsController
 
     @form = work_form(work)
     if @form.validate(work_params) && @form.save
-      work.event_context = { user: current_user }
-      work.update_metadata!
-
       after_save(work)
     else
       # Send form errors to client in JSON format to be parsed and rendered there
@@ -97,6 +94,8 @@ class WorksController < ObjectsController
 
   sig { params(work: Work).void }
   def after_save(work)
+    work.event_context = { user: current_user }
+    work.update_metadata!
     if deposit_button_pushed?
       if work.collection.review_enabled?
         work.submit_for_review!

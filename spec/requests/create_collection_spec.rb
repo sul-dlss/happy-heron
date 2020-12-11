@@ -12,6 +12,18 @@ RSpec.describe 'Create a collection' do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
 
+  context 'with unauthenticated user' do
+    before do
+      sign_out
+    end
+
+    it 'redirects from /collections/new to login URL' do
+      get '/collections/new'
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+
   context 'with an authenticated user who is not in any application workgroups' do
     let(:user) { create(:user) }
     let(:alert_text) { 'You are not authorized to perform the requested action' }
@@ -20,12 +32,24 @@ RSpec.describe 'Create a collection' do
       sign_in user, groups: ['sdr:baz']
     end
 
-    it 'does not allow the user to save a collection' do
-      post '/collections', params: { collection: { should_not: 'even read these params' } }
-      expect(response).to redirect_to(:root)
-      follow_redirect!
-      expect(response).to be_successful
-      expect(response.body).to include alert_text
+    describe 'show the form' do
+      it 'does not authorize GETs to /collections/new' do
+        get '/collections/new'
+        expect(response).to redirect_to(:root)
+        follow_redirect!
+        expect(response).to be_successful
+        expect(response.body).to include alert_text
+      end
+    end
+
+    describe 'save the form' do
+      it 'does not allow the user to save a collection' do
+        post '/collections', params: { collection: { should_not: 'even read these params' } }
+        expect(response).to redirect_to(:root)
+        follow_redirect!
+        expect(response).to be_successful
+        expect(response.body).to include alert_text
+      end
     end
   end
 
@@ -36,7 +60,37 @@ RSpec.describe 'Create a collection' do
       sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     end
 
-    describe 'create' do
+    describe 'shows the form for a new object' do
+      let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
+
+      context 'when content changes are not allowed' do
+        before do
+          allow(Settings).to receive(:allow_sdr_content_changes).and_return(false)
+        end
+
+        it 'redirects and displays alert' do
+          get '/collections/new'
+          expect(response).to redirect_to(:root)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include alert_text
+        end
+      end
+
+      context 'when content changes are allowed' do
+        before do
+          allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
+        end
+
+        it 'does NOT display alert' do
+          get '/collections/new'
+          expect(response).to have_http_status(:ok)
+          expect(response.body).not_to include alert_text
+        end
+      end
+    end
+
+    describe 'save the form' do
       context 'when collection saves' do
         let(:related_links) do
           {

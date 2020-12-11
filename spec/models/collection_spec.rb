@@ -53,7 +53,7 @@ RSpec.describe Collection do
       let(:collection) { create(:collection, :deposited) }
 
       before do
-        collection.event_context = { user: collection.creator, new_depositors: [] }
+        collection.event_context = { user: collection.creator, added_depositors: [], removed_depositors: [] }
       end
 
       it 'transitions to version draft' do

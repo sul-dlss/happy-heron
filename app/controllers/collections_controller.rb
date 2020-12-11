@@ -42,8 +42,11 @@ class CollectionsController < ObjectsController
     previous_depositors = collection.depositors.to_a # this .to_a ensures we have a frozen copy of the depositors
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
-      collection.update_metadata!
-      after_save(collection, context: { new_depositors: collection.depositors - previous_depositors })
+      after_save(collection,
+                 context: {
+                   added_depositors: collection.depositors - previous_depositors,
+                   removed_depositors: previous_depositors - collection.depositors
+                 })
     else
       # Send form errors to client in JSON format to be parsed and rendered there
       render 'errors', status: :bad_request
@@ -69,11 +72,11 @@ class CollectionsController < ObjectsController
   sig { params(collection: Collection, context: Hash).void }
   def after_save(collection, context: {})
     collection.event_context = context.merge(user: current_user)
+    collection.update_metadata!
     if deposit_button_pushed?
       collection.begin_deposit!
       redirect_to dashboard_path
     else
-      collection.update_metadata!
       redirect_to collection_path(collection)
     end
   end

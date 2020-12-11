@@ -34,7 +34,7 @@ class Collection < ApplicationRecord
 
   state_machine initial: :first_draft do
     before_transition do |collection, transition|
-      # filters out bits of the context that don't go into the event, e.g.: :new_depositor
+      # filters out bits of the context that don't go into the event, e.g.: :added_depositors
       event_params = collection.event_context.slice(:user)
       collection.events.build(event_params.merge(event_type: transition.event))
     end
@@ -51,10 +51,16 @@ class Collection < ApplicationRecord
 
     after_transition on: :update_metadata do |collection, transition|
       if transition.to == 'version_draft'
-        new_depositors = collection.event_context.fetch(:new_depositors)
+        new_depositors = collection.event_context.fetch(:added_depositors)
         new_depositors.each do |depositor|
           CollectionsMailer.with(collection: collection, user: depositor)
                            .invitation_to_deposit_email.deliver_later
+        end
+
+        removed_depositors = collection.event_context.fetch(:removed_depositors)
+        removed_depositors.each do |depositor|
+          CollectionsMailer.with(collection: collection, user: depositor)
+                           .deposit_access_removed_email.deliver_later
         end
       end
     end
