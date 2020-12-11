@@ -4,23 +4,20 @@
 # Preview all emails at http://localhost:3000/rails/mailers
 # Preview these emails at http://localhost:3000/rails/mailers/works_mailer
 class WorksMailerPreview < ActionMailer::Preview
-  def reject_email
-    work = Work.first
-    WorksMailer.with(user: work.depositor, work: work).reject_email
-  end
+  delegate :reject_email, to: :mailer_with_work
 
-  def approved_email
-    work = Work.first
-    WorksMailer.with(user: work.depositor, work: work).approved_email
-  end
+  delegate :approved_email, to: :mailer_with_work
 
-  def new_version_deposited_email
-    work = Work.first
-    WorksMailer.with(user: work.depositor, work: work).new_version_deposited_email
-  end
+  delegate :new_version_deposited_email, to: :mailer_with_work
 
-  def deposited_email
+  delegate :deposited_email, to: :mailer_with_work
+
+  delegate :submitted_email, to: :mailer_with_work
+
+  private
+
+  def mailer_with_work
     work = Work.first
-    WorksMailer.with(user: work.depositor, work: work).deposited_email
+    WorksMailer.with(user: work.depositor, work: work)
   end
 end

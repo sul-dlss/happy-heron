@@ -310,8 +310,12 @@ RSpec.describe Work do
             .to change(work, :state)
             .to('pending_approval')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                   'WorksMailer', 'submitted_for_review_email', 'deliver_now',
+                   'ReviewersMailer', 'submitted_email', 'deliver_now',
                    { params: { user: reviewer, work: work }, args: [] }
+                 ))
+            .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                   'WorksMailer', 'submitted_email', 'deliver_now',
+                   { params: { user: depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
           expect(WorkUpdatesChannel).to have_received(:broadcast_to)
@@ -320,15 +324,19 @@ RSpec.describe Work do
       end
 
       context 'when work was rejected' do
-        let(:work) { create(:work, :rejected, collection: collection) }
+        let(:work) { create(:work, :rejected, collection: collection, depositor: depositor) }
 
         it 'transitions to pending_approval' do
           expect { work.submit_for_review! }
             .to change(work, :state)
             .to('pending_approval')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                   'WorksMailer', 'submitted_for_review_email', 'deliver_now',
+                   'ReviewersMailer', 'submitted_email', 'deliver_now',
                    { params: { user: reviewer, work: work }, args: [] }
+                 ))
+            .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                   'WorksMailer', 'submitted_email', 'deliver_now',
+                   { params: { user: depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
           expect(WorkUpdatesChannel).to have_received(:broadcast_to)

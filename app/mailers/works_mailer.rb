@@ -27,9 +27,9 @@ class WorksMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Your deposit has been reviewed and returned')
   end
 
-  def submitted_for_review_email
+  def submitted_email
     @user = params[:user]
     @work = params[:work]
-    mail(to: @user.email, subject: "A Depositor has submitted a deposit in the #{@work.collection_name} collection")
+    mail(to: @user.email, subject: 'Your deposit is submitted and waiting for approval')
   end
 end

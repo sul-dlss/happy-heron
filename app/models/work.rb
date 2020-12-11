@@ -58,9 +58,9 @@ class Work < ApplicationRecord
 
     after_transition on: :submit_for_review do |work, _transition|
       (work.collection.reviewers + work.collection.managers - [work.depositor]).each do |recipient|
-        WorksMailer.with(user: recipient, work: work)
-                   .submitted_for_review_email.deliver_later
+        ReviewersMailer.with(user: recipient, work: work).submitted_email.deliver_later
       end
+      WorksMailer.with(user: work.depositor, work: work).submitted_email.deliver_later
     end
 
     # NOTE: there is no approval "event" because when a work is approved in review, it goes
