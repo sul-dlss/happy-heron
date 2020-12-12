@@ -39,14 +39,10 @@ class CollectionsController < ObjectsController
   def update
     collection = Collection.find(params[:id])
     authorize! collection
-    previous_depositors = collection.depositors.to_a # this .to_a ensures we have a frozen copy of the depositors
+    change_set = CollectionChangeSet.from(collection)
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
-      after_save(collection,
-                 context: {
-                   added_depositors: collection.depositors - previous_depositors,
-                   removed_depositors: previous_depositors - collection.depositors
-                 })
+      after_save(collection, context: { change_set: change_set.to(collection) })
     else
       # Send form errors to client in JSON format to be parsed and rendered there
       render 'errors', status: :bad_request

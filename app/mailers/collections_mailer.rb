@@ -15,4 +15,11 @@ class CollectionsMailer < ApplicationMailer
     mail(to: @user.email, subject: "Your Depositor permissions for the #{@collection.name} " \
       'collection in the SDR have been removed')
   end
+
+  def review_access_granted_email
+    @user = params[:user]
+    @collection = params[:collection]
+    mail(to: @user.email, subject: "You are invited to participate as a Reviewer in the #{@collection.name} " \
+      'collection in the SDR')
+  end
 end
