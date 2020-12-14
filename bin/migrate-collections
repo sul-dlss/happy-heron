@@ -2,23 +2,20 @@
 # frozen_string_literal: true
 
 # Usage:
-# SETTINGS__SDR_API__URL=https://sdr-api-stage.stanford.edu \
-# SETTINGS__SDR_API__EMAIL=jcoyne85@stanford.edu \
-# SETTINGS__SDR_API__PASSWORD=sekret! \
-# bin/migrate-collections
+#   bin/migrate-collections collections.jsonl
 
 require_relative '../config/environment'
-COLLECTION_LIST = ['druid:vq434wh5503']
 
-def login
-  SdrClient::Login.run(url: Settings.sdr_api.url, login_service: BaseDepositJob::LoginFromSettings)
-end
-
-login
-
-COLLECTION_LIST.each do |druid|
-  result = SdrClient::Find.run(druid, url: Settings.sdr_api.url)
-  puts "result: #{result}"
-  json = JSON.parse(result)
-  puts json['externalIdentifier']
+File.foreach(ARGV[0]) do |data|
+  json = JSON.parse(data)
+  puts data
+  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  collection = Collection.find_or_initialize_by(druid: json['druid'])
+  collection.update!(
+    description: 'test', # TODO
+    contact_email: 'test@example.com', # TODO
+    access: 'world', # TODO
+    creator: creator,
+    name: json['name']
+  )
 end

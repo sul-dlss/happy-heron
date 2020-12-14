@@ -51,3 +51,6 @@ sorbet/rbi/hidden-definitions/errors.txt
 # allow local gems
 /Gemfile.local
 /Gemfile.local.lock
+
+# Migration data
+collections.jsonl
