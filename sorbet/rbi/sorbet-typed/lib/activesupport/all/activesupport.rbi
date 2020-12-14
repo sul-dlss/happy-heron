@@ -343,6 +343,11 @@ class Array
   def self.wrap(object); end
 end
 
+class ActiveSupport::BacktraceCleaner
+  sig { params(backtrace: T::Array[String], kind: Symbol).returns(T::Array[String]) }
+  def clean(backtrace, kind = :silent); end
+end
+
 module ActiveSupport::NumberHelper
   extend(::ActiveSupport::NumberHelper)
 
@@ -956,7 +961,7 @@ module DateAndTime::Calculations
   sig { returns(T.self_type) }
   def at_beginning_of_quarter; end
 
-  sig { params(start_day: Integer).returns(T.self_type) }
+  sig { params(start_day: Symbol).returns(T.self_type) }
   def at_beginning_of_week(start_day = T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -968,7 +973,7 @@ module DateAndTime::Calculations
   sig { returns(T.self_type) }
   def at_end_of_quarter; end
 
-  sig { params(start_day: Integer).returns(T.self_type) }
+  sig { params(start_day: Symbol).returns(T.self_type) }
   def at_end_of_week(start_day = T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -983,7 +988,7 @@ module DateAndTime::Calculations
   sig { returns(T.self_type) }
   def beginning_of_quarter; end
 
-  sig { params(start_day: Integer).returns(T.self_type) }
+  sig { params(start_day: Symbol).returns(T.self_type) }
   def beginning_of_week(start_day = T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -995,7 +1000,7 @@ module DateAndTime::Calculations
   sig { params(days: Numeric).returns(T.self_type) }
   def days_since(days); end
 
-  sig { params(start_day: Integer).returns(T.self_type) }
+  sig { params(start_day: Symbol).returns(T.self_type) }
   def days_to_week_start(start_day = T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -1004,7 +1009,7 @@ module DateAndTime::Calculations
   sig { returns(T.self_type) }
   def end_of_quarter; end
 
-  sig { params(start_day: Integer).returns(T.self_type) }
+  sig { params(start_day: Symbol).returns(T.self_type) }
   def end_of_week(start_day = T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -1019,7 +1024,7 @@ module DateAndTime::Calculations
   sig { returns(T.self_type) }
   def last_quarter; end
 
-  sig { params(start_day: Integer, same_time: T::Boolean).returns(T.self_type) }
+  sig { params(start_day: Symbol, same_time: T::Boolean).returns(T.self_type) }
   def last_week(start_day = T.unsafe(nil), same_time: T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -1037,13 +1042,13 @@ module DateAndTime::Calculations
   sig { params(months: Numeric).returns(T.self_type) }
   def months_since(months); end
 
-  sig { params(day_of_week: Integer).returns(T.self_type) }
+  sig { params(day_of_week: Symbol).returns(T.self_type) }
   def next_occurring(day_of_week); end
 
   sig { returns(T.self_type) }
   def next_quarter; end
 
-  sig { params(given_day_in_next_week: Integer, same_time: T::Boolean).returns(T.self_type) }
+  sig { params(given_day_in_next_week: Symbol, same_time: T::Boolean).returns(T.self_type) }
   def next_week(given_day_in_next_week = T.unsafe(nil), same_time: T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -1058,13 +1063,13 @@ module DateAndTime::Calculations
   sig { returns(T::Boolean) }
   def past?; end
 
-  sig { params(day_of_week: Integer).returns(T.self_type) }
+  sig { params(day_of_week: Symbol).returns(T.self_type) }
   def prev_occurring(day_of_week); end
 
   sig { returns(T.self_type) }
   def prev_quarter; end
 
-  sig { params(start_day: Integer, same_time: T::Boolean).returns(T.self_type) }
+  sig { params(start_day: Symbol, same_time: T::Boolean).returns(T.self_type) }
   def prev_week(start_day = T.unsafe(nil), same_time: T.unsafe(nil)); end
 
   sig { returns(T.self_type) }
@@ -2773,7 +2778,11 @@ end
 
 module ActiveSupport::Rescuable::ClassMethods
   def handler_for_rescue(exception, object: T.unsafe(nil)); end
+
+  # https://github.com/rails/rails/blob/5-2-stable/activesupport/lib/active_support/rescuable.rb#L51
+  sig { params(klasses: Class, with: T.nilable(Symbol), block: T.nilable(T.proc.params(error: T.untyped).void)).void }
   def rescue_from(*klasses, with: T.unsafe(nil), &block); end
+
   def rescue_with_handler(exception, object: T.unsafe(nil), visited_exceptions: T.unsafe(nil)); end
 
   private

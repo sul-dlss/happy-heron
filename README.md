@@ -119,6 +119,11 @@ H2 is deployed via Capistrano to servers running the Passenger server in standal
 
 At the end of the 2020 workcycle, H2 should use sdr-api to do file and metadata deposits.
 
+## Migration
+
+The first step is to migrate all the [Hydrus Collections](https://argo.stanford.edu/catalog?f%5Bexploded_tag_ssim%5D%5B%5D=Project+%3A+Hydrus&f%5BobjectType_ssim%5D%5B%5D=collection)
+
+
 ## Branch aliasing
 
 If your Git muscle memory is too strong and you find you keep typing `master` when you mean `main` (the default branch for H2), you can help yourself a bit by creating an alias thusly:

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/action_policy/all/action_policy.rbi
 #
-# action_policy-0.5.3
+# action_policy-0.5.4
 
 module ActionPolicy
   def self.cache_store; end
@@ -266,7 +266,6 @@ module ActionPolicy::LookupChain
   def self.namespace_cache_enabled; end
   def self.namespace_cache_enabled=(arg0); end
   def self.namespace_cache_enabled?; end
-  def self.objectify_policy(policy_name, strict: nil); end
   def self.policy_class_name_for(record); end
 end
 class ActionPolicy::LookupChain::NamespaceCache

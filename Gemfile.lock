@@ -403,7 +403,7 @@ GEM
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     safe_type (1.1.1)
-    sdr-client (0.39.0)
+    sdr-client (0.40.0)
       activesupport
       cocina-models (~> 0.44.0)
       dry-monads
@@ -537,7 +537,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-sorbet
-  sdr-client (~> 0.39)
+  sdr-client (~> 0.40)
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
   sorbet (= 0.5.5981)
