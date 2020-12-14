@@ -141,12 +141,12 @@ ALTER SEQUENCE public.attached_files_id_seq OWNED BY public.attached_files.id;
 CREATE TABLE public.collections (
     id bigint NOT NULL,
     name character varying NOT NULL,
-    description character varying NOT NULL,
-    contact_email character varying NOT NULL,
+    description character varying,
+    contact_email character varying,
     release_option character varying,
     release_duration character varying,
     release_date date,
-    access character varying NOT NULL,
+    access character varying,
     required_license character varying,
     default_license character varying,
     email_when_participants_changed boolean,
@@ -1003,6 +1003,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201202195426'),
 ('20201204214055'),
 ('20201207223546'),
-('20201211051829');
+('20201211051829'),
+('20201214213408');
 
 
