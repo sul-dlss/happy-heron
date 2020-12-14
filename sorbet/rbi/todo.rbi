@@ -2,15 +2,17 @@
 #   srb rbi todo
 
 # typed: strong
-module ::Anonymous_Delegator_11; end
-module ::Anonymous_Delegator_110; end
+module ::Anonymous_Delegator_111; end
+module ::Anonymous_Delegator_12; end
 module ::Capistrano::OneTimeKey; end
-module ::FilterEncryptedAttributes; end
-module GeneratedUrlHelpers::Anonymous_Module_4; end
 module GeneratedUrlHelpers::Anonymous_Module_5; end
+module GeneratedUrlHelpers::Anonymous_Module_6; end
 module T::InterfaceWrapper::Helpers; end
 module T::Private::Abstract::Hooks; end
 module T::Private::Methods::MethodHooks; end
 module T::Private::Methods::SingletonMethodHooks; end
 module T::Props::Plugin::ClassMethods; end
-module Types::Custom::NilableInteger; end
+module Thor::Actions; end
+module Thor::Actions::ClassMethods; end
+module Thor::Actions::CreateFile; end
+module Thor::Group; end

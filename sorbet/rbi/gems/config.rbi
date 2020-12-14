@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/config/all/config.rbi
 #
-# config-2.2.1
+# config-2.2.3
 
 module Config
   def self.load_and_set_settings(*files); end
@@ -34,11 +34,13 @@ class Config::Options < OpenStruct
   def __convert(h); end
   def __value(v); end
   def add_source!(source); end
+  def as_json(options = nil); end
   def collect; end
   def count; end
   def descend_array(array); end
   def each(*args, &block); end
   def empty?; end
+  def exit!; end
   def has_key?(key); end
   def key?(key); end
   def keys; end

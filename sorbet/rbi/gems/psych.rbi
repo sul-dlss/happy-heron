@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/psych/all/psych.rbi
 #
-# psych-3.2.0
+# psych-3.2.1
 
 module Psych
   def self.add_builtin_type(type_tag, &block); end
@@ -22,7 +22,7 @@ module Psych
   def self.libyaml_version; end
   def self.load(yaml, legacy_filename = nil, filename: nil, fallback: nil, symbolize_names: nil, freeze: nil); end
   def self.load_file(path, *args); end
-  def self.load_stream(yaml, legacy_filename = nil, filename: nil, fallback: nil); end
+  def self.load_stream(yaml, legacy_filename = nil, filename: nil, fallback: nil, **kwargs); end
   def self.load_tags; end
   def self.load_tags=(arg0); end
   def self.parse(yaml, legacy_filename = nil, filename: nil, fallback: nil); end
@@ -32,6 +32,7 @@ module Psych
   def self.parser; end
   def self.remove_type(type_tag); end
   def self.safe_load(yaml, legacy_permitted_classes = nil, legacy_permitted_symbols = nil, legacy_aliases = nil, legacy_filename = nil, permitted_classes: nil, permitted_symbols: nil, aliases: nil, filename: nil, fallback: nil, symbolize_names: nil, freeze: nil); end
+  def self.safe_load_file(filename, **kwargs); end
   def self.to_json(object); end
   def self.warn_with_uplevel(message, uplevel: nil); end
 end

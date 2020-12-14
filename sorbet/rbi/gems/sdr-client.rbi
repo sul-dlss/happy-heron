@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-0.38.0
+# sdr-client-0.39.0
 
 module SdrClient
 end
