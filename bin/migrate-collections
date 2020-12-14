@@ -15,18 +15,25 @@ File.foreach(ARGV[0]) do |data|
   creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
 
   managers = json['managers'].map do |sunetid|
-    User.find_or_create_by!(email: "#{sunetid}@stanford.edu")
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   depositors = json['depositors'].map do |sunetid|
-    User.find_or_create_by!(email: "#{sunetid}@stanford.edu")
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   reviewers = json['reviewers'].map do |sunetid|
-    User.find_or_create_by!(email: "#{sunetid}@stanford.edu")
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+  end
+
+  contact_email = if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
+    json['contact_email']
+  else
+    warn "Invalid contact email found in #{json['druid']}"
+    nil
   end
 
   collection.update!(
     description: json['description'],
-    contact_email: json['contact_email'],
+    contact_email: contact_email,
     access: 'world', # TODO
     creator: creator,
     name: json['name'],
