@@ -9,13 +9,29 @@ require_relative '../config/environment'
 File.foreach(ARGV[0]) do |data|
   json = JSON.parse(data)
   puts data
-  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
   collection = Collection.find_or_initialize_by(druid: json['druid'])
+
+  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+
+  managers = json['managers'].map do |sunetid|
+    User.find_or_create_by!(email: "#{sunetid}@stanford.edu")
+  end
+  depositors = json['depositors'].map do |sunetid|
+    User.find_or_create_by!(email: "#{sunetid}@stanford.edu")
+  end
+  reviewers = json['reviewers'].map do |sunetid|
+    User.find_or_create_by!(email: "#{sunetid}@stanford.edu")
+  end
+
   collection.update!(
-    description: 'test', # TODO
-    contact_email: 'test@example.com', # TODO
+    description: json['description'],
+    contact_email: json['contact_email'],
     access: 'world', # TODO
     creator: creator,
-    name: json['name']
+    name: json['name'],
+    managers: managers,
+    depositors: depositors,
+    reviewers: reviewers
   )
+  puts "collection #{collection.id}"
 end
