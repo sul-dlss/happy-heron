@@ -2,13 +2,13 @@
 # frozen_string_literal: true
 
 # Usage:
-# SETTINGS__SDR_API__URL=https://sdr-api-qa.stanford.edu \
+# SETTINGS__SDR_API__URL=https://sdr-api-stage.stanford.edu \
 # SETTINGS__SDR_API__EMAIL=jcoyne85@stanford.edu \
 # SETTINGS__SDR_API__PASSWORD=sekret! \
 # bin/migrate-collections
 
 require_relative '../config/environment'
-COLLECTION_LIST = ['druid:vd720ss0998']
+COLLECTION_LIST = ['druid:vq434wh5503']
 
 def login
   SdrClient::Login.run(url: Settings.sdr_api.url, login_service: BaseDepositJob::LoginFromSettings)
