@@ -8,6 +8,7 @@ require_relative '../config/environment'
 
 File.foreach(ARGV[0]) do |data|
   json = JSON.parse(data)
+  next unless json.present?
   puts data
   collection = Collection.find_or_initialize_by(druid: json['druid'])
 
