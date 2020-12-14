@@ -32,6 +32,7 @@ File.foreach(ARGV[0]) do |data|
   end
 
   collection.update!(
+    version: json['version'],
     description: json['description'],
     contact_email: contact_email,
     access: 'world', # TODO
