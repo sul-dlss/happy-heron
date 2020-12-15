@@ -17,6 +17,11 @@ ACCESS = {
   'varies' => 'depositor-selects'
 }
 
+RELEASE_OPTION = {
+  'varies' => 'depositor-selects',
+  'none' => 'immediate',
+}
+
 
 def contact_email(json)
   if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
@@ -28,19 +33,27 @@ def contact_email(json)
 end
 
 def release_attributes(json)
-  puts json if json['embargo_option'] == 'fixed'
-  {
-    access: ACCESS.fetch(json.fetch('visibility_option_value')),
-    # release_option # TODO - embargo_option
-    # release_duration - embargo_terms
-    # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
+  data = {
+    access: ACCESS.fetch(json.fetch('visibility_option_value'))
   }
+  if json['embargo_option'] == 'fixed'
+    puts "#{json['druid']} has embargo option of 'fixed', which cannot be mapped to h2"
+    # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
+    return data
+  end
+
+  release_option = RELEASE_OPTION.fetch(json.fetch('embargo_option'))
+  data[:release_option] = release_option
+
+  return data unless release_option == 'depositor-selects'
+
+  data.merge(release_duration: json.fetch('embargo_terms'))
 end
 
 def license_attributes(json)
-  # TODO: which is set depends on embargo_option (e.g. fixed or varies)
+  # TODO: h2 doesn't set these fields yet, so it's unclear how to migrate to them:
   {
-    # required_license - license_option_fixed
+    # attr_reader :attr_namesequired_license - license_option_fixed
     # default_license - license_option_varies
   }
 end
@@ -66,13 +79,13 @@ def build_collection_attributes(json)
   creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
 
   {
-    version: json['version'],
-    description: json['description'],
+    version: json.fetch('version'),
+    description: json.fetch('description'),
     contact_email: contact_email(json),
     creator: creator,
-    name: json['name'],
-    state: STATES.fetch(json['object_status']),
-    related_links: json['related_items'].reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+    name: json.fetch('name'),
+    state: STATES.fetch(json.fetch('object_status')),
+    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
   }.merge(release_attributes(json)).
     merge(license_attributes(json)).
     merge(participants_attributes(json))
