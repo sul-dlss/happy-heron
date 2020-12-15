@@ -5,15 +5,40 @@
 #   bin/migrate-collections collections.jsonl
 
 require_relative '../config/environment'
+STATES = {
+  'published_open' => 'deposited',
+  'published_closed' => 'deposited',
+  'draft' => 'first_draft'
+}
 
-File.foreach(ARGV[0]) do |data|
-  json = JSON.parse(data)
-  next unless json.present?
-  puts data
-  collection = Collection.find_or_initialize_by(druid: json['druid'])
 
-  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+def contact_email(json)
+  if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
+    json['contact_email']
+  elsif json['contact_email'].present?
+    warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}"
+    nil
+  end
+end
 
+def release_attributes(json)
+  puts json if json['embargo_option'] == 'fixed'
+  {
+    # release_option # TODO - embargo_option
+    # release_duration - embargo_terms
+    # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
+  }
+end
+
+def license_attributes(json)
+  # TODO: which is set depends on embargo_option (e.g. fixed or varies)
+  {
+    # required_license - license_option_fixed
+    # default_license - license_option_varies
+  }
+end
+
+def participants_attributes(json)
   managers = json['managers'].map do |sunetid|
     User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
@@ -23,24 +48,35 @@ File.foreach(ARGV[0]) do |data|
   reviewers = json['reviewers'].map do |sunetid|
     User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
-
-  contact_email = if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
-    json['contact_email']
-  else
-    warn "Invalid contact email found in #{json['druid']}"
-    nil
-  end
-
-  collection.update!(
-    version: json['version'],
-    description: json['description'],
-    contact_email: contact_email,
-    access: 'world', # TODO
-    creator: creator,
-    name: json['name'],
+  {
     managers: managers,
     depositors: depositors,
     reviewers: reviewers
-  )
+  }
+end
+
+def build_collection_attributes(json)
+  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+
+  {
+    version: json['version'],
+    description: json['description'],
+    contact_email: contact_email(json),
+    access: 'world', # TODO - visibility_option_value
+    creator: creator,
+    name: json['name'],
+    state: STATES.fetch(json['object_status']),
+    related_links: json['related_items'].reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+  }.merge(release_attributes(json)).
+    merge(license_attributes(json)).
+    merge(participants_attributes(json))
+end
+
+File.foreach(ARGV[0]) do |data|
+  json = JSON.parse(data)
+  next unless json.present?
+  collection = Collection.find_or_initialize_by(druid: json['druid'])
+  collection_attributes = build_collection_attributes(json)
+  collection.update!(collection_attributes)
   puts "collection #{collection.id}"
 end
