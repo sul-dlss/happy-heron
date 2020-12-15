@@ -11,6 +11,12 @@ STATES = {
   'draft' => 'first_draft'
 }
 
+ACCESS = {
+  'everyone' => 'world',
+  'stanford' => 'stanford',
+  'varies' => 'depositor-selects'
+}
+
 
 def contact_email(json)
   if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
@@ -24,6 +30,7 @@ end
 def release_attributes(json)
   puts json if json['embargo_option'] == 'fixed'
   {
+    access: ACCESS.fetch(json.fetch('visibility_option_value')),
     # release_option # TODO - embargo_option
     # release_duration - embargo_terms
     # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
@@ -62,7 +69,6 @@ def build_collection_attributes(json)
     version: json['version'],
     description: json['description'],
     contact_email: contact_email(json),
-    access: 'world', # TODO - visibility_option_value
     creator: creator,
     name: json['name'],
     state: STATES.fetch(json['object_status']),
