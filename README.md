@@ -123,6 +123,13 @@ At the end of the 2020 workcycle, H2 should use sdr-api to do file and metadata 
 
 The first step is to migrate all the [Hydrus Collections](https://argo.stanford.edu/catalog?f%5Bexploded_tag_ssim%5D%5B%5D=Project+%3A+Hydrus&f%5BobjectType_ssim%5D%5B%5D=collection)
 
+We do this by running `RAILS_ENV=production bin/export-collections > collections.jsonl` in Hydrus (see https://github.com/sul-dlss/hydrus/pull/507)
+
+Then download this file to the h2 server you want to load the collections on and run:
+
+```
+RAILS_ENV=production bin/migrate-collections collections.jsonl
+```
 
 ## Branch aliasing
 
