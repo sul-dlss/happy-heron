@@ -2,7 +2,8 @@
 # frozen_string_literal: true
 
 # Usage:
-#   bin/migrate-items items.jsonl 1000 /opt/app/local-files
+#   bin/migrate-items items.jsonl 0 /opt/app/local-files
+#   These two just load metadata:
 #   bin/migrate-items items.jsonl 1000
 #   bin/migrate-items items.jsonl
 
@@ -191,6 +192,14 @@ def contributors(json)
   end.compact
 end
 
+def related_links(json)
+  json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+end
+
+def related_works(json)
+  json.fetch('related_citations').reject(&:blank?).map { |citation| RelatedWork.new(citation: citation) }
+end
+
 def build_attributes(json)
   collection_id = json['collection']
   unless collection_id
@@ -235,7 +244,8 @@ def build_attributes(json)
     keywords: json.fetch('keywords').map { |text| Keyword.new(label: text) },
     created_edtf: created_edtf,
     state: STATES.fetch(json.fetch('object_status')),
-    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) },
+    related_links: related_links(json),
+    related_works: related_works(json),
     contributors: contributors(json)
   }
 end
