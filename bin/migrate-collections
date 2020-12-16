@@ -1,0 +1,101 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Usage:
+#   bin/migrate-collections collections.jsonl
+
+require_relative '../config/environment'
+STATES = {
+  'published_open' => 'deposited',
+  'published_closed' => 'deposited',
+  'draft' => 'first_draft'
+}
+
+ACCESS = {
+  'everyone' => 'world',
+  'stanford' => 'stanford',
+  'varies' => 'depositor-selects'
+}
+
+RELEASE_OPTION = {
+  'varies' => 'depositor-selects',
+  'none' => 'immediate',
+}
+
+
+def contact_email(json)
+  if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
+    json['contact_email']
+  elsif json['contact_email'].present?
+    warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}"
+    nil
+  end
+end
+
+def release_attributes(json)
+  data = {
+    access: ACCESS.fetch(json.fetch('visibility_option_value'))
+  }
+  if json['embargo_option'] == 'fixed'
+    puts "#{json['druid']} has embargo option of 'fixed', which cannot be mapped to h2"
+    # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
+    return data
+  end
+
+  release_option = RELEASE_OPTION.fetch(json.fetch('embargo_option'))
+  data[:release_option] = release_option
+
+  return data unless release_option == 'depositor-selects'
+
+  data.merge(release_duration: json.fetch('embargo_terms'))
+end
+
+def license_attributes(json)
+  # TODO: h2 doesn't set these fields yet, so it's unclear how to migrate to them:
+  {
+    # attr_reader :attr_namesequired_license - license_option_fixed
+    # default_license - license_option_varies
+  }
+end
+
+def participants_attributes(json)
+  managers = json['managers'].map do |sunetid|
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+  end
+  depositors = json['depositors'].map do |sunetid|
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+  end
+  reviewers = json['reviewers'].map do |sunetid|
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+  end
+  {
+    managers: managers,
+    depositors: depositors,
+    reviewers: reviewers
+  }
+end
+
+def build_collection_attributes(json)
+  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+
+  {
+    version: json.fetch('version'),
+    description: json.fetch('description'),
+    contact_email: contact_email(json),
+    creator: creator,
+    name: json.fetch('name'),
+    state: STATES.fetch(json.fetch('object_status')),
+    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+  }.merge(release_attributes(json)).
+    merge(license_attributes(json)).
+    merge(participants_attributes(json))
+end
+
+File.foreach(ARGV[0]) do |data|
+  json = JSON.parse(data)
+  next unless json.present?
+  collection = Collection.find_or_initialize_by(druid: json['druid'])
+  collection_attributes = build_collection_attributes(json)
+  collection.update!(collection_attributes)
+  puts "collection #{collection.id}"
+end
