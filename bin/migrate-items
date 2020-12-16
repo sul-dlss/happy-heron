@@ -27,6 +27,7 @@ LICENSE = {
   'cc-by-nc-nd' => 'CC-BY-NC-ND-4.0',
   'cc-by-nd' => 'CC-BY-ND-4.0',
   'cc-pdm' => 'PDDL-1.0',
+  'cc-cc0' => 'CC0-1.0',
   'odc-by' => 'ODC-By-1.0',
   'odc-odbl' => 'ODbL-1.0',
   'none' => 'none'
@@ -50,6 +51,88 @@ WORK_TYPE = {
   'archival mixed material' => 'mixed material'
 }
 
+CONTRIBUTOR_TYPE = {
+  'personal' => 'person',
+  'corporate' => 'organization',
+  'conference' => 'organization'
+}
+
+CONTRIBUTOR_ROLE = {
+  'Author' => 'Author',
+  'author' => 'Author', # Bad data? about 1000 items are like this.
+  'author,' => 'Author', # Bad data? 4 items have this role
+  'author.' => 'Author', # Bad data? 207 items have this role
+  'autor' => 'Author', # Bad data? 7 items have this role
+  'Department' => 'Research group',
+  'Editor' => 'Editor',
+  'editor' => 'Editor',
+  'editor.' => 'Editor',
+  'Advisor' => 'Thesis advisor',
+  'Primary advisor' => 'Primary thesis advisor',
+  'Degree granting institution' => 'Degree granting institution',
+  'Publisher' => 'Publisher',
+  'publisher.' => 'Publisher',
+  'publisher' => 'Publisher',
+  'publisher,' => 'Publisher',
+  'Creator' => 'Creator',
+  'creator' => 'Creator', # Bad data? 3 items have this role
+  'Conference' => 'Conference',
+  'conference' => 'Conference',
+  'composer' => 'Composer',
+  'composer.' => 'Composer',
+  'Contributing author' => 'Contributing author',
+  'Principal investigator' => 'Principal investigator',
+  'principal investigator and author.' => 'Principal investigator',
+  'Sponsor' => 'Sponsor',
+  'sponsoring body' => 'Sponsor',
+  'sponsoring body.' => 'Sponsor',
+  'sponsoring and issuing body.' => 'Sponsor',
+  'sponsor.' => 'Sponsor',
+  'speaker.' => 'Speaker', # Bad data? druid:kp775fq5022
+  'issuing body.' => "Issuing body",
+  'issuing body,' => "Issuing body",
+  'issuing body' => "Issuing body",
+  'issuing boyd.' => "Issuing body", # bad data: druid:nn568sd8519
+  'photographer,' => 'Photographer', # bad data? druid:hs463hp0639, druid:wz110cw1514
+  'researcher' => 'Researcher',
+  'researcher.' => 'Researcher',
+}
+
+INVALID_ROLES = [
+  'Collector',
+  'Distributor',
+  'contributor',
+  'Contributor',
+  'production company.',
+  'compiler',
+  'compiler.',
+  'designer.',
+  'printer.',
+  'binder.',
+  'participant in a treaty.',
+  'enacting jurisdiction.',
+  'writer of forward.',
+  'addressee',
+  'addressee.',
+  'commissioning body.',
+  'commissioning body,',
+  'commissioning body',
+  'cre', # see druid:jn023kf3320
+  'his', # see druid:jn023kf3320
+  'aut', # see druid:ns801cg260 and 19 others
+  'ive', # see druid:fg188hk6403 and druid:hd575hm6964
+  'ivr', # see druid:fg188hk6403 and druid:hd575hm6964
+  'pbl', # see druid:fg188hk6403 and druid:hd575hm6964
+  'spk', # on 15 items
+  'spn', # on 15 items
+  'co-investigator.',
+  'Programmer',
+  'judge',
+  'defendant',
+  'plaintiff',
+  'writer of added commentary'
+]
+
 def contact_email(json)
   return json['contact_email'] if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
 
@@ -67,6 +150,38 @@ end
 
 def license(json)
   LICENSE.fetch(json.fetch('license'))
+end
+
+def split_name(full_name)
+  if full_name.include?(', ')
+    last, first = full_name.split(', ')
+    { last_name: last, first_name: first }
+  else
+    first, last = full_name.split(' ')
+    { last_name: last, first_name: first }
+  end
+end
+
+def contributors(json)
+  json.fetch('contributors').map do |attributes|
+    contributor_attributes = attributes.dup
+    hydrus_role = contributor_attributes.delete('role')
+    case hydrus_role
+    when *INVALID_ROLES # H2 doesn't have an equivalent role
+      warn "Found role '#{hydrus_role}' for #{json['druid']}, but there is no H2 equivalent role. Skipping."
+      next
+    when ''
+      warn "Found empty role for #{json['druid']}, Skipping."
+      next
+    end
+    role = CONTRIBUTOR_ROLE.fetch(hydrus_role)
+
+    type = CONTRIBUTOR_TYPE.fetch(contributor_attributes.delete('name_type'))
+    if type == 'person'
+      contributor_attributes.merge!(split_name(contributor_attributes.delete('full_name')))
+    end
+    Contributor.new(contributor_attributes.merge(contributor_type: type, role: role))
+  end.compact
 end
 
 def build_attributes(json)
@@ -92,6 +207,11 @@ def build_attributes(json)
   elsif json.fetch('item_type') == 'audio - music'
     ['Musical performance']
   end
+  title = json['title']
+  unless title
+    warn "#{json['druid']} does not have a title. #{json}"
+    return
+  end
   {
     version: json.fetch('version'),
     abstract: abstract(json),
@@ -99,23 +219,33 @@ def build_attributes(json)
     depositor: depositor,
     collection: collection,
     license: license(json),
-    title: json.fetch('title'),
+    title: title,
     work_type: work_type,
     subtype: subtype,
     state: STATES.fetch(json.fetch('object_status')),
-    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) },
+    contributors: contributors(json)
   }
 end
 
+OFFSET = ARGV[1].present? ? ARGV[1].to_i : 0
+count = 0
 File.foreach(ARGV[0]) do |data|
+  count += 1
+  next if count < OFFSET
   json = JSON.parse(data)
   next unless json.present?
   work = Work.find_or_initialize_by(druid: json['druid'])
   attributes = build_attributes(json)
   next if attributes.blank?
-  if work.update(attributes)
-    puts "Work #{work.id} - #{work.druid}"
-  else
-    warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+  begin
+    if work.update(attributes)
+      puts "Work #{work.id} - #{work.druid}"
+    else
+      warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+    end
+  rescue ActiveRecord::RecordNotSaved => e
+    warn "unable to save #{json['druid']} because contributors: " \
+      "#{attributes[:contributors].reject(&:valid?).map { |c| c.errors.full_messages.join(', ') + " " + c.inspect }}"
   end
 end
