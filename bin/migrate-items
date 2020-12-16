@@ -227,6 +227,7 @@ def build_attributes(json)
     title: title,
     work_type: work_type,
     subtype: subtype,
+    citation: json.fetch('citation'),
     state: STATES.fetch(json.fetch('object_status')),
     related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) },
     contributors: contributors(json)
