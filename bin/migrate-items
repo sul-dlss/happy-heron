@@ -2,9 +2,14 @@
 # frozen_string_literal: true
 
 # Usage:
+#   bin/migrate-items items.jsonl 1000 /opt/app/local-files
+#   bin/migrate-items items.jsonl 1000
 #   bin/migrate-items items.jsonl
 
 require_relative '../config/environment'
+DEFAULT_DATA_ROOT = '/data/hydrus-files'
+DATA_ROOT = ARGV[2] || DEFAULT_DATA_ROOT
+
 STATES = {
   'published' => 'deposited',
   'draft' => 'first_draft',
@@ -228,6 +233,24 @@ def build_attributes(json)
   }
 end
 
+def resolve_file(hydrus_path)
+  hydrus_path.sub(DEFAULT_DATA_ROOT  , DATA_ROOT)
+end
+
+def attach_files(json, work)
+  json['files'].each do |file_data|
+    pathname = resolve_file(file_data['path'])
+    filename = File.basename(pathname)
+    attached_file = work.attached_files.find { |attached| attached.filename == filename }
+    next if attached_file
+
+    file = File.open(pathname)
+    attached_file = work.attached_files.build(label: file_data['label'])
+    attached_file.file.attach(io: file, filename: filename)
+    attached_file.save!
+  end
+end
+
 OFFSET = ARGV[1].present? ? ARGV[1].to_i : 0
 count = 0
 File.foreach(ARGV[0]) do |data|
@@ -240,6 +263,7 @@ File.foreach(ARGV[0]) do |data|
   next if attributes.blank?
   begin
     if work.update(attributes)
+      attach_files(json, work)
       puts "Work #{work.id} - #{work.druid}"
     else
       warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
