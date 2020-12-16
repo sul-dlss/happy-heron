@@ -154,6 +154,30 @@ H2 uses the [SDR API](https://github.com/sul-dlss/sdr-api) to deposit collection
 
 H2 relies upon dor-services-app publishing messages to the `sdr.objects.created` topic when a resource is persisted. Then RabbitMQ routes this message to a queue `h2.druid_assigned`.  The `AssignPidJob` running via Sneakers works on messages from this queue.  Similarly workflow-server-rails publishes messages to the `sdr.workflow` topic when accessioning is completed.  RabbitMQ then routes these messages to a queue `h2.deposit_complete` which is processed by the `DepositStatusJob` via Sneakers.
 
+## Migration
+
+The first step is to migrate all the [Hydrus Collections](https://argo.stanford.edu/catalog?f%5Bexploded_tag_ssim%5D%5B%5D=Project+%3A+Hydrus&f%5BobjectType_ssim%5D%5B%5D=collection)
+
+We do this by exporting from the Hydrus server (see https://github.com/sul-dlss/hydrus/pull/507)
+
+```
+RAILS_ENV=production bin/export-collections > collections.jsonl
+RAILS_ENV=production bin/export-items > items.jsonl
+```
+
+Then download these files to the h2 server you want to load the collections on and run:
+
+```
+RAILS_ENV=production bin/migrate-collections collections.jsonl
+```
+
+Next mount the `/data/hydrus-files` mount on the server you are importing to.
+
+And finally import the items with their files:
+```
+RAILS_ENV=production bin/migrate-items items.jsonl
+```
+
 ## Branch aliasing
 
 If your Git muscle memory is too strong and you find you keep typing `master` when you mean `main` (the default branch for H2), you can help yourself a bit by creating an alias thusly:
