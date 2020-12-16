@@ -1,0 +1,121 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Usage:
+#   bin/migrate-items items.jsonl
+
+require_relative '../config/environment'
+STATES = {
+  'published' => 'deposited',
+  'draft' => 'first_draft',
+  'awaiting_approval' => 'pending_approval',
+  'returned' => 'rejected'
+}
+
+# ACCESS = {
+#   'everyone' => 'world',
+#   'stanford' => 'stanford',
+#   'varies' => 'depositor-selects'
+# }
+
+LICENSE = {
+  'pddl' => 'PDDL-1.0',
+  'cc-by' => 'CC-BY-4.0',
+  'cc-by-sa' => 'CC-BY-SA-4.0',
+  'cc-by-nc' => 'CC-BY-NC-4.0',
+  'cc-by-nc-sa' => 'CC-BY-NC-SA-4.0',
+  'cc-by-nc-nd' => 'CC-BY-NC-ND-4.0',
+  'cc-by-nd' => 'CC-BY-ND-4.0',
+  'cc-pdm' => 'PDDL-1.0',
+  'odc-by' => 'ODC-By-1.0',
+  'odc-odbl' => 'ODbL-1.0',
+  'none' => 'none'
+}
+
+WORK_TYPE = {
+  'dataset' => 'data',
+  'image' => 'image',
+  'video' => 'video',
+  'audio - spoken' => 'sound',
+  'audio - music' => 'sound',
+  'other' => 'other',
+  'class project' => 'other',
+  'textbook' => 'other',
+  'thesis' => 'other',
+  'article' => 'other',
+  'technical report' => 'other',
+  'conference paper / presentation' => 'other',
+  'software' => 'software, multimedia',
+  'computer game' => 'software, multimedia',
+  'archival mixed material' => 'mixed material'
+}
+
+def contact_email(json)
+  return json['contact_email'] if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
+
+  warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}. Setting a dummy value."
+  warn json
+  'no-reply@sdr.stanford.edu'
+end
+
+def abstract(json)
+  return json['abstract'] if json['abstract']
+
+  warn "Work has no abstract: #{json['druid']}. Setting a dummy value"
+  'No abstract entered'
+end
+
+def license(json)
+  LICENSE.fetch(json.fetch('license'))
+end
+
+def build_attributes(json)
+  collection_id = json['collection']
+  unless collection_id
+    warn "No collection exists for #{json['druid']}. Skipping."
+    return
+  end
+
+  collection = Collection.find_by(druid: collection_id)
+  unless collection
+    warn "Unable to find Collection #{collection_id}"
+    return
+  end
+
+  depositor = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  work_type = WORK_TYPE.fetch(json.fetch('item_type'))
+  subtype = if work_type == 'other'
+    warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
+    ['placeholder']
+  elsif json.fetch('item_type') == 'audio - spoken'
+    ['Speech']
+  elsif json.fetch('item_type') == 'audio - music'
+    ['Musical performance']
+  end
+  {
+    version: json.fetch('version'),
+    abstract: abstract(json),
+    contact_email: contact_email(json),
+    depositor: depositor,
+    collection: collection,
+    license: license(json),
+    title: json.fetch('title'),
+    work_type: work_type,
+    subtype: subtype,
+    state: STATES.fetch(json.fetch('object_status')),
+    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+  }
+end
+
+File.foreach(ARGV[0]) do |data|
+  json = JSON.parse(data)
+  next unless json.present?
+  work = Work.find_or_initialize_by(druid: json['druid'])
+  attributes = build_attributes(json)
+  next if attributes.blank?
+  if work.update(attributes)
+    puts "Work #{work.id} - #{work.druid}"
+  else
+    warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+  end
+end

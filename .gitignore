@@ -54,3 +54,4 @@ sorbet/rbi/hidden-definitions/errors.txt
 
 # Migration data
 collections.jsonl
+items.jsonl
