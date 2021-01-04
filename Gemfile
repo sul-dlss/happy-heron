@@ -64,7 +64,8 @@ gem 'redis', '~> 4.0'
 gem 'reform-rails', '~> 0.2.0'
 gem 'sdr-client', '~> 0.39'
 gem 'sidekiq', '~> 6.1'
-gem 'sorbet-rails' # used both statically and at runtime
+# pinned because 0.7.2 broke the build with 181 new errors related (apparently?) to the parlour 5.0.0 bump
+gem 'sorbet-rails', '0.7.1'
 gem 'sorbet-runtime'
 gem 'state_machines-activerecord'
 gem 'turbolinks', '~> 5'

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.22.1
+# view_component-2.23.1
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -42,7 +42,29 @@ module ViewComponent::Slotable
   extend ActiveSupport::Concern
 end
 module ViewComponent::Slotable::ClassMethods
+  def inherited(child); end
   def with_slot(*slot_names, collection: nil, class_name: nil); end
+end
+class ViewComponent::SlotV2
+  def _component_instance=(arg0); end
+  def _content=(arg0); end
+  def _content_block=(arg0); end
+  def initialize(parent); end
+  def method_missing(symbol, *args, &block); end
+  def respond_to_missing?(symbol, include_all = nil); end
+  def to_s; end
+end
+module ViewComponent::SlotableV2
+  def get_slot(slot_name); end
+  def set_slot(slot_name, *args, **kwargs, &block); end
+  extend ActiveSupport::Concern
+end
+module ViewComponent::SlotableV2::ClassMethods
+  def inherited(child); end
+  def register_slot(slot_name, collection:, callable:); end
+  def renders_many(slot_name, callable = nil); end
+  def renders_one(slot_name, callable = nil); end
+  def validate_slot_name(slot_name); end
 end
 class ViewComponent::Base < ActionView::Base
   def before_render; end
@@ -93,9 +115,6 @@ class ViewComponent::Base < ActionView::Base
   def self.short_identifier; end
   def self.show_previews; end
   def self.show_previews=(obj); end
-  def self.slots; end
-  def self.slots=(val); end
-  def self.slots?; end
   def self.source_location; end
   def self.source_location=(arg0); end
   def self.template_compiler; end
@@ -109,9 +128,6 @@ class ViewComponent::Base < ActionView::Base
   def self.with_collection_parameter(param); end
   def self.with_content_areas(*areas); end
   def show_previews; end
-  def slots; end
-  def slots=(val); end
-  def slots?; end
   def test_controller; end
   def test_controller=(obj); end
   def view_cache_dependencies; end

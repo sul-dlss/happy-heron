@@ -8,19 +8,19 @@ module Collection::ActiveRelation_WhereNot
 end
 
 module Collection::GeneratedAttributeMethods
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def access; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
   def access=(value); end
 
   sig { returns(T::Boolean) }
   def access?; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def contact_email; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
   def contact_email=(value); end
 
   sig { returns(T::Boolean) }
@@ -53,10 +53,10 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def default_license?; end
 
-  sig { returns(String) }
+  sig { returns(T.nilable(String)) }
   def description; end
 
-  sig { params(value: T.any(String, Symbol)).void }
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
   def description=(value); end
 
   sig { returns(T::Boolean) }

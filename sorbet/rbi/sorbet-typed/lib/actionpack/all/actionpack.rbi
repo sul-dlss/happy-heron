@@ -7,7 +7,49 @@
 #
 # typed: strong
 
-class AbstractController::Base < Object
+# https://github.com/rails/rails/blob/5-2-stable/actionpack/lib/action_controller.rb
+module ActionController
+end
+
+class AbstractController::Base
+  include(::ActiveSupport::Configurable)
+  extend(::ActiveSupport::Configurable::ClassMethods)
+  extend(::ActiveSupport::DescendantsTracker)
+
+  def action_methods; end
+  def action_name; end
+  def action_name=(_arg0); end
+  def available_action?(action_name); end
+  def controller_path; end
+  def formats; end
+  def formats=(_arg0); end
+  def performed?; end
+  def process(action, *args); end
+  def response_body; end
+  def response_body=(_arg0); end
+  def send_action(*_arg0); end
+
+  private
+
+  def _find_action_name(action_name); end
+  def _handle_action_missing(*args); end
+  def _valid_action_name?(action_name); end
+  def action_method?(name); end
+  def method_for_action(action_name); end
+  def process_action(method_name, *args); end
+
+  class << self
+    def abstract; end
+    def abstract!; end
+    def abstract?; end
+    def action_methods; end
+    def clear_action_methods!; end
+    def controller_path; end
+    def inherited(klass); end
+    def internal_methods; end
+    def method_added(name); end
+    def supports_path?; end
+  end
 end
 
 # https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html
@@ -266,6 +308,126 @@ module AbstractController::UrlFor::ClassMethods
 end
 
 class ActionController::ActionControllerError < ::StandardError
+end
+
+class ActionController::API < ::ActionController::Metal
+  include(::ActionView::ViewPaths)
+  include(::AbstractController::Rendering)
+  include(::ActionDispatch::Routing::PolymorphicRoutes)
+  include(::ActionDispatch::Routing::UrlFor)
+  include(::AbstractController::UrlFor)
+  include(::ActionController::UrlFor)
+  include(::AbstractController::Logger)
+  include(::ActiveSupport::Benchmarkable)
+  include(::ActionController::Redirecting)
+  include(::ActionController::ApiRendering)
+  include(::ActionController::Rendering)
+  include(::ActionController::Renderers)
+  include(::ActionController::Renderers::All)
+  include(::ActionController::Head)
+  include(::ActionController::ConditionalGet)
+  include(::ActionController::BasicImplicitRender)
+  include(::ActionController::StrongParameters)
+  include(::ActiveSupport::Callbacks)
+  include(::AbstractController::Callbacks)
+  include(::ActionController::ForceSSL)
+  include(::ActionController::DataStreaming)
+  include(::ActionController::DefaultHeaders)
+  include(::ActiveSupport::Rescuable)
+  include(::ActionController::Rescue)
+  include(::ActionController::Instrumentation)
+  include(::ActionController::ParamsWrapper)
+  include(::ActionController::RespondWith)
+  extend(::ActionView::ViewPaths::ClassMethods)
+  extend(::AbstractController::UrlFor::ClassMethods)
+  extend(::ActionController::Rendering::ClassMethods)
+  extend(::ActionController::Renderers::ClassMethods)
+  extend(::ActionController::ConditionalGet::ClassMethods)
+  extend(::ActiveSupport::Callbacks::ClassMethods)
+  extend(::AbstractController::Callbacks::ClassMethods)
+  extend(::ActionController::ForceSSL::ClassMethods)
+  extend(::ActionController::DefaultHeaders::ClassMethods)
+  extend(::ActiveSupport::Rescuable::ClassMethods)
+  extend(::ActionController::Instrumentation::ClassMethods)
+  extend(::ActionController::ParamsWrapper::ClassMethods)
+  extend(::ActionController::RespondWith::ClassMethods)
+
+  def __callbacks; end
+  def __callbacks?; end
+  def _cancan_skipper; end
+  def _cancan_skipper=(val); end
+  def _cancan_skipper?; end
+  def _process_action_callbacks; end
+  def _renderers; end
+  def _renderers=(val); end
+  def _renderers?; end
+  def _run_process_action_callbacks(&block); end
+  def _wrapper_options; end
+  def _wrapper_options=(val); end
+  def _wrapper_options?; end
+  def default_url_options; end
+  def default_url_options=(val); end
+  def default_url_options?; end
+  def etaggers; end
+  def etaggers=(val); end
+  def etaggers?; end
+  def logger; end
+  def logger=(value); end
+  def mimes_for_respond_to; end
+  def mimes_for_respond_to=(val); end
+  def mimes_for_respond_to?; end
+  def rescue_handlers; end
+  def rescue_handlers=(val); end
+  def rescue_handlers?; end
+  def responder; end
+  def responder=(val); end
+  def responder?; end
+
+  class << self
+    def __callbacks; end
+    def __callbacks=(val); end
+    def __callbacks?; end
+    def _cancan_skipper; end
+    def _cancan_skipper=(val); end
+    def _cancan_skipper?; end
+    def _process_action_callbacks; end
+    def _process_action_callbacks=(value); end
+    def _renderers; end
+    def _renderers=(val); end
+    def _renderers?; end
+    def _wrapper_options; end
+    def _wrapper_options=(val); end
+    def _wrapper_options?; end
+    def default_url_options; end
+    def default_url_options=(val); end
+    def default_url_options?; end
+    def etaggers; end
+    def etaggers=(val); end
+    def etaggers?; end
+    def logger; end
+    def logger=(value); end
+    def middleware_stack; end
+    def mimes_for_respond_to; end
+    def mimes_for_respond_to=(val); end
+    def mimes_for_respond_to?; end
+    def rescue_handlers; end
+    def rescue_handlers=(val); end
+    def rescue_handlers?; end
+    def responder; end
+    def responder=(val); end
+    def responder?; end
+    def without_modules(*modules); end
+  end
+end
+
+ActionController::API::MODULES = T.let(T.unsafe(nil), T::Array[T.untyped])
+
+module ActionController::ApiRendering
+  extend(::ActiveSupport::Concern)
+
+  include(::ActionController::Rendering)
+
+  def render_to_body(options = T.unsafe(nil)); end
 end
 
 module ::AbstractController::Rendering; end
@@ -841,6 +1003,18 @@ end
 
 ActionController::Rendering::RENDER_FORMATS_IN_PRIORITY = T.let(T.unsafe(nil), T::Array[T.untyped])
 
+module ActionController::RequestForgeryProtection
+  private
+
+  # https://github.com/rails/rails/blob/5-2-stable/actionpack/lib/action_controller/metal/request_forgery_protection.rb#L435
+  sig { returns(T::Boolean) }
+  def protect_against_forgery?; end
+
+  # https://github.com/rails/rails/blob/5-2-stable/actionpack/lib/action_controller/metal/request_forgery_protection.rb#L307
+  sig { params(form_options: T::Hash[T.untyped, T.untyped]).returns(String)  }
+  def form_authenticity_token(form_options: {}); end
+end
+
 module ActionController::RequestForgeryProtection::ClassMethods
   sig do
     params(
@@ -941,6 +1115,8 @@ end
 ActionDispatch::RemoteIp::TRUSTED_PROXIES = T.let(T.unsafe(nil), T::Array[T.untyped])
 
 class ActionDispatch::Request
+  def body; end
+
   # Provides access to the request's HTTP headers, for example:
   #
   # ```ruby

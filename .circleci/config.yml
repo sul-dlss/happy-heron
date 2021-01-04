@@ -84,7 +84,7 @@ jobs:
             - happy-heron-bundle-
       - run:
           name: Run static type checking
-          command: bundle exec srb tc --ignore=vendor/
+          command: bundle exec srb tc
   test:
     executor: ruby_with_postgres
     steps:

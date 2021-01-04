@@ -451,6 +451,7 @@ class RuboCop::AST::Node < Parser::AST::Node
   def ivasgn_type?; end
   def keyword?; end
   def kwarg_type?; end
+  def kwargs_type?; end
   def kwbegin_type?; end
   def kwnilarg_type?; end
   def kwoptarg_type?; end
@@ -473,6 +474,8 @@ class RuboCop::AST::Node < Parser::AST::Node
   def match_current_line_type?; end
   def match_guard_clause?(param0 = nil); end
   def match_nil_pattern_type?; end
+  def match_pattern_p_type?; end
+  def match_pattern_type?; end
   def match_rest_type?; end
   def match_var_type?; end
   def match_with_lvasgn_type?; end
@@ -1235,7 +1238,6 @@ class RuboCop::AST::Token
   def type; end
 end
 module RuboCop::AST::Traversal
-  def on_(node); end
   def on___ENCODING__(node); end
   def on___FILE__(node); end
   def on___LINE__(node); end
@@ -1297,6 +1299,7 @@ module RuboCop::AST::Traversal
   def on_ivar(node); end
   def on_ivasgn(node); end
   def on_kwarg(node); end
+  def on_kwargs(node); end
   def on_kwbegin(node); end
   def on_kwnilarg(node); end
   def on_kwoptarg(node); end
@@ -1310,6 +1313,8 @@ module RuboCop::AST::Traversal
   def on_match_as(node); end
   def on_match_current_line(node); end
   def on_match_nil_pattern(node); end
+  def on_match_pattern(node); end
+  def on_match_pattern_p(node); end
   def on_match_rest(node); end
   def on_match_var(node); end
   def on_match_with_lvasgn(node); end
