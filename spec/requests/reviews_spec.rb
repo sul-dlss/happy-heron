@@ -19,7 +19,7 @@ RSpec.describe 'Works requests' do
   end
 
   context 'with an authenticated user' do
-    let(:user) { collection.reviewers.first }
+    let(:user) { collection.reviewed_by.first }
     let(:collection) { create(:collection, :with_reviewers) }
     let(:work) { create(:work, :pending_approval, collection: collection) }
 

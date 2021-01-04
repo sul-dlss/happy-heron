@@ -83,10 +83,10 @@ class JbuilderTemplate < Jbuilder
 end
 class JbuilderHandler
   def default_format; end
-  def default_format=(obj); end
+  def default_format=(val); end
   def self.call(template, source = nil); end
   def self.default_format; end
-  def self.default_format=(obj); end
+  def self.default_format=(val); end
 end
 class Jbuilder::Railtie < Rails::Railtie
 end

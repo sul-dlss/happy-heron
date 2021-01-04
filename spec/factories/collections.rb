@@ -29,7 +29,7 @@ FactoryBot.define do
       reviewer_count { 2 }
     end
 
-    reviewers { build_list(:user, reviewer_count) }
+    reviewed_by { build_list(:user, reviewer_count) }
   end
 
   trait :with_managers do

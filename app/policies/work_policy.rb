@@ -42,7 +42,7 @@ class WorkPolicy < ApplicationPolicy
     administrator? ||
       record.depositor == user ||
       record.collection.managers.include?(user) ||
-      record.collection.reviewers.include?(user)
+      record.collection.reviewed_by.include?(user)
   end
 
   # Can show a work iff any one of the following is true:
@@ -55,13 +55,13 @@ class WorkPolicy < ApplicationPolicy
     administrator? ||
       record.depositor == user ||
       record.collection.managers.include?(user) ||
-      record.collection.reviewers.include?(user)
+      record.collection.reviewed_by.include?(user)
   end
 
   # The collection reviewers can review a work
   sig { returns(T::Boolean) }
   def review?
-    record.pending_approval? && (administrator? || record.collection.reviewers.include?(user))
+    record.pending_approval? && (administrator? || record.collection.reviewed_by.include?(user))
   end
 
   sig { returns(T::Boolean) }

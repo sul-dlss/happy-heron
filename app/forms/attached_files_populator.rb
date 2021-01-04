@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 # Populates the nested attached files form
@@ -14,7 +14,7 @@ class AttachedFilesPopulator < ApplicationPopulator
       if item
         form.attached_files.delete(item)
       else
-        ActiveStorage::Blob.find_signed(fragment['file']).purge_later
+        ActiveStorage::Blob.find_signed!(fragment['file']).purge_later
       end
       return skip!
     end

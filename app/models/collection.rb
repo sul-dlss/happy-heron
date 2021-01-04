@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 # Models a collection in the database
@@ -10,14 +10,14 @@ class Collection < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   belongs_to :creator, class_name: 'User'
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
-  has_and_belongs_to_many :reviewers, class_name: 'User', join_table: 'reviewers'
+  has_and_belongs_to_many :reviewed_by, class_name: 'User', join_table: 'reviewers'
   has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
 
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
 
   sig { returns(T::Boolean) }
   def review_enabled?
-    reviewers.present?
+    reviewed_by.present?
   end
 
   sig { returns(T::Boolean) }
@@ -48,7 +48,7 @@ class Collection < ApplicationRecord
                            .invitation_to_deposit_email.deliver_later
         end
 
-        collection.reviewers.each do |reviewer|
+        collection.reviewed_by.each do |reviewer|
           CollectionsMailer.with(collection: collection, user: reviewer)
                            .review_access_granted_email.deliver_later
         end

@@ -11,7 +11,7 @@ RSpec.describe User do
 
     it 'validates email is present' do
       expect(invalid_user).not_to be_valid
-      expect(invalid_user.errors.messages).to include(email: ["can't be blank"])
+      expect(invalid_user.errors.messages.to_h).to include(email: ["can't be blank"])
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe User do
 
     it 'validates email is unique' do
       expect(invalid_user).not_to be_valid
-      expect(invalid_user.errors.messages).to include(email: ['has already been taken'])
+      expect(invalid_user.errors.messages.to_h).to include(email: ['has already been taken'])
     end
   end
 

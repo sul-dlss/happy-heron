@@ -14,7 +14,7 @@ module FactoryBot
   def self.aliases=(arg0); end
   def self.aliases_for(attribute); end
   def self.automatically_define_enum_traits; end
-  def self.automatically_define_enum_traits=(obj); end
+  def self.automatically_define_enum_traits=(val); end
   def self.build_stubbed_starting_id=(starting_id); end
   def self.definition_file_paths; end
   def self.definition_file_paths=(arg0); end
@@ -26,7 +26,7 @@ module FactoryBot
   def self.rewind_sequences(**, &&); end
   def self.strategy_by_name(**, &&); end
   def self.use_parent_strategy; end
-  def self.use_parent_strategy=(obj); end
+  def self.use_parent_strategy=(val); end
   extend FactoryBot::Syntax::Default
 end
 module FactoryBot::Internal
@@ -243,7 +243,7 @@ class FactoryBot::Evaluator
   def __override_names__; end
   def association(factory_name, *traits_and_overrides); end
   def attribute_lists; end
-  def attribute_lists=(val); end
+  def attribute_lists=(arg0); end
   def attribute_lists?; end
   def increment_sequence(sequence); end
   def initialize(build_strategy, overrides = nil); end
@@ -253,7 +253,7 @@ class FactoryBot::Evaluator
   def respond_to_missing?(method_name, _include_private = nil); end
   def self.attribute_list; end
   def self.attribute_lists; end
-  def self.attribute_lists=(val); end
+  def self.attribute_lists=(value); end
   def self.attribute_lists?; end
   def self.define_attribute(name, &block); end
 end

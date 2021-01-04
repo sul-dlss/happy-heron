@@ -323,21 +323,3 @@ class SorbetRails::PluckToTStruct::UnexpectedType < StandardError
 end
 class SorbetRails::PluckToTStruct::UnexpectedAssociations < StandardError
 end
-module GeneratedUrlHelpers
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
-end

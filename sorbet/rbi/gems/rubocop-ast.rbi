@@ -627,6 +627,8 @@ module RuboCop::AST::CollectionNode
   def combination(*args, &block); end
   def compact!(*args, &block); end
   def compact(*args, &block); end
+  def compact_blank!(*args, &block); end
+  def compact_blank(*args, &block); end
   def concat(*args, &block); end
   def count(*args, &block); end
   def cycle(*args, &block); end
@@ -702,6 +704,7 @@ module RuboCop::AST::CollectionNode
   def pack(*args, &block); end
   def partition(*args, &block); end
   def permutation(*args, &block); end
+  def pick(*args, &block); end
   def pluck(*args, &block); end
   def pop(*args, &block); end
   def prepend(*args, &block); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionmailbox/all/actionmailbox.rbi
 #
-# actionmailbox-6.0.3.4
+# actionmailbox-6.1.1
 
 module Mail
   def self.from_source(source); end
@@ -27,25 +27,25 @@ class Mail::Address
 end
 module ActionMailbox
   def incinerate; end
-  def incinerate=(obj); end
+  def incinerate=(val); end
   def incinerate_after; end
-  def incinerate_after=(obj); end
+  def incinerate_after=(val); end
   def ingress; end
-  def ingress=(obj); end
+  def ingress=(val); end
   def logger; end
-  def logger=(obj); end
+  def logger=(val); end
   def queues; end
-  def queues=(obj); end
+  def queues=(val); end
   def self.incinerate; end
-  def self.incinerate=(obj); end
+  def self.incinerate=(val); end
   def self.incinerate_after; end
-  def self.incinerate_after=(obj); end
+  def self.incinerate_after=(val); end
   def self.ingress; end
-  def self.ingress=(obj); end
+  def self.ingress=(val); end
   def self.logger; end
-  def self.logger=(obj); end
+  def self.logger=(val); end
   def self.queues; end
-  def self.queues=(obj); end
+  def self.queues=(val); end
   def self.railtie_helpers_paths; end
   def self.railtie_namespace; end
   def self.railtie_routes_url_helpers(include_path_helpers = nil); end
@@ -68,6 +68,7 @@ module ActionMailbox::Routing
   extend ActiveSupport::Concern
 end
 module ActionMailbox::Routing::ClassMethods
+  def mailbox_for(inbound_email); end
   def route(inbound_email); end
   def routing(routes); end
 end
@@ -83,7 +84,7 @@ class ActionMailbox::Router
   def add_route(address, to:); end
   def add_routes(routes); end
   def initialize; end
-  def match_to_mailbox(inbound_email); end
+  def mailbox_for(inbound_email); end
   def route(inbound_email); end
   def routes; end
 end
@@ -105,21 +106,21 @@ class ActionMailbox::Base
   def perform_processing; end
   def process; end
   def rescue_handlers; end
-  def rescue_handlers=(val); end
+  def rescue_handlers=(arg0); end
   def rescue_handlers?; end
   def router; end
-  def router=(obj); end
+  def router=(val); end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._process_callbacks; end
   def self._process_callbacks=(value); end
   def self.receive(inbound_email); end
   def self.rescue_handlers; end
-  def self.rescue_handlers=(val); end
+  def self.rescue_handlers=(value); end
   def self.rescue_handlers?; end
   def self.router; end
-  def self.router=(obj); end
+  def self.router=(val); end
   def track_status_of_inbound_email; end
   extend ActionMailbox::Callbacks::ClassMethods
   extend ActionMailbox::Routing::ClassMethods
@@ -132,10 +133,10 @@ class ActionMailbox::Base
 end
 module ActionMailbox::TestHelper
   def create_inbound_email_from_fixture(fixture_name, status: nil); end
-  def create_inbound_email_from_mail(status: nil, **mail_options); end
+  def create_inbound_email_from_mail(status: nil, **mail_options, &block); end
   def create_inbound_email_from_source(source, status: nil); end
   def receive_inbound_email_from_fixture(*args); end
-  def receive_inbound_email_from_mail(**kwargs); end
+  def receive_inbound_email_from_mail(**kwargs, &block); end
   def receive_inbound_email_from_source(*args); end
 end
 class ActionMailbox::TestCase < ActiveSupport::TestCase

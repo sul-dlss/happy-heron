@@ -575,6 +575,8 @@ module RSpec::Core::HashImitatable
   def collect_concat(*args, &block); end
   def compact!(*args, &block); end
   def compact(*args, &block); end
+  def compact_blank!(*args, &block); end
+  def compact_blank(*args, &block); end
   def compare_by_identity(*args, &block); end
   def compare_by_identity?(*args, &block); end
   def count(*args, &block); end
@@ -612,6 +614,8 @@ module RSpec::Core::HashImitatable
   def entries(*args, &block); end
   def except!(*args, &block); end
   def except(*args, &block); end
+  def exclude?(*args, &block); end
+  def excluding(*args, &block); end
   def extra_hash_attributes; end
   def extract!(*args, &block); end
   def extractable_options?(*args, &block); end
@@ -634,7 +638,10 @@ module RSpec::Core::HashImitatable
   def has_value?(*args, &block); end
   def hash_for_delegation; end
   def include?(*args, &block); end
+  def including(*args, &block); end
   def index(*args, &block); end
+  def index_by(*args, &block); end
+  def index_with(*args, &block); end
   def inject(*args, &block); end
   def invert(*args, &block); end
   def issue_deprecation(_method_name, *_args); end
@@ -644,6 +651,7 @@ module RSpec::Core::HashImitatable
   def keys(*args, &block); end
   def lazy(*args, &block); end
   def length(*args, &block); end
+  def many?(*args, &block); end
   def map(*args, &block); end
   def max(*args, &block); end
   def max_by(*args, &block); end
@@ -658,6 +666,8 @@ module RSpec::Core::HashImitatable
   def none?(*args, &block); end
   def one?(*args, &block); end
   def partition(*args, &block); end
+  def pick(*args, &block); end
+  def pluck(*args, &block); end
   def rassoc(*args, &block); end
   def reduce(*args, &block); end
   def rehash(*args, &block); end
@@ -711,6 +721,7 @@ module RSpec::Core::HashImitatable
   def with_defaults!(*args, &block); end
   def with_defaults(*args, &block); end
   def with_indifferent_access(*args, &block); end
+  def without(*args, &block); end
   def zip(*args, &block); end
 end
 module RSpec::Core::HashImitatable::ClassMethods

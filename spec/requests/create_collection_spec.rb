@@ -160,8 +160,8 @@ RSpec.describe 'Create a collection' do
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
             expect(collection.managers.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
-            expect(collection.reviewers.map(&:email)).to eq %w[maya.aguirre@stanford.edu
-                                                               jcairns@stanford.edu faridz@stanford.edu]
+            expect(collection.reviewed_by.map(&:email)).to eq %w[maya.aguirre@stanford.edu
+                                                                 jcairns@stanford.edu faridz@stanford.edu]
           end
         end
 
@@ -180,7 +180,7 @@ RSpec.describe 'Create a collection' do
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
-            expect(collection.reviewers).to be_empty
+            expect(collection.reviewed_by).to be_empty
           end
         end
 

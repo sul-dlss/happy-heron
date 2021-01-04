@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actioncable/all/actioncable.rbi
 #
-# actioncable-6.0.3.4
+# actioncable-6.1.1
 
 module ActionCable
   def self.gem_version; end
@@ -85,7 +85,7 @@ class ActionCable::Server::Worker
   def invoke(receiver, method, *args, connection:, &block); end
   def logger; end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._work_callbacks; end
   def self._work_callbacks=(value); end
@@ -132,10 +132,13 @@ module ActionCable::Channel::Streams
   def identity_handler; end
   def pubsub(**, &&); end
   def stop_all_streams; end
+  def stop_stream_for(model); end
+  def stop_stream_from(broadcasting); end
   def stream_decoder(handler = nil, coder:); end
   def stream_for(model, callback = nil, coder: nil, &block); end
   def stream_from(broadcasting, callback = nil, coder: nil, &block); end
   def stream_handler(broadcasting, user_handler, coder: nil); end
+  def stream_or_reject_for(record); end
   def stream_transmitter(handler = nil, broadcasting:); end
   def streams; end
   def worker_pool_stream_handler(broadcasting, user_handler, coder: nil); end
@@ -178,15 +181,15 @@ class ActionCable::Channel::Base
   def logger(**, &&); end
   def params; end
   def perform_action(data); end
-  def periodic_timers=(val); end
+  def periodic_timers=(arg0); end
   def processable_action?(action); end
   def reject; end
   def reject_subscription; end
   def rescue_handlers; end
-  def rescue_handlers=(val); end
+  def rescue_handlers=(arg0); end
   def rescue_handlers?; end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._subscribe_callbacks; end
   def self._subscribe_callbacks=(value); end
@@ -196,10 +199,10 @@ class ActionCable::Channel::Base
   def self.clear_action_methods!; end
   def self.method_added(name); end
   def self.periodic_timers; end
-  def self.periodic_timers=(val); end
+  def self.periodic_timers=(value); end
   def self.periodic_timers?; end
   def self.rescue_handlers; end
-  def self.rescue_handlers=(val); end
+  def self.rescue_handlers=(value); end
   def self.rescue_handlers?; end
   def subscribe_to_channel; end
   def subscribed; end
@@ -240,7 +243,7 @@ class ActionCable::Server::Base
   def remote_connections; end
   def restart; end
   def self.config; end
-  def self.config=(obj); end
+  def self.config=(val); end
   def self.logger; end
   def worker_pool; end
   include ActionCable::Server::Broadcasting
@@ -283,7 +286,7 @@ class ActionCable::Connection::Base
   def handle_close; end
   def handle_open; end
   def identifiers; end
-  def identifiers=(val); end
+  def identifiers=(arg0); end
   def identifiers?; end
   def initialize(server, env, coder: nil); end
   def invalid_request_message; end
@@ -299,11 +302,17 @@ class ActionCable::Connection::Base
   def pubsub(**, &&); end
   def receive(websocket_message); end
   def request; end
+  def rescue_handlers; end
+  def rescue_handlers=(arg0); end
+  def rescue_handlers?; end
   def respond_to_invalid_request; end
   def respond_to_successful_request; end
   def self.identifiers; end
-  def self.identifiers=(val); end
+  def self.identifiers=(value); end
   def self.identifiers?; end
+  def self.rescue_handlers; end
+  def self.rescue_handlers=(value); end
+  def self.rescue_handlers?; end
   def send_async(method, *arguments); end
   def send_welcome_message; end
   def server; end
@@ -315,9 +324,11 @@ class ActionCable::Connection::Base
   def websocket; end
   def worker_pool; end
   extend ActionCable::Connection::Identification::ClassMethods
+  extend ActiveSupport::Rescuable::ClassMethods
   include ActionCable::Connection::Authorization
   include ActionCable::Connection::Identification
   include ActionCable::Connection::InternalChannel
+  include ActiveSupport::Rescuable
 end
 class ActionCable::Connection::ClientSocket
   def alive?; end
@@ -425,11 +436,11 @@ module ActionCable::Connection::TestConnection
 end
 class ActionCable::Connection::TestCase < ActiveSupport::TestCase
   def _connection_class; end
-  def _connection_class=(val); end
+  def _connection_class=(arg0); end
   def _connection_class?; end
   def connection; end
   def self._connection_class; end
-  def self._connection_class=(val); end
+  def self._connection_class=(value); end
   def self._connection_class?; end
   extend ActionCable::Connection::TestCase::Behavior::ClassMethods
   extend ActiveSupport::Testing::ConstantLookup::ClassMethods
@@ -462,8 +473,8 @@ class ActionCable::Connection::WebSocket
 end
 module ActionCable::TestHelper
   def after_teardown; end
-  def assert_broadcast_on(stream, data); end
-  def assert_broadcasts(stream, number); end
+  def assert_broadcast_on(stream, data, &block); end
+  def assert_broadcasts(stream, number, &block); end
   def assert_no_broadcasts(stream, &block); end
   def before_setup; end
   def broadcasts(**, &&); end
@@ -493,11 +504,11 @@ class ActionCable::Channel::ConnectionStub
 end
 class ActionCable::Channel::TestCase < ActiveSupport::TestCase
   def _channel_class; end
-  def _channel_class=(val); end
+  def _channel_class=(arg0); end
   def _channel_class?; end
   def connection; end
   def self._channel_class; end
-  def self._channel_class=(val); end
+  def self._channel_class=(value); end
   def self._channel_class?; end
   def subscription; end
   extend ActionCable::Channel::TestCase::Behavior::ClassMethods
@@ -535,11 +546,11 @@ end
 class ActionCable::RemoteConnections::RemoteConnection
   def disconnect; end
   def identifiers; end
-  def identifiers=(val); end
+  def identifiers=(arg0); end
   def identifiers?; end
   def initialize(server, ids); end
   def self.identifiers; end
-  def self.identifiers=(val); end
+  def self.identifiers=(value); end
   def self.identifiers?; end
   def server; end
   def set_identifier_instance_vars(ids); end
@@ -554,6 +565,7 @@ module ActionCable::SubscriptionAdapter
 end
 class ActionCable::SubscriptionAdapter::Base
   def broadcast(channel, payload); end
+  def identifier; end
   def initialize(server); end
   def logger; end
   def server; end

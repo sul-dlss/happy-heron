@@ -28,7 +28,7 @@ class CollectionPolicy < ApplicationPolicy
   def show?
     administrator? ||
       record.managers.include?(user) ||
-      record.reviewers.include?(user) ||
+      record.reviewed_by.include?(user) ||
       record.depositor_ids.include?(user.id)
   end
 

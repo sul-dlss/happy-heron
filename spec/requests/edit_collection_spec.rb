@@ -77,7 +77,7 @@ RSpec.describe 'Updating an existing collection' do
             patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
-            expect(collection.reload.reviewers).to be_empty
+            expect(collection.reload.reviewed_by).to be_empty
           end
         end
 
@@ -127,7 +127,7 @@ RSpec.describe 'Updating an existing collection' do
           let!(:removed_depositor) { collection.depositors.second } # needs to be instantiated before collection edit
           let(:collection) do
             create(:collection, :deposited, :with_depositors, :email_when_participants_changed,
-                   depositor_count: 2, managers: [user], reviewers: [reviewer, reviewer2])
+                   depositor_count: 2, managers: [user], reviewed_by: [reviewer, reviewer2])
           end
           let(:collection_params) do
             {

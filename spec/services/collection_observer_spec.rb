@@ -37,7 +37,7 @@ RSpec.describe CollectionObserver do
         let(:manager) { create(:user) }
         let(:collection) do
           create(:collection, :deposited, :with_depositors, :email_when_participants_changed,
-                 managers: [manager], reviewers: [reviewer, reviewer2], depositor_count: 2)
+                 managers: [manager], reviewed_by: [reviewer, reviewer2], depositor_count: 2)
         end
 
         it 'sends emails to the managers about the participants change' do
@@ -113,7 +113,7 @@ RSpec.describe CollectionObserver do
     context 'when reviewers are added to a collection' do
       let(:collection) { create(:collection, :deposited) }
       let(:reviewer) { create(:user) }
-      let(:collection_after) { collection.dup.tap { |col| col.reviewers = [reviewer] } }
+      let(:collection_after) { collection.dup.tap { |col| col.reviewed_by = [reviewer] } }
 
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(

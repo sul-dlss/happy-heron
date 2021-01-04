@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activemodel/all/activemodel.rbi
 #
-# activemodel-6.0.3.4
+# activemodel-6.1.1
 
 module ActiveModel
   def self.eager_load!; end
@@ -34,18 +34,18 @@ class ActiveModel::Attribute
   def has_been_read?; end
   def hash; end
   def init_with(coder); end
-  def initialize(name, value_before_type_cast, type, original_attribute = nil); end
+  def initialize(name, value_before_type_cast, type, original_attribute = nil, value = nil); end
   def initialize_dup(other); end
   def initialized?; end
   def name; end
   def original_attribute; end
   def original_value; end
   def original_value_for_database; end
-  def self.from_database(name, value, type); end
-  def self.from_user(name, value, type, original_attribute = nil); end
+  def self.from_database(name, value_before_type_cast, type, value = nil); end
+  def self.from_user(name, value_before_type_cast, type, original_attribute = nil); end
   def self.null(name); end
   def self.uninitialized(name, type); end
-  def self.with_cast_value(name, value, type); end
+  def self.with_cast_value(name, value_before_type_cast, type); end
   def type; end
   def type_cast(*arg0); end
   def value; end
@@ -92,6 +92,7 @@ class ActiveModel::AttributeSet
   def accessed; end
   def attributes; end
   def deep_dup; end
+  def default_attribute(name); end
   def each_value(**, &&); end
   def except(**, &&); end
   def fetch(**, &&); end
@@ -100,7 +101,6 @@ class ActiveModel::AttributeSet
   def initialize(attributes); end
   def initialize_clone(_); end
   def initialize_dup(_); end
-  def initialized_attributes; end
   def key?(name); end
   def keys; end
   def map(&block); end
@@ -118,6 +118,18 @@ class ActiveModel::AttributeSet::Builder
   def initialize(types, default_attributes = nil); end
   def types; end
 end
+class ActiveModel::LazyAttributeSet < ActiveModel::AttributeSet
+  def additional_types; end
+  def attributes; end
+  def default_attribute(name, value_present = nil, value = nil); end
+  def default_attributes; end
+  def fetch_value(name, &block); end
+  def initialize(values, types, additional_types, default_attributes, attributes = nil); end
+  def key?(name); end
+  def keys; end
+  def types; end
+  def values; end
+end
 class ActiveModel::LazyAttributeHash
   def ==(other); end
   def [](key); end
@@ -127,7 +139,7 @@ class ActiveModel::LazyAttributeHash
   def deep_dup; end
   def default_attributes; end
   def delegate_hash; end
-  def each_key(**, &&); end
+  def each_key(&block); end
   def each_value(**, &&); end
   def except(**, &&); end
   def fetch(**, &&); end
@@ -137,7 +149,6 @@ class ActiveModel::LazyAttributeHash
   def marshal_dump; end
   def marshal_load(values); end
   def materialize; end
-  def select; end
   def transform_values(**, &&); end
   def types; end
   def values; end
@@ -147,6 +158,114 @@ class ActiveModel::AttributeSet::YAMLEncoder
   def default_types; end
   def encode(attribute_set, coder); end
   def initialize(default_types); end
+end
+class ActiveModel::Error
+  def ==(other); end
+  def attribute; end
+  def attributes_for_hash; end
+  def base; end
+  def detail; end
+  def details; end
+  def eql?(other); end
+  def full_message; end
+  def hash; end
+  def i18n_customize_full_message; end
+  def i18n_customize_full_message=(arg0); end
+  def i18n_customize_full_message?; end
+  def initialize(base, attribute, type = nil, **options); end
+  def initialize_dup(other); end
+  def inspect; end
+  def match?(attribute, type = nil, **options); end
+  def message; end
+  def options; end
+  def raw_type; end
+  def self.full_message(attribute, message, base); end
+  def self.generate_message(attribute, type, base, options); end
+  def self.i18n_customize_full_message; end
+  def self.i18n_customize_full_message=(value); end
+  def self.i18n_customize_full_message?; end
+  def strict_match?(attribute, type, **options); end
+  def type; end
+end
+class ActiveModel::NestedError < ActiveModel::Error
+  def initialize(base, inner_error, override_options = nil); end
+  def inner_error; end
+  def message(*args, &block); end
+  extend Forwardable
+end
+class ActiveModel::Errors
+  def [](attribute); end
+  def add(attribute, type = nil, **options); end
+  def add_from_legacy_details_hash(details); end
+  def added?(attribute, type = nil, options = nil); end
+  def any?(*args, &block); end
+  def as_json(options = nil); end
+  def attribute_names; end
+  def blank?(*args, &block); end
+  def clear(*args, &block); end
+  def copy!(other); end
+  def count(*args, &block); end
+  def delete(attribute, type = nil, **options); end
+  def deprecation_removal_warning(method_name, alternative_message = nil); end
+  def deprecation_rename_warning(old_method_name, new_method_name); end
+  def details; end
+  def each(&block); end
+  def empty?(*args, &block); end
+  def errors; end
+  def full_message(attribute, message); end
+  def full_messages; end
+  def full_messages_for(attribute); end
+  def generate_message(attribute, type = nil, options = nil); end
+  def group_by_attribute; end
+  def has_key?(attribute); end
+  def import(error, override_options = nil); end
+  def include?(attribute); end
+  def init_with(coder); end
+  def initialize(base); end
+  def initialize_dup(other); end
+  def key?(attribute); end
+  def keys; end
+  def marshal_load(array); end
+  def merge!(other); end
+  def messages; end
+  def messages_for(attribute); end
+  def normalize_arguments(attribute, type, **options); end
+  def objects; end
+  def of_kind?(attribute, type = nil); end
+  def size(*args, &block); end
+  def slice!(*keys); end
+  def to_a; end
+  def to_h; end
+  def to_hash(full_messages = nil); end
+  def to_xml(options = nil); end
+  def uniq!(*args, &block); end
+  def values; end
+  def where(attribute, type = nil, **options); end
+  extend Forwardable
+  include Enumerable
+end
+class ActiveModel::DeprecationHandlingMessageHash < SimpleDelegator
+  def []=(attribute, value); end
+  def delete(attribute); end
+  def initialize(errors); end
+  def prepare_content; end
+end
+class ActiveModel::DeprecationHandlingMessageArray < SimpleDelegator
+  def <<(message); end
+  def clear; end
+  def initialize(content, errors, attribute); end
+end
+class ActiveModel::DeprecationHandlingDetailsHash < SimpleDelegator
+  def initialize(details); end
+end
+class ActiveModel::StrictValidationFailed < StandardError
+end
+class ActiveModel::RangeError < RangeError
+end
+class ActiveModel::UnknownAttributeError < NoMethodError
+  def attribute; end
+  def initialize(record, attribute); end
+  def record; end
 end
 class ActiveModel::MissingAttributeError < NoMethodError
 end
@@ -170,18 +289,24 @@ module ActiveModel::AttributeMethods::ClassMethods
   def attribute_method_matchers_matching(method_name); end
   def attribute_method_prefix(*prefixes); end
   def attribute_method_suffix(*suffixes); end
-  def define_attribute_method(attr_name); end
+  def define_attribute_method(attr_name, _owner: nil); end
   def define_attribute_methods(*attr_names); end
-  def define_proxy_call(include_private, mod, name, target, *extra); end
+  def define_proxy_call(include_private, code_generator, name, target, *extra); end
   def generated_attribute_methods; end
   def instance_method_already_implemented?(method_name); end
   def undefine_attribute_methods; end
+end
+class ActiveModel::AttributeMethods::ClassMethods::CodeGenerator
+  def <<(source_line); end
+  def execute; end
+  def initialize(owner, path, line); end
+  def rename_method(old_name, new_name); end
+  def self.batch(owner, path, line); end
 end
 class ActiveModel::AttributeMethods::ClassMethods::AttributeMethodMatcher
   def initialize(options = nil); end
   def match(method_name); end
   def method_name(attr_name); end
-  def plain?; end
   def prefix; end
   def suffix; end
   def target; end
@@ -197,59 +322,7 @@ class ActiveModel::AttributeMethods::ClassMethods::AttributeMethodMatcher::Attri
   def target=(_); end
 end
 module ActiveModel::AttributeMethods::AttrNames
-  def self.define_attribute_accessor_method(mod, attr_name, writer: nil); end
-end
-class ActiveModel::Errors
-  def [](attribute); end
-  def add(attribute, message = nil, options = nil); end
-  def added?(attribute, message = nil, options = nil); end
-  def apply_default_array(hash); end
-  def as_json(options = nil); end
-  def blank?; end
-  def clear; end
-  def copy!(other); end
-  def count; end
-  def delete(key); end
-  def details; end
-  def each; end
-  def empty?; end
-  def full_message(attribute, message); end
-  def full_messages; end
-  def full_messages_for(attribute); end
-  def generate_message(attribute, type = nil, options = nil); end
-  def has_key?(attribute); end
-  def include?(attribute); end
-  def init_with(coder); end
-  def initialize(base); end
-  def initialize_dup(other); end
-  def key?(attribute); end
-  def keys; end
-  def marshal_dump; end
-  def marshal_load(array); end
-  def merge!(other); end
-  def messages; end
-  def normalize_detail(message, options); end
-  def normalize_message(attribute, message, options); end
-  def of_kind?(attribute, message = nil); end
-  def self.i18n_customize_full_message; end
-  def self.i18n_customize_full_message=(arg0); end
-  def size; end
-  def slice!(*keys); end
-  def to_a; end
-  def to_hash(full_messages = nil); end
-  def to_xml(options = nil); end
-  def values; end
-  def without_default_proc(hash); end
-  include Enumerable
-end
-class ActiveModel::StrictValidationFailed < StandardError
-end
-class ActiveModel::RangeError < RangeError
-end
-class ActiveModel::UnknownAttributeError < NoMethodError
-  def attribute; end
-  def initialize(record, attribute); end
-  def record; end
+  def self.define_attribute_accessor_method(owner, attr_name, writer: nil); end
 end
 class ActiveModel::Railtie < Rails::Railtie
 end
@@ -308,6 +381,7 @@ class ActiveModel::EachValidator < ActiveModel::Validator
   def attributes; end
   def check_validity!; end
   def initialize(options); end
+  def prepare_value_for_validation(value, record, attr_name); end
   def validate(record); end
   def validate_each(record, attribute, value); end
 end
@@ -341,10 +415,12 @@ class ActiveModel::Validations::NumericalityValidator < ActiveModel::EachValidat
   def filtered_options(value); end
   def is_hexadecimal_literal?(raw_value); end
   def is_integer?(raw_value); end
-  def is_number?(raw_value); end
-  def parse_as_number(raw_value); end
+  def is_number?(raw_value, precision, scale); end
+  def parse_as_number(raw_value, precision, scale); end
+  def parse_float(raw_value, precision, scale); end
+  def prepare_value_for_validation(value, record, attr_name); end
   def record_attribute_changed_in_place?(record, attr_name); end
-  def validate_each(record, attr_name, value); end
+  def validate_each(record, attr_name, value, precision: nil, scale: nil); end
 end
 module ActiveModel::Validations::Callbacks
   def run_validations!; end
@@ -353,6 +429,7 @@ end
 module ActiveModel::Validations::Callbacks::ClassMethods
   def after_validation(*args, &block); end
   def before_validation(*args, &block); end
+  def set_options_for_callback(options); end
 end
 class ActiveModel::Validations::ExclusionValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value); end
@@ -412,18 +489,27 @@ class ActiveModel::Name
   def as_json(**, &&); end
   def cache_key; end
   def collection; end
+  def collection=(arg0); end
   def element; end
+  def element=(arg0); end
   def eql?(**, &&); end
   def human(options = nil); end
   def i18n_key; end
+  def i18n_key=(arg0); end
   def initialize(klass, namespace = nil, name = nil); end
   def match?(**, &&); end
   def name; end
+  def name=(arg0); end
   def param_key; end
+  def param_key=(arg0); end
   def plural; end
+  def plural=(arg0); end
   def route_key; end
+  def route_key=(arg0); end
   def singular; end
+  def singular=(arg0); end
   def singular_route_key; end
+  def singular_route_key=(arg0); end
   def to_s(**, &&); end
   def to_str(**, &&); end
   include Comparable
@@ -472,6 +558,12 @@ end
 class ActiveModel::Type::Helpers::AcceptsMultiparameterTime < Module
   def initialize(defaults: nil); end
 end
+module ActiveModel::Type::Helpers::AcceptsMultiparameterTime::InstanceMethods
+  def assert_valid_value(value); end
+  def cast(value); end
+  def serialize(value); end
+  def value_constructed_by_mass_assignment?(value); end
+end
 module ActiveModel::Type::Helpers::Numeric
   def cast(value); end
   def changed?(old_value, _new_value, new_value_before_type_cast); end
@@ -497,7 +589,7 @@ module ActiveModel::Type::Helpers::Timezone
 end
 class ActiveModel::Type::Value
   def ==(other); end
-  def assert_valid_value(*arg0); end
+  def assert_valid_value(_); end
   def binary?; end
   def cast(value); end
   def cast_value(value); end
@@ -512,6 +604,7 @@ class ActiveModel::Type::Value
   def map(value); end
   def precision; end
   def scale; end
+  def serializable?(value); end
   def serialize(value); end
   def type; end
   def type_cast_for_schema(value); end
@@ -522,10 +615,12 @@ class ActiveModel::Type::Integer < ActiveModel::Type::Value
   def cast_value(value); end
   def deserialize(value); end
   def ensure_in_range(value); end
-  def initialize(*arg0, **arg1); end
+  def in_range?(value); end
+  def initialize(**arg0); end
   def max_value; end
   def min_value; end
   def range; end
+  def serializable?(value); end
   def serialize(value); end
   def type; end
   include ActiveModel::Type::Helpers::Numeric
@@ -561,14 +656,11 @@ class ActiveModel::Type::Date < ActiveModel::Type::Value
   def type_cast_for_schema(value); end
   def value_from_multiparameter_assignment(*arg0); end
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_18
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_13
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_18
-  def assert_valid_value(value); end
-  def cast(value); end
-  def serialize(value); end
-  def value_constructed_by_mass_assignment?(value); end
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_13
   def value_from_multiparameter_assignment(values_hash); end
+  include ActiveModel::Type::Helpers::AcceptsMultiparameterTime::InstanceMethods
 end
 class ActiveModel::Type::DateTime < ActiveModel::Type::Value
   def cast_value(value); end
@@ -578,14 +670,11 @@ class ActiveModel::Type::DateTime < ActiveModel::Type::Value
   def value_from_multiparameter_assignment(values_hash); end
   include ActiveModel::Type::Helpers::TimeValue
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_19
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_14
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_19
-  def assert_valid_value(value); end
-  def cast(value); end
-  def serialize(value); end
-  def value_constructed_by_mass_assignment?(value); end
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_14
   def value_from_multiparameter_assignment(values_hash); end
+  include ActiveModel::Type::Helpers::AcceptsMultiparameterTime::InstanceMethods
 end
 class ActiveModel::Type::Decimal < ActiveModel::Type::Value
   def apply_scale(value); end
@@ -604,12 +693,14 @@ class ActiveModel::Type::Float < ActiveModel::Type::Value
 end
 class ActiveModel::Type::ImmutableString < ActiveModel::Type::Value
   def cast_value(value); end
+  def initialize(**args); end
   def serialize(value); end
   def type; end
 end
 class ActiveModel::Type::String < ActiveModel::Type::ImmutableString
   def cast_value(value); end
   def changed_in_place?(raw_old_value, new_value); end
+  def to_immutable_string; end
 end
 class ActiveModel::Type::Time < ActiveModel::Type::Value
   def cast_value(value); end
@@ -617,18 +708,16 @@ class ActiveModel::Type::Time < ActiveModel::Type::Value
   def user_input_in_time_zone(value); end
   include ActiveModel::Type::Helpers::TimeValue
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_20
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_15
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_20
-  def assert_valid_value(value); end
-  def cast(value); end
-  def serialize(value); end
-  def value_constructed_by_mass_assignment?(value); end
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_15
   def value_from_multiparameter_assignment(values_hash); end
+  include ActiveModel::Type::Helpers::AcceptsMultiparameterTime::InstanceMethods
 end
 class ActiveModel::Type::Registry
-  def find_registration(symbol, *args); end
+  def find_registration(symbol, *args, **kwargs); end
   def initialize; end
+  def initialize_dup(other); end
   def lookup(symbol, *args, **kwargs); end
   def register(type_name, klass = nil, **options, &block); end
   def registration_klass; end
@@ -679,7 +768,7 @@ class ActiveModel::AttributeMutationTracker
   def force_change(attr_name); end
   def forced_changes; end
   def forget_change(attr_name); end
-  def initialize(attributes, forced_changes = nil); end
+  def initialize(attributes); end
   def original_value(attr_name); end
 end
 class ActiveModel::ForcedMutationTracker < ActiveModel::AttributeMutationTracker
@@ -693,7 +782,7 @@ class ActiveModel::ForcedMutationTracker < ActiveModel::AttributeMutationTracker
   def finalized_changes; end
   def force_change(attr_name); end
   def forget_change(attr_name); end
-  def initialize(attributes, forced_changes = nil); end
+  def initialize(attributes); end
   def original_value(attr_name); end
 end
 class ActiveModel::NullMutationTracker
@@ -715,7 +804,8 @@ module ActiveModel::Dirty
   def attribute_changed?(attr_name, **options); end
   def attribute_changed_in_place?(attr_name); end
   def attribute_previous_change(attr_name); end
-  def attribute_previously_changed?(attr_name); end
+  def attribute_previously_changed?(attr_name, **options); end
+  def attribute_previously_was(attr_name); end
   def attribute_was(attr_name); end
   def attribute_will_change!(attr_name); end
   def changed; end
@@ -739,6 +829,7 @@ end
 module ActiveModel::Serialization
   def read_attribute_for_serialization(*arg0); end
   def serializable_add_includes(options = nil); end
+  def serializable_attributes(attribute_names); end
   def serializable_hash(options = nil); end
 end
 module ActiveModel::Serializers::JSON

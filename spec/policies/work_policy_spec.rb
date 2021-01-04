@@ -67,7 +67,7 @@ RSpec.describe WorkPolicy do
     end
 
     succeed 'when user is a collection reviewer and status is not pending_approval' do
-      let(:collection) { build_stubbed :collection, reviewers: [user] }
+      let(:collection) { build_stubbed :collection, reviewed_by: [user] }
     end
 
     failed 'when user is an admin and status is pending_approval' do
@@ -92,7 +92,7 @@ RSpec.describe WorkPolicy do
     end
 
     succeed 'when user is a collection reviewer' do
-      let(:collection) { build_stubbed :collection, reviewers: [user] }
+      let(:collection) { build_stubbed :collection, reviewed_by: [user] }
     end
   end
 
@@ -108,11 +108,11 @@ RSpec.describe WorkPolicy do
 
     succeed 'when user is a reviewer and status is pending_approval' do
       let(:record) { build_stubbed :work, :pending_approval, collection: collection }
-      before { collection.reviewers = [user] }
+      before { collection.reviewed_by = [user] }
     end
 
     failed 'when user is a reviewer and status is not pending_approval' do
-      before { collection.reviewers = [user] }
+      before { collection.reviewed_by = [user] }
     end
 
     failed 'when user is an admin and status is not pending_approval' do
@@ -139,7 +139,7 @@ RSpec.describe WorkPolicy do
     end
 
     context 'when the user is a reviewer' do
-      let(:collection) { create(:collection, reviewers: [user]) }
+      let(:collection) { create(:collection, reviewed_by: [user]) }
 
       it { is_expected.to include(work) }
     end

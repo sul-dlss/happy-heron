@@ -18,11 +18,11 @@ class Webpacker::Instance
   def env; end
   def initialize(root_path: nil, config_path: nil); end
   def logger; end
-  def logger=(obj); end
+  def logger=(val); end
   def manifest; end
   def root_path; end
   def self.logger; end
-  def self.logger=(obj); end
+  def self.logger=(val); end
 end
 class Webpacker::Env
   def available_environments; end
@@ -91,7 +91,7 @@ class Webpacker::Compiler
   def config(**, &&); end
   def default_watched_paths; end
   def env; end
-  def env=(obj); end
+  def env=(val); end
   def fresh?; end
   def initialize(webpacker); end
   def last_compilation_digest; end
@@ -99,13 +99,13 @@ class Webpacker::Compiler
   def record_compilation_digest; end
   def run_webpack; end
   def self.env; end
-  def self.env=(obj); end
+  def self.env=(val); end
   def self.watched_paths; end
-  def self.watched_paths=(obj); end
+  def self.watched_paths=(val); end
   def stale?; end
   def watched_files_digest; end
   def watched_paths; end
-  def watched_paths=(obj); end
+  def watched_paths=(val); end
   def webpack_env; end
   def webpacker; end
 end
@@ -125,7 +125,7 @@ end
 class Webpacker::DevServer
   def config; end
   def connect_timeout; end
-  def connect_timeout=(obj); end
+  def connect_timeout=(val); end
   def defaults; end
   def env_prefix; end
   def fetch(key); end
@@ -138,7 +138,7 @@ class Webpacker::DevServer
   def protocol; end
   def running?; end
   def self.connect_timeout; end
-  def self.connect_timeout=(obj); end
+  def self.connect_timeout=(val); end
 end
 module Webpacker::Helper
   def asset_pack_path(name, **options); end
