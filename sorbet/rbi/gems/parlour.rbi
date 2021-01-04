@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/parlour/all/parlour.rbi
 #
-# parlour-4.0.1
+# parlour-2.1.0
 
 module Parlour
 end
@@ -168,7 +168,6 @@ end
 class Parlour::RbiGenerator::Constant < Parlour::RbiGenerator::RbiObject
   def ==(*args, &blk); end
   def describe(*args, &blk); end
-  def eigen_constant; end
   def generate_rbi(*args, &blk); end
   def initialize(*args, &blk); end
   def merge_into_self(*args, &blk); end
@@ -196,7 +195,6 @@ class Parlour::RbiGenerator::Namespace < Parlour::RbiGenerator::RbiObject
   def create_includes(*args, &blk); end
   def create_method(*args, &blk); end
   def create_module(*args, &blk); end
-  def create_struct_class(*args, &blk); end
   def create_type_alias(*args, &blk); end
   def describe(*args, &blk); end
   def extends(*args, &blk); end
@@ -240,38 +238,7 @@ class Parlour::RbiGenerator::EnumClassNamespace < Parlour::RbiGenerator::ClassNa
   def enums(*args, &blk); end
   def generate_body(*args, &blk); end
   def initialize(*args, &blk); end
-  def merge_into_self(*args, &blk); end
   def mergeable?(*args, &blk); end
-  extend T::Private::Methods::MethodHooks
-  extend T::Private::Methods::SingletonMethodHooks
-  extend T::Sig
-end
-class Parlour::RbiGenerator::StructProp
-  def ==(*args, &blk); end
-  def array(*args, &blk); end
-  def default(*args, &blk); end
-  def dont_store(*args, &blk); end
-  def enum(*args, &blk); end
-  def factory(*args, &blk); end
-  def foreign(*args, &blk); end
-  def immutable(*args, &blk); end
-  def initialize(*args, &blk); end
-  def name(*args, &blk); end
-  def optional(*args, &blk); end
-  def override(*args, &blk); end
-  def redaction(*args, &blk); end
-  def to_prop_call(*args, &blk); end
-  def type(*args, &blk); end
-  extend T::Private::Methods::MethodHooks
-  extend T::Private::Methods::SingletonMethodHooks
-  extend T::Sig
-end
-class Parlour::RbiGenerator::StructClassNamespace < Parlour::RbiGenerator::ClassNamespace
-  def generate_body(*args, &blk); end
-  def initialize(*args, &blk); end
-  def merge_into_self(*args, &blk); end
-  def mergeable?(*args, &blk); end
-  def props(*args, &blk); end
   extend T::Private::Methods::MethodHooks
   extend T::Private::Methods::SingletonMethodHooks
   extend T::Sig
@@ -281,12 +248,12 @@ class Parlour::DetachedRbiGenerator < Parlour::RbiGenerator
   def detached!(*args, &blk); end
   def options(*args, &blk); end
   def rbi(*args, &blk); end
+  def root(*args, &blk); end
   extend T::Private::Methods::MethodHooks
   extend T::Private::Methods::SingletonMethodHooks
 end
 class Parlour::ConflictResolver
   def all_eql?(*args, &blk); end
-  def deduplicate_mixins_of_name(*args, &blk); end
   def merge_strategy(*args, &blk); end
   def resolve_conflicts(*args, &blk); end
   extend T::Private::Methods::MethodHooks
@@ -307,17 +274,13 @@ class Parlour::TypeParser
   def body_has_modifier?(*args, &blk); end
   def body_includes_and_extends(*args, &blk); end
   def constant_names(*args, &blk); end
-  def generator(*args, &blk); end
-  def generator=(arg0); end
   def initialize(*args, &blk); end
   def node_to_s(*args, &blk); end
   def parse_all(*args, &blk); end
   def parse_err(*args, &blk); end
-  def parse_method_into_methods(*args, &blk); end
   def parse_path_to_object(*args, &blk); end
   def parse_sig_into_methods(*args, &blk); end
   def parse_sig_into_sig(*args, &blk); end
-  def previous_sibling_sig_node?(*args, &blk); end
   def self.from_source(*args, &blk); end
   def sig_node?(*args, &blk); end
   def unknown_node_errors(*args, &blk); end

@@ -1,3 +1,4 @@
 --dir
 .
 --ignore=db
+--ignore=vendor

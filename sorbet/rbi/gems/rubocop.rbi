@@ -503,6 +503,7 @@ class RuboCop::Cop::Commissioner
   def on_ivar(node); end
   def on_ivasgn(node); end
   def on_kwarg(node); end
+  def on_kwargs(node); end
   def on_kwbegin(node); end
   def on_kwnilarg(node); end
   def on_kwoptarg(node); end
@@ -516,6 +517,8 @@ class RuboCop::Cop::Commissioner
   def on_match_as(node); end
   def on_match_current_line(node); end
   def on_match_nil_pattern(node); end
+  def on_match_pattern(node); end
+  def on_match_pattern_p(node); end
   def on_match_rest(node); end
   def on_match_var(node); end
   def on_match_with_lvasgn(node); end

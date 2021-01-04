@@ -7,4 +7,7 @@ class CollectionsMailer
 
   sig { returns(ActionMailer::MessageDelivery) }
   def self.invitation_to_deposit_email; end
+
+  sig { returns(ActionMailer::MessageDelivery) }
+  def self.review_access_granted_email; end
 end
