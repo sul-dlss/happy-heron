@@ -24,7 +24,8 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false # needed to update RBIs after adding reform-rails
   gem 'puma', '~> 4.1'
-  gem 'sorbet', '0.5.5981' # pin until https://github.com/sorbet/sorbet/issues/3561 is resolved
+  # Sorbet does not work with Ruby 3: https://github.com/sorbet/sorbet/issues/3851
+  # gem 'sorbet'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'state_machines-graphviz'
@@ -35,7 +36,8 @@ group :test do
   gem 'apparition'
   gem 'capybara', '~> 3.34'
   gem 'capybara-screenshot'
-  gem 'rspec-sorbet'
+  # Sorbet does not work with Ruby 3: https://github.com/sorbet/sorbet/issues/3851
+  # gem 'rspec-sorbet'
 end
 
 group :deployment do
@@ -45,6 +47,9 @@ group :deployment do
   gem 'capistrano-rvm', require: false
   gem 'dlss-capistrano', '~> 3.6', require: false
 end
+
+# moab-versioning is a transitive dependency, so this line can be removed when version 4.5 is released
+gem 'moab-versioning', github: 'sul-dlss/moab-versioning', branch: 'ruby3'
 
 gem 'action_policy', '~> 0.5.3'
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -64,9 +69,10 @@ gem 'redis', '~> 4.0'
 gem 'reform-rails', '~> 0.2.0'
 gem 'sdr-client', '~> 0.43'
 gem 'sidekiq', '~> 6.1'
+# Sorbet does not work with Ruby 3: https://github.com/sorbet/sorbet/issues/3851
 # pinned because 0.7.2 broke the build with 181 new errors related (apparently?) to the parlour 5.0.0 bump
-gem 'sorbet-rails', '0.7.1'
-gem 'sorbet-runtime'
+# gem 'sorbet-rails', '0.7.1'
+# gem 'sorbet-runtime'
 gem 'state_machines-activerecord'
 gem 'turbo-rails', '~> 0.5.9'
 gem 'view_component', '~> 2.18'
