@@ -28,7 +28,7 @@ class AssignPidJob
     else
       Collection.find(unprefixed.delete_prefix('collection-'))
     end
-    object.druid = druid
+    object.druid = model.externalIdentifier
     object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
     object.save!
     ack!

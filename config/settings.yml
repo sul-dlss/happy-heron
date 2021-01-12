@@ -41,6 +41,7 @@ host: <%= Socket.gethostname %>
 rabbitmq:
   enabled: false
   hostname: localhost
+  vhost: /
   username: guest
   password: guest
 

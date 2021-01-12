@@ -4,6 +4,7 @@ namespace :rabbitmq do
     require 'bunny'
 
     conn = Bunny.new(hostname: Settings.rabbitmq.hostname,
+                     vhost: Settings.rabbitmq.vhost,
                      username: Settings.rabbitmq.username,
                      password: Settings.rabbitmq.password).tap(&:start)
 
