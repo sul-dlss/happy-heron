@@ -31,11 +31,27 @@ for (i = 0; i < tables.length; i++) {
  */
 function sortTableFunction(table) {
     return function(ev) {
-        if (ev.target.tagName.toLowerCase() == 'a') {
-            sortRows(table, siblingIndex(ev.target.parentNode));
+      if (ev.target.tagName.toLowerCase() == 'a') {
+            sortRows(table, siblingIndex(ev.target.parentNode), reverseSort(ev.target));
             ev.preventDefault();
+            setIndicator(ev.target.parentNode)
         }
     };
+}
+
+function setIndicator(target) {
+  if(target.innerHTML.includes('fa-angle-down')) {
+    target.innerHTML = "<a href='#'>" + target.innerText + " <i class=\"fa fa-angle-up\"></i></a>";
+  } else {
+    target.innerHTML = "<a href='#'>" + target.innerText + " <i class=\"fa fa-angle-down\"></i></a>";
+  }
+}
+
+function reverseSort(target) {
+  if(target.innerHTML.includes('fa-angle-down')) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -55,7 +71,7 @@ function siblingIndex(node) {
 /**
  * Sort the given table by the numbered column (0 is the first column, etc.)
  */
-function sortRows(table, columnIndex) {
+function sortRows(table, columnIndex, desc) {
     var rows = table.querySelectorAll("tbody tr"),
         sel = "thead th:nth-child(" + (columnIndex + 1) + ")",
         sel2 = "td:nth-child(" + (columnIndex + 1) + ")",
@@ -101,8 +117,14 @@ function sortRows(table, columnIndex) {
         values.sort(sortTextVal);
     }
 
-    for (var idx = 0; idx < values.length; idx++) {
+    if (desc) { // sort ascending
+      for (var idx = values.length-1; idx >= 0; idx--) {
         table.querySelector("tbody").appendChild(values[idx].row);
+      }
+    } else {
+      for (var idx = 0; idx < values.length; idx++) {
+          table.querySelector("tbody").appendChild(values[idx].row);
+      }
     }
 }
 
