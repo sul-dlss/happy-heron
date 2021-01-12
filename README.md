@@ -134,7 +134,7 @@ RAILS_ENV=production bin/rake rabbitmq:setup
 This is going to create queues for this application that bind to some topics.
 
 ### RabbitMQ queue workers
-WORKERS=DepositStatusJob bin/rake sneakers:run
+RAILS_ENV=production WORKERS=AssignPidJob bin/rake sneakers:run
 
 ## Architecture
 
