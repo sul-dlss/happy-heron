@@ -12,7 +12,7 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :allowed_to?, :current_user, :user_with_groups, to: :helpers
+    delegate :current_user, :user_with_groups, to: :helpers
 
     def works
       policy.authorized_scope(collection.works, as: :edits)
