@@ -15,3 +15,8 @@ module Unicode::DisplayWidth
   def self.emoji_extra_width_of(string, ambiguous = nil, overwrite = nil, _ = nil); end
   def self.of(string, ambiguous = nil, overwrite = nil, options = nil); end
 end
+class String
+  def display_length(*args); end
+  def display_size(*args); end
+  def display_width(ambiguous = nil, overwrite = nil, options = nil); end
+end

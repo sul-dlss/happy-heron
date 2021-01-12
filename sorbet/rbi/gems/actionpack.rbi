@@ -2354,6 +2354,7 @@ module ActionController::Renderers
   def _render_to_body_with_renderer(options); end
   def _render_with_renderer_js(js, options); end
   def _render_with_renderer_json(json, options); end
+  def _render_with_renderer_turbo_stream(turbo_streams_html, options); end
   def _render_with_renderer_xml(xml, options); end
   def render_to_body(options); end
   def self._render_with_renderer_method_name(key); end
@@ -2431,6 +2432,7 @@ module AbstractController::Collector
   def text(*args, &block); end
   def tiff(*args, &block); end
   def ttf(*args, &block); end
+  def turbo_stream(*args, &block); end
   def url_encoded_form(*args, &block); end
   def vcf(*args, &block); end
   def vtt(*args, &block); end
@@ -2755,35 +2757,6 @@ class ActionController::Renderer
   def self.for(controller, env = nil, defaults = nil); end
   def with_defaults(defaults); end
 end
-module ActionDispatch::Assertions
-  def html_document; end
-  extend ActiveSupport::Concern
-  include ActionDispatch::Assertions::ResponseAssertions
-  include ActionDispatch::Assertions::RoutingAssertions
-  include Rails::Dom::Testing::Assertions
-  include Turbolinks::Assertions
-  include Turbolinks::Assertions
-end
-module ActionDispatch::Assertions::ResponseAssertions
-  def assert_redirected_to(options = nil, message = nil); end
-  def assert_response(type, message = nil); end
-  def code_with_name(code_or_name); end
-  def generate_response_message(expected, actual = nil); end
-  def location_if_redirected; end
-  def normalize_argument_to_redirection(fragment); end
-  def parameterize(value); end
-  def response_body_if_short; end
-end
-module ActionDispatch::Assertions::RoutingAssertions
-  def assert_generates(expected_path, options, defaults = nil, extras = nil, message = nil); end
-  def assert_recognizes(expected_options, path, extras = nil, msg = nil); end
-  def assert_routing(path, options, defaults = nil, extras = nil, message = nil); end
-  def fail_on(exception_class, message); end
-  def method_missing(selector, *args, &block); end
-  def recognized_request_for(path, extras = nil, msg); end
-  def setup; end
-  def with_routing; end
-end
 class ActionController::API < ActionController::Metal
   def __callbacks; end
   def __callbacks?; end
@@ -2926,8 +2899,6 @@ class ActionController::API < ActionController::Metal
   include ActiveSupport::Rescuable
   include Devise::Controllers::Helpers
   include Devise::Controllers::UrlHelpers
-  include Turbolinks::Controller
-  include Turbolinks::Redirection
 end
 class ActionController::Base < ActionController::Metal
   def __callbacks; end
@@ -2939,6 +2910,7 @@ class ActionController::Base < ActionController::Metal
   def _helpers=(val); end
   def _helpers?; end
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def _process_action_callbacks; end
   def _protected_ivars; end
   def _renderers; end
@@ -3211,8 +3183,7 @@ class ActionController::Base < ActionController::Metal
   include ActiveSupport::Rescuable
   include Devise::Controllers::Helpers
   include Devise::Controllers::UrlHelpers
-  include Turbolinks::Controller
-  include Turbolinks::Redirection
+  include Turbo::Streams::TurboStreamsTagBuilder
   include ViewComponent::RenderComponentToStringHelper
   include ViewComponent::RenderComponentToStringHelper
   include ViewComponent::RenderingComponentHelper
@@ -3226,6 +3197,12 @@ module ActionView::RoutingUrlFor
   def self.default_url_options=(obj); end
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::Routing::UrlFor
+end
+module Turbo::Streams
+end
+module Turbo::Frames
+end
+module Turbo::Native
 end
 module Anonymous_Module_11
   def inherited(klass); end
@@ -3299,6 +3276,33 @@ module ActionDispatch::TestProcess
 end
 module ActionDispatch::TestProcess::FixtureFile
   def fixture_file_upload(path, mime_type = nil, binary = nil); end
+end
+module ActionDispatch::Assertions
+  def html_document; end
+  extend ActiveSupport::Concern
+  include ActionDispatch::Assertions::ResponseAssertions
+  include ActionDispatch::Assertions::RoutingAssertions
+  include Rails::Dom::Testing::Assertions
+end
+module ActionDispatch::Assertions::ResponseAssertions
+  def assert_redirected_to(options = nil, message = nil); end
+  def assert_response(type, message = nil); end
+  def code_with_name(code_or_name); end
+  def generate_response_message(expected, actual = nil); end
+  def location_if_redirected; end
+  def normalize_argument_to_redirection(fragment); end
+  def parameterize(value); end
+  def response_body_if_short; end
+end
+module ActionDispatch::Assertions::RoutingAssertions
+  def assert_generates(expected_path, options, defaults = nil, extras = nil, message = nil); end
+  def assert_recognizes(expected_options, path, extras = nil, msg = nil); end
+  def assert_routing(path, options, defaults = nil, extras = nil, message = nil); end
+  def fail_on(exception_class, message); end
+  def method_missing(selector, *args, &block); end
+  def recognized_request_for(path, extras = nil, msg); end
+  def setup; end
+  def with_routing; end
 end
 class ActionController::TestRequest < ActionDispatch::TestRequest
   def assign_parameters(routes, controller_path, action, parameters, generated_path, query_string_keys); end

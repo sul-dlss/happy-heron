@@ -65,10 +65,14 @@ gem 'redis', '~> 4.0'
 gem 'reform-rails', '~> 0.2.0'
 gem 'sdr-client', '~> 0.40'
 gem 'sidekiq', '~> 6.1'
-# pinned because 0.7.2 broke the build with 181 new errors related (apparently?) to the parlour 5.0.0 bump
+# NOTE: pinned because 0.7.2 broke the build with 181 new errors related (apparently?) to the parlour 5.0.0 bump
 gem 'sorbet-rails', '0.7.1'
 gem 'sorbet-runtime'
 gem 'state_machines-activerecord'
+# NOTE: rspec-sorbet's RBIs define Unicode::DisplayWidth as a module, but v2.0.0
+#       of the unicode-display_width gem changes that module to a class. Pin
+#       back to allow sorbet typechecking to pass
+gem 'unicode-display_width', '< 2.0'
 gem 'view_component', '~> 2.18'
 gem 'webpacker', '~> 5.0'
 gem 'whenever'

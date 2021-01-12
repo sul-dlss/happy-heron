@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sorbet-coerce/all/sorbet-coerce.rbi
 #
-# sorbet-coerce-0.2.7
+# sorbet-coerce-0.3.0
 
 module TypeCoerce
   def self.[](type); end
@@ -25,6 +25,7 @@ end
 class TypeCoerce::Converter
   def _build_args(args, type, raise_coercion_error); end
   def _convert(value, type, raise_coercion_error); end
+  def _convert_enum(value, type, raise_coercion_error); end
   def _convert_simple(value, type, raise_coercion_error); end
   def _convert_to_a(ary, type, raise_coercion_error); end
   def _nil_like?(value, type); end

@@ -126,6 +126,27 @@ module GeneratedUrlHelpers
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def sidekiq_web_url(*args, **kwargs); end
 
+  # Sigs for route /recede_historical_location(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def turbo_recede_historical_location_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def turbo_recede_historical_location_url(*args, **kwargs); end
+
+  # Sigs for route /resume_historical_location(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def turbo_resume_historical_location_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def turbo_resume_historical_location_url(*args, **kwargs); end
+
+  # Sigs for route /refresh_historical_location(.:format)
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def turbo_refresh_historical_location_path(*args, **kwargs); end
+
+  sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
+  def turbo_refresh_historical_location_url(*args, **kwargs); end
+
   # Sigs for route /rails/active_storage/blobs/:signed_id/*filename(.:format)
   sig { params(args: T.untyped, kwargs: T.untyped).returns(String) }
   def rails_service_blob_path(*args, **kwargs); end

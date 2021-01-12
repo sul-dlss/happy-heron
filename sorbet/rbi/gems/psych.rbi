@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/psych/all/psych.rbi
 #
-# psych-3.2.1
+# psych-3.3.0
 
 module Psych
   def self.add_builtin_type(type_tag, &block); end
@@ -241,6 +241,8 @@ module Psych::Visitors
 end
 class Psych::Visitors::Visitor
   def accept(target); end
+  def dispatch; end
+  def self.dispatch_cache; end
   def visit(target); end
 end
 class Psych::Visitors::NoAliasRuby < Psych::Visitors::ToRuby

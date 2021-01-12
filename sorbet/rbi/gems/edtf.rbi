@@ -20,7 +20,7 @@ module EDTF
   def self.parse!(input, options = nil); end
   def self.parse(input, options = nil); end
 end
-class Anonymous_Struct_95 < Struct
+class Anonymous_Struct_100 < Struct
   def day; end
   def day=(_); end
   def month; end
@@ -32,7 +32,7 @@ class Anonymous_Struct_95 < Struct
   def year; end
   def year=(_); end
 end
-class EDTF::Uncertainty < Anonymous_Struct_95
+class EDTF::Uncertainty < Anonymous_Struct_100
   def certain!(parts = nil); end
   def certain?(parts = nil); end
   def eql?(other); end
@@ -44,7 +44,7 @@ class EDTF::Uncertainty < Anonymous_Struct_95
   def uncertain!(parts = nil); end
   def uncertain?(parts = nil); end
 end
-class Anonymous_Struct_96 < Struct
+class Anonymous_Struct_101 < Struct
   def day; end
   def day=(_); end
   def month; end
@@ -56,7 +56,7 @@ class Anonymous_Struct_96 < Struct
   def year; end
   def year=(_); end
 end
-class EDTF::Unspecified < Anonymous_Struct_96
+class EDTF::Unspecified < Anonymous_Struct_101
   def day=(_); end
   def initialize; end
   def mask(values); end

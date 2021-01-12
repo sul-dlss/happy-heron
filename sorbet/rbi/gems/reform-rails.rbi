@@ -82,9 +82,9 @@ class Reform::Form::ActiveModel::Validations::Group
   def call(form); end
   def initialize(*arg0); end
   extend Uber::Delegates
-  include Anonymous_Module_100
+  include Anonymous_Module_108
 end
-module Anonymous_Module_100
+module Anonymous_Module_108
   def validate(*args, &block); end
   def validate_with(*args, &block); end
   def validates(*args, &block); end

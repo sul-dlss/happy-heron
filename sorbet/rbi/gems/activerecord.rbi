@@ -5324,6 +5324,7 @@ class ActiveRecord::Base
   extend OrmAdapter::ToAdapter
   extend SorbetRails::CustomFinderMethods
   extend SorbetRails::PluckToTStruct
+  extend Turbo::Broadcastable::ClassMethods
   include ActiveModel::AttributeMethods
   include ActiveModel::AttributeMethods
   include ActiveModel::Conversion
@@ -5380,6 +5381,7 @@ class ActiveRecord::Base
   include ActiveSupport::Callbacks
   include ActiveSupport::Callbacks
   include GlobalID::Identification
+  include Turbo::Broadcastable
 end
 module ActiveRecord::Base::GeneratedAttributeMethods
 end

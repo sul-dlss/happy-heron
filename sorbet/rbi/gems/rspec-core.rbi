@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rspec-core/all/rspec-core.rbi
 #
-# rspec-core-3.10.0
+# rspec-core-3.10.1
 
 module RSpec
   def self.clear_examples; end
@@ -612,6 +612,8 @@ module RSpec::Core::HashImitatable
   def entries(*args, &block); end
   def except!(*args, &block); end
   def except(*args, &block); end
+  def exclude?(*args, &block); end
+  def excluding(*args, &block); end
   def extra_hash_attributes; end
   def extract!(*args, &block); end
   def extractable_options?(*args, &block); end
@@ -634,7 +636,10 @@ module RSpec::Core::HashImitatable
   def has_value?(*args, &block); end
   def hash_for_delegation; end
   def include?(*args, &block); end
+  def including(*args, &block); end
   def index(*args, &block); end
+  def index_by(*args, &block); end
+  def index_with(*args, &block); end
   def inject(*args, &block); end
   def invert(*args, &block); end
   def issue_deprecation(_method_name, *_args); end
@@ -644,6 +649,7 @@ module RSpec::Core::HashImitatable
   def keys(*args, &block); end
   def lazy(*args, &block); end
   def length(*args, &block); end
+  def many?(*args, &block); end
   def map(*args, &block); end
   def max(*args, &block); end
   def max_by(*args, &block); end
@@ -658,6 +664,7 @@ module RSpec::Core::HashImitatable
   def none?(*args, &block); end
   def one?(*args, &block); end
   def partition(*args, &block); end
+  def pluck(*args, &block); end
   def rassoc(*args, &block); end
   def reduce(*args, &block); end
   def rehash(*args, &block); end
@@ -711,6 +718,7 @@ module RSpec::Core::HashImitatable
   def with_defaults!(*args, &block); end
   def with_defaults(*args, &block); end
   def with_indifferent_access(*args, &block); end
+  def without(*args, &block); end
   def zip(*args, &block); end
 end
 module RSpec::Core::HashImitatable::ClassMethods

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faraday/all/faraday.rbi
 #
-# faraday-1.1.0
+# faraday-1.3.0
 
 module Faraday
   def self.default_adapter; end
@@ -117,7 +117,7 @@ class Faraday::Utils::ParamsHash < Hash
   def to_query(encoder = nil); end
   def update(params); end
 end
-class Anonymous_Faraday_Options_89 < Faraday::Options
+class Anonymous_Faraday_Options_94 < Faraday::Options
   def bind; end
   def bind=(_); end
   def boundary; end
@@ -145,11 +145,11 @@ class Anonymous_Faraday_Options_89 < Faraday::Options
   def write_timeout; end
   def write_timeout=(_); end
 end
-class Faraday::RequestOptions < Anonymous_Faraday_Options_89
+class Faraday::RequestOptions < Anonymous_Faraday_Options_94
   def []=(key, value); end
   def stream_response?; end
 end
-class Anonymous_Faraday_Options_90 < Faraday::Options
+class Anonymous_Faraday_Options_95 < Faraday::Options
   def ca_file; end
   def ca_file=(_); end
   def ca_path; end
@@ -181,11 +181,11 @@ class Anonymous_Faraday_Options_90 < Faraday::Options
   def version; end
   def version=(_); end
 end
-class Faraday::SSLOptions < Anonymous_Faraday_Options_90
+class Faraday::SSLOptions < Anonymous_Faraday_Options_95
   def disable?; end
   def verify?; end
 end
-class Anonymous_Faraday_Options_91 < Faraday::Options
+class Anonymous_Faraday_Options_96 < Faraday::Options
   def password; end
   def password=(_); end
   def self.[](*arg0); end
@@ -197,7 +197,7 @@ class Anonymous_Faraday_Options_91 < Faraday::Options
   def user; end
   def user=(_); end
 end
-class Faraday::ProxyOptions < Anonymous_Faraday_Options_91
+class Faraday::ProxyOptions < Anonymous_Faraday_Options_96
   def host(*args, &block); end
   def host=(*args, &block); end
   def password; end
@@ -211,7 +211,7 @@ class Faraday::ProxyOptions < Anonymous_Faraday_Options_91
   def user; end
   extend Forwardable
 end
-class Anonymous_Faraday_Options_92 < Faraday::Options
+class Anonymous_Faraday_Options_97 < Faraday::Options
   def builder; end
   def builder=(_); end
   def builder_class; end
@@ -235,13 +235,13 @@ class Anonymous_Faraday_Options_92 < Faraday::Options
   def url; end
   def url=(_); end
 end
-class Faraday::ConnectionOptions < Anonymous_Faraday_Options_92
+class Faraday::ConnectionOptions < Anonymous_Faraday_Options_97
   def builder_class; end
   def new_builder(block); end
   def request; end
   def ssl; end
 end
-class Anonymous_Faraday_Options_93 < Faraday::Options
+class Anonymous_Faraday_Options_98 < Faraday::Options
   def method; end
   def method=(_); end
   def parallel_manager; end
@@ -273,7 +273,7 @@ class Anonymous_Faraday_Options_93 < Faraday::Options
   def url; end
   def url=(_); end
 end
-class Faraday::Env < Anonymous_Faraday_Options_93
+class Faraday::Env < Anonymous_Faraday_Options_98
   def [](key); end
   def []=(key, value); end
   def body; end
@@ -457,8 +457,11 @@ module Faraday::FlatParamsEncoder
   def self.unescape(*args, &block); end
 end
 class Faraday::Middleware
+  def app; end
+  def call(env); end
   def close; end
-  def initialize(app = nil); end
+  def initialize(app = nil, options = nil); end
+  def options; end
   extend Faraday::DependencyLoader
   extend Faraday::MiddlewareRegistry
 end
@@ -479,7 +482,7 @@ module Faraday::Adapter::Parallelism
   def supports_parallel=(arg0); end
   def supports_parallel?; end
 end
-class Anonymous_Struct_94 < Struct
+class Anonymous_Struct_99 < Struct
   def body; end
   def body=(_); end
   def headers; end
@@ -497,7 +500,7 @@ class Anonymous_Struct_94 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Faraday::Request < Anonymous_Struct_94
+class Faraday::Request < Anonymous_Struct_99
   def [](key); end
   def []=(key, value); end
   def headers=(hash); end
@@ -532,7 +535,6 @@ class Faraday::Response
   extend Forwardable
 end
 class Faraday::Response::Middleware < Faraday::Middleware
-  def call(env); end
   def on_complete(env); end
 end
 class Faraday::Error < StandardError
@@ -542,6 +544,9 @@ class Faraday::Error < StandardError
   def initialize(exc, response = nil); end
   def inspect; end
   def response; end
+  def response_body; end
+  def response_headers; end
+  def response_status; end
   def wrapped_exception; end
 end
 class Faraday::ClientError < Faraday::Error

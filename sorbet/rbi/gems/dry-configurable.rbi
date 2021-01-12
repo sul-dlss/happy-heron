@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-configurable/all/dry-configurable.rbi
 #
-# dry-configurable-0.11.6
+# dry-configurable-0.12.0
 
 module Dry
 end
@@ -38,16 +38,15 @@ class Dry::Configurable::Config
   def to_hash; end
   def update(values); end
   def values; end
-  include Anonymous_Dry_Equalizer_54
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_59
+  include Dry::Core::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_54
+module Anonymous_Dry_Core_Equalizer_59
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
 end
 class Dry::Configurable::Setting
-  def clonable_value?; end
   def constructor; end
   def default; end
   def evaluate; end
@@ -61,14 +60,15 @@ class Dry::Configurable::Setting
   def options; end
   def pristine; end
   def reader?; end
+  def self.clonable_value?(value); end
   def value; end
   def with(new_opts); end
   def writer?(meth); end
   def writer_name; end
-  include Anonymous_Dry_Equalizer_55
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_60
+  include Dry::Core::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_55
+module Anonymous_Dry_Core_Equalizer_60
   def cmp?(comparator, other); end
   def hash; end
 end
@@ -87,11 +87,11 @@ class Dry::Configurable::Settings
   def key?(name); end
   def keys; end
   def pristine; end
-  include Anonymous_Dry_Equalizer_56
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_61
+  include Dry::Core::Equalizer::Methods
   include Enumerable
 end
-module Anonymous_Dry_Equalizer_56
+module Anonymous_Dry_Core_Equalizer_61
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end

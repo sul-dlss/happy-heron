@@ -24,13 +24,13 @@ class Dry::Struct
   def self.prepend(*arg0); end
   def to_h; end
   def to_hash; end
-  extend Anonymous_Dry_Core_Deprecations_Tagged_84
-  extend Anonymous_Module_86
-  extend Anonymous_Module_87
+  extend Anonymous_Dry_Core_Deprecations_Tagged_89
+  extend Anonymous_Module_91
+  extend Anonymous_Module_92
   extend Dry::Core::Deprecations::Interface
   extend Dry::Core::Extensions
   extend Dry::Struct::ClassInterface
-  include Anonymous_Dry_Equalizer_85
+  include Anonymous_Dry_Equalizer_90
   include Dry::Core::Constants
   include Dry::Equalizer::Methods
 end
@@ -121,18 +121,18 @@ class Dry::Types::Printer
   def visit_struct_constructor(constructor); end
   def visit_struct_sum(sum); end
 end
-module Anonymous_Dry_Core_Deprecations_Tagged_84
+module Anonymous_Dry_Core_Deprecations_Tagged_89
 end
-module Anonymous_Dry_Equalizer_85
+module Anonymous_Dry_Equalizer_90
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
 end
-module Anonymous_Module_86
+module Anonymous_Module_91
   def inherited(klass); end
   def schema(value = nil); end
 end
-module Anonymous_Module_87
+module Anonymous_Module_92
   def abstract_class(value = nil); end
   def inherited(klass); end
 end

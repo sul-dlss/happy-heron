@@ -37,9 +37,9 @@ module OkComputer
 end
 class OkComputer::Engine < Rails::Engine
 end
-module Anonymous_Module_97
+module Anonymous_Module_105
 end
-module Anonymous_Module_98
+module Anonymous_Module_106
 end
 class OkComputer::Check
   def <=>(check); end
@@ -324,6 +324,7 @@ class OkComputer::SolrCheck < OkComputer::HttpCheck
 end
 class OkComputer::OkComputerController < ActionController::Base
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def authenticate; end
   def index; end
   def respond(data, status); end
@@ -339,9 +340,9 @@ class OkComputer::OkComputerController < ActionController::Base
   def show; end
   def status_code(check); end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_99
+  include Anonymous_Module_107
 end
-module Anonymous_Module_99
+module Anonymous_Module_107
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -353,9 +354,9 @@ module Anonymous_Module_99
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_97
-  extend Anonymous_Module_98
+  extend Anonymous_Module_105
+  extend Anonymous_Module_106
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_97
-  include Anonymous_Module_98
+  include Anonymous_Module_105
+  include Anonymous_Module_106
 end

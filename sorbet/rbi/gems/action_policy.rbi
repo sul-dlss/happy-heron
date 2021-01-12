@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/action_policy/all/action_policy.rbi
 #
-# action_policy-0.5.4
+# action_policy-0.5.5
 
 module ActionPolicy
   def self.cache_store; end
@@ -397,20 +397,20 @@ end
 module ActionPolicy::Rails::Authorizer
   def authorize(policy, rule); end
 end
-module Anonymous_Module_39
+module Anonymous_Module_44
   def policy_cache_key; end
   def policy_class; end
 end
 class ActiveRecord::Relation
-  include Anonymous_Module_39
-  include Anonymous_Module_40
+  include Anonymous_Module_44
+  include Anonymous_Module_45
 end
 module ActionPolicy::ScopeMatchers
 end
 module ActionPolicy::ScopeMatchers::ActiveRecord
   def relation_scope(*args, &block); end
 end
-module Anonymous_Module_40
+module Anonymous_Module_45
   def policy_name; end
 end
 module ActionPolicy::ScopeMatchers::ActionControllerParams

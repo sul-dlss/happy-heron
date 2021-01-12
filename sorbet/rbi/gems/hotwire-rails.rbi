@@ -5,12 +5,11 @@
 #
 # If you would like to make changes to this file, great! Please create the gem's shim here:
 #
-#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/turbolinks-source/all/turbolinks-source.rbi
+#   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/hotwire-rails/all/hotwire-rails.rbi
 #
-# turbolinks-source-5.2.0
+# hotwire-rails-0.1.2
 
-module Turbolinks
+module Hotwire
 end
-module Turbolinks::Source
-  def self.asset_path; end
+class Hotwire::Engine < Rails::Engine
 end

@@ -231,6 +231,7 @@ module ActiveStorage::SetCurrent
 end
 class ActiveStorage::BaseController < ActionController::Base
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def self.__callbacks; end
   def self._helpers; end
   def self._routes; end
@@ -261,6 +262,7 @@ module Anonymous_Module_31
 end
 class ActiveStorage::DirectUploadsController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def blob_args; end
   def create; end
   def direct_upload_json(blob); end
@@ -296,6 +298,7 @@ module ActiveStorage::SetBlob
 end
 class ActiveStorage::RepresentationsController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def self.__callbacks; end
   def self._helpers; end
   def self._routes; end
@@ -327,6 +330,7 @@ module Anonymous_Module_33
 end
 class ActiveStorage::BlobsController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def self.__callbacks; end
   def self._helpers; end
   def self._routes; end
@@ -358,6 +362,7 @@ module Anonymous_Module_34
 end
 class ActiveStorage::DiskController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def acceptable_content?(token); end
   def decode_verified_key; end
   def decode_verified_token; end

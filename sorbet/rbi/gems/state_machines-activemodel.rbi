@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/state_machines-activemodel/all/state_machines-activemodel.rbi
 #
-# state_machines-activemodel-0.7.1
+# state_machines-activemodel-0.8.0
 
 module StateMachines
 end

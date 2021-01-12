@@ -37,7 +37,7 @@ class Hash
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
   def self.[](*arg0); end
-  def self.try_convert(arg0); end
+  def self.from_xml(xml, disallowed_types = nil); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -1882,6 +1882,39 @@ class ActiveSupport::ParameterFilter::CompiledFilter
   def self.compile(filters, mask:); end
   def value_for_key(key, value, parents = nil, original_params = nil); end
 end
+module Benchmark
+  def self.ms; end
+end
+module ActiveSupport::Benchmarkable
+  def benchmark(message = nil, options = nil); end
+end
+module Module::Concerning
+  def concern(topic, &module_definition); end
+  def concerning(topic, &block); end
+end
+module ActiveSupport::NumberHelper
+  def number_to_currency(number, options = nil); end
+  def number_to_delimited(number, options = nil); end
+  def number_to_human(number, options = nil); end
+  def number_to_human_size(number, options = nil); end
+  def number_to_percentage(number, options = nil); end
+  def number_to_phone(number, options = nil); end
+  def number_to_rounded(number, options = nil); end
+  extend ActiveSupport::Autoload
+  extend ActiveSupport::NumberHelper
+end
+class ActiveSupport::FileUpdateChecker
+  def compile_ext(array); end
+  def compile_glob(hash); end
+  def escape(key); end
+  def execute; end
+  def execute_if_updated; end
+  def initialize(files, dirs = nil, &block); end
+  def max_mtime(paths); end
+  def updated?; end
+  def updated_at(paths); end
+  def watched; end
+end
 class ActiveSupport::StringInquirer < String
   def method_missing(method_name, *arguments); end
   def respond_to_missing?(method_name, include_private = nil); end
@@ -2070,18 +2103,6 @@ class ActiveSupport::Reloader < ActiveSupport::ExecutionWrapper
   def self.to_prepare(*args, &block); end
   def self.wrap; end
 end
-class ActiveSupport::FileUpdateChecker
-  def compile_ext(array); end
-  def compile_glob(hash); end
-  def escape(key); end
-  def execute; end
-  def execute_if_updated; end
-  def initialize(files, dirs = nil, &block); end
-  def max_mtime(paths); end
-  def updated?; end
-  def updated_at(paths); end
-  def watched; end
-end
 class ActiveSupport::EventedFileUpdateChecker
   def boot!; end
   def changed(modified, added, removed); end
@@ -2120,17 +2141,6 @@ module ActiveSupport::EachTimeWithZone
   def ensure_iteration_allowed; end
   def step(n = nil, &block); end
 end
-module ActiveSupport::NumberHelper
-  def number_to_currency(number, options = nil); end
-  def number_to_delimited(number, options = nil); end
-  def number_to_human(number, options = nil); end
-  def number_to_human_size(number, options = nil); end
-  def number_to_percentage(number, options = nil); end
-  def number_to_phone(number, options = nil); end
-  def number_to_rounded(number, options = nil); end
-  extend ActiveSupport::Autoload
-  extend ActiveSupport::NumberHelper
-end
 module ActiveSupport::NumericWithFormat
   def to_s(format = nil, options = nil); end
 end
@@ -2141,9 +2151,6 @@ module SecureRandom
   def self.base36(n = nil); end
   def self.base58(n = nil); end
 end
-module Benchmark
-  def self.ms; end
-end
 module Digest
 end
 module Digest::UUID
@@ -2151,10 +2158,6 @@ module Digest::UUID
   def self.uuid_v3(uuid_namespace, name); end
   def self.uuid_v4; end
   def self.uuid_v5(uuid_namespace, name); end
-end
-module Module::Concerning
-  def concern(topic, &module_definition); end
-  def concerning(topic, &block); end
 end
 module ActiveSupport::Cache::Strategy::LocalCache
   def bypass_local_cache; end
@@ -2251,9 +2254,6 @@ class ActiveSupport::BacktraceCleaner
   def remove_filters!; end
   def remove_silencers!; end
   def silence(backtrace); end
-end
-module ActiveSupport::Benchmarkable
-  def benchmark(message = nil, options = nil); end
 end
 class ActiveSupport::Cache::MemoryStore < ActiveSupport::Cache::Store
   def cached_size(key, entry); end
@@ -2462,6 +2462,8 @@ class ActiveSupport::TestCase < Minitest::Test
   def assert_not_respond_to(obj, meth, msg = nil); end
   def assert_not_same(exp, act, msg = nil); end
   def assert_raise(*exp); end
+  def dom_class(**, &&); end
+  def dom_id(**, &&); end
   def file_fixture_path; end
   def file_fixture_path?; end
   def method_name; end
@@ -2490,6 +2492,7 @@ class ActiveSupport::TestCase < Minitest::Test
   include ActiveSupport::Testing::FileFixtures
   include ActiveSupport::Testing::TaggedLogging
   include ActiveSupport::Testing::TimeHelpers
+  include Turbo::TestAssertions
 end
 class ActiveSupport::Cache::FileStore < ActiveSupport::Cache::Store
   def cache_path; end
