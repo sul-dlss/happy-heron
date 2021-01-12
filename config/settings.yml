@@ -38,6 +38,12 @@ terms_url: https://stanford.app.box.com/s/lozngarhdzj56z44la38v1zn3a1ggbyu
 
 host: <%= Socket.gethostname %>
 
+rabbitmq:
+  enabled: false
+  hostname: localhost
+  username: guest
+  password: guest
+
 notifications:
   first_draft_reminder:
     first_interval: 14 # delay before initial first draft reminder, in days
