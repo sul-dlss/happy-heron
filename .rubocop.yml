@@ -62,10 +62,16 @@ Layout/EmptyLinesAroundAttributeAccessor: # (new in 0.83)
   Enabled: true
 Layout/SpaceAroundMethodCallOperator: # (new in 0.82)
   Enabled: true
+Layout/SpaceBeforeBrackets: # (new in 1.7)
+  Enabled: true
 
+Lint/AmbiguousAssignment: # (new in 1.7)
+  Enabled: true
 Lint/BinaryOperatorWithIdenticalOperands: # (new in 0.89)
   Enabled: true
 Lint/ConstantDefinitionInBlock: # (new in 0.91)
+  Enabled: true
+Lint/DeprecatedConstants: # (new in 1.8)
   Enabled: true
 Lint/DeprecatedOpenSSLConstant: # (new in 0.84)
   Enabled: true
@@ -93,6 +99,8 @@ Lint/HashCompareByIdentity: # (new in 0.93)
   Enabled: true
 Lint/IdentityComparison: # (new in 0.91)
   Enabled: true
+Lint/LambdaWithoutLiteralBlock: # (new in 1.8)
+  Enabled: true
 Lint/MixedRegexpCaptureTypes: # (new in 0.85)
   Enabled: true
 Lint/NoReturnInBeginEndBlocks: # (new in 1.2)
@@ -100,6 +108,8 @@ Lint/NoReturnInBeginEndBlocks: # (new in 1.2)
 Lint/OutOfRangeRegexpRef: # (new in 0.89)
   Enabled: true
 Lint/RaiseException: # (new in 0.81)
+  Enabled: true
+Lint/RedundantDirGlobSort: # (new in 1.8)
   Enabled: true
 Lint/RedundantSafeNavigation: # (new in 0.93)
   Enabled: true
@@ -213,6 +223,8 @@ Style/CombinableLoops: # (new in 0.90)
   Enabled: true
 Style/DocumentDynamicEvalDefinition: # (new in 1.1)
   Enabled: true
+Style/EndlessMethod: # (new in 1.8)
+  Enabled: true
 Style/ExplicitBlockArgument: # (new in 0.89)
   Enabled: true
 Style/ExponentialNotation: # (new in 0.82)
@@ -222,6 +234,8 @@ Style/GlobalStdStream: # (new in 0.89)
 Style/HashAsLastArrayItem: # (new in 0.88)
   Enabled: true
 Style/HashEachMethods: # (new in 0.80)
+  Enabled: true
+Style/HashExcept: # (new in 1.7)
   Enabled: true
 Style/HashLikeCase: # (new in 0.88)
   Enabled: true
