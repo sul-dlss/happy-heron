@@ -13,7 +13,7 @@ require 'active_job/railtie'
 require 'active_record/railtie'
 require 'active_storage/engine'
 # require 'rails/test_unit/railtie'
-# require 'sprockets/railtie'
+require 'sprockets/railtie' # required for hotwire-rails gem
 require 'view_component/engine'
 
 # Require the gems listed in Gemfile, including any gems
@@ -30,6 +30,13 @@ module HappyHeron
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # TODO: Uncomment this when all remote forms have been replaced with hotwire
+    #
+    # Make sure `form_with` does not default to remote forms. This is prescribed
+    # by the hotwire approach as documented in the [turbo-rails
+    # README](https://github.com/hotwired/turbo-rails#compatibility-with-rails-ujs).
+    # config.action_view.form_with_generates_remote_forms = false
 
     # Don't bother running AS analyzers since we handle technical metadata elsewhere
     config.active_storage.analyzers = []
