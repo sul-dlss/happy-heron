@@ -22,8 +22,12 @@ class AssignPidJob
 
     return ack! unless source_id.start_with?('hydrus:')
 
-
-    object = Work.find(source_id.delete_prefix('hydrus:'))
+    unprefixed = source_id.delete_prefix('hydrus:')
+    object = if unprefixed.start_with?('object-')
+      Work.find(unprefixed.delete_prefix('object-'))
+    else
+      Collection.find(unprefixed.delete_prefix('collection-'))
+    end
     object.druid = druid
     object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
     object.save!
