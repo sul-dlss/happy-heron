@@ -16,7 +16,7 @@ class AssignPidJob
     model = Cocina::Models.build(json.fetch('model'))
     source_id = model.identification.sourceId
 
-    return unless source_id.start_with?('hydrus:')
+    return ack! unless source_id.start_with?('hydrus:')
 
 
     object = Work.find(source_id.delete_prefix('hydrus:'))
