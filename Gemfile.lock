@@ -408,15 +408,24 @@ GEM
       dry-monads
       faraday (>= 0.16)
     semantic_range (2.3.1)
+    serverengine (2.0.7)
+      sigdump (~> 0.2.2)
     sidekiq (6.1.3)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sigdump (0.2.4)
     simplecov (0.17.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    sneakers (2.11.0)
+      bunny (~> 2.12)
+      concurrent-ruby (~> 1.0)
+      rake
+      serverengine (~> 2.0.5)
+      thor
     sorbet (0.5.5981)
       sorbet-static (= 0.5.5981)
     sorbet-coerce (0.3.0)
@@ -546,6 +555,7 @@ DEPENDENCIES
   sdr-client (~> 0.43)
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
+  sneakers (~> 2.11)
   sorbet (= 0.5.5981)
   sorbet-rails (= 0.7.1)
   sorbet-runtime

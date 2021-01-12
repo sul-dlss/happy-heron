@@ -2,20 +2,26 @@
 # frozen_string_literal: true
 
 # Wait for a deposit into SDR API.
-class DepositStatusJob < BaseDepositJob
-  queue_as :default
+class DepositStatusJob
+  extend T::Sig
+  include Sneakers::Worker
+  # This worker will connect to "h2.deposit_complete" queue
+  # env is set to nil since by default the actuall queue name would be
+  # "h2.deposit_complete_development"
+  from_queue 'h2.deposit_complete', env: nil
 
-  sig { params(object: T.any(WorkVersion, CollectionVersion), job_id: Integer).void }
-  def perform(object:, job_id:)
-    result = status(job_id: job_id)
-    # This will force a recheck of status (and should be ignored by Honeybadger)
-    raise TryAgainLater, "No result yet for job #{job_id}" if result.nil?
+  sig { params(msg: String).void }
+  def work(msg)
+    json = JSON.parse(msg)
+    # TODO: how are we going to match up our request with an object that doesn't yet have a druid.
+    # TODO: Maybe have source_id broadcast passed with registration.
 
-    if result.success?
-      complete_deposit(object, result.value!)
-    else
-      Honeybadger.notify("Job #{job_id} for #{object.class} #{object.id} failed with: #{result.failure}")
-    end
+    druid = json.fetch('druid')
+    object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
+    version = object.head
+
+    complete_deposit(version, json.fetch(:druid))
+    ack!
   end
 
   # Assigns druid, adds the purl to the citation (if one exists), updates the state and saves.
@@ -43,6 +49,7 @@ class DepositStatusJob < BaseDepositJob
       object.deposit_complete!
     end
   end
+<<<<<<< HEAD
 
   sig { params(object: CollectionVersion, druid: String).void }
   def complete_collection_version_deposit(object, druid)
@@ -80,4 +87,6 @@ class DepositStatusJob < BaseDepositJob
     error_msg += ": #{error[:message]}" if error[:message]
     error_msg
   end
+=======
+>>>>>>> Add sneakers to do rabbitmq processing
 end

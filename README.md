@@ -131,6 +131,10 @@ You must set up the durable rabbitmq queues that bind to the exchange where work
 ```
 RAILS_ENV=production bin/rake rabbitmq:setup
 ```
+This is going to create queues for this application that bind to some topics.
+
+### RabbitMQ queue workers
+WORKERS=DepositStatusJob bin/rake sneakers:run
 
 ## Architecture
 

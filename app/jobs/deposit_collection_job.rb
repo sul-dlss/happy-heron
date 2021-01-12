@@ -7,8 +7,7 @@ class DepositCollectionJob < BaseDepositJob
 
   sig { params(collection_version: CollectionVersion).void }
   def perform(collection_version)
-    job_id = deposit(request_dro: CollectionGenerator.generate_model(collection_version: collection_version))
-    DepositStatusJob.perform_later(object: collection_version, job_id: job_id)
+    deposit(request_dro: CollectionGenerator.generate_model(collection_version: collection_version))
   rescue StandardError => e
     Honeybadger.notify(e)
   end

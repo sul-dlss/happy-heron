@@ -14,6 +14,11 @@ namespace :rabbitmq do
     queue = channel.queue('h2.deposit_complete', durable: true)
     queue.bind(exchange, routing_key: 'end-accession.completed')
 
+    exchange = channel.topic('sdr.objects.created')
+    queue = channel.queue('h2.druid_assigned', durable: true)
+    # TODO: if we set partOfProject when we register, then update this routing key to match
+    queue.bind(exchange, routing_key: '#')
+
     conn.close
   end
 end
