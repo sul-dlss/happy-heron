@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table sortable">
 <thead class="table-light">
   <tr>
     <th><%= I18n.t 'collection.deposits' %></th>
@@ -35,3 +35,5 @@
   <% end %>
 </tbody>
 </table>
+<%= javascript_pack_tag 'data-table', 'data-turbolinks-track': 'reload' %>
+
