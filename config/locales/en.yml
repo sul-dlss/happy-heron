@@ -31,7 +31,7 @@ en:
     depositor: Depositor
     deposits: Deposits in collection
     deposit_status: Deposit status
-    deposit_size: Deposit size
-    last_modified: Last modified
-    number_of_files: '# of files'
+    deposit_size: Size
+    last_modified: Modified
+    number_of_files: 'Files'
     persistent_link: Persistent link

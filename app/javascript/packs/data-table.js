@@ -9,46 +9,73 @@ var tables = document.querySelectorAll("table.sortable"),
     i,
     j;
 
-var disabledColumns = [4, 5, 6, 7, 8]
+var disabledColumns = [1, 5, 6, 7, 8]
 
 for (i = 0; i < tables.length; i++) {
-    table = tables[i];
+  setTableHeaders(tables[i], true);
+}
 
-    if (thead = table.querySelector("thead")) {
-        headers = thead.querySelectorAll("th");
+function setTableHeaders(table, withEvent) {
+  if (thead = table.querySelector("thead")) {
+    headers = thead.querySelectorAll("th");
 
-        for (j = 0; j < headers.length; j++) {
-          if (disabledColumns.includes(j)) { continue; }
-          else { headers[j].innerHTML = "<a href='#'>" + headers[j].innerText + "</a>"; }
-        }
-
-        thead.addEventListener("click", sortTableFunction(table));
+    for (j = 0; j < headers.length; j++) {
+      if (disabledColumns.includes(j)) { continue; }
+      else { headers[j].innerHTML = "<a href='#'>" + headers[j].innerText + "</a>"; }
     }
+
+    if (withEvent) {
+      console.log("1")
+      thead.addEventListener("click", sortTableFunction(table));
+    }
+  }
 }
 
 /**
  * Create a function to sort the given table.
  */
 function sortTableFunction(table) {
-    return function(ev) {
-      if (ev.target.tagName.toLowerCase() == 'a') {
-            sortRows(table, siblingIndex(ev.target.parentNode), reverseSort(ev.target));
-            ev.preventDefault();
-            setIndicator(ev.target.parentNode)
-        }
-    };
+  return function(ev) {
+    if (ev.target.tagName.toLowerCase() == 'a') {
+      target = ev.target
+      indicator = getNextIndicator(target)
+      sortRows(table, siblingIndex(target.parentNode), reverseSort(indicator));
+      // clearIndicators(table); // restetting table headers here causes a null exception
+      setIndicator(target.parentNode, indicator)
+      ev.preventDefault();
+    }
+  };
 }
 
-function setIndicator(target) {
+// function clearIndicators(table) {
+//   var headers = table.getElementsByTagName("th")
+//   for (i = 0; i < headers.length; i++) {
+//     icon = headers[i].getElementsByTagName("i")
+//       console.log("ICON");
+//       console.dir(icon[0]);
+//     }
+// }
+
+/**
+ * Get the existing sort indicator, used to determin sort direction
+ */
+function getNextIndicator(target) {
   if(target.innerHTML.includes('fa-angle-down')) {
-    target.innerHTML = "<a href='#'>" + target.innerText + " <i class=\"fa fa-angle-up\"></i></a>";
+    return 'up';
   } else {
-    target.innerHTML = "<a href='#'>" + target.innerText + " <i class=\"fa fa-angle-down\"></i></a>";
+    return 'down';
   }
 }
 
-function reverseSort(target) {
-  if(target.innerHTML.includes('fa-angle-down')) {
+ /**
+ * Uses existing sort indicastor to set the proper font-awesome indicator based on sort direction
+ */
+function setIndicator(target, indicator) {
+  target.innerHTML = "<a href='#'>" + target.innerText + " <i class=\"fa fa-angle-" + indicator + "\"></i></a>";
+}
+
+function reverseSort(direction) {
+  if(direction == 'up') {
     return true;
   }
   return false;
