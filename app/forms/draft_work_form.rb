@@ -11,7 +11,6 @@ class DraftWorkForm < Reform::Form
   property :work_type
   property :subtype
   property :title
-  property :contact_email
   property :abstract
   property :citation
   property :default_citation, virtual: true, default: true
@@ -102,6 +101,13 @@ class DraftWorkForm < Reform::Form
     property :_destroy, virtual: true
   end
 
+  collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
+                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? } do
+    property :id
+    property :email
+    property :_destroy, virtual: true
+  end
+  
   collection :keywords, populator: KeywordsPopulator.new(:keywords, Keyword) do
     property :id
     property :label

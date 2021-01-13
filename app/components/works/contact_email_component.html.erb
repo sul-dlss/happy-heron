@@ -1,4 +1,4 @@
-<div class="mb-3 row" data-controller="nested-form">
+<div class="mb-3" data-controller="nested-form">
 
   <template data-nested-form-target='template'>
     <%= form.fields_for :contact_emails, ContactEmail.new, child_index: 'TEMPLATE_RECORD' do |email_form| %>

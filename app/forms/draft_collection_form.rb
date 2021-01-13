@@ -38,7 +38,7 @@ class DraftCollectionForm < Reform::Form
     self.reviewer_sunets = reviewer_sunets_from_model.join(', ')
   }
 
-  collection :contact_emails, populator: ContactEmailsPopular.new(:contact_emails),
+  collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? } do
     property :id
     property :email

@@ -8,12 +8,13 @@ class Collection < ApplicationRecord
   has_many :works, dependent: :destroy
   has_many :related_links, as: :linkable, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
+  has_many :contact_emails, as: :emailable, dependent: :destroy
   belongs_to :creator, class_name: 'User'
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
   has_and_belongs_to_many :reviewed_by, class_name: 'User', join_table: 'reviewers'
   has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
 
-  validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
+  validates :contact_emails, format: { with: Devise.email_regexp }, allow_blank: true
 
   sig { returns(T::Boolean) }
   def accessioned?

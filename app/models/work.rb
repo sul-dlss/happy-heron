@@ -11,12 +11,12 @@ class Work < ApplicationRecord
   has_many :contributors, dependent: :destroy, class_name: 'Contributor'
   has_many :authors, dependent: :destroy, class_name: 'Author'
   has_many :related_links, as: :linkable, dependent: :destroy
+  has_many :contact_emails, as: :emailable, dependent: :destroy
   has_many :related_works, dependent: :destroy
   has_many :attached_files, dependent: :destroy
   has_many :keywords, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
 
-  validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
   validates :state, presence: true
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
