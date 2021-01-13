@@ -90,6 +90,7 @@ class CollectionsController < ObjectsController
                                        :email_depositors_status_changed,
                                        :release_option, :release_duration,
                                        'release_date(1i)', 'release_date(2i)', 'release_date(3i)',
-                                       related_links_attributes: %i[_destroy id link_title url])
+                                       related_links_attributes: %i[_destroy id link_title url],
+                                       contact_emails_attributes: %i[_destroy id email])
   end
 end

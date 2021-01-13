@@ -14,7 +14,6 @@ class Collection < ApplicationRecord
   has_and_belongs_to_many :reviewed_by, class_name: 'User', join_table: 'reviewers'
   has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
 
-  validates :contact_emails, format: { with: Devise.email_regexp }, allow_blank: true
 
   sig { returns(T::Boolean) }
   def accessioned?

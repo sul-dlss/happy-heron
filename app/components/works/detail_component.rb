@@ -13,7 +13,7 @@ module Works
     attr_reader :work
 
     delegate :purl, :collection, :version, :work_type,
-             :contact_email, :abstract, :citation,
+             :contact_emails, :abstract, :citation,
              :depositor, :attached_files,
              :related_works, :related_links, :events,
              to: :work
