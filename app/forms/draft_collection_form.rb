@@ -13,7 +13,6 @@ class DraftCollectionForm < Reform::Form
 
   property :name
   property :description
-  property :contact_email
   property :access, default: 'world'
   property :manager_sunets, virtual: true, prepopulator: lambda { |_options|
     self.manager_sunets = manager_sunets_from_model.join(', ')
@@ -38,6 +37,13 @@ class DraftCollectionForm < Reform::Form
   property :reviewer_sunets, virtual: true, prepopulator: lambda { |_options|
     self.reviewer_sunets = reviewer_sunets_from_model.join(', ')
   }
+
+  collection :contact_emails, populator: ContactEmailsPopular.new(:contact_emails),
+                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? } do
+    property :id
+    property :email
+    property :_destroy, virtual: true
+  end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
                              prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? } do
