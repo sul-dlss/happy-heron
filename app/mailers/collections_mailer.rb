@@ -37,4 +37,10 @@ class CollectionsMailer < ApplicationMailer
 
     mail(to: @user.email, subject: "New activity in the #{@collection.name} collection")
   end
+
+  def participants_changed_email
+    @user = params[:user]
+    @collection = params[:collection]
+    mail(to: @user.email, subject: "Participant changes for the #{@collection.name} collection in the SDR")
+  end
 end

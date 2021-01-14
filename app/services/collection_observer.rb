@@ -18,6 +18,11 @@ class CollectionObserver
     reviewers_added(collection)
   end
 
+  # Whenever metadata is updated
+  def self.on_update_metadata(collection, _transition)
+    send_participant_change_emails(collection)
+  end
+
   def self.depositors_added(collection)
     change_set(collection).added_depositors.each do |depositor|
       CollectionsMailer.with(collection: collection, user: depositor)
@@ -56,4 +61,15 @@ class CollectionObserver
     collection.event_context.fetch(:change_set)
   end
   private_class_method :change_set
+
+  def self.send_participant_change_emails(collection)
+    change_set = collection.event_context.fetch(:change_set, nil) # there isn't always a change set at this point
+    return unless collection.email_when_participants_changed? && change_set&.participants_changed?
+
+    (collection.managers + collection.reviewers).each do |user|
+      CollectionsMailer.with(collection: collection, user: user)
+                       .participants_changed_email.deliver_later
+    end
+  end
+  private_class_method :send_participant_change_emails
 end

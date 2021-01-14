@@ -59,4 +59,8 @@ FactoryBot.define do
   trait :email_depositors_status_changed do
     email_depositors_status_changed { true }
   end
+
+  trait :email_when_participants_changed do
+    email_when_participants_changed { true }
+  end
 end

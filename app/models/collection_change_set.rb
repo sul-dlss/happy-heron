@@ -12,6 +12,10 @@ class CollectionChangeSet
     @point2 = point2
   end
 
+  def added_managers
+    point2.managers - point1.managers
+  end
+
   def added_depositors
     point2.depositors - point1.depositors
   end
@@ -26,6 +30,25 @@ class CollectionChangeSet
 
   def removed_managers
     point1.managers - point2.managers
+  end
+
+  def removed_reviewers
+    point1.reviewers - point2.reviewers
+  end
+
+  def participants_changed?
+    added_managers.present? || added_depositors.present? || added_reviewers.present? ||
+      removed_managers.present? || removed_depositors.present? || removed_reviewers.present?
+  end
+
+  def participant_change_description
+    %i[added_managers added_depositors added_reviewers
+       removed_managers removed_depositors removed_reviewers].map do |field_name|
+      field_changes = send(field_name)
+      next if field_changes.blank?
+
+      "#{field_name.to_s.humanize}: #{field_changes.map(&:sunetid).join(', ')}"
+    end.compact.join("\n")
   end
 
   attr_reader :point1, :point2

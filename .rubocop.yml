@@ -49,7 +49,7 @@ RSpec/MultipleMemoizedHelpers:
   Max: 15
 
 RSpec/NestedGroups:
-  Max: 5
+  Max: 6
 
 RSpec/ScatteredSetup:
   Exclude:

@@ -91,4 +91,21 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.body.encoded).to match "in the #{collection.name} collection"
     end
   end
+
+  describe '#participants_changed_email' do
+    let(:user) { build(:user) }
+    let(:mail) { described_class.with(user: user, collection: collection).participants_changed_email }
+    let(:collection) { build(:collection) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq "Participant changes for the #{collection.name} collection in the SDR"
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match 'Members have been either added to or removed from the ' \
+                                         "#{collection.name} collection."
+    end
+  end
 end
