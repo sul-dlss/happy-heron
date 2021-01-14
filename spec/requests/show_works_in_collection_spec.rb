@@ -8,8 +8,12 @@ RSpec.describe 'Show the collection work list page' do
 
   context 'with an admin user' do
     let(:user) { create(:user) }
+    let(:attached_file) { build(:attached_file, :with_file) }
 
     before do
+      collection.works.first.attached_files = [attached_file]
+      attached_file.save!
+
       sign_in user, groups: [Settings.authorization_workgroup_names.administrators]
     end
 
@@ -19,6 +23,7 @@ RSpec.describe 'Show the collection work list page' do
       collection.works.each do |work|
         expect(response.body).to include work.title
       end
+      expect(response.body).to include '17.3 KB'
     end
   end
 
