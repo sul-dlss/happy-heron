@@ -223,15 +223,49 @@ RSpec.describe Work do
     end
 
     describe 'an update_metadata event' do
-      let(:work) { create(:work, :deposited) }
+      let(:collection) { create(:collection, :with_managers) }
+      let(:work) { create(:work, state: state, collection: collection, depositor: collection.managers.first) }
 
-      it 'transitions to version draft' do
-        expect { work.update_metadata! }
-          .to change(work, :state)
-          .from('deposited').to('version_draft')
-          .and change(Event, :count).by(1)
-        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-          .with(work, state: 'New version in draft')
+      context 'when the state was deposited' do
+        let(:state) { 'deposited' }
+
+        it 'transitions to version draft' do
+          expect { work.update_metadata! }
+            .to change(work, :state)
+            .from('deposited').to('version_draft')
+            .and change(Event, :count).by(1)
+                                      .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                                             'CollectionsMailer', 'collection_activity', 'deliver_now',
+                                             { params: {
+                                               user: collection.managers.last,
+                                               depositor: work.depositor,
+                                               collection: collection
+                                             }, args: [] }
+                                           ))
+          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+            .with(work, state: 'New version in draft')
+        end
+      end
+
+      context 'when the state was initial' do
+        let(:state) { 'initial' }
+
+        it 'transitions to version draft' do
+          expect { work.update_metadata! }
+            .to change(work, :state)
+            .from('initial').to('first_draft')
+            .and change(Event, :count).by(1)
+                                      .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                                             'CollectionsMailer', 'collection_activity', 'deliver_now',
+                                             { params: {
+                                               user: collection.managers.last,
+                                               depositor: work.depositor,
+                                               collection: collection
+                                             }, args: [] }
+                                           ))
+          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
+            .with(work, state: 'Draft - Not deposited')
+        end
       end
     end
 

@@ -14,6 +14,7 @@ FactoryBot.define do
     license { 'CC0-1.0' }
     depositor { association(:user) }
     access { 'world' }
+    state { 'first_draft' }
     collection
 
     factory :valid_deposited_work do

@@ -54,4 +54,24 @@ RSpec.describe CollectionsMailer, type: :mailer do
         "to the #{collection.name} collection")
     end
   end
+
+  describe '#collection_activity' do
+    let(:user) { build(:user) }
+    let(:depositor) { build(:user, name: 'Audre Lorde') }
+
+    let(:mail) { described_class.with(user: user, collection: collection, depositor: depositor).collection_activity }
+    let(:collection) { build(:collection) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq "New activity in the #{collection.name} collection"
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has created a draft / " \
+                                         'submitted a deposit / started a new version'
+      expect(mail.body.encoded).to match "in the #{collection.name} collection"
+    end
+  end
 end

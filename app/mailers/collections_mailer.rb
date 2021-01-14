@@ -22,4 +22,12 @@ class CollectionsMailer < ApplicationMailer
     mail(to: @user.email, subject: "You are invited to participate as a Reviewer in the #{@collection.name} " \
       'collection in the SDR')
   end
+
+  def collection_activity
+    @user = params[:user]
+    @collection = params[:collection]
+    @depositor = params[:depositor]
+
+    mail(to: @user.email, subject: "New activity in the #{@collection.name} collection")
+  end
 end
