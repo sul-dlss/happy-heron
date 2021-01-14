@@ -62,14 +62,24 @@ class Collection < ApplicationRecord
                            .invitation_to_deposit_email.deliver_later
         end
 
-        change_set.removed_depositors.each do |depositor|
-          CollectionsMailer.with(collection: collection, user: depositor)
-                           .deposit_access_removed_email.deliver_later
+        change_set.added_managers.each do |manager|
+          CollectionsMailer.with(collection: collection, user: manager)
+                           .manage_access_granted_email.deliver_later
         end
 
         change_set.added_reviewers.each do |reviewer|
           CollectionsMailer.with(collection: collection, user: reviewer)
                            .review_access_granted_email.deliver_later
+        end
+
+        change_set.removed_depositors.each do |depositor|
+          CollectionsMailer.with(collection: collection, user: depositor)
+                           .deposit_access_removed_email.deliver_later
+        end
+
+        change_set.removed_managers.each do |manager|
+          CollectionsMailer.with(collection: collection, user: manager)
+                           .manage_access_removed_email.deliver_later
         end
       end
     end
