@@ -153,7 +153,7 @@ CREATE TABLE public.collections (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
-    state character varying DEFAULT 'first_draft'::character varying NOT NULL,
+    state character varying DEFAULT 'new'::character varying NOT NULL,
     druid character varying,
     version integer DEFAULT 0 NOT NULL,
     email_depositors_status_changed boolean
@@ -1004,6 +1004,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201204214055'),
 ('20201207223546'),
 ('20201211051829'),
-('20201214213408');
+('20201214213408'),
+('20210114221943');
 
 

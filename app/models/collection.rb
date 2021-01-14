@@ -32,7 +32,7 @@ class Collection < ApplicationRecord
     File.join(Settings.purl_url, T.must(druid).delete_prefix('druid:'))
   end
 
-  state_machine initial: :first_draft do
+  state_machine initial: :new do
     before_transition do |collection, transition|
       # filters out bits of the context that don't go into the event, e.g.: :change_set
       event_params = collection.event_context.slice(:user)
@@ -87,6 +87,7 @@ class Collection < ApplicationRecord
     end
 
     event :update_metadata do
+      transition new: :first_draft
       transition deposited: :version_draft
       transition %i[first_draft version_draft] => same
     end

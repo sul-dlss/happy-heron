@@ -26,7 +26,7 @@ class Work < ApplicationRecord
     world: 'world'
   }
 
-  state_machine initial: :first_draft do
+  state_machine initial: :new do
     before_transition do |work, transition|
       work.events.build(work.event_context.merge(event_type: transition.event))
     end
@@ -34,6 +34,10 @@ class Work < ApplicationRecord
     after_transition on: :begin_deposit do |work, _transition|
       DepositJob.perform_later(work)
     end
+
+    after_transition except_from: :first_draft, to: :first_draft, do: CollectionObserver.method(:collection_activity)
+    after_transition except_from: :version_draft, to: :version_draft,
+                     do: CollectionObserver.method(:collection_activity)
 
     after_transition on: :deposit_complete do |work, _transition|
       mailer = WorksMailer.with(user: work.depositor, work: work)
@@ -84,6 +88,8 @@ class Work < ApplicationRecord
 
     event :update_metadata do
       transition deposited: :version_draft
+      transition new: :first_draft
+
       transition %i[first_draft version_draft rejected] => same
     end
   end

@@ -12,6 +12,7 @@ FactoryBot.define do
     required_license { 'MyString' }
     default_license { 'MyString' }
     email_when_participants_changed { false }
+    state { 'first_draft' }
     creator
   end
 
