@@ -106,8 +106,9 @@ class DraftWorkForm < Reform::Form
     property :id
     property :email
     property :_destroy, virtual: true
+    validates :email, format: { with: Devise.email_regexp }
   end
-  
+
   collection :keywords, populator: KeywordsPopulator.new(:keywords, Keyword) do
     property :id
     property :label

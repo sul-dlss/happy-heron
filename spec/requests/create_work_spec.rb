@@ -185,6 +185,15 @@ RSpec.describe 'Create a new work' do
           )
         end
 
+        let(:contact_emails) do
+          {
+            '0' =>
+            { '_destroy' => 'false', 'email': user.email },
+            '999' =>
+            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+          }
+        end
+
         let(:files) do
           {
             '0' => {
@@ -247,6 +256,7 @@ RSpec.describe 'Create a new work' do
           attributes_for(:work)
             .merge(authors_attributes: authors,
                    attached_files_attributes: files,
+                   contact_emails_attributes: contact_emails,
                    keywords_attributes: keywords,
                    related_works_attributes: related_works,
                    related_links_attributes: related_links,
@@ -270,6 +280,7 @@ RSpec.describe 'Create a new work' do
           expect(work.authors.size).to eq 2
           expect(work.authors.last.full_name).to eq 'The Leland Stanford Junior University'
           expect(work.attached_files.size).to eq 2
+          expect(work.contact_emails.size).to eq 2
           expect(work.keywords.size).to eq 2
           expect(work.related_works.size).to eq 2
           expect(work.related_links.size).to eq 2
@@ -364,7 +375,7 @@ RSpec.describe 'Create a new work' do
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
-          expect(work.contact_email).to be_empty
+          expect(work.contact_emails.size).to eq 0
           expect(work.abstract).to be_empty
           expect(work.authors).to be_empty
           expect(work.attached_files).to be_empty
@@ -402,7 +413,7 @@ RSpec.describe 'Create a new work' do
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
-          expect(work.contact_email).to be_empty
+          expect(work.contact_emails.size).to eq 0
           expect(work.abstract).to be_empty
           expect(work.authors).to be_empty
           expect(work.attached_files).to be_empty

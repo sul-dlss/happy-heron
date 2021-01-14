@@ -10,6 +10,7 @@ RSpec.describe DescriptionGenerator do
   let(:work) do
     build(:work, :with_creation_date_range, :published, :with_keywords,
           :with_some_untitled_related_links, :with_related_works,
+          :with_contact_emails,
           contributors: [contributor],
           citation: "Test citation #{Work::LINK_TEXT}",
           title: 'Test title')
@@ -190,8 +191,9 @@ RSpec.describe DescriptionGenerator do
     let(:contributor2) { build(:person_contributor, role: 'Author') }
     let(:contributor3) { build(:org_contributor, role: 'Conference') }
     let(:work) do
-      build(:work, contributors: [contributor1, contributor2, contributor3],
-                   title: 'Test title')
+      build(:work, :with_contact_emails,
+            contributors: [contributor1, contributor2, contributor3],
+            title: 'Test title')
     end
     let(:datacite_creator_role) do
       {
@@ -282,8 +284,9 @@ RSpec.describe DescriptionGenerator do
   context 'when publisher and publication date are entered by user' do
     let(:contributor) { build(:org_contributor, role: 'Publisher') }
     let(:work) do
-      build(:work, :published, contributors: [contributor],
-                               title: 'Test title')
+      build(:work, :published, :with_contact_emails,
+            contributors: [contributor],
+            title: 'Test title')
     end
 
     it 'creates event of type publication with date' do
@@ -326,7 +329,10 @@ RSpec.describe DescriptionGenerator do
   #   Note:  no top level contributor -- publisher is under event
   context 'when publisher entered by user, no publication date' do
     let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work) { build(:work, contributors: [contributor], title: 'Test title') }
+    let(:work) do
+      build(:work, :with_contact_emails,
+            contributors: [contributor], title: 'Test title')
+    end
 
     it 'creates event of type publication without date' do
       expect(model).to eq(
@@ -361,7 +367,8 @@ RSpec.describe DescriptionGenerator do
     let(:person_contrib) { build(:person_contributor, role: 'Author') }
     let(:pub_contrib) { build(:org_contributor, role: 'Publisher') }
     let(:work) do
-      build(:work, :published, contributors: [person_contrib, pub_contrib], title: 'Test title')
+      build(:work, :published, :with_contact_emails,
+            contributors: [person_contrib, pub_contrib], title: 'Test title')
     end
 
     it 'creates event of type publication with date' do

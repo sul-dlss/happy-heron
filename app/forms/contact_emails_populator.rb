@@ -6,7 +6,7 @@ class ContactEmailsPopulator < ApplicationPopulator
   # The fragment represents one row of the attached file data from the HTML form
   def call(form, fragment:, **)
     item = existing_record(form: form, id: fragment['id'])
-    
+
     if fragment['_destroy'] == '1'
       form.contact_emails.delete(item)
       return skip!

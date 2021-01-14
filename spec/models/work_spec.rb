@@ -26,22 +26,8 @@ RSpec.describe Work do
     expect(work.attached_files).to be_present
   end
 
-  describe 'contact_email' do
-    describe 'validation' do
-      subject(:work) { build(:work, contact_email: email) }
-
-      context 'with invalid email' do
-        let(:email) { 'notavalidemail' }
-
-        it { is_expected.not_to be_valid }
-      end
-
-      context 'with a blank email' do
-        let(:email) { '' }
-
-        it { is_expected.to be_valid }
-      end
-    end
+  it 'has many contact emails' do
+    expect(work.contact_emails).to all(be_a(ContactEmail))
   end
 
   describe 'created_edtf' do

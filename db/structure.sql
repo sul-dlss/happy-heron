@@ -21,8 +21,6 @@ CREATE TYPE public.work_access AS ENUM (
 
 SET default_tablespace = '';
 
-SET default_table_access_method = heap;
-
 --
 -- Name: abstract_contributors; Type: TABLE; Schema: public; Owner: -
 --
