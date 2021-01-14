@@ -60,15 +60,16 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user is an application admin' do
-    let(:collection) { create(:collection, creator: user, updated_at: '2020-12-02') }
+    let(:workful_collection) { create(:collection, creator: user, updated_at: '2020-12-02') }
+    let!(:workless_collection) { create(:collection, creator: user, updated_at: '2020-12-03') }
 
     before do
       sign_in user, groups: ['dlss:hydrus-app-administrators']
-      create(:work, :deposited, collection: collection, depositor: user)
-      create(:work, :first_draft, collection: collection, depositor: user)
-      create(:work, :version_draft, collection: collection, depositor: user)
-      create(:work, :pending_approval, collection: collection, depositor: user)
-      create(:work, :rejected, collection: collection, depositor: user)
+      create(:work, :deposited, collection: workful_collection, depositor: user)
+      create(:work, :first_draft, collection: workful_collection, depositor: user)
+      create(:work, :version_draft, collection: workful_collection, depositor: user)
+      create(:work, :pending_approval, collection: workful_collection, depositor: user)
+      create(:work, :rejected, collection: workful_collection, depositor: user)
     end
 
     it 'shows a link to create collections and the all collections table' do
@@ -78,7 +79,7 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include '+ Create a new collection'
       expect(response.body).to include <<-HTML
       <tr>
-        <td><a href=\"#{collection_path(collection)}\">MyString</a></td>
+        <td><a href=\"#{collection_path(workful_collection)}\">MyString</a></td>
         <td>5</td>
         <td>1</td>
         <td>1</td>
@@ -86,6 +87,18 @@ RSpec.describe 'Dashboard requests' do
         <td>1</td>
         <td>1</td>
         <td>Dec 02, 2020</td>
+      </tr>
+      HTML
+      expect(response.body).to include <<-HTML
+      <tr>
+        <td><a href=\"#{collection_path(workless_collection)}\">MyString</a></td>
+        <td>0</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Dec 03, 2020</td>
       </tr>
       HTML
     end
