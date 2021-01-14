@@ -54,25 +54,7 @@ class Collection < ApplicationRecord
       DepositCollectionJob.perform_later(collection)
     end
 
-    after_transition on: :update_metadata do |collection, transition|
-      if transition.to == 'version_draft' # only send these emails when the collection is already pubished
-        change_set = collection.event_context.fetch(:change_set)
-        change_set.added_depositors.each do |depositor|
-          CollectionsMailer.with(collection: collection, user: depositor)
-                           .invitation_to_deposit_email.deliver_later
-        end
-
-        change_set.removed_depositors.each do |depositor|
-          CollectionsMailer.with(collection: collection, user: depositor)
-                           .deposit_access_removed_email.deliver_later
-        end
-
-        change_set.added_reviewers.each do |reviewer|
-          CollectionsMailer.with(collection: collection, user: reviewer)
-                           .review_access_granted_email.deliver_later
-        end
-      end
-    end
+    after_transition to: :version_draft, do: CollectionObserver.method(:after_update_published)
 
     after_transition do |collection, transition|
       BroadcastCollectionChange.call(collection: collection, state: transition.to_name)

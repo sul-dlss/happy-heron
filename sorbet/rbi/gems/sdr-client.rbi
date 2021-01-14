@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-0.39.0
+# sdr-client-0.40.1
 
 module SdrClient
 end
@@ -74,6 +74,8 @@ class SdrClient::Deposit::Files::DirectUploadResponse < Struct
   def self.inspect; end
   def self.members; end
   def self.new(*arg0); end
+  def service_name; end
+  def service_name=(_); end
   def signed_id; end
   def signed_id=(_); end
 end
@@ -215,6 +217,9 @@ class SdrClient::Credentials
 end
 class SdrClient::Credentials::NoCredentialsError < StandardError
 end
+module SdrClient::Find
+  def self.run(druid, url:, logger: nil); end
+end
 module SdrClient::Login
   def self.run(url:, login_service: nil, credential_store: nil); end
   extend Anonymous_Module_107
@@ -226,14 +231,16 @@ module SdrClient::LoginPrompt
   def self.run; end
 end
 module SdrClient::CLI
+  def self.deposit(command, options, arguments); end
   def self.display_errors(errors); end
   def self.help; end
   def self.poll_for_job_complete(job_id:, url:); end
-  def self.start(command, options); end
+  def self.start(command, options, arguments = nil); end
   def self.validate_deposit_options(options); end
 end
 class SdrClient::Connection
   def connection; end
+  def get(**, &&); end
   def initialize(url:, token: nil); end
   def post(**, &&); end
   def proxy(to); end

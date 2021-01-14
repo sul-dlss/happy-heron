@@ -55,4 +55,8 @@ FactoryBot.define do
 
     events { build_list(:event, event_count) }
   end
+
+  trait :email_depositors_status_changed do
+    email_depositors_status_changed { true }
+  end
 end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-performance/all/rubocop-performance.rbi
 #
-# rubocop-performance-1.9.1
+# rubocop-performance-1.9.2
 
 module RuboCop
 end
@@ -349,8 +349,8 @@ class RuboCop::Cop::Performance::RegexpMatch < RuboCop::Cop::Base
   extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Performance::ReverseEach < RuboCop::Cop::Base
+  def offense_range(node); end
   def on_send(node); end
-  def replacement_range(node); end
   def reverse_each?(param0 = nil); end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::RangeHelp

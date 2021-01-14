@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-logic/all/dry-logic.rbi
 #
-# dry-logic-1.0.8
+# dry-logic-1.1.0
 
 module Dry
 end
