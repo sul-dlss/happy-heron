@@ -1,9 +1,9 @@
 <table class="table">
 <thead class="table-light">
   <tr>
-    <th><%= I18n.t 'collection.deposits' %></th>
+    <th width="18%"><%= I18n.t 'collection.deposits' %></th>
     <th><span class="visually-hidden"><%= I18n.t 'collection.actions' %></span></th>
-    <th><%= I18n.t 'collection.depositor' %></th>
+    <th width="10%"><%= I18n.t 'collection.depositor' %></th>
     <th><%= I18n.t 'collection.deposit_status' %></th>
     <th><%= I18n.t 'collection.last_modified' %></th>
     <th><%= I18n.t 'collection.number_of_files' %></th>
@@ -28,10 +28,19 @@
       <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
       <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
       <td><%= work.attached_files.count %></td>
-      <td><%= work.attached_files.sum(&:byte_size) %></td>
+      <td><%= number_to_human_size(work.attached_files.sum(&:byte_size)) %></td>
       <td><%= link_to work.purl, work.purl if work.purl %></td>
       <td><span class="fas fa-quote-left"></span> Cite</td>
     </tr>
   <% end %>
 </tbody>
 </table>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@2.1.13"></script>
+<script>
+  new simpleDatatables.DataTable("table", {
+    columns: [
+        { select: 0, sort: "asc" },  // Sort the first column in ascending order
+        { select: [1, 5, 6, 7, 8], sortable: false } // Disable unsortable columns
+    ]});
+</script>
