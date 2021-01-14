@@ -10,7 +10,6 @@ class DraftCollectionForm < Reform::Form
   property :description
   property :contact_email
   property :access, default: 'world'
-  property :creator, writable: false
   property :manager_sunets, virtual: true, prepopulator: lambda { |_options|
     self.manager_sunets = manager_sunets_from_model.join(', ')
   }
