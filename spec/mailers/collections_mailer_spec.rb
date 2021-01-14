@@ -37,6 +37,41 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
   end
 
+  describe '#manage_access_granted_email' do
+    let(:user) { build(:user) }
+    let(:mail) { described_class.with(user: user, collection: collection).manage_access_granted_email }
+    let(:collection) { build(:collection) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq "You are invited to participate as a Manager in the #{collection.name} " \
+        'collection in the SDR'
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match('You have been invited to be a Manager ' \
+        "of the #{collection.name} collection")
+    end
+  end
+
+  describe '#manage_access_removed_email' do
+    let(:user) { build(:user) }
+    let(:mail) { described_class.with(user: user, collection: collection).manage_access_removed_email }
+    let(:collection) { build(:collection) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq "Your permissions have changed for the #{collection.name} " \
+        'collection in the SDR'
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match("A Manager of the #{collection.name} collection has updated the")
+    end
+  end
+
   describe '#review_access_granted_email' do
     let(:user) { build(:user) }
     let(:mail) { described_class.with(user: user, collection: collection).review_access_granted_email }
