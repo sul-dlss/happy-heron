@@ -26,7 +26,7 @@ class Work < ApplicationRecord
     world: 'world'
   }
 
-  state_machine initial: :initial do
+  state_machine initial: :new do
     before_transition do |work, transition|
       work.events.build(work.event_context.merge(event_type: transition.event))
     end
@@ -88,7 +88,7 @@ class Work < ApplicationRecord
 
     event :update_metadata do
       transition deposited: :version_draft
-      transition initial: :first_draft
+      transition new: :first_draft
 
       transition %i[first_draft version_draft rejected] => same
     end

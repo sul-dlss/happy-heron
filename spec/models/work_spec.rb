@@ -247,13 +247,13 @@ RSpec.describe Work do
         end
       end
 
-      context 'when the state was initial' do
-        let(:state) { 'initial' }
+      context 'when the state was new' do
+        let(:state) { 'new' }
 
         it 'transitions to version draft' do
           expect { work.update_metadata! }
             .to change(work, :state)
-            .from('initial').to('first_draft')
+            .from('new').to('first_draft')
             .and change(Event, :count).by(1)
                                       .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                              'CollectionsMailer', 'collection_activity', 'deliver_now',
