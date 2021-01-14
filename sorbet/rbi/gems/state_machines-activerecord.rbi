@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/state_machines-activerecord/all/state_machines-activerecord.rbi
 #
-# state_machines-activerecord-0.6.0
+# state_machines-activerecord-0.8.0
 
 module StateMachines
 end

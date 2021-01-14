@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/ffi/all/ffi.rbi
 #
-# ffi-1.13.1
+# ffi-1.14.2
 
 class FFI::Type
   def alignment; end
@@ -176,6 +176,7 @@ class FFI::AbstractMemory
   def read_ulong_long; end
   def read_ushort; end
   def size; end
+  def size_limit?; end
   def total; end
   def type_size; end
   def write_array_of_char(arg0); end
@@ -557,4 +558,11 @@ class FFI::Bitmask < FFI::Enum
   def from_native(val, ctx); end
   def initialize(*args); end
   def to_native(query, ctx); end
+end
+module INotify
+end
+module INotify::Native
+  extend FFI::Library
+end
+class INotify::Native::Event < FFI::Struct
 end

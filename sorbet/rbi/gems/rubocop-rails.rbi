@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-rails/all/rubocop-rails.rbi
 #
-# rubocop-rails-2.9.0
+# rubocop-rails-2.9.1
 
 module RuboCop
 end
@@ -419,8 +419,7 @@ class RuboCop::Cop::Rails::FindById < RuboCop::Cop::Base
   include RuboCop::Cop::RangeHelp
 end
 class RuboCop::Cop::Rails::FindEach < RuboCop::Cop::Base
-  def ignored?(relation_method); end
-  def method_chain(node); end
+  def ignored?(node); end
   def on_send(node); end
   extend RuboCop::Cop::AutoCorrector
 end
@@ -441,6 +440,8 @@ class RuboCop::Cop::Rails::HasManyOrHasOneDependent < RuboCop::Cop::Base
   def with_options_block(param0 = nil); end
 end
 class RuboCop::Cop::Rails::HelperInstanceVariable < RuboCop::Cop::Base
+  def form_builder_class?(param0 = nil); end
+  def inherit_form_builder?(node); end
   def on_ivar(node); end
   def on_ivasgn(node); end
 end

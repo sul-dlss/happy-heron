@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.23.1
+# view_component-2.24.0
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -16,7 +16,9 @@ class ViewComponent::Engine < Rails::Engine
 end
 class ViewComponent::Collection
   def collection_variable(object); end
+  def component; end
   def component_options(item, iterator); end
+  def format(**, &&); end
   def initialize(component, object, **options); end
   def render_in(view_context, &block); end
 end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/deprecation/all/deprecation.rbi
 #
-# deprecation-1.0.0
+# deprecation-1.1.0
 
 module Deprecation
   def debug; end

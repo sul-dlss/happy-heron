@@ -10,11 +10,24 @@
 # dry-core-0.5.0
 
 module Dry
+  def self.Equalizer(*keys, **options); end
 end
 module Dry::Core
 end
 module Dry::Core::Constants
   def self.included(base); end
+end
+class Dry::Core::Equalizer < Module
+  def define_cmp_method; end
+  def define_hash_method(immutable:); end
+  def define_inspect_method; end
+  def define_methods(inspect: nil, immutable: nil); end
+  def included(descendant); end
+  def initialize(*keys, **options); end
+end
+module Dry::Core::Equalizer::Methods
+  def ==(other); end
+  def eql?(other); end
 end
 module Dry::Core::Extensions
   def available_extension?(name); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faraday/all/faraday.rbi
 #
-# faraday-1.1.0
+# faraday-1.3.0
 
 module Faraday
   def self.default_adapter; end
@@ -457,8 +457,11 @@ module Faraday::FlatParamsEncoder
   def self.unescape(*args, &block); end
 end
 class Faraday::Middleware
+  def app; end
+  def call(env); end
   def close; end
-  def initialize(app = nil); end
+  def initialize(app = nil, options = nil); end
+  def options; end
   extend Faraday::DependencyLoader
   extend Faraday::MiddlewareRegistry
 end
@@ -532,7 +535,6 @@ class Faraday::Response
   extend Forwardable
 end
 class Faraday::Response::Middleware < Faraday::Middleware
-  def call(env); end
   def on_complete(env); end
 end
 class Faraday::Error < StandardError
@@ -542,6 +544,9 @@ class Faraday::Error < StandardError
   def initialize(exc, response = nil); end
   def inspect; end
   def response; end
+  def response_body; end
+  def response_headers; end
+  def response_status; end
   def wrapped_exception; end
 end
 class Faraday::ClientError < Faraday::Error

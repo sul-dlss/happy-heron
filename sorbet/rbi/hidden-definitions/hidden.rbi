@@ -20132,19 +20132,6 @@ class BroadcastWorkChange
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class Bundler::APIResponseInvalidDependenciesError
-  def status_code(); end
-end
-
-class Bundler::APIResponseInvalidDependenciesError
-end
-
-class Bundler::Definition
-  def dependencies_for(groups); end
-
-  def requested_dependencies(); end
-end
-
 class Bundler::Dependency
   def branch(); end
 
@@ -20164,16 +20151,6 @@ class Bundler::Env
   def self.report(options=T.unsafe(nil)); end
 
   def self.write(io); end
-end
-
-class Bundler::EnvironmentPreserver
-  def replace_with_backup(); end
-end
-
-class Bundler::EnvironmentPreserver
-  def self.env_to_hash(env); end
-
-  def self.from_env(); end
 end
 
 class Bundler::Fetcher
@@ -20361,8 +20338,6 @@ class Bundler::GemHelper
 
   def committed?(); end
 
-  def default_remote(); end
-
   def gem_command(); end
 
   def gem_key(); end
@@ -20397,8 +20372,6 @@ class Bundler::GemHelper
 
   def spec_path(); end
 
-  def tag_prefix=(tag_prefix); end
-
   def tag_version(); end
 
   def version(); end
@@ -20414,12 +20387,6 @@ class Bundler::GemHelper
   def self.instance(); end
 
   def self.instance=(instance); end
-
-  def self.tag_prefix=(prefix); end
-end
-
-module Bundler::GemHelpers
-  def self.local_platform(); end
 end
 
 class Bundler::GemVersionPromoter
@@ -20507,7 +20474,7 @@ end
 class Bundler::Installer
   def generate_bundler_executable_stubs(spec, options=T.unsafe(nil)); end
 
-  def generate_standalone_bundler_executable_stubs(spec, options=T.unsafe(nil)); end
+  def generate_standalone_bundler_executable_stubs(spec); end
 
   def initialize(root, definition); end
 
@@ -20522,10 +20489,6 @@ class Bundler::Installer
   def self.ambiguous_gems=(ambiguous_gems); end
 
   def self.install(root, definition, options=T.unsafe(nil)); end
-end
-
-class Bundler::LazySpecification
-  def eql?(other); end
 end
 
 class Bundler::Molinillo::DependencyGraph
@@ -20622,8 +20585,6 @@ class Bundler::Plugin::Index
   def installed_plugins(); end
 
   def plugin_commands(plugin); end
-
-  def unregister_plugin(name); end
 end
 
 class Bundler::Plugin::Index::CommandConflict
@@ -20670,8 +20631,6 @@ end
 
 module Bundler::Plugin
   def self.list(); end
-
-  def self.uninstall(names, options); end
 end
 
 class Bundler::ProcessLock
@@ -20679,14 +20638,6 @@ end
 
 class Bundler::ProcessLock
   def self.lock(bundle_path=T.unsafe(nil)); end
-end
-
-class Bundler::Resolver::SpecGroup
-  def copy_for(platform); end
-
-  def sorted_activated_platforms(); end
-
-  def spec_for(platform); end
 end
 
 class Bundler::Retry
@@ -20724,8 +20675,6 @@ class Bundler::RubyGemsGemInstaller
 end
 
 class Bundler::RubygemsIntegration
-  def add_default_gems_to(specs); end
-
   def add_to_load_path(paths); end
 
   def all_specs(); end
@@ -20739,8 +20688,6 @@ class Bundler::RubygemsIntegration
   def find_name(name); end
 
   def gem_remote_fetcher(); end
-
-  def load_env_plugins(); end
 
   def plain_specs(); end
 
@@ -20812,20 +20759,10 @@ end
 
 class Bundler::Source::Git
   def glob(); end
-
-  def local?(); end
 end
 
 class Bundler::SpecSet
   include ::Enumerable
-end
-
-class Bundler::StubSpecification
-  def default_gem?(); end
-
-  def extensions(); end
-
-  def gem_build_complete_path(); end
 end
 
 class Bundler::Thor
@@ -21949,7 +21886,7 @@ class Bundler::UI::Shell
 
   def debug?(); end
 
-  def error(msg, newline=T.unsafe(nil), color=T.unsafe(nil)); end
+  def error(msg, newline=T.unsafe(nil)); end
 
   def info(msg, newline=T.unsafe(nil)); end
 
@@ -21971,7 +21908,7 @@ class Bundler::UI::Shell
 
   def unprinted_warnings(); end
 
-  def warn(msg, newline=T.unsafe(nil), color=T.unsafe(nil)); end
+  def warn(msg, newline=T.unsafe(nil)); end
 
   def yes?(msg); end
   LEVELS = ::T.let(nil, ::T.untyped)
@@ -22491,10 +22428,6 @@ module Bundler
   def self.original_exec(*args); end
 
   def self.original_system(*args); end
-
-  def self.preferred_gemfile_name(); end
-
-  def self.reset_settings!(); end
 
   def self.unbundled_env(); end
 
@@ -30028,6 +29961,10 @@ module Docile
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module Docile::BacktraceFilter
+  FILTER_PATTERN = ::T.let(nil, ::T.untyped)
+end
+
 class Docile::FallbackContextProxy
   NON_FALLBACK_METHODS = ::T.let(nil, ::T.untyped)
   NON_PROXIED_INSTANCE_VARIABLES = ::T.let(nil, ::T.untyped)
@@ -30639,6 +30576,11 @@ module Dry::Schema
   Undefined = ::T.let(nil, ::T.untyped)
 end
 
+class Dry::Schema::Config
+  include ::Dry::Configurable::InstanceMethods
+  include ::Dry::Configurable::Methods
+end
+
 Dry::Schema::DSL::Types = Dry::Schema::Types
 
 class Dry::Schema::Key
@@ -30664,6 +30606,11 @@ end
 
 module Dry::Schema::Messages
   BACKENDS = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::Messages::Abstract
+  include ::Dry::Configurable::InstanceMethods
+  include ::Dry::Configurable::Methods
 end
 
 class Dry::Schema::Messages::YAML
@@ -32535,15 +32482,6 @@ class Faraday::Adapter::EMSynchrony
   def create_request(env); end
 end
 
-class Faraday::Adapter::EMSynchrony::ParallelManager
-  def add(request, method, *args, &block); end
-
-  def run(); end
-end
-
-class Faraday::Adapter::EMSynchrony::ParallelManager
-end
-
 class Faraday::Adapter::EMSynchrony
   def self.setup_parallel_manager(_options=T.unsafe(nil)); end
 end
@@ -32699,6 +32637,10 @@ end
 
 Faraday::FilePart = UploadIO
 
+module Faraday::NetHttp
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 Faraday::Parts = Parts
 
 class Faraday::RackBuilder
@@ -32711,8 +32653,6 @@ class Faraday::RackBuilder::Handler
 end
 
 class Faraday::Request::Authorization
-  def call(env); end
-
   def initialize(app, type, token); end
   KEY = ::T.let(nil, ::T.untyped)
 end
@@ -32731,8 +32671,6 @@ class Faraday::Request::BasicAuthentication
 end
 
 class Faraday::Request::Instrumentation
-  def call(env); end
-
   def initialize(app, options=T.unsafe(nil)); end
 end
 
@@ -32822,13 +32760,6 @@ end
 
 module FileUtils
   include ::FileUtils::StreamUtils_
-  def ruby(*args, **options, &block); end
-
-  def safe_ln(*args, **options); end
-
-  def sh(*cmd, &block); end
-
-  def split_all(path); end
   LN_SUPPORTED = ::T.let(nil, ::T.untyped)
   RUBY = ::T.let(nil, ::T.untyped)
 end
@@ -33147,21 +33078,6 @@ class Gem::Request
   extend ::Gem::Text
 end
 
-class Gem::Requirement
-  include ::Gem::Requirement::OrderIndependentComparison
-end
-
-module Gem::Requirement::OrderIndependentComparison
-  def ==(other); end
-
-  def _requirements_sorted?(); end
-
-  def _with_sorted_requirements(); end
-end
-
-module Gem::Requirement::OrderIndependentComparison
-end
-
 class Gem::Resolver::CurrentSet
 end
 
@@ -33386,8 +33302,6 @@ end
 class Gem::Specification
   include ::Bundler::MatchPlatform
   include ::Bundler::GemHelpers
-  def removed_method_calls(); end
-  REMOVED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class Gem::Specification
@@ -34147,12 +34061,6 @@ class IRB::Context
 
   def newline_before_multiline_output?(); end
 
-  def omit_on_assignment(); end
-
-  def omit_on_assignment=(omit_on_assignment); end
-
-  def omit_on_assignment?(); end
-
   def use_colorize(); end
 
   def use_colorize?(); end
@@ -34200,8 +34108,6 @@ module IRB::ExtendCommandBundle
 
   def irb_help(*opts, &b); end
 
-  def irb_info(*opts, &b); end
-
   def irb_jobs(*opts, &b); end
 
   def irb_kill(*opts, &b); end
@@ -34243,8 +34149,6 @@ end
 
 class IRB::InputMethod
   def initialize(file=T.unsafe(nil)); end
-
-  def winsize(); end
 end
 
 class IRB::Inspector
@@ -34258,7 +34162,7 @@ class IRB::Irb
 
   def initialize(workspace=T.unsafe(nil), input_method=T.unsafe(nil)); end
 
-  def output_value(omit=T.unsafe(nil)); end
+  def output_value(); end
 
   def prompt(prompt, ltype, indent, line_no); end
   ASSIGNMENT_NODE_TYPES = ::T.let(nil, ::T.untyped)
@@ -34307,10 +34211,6 @@ end
 
 class IRB::ReadlineInputMethod
   def initialize(); end
-end
-
-class IRB::ReadlineInputMethod
-  def self.initialize_readline(); end
 end
 
 class IRB::ReidlineInputMethod
@@ -34377,6 +34277,15 @@ class Integer
   def ordinalize(); end
 
   def to_bn(); end
+  GMP_VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class JSON::Ext::Generator::State
+  def escape_slash(); end
+
+  def escape_slash=(escape_slash); end
+
+  def escape_slash?(); end
 end
 
 class JSON::Ext::Generator::State
@@ -34392,6 +34301,16 @@ JSON::Parser = JSON::Ext::Parser
 JSON::State = JSON::Ext::Generator::State
 
 JSON::UnparserError = JSON::GeneratorError
+
+module JSON
+  def self.create_fast_state(); end
+
+  def self.create_pretty_state(); end
+
+  def self.load_file(filespec, opts=T.unsafe(nil)); end
+
+  def self.load_file!(filespec, opts=T.unsafe(nil)); end
+end
 
 class Jbuilder
   BLANK = ::T.let(nil, ::T.untyped)
@@ -35579,8 +35498,6 @@ class Module
 
   def parents(); end
 
-  def rake_extension(method); end
-
   def redefine_method(method, &block); end
 
   def redefine_singleton_method(method, &block); end
@@ -35771,6 +35688,8 @@ end
 class Net::HTTPAlreadyReported
 end
 
+Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
+
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
 class Net::HTTPEarlyHints
@@ -35830,6 +35749,8 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
+Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
+
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -35838,9 +35759,13 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
+Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
+
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
+
+Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
 
 Net::HTTPSuccessCode = Net::HTTPSuccess
 
@@ -36113,14 +36038,16 @@ class NoMatchingPatternError
 end
 
 module Nokogiri
+  LIBXML2_PATCHES = ::T.let(nil, ::T.untyped)
+  LIBXML_COMPILED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXML_ICONV_ENABLED = ::T.let(nil, ::T.untyped)
-  LIBXML_PARSER_VERSION = ::T.let(nil, ::T.untyped)
-  LIBXML_VERSION = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXML2_PATCHES = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXML2_PATH = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXSLT_PATCHES = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_LIBXSLT_PATH = ::T.let(nil, ::T.untyped)
-  NOKOGIRI_USE_PACKAGED_LIBRARIES = ::T.let(nil, ::T.untyped)
+  LIBXML_LOADED_VERSION = ::T.let(nil, ::T.untyped)
+  LIBXSLT_COMPILED_VERSION = ::T.let(nil, ::T.untyped)
+  LIBXSLT_LOADED_VERSION = ::T.let(nil, ::T.untyped)
+  LIBXSLT_PATCHES = ::T.let(nil, ::T.untyped)
+  OTHER_LIBRARY_VERSIONS = ::T.let(nil, ::T.untyped)
+  PACKAGED_LIBRARIES = ::T.let(nil, ::T.untyped)
+  PRECOMPILED_LIBRARIES = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
   VERSION_INFO = ::T.let(nil, ::T.untyped)
 end
@@ -36130,6 +36057,7 @@ class Nokogiri::CSS::Node
 end
 
 class Nokogiri::CSS::Parser
+  CACHE_SWITCH_NAME = ::T.let(nil, ::T.untyped)
   Racc_arg = ::T.let(nil, ::T.untyped)
   Racc_debug_parser = ::T.let(nil, ::T.untyped)
   Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
@@ -36327,6 +36255,7 @@ end
 class Nokogiri::XML::ParseOptions
   COMPACT = ::T.let(nil, ::T.untyped)
   DEFAULT_HTML = ::T.let(nil, ::T.untyped)
+  DEFAULT_SCHEMA = ::T.let(nil, ::T.untyped)
   DEFAULT_XML = ::T.let(nil, ::T.untyped)
   DTDATTR = ::T.let(nil, ::T.untyped)
   DTDLOAD = ::T.let(nil, ::T.untyped)
@@ -38592,6 +38521,18 @@ class Parallel::UserInterruptHandler
   INTERRUPT_SIGNAL = ::T.let(nil, ::T.untyped)
 end
 
+module Parlour
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Parlour::Debugging::Tree
+  INDENT_SPACES = ::T.let(nil, ::T.untyped)
+end
+
+class Parlour::RbiGenerator::Parameter
+  PREFIXES = ::T.let(nil, ::T.untyped)
+end
+
 ParseError = Racc::ParseError
 
 module Parser
@@ -38622,6 +38563,10 @@ end
 class Parser::Lexer::Literal
   DELIMITERS = ::T.let(nil, ::T.untyped)
   TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::MaxNumparamStack
+  ORDINARY_PARAMS = ::T.let(nil, ::T.untyped)
 end
 
 module Parser::Meta
@@ -38704,6 +38649,7 @@ class ProgressBar::Components::Time
   NO_TIME_ELAPSED_TEXT = ::T.let(nil, ::T.untyped)
   OOB_FRIENDLY_TIME_TEXT = ::T.let(nil, ::T.untyped)
   OOB_LIMIT_IN_HOURS = ::T.let(nil, ::T.untyped)
+  OOB_TEXT_TO_FORMAT = ::T.let(nil, ::T.untyped)
   OOB_TIME_FORMATS = ::T.let(nil, ::T.untyped)
   OOB_UNKNOWN_TIME_TEXT = ::T.let(nil, ::T.untyped)
   TIME_FORMAT = ::T.let(nil, ::T.untyped)
@@ -39729,7 +39675,7 @@ end
 
 module Racc
   Copyright = ::T.let(nil, ::T.untyped)
-  Racc_No_Extentions = ::T.let(nil, ::T.untyped)
+  Racc_No_Extensions = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
   Version = ::T.let(nil, ::T.untyped)
 end
@@ -39743,13 +39689,9 @@ end
 class Racc::Parser
   Racc_Main_Parsing_Routine = ::T.let(nil, ::T.untyped)
   Racc_Runtime_Core_Id_C = ::T.let(nil, ::T.untyped)
-  Racc_Runtime_Core_Revision = ::T.let(nil, ::T.untyped)
-  Racc_Runtime_Core_Revision_C = ::T.let(nil, ::T.untyped)
-  Racc_Runtime_Core_Revision_R = ::T.let(nil, ::T.untyped)
   Racc_Runtime_Core_Version = ::T.let(nil, ::T.untyped)
   Racc_Runtime_Core_Version_C = ::T.let(nil, ::T.untyped)
   Racc_Runtime_Core_Version_R = ::T.let(nil, ::T.untyped)
-  Racc_Runtime_Revision = ::T.let(nil, ::T.untyped)
   Racc_Runtime_Type = ::T.let(nil, ::T.untyped)
   Racc_Runtime_Version = ::T.let(nil, ::T.untyped)
   Racc_YY_Parse_Method = ::T.let(nil, ::T.untyped)
@@ -40099,120 +40041,22 @@ end
 
 Rails::Html::WhiteListSanitizer = Rails::Html::SafeListSanitizer
 
-module Rake::Cloneable
-end
-
-module Rake::Cloneable
-end
-
 module Rake::DSL
-  include ::Rake::FileUtilsExt
-  include ::FileUtils
   include ::FileUtils::StreamUtils_
-end
-
-module Rake::DSL
 end
 
 module Rake::FileUtilsExt
-  include ::FileUtils
   include ::FileUtils::StreamUtils_
-  def cd(*args, **options, &block); end
-
-  def chdir(*args, **options, &block); end
-
-  def chmod(*args, **options, &block); end
-
-  def chmod_R(*args, **options, &block); end
-
-  def chown(*args, **options, &block); end
-
-  def chown_R(*args, **options, &block); end
-
-  def copy(*args, **options, &block); end
-
-  def cp(*args, **options, &block); end
-
-  def cp_lr(*args, **options, &block); end
-
-  def cp_r(*args, **options, &block); end
-
-  def install(*args, **options, &block); end
-
-  def link(*args, **options, &block); end
-
-  def ln(*args, **options, &block); end
-
-  def ln_s(*args, **options, &block); end
-
-  def ln_sf(*args, **options, &block); end
-
-  def makedirs(*args, **options, &block); end
-
-  def mkdir(*args, **options, &block); end
-
-  def mkdir_p(*args, **options, &block); end
-
-  def mkpath(*args, **options, &block); end
-
-  def move(*args, **options, &block); end
-
-  def mv(*args, **options, &block); end
-
-  def nowrite(value=T.unsafe(nil)); end
-
-  def rake_check_options(options, *optdecl); end
-
-  def rake_output_message(message); end
-
-  def remove(*args, **options, &block); end
-
-  def rm(*args, **options, &block); end
-
-  def rm_f(*args, **options, &block); end
-
-  def rm_r(*args, **options, &block); end
-
-  def rm_rf(*args, **options, &block); end
-
-  def rmdir(*args, **options, &block); end
-
-  def rmtree(*args, **options, &block); end
-
-  def safe_unlink(*args, **options, &block); end
-
-  def symlink(*args, **options, &block); end
-
-  def touch(*args, **options, &block); end
-
-  def verbose(value=T.unsafe(nil)); end
-
-  def when_writing(msg=T.unsafe(nil)); end
   DEFAULT = ::T.let(nil, ::T.untyped)
 end
 
 module Rake::FileUtilsExt
-  extend ::Rake::FileUtilsExt
-  extend ::FileUtils
   extend ::FileUtils::StreamUtils_
-  def self.nowrite_flag(); end
-
-  def self.nowrite_flag=(nowrite_flag); end
-
-  def self.verbose_flag(); end
-
-  def self.verbose_flag=(verbose_flag); end
 end
 
 class Rake::TaskLib
   include ::Rake::Cloneable
-  include ::Rake::DSL
-  include ::Rake::FileUtilsExt
-  include ::FileUtils
   include ::FileUtils::StreamUtils_
-end
-
-class Rake::TaskLib
 end
 
 class Random
@@ -41143,10 +40987,6 @@ class Reline::Config
 
   def editing_mode_is?(*val); end
 
-  def emacs_mode_string(); end
-
-  def emacs_mode_string=(emacs_mode_string); end
-
   def enable_keypad(); end
 
   def enable_keypad=(enable_keypad); end
@@ -41231,8 +41071,6 @@ class Reline::Config
 
   def reset_default_key_bindings(); end
 
-  def retrieve_string(str); end
-
   def show_all_if_ambiguous(); end
 
   def show_all_if_ambiguous=(show_all_if_ambiguous); end
@@ -41241,23 +41079,12 @@ class Reline::Config
 
   def show_all_if_unmodified=(show_all_if_unmodified); end
 
-  def show_mode_in_prompt(); end
-
-  def show_mode_in_prompt=(show_mode_in_prompt); end
-
   def test_mode(); end
-
-  def vi_cmd_mode_icon(); end
-
-  def vi_cmd_mode_icon=(vi_cmd_mode_icon); end
-
-  def vi_ins_mode_icon(); end
-
-  def vi_ins_mode_icon=(vi_ins_mode_icon); end
 
   def visible_stats(); end
 
   def visible_stats=(visible_stats); end
+  DEFAULT_PATH = ::T.let(nil, ::T.untyped)
   KEYSEQ_PATTERN = ::T.let(nil, ::T.untyped)
   VARIABLE_NAMES = ::T.let(nil, ::T.untyped)
   VARIABLE_NAME_SYMBOLS = ::T.let(nil, ::T.untyped)
@@ -41656,7 +41483,12 @@ class Reline::LineEditor
   def whole_buffer(); end
 
   def whole_lines(index: T.unsafe(nil), line: T.unsafe(nil)); end
+  CSI_REGEXP = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
+  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
+  OSC_REGEXP = ::T.let(nil, ::T.untyped)
   VI_MOTIONS = ::T.let(nil, ::T.untyped)
+  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 Reline::LineEditor::CompletionJourneyData = Struct::CompletionJourneyData
@@ -41679,13 +41511,8 @@ class Reline::LineEditor
 end
 
 class Reline::Unicode
-  CSI_REGEXP = ::T.let(nil, ::T.untyped)
   EscapedChars = ::T.let(nil, ::T.untyped)
   EscapedPairs = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_END = ::T.let(nil, ::T.untyped)
-  NON_PRINTING_START = ::T.let(nil, ::T.untyped)
-  OSC_REGEXP = ::T.let(nil, ::T.untyped)
-  WIDTH_SCANNER = ::T.let(nil, ::T.untyped)
 end
 
 class Reline::Unicode::EastAsianWidth
@@ -41701,8 +41528,6 @@ class Reline::Unicode::EastAsianWidth
 end
 
 class Reline::Unicode
-  def self.calculate_width(str, allow_escape_code=T.unsafe(nil)); end
-
   def self.ed_transpose_words(line, byte_pointer); end
 
   def self.em_backward_word(line, byte_pointer); end
@@ -41722,8 +41547,6 @@ class Reline::Unicode
   def self.get_next_mbchar_size(line, byte_pointer); end
 
   def self.get_prev_mbchar_size(line, byte_pointer); end
-
-  def self.split_by_width(str, max_width, encoding=T.unsafe(nil)); end
 
   def self.vi_backward_word(line, byte_pointer); end
 
@@ -43172,7 +42995,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_ZERO_POSITIVE_NEGATIVE = ::T.let(nil, ::T.untyped)
   SET__ = ::T.let(nil, ::T.untyped)
   SET__AT_SLICE = ::T.let(nil, ::T.untyped)
-  SET__EQL_ = ::T.let(nil, ::T.untyped)
   SET__EQUAL_EQL = ::T.let(nil, ::T.untyped)
   SET__GLOB = ::T.let(nil, ::T.untyped)
   SET___ = ::T.let(nil, ::T.untyped)
@@ -43183,6 +43005,7 @@ module RuboCop::AST::NodePattern::Sets
   SET___6 = ::T.let(nil, ::T.untyped)
   SET___7 = ::T.let(nil, ::T.untyped)
   SET___8 = ::T.let(nil, ::T.untyped)
+  SET___EQL = ::T.let(nil, ::T.untyped)
   SET___METHOD_____CALLEE__ = ::T.let(nil, ::T.untyped)
   SET____ = ::T.let(nil, ::T.untyped)
   SET____ETC = ::T.let(nil, ::T.untyped)
@@ -43288,6 +43111,10 @@ end
 
 module RuboCop::Cop::Alignment
   SPACE = ::T.let(nil, ::T.untyped)
+end
+
+module RuboCop::Cop::AllowedIdentifiers
+  SIGILS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::AmbiguousCopName
@@ -43726,6 +43553,10 @@ class RuboCop::Cop::Layout::SpaceBeforeBlockBraces
   MISSING_MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Layout::SpaceBeforeBrackets
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Layout::SpaceBeforeComment
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -43783,6 +43614,12 @@ class RuboCop::Cop::Layout::TrailingWhitespace
   MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Lint::AmbiguousAssignment
+  MISTAKES = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+  SIMPLE_ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Lint::AmbiguousBlockAssociation
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -43808,7 +43645,7 @@ class RuboCop::Cop::Lint::BigDecimalNew
 end
 
 class RuboCop::Cop::Lint::BinaryOperatorWithIdenticalOperands
-  MATH_OPERATORS = ::T.let(nil, ::T.untyped)
+  ALLOWED_MATH_OPERATORS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -43837,6 +43674,11 @@ class RuboCop::Cop::Lint::DeprecatedClassMethods
   DEPRECATED_METHODS_OBJECT = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::DeprecatedConstants
+  DO_NOT_USE_MSG = ::T.let(nil, ::T.untyped)
+  SUGGEST_GOOD_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::DeprecatedOpenSSLConstant
@@ -43995,6 +43837,11 @@ class RuboCop::Cop::Lint::InterpolationCheck
   MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Lint::LambdaWithoutLiteralBlock
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Lint::LiteralAsCondition
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -44107,6 +43954,12 @@ end
 
 class RuboCop::Cop::Lint::RedundantCopEnableDirective
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::RedundantDirGlobSort
+  GLOB_METHODS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantRequireStatement
@@ -44412,6 +44265,7 @@ class RuboCop::Cop::Naming::HeredocDelimiterNaming
 end
 
 class RuboCop::Cop::Naming::MemoizedInstanceVariableName
+  DYNAMIC_DEFINE_METHODS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   UNDERSCORE_REQUIRED = ::T.let(nil, ::T.untyped)
 end
@@ -45664,6 +45518,12 @@ class RuboCop::Cop::Style::EndBlock
   MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Style::EndlessMethod
+  CORRECTION_STYLES = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+  MSG_MULTI_LINE = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Style::EvalWithLocation
   MSG = ::T.let(nil, ::T.untyped)
   MSG_INCORRECT_LINE = ::T.let(nil, ::T.untyped)
@@ -45730,6 +45590,11 @@ end
 
 class RuboCop::Cop::Style::HashEachMethods
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::HashExcept
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::HashLikeCase
@@ -46560,7 +46425,13 @@ class RuboCop::TargetRuby::GemspecFile
 end
 
 class RuboCop::TargetRuby::RubyVersionFile
-  FILENAME = ::T.let(nil, ::T.untyped)
+  RUBY_VERSION_FILENAME = ::T.let(nil, ::T.untyped)
+  RUBY_VERSION_PATTERN = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::TargetRuby::ToolVersionsFile
+  TOOL_VERSIONS_FILENAME = ::T.let(nil, ::T.untyped)
+  TOOL_VERSIONS_PATTERN = ::T.let(nil, ::T.untyped)
 end
 
 RuboCop::Token = RuboCop::AST::Token
@@ -46617,15 +46488,131 @@ class RubyLex::TerminateLineInput
 end
 
 class RubyLex
-  def self.compile_with_errors_suppressed(code); end
 end
 
 module RubyNext
   LAST_MINOR_VERSIONS = ::T.let(nil, ::T.untyped)
   LATEST_VERSION = ::T.let(nil, ::T.untyped)
   MIN_SUPPORTED_VERSION = ::T.let(nil, ::T.untyped)
+  NEXT_VERSION = ::T.let(nil, ::T.untyped)
   RUBY_NEXT_DIR = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module RubyNext::Core
+end
+
+class RubyNext::Core::Patch
+  def body(); end
+
+  def core_ext(); end
+
+  def core_ext?(); end
+
+  def initialize(mod=T.unsafe(nil), method:, version:, name: T.unsafe(nil), supported: T.unsafe(nil), native: T.unsafe(nil), location: T.unsafe(nil), refineable: T.unsafe(nil), core_ext: T.unsafe(nil), singleton: T.unsafe(nil)); end
+
+  def location(); end
+
+  def method_name(); end
+
+  def mod(); end
+
+  def name(); end
+
+  def native(); end
+
+  def native?(); end
+
+  def prepend?(); end
+
+  def refineables(); end
+
+  def singleton(); end
+
+  def singleton?(); end
+
+  def supported(); end
+
+  def supported?(); end
+
+  def to_module(); end
+
+  def version(); end
+end
+
+class RubyNext::Core::Patch
+end
+
+class RubyNext::Core::Patches
+  def <<(patch); end
+
+  def extensions(); end
+
+  def refined(); end
+end
+
+class RubyNext::Core::Patches
+end
+
+module RubyNext::Core
+  def self.backports?(); end
+
+  def self.core_ext?(); end
+
+  def self.inject!(contents); end
+
+  def self.patch(*_, &_1); end
+
+  def self.patches(); end
+
+  def self.refine?(); end
+
+  def self.strategy(); end
+
+  def self.strategy=(val); end
+end
+
+module RubyNext::Language
+end
+
+module RubyNext::Language::GemTranspiler
+end
+
+module RubyNext::Language::GemTranspiler
+  def self.maybe_transpile(root_dir, lib_dir, target_dir); end
+end
+
+module RubyNext::Language
+  def self.runtime?(); end
+
+  def self.setup_gem_load_path(lib_dir=T.unsafe(nil), rbnext_dir: T.unsafe(nil), transpile: T.unsafe(nil)); end
+end
+
+module RubyNext::Utils
+end
+
+module RubyNext::Utils
+  def self.refine_modules?(); end
+
+  def self.resolve_feature_path(feature); end
+
+  def self.source_with_lines(source, path); end
+end
+
+module RubyNext
+  def self.current_ruby_version(); end
+
+  def self.debug_enabled(); end
+
+  def self.debug_enabled=(val); end
+
+  def self.debug_source(source, filepath=T.unsafe(nil)); end
+
+  def self.next_ruby_version(version=T.unsafe(nil)); end
+
+  def self.silence_warnings=(silence_warnings); end
+
+  def self.warn(msg); end
 end
 
 class RubyVM::AbstractSyntaxTree::Node
@@ -46694,13 +46681,15 @@ module SdrClient::CLI
 end
 
 module SdrClient::CLI
+  def self.deposit(command, options, arguments); end
+
   def self.display_errors(errors); end
 
   def self.help(); end
 
   def self.poll_for_job_complete(job_id:, url:); end
 
-  def self.start(command, options); end
+  def self.start(command, options, arguments=T.unsafe(nil)); end
 
   def self.validate_deposit_options(options); end
 end
@@ -46709,6 +46698,8 @@ class SdrClient::Connection
   include ::Dry::Monads::Result::Mixin
   include ::Dry::Monads::Result::Mixin::Constructors
   def connection(); end
+
+  def get(*_, &_1); end
 
   def initialize(url:, token: T.unsafe(nil)); end
 
@@ -46884,6 +46875,10 @@ class SdrClient::Deposit::Files::DirectUploadResponse
 
   def metadata=(_); end
 
+  def service_name(); end
+
+  def service_name=(_); end
+
   def signed_id(); end
 
   def signed_id=(_); end
@@ -47018,6 +47013,14 @@ class SdrClient::Error
 end
 
 class SdrClient::Error
+end
+
+module SdrClient::Find
+  DRO_PATH = ::T.let(nil, ::T.untyped)
+end
+
+module SdrClient::Find
+  def self.run(druid, url:, logger: T.unsafe(nil)); end
 end
 
 module SdrClient::Login
@@ -47470,16 +47473,6 @@ end
 
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
-  def ext(newext=T.unsafe(nil)); end
-
-  def pathmap(spec=T.unsafe(nil), &block); end
-
-  def pathmap_explode(); end
-
-  def pathmap_partial(n); end
-
-  def pathmap_replace(patterns, &block); end
-
   def shellescape(); end
 
   def shellsplit(); end
@@ -49187,12 +49180,11 @@ class UnboundMethod
   def bind_call(*_); end
 end
 
-module Unicode::DisplayWidth
+class Unicode::DisplayWidth
   DATA_DIRECTORY = ::T.let(nil, ::T.untyped)
   DEPTHS = ::T.let(nil, ::T.untyped)
   INDEX = ::T.let(nil, ::T.untyped)
   INDEX_FILENAME = ::T.let(nil, ::T.untyped)
-  NO_STRING_EXT = ::T.let(nil, ::T.untyped)
   UNICODE_VERSION = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -49843,6 +49835,10 @@ class ViewComponent::Base
 end
 
 class ViewComponent::Collection
+  def component(); end
+
+  def format(*_, &_1); end
+
   def initialize(component, object, **options); end
 
   def render_in(view_context, &block); end

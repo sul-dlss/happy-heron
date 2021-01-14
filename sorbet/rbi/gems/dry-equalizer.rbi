@@ -10,7 +10,6 @@
 # dry-equalizer-0.3.0
 
 module Dry
-  def self.Equalizer(*keys, **options); end
 end
 class Dry::Equalizer < Module
   def define_cmp_method; end
