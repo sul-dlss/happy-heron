@@ -20,9 +20,11 @@ class DraftWorkForm < Reform::Form
   property :access
   property :license
   property :agree_to_terms
+  property :created_type, virtual: true, prepopulator: (proc do |*|
+    self.created_type = created_edtf.is_a?(EDTF::Interval) ? 'range' : 'single'
+  end)
   property :created_edtf, edtf: true, range: true
   property :published_edtf, edtf: true
-
   property :release, virtual: true, default: 'immediate'
   property :embargo_date, embargo_date: true, assign_if: ->(params) { params['release'] == 'embargo' }
 

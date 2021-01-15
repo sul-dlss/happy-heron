@@ -115,6 +115,28 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'created_type prepopulation' do
+    before do
+      form.prepopulate!
+    end
+
+    context 'when created_edtf is a single date' do
+      let(:work) { build(:valid_work, :with_creation_date) }
+
+      it 'is set to "single"' do
+        expect(form.created_type).to eq('single')
+      end
+    end
+
+    context 'when created_edtf is a range' do
+      let(:work) { build(:valid_work, :with_creation_date_range) }
+
+      it 'is set to "range"' do
+        expect(form.created_type).to eq('range')
+      end
+    end
+  end
+
   describe 'type and subtype validation' do
     it 'does not validate with an invalid work type' do
       form.validate(work_type: 'a pile of something')
