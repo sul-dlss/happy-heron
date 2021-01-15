@@ -11,7 +11,7 @@ class BaseDepositJob < ApplicationJob
   class LoginFromSettings
     extend T::Sig
 
-    sig { returns(email: String, password: String) }
+    sig { returns(T::Hash[Symbol, String]) }
     def self.run
       { email: Settings.sdr_api.email, password: Settings.sdr_api.password }
     end
