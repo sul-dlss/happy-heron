@@ -16,6 +16,7 @@ module Collections
 
     def works
       policy.authorized_scope(collection.works, as: :edits)
+            .order('updated_at DESC')
     end
 
     private

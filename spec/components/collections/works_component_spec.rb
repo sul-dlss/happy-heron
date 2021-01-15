@@ -7,7 +7,7 @@ RSpec.describe Collections::WorksComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
   context 'when displaying a collections works' do
-    let(:collection) { build_stubbed(:collection, :with_works) }
+    let(:collection) { create(:collection, :with_works) }
     let(:user_with_groups) { UserWithGroups.new(user: user, groups: groups) }
     let(:user) { create(:user) }
     let(:groups) { [Settings.authorization_workgroup_names.administrators] }
