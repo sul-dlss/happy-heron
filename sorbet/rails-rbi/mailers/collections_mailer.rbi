@@ -3,6 +3,9 @@
 # Please rerun bundle exec rake rails_rbi:mailers to regenerate.
 class CollectionsMailer
   sig { returns(ActionMailer::MessageDelivery) }
+  def self.collection_activity; end
+
+  sig { returns(ActionMailer::MessageDelivery) }
   def self.deposit_access_removed_email; end
 
   sig { returns(ActionMailer::MessageDelivery) }

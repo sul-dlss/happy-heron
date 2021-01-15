@@ -16,6 +16,12 @@ module Works
       form.object
     end
 
+    def radio_button_options
+      { class: 'form-check-input' }.tap do |options|
+        options[:checked] = true if embargo_date.present?
+      end
+    end
+
     def year_field
       select_year embargo_year,
                   {

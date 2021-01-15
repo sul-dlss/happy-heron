@@ -6,7 +6,7 @@
 
   <div class="mb-3 row">
     <div class="col-sm-10 release-option">
-      <%= form.radio_button :release, 'immediate', class: 'form-check-input' %>
+      <%= form.radio_button :release, 'immediate', radio_button_options %>
       <%= form.label :release_immediate, 'Immediately once deposit is completed' %>
     </div>
   </div>
@@ -14,7 +14,7 @@
   <div class="embargo-date" data-controller="embargo-date" data-action="error->embargo-date#error" data-edit-deposit-target="embargo-dateField">
     <div class="mb-5 row" data-embargo-date-target="container">
       <div class="col-sm-10 release-option">
-        <%= form.radio_button :release, 'embargo', class: 'form-check-input' %>
+        <%= form.radio_button :release, 'embargo', radio_button_options %>
         <%= form.label :release_embargo, 'On this date' %>
 
         <div class="year">

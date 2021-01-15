@@ -22,9 +22,8 @@ class DraftWorkForm < Reform::Form
   property :agree_to_terms
   property :created_edtf, edtf: true, range: true
   property :published_edtf, edtf: true
-
   property :release, virtual: true, default: 'immediate'
-  property :embargo_date, embargo_date: true, assign_if: ->(params) { params['release'] == 'embargo' }
+  property :embargo_date, embargo_date: true
 
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true

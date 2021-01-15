@@ -80,5 +80,12 @@ module Works
     def reform
       form.object
     end
+
+    def radio_button_options(type:)
+      { class: 'form-check-input' }.tap do |options|
+        options[:checked] = true if (type == 'range' && created_interval) ||
+                                    (type == 'single' && created_edtf)
+      end
+    end
   end
 end

@@ -9,7 +9,7 @@ class EmbargoDateParamsFilter
       next unless dfn[:embargo_date]
 
       name = dfn[:name]
-      date_attributes[name] = deserialize(params, name) if dfn[:assign_if].call(params)
+      date_attributes[name] = params['release'] == 'embargo' ? deserialize(params, name) : nil
     end
 
     params.merge(date_attributes)

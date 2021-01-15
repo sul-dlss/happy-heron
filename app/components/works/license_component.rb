@@ -9,5 +9,11 @@ module Works
     end
 
     attr_reader :form
+
+    delegate :license, to: :reform
+
+    def reform
+      form.object
+    end
   end
 end
