@@ -5,11 +5,6 @@
 class CollectionChangeSet
   extend T::Sig
 
-  sig { params(collection: Collection).returns(PointInTime) }
-  def self.from(collection)
-    PointInTime.new(collection)
-  end
-
   sig { params(point1: PointInTime, point2: PointInTime).void }
   def initialize(point1, point2)
     @point1 = point1
@@ -83,7 +78,7 @@ class CollectionChangeSet
     attr_reader :depositors, :reviewers, :managers
 
     sig { params(collection: Collection).returns(CollectionChangeSet) }
-    def to(collection)
+    def diff(collection)
       CollectionChangeSet.new(self, PointInTime.new(collection))
     end
   end

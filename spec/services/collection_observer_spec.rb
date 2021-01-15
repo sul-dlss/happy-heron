@@ -9,7 +9,7 @@ RSpec.describe CollectionObserver do
   describe '.after_update_published' do
     subject(:action) { described_class.after_update_published(collection, nil) }
 
-    let(:change_set) { CollectionChangeSet.from(collection).to(collection_after) }
+    let(:change_set) { CollectionChangeSet::PointInTime.new(collection).diff(collection_after) }
 
     before do
       collection.event_context = { user: collection.creator, change_set: change_set }

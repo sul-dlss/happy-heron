@@ -51,7 +51,7 @@ RSpec.describe Collection do
 
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :deposited) }
-      let(:change_set) { CollectionChangeSet.from(collection).to(collection) }
+      let(:change_set) { CollectionChangeSet::PointInTime.new(collection).diff(collection) }
 
       before do
         collection.event_context = { user: collection.creator, change_set: change_set }
