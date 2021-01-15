@@ -64,13 +64,22 @@ RSpec.describe WorkForm do
     end
 
     context 'with contributors' do
-      let(:embargo) { { embargo_date: Date.new } }
-      let(:work) { build(:work, :with_contributors, :with_attached_file, :with_keywords, embargo) }
+      let(:work) { build(:valid_work) }
 
       it 'validates' do
         expect(form).to be_valid
         expect(form.errors.messages).not_to include(contributor_error)
       end
+    end
+  end
+
+  describe 'embargo date validation' do
+    let(:embargo_error) { { 'embargo-date' => ['Must provide all parts'] } }
+    let(:work) { build(:valid_work, :embargoed) }
+
+    it 'validates' do
+      expect(form).to be_valid
+      expect(form.errors.messages).not_to include(embargo_error)
     end
   end
 
