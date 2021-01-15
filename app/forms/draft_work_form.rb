@@ -25,8 +25,10 @@ class DraftWorkForm < Reform::Form
   end)
   property :created_edtf, edtf: true, range: true
   property :published_edtf, edtf: true
-  property :release, virtual: true, default: 'immediate'
-  property :embargo_date, embargo_date: true, assign_if: ->(params) { params['release'] == 'embargo' }
+  property :release, virtual: true, prepopulator: (proc do |*|
+    self.release = embargo_date.present? ? 'embargo' : 'immediate'
+  end)
+  property :embargo_date, embargo_date: true
 
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true

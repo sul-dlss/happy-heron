@@ -56,30 +56,32 @@ RSpec.describe WorkForm do
   describe 'contributors validation' do
     let(:contributor_error) { { contributors: ['Please add at least one contributor.'] } }
 
+    before do
+      form.validate(contributors: contributors)
+    end
+
     context 'with no contributors' do
+      let(:contributors) { [] }
+
       it 'does not validate' do
-        expect(form).not_to be_valid
         expect(form.errors.messages).to include(contributor_error)
       end
     end
 
     context 'with contributors' do
-      let(:work) { build(:valid_work) }
+      let(:contributors) do
+        [
+          { '_destroy' => 'false', 'first_name' => 'Naomi',
+            'last_name' => 'Dushay', 'full_name' => 'Stanford', 'role_term' => 'person|Author' },
+          { '_destroy' => 'false', 'first_name' => 'Naomi',
+            'last_name' => 'Dushay', 'full_name' => 'The Leland Stanford Junior University',
+            'role_term' => 'organization|Host institution' }
+        ]
+      end
 
-      it 'validates' do
-        expect(form).to be_valid
+      it 'validates with contributors in place' do
         expect(form.errors.messages).not_to include(contributor_error)
       end
-    end
-  end
-
-  describe 'embargo date validation' do
-    let(:embargo_error) { { 'embargo-date' => ['Must provide all parts'] } }
-    let(:work) { build(:valid_work, :embargoed) }
-
-    it 'validates' do
-      expect(form).to be_valid
-      expect(form.errors.messages).not_to include(embargo_error)
     end
   end
 
@@ -112,28 +114,6 @@ RSpec.describe WorkForm do
     it 'validates' do
       form.validate(license: License.license_list.first)
       expect(form.errors.messages).not_to include({ license: ['is not included in the list'] })
-    end
-  end
-
-  describe 'created_type prepopulation' do
-    before do
-      form.prepopulate!
-    end
-
-    context 'when created_edtf is a single date' do
-      let(:work) { build(:valid_work, :with_creation_date) }
-
-      it 'is set to "single"' do
-        expect(form.created_type).to eq('single')
-      end
-    end
-
-    context 'when created_edtf is a range' do
-      let(:work) { build(:valid_work, :with_creation_date_range) }
-
-      it 'is set to "range"' do
-        expect(form.created_type).to eq('range')
-      end
     end
   end
 
