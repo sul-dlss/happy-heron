@@ -1,5 +1,5 @@
 <tr>
-  <td class="work-title"><%= link_to Works::DetailComponent.new(work: work).title, work %></td>
+  <%= render Works::LinkToShowComponent.new(work: work) %>
   <td>
     <% if allowed_to? :edit?, work %>
       <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work: work).title}" } do %>
