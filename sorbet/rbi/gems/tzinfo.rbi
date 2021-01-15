@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/tzinfo/all/tzinfo.rbi
 #
-# tzinfo-1.2.8
+# tzinfo-1.2.9
 
 module TZInfo
 end

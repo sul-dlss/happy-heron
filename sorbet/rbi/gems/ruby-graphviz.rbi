@@ -188,11 +188,14 @@ class Dot2Ruby
   def run(xFile); end
   include GraphViz::Utils
 end
+class DoubleException < RuntimeError
+end
 class GraphViz::Types
 end
-class GraphViz::Types::LblString < GraphViz::Types::Common
+class GraphViz::Types::GvDouble < GraphViz::Types::Common
   def check(data); end
   def output; end
+  def to_f; end
   def to_gv; end
   def to_ruby; end
   def to_s; end
@@ -206,6 +209,20 @@ class GraphViz::Types::GvBool < GraphViz::Types::Common
   def to_ruby; end
   def to_s; end
 end
+class SplineTypeException < RuntimeError
+end
+class GraphViz::Types::SplineType < GraphViz::Types::Common
+  def check(data); end
+  def endp; end
+  def output; end
+  def point; end
+  def point?; end
+  def splite_type?; end
+  def startp; end
+  def to_gv; end
+  def to_s; end
+  def triples; end
+end
 class GraphViz::Types::ArrowType < GraphViz::Types::Common
   def check(data); end
   def output; end
@@ -213,7 +230,30 @@ class GraphViz::Types::ArrowType < GraphViz::Types::Common
   def to_ruby; end
   def to_s; end
 end
+class GraphViz::Types::LblString < GraphViz::Types::Common
+  def check(data); end
+  def output; end
+  def to_gv; end
+  def to_ruby; end
+  def to_s; end
+end
 class GraphViz::Types::HtmlString < GraphViz::Types::Common
+  def check(data); end
+  def output; end
+  def to_gv; end
+  def to_ruby; end
+  def to_s; end
+end
+class RectException < RuntimeError
+end
+class GraphViz::Types::Rect < GraphViz::Types::Common
+  def check(data); end
+  def output; end
+  def to_gv; end
+  def to_ruby; end
+  def to_s; end
+end
+class GraphViz::Types::EscString < GraphViz::Types::Common
   def check(data); end
   def output; end
   def to_gv; end
@@ -260,46 +300,6 @@ class GraphViz::Types::Color < GraphViz::Types::Common
   def to_gv; end
   def to_ruby; end
   def to_s; end
-end
-class RectException < RuntimeError
-end
-class GraphViz::Types::Rect < GraphViz::Types::Common
-  def check(data); end
-  def output; end
-  def to_gv; end
-  def to_ruby; end
-  def to_s; end
-end
-class DoubleException < RuntimeError
-end
-class GraphViz::Types::GvDouble < GraphViz::Types::Common
-  def check(data); end
-  def output; end
-  def to_f; end
-  def to_gv; end
-  def to_ruby; end
-  def to_s; end
-end
-class GraphViz::Types::EscString < GraphViz::Types::Common
-  def check(data); end
-  def output; end
-  def to_gv; end
-  def to_ruby; end
-  def to_s; end
-end
-class SplineTypeException < RuntimeError
-end
-class GraphViz::Types::SplineType < GraphViz::Types::Common
-  def check(data); end
-  def endp; end
-  def output; end
-  def point; end
-  def point?; end
-  def splite_type?; end
-  def startp; end
-  def to_gv; end
-  def to_s; end
-  def triples; end
 end
 class GraphViz::Types::ColorList < GraphViz::Types::Common
   def check(data); end

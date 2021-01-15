@@ -81,8 +81,11 @@ RSpec.describe 'Updating an existing collection' do
           end
         end
 
-        context 'when depositors are removed from a collection' do
-          let(:collection) { create(:collection, :deposited, :with_depositors, depositor_count: 2, managers: [user]) }
+        context 'when the collection was previously deposited' do
+          let(:collection) do
+            create(:collection, :deposited, :with_depositors, :email_depositors_status_changed, depositor_count: 2,
+                                                                                                managers: [user])
+          end
           let(:collection_params) do
             {
               name: 'My Test Collection',
@@ -96,47 +99,25 @@ RSpec.describe 'Updating an existing collection' do
               reviewer_sunets: ''
             }
           end
-
-          it 'sends emails to those removed' do
-            expect do
-              patch "/collections/#{collection.id}",
-                    params: { collection: collection_params, commit: save_draft_button }
-            end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-              'CollectionsMailer', 'deposit_access_removed_email', 'deliver_now',
-              { params: { user: collection.depositors.last, collection: collection }, args: [] }
-            )
-            expect(response).to have_http_status(:found)
-            expect(response).to redirect_to(collection)
-          end
-        end
-
-        context 'when reviewers are added to a collection' do
-          let(:collection) { create(:collection, :deposited, managers: [user]) }
-          let(:reviewer) { create(:user) }
-          let(:collection_params) do
-            {
-              name: 'My Test Collection',
-              description: 'This is a very good collection.',
-              contact_email: user.email,
-              access: 'world',
-              manager_sunets: user.sunetid,
-              depositor_sunets: '',
-              email_depositors_status_changed: true,
-              review_enabled: 'true',
-              reviewer_sunets: reviewer.sunetid
-            }
+          let(:method) do
+            Collection.state_machines[:state].callbacks[:after].find do |cb|
+              cb.instance_variable_get(:@methods).any? do |method|
+                method.is_a?(Method) && method.original_name == :after_update_published
+              end
+            end
           end
 
-          it 'sends emails to those removed' do
-            expect do
-              patch "/collections/#{collection.id}",
-                    params: { collection: collection_params, commit: save_draft_button }
-            end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-              'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
-              { params: { user: reviewer, collection: collection }, args: [] }
-            )
+          before do
+            allow(method).to receive(:call)
+          end
+
+          it 'runs the observer method after_update_published' do
+            patch "/collections/#{collection.id}",
+                  params: { collection: collection_params, commit: save_draft_button }
+
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(collection)
+            expect(method).to have_received(:call)
           end
         end
       end

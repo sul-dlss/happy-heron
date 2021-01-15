@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/action_policy/all/action_policy.rbi
 #
-# action_policy-0.5.4
+# action_policy-0.5.5
 
 module ActionPolicy
   def self.cache_store; end

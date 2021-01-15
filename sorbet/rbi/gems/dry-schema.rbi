@@ -71,7 +71,6 @@ class Dry::Schema::Config
   extend Dry::Configurable::ClassMethods
   include Anonymous_Dry_Equalizer_128
   include Dry::Configurable
-  include Dry::Configurable::InstanceMethods
   include Dry::Equalizer::Methods
 end
 module Anonymous_Dry_Equalizer_128
@@ -563,7 +562,6 @@ class Dry::Schema::Messages::Abstract
   extend Dry::Configurable::ClassMethods
   include Anonymous_Dry_Equalizer_152
   include Dry::Configurable
-  include Dry::Configurable::InstanceMethods
   include Dry::Equalizer::Methods
 end
 module Anonymous_Dry_Equalizer_152
