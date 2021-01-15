@@ -42,6 +42,20 @@ RSpec.describe CollectionObserver do
       end
     end
 
+    context 'when managers are removed from a collection' do
+      let(:collection_after) { collection.dup.tap { |col| col.managers = [collection.managers.first] } }
+      let(:collection) do
+        create(:collection, :deposited, :with_managers, manager_count: 2)
+      end
+
+      it 'sends emails to those removed' do
+        expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+          'CollectionsMailer', 'manage_access_removed_email', 'deliver_now',
+          { params: { user: collection.managers.last, collection: collection }, args: [] }
+        )
+      end
+    end
+
     context 'when reviewers are added to a collection' do
       let(:collection) { create(:collection, :deposited) }
       let(:reviewer) { create(:user) }

@@ -24,6 +24,10 @@ class CollectionChangeSet
     point1.depositors - point2.depositors
   end
 
+  def removed_managers
+    point1.managers - point2.managers
+  end
+
   attr_reader :point1, :point2
 
   # Represents a collection at a fixed point in time
@@ -33,9 +37,10 @@ class CollectionChangeSet
       # underlying data in the database is mutable
       @depositors = collection.depositors.to_a
       @reviewers = collection.reviewers.to_a
+      @managers = collection.managers.to_a
     end
 
-    attr_reader :depositors, :reviewers
+    attr_reader :depositors, :reviewers, :managers
 
     def to(collection)
       CollectionChangeSet.new(self, PointInTime.new(collection))
