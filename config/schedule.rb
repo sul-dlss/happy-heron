@@ -5,5 +5,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every :day, at: '1:00am' do
-  runner 'WorkReminderGenerator.send_first_draft_reminders'
+  runner 'WorkReminderGenerator.send_draft_reminders'
 end
