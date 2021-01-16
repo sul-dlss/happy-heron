@@ -77,12 +77,7 @@
           between date of deposit and
         <% end %>
         <%= form.select :release_duration,
-          options_for_select([['1 month from date of deposit', '1 month'],
-                              ['3 months from date of deposit', '3 month'],
-                              ['6 months from date of deposit', '6 month'],
-                              ['1 year from date of deposit', '1 year'],
-                              ['2 years from date of deposit', '2 years'],
-                              ['3 years from date of deposit', '3 years']]),
+          options_for_select(collection_form.class::EMBARGO_RELEASE_DURATION_OPTIONS),
                               {},
                               class: 'form-select release-duration' %>
       </div>
