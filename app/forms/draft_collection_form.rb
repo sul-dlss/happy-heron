@@ -6,10 +6,10 @@ class DraftCollectionForm < Reform::Form
   extend T::Sig
   feature EmbargoDate
 
-  EMBARGO_RELEASE_DURATION_OPTIONS = [['6 months from date of deposit', '6 month'],
-                                      ['1 year from date of deposit', '1 year'],
-                                      ['2 years from date of deposit', '2 years'],
-                                      ['3 years from date of deposit', '3 years']].freeze
+  EMBARGO_RELEASE_DURATION_OPTIONS = { '6 months from date of deposit': '6 month',
+                                       '1 year from date of deposit': '1 year',
+                                       '2 years from date of deposit': '2 years',
+                                       '3 years from date of deposit': '3 years' }.freeze
 
   property :name
   property :description
@@ -44,7 +44,7 @@ class DraftCollectionForm < Reform::Form
   validate :reviewable_form
   validates :release_date, embargo_date: true
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
-  validates :release_duration, inclusion: { in: EMBARGO_RELEASE_DURATION_OPTIONS.map(&:last) }, allow_blank: true
+  validates :release_duration, inclusion: { in: EMBARGO_RELEASE_DURATION_OPTIONS.values }, allow_blank: true
 
   def sync(*)
     update_depositors
