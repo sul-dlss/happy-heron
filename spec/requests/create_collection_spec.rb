@@ -116,7 +116,7 @@ RSpec.describe 'Create a collection' do
             'release_date(1i)' => '2020',
             'release_date(2i)' => '7',
             'release_date(3i)' => '14',
-            'release_duration' => '1 month',
+            'release_duration' => '1 year',
             related_links_attributes: related_links
           }
         end
