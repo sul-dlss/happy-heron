@@ -6,7 +6,7 @@ class DraftCollectionForm < Reform::Form
   extend T::Sig
   feature EmbargoDate
 
-  EMBARGO_RELEASE_DURATION_OPTIONS = { '6 months from date of deposit': '6 month',
+  EMBARGO_RELEASE_DURATION_OPTIONS = { '6 months from date of deposit': '6 months',
                                        '1 year from date of deposit': '1 year',
                                        '2 years from date of deposit': '2 years',
                                        '3 years from date of deposit': '3 years' }.freeze
