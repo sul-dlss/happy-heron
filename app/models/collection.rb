@@ -36,6 +36,8 @@ class Collection < ApplicationRecord
     before_transition do |collection, transition|
       # filters out bits of the context that don't go into the event, e.g.: :change_set
       event_params = collection.event_context.slice(:user)
+      change_set = collection.event_context.fetch(:change_set, nil)
+      event_params[:description] = change_set.participant_change_description if change_set&.participants_changed?
       collection.events.build(event_params.merge(event_type: transition.event))
     end
 

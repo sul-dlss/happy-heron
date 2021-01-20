@@ -120,6 +120,49 @@ RSpec.describe 'Updating an existing collection' do
             expect(method).to have_received(:call)
           end
         end
+
+        context 'when depositors or reviewers are removed from a collection' do
+          let(:reviewer) { create(:user, email: 'v.stern@stanford.edu') }
+          let(:reviewer2) { create(:user, email: 'w.a.sterner@stanford.edu') }
+          let!(:removed_depositor) { collection.depositors.second } # needs to be instantiated before collection edit
+          let(:collection) do
+            create(:collection, :deposited, :with_depositors, :email_when_participants_changed,
+                   depositor_count: 2, managers: [user], reviewers: [reviewer, reviewer2])
+          end
+          let(:collection_params) do
+            {
+              name: 'My Test Collection',
+              description: 'This is a very good collection.',
+              contact_email: user.email,
+              access: 'world',
+              manager_sunets: user.sunetid,
+              depositor_sunets: collection.depositors.first.sunetid,
+              email_depositors_status_changed: true,
+              review_enabled: 'true',
+              reviewer_sunets: 'v.stern'
+            }
+          end
+
+          it 'logs the changes in the event description' do
+            patch "/collections/#{collection.id}",
+                  params: { collection: collection_params, commit: save_draft_button }
+            event_description = collection.reload.events.order(created_at: :desc).take.description
+            expect(event_description).to match(/Removed reviewers: w.a.sterner/)
+            expect(event_description).to match(/Removed depositors: #{removed_depositor.sunetid}/)
+          end
+
+          context 'when participant change emails are off' do
+            let(:no_notification_param) { collection_params.merge(email_when_participants_changed: false) }
+
+            it 'still logs the changes in the event description' do
+              patch "/collections/#{collection.id}",
+                    params: { collection: collection_params, commit: save_draft_button }
+              event_description = collection.reload.events.order(created_at: :desc).take.description
+              expect(event_description).to match(/Removed reviewers: w.a.sterner/)
+              expect(event_description).to match(/Removed depositors: #{removed_depositor.sunetid}/)
+            end
+          end
+        end
       end
 
       context 'when collection fails to save' do

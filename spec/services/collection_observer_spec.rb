@@ -31,13 +31,54 @@ RSpec.describe CollectionObserver do
         end
       end
 
+      context 'when the collection is configured to send participant change notifications' do
+        let(:reviewer) { create(:user) }
+        let(:reviewer2) { create(:user) }
+        let(:manager) { create(:user) }
+        let(:collection) do
+          create(:collection, :deposited, :with_depositors, :email_when_participants_changed,
+                 managers: [manager], reviewers: [reviewer, reviewer2], depositor_count: 2)
+        end
+
+        it 'sends emails to the managers about the participants change' do
+          expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+            'CollectionsMailer', 'participants_changed_email', 'deliver_now',
+            { params: { user: manager, collection: collection }, args: [] }
+          )
+        end
+
+        it 'sends emails to the reviewers about the participants change' do
+          expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+            'CollectionsMailer', 'participants_changed_email', 'deliver_now',
+            { params: { user: reviewer, collection: collection }, args: [] }
+          ).and have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+            'CollectionsMailer', 'participants_changed_email', 'deliver_now',
+            { params: { user: reviewer2, collection: collection }, args: [] }
+          )
+        end
+      end
+
       context 'when the collection is not configured to send notifications to depositors' do
         let(:collection) do
-          create(:collection, :deposited, :with_depositors, depositor_count: 2)
+          create(:collection, :deposited, :email_when_participants_changed, :with_depositors, depositor_count: 2)
         end
 
         it 'sends no emails' do
-          expect { action }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
+          expect { action }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+            'CollectionsMailer', 'deposit_access_removed_email', anything, anything
+          )
+        end
+      end
+
+      context 'when the collection is not configured to send participant change notifications' do
+        let(:collection) do
+          create(:collection, :deposited, :email_depositors_status_changed, :with_depositors, depositor_count: 2)
+        end
+
+        it 'does not send notification about the participant change' do
+          expect { action }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+            'CollectionsMailer', 'participants_changed_email', anything, anything
+          )
         end
       end
     end
