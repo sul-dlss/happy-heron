@@ -23,6 +23,15 @@ class ButtonsComponent < ApplicationComponent
     end
   end
 
+  sig { returns(T.nilable(String)) }
+  def cancel_button
+    if model_type == 'Work'
+      render Works::CancelComponent.new(work: object.model)
+    else
+      render Collections::CancelComponent.new(collection: object.model)
+    end
+  end
+
   private
 
   delegate :object, to: :form

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/ruby2_keywords/all/ruby2_keywords.rbi
 #
-# ruby2_keywords-0.0.2
+# ruby2_keywords-0.0.4
 
 class Module
 end
