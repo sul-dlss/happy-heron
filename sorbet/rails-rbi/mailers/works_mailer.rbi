@@ -15,6 +15,9 @@ class WorksMailer
   def self.new_version_deposited_email; end
 
   sig { returns(ActionMailer::MessageDelivery) }
+  def self.new_version_reminder_email; end
+
+  sig { returns(ActionMailer::MessageDelivery) }
   def self.reject_email; end
 
   sig { returns(ActionMailer::MessageDelivery) }

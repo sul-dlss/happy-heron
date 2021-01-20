@@ -6,9 +6,15 @@ module Collections
   class FormComponent < ApplicationComponent
     attr_reader :collection_form
 
+    delegate :release_duration, to: :collection_form
+
     sig { params(collection_form: DraftCollectionForm).void }
     def initialize(collection_form:)
       @collection_form = collection_form
+    end
+
+    def embargo_release_duration_options
+      DraftCollectionForm::EMBARGO_RELEASE_DURATION_OPTIONS
     end
 
     def release_date_year
@@ -25,15 +31,10 @@ module Collections
 
     sig { returns(T.nilable(Date)) }
     def release_date
-      case reform.release_date
+      case collection_form.release_date
       when Date
-        T.cast(reform.release_date, Date)
+        T.cast(collection_form.release_date, Date)
       end
-    end
-
-    sig { returns(DraftCollectionForm) }
-    def reform
-      collection_form
     end
   end
 end

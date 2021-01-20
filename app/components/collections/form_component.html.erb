@@ -77,7 +77,7 @@
           between date of deposit and
         <% end %>
         <%= form.select :release_duration,
-          options_for_select(DraftCollectionForm::EMBARGO_RELEASE_DURATION_OPTIONS, selected: collection_form.release_duration),
+          options_for_select(embargo_release_duration_options, selected: release_duration),
                               {},
                               class: 'form-select release-duration' %>
       </div>
