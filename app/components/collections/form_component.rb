@@ -15,6 +15,10 @@ module Collections
       release_date&.year || Time.zone.today.year
     end
 
+    def release_duration
+      collection_form.release_duration
+    end
+
     def release_date_month
       release_date&.month
     end
