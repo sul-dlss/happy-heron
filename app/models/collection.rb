@@ -57,7 +57,6 @@ class Collection < ApplicationRecord
     end
 
     after_transition to: :version_draft, do: CollectionObserver.method(:after_update_published)
-    after_transition on: :update_metadata, do: CollectionObserver.method(:on_update_metadata)
 
     after_transition do |collection, transition|
       BroadcastCollectionChange.call(collection: collection, state: transition.to_name)

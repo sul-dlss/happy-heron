@@ -16,10 +16,6 @@ class CollectionObserver
     depositors_added(collection)
     depositors_removed(collection)
     reviewers_added(collection)
-  end
-
-  # Whenever metadata is updated
-  def self.on_update_metadata(collection, _transition)
     send_participant_change_emails(collection)
   end
 
