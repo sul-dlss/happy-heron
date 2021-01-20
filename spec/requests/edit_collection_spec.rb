@@ -143,26 +143,6 @@ RSpec.describe 'Updating an existing collection' do
             }
           end
 
-          it 'sends emails to the managers' do
-            expect do
-              patch "/collections/#{collection.id}",
-                    params: { collection: collection_params, commit: save_draft_button }
-            end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-              'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-              { params: { user: user, collection: collection }, args: [] }
-            )
-          end
-
-          it 'sends emails to the reviewers' do
-            expect do
-              patch "/collections/#{collection.id}",
-                    params: { collection: collection_params, commit: save_draft_button }
-            end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-              'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-              { params: { user: collection.reviewers.first, collection: collection }, args: [] }
-            )
-          end
-
           it 'logs the changes in the event description' do
             patch "/collections/#{collection.id}",
                   params: { collection: collection_params, commit: save_draft_button }
@@ -173,15 +153,6 @@ RSpec.describe 'Updating an existing collection' do
 
           context 'when participant change emails are off' do
             let(:no_notification_param) { collection_params.merge(email_when_participants_changed: false) }
-
-            it 'does not send notification about the participant change' do
-              expect do
-                patch "/collections/#{collection.id}",
-                      params: { collection: no_notification_param, commit: save_draft_button }
-              end.not_to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                'CollectionsMailer', 'participants_changed_email', anything, anything
-              )
-            end
 
             it 'still logs the changes in the event description' do
               patch "/collections/#{collection.id}",
