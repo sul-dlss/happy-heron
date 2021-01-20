@@ -9,7 +9,11 @@ class EmbargoDateParamsFilter
       next unless dfn[:embargo_date]
 
       name = dfn[:name]
-      date_attributes[name] = deserialize(params, name) if dfn[:assign_if].call(params)
+      date_attributes[name] = if params.slice(*release_params).values.include?('immediate') # rubocop:disable Performance/InefficientHashSearch
+                                nil # Do not attempt to deserialize date if release is immediate
+                              else
+                                deserialize(params, name)
+                              end
     end
 
     params.merge(date_attributes)
@@ -20,5 +24,12 @@ class EmbargoDateParamsFilter
     month = params.delete("#{date_attribute}(2i)").to_i
     day = params.delete("#{date_attribute}(3i)").to_i
     Date.new(year, month, day) if Date.valid_date?(year, month, day)
+  end
+
+  private
+
+  # Work and Collection models use differently named release params
+  def release_params
+    %w[release release_option]
   end
 end

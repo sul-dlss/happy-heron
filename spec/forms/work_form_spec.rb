@@ -56,19 +56,30 @@ RSpec.describe WorkForm do
   describe 'contributors validation' do
     let(:contributor_error) { { contributors: ['Please add at least one contributor.'] } }
 
+    before do
+      form.validate(contributors: contributors)
+    end
+
     context 'with no contributors' do
+      let(:contributors) { [] }
+
       it 'does not validate' do
-        expect(form).not_to be_valid
         expect(form.errors.messages).to include(contributor_error)
       end
     end
 
     context 'with contributors' do
-      let(:embargo) { { embargo_date: Date.new } }
-      let(:work) { build(:work, :with_contributors, :with_attached_file, :with_keywords, embargo) }
+      let(:contributors) do
+        [
+          { '_destroy' => 'false', 'first_name' => 'Naomi',
+            'last_name' => 'Dushay', 'full_name' => 'Stanford', 'role_term' => 'person|Author' },
+          { '_destroy' => 'false', 'first_name' => 'Naomi',
+            'last_name' => 'Dushay', 'full_name' => 'The Leland Stanford Junior University',
+            'role_term' => 'organization|Host institution' }
+        ]
+      end
 
-      it 'validates' do
-        expect(form).to be_valid
+      it 'validates with contributors in place' do
         expect(form.errors.messages).not_to include(contributor_error)
       end
     end

@@ -347,7 +347,8 @@ RSpec.describe 'Create a new work' do
             contact_email: '',
             abstract: '',
             license: License.license_list.first,
-            work_type: 'text'
+            work_type: 'text',
+            release: 'immediate'
           }
         end
 
@@ -382,6 +383,7 @@ RSpec.describe 'Create a new work' do
             abstract: '',
             license: License.license_list.first,
             work_type: 'text',
+            release: 'immediate',
             citation: 'manual one',
             citation_auto: 'Zappa, F. (2020). Test publication yy/mm date in past. ' \
               'Stanford Digital Repository. Available at :link:',

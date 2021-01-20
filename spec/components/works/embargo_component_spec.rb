@@ -9,14 +9,28 @@ RSpec.describe Works::EmbargoComponent do
   let(:work_form) { WorkForm.new(work) }
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
+  before do
+    work_form.prepopulate!
+  end
+
   it 'renders the component' do
     expect(rendered.to_html)
       .to include('Manage release of this deposit for discovery and download after publication')
   end
 
+  it 'checks the immediate release radio button' do
+    expect(rendered.css('#release_immediate[@checked]')).to be_present
+    expect(rendered.css('#release_embargo[@checked]')).not_to be_present
+  end
+
   context 'when the embargo date is set' do
     let(:embargo_date) { work.embargo_date }
     let(:work) { build(:work, :embargoed) }
+
+    it 'checks the embargo release radio button' do
+      expect(rendered.css('#release_embargo[@checked]')).to be_present
+      expect(rendered.css('#release_immediate[@checked]')).not_to be_present
+    end
 
     it 'renders the year' do
       expect(rendered.css('#work_embargo_year option[@selected]').first['value'])

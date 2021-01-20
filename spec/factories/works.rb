@@ -17,11 +17,12 @@ FactoryBot.define do
     state { 'first_draft' }
     collection
 
-    factory :valid_deposited_work do
-      deposited
-      with_keywords
-      with_contributors
-      with_attached_file
+    factory :valid_work do
+      with_required_associations
+
+      factory :valid_deposited_work do
+        deposited
+      end
     end
   end
 
@@ -31,6 +32,12 @@ FactoryBot.define do
 
   trait :embargoed do
     embargo_date { 30.months.from_now }
+  end
+
+  trait :with_required_associations do
+    with_keywords
+    with_contributors
+    with_attached_file
   end
 
   trait :with_creation_date_range do
