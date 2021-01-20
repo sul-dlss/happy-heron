@@ -39,10 +39,10 @@ class CollectionsController < ObjectsController
   def update
     collection = Collection.find(params[:id])
     authorize! collection
-    change_set = CollectionChangeSet.from(collection)
+    point1 = CollectionChangeSet::PointInTime.new(collection)
     @form = collection_form(collection)
     if @form.validate(collection_params) && @form.save
-      after_save(collection, context: { change_set: change_set.to(collection) })
+      after_save(collection, context: { change_set: point1.diff(collection) })
     else
       # Send form errors to client in JSON format to be parsed and rendered there
       render 'errors', status: :bad_request
