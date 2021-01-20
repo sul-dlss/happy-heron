@@ -6,5 +6,6 @@ class CollectionForm < DraftCollectionForm
   extend T::Sig
 
   validates :name, :description, :manager_sunets, :access, presence: true
+  validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates_with CollectionLicenseValidator
 end

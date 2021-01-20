@@ -302,7 +302,7 @@ RSpec.describe 'Create a new work' do
           {
             title: 'Test title',
             work_type: 'text',
-            contact_email: 'io@io.io',
+            contact_emails_attributes: contact_emails,
             abstract: 'test abstract',
             attached_files_attributes: files,
             authors_attributes: authors,
@@ -329,6 +329,15 @@ RSpec.describe 'Create a new work' do
               'full_name' => 'Stanford', 'role_term' => 'organization|Host institution' } }
         end
 
+        let(:contact_emails) do
+          {
+            '0' => {
+              '_destroy' => false,
+              'email' => 'test@example.com'
+            }
+          }
+        end
+
         let(:files) do
           {
             '0' => {
@@ -347,6 +356,7 @@ RSpec.describe 'Create a new work' do
           expect(work.authors.size).to eq 1
           expect(work.attached_files.size).to eq 1
           expect(work.keywords.size).to eq 1
+          expect(work.contact_emails.size).to eq 1
           expect(work.published_edtf).to be_nil
           expect(work.created_edtf).to be_nil
           expect(work.embargo_date).to be_nil
@@ -361,7 +371,6 @@ RSpec.describe 'Create a new work' do
         let(:work_params) do
           {
             title: '',
-            contact_email: '',
             abstract: '',
             license: License.license_list.first,
             work_type: 'text',
@@ -395,7 +404,6 @@ RSpec.describe 'Create a new work' do
         let(:work_params) do
           {
             title: '',
-            contact_email: '',
             abstract: '',
             license: License.license_list.first,
             work_type: 'text',
@@ -436,9 +444,9 @@ RSpec.describe 'Create a new work' do
           {
             title: 'Test title',
             work_type: 'text',
-            contact_email: 'io@io.io',
             abstract: 'test abstract',
             authors_attributes: authors,
+            contact_emails_attributes: contact_emails,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -452,6 +460,15 @@ RSpec.describe 'Create a new work' do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
+        end
+
+        let(:contact_emails) do
+          {
+            '0' => {
+              '_destroy' => false,
+              'email' => 'test@example.com'
+            }
+          }
         end
 
         let(:upload) do
@@ -480,6 +497,7 @@ RSpec.describe 'Create a new work' do
           work = Work.last
           expect(work.authors.size).to eq 1
           expect(work.attached_files.size).to eq 1
+          expect(work.contact_emails.size).to eq 1
           expect(work.keywords.size).to eq 1
           expect(work.published_edtf).to be_nil
           expect(work.created_edtf).to be_nil
