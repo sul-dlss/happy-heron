@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/ruby-next-core/all/ruby-next-core.rbi
 #
-# ruby-next-core-0.11.1
+# ruby-next-core-0.12.0
 
 module RubyNext
   def self.current_ruby_version; end

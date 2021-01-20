@@ -329,7 +329,7 @@ class Array
   def inquiry; end
   def second; end
   def second_to_last; end
-  def self.wrap(object); end
+  def self.[](*arg0); end
   def split(value = nil); end
   def third; end
   def third_to_last; end

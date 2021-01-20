@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sshkit/all/sshkit.rbi
 #
-# sshkit-1.21.1
+# sshkit-1.21.2
 
 class Array
 end
