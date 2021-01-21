@@ -5,6 +5,7 @@ require 'rails_helper'
 
 RSpec.describe CollectionGenerator do
   let(:model) { described_class.generate_model(collection: collection) }
+  let(:project_tag) { Settings.h2.project_tag }
 
   context 'without a druid' do
     let(:collection) { build(:collection, name: 'Test title', id: 7) }
@@ -15,7 +16,8 @@ RSpec.describe CollectionGenerator do
         version: 0,
         access: { access: 'stanford' },
         administrative: {
-          hasAdminPolicy: 'druid:zx485kb6348'
+          hasAdminPolicy: 'druid:zx485kb6348',
+          partOfProject: project_tag
         },
         description: {
           title: [
@@ -43,7 +45,8 @@ RSpec.describe CollectionGenerator do
         version: 0,
         access: { access: 'stanford' },
         administrative: {
-          hasAdminPolicy: 'druid:zx485kb6348'
+          hasAdminPolicy: 'druid:zx485kb6348',
+          partOfProject: project_tag
         },
         description: {
           title: [

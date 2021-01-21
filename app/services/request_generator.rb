@@ -33,7 +33,8 @@ class RequestGenerator
     {
       access: AccessGenerator.generate(work: work),
       administrative: {
-        hasAdminPolicy: Settings.h2.hydrus_apo
+        hasAdminPolicy: Settings.h2.hydrus_apo,
+        partOfProject: Settings.h2.project_tag
       },
       identification: {
         sourceId: "hydrus:#{work.id}" # TODO: what should this be?
