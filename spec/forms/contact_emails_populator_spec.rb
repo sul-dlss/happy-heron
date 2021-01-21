@@ -18,6 +18,6 @@ RSpec.describe ContactEmailsPopulator do
   it 'removes a contact email row' do
     remove_keep = ActionController::Parameters.new({ '_destroy': '1', 'email': 'test@local.edu' })
     expect(contact_email_populator.call(work_form,
-                                        fragment: remove_keep).to_s).to eq 'Representable::Pipeline::Stop'
+                                        fragment: remove_keep)).to eq Representable::Pipeline::Stop
   end
 end

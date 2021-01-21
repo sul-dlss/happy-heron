@@ -4,8 +4,8 @@ class CreateContactEmails < ActiveRecord::Migration[6.0]
       t.string :email
 
       t.timestamps
+      t.references :emailable, polymorphic: true
     end
-    add_reference :contact_emails, :emailable, polymorphic: true
     remove_column :collections, :contact_email
     remove_column :works, :contact_email
   end

@@ -21,7 +21,7 @@ class DescriptionGenerator
                                       title: title,
                                       contributor: ContributorsGenerator.generate(work: work),
                                       subject: keywords,
-                                      note: [abstract, citation] + contact,
+                                      note: [abstract, citation] + contacts,
                                       event: generate_events,
                                       relatedResource: related_links + related_works,
                                       form: generate_form
@@ -117,7 +117,7 @@ class DescriptionGenerator
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def contact
+  def contacts
     work.contact_emails.map do |email|
       Cocina::Models::DescriptiveValue.new(
         value: email.email,

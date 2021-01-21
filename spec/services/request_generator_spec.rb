@@ -291,11 +291,6 @@ RSpec.describe RequestGenerator do
                 value: 'test citation',
                 type: 'preferred citation'
               }
-              # {
-              #   value: 'io@io.io',
-              #   type: 'contact',
-              #   displayLabel: 'Contact'
-              # }
             ],
             relatedResource: [],
             form: types_form

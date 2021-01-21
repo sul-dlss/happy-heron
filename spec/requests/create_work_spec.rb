@@ -384,7 +384,7 @@ RSpec.describe 'Create a new work' do
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
-          expect(work.contact_emails.size).to eq 0
+          expect(work.contact_emails).to be_empty
           expect(work.abstract).to be_empty
           expect(work.authors).to be_empty
           expect(work.attached_files).to be_empty
@@ -421,7 +421,7 @@ RSpec.describe 'Create a new work' do
           expect(response).to have_http_status(:found)
           work = Work.last
           expect(work.title).to be_empty
-          expect(work.contact_emails.size).to eq 0
+          expect(work.contact_emails).to be_empty
           expect(work.abstract).to be_empty
           expect(work.authors).to be_empty
           expect(work.attached_files).to be_empty
