@@ -12,6 +12,7 @@ class CollectionObserver
 
   # When an already published collection is updated
   def self.after_update_published(collection, _transition)
+    managers_added(collection)
     managers_removed(collection)
     depositors_added(collection)
     depositors_removed(collection)
@@ -26,6 +27,14 @@ class CollectionObserver
     end
   end
   private_class_method :depositors_added
+
+  def self.managers_added(collection)
+    change_set(collection).added_managers.each do |manager|
+      CollectionsMailer.with(collection: collection, user: manager)
+                       .manage_access_granted_email.deliver_later
+    end
+  end
+  private_class_method :managers_added
 
   def self.managers_removed(collection)
     change_set(collection).removed_managers.each do |manager|
