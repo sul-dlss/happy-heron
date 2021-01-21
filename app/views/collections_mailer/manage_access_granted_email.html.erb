@@ -1,0 +1,12 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>You have been invited to be a Manager of the <%= @collection.name %> collection in the
+   Stanford Digital Repository. Managers have the ability to manage global settings for the collection,
+   manage Depositors and other participants, and edit any deposits in the collection.</p>
+
+<p>To visit the collection where deposits are made, and for more information about SDR repository services,
+   please visit http://sdr.stanford.edu.</p>
+
+<p>If you have any questions, contact the SDR team at:  <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>

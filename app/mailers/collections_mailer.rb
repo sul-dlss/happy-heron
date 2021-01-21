@@ -16,6 +16,13 @@ class CollectionsMailer < ApplicationMailer
       'collection in the SDR have been removed')
   end
 
+  def manage_access_granted_email
+    @user = params[:user]
+    @collection = params[:collection]
+    mail(to: @user.email, subject: "You are invited to participate as a Manager in the #{@collection.name} " \
+      'collection in the SDR')
+  end
+
   def manage_access_removed_email
     @user = params[:user]
     @collection = params[:collection]
