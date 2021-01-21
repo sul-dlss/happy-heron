@@ -16,6 +16,7 @@ class CollectionObserver
     depositors_added(collection)
     depositors_removed(collection)
     reviewers_added(collection)
+    reviewers_removed(collection)
     send_participant_change_emails(collection)
   end
 
@@ -52,6 +53,14 @@ class CollectionObserver
     end
   end
   private_class_method :reviewers_added
+
+  def self.reviewers_removed(collection)
+    change_set(collection).removed_reviewers.each do |reviewer|
+      CollectionsMailer.with(collection: collection, user: reviewer)
+                       .review_access_removed_email.deliver_later
+    end
+  end
+  private_class_method :reviewers_removed
 
   def self.change_set(collection)
     collection.event_context.fetch(:change_set)
