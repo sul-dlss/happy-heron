@@ -3,15 +3,7 @@
 
 module Collections
   # Renders the workflow review section of the collection (show page)
-  class WorkflowReviewComponent < ApplicationComponent
-    sig { params(collection: Collection).void }
-    def initialize(collection:)
-      @collection = collection
-    end
-
-    sig { returns(Collection) }
-    attr_reader :collection
-
+  class WorkflowReviewComponent < Collections::ShowComponent
     sig { returns(String) }
     def review_workflow_status
       collection.review_enabled? ? 'On' : 'Off'

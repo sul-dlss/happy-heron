@@ -5,7 +5,7 @@
       action: 'ajax:error->edit-collection#displayErrors'
     },
     html: { class: 'needs-validation row collection-editor', novalidate: true, multipart: true } do |form| %>
-  <section>
+  <section id="details">
     <header>Details</header>
     <div class="mb-3 row">
       <%= form.label :name, 'Collection name', class: 'col-sm-2 col-form-label' %>
@@ -31,11 +31,11 @@
     </div>
   </section>
 
-  <section>
+  <section id="links">
     <%= render RelatedLinkComponent.new(form: form) %>
   </section>
 
-  <section>
+  <section id="release_details">
     <header>Manage release of deposits for discovery and download</header>
 
     <fieldset class="mb-5 release-option">
@@ -106,7 +106,7 @@
     </fieldset>
   </section>
 
-  <section>
+  <section id="participants">
     <header>Collection participants</header>
     <div class="mb-3 row">
       <p class="col-sm-12">Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
@@ -147,7 +147,7 @@
 
   </section>
 
-  <section>
+  <section id="review">
     <header>Review Workflow</header>
 
     <div class="mb-3 row">

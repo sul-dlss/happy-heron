@@ -3,15 +3,7 @@
 
 module Collections
   # Renders the terms of use section of the collection (show page)
-  class TermsOfUseComponent < ApplicationComponent
-    sig { params(collection: Collection).void }
-    def initialize(collection:)
-      @collection = collection
-    end
-
-    sig { returns(Collection) }
-    attr_reader :collection
-
+  class TermsOfUseComponent < Collections::ShowComponent
     delegate :default_license, to: :collection
   end
 end
