@@ -30,5 +30,9 @@ module Works
     def access_from_collection
       'TBD' # TODO: by https://github.com/sul-dlss/happy-heron/pull/884
     end
+
+    def default_access
+      Collection.find(reform.collection_id).access
+    end
   end
 end
