@@ -1,15 +1,6 @@
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="dashboard">
-    <section class="mb-5">
-      <header>Deposits in progress</header>
-      <% @presenter.drafts.each do |draft| %>
-        <div>
-          <%= Dashboard::CollectionHeaderComponent.new(collection: draft.collection).name %> &gt; <%= link_to Works::DetailComponent.new(work: draft).title, edit_work_path(draft) %>
-          <%= render Works::DeleteComponent.new(work: draft) %>
-        </div>
-      <% end %>
-    </section>
-
+    <%= render Dashboard::InProgressComponent.new(presenter: @presenter) %>
     <%= render Dashboard::ApprovalsComponent.new(presenter: @presenter) %>
 
     <section data-controller="work-type">

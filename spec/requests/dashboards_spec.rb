@@ -48,6 +48,29 @@ RSpec.describe 'Dashboard requests' do
     end
   end
 
+  context 'when user has in progress deposits in different states' do
+    before do
+      sign_in user
+      create(:work, depositor: user, state: 'first_draft', title: 'I am a first draft')
+      create(:work, depositor: user, state: 'version_draft', title: 'I am a version draft')
+      create(:work, depositor: user, state: 'rejected', title: 'I am rejected')
+      create(:work, depositor: user, state: 'deposited', title: 'I am deposited')
+      create(:work, depositor: user, state: 'depositing', title: 'I am depositing')
+      create(:work, depositor: user, state: 'pending_approval', title: 'I am pending approval')
+    end
+
+    it 'shows draft and rejected deposits as being in progress' do
+      get '/dashboard'
+      expect(response).to be_successful
+      expect(response.body).to include('I am a first draft')
+      expect(response.body).to include('I am a version draft')
+      expect(response.body).to include('I am rejected')
+      expect(response.body).not_to include('I am deposited')
+      expect(response.body).not_to include('I am depositing')
+      expect(response.body).not_to include('I am pending approval')
+    end
+  end
+
   context 'when user has the collection creator LDAP role' do
     before { sign_in user, groups: ['dlss:hydrus-app-collection-creators'] }
 
