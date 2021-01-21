@@ -38,7 +38,9 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       click_button('Submit')
 
       visit dashboard_path
-      click_link new_work_title
+      within('.collections') do
+        click_link new_work_title
+      end
       expect(page).to have_content(rejection_reason)
 
       find("a[aria-label='Edit #{new_work_title}']").click
