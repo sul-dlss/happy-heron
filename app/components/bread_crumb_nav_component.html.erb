@@ -1,0 +1,20 @@
+<div>
+  <nav aria-label="breadcrumb" class="justify-content-between navbar navbar-light bg-light">
+    <ol class="breadcrumb">
+      <% breadcrumb_links.each do |breadcrumb_link| %>
+        <li class="breadcrumb-item"><%= breadcrumb_link%></li>
+      <% end %>
+    </ol>
+    <ul class="navbar-nav mr-auto breadcrumb">
+      <li class="nav-item active">
+        <%= link_to('Help', '#contactUsModal',
+                    class: 'nav-link',
+                    data: {
+                      bs_toggle: 'modal',
+                      bs_target: '#contactUsModal',
+                      controller: 'contact-us'
+                    }) %>
+        </li>
+      </ul>
+  </nav>
+</div>

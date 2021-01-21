@@ -39,16 +39,10 @@
               <% end %>
             </div>
 
-            <%= link_to('Help', '#contactUsModal',
-                        class: 'nav-link',
-                        data: {
-                          bs_toggle: 'modal',
-                          bs_target: '#contactUsModal',
-                          controller: 'contact-us'
-                        }) %>
           </nav>
         </header>
 
+        <%= render BreadCrumbNavComponent.new(breadcrumbs: @breadcrumbs) %>
         <%= render 'shared/flashes' %>
         <%= render Help::FormComponent.new(user: current_user) %>
         <%= yield %>

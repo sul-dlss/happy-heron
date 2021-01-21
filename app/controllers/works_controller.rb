@@ -17,6 +17,9 @@ class WorksController < ObjectsController
 
     @form = WorkForm.new(work)
     @form.prepopulate!
+
+    add_breadcrumb work.collection.name, collection_path(work.collection)
+    add_breadcrumb 'New deposit', ''
   end
 
   def create
@@ -39,6 +42,10 @@ class WorksController < ObjectsController
 
     @form = WorkForm.new(work)
     @form.prepopulate!
+
+    add_breadcrumb work.collection.name, collection_path(work.collection)
+    add_breadcrumb work.title, work_path(work)
+    add_breadcrumb 'Edit', ''
   end
 
   def update
@@ -59,11 +66,17 @@ class WorksController < ObjectsController
     authorize! @collection, to: :show?
 
     @works = authorized_scope(@collection.works, as: :edits)
+
+    add_breadcrumb @collection.name, collection_path(@collection)
+    add_breadcrumb 'Deposits', ''
   end
 
   def show
     @work = Work.find(params[:id])
     authorize! @work
+
+    add_breadcrumb @work.collection.name, collection_path(@work.collection)
+    add_breadcrumb @work.title, ''
   end
 
   def destroy
