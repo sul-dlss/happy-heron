@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::RelatedLinkComponent, type: :component do
+RSpec.describe RelatedLinkComponent, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 
   # it "renders something useful" do
