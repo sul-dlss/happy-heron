@@ -1,6 +1,6 @@
 <header class="title">
   <span class="header-text"><%= name %></span>
-  <%= edit_link('#', "Edit #{name}") %>
+  <%= render Collections::EditLinkComponent.new(collection: collection, anchor: '', label: "Edit #{name}") %>
   <% if depositing? %>
     <span data-state-updates-target="state" class="state">
       Depositing <%= spinner %>

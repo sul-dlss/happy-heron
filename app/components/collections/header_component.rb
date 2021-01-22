@@ -3,7 +3,7 @@
 
 module Collections
   # Renders the header for the collection show page (title and create new link)
-  class HeaderComponent < Collections::ShowComponent
+  class HeaderComponent < ApplicationComponent
     sig { params(collection: Collection).void }
     def initialize(collection:)
       @collection = collection
