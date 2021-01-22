@@ -549,6 +549,7 @@ module Devise::Controllers::ScopedViews::ClassMethods
 end
 class DeviseController < ApplicationController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def _prefixes; end
   def assert_is_devise_resource!; end
   def clean_up_passwords(object); end
@@ -593,6 +594,7 @@ module DeviseController::HelperMethods
 end
 class Devise::OmniauthCallbacksController < DeviseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def after_omniauth_failure_path_for(scope); end
   def failed_strategy; end
   def failure; end
@@ -607,6 +609,7 @@ class Devise::OmniauthCallbacksController < DeviseController
 end
 class Devise::PasswordsController < DeviseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def after_resetting_password_path_for(resource); end
   def after_sending_reset_password_instructions_path_for(resource_name); end
   def assert_reset_token_passed; end
@@ -624,6 +627,7 @@ class Devise::PasswordsController < DeviseController
 end
 class Devise::SessionsController < DeviseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def all_signed_out?; end
   def auth_options; end
   def create; end
@@ -642,6 +646,7 @@ class Devise::SessionsController < DeviseController
 end
 class Devise::UnlocksController < DeviseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def after_sending_unlock_instructions_path_for(resource); end
   def after_unlock_path_for(resource); end
   def create; end
@@ -656,6 +661,7 @@ class Devise::UnlocksController < DeviseController
 end
 class Devise::ConfirmationsController < DeviseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def after_confirmation_path_for(resource_name, resource); end
   def after_resending_confirmation_instructions_path_for(resource_name); end
   def create; end
@@ -669,6 +675,7 @@ class Devise::ConfirmationsController < DeviseController
 end
 class Devise::RegistrationsController < DeviseController
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def account_update_params; end
   def after_inactive_sign_up_path_for(resource); end
   def after_sign_up_path_for(resource); end
@@ -718,7 +725,7 @@ class Devise::Mailer < ActionMailer::Base
   def unlock_instructions(record, token, opts = nil); end
   extend Devise::Controllers::ScopedViews::ClassMethods
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_32
+  include Anonymous_Module_33
   include Devise::Controllers::ScopedViews
   include Devise::Mailers::Helpers
 end

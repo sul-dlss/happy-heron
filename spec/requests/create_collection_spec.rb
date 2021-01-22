@@ -233,10 +233,9 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'renders the page again' do
-          post '/collections', params: { collection: collection_params, format: :json, commit: deposit_button }
-          expect(response).to have_http_status(:bad_request)
-          json = JSON.parse(response.body)
-          expect(json['name']).to eq ["can't be blank"]
+          post '/collections', params: { collection: collection_params, commit: deposit_button }
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to include 'Description can&#39;t be blank'
         end
       end
     end

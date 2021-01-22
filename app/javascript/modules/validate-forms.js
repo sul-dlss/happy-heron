@@ -1,7 +1,7 @@
 // JavaScript to disable form submissions if there are invalid fields
 (function () {
   'use strict'
-  window.addEventListener('turbolinks:load', function() {
+  window.addEventListener('turbo:load', function() {
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.querySelectorAll('.needs-validation')
 

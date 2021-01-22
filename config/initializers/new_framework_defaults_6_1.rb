@@ -1,5 +1,6 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 #
 # This file contains migration options to ease your Rails 6.1 upgrade.
@@ -47,7 +48,7 @@
 # Rails.application.config.active_record.legacy_connection_handling = false
 
 # Make `form_with` generate non-remote forms by default.
-# Rails.application.config.action_view.form_with_generates_remote_forms = false
+Rails.application.config.action_view.form_with_generates_remote_forms = false
 
 # Set the default queue name for the analysis job to the queue adapter default.
 # Rails.application.config.active_storage.queues.analysis = nil

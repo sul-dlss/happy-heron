@@ -1,0 +1,7 @@
+<%= turbo_stream.update 'help' do %>
+  <div data-help-target="results">
+    <h2>Help request successfully sent</h2>
+    <p>You should receive a response from our team within 48 hours.</p>
+    <%= link_to 'Close', '/', class: 'btn btn-primary', data: { turbo_frame: "_top" } %>
+  </div>
+<% end %>

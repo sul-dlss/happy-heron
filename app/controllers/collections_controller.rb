@@ -31,8 +31,7 @@ class CollectionsController < ObjectsController
     if @form.validate(collection_params) && @form.save
       after_save(collection)
     else
-      # Send form errors to client in JSON format to be parsed and rendered there
-      render 'errors', status: :bad_request
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -44,8 +43,7 @@ class CollectionsController < ObjectsController
     if @form.validate(collection_params) && @form.save
       after_save(collection, context: { change_set: point1.diff(collection) })
     else
-      # Send form errors to client in JSON format to be parsed and rendered there
-      render 'errors', status: :bad_request
+      render :edit, status: :unprocessable_entity
     end
   end
 

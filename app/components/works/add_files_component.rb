@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 module Works
@@ -9,5 +9,17 @@ module Works
     end
 
     attr_reader :form
+
+    def error?
+      errors.present?
+    end
+
+    def error_message
+      safe_join(errors.map(&:message), tag.br)
+    end
+
+    def errors
+      form.object.errors.where(:attached_files)
+    end
   end
 end

@@ -656,9 +656,9 @@ class ActiveModel::Type::Date < ActiveModel::Type::Value
   def type_cast_for_schema(value); end
   def value_from_multiparameter_assignment(*arg0); end
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_13
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_14
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_13
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_14
   def value_from_multiparameter_assignment(values_hash); end
   include ActiveModel::Type::Helpers::AcceptsMultiparameterTime::InstanceMethods
 end
@@ -670,9 +670,9 @@ class ActiveModel::Type::DateTime < ActiveModel::Type::Value
   def value_from_multiparameter_assignment(values_hash); end
   include ActiveModel::Type::Helpers::TimeValue
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_14
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_15
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_14
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_15
   def value_from_multiparameter_assignment(values_hash); end
   include ActiveModel::Type::Helpers::AcceptsMultiparameterTime::InstanceMethods
 end
@@ -708,9 +708,9 @@ class ActiveModel::Type::Time < ActiveModel::Type::Value
   def user_input_in_time_zone(value); end
   include ActiveModel::Type::Helpers::TimeValue
   include ActiveModel::Type::Helpers::Timezone
-  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_15
+  include Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_16
 end
-module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_15
+module Anonymous_ActiveModel_Type_Helpers_AcceptsMultiparameterTime_16
   def value_from_multiparameter_assignment(values_hash); end
   include ActiveModel::Type::Helpers::AcceptsMultiparameterTime::InstanceMethods
 end

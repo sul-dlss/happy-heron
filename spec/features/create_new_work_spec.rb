@@ -100,11 +100,6 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       fill_in 'Keywords', with: 'Springs'
       blur_from 'work_keywords'
 
-      expect(page).not_to have_content('Please add at least one keyword')
-      expect(page).not_to have_css('.keywords-container.is-invalid')
-      expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
-      # End of remote form validation
-
       uncheck 'Use default citation'
       fill_in 'Provided citation', with: 'Whatever'
 

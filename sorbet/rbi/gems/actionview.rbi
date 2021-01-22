@@ -1332,6 +1332,7 @@ class ActionView::TestCase < ActiveSupport::TestCase
 end
 class ActionView::TestCase::TestController < ActionController::Base
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def controller_path=(path); end
   def initialize; end
   def params; end

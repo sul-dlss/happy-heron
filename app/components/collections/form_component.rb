@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -15,6 +15,10 @@ module Collections
 
     def embargo_release_duration_options
       DraftCollectionForm::EMBARGO_RELEASE_DURATION_OPTIONS
+    end
+
+    def draft_collections_path(collection)
+      collections_path(collection)
     end
 
     def release_date_year

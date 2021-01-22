@@ -46,7 +46,7 @@ RSpec.describe 'Updating an existing work' do
         end
 
         it 'redirects to the work page' do
-          patch "/works/#{work.id}", params: { work: work_params, format: :json }
+          patch "/works/#{work.id}", params: { work: work_params }
           expect(work.reload).to be_version_draft
           expect(response).to redirect_to(work)
         end
@@ -69,12 +69,11 @@ RSpec.describe 'Updating an existing work' do
           }
         end
 
-        it 'returns a validation error in JSON format' do
-          patch "/works/#{work.id}", params: { work: work_params, format: :json, commit: 'Deposit' }
-          expect(response).to have_http_status(:bad_request)
-          json = JSON.parse(response.body)
-          expect(json['title']).to include("can't be blank")
-          expect(json['file']).to eq ['Please add at least one file.']
+        it 'returns a validation error' do
+          patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.body).to include 'Title can&#39;t be blank'
+          expect(response.body).to include 'Please add at least one file.'
         end
       end
     end

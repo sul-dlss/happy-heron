@@ -1,11 +1,21 @@
 <h1 class="row"><%= page_title %></h1>
-<%= form_with model: work_form, url: url, remote: true,
+<%= form_with model: work_form, url: url,
     data: {
       controller: 'edit-deposit auto-citation',
-      action: 'ajax:error->edit-deposit#displayErrors',
       auto_citation_purl: purl
     },
     html: { class: "needs-validation row work-editor #{'was-validated' if work_form.errors.present?}", novalidate: true, multipart: true } do |f| %>
+  <% if work_form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(work_form.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% work_form.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <%= f.hidden_field :work_type %>
   <%= render Works::DepositProgressComponent.new %>
   <%= render Works::AddFilesComponent.new(form: f) %>

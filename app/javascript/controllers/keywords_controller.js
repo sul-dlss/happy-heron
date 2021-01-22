@@ -12,12 +12,6 @@ export default class extends Controller {
     this.containerTargets.forEach((container) => container.classList.remove('keywords-container-open') )
   }
 
-  // Triggered when edit-deposit controller sends an error event
-  error(e) {
-    this.containerTarget.classList.add('is-invalid')
-    this.errorTarget.innerHTML = e.detail.join(' ')
-  }
-
   add(event) {
     const content = this.selectedTemplateTarget.innerHTML
       .replace(/TEMPLATE_RECORD/g, new Date().valueOf())
