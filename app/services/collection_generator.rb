@@ -33,7 +33,8 @@ class CollectionGenerator
     {
       access: access,
       administrative: {
-        hasAdminPolicy: Settings.h2.hydrus_apo
+        hasAdminPolicy: Settings.h2.hydrus_apo,
+        partOfProject: Settings.h2.project_tag
       },
       identification: {},
       label: collection.name,

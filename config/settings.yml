@@ -16,6 +16,7 @@ remote_user_headers:
 
 h2:
   hydrus_apo: 'druid:zx485kb6348'
+  project_tag: 'H2'
 
 earliest_year: 1000
 

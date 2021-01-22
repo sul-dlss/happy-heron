@@ -4,9 +4,9 @@
 require 'rails_helper'
 
 RSpec.describe RequestGenerator do
-  let(:model) { described_class.generate_model(work: work) }
   let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
-
+  let(:model) { described_class.generate_model(work: work) }
+  let(:project_tag) { Settings.h2.project_tag }
   let(:types_form) do
     [
       {
@@ -63,7 +63,8 @@ RSpec.describe RequestGenerator do
           version: 0,
           access: { access: 'world', download: 'world' },
           administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348'
+            hasAdminPolicy: 'druid:zx485kb6348',
+            partOfProject: project_tag
           },
           description: {
             title: [
@@ -120,7 +121,8 @@ RSpec.describe RequestGenerator do
           version: 0,
           access: { access: 'world', download: 'world' },
           administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348'
+            hasAdminPolicy: 'druid:zx485kb6348',
+            partOfProject: project_tag
           },
           description: {
             title: [
@@ -196,7 +198,8 @@ RSpec.describe RequestGenerator do
           version: 1,
           access: { access: 'world', download: 'world' },
           administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348'
+            hasAdminPolicy: 'druid:zx485kb6348',
+            partOfProject: project_tag
           },
           description: {
             title: [
@@ -277,7 +280,8 @@ RSpec.describe RequestGenerator do
           externalIdentifier: 'druid:bk123gh4567',
           access: { access: 'world', download: 'world' },
           administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348'
+            hasAdminPolicy: 'druid:zx485kb6348',
+            partOfProject: project_tag
           },
           description: {
             title: [
