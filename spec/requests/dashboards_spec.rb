@@ -129,7 +129,7 @@ RSpec.describe 'Dashboard requests' do
 
   context 'when user is a reviewer' do
     let(:collection) { create(:collection, :deposited, :with_reviewers) }
-    let(:user) { collection.reviewers.first }
+    let(:user) { collection.reviewed_by.first }
 
     before do
       create(:work, collection: collection, state: 'pending_approval', title: 'To Review')

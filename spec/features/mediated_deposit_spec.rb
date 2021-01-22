@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Create a work in a collection using mediated deposit', js: true do
   # Collection needs to exist before user hits dashboard
-  let!(:collection) { create(:collection, reviewers: [user], depositors: [user]) }
+  let!(:collection) { create(:collection, reviewed_by: [user], depositors: [user]) }
   let(:user) { create(:user) }
   let(:work_title) { 'Mediate this!' }
 

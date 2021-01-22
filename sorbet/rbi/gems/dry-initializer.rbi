@@ -197,10 +197,10 @@ class Dry::Initializer::Struct
   def self.new(options); end
   def to_h; end
   extend Dry::Initializer
-  include Anonymous_Module_126
+  include Anonymous_Module_106
   include Dry::Initializer::Mixin::Root
 end
-module Anonymous_Module_126
+module Anonymous_Module_106
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(*arg0); end
   extend Dry::Initializer::Mixin::Local

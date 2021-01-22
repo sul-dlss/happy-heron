@@ -39,18 +39,18 @@ class WebConsole::Middleware
   def json_response(opts = nil); end
   def json_response_with_session(id, request, opts = nil); end
   def mount_point; end
-  def mount_point=(obj); end
+  def mount_point=(val); end
   def repl_sessions_re; end
   def respond_with_unacceptable_request; end
   def respond_with_unavailable_session(id); end
   def self.mount_point; end
-  def self.mount_point=(obj); end
+  def self.mount_point=(val); end
   def self.whiny_requests; end
-  def self.whiny_requests=(obj); end
+  def self.whiny_requests=(val); end
   def update_re; end
   def update_repl_session(id, request); end
   def whiny_requests; end
-  def whiny_requests=(obj); end
+  def whiny_requests=(val); end
 end
 class WebConsole::Permissions
   def coerce_network_to_ipaddr(network); end
@@ -62,10 +62,10 @@ class WebConsole::Permissions
 end
 class WebConsole::Request < ActionDispatch::Request
   def permissions; end
-  def permissions=(obj); end
+  def permissions=(val); end
   def permitted?; end
   def self.permissions; end
-  def self.permissions=(obj); end
+  def self.permissions=(val); end
   def strict_remote_ip; end
 end
 class WebConsole::Request::GetSecureIp < ActionDispatch::RemoteIp::GetIp

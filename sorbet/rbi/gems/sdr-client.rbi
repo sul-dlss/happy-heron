@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-0.40.1
+# sdr-client-0.41.0
 
 module SdrClient
 end
@@ -222,9 +222,9 @@ module SdrClient::Find
 end
 module SdrClient::Login
   def self.run(url:, login_service: nil, credential_store: nil); end
-  extend Anonymous_Module_107
+  extend Anonymous_Module_87
 end
-module Anonymous_Module_107
+module Anonymous_Module_87
   include Dry::Monads::Result::Mixin
 end
 module SdrClient::LoginPrompt
@@ -247,7 +247,7 @@ class SdrClient::Connection
   def put(**, &&); end
   def token; end
   def url; end
-  include Anonymous_Module_107
+  include Anonymous_Module_87
 end
 module SdrClient::BackgroundJobResults
   def self.show(url:, job_id:); end

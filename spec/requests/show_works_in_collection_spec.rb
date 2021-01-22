@@ -46,7 +46,7 @@ RSpec.describe 'Show the collection work list page' do
 
   context 'with a reviewer' do
     let(:collection) { create(:collection, :with_reviewers, :with_works) }
-    let(:user) { collection.reviewers.first }
+    let(:user) { collection.reviewed_by.first }
 
     before do
       sign_in user

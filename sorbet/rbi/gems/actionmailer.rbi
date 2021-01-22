@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionmailer/all/actionmailer.rbi
 #
-# actionmailer-6.0.3.4
+# actionmailer-6.1.1
 
 module ActionMailer
   def self.eager_load!; end
@@ -68,6 +68,7 @@ class ActionMailer::MessageDelivery < Delegator
   def message; end
   def processed?; end
   def processed_mailer; end
+  def use_new_args?(job); end
 end
 module ActionMailer::Parameterized
   extend ActiveSupport::Concern
@@ -143,17 +144,14 @@ class ActionMailer::Base < AbstractController::Base
   def __callbacks; end
   def __callbacks?; end
   def _helper_methods; end
-  def _helper_methods=(val); end
+  def _helper_methods=(arg0); end
   def _helper_methods?; end
-  def _helpers; end
-  def _helpers=(val); end
-  def _helpers?; end
   def _layout(lookup_context, formats); end
   def _process_action_callbacks; end
   def _protected_ivars; end
   def _run_process_action_callbacks(&block); end
   def _view_cache_dependencies; end
-  def _view_cache_dependencies=(val); end
+  def _view_cache_dependencies=(arg0); end
   def _view_cache_dependencies?; end
   def apply_defaults(headers); end
   def asset_host; end
@@ -172,32 +170,33 @@ class ActionMailer::Base < AbstractController::Base
   def default_asset_host_protocol=(value); end
   def default_i18n_subject(interpolations = nil); end
   def default_params; end
-  def default_params=(val); end
+  def default_params=(arg0); end
   def default_params?; end
   def default_static_extension; end
   def default_static_extension=(value); end
   def default_url_options; end
-  def default_url_options=(val); end
+  def default_url_options=(arg0); end
   def default_url_options?; end
   def deliver_later_queue_name; end
-  def deliver_later_queue_name=(obj); end
+  def deliver_later_queue_name=(val); end
   def delivery_job; end
-  def delivery_job=(val); end
+  def delivery_job=(arg0); end
   def delivery_job?; end
   def delivery_method; end
-  def delivery_method=(val); end
+  def delivery_method=(arg0); end
   def delivery_method?; end
   def delivery_methods; end
-  def delivery_methods=(val); end
+  def delivery_methods=(arg0); end
   def delivery_methods?; end
   def each_template(paths, name, &block); end
+  def email_address_with_name(address, name); end
   def enable_fragment_cache_logging; end
   def enable_fragment_cache_logging=(value); end
   def file_settings; end
-  def file_settings=(val); end
+  def file_settings=(arg0); end
   def file_settings?; end
   def fragment_cache_keys; end
-  def fragment_cache_keys=(val); end
+  def fragment_cache_keys=(arg0); end
   def fragment_cache_keys?; end
   def headers(args = nil); end
   def initialize; end
@@ -217,36 +216,34 @@ class ActionMailer::Base < AbstractController::Base
   def perform_caching; end
   def perform_caching=(value); end
   def perform_deliveries; end
-  def perform_deliveries=(obj); end
+  def perform_deliveries=(val); end
   def preview_interceptors; end
   def preview_path; end
   def process(method_name, *args); end
   def raise_delivery_errors; end
-  def raise_delivery_errors=(obj); end
+  def raise_delivery_errors=(val); end
   def relative_url_root; end
   def relative_url_root=(value); end
   def rescue_handlers; end
-  def rescue_handlers=(val); end
+  def rescue_handlers=(arg0); end
   def rescue_handlers?; end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._helper_methods; end
-  def self._helper_methods=(val); end
+  def self._helper_methods=(value); end
   def self._helper_methods?; end
   def self._helpers; end
-  def self._helpers=(val); end
-  def self._helpers?; end
   def self._layout; end
-  def self._layout=(val); end
+  def self._layout=(value); end
   def self._layout?; end
   def self._layout_conditions; end
-  def self._layout_conditions=(val); end
+  def self._layout_conditions=(value); end
   def self._layout_conditions?; end
   def self._process_action_callbacks; end
   def self._process_action_callbacks=(value); end
   def self._view_cache_dependencies; end
-  def self._view_cache_dependencies=(val); end
+  def self._view_cache_dependencies=(value); end
   def self._view_cache_dependencies?; end
   def self.asset_host; end
   def self.asset_host=(value); end
@@ -258,32 +255,33 @@ class ActionMailer::Base < AbstractController::Base
   def self.default_asset_host_protocol=(value); end
   def self.default_options=(value = nil); end
   def self.default_params; end
-  def self.default_params=(val); end
+  def self.default_params=(value); end
   def self.default_params?; end
   def self.default_static_extension; end
   def self.default_static_extension=(value); end
   def self.default_url_options; end
-  def self.default_url_options=(val); end
+  def self.default_url_options=(value); end
   def self.default_url_options?; end
   def self.deliver_later_queue_name; end
-  def self.deliver_later_queue_name=(obj); end
+  def self.deliver_later_queue_name=(val); end
   def self.deliver_mail(mail); end
   def self.delivery_job; end
-  def self.delivery_job=(val); end
+  def self.delivery_job=(value); end
   def self.delivery_job?; end
   def self.delivery_method; end
-  def self.delivery_method=(val); end
+  def self.delivery_method=(value); end
   def self.delivery_method?; end
   def self.delivery_methods; end
-  def self.delivery_methods=(val); end
+  def self.delivery_methods=(value); end
   def self.delivery_methods?; end
+  def self.email_address_with_name(address, name); end
   def self.enable_fragment_cache_logging; end
   def self.enable_fragment_cache_logging=(value); end
   def self.file_settings; end
-  def self.file_settings=(val); end
+  def self.file_settings=(value); end
   def self.file_settings?; end
   def self.fragment_cache_keys; end
-  def self.fragment_cache_keys=(val); end
+  def self.fragment_cache_keys=(value); end
   def self.fragment_cache_keys?; end
   def self.javascripts_dir; end
   def self.javascripts_dir=(value); end
@@ -296,14 +294,13 @@ class ActionMailer::Base < AbstractController::Base
   def self.perform_caching; end
   def self.perform_caching=(value); end
   def self.perform_deliveries; end
-  def self.perform_deliveries=(obj); end
+  def self.perform_deliveries=(val); end
   def self.preview_interceptors; end
-  def self.preview_interceptors=(obj); end
+  def self.preview_interceptors=(val); end
   def self.preview_path; end
-  def self.preview_path=(obj); end
+  def self.preview_path=(val); end
   def self.raise_delivery_errors; end
-  def self.raise_delivery_errors=(obj); end
-  def self.receive(raw_mail); end
+  def self.raise_delivery_errors=(val); end
   def self.register_interceptor(interceptor); end
   def self.register_interceptors(*interceptors); end
   def self.register_observer(observer); end
@@ -311,41 +308,42 @@ class ActionMailer::Base < AbstractController::Base
   def self.relative_url_root; end
   def self.relative_url_root=(value); end
   def self.rescue_handlers; end
-  def self.rescue_handlers=(val); end
+  def self.rescue_handlers=(value); end
   def self.rescue_handlers?; end
   def self.respond_to_missing?(method, include_all = nil); end
   def self.sendmail_settings; end
-  def self.sendmail_settings=(val); end
+  def self.sendmail_settings=(value); end
   def self.sendmail_settings?; end
   def self.set_payload_for_mail(payload, mail); end
   def self.show_previews; end
-  def self.show_previews=(obj); end
+  def self.show_previews=(val); end
   def self.smtp_settings; end
-  def self.smtp_settings=(val); end
+  def self.smtp_settings=(value); end
   def self.smtp_settings?; end
   def self.stylesheets_dir; end
   def self.stylesheets_dir=(value); end
   def self.supports_path?; end
   def self.test_settings; end
-  def self.test_settings=(val); end
+  def self.test_settings=(value); end
   def self.test_settings?; end
   def self.unregister_interceptor(interceptor); end
   def self.unregister_interceptors(*interceptors); end
   def self.unregister_observer(observer); end
   def self.unregister_observers(*observers); end
   def sendmail_settings; end
-  def sendmail_settings=(val); end
+  def sendmail_settings=(arg0); end
   def sendmail_settings?; end
   def set_content_type(m, user_content_type, class_default); end
   def show_previews; end
   def smtp_settings; end
-  def smtp_settings=(val); end
+  def smtp_settings=(arg0); end
   def smtp_settings?; end
   def stylesheets_dir; end
   def stylesheets_dir=(value); end
   def test_settings; end
-  def test_settings=(val); end
+  def test_settings=(arg0); end
   def test_settings?; end
+  def wrap_inline_attachments(message); end
   extend AbstractController::Caching::ClassMethods
   extend AbstractController::Caching::ConfigMethods
   extend AbstractController::Caching::Fragments::ClassMethods
@@ -362,7 +360,7 @@ class ActionMailer::Base < AbstractController::Base
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
-  extend Anonymous_Module_17
+  extend Anonymous_Module_12
   include AbstractController::AssetPaths
   include AbstractController::Caching
   include AbstractController::Caching::Fragments
@@ -387,6 +385,11 @@ class ActionMailer::Base < AbstractController::Base
   include ActiveSupport::Callbacks
   include ActiveSupport::Rescuable
 end
+module ActionMailer::Base::HelperMethods
+  def combined_fragment_cache_key(*args, &block); end
+  def view_cache_dependencies(*args, &block); end
+  include ActionMailer::MailHelper
+end
 class ActionMailer::Base::NullMail
   def body; end
   def header; end
@@ -398,6 +401,6 @@ class ActionMailer::Base::LateAttachmentsProxy < SimpleDelegator
   def _raise_error; end
   def inline; end
 end
-module Anonymous_Module_17
+module Anonymous_Module_12
   def inherited(klass); end
 end

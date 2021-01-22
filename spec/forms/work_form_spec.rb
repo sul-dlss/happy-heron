@@ -10,7 +10,7 @@ RSpec.describe WorkForm do
 
   describe 'populator on files' do
     let!(:blob) do
-      ActiveStorage::Blob.create_after_upload!(
+      ActiveStorage::Blob.create_and_upload!(
         io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
         filename: 'sul.svg',
         content_type: 'image/svg+xml'
@@ -54,7 +54,7 @@ RSpec.describe WorkForm do
   end
 
   describe 'contributors validation' do
-    let(:contributor_error) { { contributors: ['Please add at least one contributor.'] } }
+    let(:contributor_error) { 'Please add at least one contributor.' }
 
     before do
       form.validate(contributors: contributors)
@@ -64,7 +64,7 @@ RSpec.describe WorkForm do
       let(:contributors) { [] }
 
       it 'does not validate' do
-        expect(form.errors.messages).to include(contributor_error)
+        expect(form.errors.where(:contributors).first.message).to include(contributor_error)
       end
     end
 
@@ -78,73 +78,87 @@ RSpec.describe WorkForm do
             'role_term' => 'organization|Host institution' }
         ]
       end
+      let(:errors) { form.errors.where(:contributors) }
 
       it 'validates with contributors in place' do
-        expect(form.errors.messages).not_to include(contributor_error)
+        expect(errors).to be_empty
       end
     end
   end
 
   describe 'email validation' do
+    let(:errors) { form.errors.where(:contact_email) }
+
     it 'does not validate with an invalid contact email' do
       form.validate(contact_email: 'notavalidemail')
       expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ contact_email: ['is invalid'] })
+      expect(errors.first.message).to eq 'is invalid'
     end
 
     it 'validates with a correct contact email' do
       form.validate(contact_email: 'avalidemail@test.com')
-      expect(form.errors.messages).not_to include({ contact_email: ['is invalid'] })
+      expect(errors).to be_empty
     end
   end
 
   describe 'license validation' do
+    let(:errors) { form.errors.where(:license) }
+    let(:messages) { errors.map(&:message) }
+
     it 'does not validate with an invalid license' do
       form.validate(license: 'Steal my stuff')
       expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ license: ['is not included in the list'] })
+      expect(messages).to eq ['is not included in the list']
     end
 
     it 'does not validate with a missing license' do
       form.validate(license: '')
       expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ license: ['can\'t be blank', 'is not included in the list'] })
+      expect(messages).to eq ['can\'t be blank', 'is not included in the list']
     end
 
     it 'validates' do
       form.validate(license: License.license_list.first)
-      expect(form.errors.messages).not_to include({ license: ['is not included in the list'] })
+      expect(errors).to be_empty
     end
   end
 
-  describe 'type and subtype validation' do
+  describe 'type validation' do
+    let(:errors) { form.errors.where(:work_type) }
+    let(:messages) { errors.map(&:message) }
+
     it 'does not validate with an invalid work type' do
       form.validate(work_type: 'a pile of something')
       expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ work_type: ['is not a valid work type'] })
+      expect(messages).to eq ['is not a valid work type']
     end
 
     it 'does not validate with a missing work type' do
       form.validate(work_type: '')
       expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ work_type: ['can\'t be blank', 'is not a valid work type'] })
+      expect(messages).to eq ['can\'t be blank', 'is not a valid work type']
     end
+  end
+
+  describe 'subtype validation' do
+    let(:errors) { form.errors.where(:subtype) }
+    let(:messages) { errors.map(&:message) }
 
     it 'does not validate with an invalid subtype/work_type combo' do
       form.validate(work_type: 'data', subtype: ['Animation'])
       expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ subtype: ['is not a valid subtype for work type data'] })
+      expect(messages).to eq ['is not a valid subtype for work type data']
     end
 
     it 'does not validate with a work_type that requires a user-supplied subtype and is empty' do
       form.validate(work_type: 'other', subtype: [])
       expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ subtype: ['is not a valid subtype for work type other'] })
+      expect(messages).to eq ['is not a valid subtype for work type other']
     end
 
     it 'validates with a valid subtype/work_type combo' do
       form.validate(work_type: 'data', subtype: ['Software/code'])
-      expect(form.errors.messages).not_to include({ subtype: ['is not a valid subtype for work type data'] })
+      expect(messages).to be_empty
     end
   end
 end

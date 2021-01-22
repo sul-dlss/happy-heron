@@ -65,7 +65,7 @@ RSpec.describe CollectionPolicy do
     end
 
     succeed 'when the user is a collection reviewer' do
-      let(:record) { build_stubbed(:collection, reviewers: [user]) }
+      let(:record) { build_stubbed(:collection, reviewed_by: [user]) }
     end
   end
 
@@ -86,7 +86,7 @@ RSpec.describe CollectionPolicy do
     end
 
     context 'when the user is a reviewer' do
-      let!(:collection) { create(:collection, reviewers: [user]) }
+      let!(:collection) { create(:collection, reviewed_by: [user]) }
 
       it { is_expected.to include(collection) }
     end

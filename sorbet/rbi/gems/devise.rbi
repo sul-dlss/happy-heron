@@ -11,231 +11,231 @@
 
 module Devise
   def allow_unconfirmed_access_for; end
-  def allow_unconfirmed_access_for=(obj); end
+  def allow_unconfirmed_access_for=(val); end
   def authentication_keys; end
-  def authentication_keys=(obj); end
+  def authentication_keys=(val); end
   def case_insensitive_keys; end
-  def case_insensitive_keys=(obj); end
+  def case_insensitive_keys=(val); end
   def clean_up_csrf_token_on_authentication; end
-  def clean_up_csrf_token_on_authentication=(obj); end
+  def clean_up_csrf_token_on_authentication=(val); end
   def confirm_within; end
-  def confirm_within=(obj); end
+  def confirm_within=(val); end
   def confirmation_keys; end
-  def confirmation_keys=(obj); end
+  def confirmation_keys=(val); end
   def default_scope; end
-  def default_scope=(obj); end
+  def default_scope=(val); end
   def email_regexp; end
-  def email_regexp=(obj); end
+  def email_regexp=(val); end
   def expire_all_remember_me_on_sign_out; end
-  def expire_all_remember_me_on_sign_out=(obj); end
+  def expire_all_remember_me_on_sign_out=(val); end
   def extend_remember_period; end
-  def extend_remember_period=(obj); end
+  def extend_remember_period=(val); end
   def helpers; end
   def http_authenticatable; end
-  def http_authenticatable=(obj); end
+  def http_authenticatable=(val); end
   def http_authenticatable_on_xhr; end
-  def http_authenticatable_on_xhr=(obj); end
+  def http_authenticatable_on_xhr=(val); end
   def http_authentication_key; end
-  def http_authentication_key=(obj); end
+  def http_authentication_key=(val); end
   def http_authentication_realm; end
-  def http_authentication_realm=(obj); end
+  def http_authentication_realm=(val); end
   def last_attempt_warning; end
-  def last_attempt_warning=(obj); end
+  def last_attempt_warning=(val); end
   def lock_strategy; end
-  def lock_strategy=(obj); end
+  def lock_strategy=(val); end
   def mailer_sender; end
-  def mailer_sender=(obj); end
+  def mailer_sender=(val); end
   def mappings; end
   def maximum_attempts; end
-  def maximum_attempts=(obj); end
+  def maximum_attempts=(val); end
   def navigational_formats; end
-  def navigational_formats=(obj); end
+  def navigational_formats=(val); end
   def omniauth_configs; end
   def omniauth_path_prefix; end
-  def omniauth_path_prefix=(obj); end
+  def omniauth_path_prefix=(val); end
   def params_authenticatable; end
-  def params_authenticatable=(obj); end
+  def params_authenticatable=(val); end
   def paranoid; end
-  def paranoid=(obj); end
+  def paranoid=(val); end
   def parent_controller; end
-  def parent_controller=(obj); end
+  def parent_controller=(val); end
   def parent_mailer; end
-  def parent_mailer=(obj); end
+  def parent_mailer=(val); end
   def password_length; end
-  def password_length=(obj); end
+  def password_length=(val); end
   def pepper; end
-  def pepper=(obj); end
+  def pepper=(val); end
   def reconfirmable; end
-  def reconfirmable=(obj); end
+  def reconfirmable=(val); end
   def reload_routes; end
-  def reload_routes=(obj); end
+  def reload_routes=(val); end
   def remember_for; end
-  def remember_for=(obj); end
+  def remember_for=(val); end
   def rememberable_options; end
-  def rememberable_options=(obj); end
+  def rememberable_options=(val); end
   def request_keys; end
-  def request_keys=(obj); end
+  def request_keys=(val); end
   def reset_password_keys; end
-  def reset_password_keys=(obj); end
+  def reset_password_keys=(val); end
   def reset_password_within; end
-  def reset_password_within=(obj); end
+  def reset_password_within=(val); end
   def router_name; end
-  def router_name=(obj); end
+  def router_name=(val); end
   def scoped_views; end
-  def scoped_views=(obj); end
+  def scoped_views=(val); end
   def secret_key; end
-  def secret_key=(obj); end
+  def secret_key=(val); end
   def self.activerecord51?; end
   def self.add_mapping(resource, options); end
   def self.add_module(module_name, options = nil); end
   def self.allow_unconfirmed_access_for; end
-  def self.allow_unconfirmed_access_for=(obj); end
+  def self.allow_unconfirmed_access_for=(val); end
   def self.authentication_keys; end
-  def self.authentication_keys=(obj); end
+  def self.authentication_keys=(val); end
   def self.available_router_name; end
   def self.case_insensitive_keys; end
-  def self.case_insensitive_keys=(obj); end
+  def self.case_insensitive_keys=(val); end
   def self.clean_up_csrf_token_on_authentication; end
-  def self.clean_up_csrf_token_on_authentication=(obj); end
+  def self.clean_up_csrf_token_on_authentication=(val); end
   def self.configure_warden!; end
   def self.confirm_within; end
-  def self.confirm_within=(obj); end
+  def self.confirm_within=(val); end
   def self.confirmation_keys; end
-  def self.confirmation_keys=(obj); end
+  def self.confirmation_keys=(val); end
   def self.default_scope; end
-  def self.default_scope=(obj); end
+  def self.default_scope=(val); end
   def self.email_regexp; end
-  def self.email_regexp=(obj); end
+  def self.email_regexp=(val); end
   def self.expire_all_remember_me_on_sign_out; end
-  def self.expire_all_remember_me_on_sign_out=(obj); end
+  def self.expire_all_remember_me_on_sign_out=(val); end
   def self.extend_remember_period; end
-  def self.extend_remember_period=(obj); end
+  def self.extend_remember_period=(val); end
   def self.friendly_token(length = nil); end
   def self.helpers; end
   def self.http_authenticatable; end
-  def self.http_authenticatable=(obj); end
+  def self.http_authenticatable=(val); end
   def self.http_authenticatable_on_xhr; end
-  def self.http_authenticatable_on_xhr=(obj); end
+  def self.http_authenticatable_on_xhr=(val); end
   def self.http_authentication_key; end
-  def self.http_authentication_key=(obj); end
+  def self.http_authentication_key=(val); end
   def self.http_authentication_realm; end
-  def self.http_authentication_realm=(obj); end
+  def self.http_authentication_realm=(val); end
   def self.include_helpers(scope); end
   def self.last_attempt_warning; end
-  def self.last_attempt_warning=(obj); end
+  def self.last_attempt_warning=(val); end
   def self.lock_strategy; end
-  def self.lock_strategy=(obj); end
+  def self.lock_strategy=(val); end
   def self.mailer; end
   def self.mailer=(class_name); end
   def self.mailer_sender; end
-  def self.mailer_sender=(obj); end
+  def self.mailer_sender=(val); end
   def self.mappings; end
   def self.maximum_attempts; end
-  def self.maximum_attempts=(obj); end
+  def self.maximum_attempts=(val); end
   def self.navigational_formats; end
-  def self.navigational_formats=(obj); end
+  def self.navigational_formats=(val); end
   def self.omniauth(provider, *args); end
   def self.omniauth_configs; end
   def self.omniauth_path_prefix; end
-  def self.omniauth_path_prefix=(obj); end
+  def self.omniauth_path_prefix=(val); end
   def self.omniauth_providers; end
   def self.params_authenticatable; end
-  def self.params_authenticatable=(obj); end
+  def self.params_authenticatable=(val); end
   def self.paranoid; end
-  def self.paranoid=(obj); end
+  def self.paranoid=(val); end
   def self.parent_controller; end
-  def self.parent_controller=(obj); end
+  def self.parent_controller=(val); end
   def self.parent_mailer; end
-  def self.parent_mailer=(obj); end
+  def self.parent_mailer=(val); end
   def self.password_length; end
-  def self.password_length=(obj); end
+  def self.password_length=(val); end
   def self.pepper; end
-  def self.pepper=(obj); end
+  def self.pepper=(val); end
   def self.reconfirmable; end
-  def self.reconfirmable=(obj); end
+  def self.reconfirmable=(val); end
   def self.ref(arg); end
   def self.regenerate_helpers!; end
   def self.reload_routes; end
-  def self.reload_routes=(obj); end
+  def self.reload_routes=(val); end
   def self.remember_for; end
-  def self.remember_for=(obj); end
+  def self.remember_for=(val); end
   def self.rememberable_options; end
-  def self.rememberable_options=(obj); end
+  def self.rememberable_options=(val); end
   def self.request_keys; end
-  def self.request_keys=(obj); end
+  def self.request_keys=(val); end
   def self.reset_password_keys; end
-  def self.reset_password_keys=(obj); end
+  def self.reset_password_keys=(val); end
   def self.reset_password_within; end
-  def self.reset_password_within=(obj); end
+  def self.reset_password_within=(val); end
   def self.router_name; end
-  def self.router_name=(obj); end
+  def self.router_name=(val); end
   def self.scoped_views; end
-  def self.scoped_views=(obj); end
+  def self.scoped_views=(val); end
   def self.secret_key; end
-  def self.secret_key=(obj); end
+  def self.secret_key=(val); end
   def self.secure_compare(a, b); end
   def self.send_email_changed_notification; end
-  def self.send_email_changed_notification=(obj); end
+  def self.send_email_changed_notification=(val); end
   def self.send_password_change_notification; end
-  def self.send_password_change_notification=(obj); end
+  def self.send_password_change_notification=(val); end
   def self.setup; end
   def self.sign_in_after_change_password; end
-  def self.sign_in_after_change_password=(obj); end
+  def self.sign_in_after_change_password=(val); end
   def self.sign_in_after_reset_password; end
-  def self.sign_in_after_reset_password=(obj); end
+  def self.sign_in_after_reset_password=(val); end
   def self.sign_out_all_scopes; end
-  def self.sign_out_all_scopes=(obj); end
+  def self.sign_out_all_scopes=(val); end
   def self.sign_out_via; end
-  def self.sign_out_via=(obj); end
+  def self.sign_out_via=(val); end
   def self.skip_session_storage; end
-  def self.skip_session_storage=(obj); end
+  def self.skip_session_storage=(val); end
   def self.stretches; end
-  def self.stretches=(obj); end
+  def self.stretches=(val); end
   def self.strip_whitespace_keys; end
-  def self.strip_whitespace_keys=(obj); end
+  def self.strip_whitespace_keys=(val); end
   def self.timeout_in; end
-  def self.timeout_in=(obj); end
+  def self.timeout_in=(val); end
   def self.token_generator; end
-  def self.token_generator=(obj); end
+  def self.token_generator=(val); end
   def self.unlock_in; end
-  def self.unlock_in=(obj); end
+  def self.unlock_in=(val); end
   def self.unlock_keys; end
-  def self.unlock_keys=(obj); end
+  def self.unlock_keys=(val); end
   def self.unlock_strategy; end
-  def self.unlock_strategy=(obj); end
+  def self.unlock_strategy=(val); end
   def self.warden(&block); end
   def self.warden_config; end
-  def self.warden_config=(obj); end
+  def self.warden_config=(val); end
   def send_email_changed_notification; end
-  def send_email_changed_notification=(obj); end
+  def send_email_changed_notification=(val); end
   def send_password_change_notification; end
-  def send_password_change_notification=(obj); end
+  def send_password_change_notification=(val); end
   def sign_in_after_change_password; end
-  def sign_in_after_change_password=(obj); end
+  def sign_in_after_change_password=(val); end
   def sign_in_after_reset_password; end
-  def sign_in_after_reset_password=(obj); end
+  def sign_in_after_reset_password=(val); end
   def sign_out_all_scopes; end
-  def sign_out_all_scopes=(obj); end
+  def sign_out_all_scopes=(val); end
   def sign_out_via; end
-  def sign_out_via=(obj); end
+  def sign_out_via=(val); end
   def skip_session_storage; end
-  def skip_session_storage=(obj); end
+  def skip_session_storage=(val); end
   def stretches; end
-  def stretches=(obj); end
+  def stretches=(val); end
   def strip_whitespace_keys; end
-  def strip_whitespace_keys=(obj); end
+  def strip_whitespace_keys=(val); end
   def timeout_in; end
-  def timeout_in=(obj); end
+  def timeout_in=(val); end
   def token_generator; end
-  def token_generator=(obj); end
+  def token_generator=(val); end
   def unlock_in; end
-  def unlock_in=(obj); end
+  def unlock_in=(val); end
   def unlock_keys; end
-  def unlock_keys=(obj); end
+  def unlock_keys=(val); end
   def unlock_strategy; end
-  def unlock_strategy=(obj); end
+  def unlock_strategy=(val); end
   def warden_config; end
-  def warden_config=(obj); end
+  def warden_config=(val); end
 end
 module Devise::Controllers
 end
@@ -444,7 +444,7 @@ end
 class Devise::FailureApp < ActionController::Metal
   def attempted_path; end
   def default_url_options; end
-  def default_url_options=(val); end
+  def default_url_options=(arg0); end
   def default_url_options?; end
   def flash(**, &&); end
   def http_auth; end
@@ -474,7 +474,7 @@ class Devise::FailureApp < ActionController::Metal
   def self._routes; end
   def self.call(env); end
   def self.default_url_options(*args); end
-  def self.default_url_options=(val); end
+  def self.default_url_options=(value); end
   def self.default_url_options?; end
   def self.logger; end
   def self.logger=(value); end
@@ -495,26 +495,8 @@ class Devise::FailureApp < ActionController::Metal
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::Routing::UrlFor
   include ActiveSupport::Benchmarkable
-  include Anonymous_Module_42
   include Devise::Controllers::StoreLocation
-end
-module Anonymous_Module_42
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 class Devise::Strategies::Base < Warden::Strategies::Base
   def mapping; end
@@ -584,8 +566,6 @@ class DeviseController < ApplicationController
   def scope_name; end
   def self.__callbacks; end
   def self._helper_methods; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
@@ -598,27 +578,18 @@ class DeviseController < ApplicationController
   def translation_scope; end
   def unknown_action!(msg); end
   extend Devise::Controllers::ScopedViews::ClassMethods
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_43
   include Devise::Controllers::ScopedViews
+  include GeneratedUrlHelpers
 end
-module Anonymous_Module_43
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+module DeviseController::HelperMethods
+  def devise_mapping(*args, &block); end
+  def resource(*args, &block); end
+  def resource_class(*args, &block); end
+  def resource_name(*args, &block); end
+  def resource_params(*args, &block); end
+  def scope_name(*args, &block); end
+  def signed_in_resource(*args, &block); end
+  include ApplicationController::HelperMethods
 end
 class Devise::OmniauthCallbacksController < DeviseController
   def _layout(lookup_context, formats); end
@@ -628,32 +599,11 @@ class Devise::OmniauthCallbacksController < DeviseController
   def failure_message; end
   def passthru; end
   def self.__callbacks; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
   def translation_scope; end
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_44
-end
-module Anonymous_Module_44
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 class Devise::PasswordsController < DeviseController
   def _layout(lookup_context, formats); end
@@ -664,34 +614,13 @@ class Devise::PasswordsController < DeviseController
   def edit; end
   def new; end
   def self.__callbacks; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
   def translation_scope; end
   def unlockable?(resource); end
   def update; end
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_45
-end
-module Anonymous_Module_45
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 class Devise::SessionsController < DeviseController
   def _layout(lookup_context, formats); end
@@ -702,8 +631,6 @@ class Devise::SessionsController < DeviseController
   def new; end
   def respond_to_on_destroy; end
   def self.__callbacks; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
@@ -711,26 +638,7 @@ class Devise::SessionsController < DeviseController
   def sign_in_params; end
   def translation_scope; end
   def verify_signed_out_user; end
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_46
-end
-module Anonymous_Module_46
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 class Devise::UnlocksController < DeviseController
   def _layout(lookup_context, formats); end
@@ -739,33 +647,12 @@ class Devise::UnlocksController < DeviseController
   def create; end
   def new; end
   def self.__callbacks; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
   def show; end
   def translation_scope; end
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_47
-end
-module Anonymous_Module_47
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 class Devise::ConfirmationsController < DeviseController
   def _layout(lookup_context, formats); end
@@ -773,33 +660,12 @@ class Devise::ConfirmationsController < DeviseController
   def after_resending_confirmation_instructions_path_for(resource_name); end
   def create; end
   def new; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
   def show; end
   def translation_scope; end
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_48
-end
-module Anonymous_Module_48
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 class Devise::RegistrationsController < DeviseController
   def _layout(lookup_context, formats); end
@@ -815,8 +681,6 @@ class Devise::RegistrationsController < DeviseController
   def edit; end
   def new; end
   def self.__callbacks; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
@@ -828,26 +692,7 @@ class Devise::RegistrationsController < DeviseController
   def update; end
   def update_needs_confirmation?(resource, previous); end
   def update_resource(resource, params); end
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_49
-end
-module Anonymous_Module_49
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 module Devise::Mailers::Helpers
   def devise_mail(record, action, opts = nil, &block); end
@@ -869,30 +714,13 @@ class Devise::Mailer < ActionMailer::Base
   def email_changed(record, opts = nil); end
   def password_change(record, opts = nil); end
   def reset_password_instructions(record, token, opts = nil); end
-  def self._helpers; end
   def self._routes; end
   def unlock_instructions(record, token, opts = nil); end
   extend Devise::Controllers::ScopedViews::ClassMethods
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_50
+  include Anonymous_Module_32
   include Devise::Controllers::ScopedViews
   include Devise::Mailers::Helpers
-end
-module Anonymous_Module_50
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
 end
 module Devise::Test::ControllerHelpers
   def _catch_warden(&block); end

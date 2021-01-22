@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actiontext/all/actiontext.rbi
 #
-# actiontext-6.0.3.4
+# actiontext-6.1.1
 
 module ActionText
   def self.railtie_helpers_paths; end
@@ -55,12 +55,12 @@ class ActionText::Attachables::ContentAttachment
   def name; end
   def name=(arg0); end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._validate_callbacks; end
   def self._validate_callbacks=(value); end
   def self._validators; end
-  def self._validators=(val); end
+  def self._validators=(value); end
   def self._validators?; end
   def self.from_node(node); end
   def to_partial_path; end
@@ -162,12 +162,12 @@ class ActionText::AttachmentGallery
   def model_name(**, &&); end
   def node; end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._validate_callbacks; end
   def self._validate_callbacks=(value); end
   def self._validators; end
-  def self._validators=(val); end
+  def self._validators=(value); end
   def self._validators?; end
   def self.find_attachment_gallery_nodes(content); end
   def self.fragment_by_canonicalizing_attachment_galleries(content); end
@@ -198,6 +198,13 @@ end
 module ActionText::Attribute::ClassMethods
   def has_rich_text(name); end
 end
+module ActionText::Rendering
+  extend ActiveSupport::Concern
+end
+module ActionText::Rendering::ClassMethods
+  def render(*args, &block); end
+  def with_renderer(renderer); end
+end
 module ActionText::Serialization
   def _dump(*arg0); end
   extend ActiveSupport::Concern
@@ -227,10 +234,11 @@ class ActionText::Content
   def inspect; end
   def links; end
   def present?(**, &&); end
+  def render(**, &&); end
   def render_attachment_galleries(&block); end
   def render_attachments(**options, &block); end
-  def renderer; end
-  def renderer=(obj); end
+  def self.default_renderer; end
+  def self.default_renderer=(val); end
   def self.fragment_by_canonicalizing_content(content); end
   def self.renderer; end
   def self.renderer=(obj); end
@@ -239,8 +247,9 @@ class ActionText::Content
   def to_rendered_html_with_layout; end
   def to_s; end
   def to_trix_html; end
+  extend ActionText::Rendering::ClassMethods
   extend ActionText::Serialization::ClassMethods
-  include ActionText::Serialization
+  include ActionText::Rendering
 end
 class ActionText::Fragment
   def find_all(selector); end

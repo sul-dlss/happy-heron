@@ -332,7 +332,7 @@ RSpec.describe Work do
     end
 
     describe 'a submit_for_review event' do
-      let(:collection) { build(:collection, reviewers: [depositor, reviewer]) }
+      let(:collection) { build(:collection, reviewed_by: [depositor, reviewer]) }
       let(:depositor) { build(:user) }
       let(:reviewer) { build(:user) }
 

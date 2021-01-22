@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/railties/all/railties.rbi
 #
-# railties-6.0.3.4
+# railties-6.1.1
 
 module Rails
   def self.app_class; end
@@ -70,6 +70,7 @@ class Rails::Railtie
   def run_console_blocks(app); end
   def run_generators_blocks(app); end
   def run_runner_blocks(app); end
+  def run_server_blocks(app); end
   def run_tasks_blocks(app); end
   def self.abstract_railtie?; end
   def self.config(**, &&); end
@@ -77,7 +78,6 @@ class Rails::Railtie
   def self.console(&blk); end
   def self.generate_railtie_name(string); end
   def self.generators(&blk); end
-  def self.inherited(base); end
   def self.instance; end
   def self.method_missing(name, *args, &block); end
   def self.new(*arg0); end
@@ -86,14 +86,20 @@ class Rails::Railtie
   def self.register_block_for(type, &blk); end
   def self.respond_to_missing?(name, _); end
   def self.runner(&blk); end
+  def self.server(&blk); end
   def self.subclasses; end
+  extend ActiveSupport::DescendantsTracker
   extend Rails::Initializable::ClassMethods
   include Rails::Initializable
 end
 class Rails::Engine < Rails::Railtie
+  def __callbacks; end
+  def __callbacks?; end
   def _all_autoload_once_paths; end
   def _all_autoload_paths; end
   def _all_load_paths(add_autoload_paths_to_load_path); end
+  def _load_seed_callbacks; end
+  def _run_load_seed_callbacks(&block); end
   def app; end
   def build_middleware; end
   def build_request(env); end
@@ -114,6 +120,7 @@ class Rails::Engine < Rails::Railtie
   def load_generators(app = nil); end
   def load_runner(app = nil); end
   def load_seed; end
+  def load_server(app = nil); end
   def load_tasks(app = nil); end
   def middleware(**, &&); end
   def paths(**, &&); end
@@ -122,6 +129,11 @@ class Rails::Engine < Rails::Railtie
   def routes(&block); end
   def routes?; end
   def run_tasks_blocks(*arg0); end
+  def self.__callbacks; end
+  def self.__callbacks=(value); end
+  def self.__callbacks?; end
+  def self._load_seed_callbacks; end
+  def self._load_seed_callbacks=(value); end
   def self.called_from; end
   def self.called_from=(arg0); end
   def self.eager_load!(**, &&); end
@@ -135,7 +147,9 @@ class Rails::Engine < Rails::Railtie
   def self.isolated; end
   def self.isolated=(arg0); end
   def self.isolated?; end
-  def with_inline_jobs; end
+  extend ActiveSupport::Callbacks::ClassMethods
+  extend ActiveSupport::DescendantsTracker
+  include ActiveSupport::Callbacks
 end
 class Rails::Engine::Railties
   def -(others); end
@@ -170,11 +184,13 @@ class Rails::Application < Rails::Engine
   def build_middleware; end
   def build_middleware_stack; end
   def build_request(env); end
+  def coerce_same_site_protection(protection); end
   def config; end
   def config=(arg0); end
   def config_for(name, env: nil); end
   def console(&blk); end
   def credentials; end
+  def credentials=(arg0); end
   def default_middleware_stack; end
   def default_url_options(**, &&); end
   def default_url_options=(arg); end
@@ -206,6 +222,7 @@ class Rails::Application < Rails::Engine
   def run_generators_blocks(app); end
   def run_load_hooks!; end
   def run_runner_blocks(app); end
+  def run_server_blocks(app); end
   def run_tasks_blocks(app); end
   def runner(&blk); end
   def sandbox; end
@@ -220,15 +237,10 @@ class Rails::Application < Rails::Engine
   def self.inherited(base); end
   def self.instance; end
   def self.new(*arg0); end
+  def server(&blk); end
   def to_app; end
   def validate_secret_key_base(secret_key_base); end
   def watchable_args; end
-end
-class Rails::Application::NonSymbolAccessDeprecatedHash < ActiveSupport::HashWithIndifferentAccess
-  def []=(key, value); end
-  def convert_key(key); end
-  def convert_value(value, options = nil); end
-  def initialize(value = nil); end
 end
 module Rails::VERSION
 end
@@ -283,6 +295,7 @@ class Rails::Paths::Path
   def last; end
   def load_path!; end
   def load_path?; end
+  def paths; end
   def push(path); end
   def skip_autoload!; end
   def skip_autoload_once!; end
@@ -306,12 +319,17 @@ class Rails::Configuration::MiddlewareStackProxy
   def insert_after(*args, &block); end
   def insert_before(*args, &block); end
   def merge_into(other); end
+  def move(*args, &block); end
+  def move_after(*args, &block); end
+  def move_before(*args, &block); end
   def operations; end
   def swap(*args, &block); end
   def unshift(*args, &block); end
   def use(*args, &block); end
 end
 class Rails::Configuration::Generators
+  def after_generate(&block); end
+  def after_generate_callbacks; end
   def aliases; end
   def aliases=(arg0); end
   def api_only; end
@@ -388,14 +406,11 @@ end
 class Rails::SourceAnnotationExtractor::Annotation < Anonymous_Struct_3
   def self.directories; end
   def self.extensions; end
-  def self.notes_task_deprecation_warning; end
   def self.register_directories(*dirs); end
   def self.register_extensions(*exts, &block); end
   def self.register_tags(*additional_tags); end
   def self.tags; end
   def to_s(options = nil); end
-end
-module SourceAnnotationExtractor
 end
 class Rails::Application::Configuration < Rails::Engine::Configuration
   def add_autoload_paths_to_load_path; end
@@ -459,6 +474,8 @@ class Rails::Application::Configuration < Rails::Engine::Configuration
   def force_ssl=(arg0); end
   def helpers_paths; end
   def helpers_paths=(arg0); end
+  def host_authorization; end
+  def host_authorization=(arg0); end
   def hosts; end
   def hosts=(arg0); end
   def initialize(*arg0); end
@@ -474,10 +491,13 @@ class Rails::Application::Configuration < Rails::Engine::Configuration
   def logger; end
   def logger=(arg0); end
   def paths; end
+  def permissions_policy(&block); end
   def public_file_server; end
   def public_file_server=(arg0); end
   def railties_order; end
   def railties_order=(arg0); end
+  def rake_eager_load; end
+  def rake_eager_load=(arg0); end
   def read_encrypted_secrets; end
   def read_encrypted_secrets=(arg0); end
   def relative_url_root; end
@@ -527,6 +547,7 @@ class Rails::Application::RoutesReloader
   def eager_load=(arg0); end
   def execute(**, &&); end
   def execute_if_updated(**, &&); end
+  def external_routes; end
   def finalize!; end
   def initialize; end
   def load_paths; end
@@ -557,7 +578,6 @@ class Rails::ApplicationController < ActionController::Base
   def local_request?; end
   def require_local!; end
   def self.__callbacks; end
-  def self._helpers; end
   def self._layout; end
   def self._layout_conditions; end
   def self._routes; end
@@ -565,23 +585,9 @@ class Rails::ApplicationController < ActionController::Base
   def self.helpers_path; end
   def self.middleware_stack; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_4
+  include GeneratedUrlHelpers
 end
-module Anonymous_Module_4
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+module Rails::ApplicationController::HelperMethods
+  include ActionController::Base::HelperMethods
+  include DeviseHelper
 end

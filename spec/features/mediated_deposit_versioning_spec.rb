@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Edit a new version of a work in a collection using mediated deposit', js: true do
-  let(:collection) { create(:collection, reviewers: [user], depositors: [user]) }
+  let(:collection) { create(:collection, reviewed_by: [user], depositors: [user]) }
   let(:new_work_title) { 'I Appear To Have Changed' }
   let(:rejection_reason) { 'I do not like the color' }
   let(:newest_work_title) { 'Indigo is preferred' }

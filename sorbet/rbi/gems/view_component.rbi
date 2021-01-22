@@ -27,7 +27,7 @@ module ViewComponent::CompileCache
   def invalidate!; end
   def register(klass); end
   def self.cache; end
-  def self.cache=(obj); end
+  def self.cache=(val); end
   def self.compiled?(klass); end
   def self.invalidate!; end
   def self.register(klass); end
@@ -74,7 +74,7 @@ class ViewComponent::Base < ActionView::Base
   def config(**, &&); end
   def content; end
   def content_areas; end
-  def content_areas=(val); end
+  def content_areas=(arg0); end
   def content_areas?; end
   def controller; end
   def default_preview_layout; end
@@ -95,33 +95,33 @@ class ViewComponent::Base < ActionView::Base
   def self.compile(raise_errors: nil); end
   def self.compiled?; end
   def self.content_areas; end
-  def self.content_areas=(val); end
+  def self.content_areas=(value); end
   def self.content_areas?; end
   def self.default_preview_layout; end
-  def self.default_preview_layout=(obj); end
+  def self.default_preview_layout=(val); end
   def self.format; end
   def self.identifier; end
   def self.inherited(child); end
   def self.initialize_parameters; end
   def self.preview_controller; end
-  def self.preview_controller=(obj); end
+  def self.preview_controller=(val); end
   def self.preview_path; end
-  def self.preview_path=(obj); end
+  def self.preview_path=(val); end
   def self.preview_paths; end
-  def self.preview_paths=(obj); end
+  def self.preview_paths=(val); end
   def self.preview_route; end
-  def self.preview_route=(obj); end
+  def self.preview_route=(val); end
   def self.provided_collection_parameter; end
   def self.render_monkey_patch_enabled; end
-  def self.render_monkey_patch_enabled=(obj); end
+  def self.render_monkey_patch_enabled=(val); end
   def self.short_identifier; end
   def self.show_previews; end
-  def self.show_previews=(obj); end
+  def self.show_previews=(val); end
   def self.source_location; end
   def self.source_location=(arg0); end
   def self.template_compiler; end
   def self.test_controller; end
-  def self.test_controller=(obj); end
+  def self.test_controller=(val); end
   def self.type; end
   def self.validate_collection_parameter!(validate_default: nil); end
   def self.virtual_path; end
@@ -131,7 +131,7 @@ class ViewComponent::Base < ActionView::Base
   def self.with_content_areas(*areas); end
   def show_previews; end
   def test_controller; end
-  def test_controller=(obj); end
+  def test_controller=(val); end
   def view_cache_dependencies; end
   def view_context; end
   def virtual_path; end
@@ -142,12 +142,6 @@ class ViewComponent::Base < ActionView::Base
   include ViewComponent::Previewable
 end
 class ViewComponent::Base::ViewContextCalledBeforeRenderError < StandardError
-end
-module ViewComponent::RenderMonkeyPatch
-  def render(options = nil, args = nil, &block); end
-end
-module ViewComponent::RenderComponentHelper
-  def render_component(component, &block); end
 end
 class ViewComponent::Compiler
   def call_method_name(variant); end
@@ -165,18 +159,6 @@ class ViewComponent::Compiler
   def variants; end
   def variants_from_inline_calls(calls); end
 end
-module ViewComponent::RenderingMonkeyPatch
-  def render(options = nil, args = nil); end
-end
-module ViewComponent::RenderToStringMonkeyPatch
-  def render_to_string(options = nil, args = nil); end
-end
-module ViewComponent::RenderingComponentHelper
-  def render_component(component); end
-end
-module ViewComponent::RenderComponentToStringHelper
-  def render_component_to_string(component); end
-end
 class ViewComponentsController < Rails::ApplicationController
   def _layout(lookup_context, formats); end
   def default_preview_layout; end
@@ -187,33 +169,12 @@ class ViewComponentsController < Rails::ApplicationController
   def prepend_preview_examples_view_path; end
   def previews; end
   def self.__callbacks; end
-  def self._helpers; end
-  def self._routes; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
   def set_locale; end
   def show_previews?; end
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_38
-end
-module Anonymous_Module_38
-  def _generate_paths_by_default; end
-  def _routes; end
-  def self._routes; end
-  def self.full_url_for(options); end
-  def self.optimize_routes_generation?; end
-  def self.polymorphic_path(record_or_hash_or_array, options = nil); end
-  def self.polymorphic_url(record_or_hash_or_array, options = nil); end
-  def self.route_for(name, *args); end
-  def self.url_for(options); end
-  def self.url_options; end
-  extend ActiveSupport::Concern
-  extend Anonymous_Module_5
-  extend Anonymous_Module_6
-  include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_5
-  include Anonymous_Module_6
+  include GeneratedUrlHelpers
 end
 module ViewComponent::TestHelpers
   def controller; end

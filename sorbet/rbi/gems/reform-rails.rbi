@@ -82,9 +82,9 @@ class Reform::Form::ActiveModel::Validations::Group
   def call(form); end
   def initialize(*arg0); end
   extend Uber::Delegates
-  include Anonymous_Module_100
+  include Anonymous_Module_80
 end
-module Anonymous_Module_100
+module Anonymous_Module_80
   def validate(*args, &block); end
   def validate_with(*args, &block); end
   def validates(*args, &block); end
@@ -124,12 +124,12 @@ class Reform::Form::ActiveModel::Validations::Validator < SimpleDelegator
   def method_missing(m, *args, &block); end
   def model_name(**, &&); end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self._validate_callbacks; end
   def self._validate_callbacks=(value); end
   def self._validators; end
-  def self._validators=(val); end
+  def self._validators=(value); end
   def self._validators?; end
   def self.attr_reader(*arg0); end
   def self.attr_writer(*arg0); end

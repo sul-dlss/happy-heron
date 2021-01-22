@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -19,7 +19,7 @@ module Collections
 
     sig { returns(T.nilable(String)) }
     def reviewers
-      collection.reviewers.map(&:sunetid).join(', ')
+      collection.reviewed_by.map(&:sunetid).join(', ')
     end
   end
 end

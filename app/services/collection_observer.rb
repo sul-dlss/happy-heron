@@ -71,7 +71,7 @@ class CollectionObserver
     change_set = collection.event_context.fetch(:change_set, nil) # there isn't always a change set at this point
     return unless collection.email_when_participants_changed? && change_set&.participants_changed?
 
-    (collection.managers + collection.reviewers).each do |user|
+    (collection.managers + collection.reviewed_by).each do |user|
       CollectionsMailer.with(collection: collection, user: user)
                        .participants_changed_email.deliver_later
     end

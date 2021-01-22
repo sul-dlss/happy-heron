@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 # Represents the difference in a Collection before and after an update.
@@ -70,7 +70,7 @@ class CollectionChangeSet
       # Need to read these associations and cache them because the
       # underlying data in the database is mutable
       @depositors = T.let(collection.depositors.to_a, T::Array[User])
-      @reviewers = T.let(collection.reviewers.to_a, T::Array[User])
+      @reviewers = T.let(collection.reviewed_by.to_a, T::Array[User])
       @managers = T.let(collection.managers.to_a, T::Array[User])
     end
 

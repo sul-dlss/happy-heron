@@ -397,20 +397,20 @@ end
 module ActionPolicy::Rails::Authorizer
   def authorize(policy, rule); end
 end
-module Anonymous_Module_39
+module Anonymous_Module_29
   def policy_cache_key; end
   def policy_class; end
 end
 class ActiveRecord::Relation
-  include Anonymous_Module_39
-  include Anonymous_Module_40
+  include Anonymous_Module_29
+  include Anonymous_Module_30
 end
 module ActionPolicy::ScopeMatchers
 end
 module ActionPolicy::ScopeMatchers::ActiveRecord
   def relation_scope(*args, &block); end
 end
-module Anonymous_Module_40
+module Anonymous_Module_30
   def policy_name; end
 end
 module ActionPolicy::ScopeMatchers::ActionControllerParams

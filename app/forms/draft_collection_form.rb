@@ -75,9 +75,9 @@ class DraftCollectionForm < Reform::Form
 
   sig { void }
   def update_reviewers
-    return model.reviewers = [] unless review_enabled == 'true'
+    return model.reviewed_by = [] unless review_enabled == 'true'
 
-    model.reviewers = field_to_users(reviewer_sunets)
+    model.reviewed_by = field_to_users(reviewer_sunets)
   end
 
   sig { params(field: String).returns(T::Array[User]) }
@@ -98,7 +98,7 @@ class DraftCollectionForm < Reform::Form
 
   sig { returns(T::Array[String]) }
   def reviewer_sunets_from_model
-    model.reviewers.map(&:sunetid)
+    model.reviewed_by.map(&:sunetid)
   end
 
   sig { returns(T::Array[String]) }

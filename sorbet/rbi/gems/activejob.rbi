@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activejob/all/activejob.rbi
 #
-# activejob-6.0.3.4
+# activejob-6.1.1
 
 module ActiveJob
   def self.gem_version; end
@@ -20,9 +20,9 @@ class ActiveJob::Railtie < Rails::Railtie
 end
 module ActiveJob::Serializers
   def _additional_serializers; end
-  def _additional_serializers=(obj); end
+  def _additional_serializers=(val); end
   def self._additional_serializers; end
-  def self._additional_serializers=(obj); end
+  def self._additional_serializers=(val); end
   def self.add_serializers(*new_serializers); end
   def self.deserialize(argument); end
   def self.serialize(argument); end
@@ -30,7 +30,7 @@ module ActiveJob::Serializers
   extend ActiveSupport::Autoload
 end
 class ActiveJob::Serializers::ObjectSerializer
-  def deserialize(_argument); end
+  def deserialize(json); end
   def klass; end
   def self.allocate; end
   def self.deserialize(**, &&); end
@@ -52,25 +52,30 @@ class ActiveJob::Serializers::DurationSerializer < ActiveJob::Serializers::Objec
   def klass; end
   def serialize(duration); end
 end
-class ActiveJob::Serializers::DateTimeSerializer < ActiveJob::Serializers::ObjectSerializer
+class ActiveJob::Serializers::TimeObjectSerializer < ActiveJob::Serializers::ObjectSerializer
+  def serialize(time); end
+end
+class ActiveJob::Serializers::DateTimeSerializer < ActiveJob::Serializers::TimeObjectSerializer
   def deserialize(hash); end
   def klass; end
-  def serialize(time); end
 end
 class ActiveJob::Serializers::DateSerializer < ActiveJob::Serializers::ObjectSerializer
   def deserialize(hash); end
   def klass; end
   def serialize(date); end
 end
-class ActiveJob::Serializers::TimeWithZoneSerializer < ActiveJob::Serializers::ObjectSerializer
+class ActiveJob::Serializers::TimeWithZoneSerializer < ActiveJob::Serializers::TimeObjectSerializer
   def deserialize(hash); end
   def klass; end
-  def serialize(time); end
 end
-class ActiveJob::Serializers::TimeSerializer < ActiveJob::Serializers::ObjectSerializer
+class ActiveJob::Serializers::TimeSerializer < ActiveJob::Serializers::TimeObjectSerializer
   def deserialize(hash); end
   def klass; end
-  def serialize(time); end
+end
+class ActiveJob::Serializers::ModuleSerializer < ActiveJob::Serializers::ObjectSerializer
+  def deserialize(hash); end
+  def klass; end
+  def serialize(constant); end
 end
 module ActiveJob::Core
   def arguments; end
@@ -124,15 +129,11 @@ module ActiveJob::QueueName
 end
 module ActiveJob::QueueName::ClassMethods
   def default_queue_name; end
-  def default_queue_name=(obj); end
+  def default_queue_name=(val); end
   def queue_as(part_name = nil, &block); end
   def queue_name_from_part(part_name); end
-  def queue_name_prefix; end
-  def queue_name_prefix=(obj); end
   def self.default_queue_name; end
-  def self.default_queue_name=(obj); end
-  def self.queue_name_prefix; end
-  def self.queue_name_prefix=(obj); end
+  def self.default_queue_name=(val); end
 end
 module ActiveJob::QueuePriority
   def priority; end
@@ -140,10 +141,10 @@ module ActiveJob::QueuePriority
 end
 module ActiveJob::QueuePriority::ClassMethods
   def default_priority; end
-  def default_priority=(obj); end
+  def default_priority=(val); end
   def queue_with_priority(priority = nil, &block); end
   def self.default_priority; end
-  def self.default_priority=(obj); end
+  def self.default_priority=(val); end
 end
 class ActiveJob::DeserializationError < StandardError
   def initialize; end
@@ -185,6 +186,7 @@ module ActiveJob::Execution::ClassMethods
   def perform_now(*args); end
 end
 module ActiveJob::Callbacks
+  def halted_callback_hook(_filter, name); end
   def self.__callbacks; end
   def self.__callbacks?; end
   def self._execute_callbacks; end
@@ -199,24 +201,30 @@ module ActiveJob::Callbacks::ClassMethods
   def around_perform(*filters, &blk); end
   def before_enqueue(*filters, &blk); end
   def before_perform(*filters, &blk); end
+  def inherited(klass); end
 end
 module ActiveJob::Exceptions
-  def determine_delay(seconds_or_duration_or_algorithm:, executions:); end
+  def determine_delay(seconds_or_duration_or_algorithm:, executions:, jitter: nil); end
+  def determine_jitter_for_delay(delay, jitter); end
   def executions_for(exceptions); end
-  def instrument(name, error: nil, wait: nil, &block); end
   def retry_job(options = nil); end
   extend ActiveSupport::Concern
 end
 module ActiveJob::Exceptions::ClassMethods
   def discard_on(*exceptions); end
-  def retry_on(*exceptions, wait: nil, attempts: nil, queue: nil, priority: nil); end
+  def retry_on(*exceptions, wait: nil, attempts: nil, queue: nil, priority: nil, jitter: nil); end
+end
+class ActiveJob::LogSubscriber < ActiveSupport::LogSubscriber
 end
 module ActiveJob::Logging
   def logger_tagged_by_active_job?; end
   def tag_logger(*tags); end
   extend ActiveSupport::Concern
 end
-class ActiveJob::Logging::LogSubscriber < ActiveSupport::LogSubscriber
+module ActiveJob::Instrumentation
+  def halted_callback_hook(*arg0); end
+  def instrument(operation, payload = nil, &block); end
+  extend ActiveSupport::Concern
 end
 module ActiveJob::Timezones
   extend ActiveSupport::Concern
@@ -282,12 +290,16 @@ class ActiveJob::Base
   def _run_enqueue_callbacks(&block); end
   def _run_perform_callbacks(&block); end
   def logger; end
-  def logger=(obj); end
+  def logger=(val); end
+  def queue_adapter(**, &&); end
+  def queue_name_prefix; end
+  def queue_name_prefix=(arg0); end
+  def queue_name_prefix?; end
   def rescue_handlers; end
-  def rescue_handlers=(val); end
+  def rescue_handlers=(arg0); end
   def rescue_handlers?; end
   def self.__callbacks; end
-  def self.__callbacks=(val); end
+  def self.__callbacks=(value); end
   def self.__callbacks?; end
   def self.__synchronized_sidekiq_options_hash; end
   def self.__synchronized_sidekiq_retries_exhausted_block; end
@@ -297,31 +309,41 @@ class ActiveJob::Base
   def self._perform_callbacks; end
   def self._perform_callbacks=(value); end
   def self._queue_adapter; end
-  def self._queue_adapter=(val); end
+  def self._queue_adapter=(value); end
   def self._queue_adapter_name; end
-  def self._queue_adapter_name=(val); end
+  def self._queue_adapter_name=(value); end
+  def self.log_arguments; end
+  def self.log_arguments=(value); end
+  def self.log_arguments?; end
   def self.logger; end
-  def self.logger=(obj); end
+  def self.logger=(val); end
   def self.priority; end
-  def self.priority=(val); end
+  def self.priority=(value); end
   def self.priority?; end
   def self.queue_name; end
-  def self.queue_name=(val); end
+  def self.queue_name=(value); end
   def self.queue_name?; end
   def self.queue_name_delimiter; end
-  def self.queue_name_delimiter=(val); end
+  def self.queue_name_delimiter=(value); end
   def self.queue_name_delimiter?; end
+  def self.queue_name_prefix; end
+  def self.queue_name_prefix=(value); end
+  def self.queue_name_prefix?; end
   def self.rescue_handlers; end
-  def self.rescue_handlers=(val); end
+  def self.rescue_handlers=(value); end
   def self.rescue_handlers?; end
-  def self.return_false_on_aborted_enqueue; end
-  def self.return_false_on_aborted_enqueue=(val); end
+  def self.retry_jitter; end
+  def self.retry_jitter=(value); end
+  def self.return_false_on_aborted_enqueue(*args, &block); end
+  def self.return_false_on_aborted_enqueue=(*args, &block); end
   def self.sidekiq_options_hash; end
   def self.sidekiq_options_hash=(val); end
   def self.sidekiq_retries_exhausted_block; end
   def self.sidekiq_retries_exhausted_block=(val); end
   def self.sidekiq_retry_in_block; end
   def self.sidekiq_retry_in_block=(val); end
+  def self.skip_after_callbacks_if_terminated; end
+  def self.skip_after_callbacks_if_terminated=(val); end
   def sidekiq_options_hash; end
   def sidekiq_options_hash=(arg0); end
   def sidekiq_retries_exhausted_block; end
@@ -345,6 +367,7 @@ class ActiveJob::Base
   include ActiveJob::Enqueuing
   include ActiveJob::Exceptions
   include ActiveJob::Execution
+  include ActiveJob::Instrumentation
   include ActiveJob::Logging
   include ActiveJob::QueueAdapter
   include ActiveJob::QueueName
