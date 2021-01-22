@@ -4,12 +4,12 @@
   <div class="mb-3" data-controller="nested-form">
     <template data-nested-form-target='template'>
       <%= form.fields_for :related_links, RelatedLink.new, child_index: 'TEMPLATE_RECORD' do |link_form| %>
-        <%= render Works::RelatedLinkRowComponent.new(form: link_form) %>
+        <%= render RelatedLinkRowComponent.new(form: link_form) %>
       <% end %>
     </template>
 
     <%= form.fields_for :related_links do |link_form| %>
-      <%= render Works::RelatedLinkRowComponent.new(form: link_form) %>
+      <%= render RelatedLinkRowComponent.new(form: link_form) %>
     <% end %>
 
     <div data-nested-form-target="add_item">

@@ -1,21 +1,23 @@
-<div class="contributor inner-container">
+<div class="inner-container">
   <div class="row mb-2">
     <%= form.label :link_title, 'Link title', class: 'form-label col-md-2' %>
 
     <div class="col-md-9">
-      <%= form.hidden_field :_destroy %>
       <%= form.text_field :link_title, class: 'form-control' %>
     </div>
 
     <div class="col-md-1">
-      <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: 'Remove' },
-       data: { action: "click->nested-form#removeAssociation" } do %>
-        <span class="far fa-trash-alt"></span>
+      <% if not_first_link? %>
+        <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: "Remove #{link_title}" },
+                       data: { action: "click->nested-form#removeAssociation" } do %>
+          <span class="far fa-trash-alt"></span>
+        <% end %>
+        <%= form.hidden_field :_destroy %>
       <% end %>
     </div>
   </div>
-  <div class="row">
 
+  <div class="row">
     <%= form.label :url, 'URL', class: 'form-label col-md-2' %>
 
     <div class="col-md-9">

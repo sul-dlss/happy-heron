@@ -4,13 +4,19 @@
 require 'rails_helper'
 
 RSpec.describe Works::RelatedWorkComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+  let(:related_works) do
+    [
+      build_stubbed(:related_work, citation: 'First Citation'),
+      build_stubbed(:related_work, citation: 'Second Citation')
+    ]
+  end
+  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:work_form) { WorkForm.new(work) }
+  let(:work) { build_stubbed(:work, related_works: related_works) }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  it 'renders a delete button for all works but the first' do
+    expect(rendered.css('button[@aria-label="Remove Second Citation"]')).to be_present
+    expect(rendered.css('button[@aria-label="Remove First Citation"]')).not_to be_present
+  end
 end
