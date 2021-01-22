@@ -32,7 +32,9 @@ module Works
     end
 
     def default_access
-      Collection.find(reform.collection_id).access
+      return unless reform.collection_id
+
+      Collection.find_by(id: reform.collection_id)&.access
     end
   end
 end
