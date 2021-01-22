@@ -34,13 +34,6 @@ module Works
       work.updated_at.to_formatted_s(:long)
     end
 
-    sig { params(anchor: String, label: String).returns(String) }
-    def edit_link(anchor, label)
-      link_to edit_work_path(work, anchor: anchor), aria: { label: label } do
-        tag.span class: 'fas fa-pencil-alt edit'
-      end
-    end
-
     sig { returns(String) }
     def embargo_date
       work.embargo_date ? T.must(work.embargo_date).to_formatted_s(:long) : 'Immediately'

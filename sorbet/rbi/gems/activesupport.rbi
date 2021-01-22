@@ -39,7 +39,7 @@ class Hash
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
   def self.[](*arg0); end
-  def self.try_convert(arg0); end
+  def self.from_xml(xml, disallowed_types = nil); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -196,7 +196,7 @@ class Array
   def inquiry; end
   def second; end
   def second_to_last; end
-  def self.wrap(object); end
+  def self.[](*arg0); end
   def split(value = nil); end
   def third; end
   def third_to_last; end

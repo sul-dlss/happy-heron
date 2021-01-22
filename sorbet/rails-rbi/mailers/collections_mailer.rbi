@@ -22,4 +22,7 @@ class CollectionsMailer
 
   sig { returns(ActionMailer::MessageDelivery) }
   def self.review_access_granted_email; end
+
+  sig { returns(ActionMailer::MessageDelivery) }
+  def self.review_access_removed_email; end
 end
