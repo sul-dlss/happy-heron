@@ -124,7 +124,7 @@ RSpec.describe CollectionObserver do
     end
 
     context 'when reviewers are removed from a collection' do
-      let(:collection_after) { collection.dup.tap { |col| col.reviewers = [collection.reviewers.first] } }
+      let(:collection_after) { collection.dup.tap { |col| col.reviewed_by = [collection.reviewed_by.first] } }
       let(:collection) do
         create(:collection, :deposited, :with_reviewers)
       end
@@ -132,7 +132,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_removed_email', 'deliver_now',
-          { params: { user: collection.reviewers.last, collection: collection }, args: [] }
+          { params: { user: collection.reviewed_by.last, collection: collection }, args: [] }
         )
       end
     end
