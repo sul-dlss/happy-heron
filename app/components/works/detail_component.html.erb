@@ -16,7 +16,7 @@
 
   <header class="title">
     <span class="header-text"><%= title %></span>
-    <%= link_to edit_work_path(@work), aria: { label: "Edit #{title}"} do %><span class="fas fa-pencil-alt edit"></span><% end %>
+    <%= render Works::EditLinkComponent.new(work: work, anchor: '', label: "Edit #{title}") %>
     <span data-state-updates-target="state" class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
   </header>
 
@@ -73,7 +73,9 @@
   <table class="table table-sm mb-5">
     <thead class="table-light">
     <tr>
-      <th scope="col" class="table-title col-3">Files<%= edit_link 'file', 'Edit files' %></th>
+      <th scope="col" class="table-title col-3">Files
+        <%= render Works::EditLinkComponent.new(work: work, anchor: 'file', label: 'Edit files') %>
+      </th>
       <th scope="col">Description</th>
       <th scope="col">Hide file</th>
     </tr>
@@ -92,7 +94,9 @@
   <table class="table table-sm mb-5">
     <thead class="table-light">
     <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Title and contact<%= edit_link 'title', 'Edit title and contact' %></th>
+      <th scope="col" colspan="2" class="table-title col-3">Title and contact
+        <%= render Works::EditLinkComponent.new(work: work, anchor: 'title', label: 'Edit title and contact') %>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -110,7 +114,9 @@
   <table class="table table-sm">
     <thead class="table-light">
     <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Authors and contributors<%= edit_link 'author', 'Edit authors and contributors' %></th>
+      <th scope="col" colspan="2" class="table-title col-3">Authors and contributors
+        <%= render Works::EditLinkComponent.new(work: work, anchor: 'author', label: 'Edit authors and contributors') %>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -130,7 +136,9 @@
   <table class="table table-sm mb-5">
     <thead class="table-light">
     <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Dates<%= edit_link 'dates', 'Edit dates' %></th>
+      <th scope="col" colspan="2" class="table-title col-3">Dates
+        <%= render Works::EditLinkComponent.new(work: work, anchor: 'dates', label: 'Edit dates') %>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -148,7 +156,9 @@
   <table class="table table-sm mb-5">
     <thead class="table-light">
     <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Description<%= edit_link 'description', 'Edit description' %></th>
+      <th scope="col" colspan="2" class="table-title col-3">Description
+        <%= render Works::EditLinkComponent.new(work: work, anchor: 'description', label: 'Edit description') %>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -192,7 +202,9 @@
   <table class="table table-sm mb-5">
     <thead class="table-light">
     <tr>
-      <th scope="col" colspan="2' class="table-title col-3">Release data and visibility<%= edit_link 'release', 'Edit release data and visibility' %></th>
+      <th scope="col" colspan="2' class="table-title col-3">Release data and visibility
+        <%= render Works::EditLinkComponent.new(work: work, anchor: 'release', label: 'Edit release data and visibility') %>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -210,7 +222,9 @@
   <table class="table table-sm mb-5">
     <thead class="table-light">
     <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Terms of use and license<%= edit_link 'license', 'Edit terms of use and license' %></th>
+      <th scope="col" colspan="2" class="table-title col-3">Terms of use and license
+        <%= render Works::EditLinkComponent.new(work: work, anchor: 'license', label: 'Edit terms of use and license') %>
+      </th>
     </tr>
     </thead>
     <tbody>

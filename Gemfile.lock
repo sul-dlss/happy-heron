@@ -438,10 +438,6 @@ GEM
       sorbet-coerce (>= 0.2.6)
       sorbet-runtime (>= 0.5)
     sorbet-runtime (0.5.6223)
-    sorbet-static (0.5.5981-universal-darwin-14)
-    sorbet-static (0.5.5981-universal-darwin-15)
-    sorbet-static (0.5.5981-universal-darwin-16)
-    sorbet-static (0.5.5981-universal-darwin-17)
     sorbet-static (0.5.5981-universal-darwin-18)
     sorbet-static (0.5.5981-universal-darwin-19)
     sorbet-static (0.5.5981-x86_64-linux)
@@ -506,6 +502,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  x86_64-darwin-18
   x86_64-darwin-19
   x86_64-linux-musl
 

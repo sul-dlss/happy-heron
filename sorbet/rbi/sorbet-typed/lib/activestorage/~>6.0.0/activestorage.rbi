@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/activestorage/~>6.0.0/activestorage.rbi
 #
-# typed: strong
+# typed: ignore
 
 ###
 # This exists because Rails 6.1 changes the method signatures for
