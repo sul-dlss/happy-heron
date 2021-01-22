@@ -8,7 +8,7 @@ RSpec.describe DepositJob do
 
   let(:conn) { instance_double(SdrClient::Connection) }
   let!(:blob) do
-    ActiveStorage::Blob.create_after_upload!(
+    ActiveStorage::Blob.create_and_upload!(
       io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
       filename: 'sul.svg',
       content_type: 'image/svg+xml'
