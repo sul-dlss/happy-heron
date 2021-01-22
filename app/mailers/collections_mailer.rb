@@ -37,6 +37,13 @@ class CollectionsMailer < ApplicationMailer
       'collection in the SDR')
   end
 
+  def review_access_removed_email
+    @user = params[:user]
+    @collection = params[:collection]
+    mail(to: @user.email, subject: "Your permissions have changed for the #{@collection.name} " \
+      'collection in the SDR')
+  end
+
   def collection_activity
     @user = params[:user]
     @collection = params[:collection]
