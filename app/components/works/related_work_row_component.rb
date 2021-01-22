@@ -9,5 +9,15 @@ module Works
     end
 
     attr_reader :form
+
+    delegate :citation, to: :work
+
+    def not_first_work?
+      form.index != 0
+    end
+
+    def work
+      form.object
+    end
   end
 end
