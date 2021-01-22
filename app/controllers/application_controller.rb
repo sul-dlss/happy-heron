@@ -10,13 +10,11 @@ class ApplicationController < ActionController::Base
   # Smartly redirect user back to URL they requested before authenticating
   # From: https://github.com/heartcombo/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   before_action :store_user_location!, if: :storable_location?
-  before_action :root_breadcrumb
+  before_action :add_root_breadcrumb
 
   rescue_from ActionPolicy::Unauthorized, with: :deny_access
 
   authorize :user_with_groups
-
-  attr_reader :breadcrumbs
 
   sig { returns(T.nilable(UserWithGroups)) }
   def user_with_groups
@@ -24,18 +22,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method :user_with_groups
 
-  def root_breadcrumb
-    add_breadcrumb 'Dashboard', dashboard_path
+  def add_root_breadcrumb
+    @breadcrumbs = []
+    add_breadcrumb(title: 'Dashboard', link: dashboard_path) unless params[:controller] == 'welcome'
   end
 
-  def add_breadcrumb(*args)
-    @breadcrumbs ||= []
-
-    # Grab pairs from the arguments and convert to hash
-    pairs = args.each_slice(2).map { |pair| { title: pair[0], link: pair[1] } }
-
-    # Push each hash into @breadcrumbs
-    pairs.each { |pair| @breadcrumbs.push(pair) }
+  def add_breadcrumb(breadcrumb)
+    @breadcrumbs.push({ title: breadcrumb[:title], link: breadcrumb[:link] || '' })
   end
 
   private
