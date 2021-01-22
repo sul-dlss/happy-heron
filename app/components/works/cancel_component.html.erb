@@ -1,1 +1,2 @@
-<%= link_to 'Cancel', collection_works_path(work.collection) %>
+<%= link_to 'Cancel', collection_works_path(work.collection),
+    data: { confirm: 'Are you sure you want to leave this page? Your changes will not be saved.' } %>
