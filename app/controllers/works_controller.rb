@@ -18,7 +18,7 @@ class WorksController < ObjectsController
     @form = WorkForm.new(work)
     @form.prepopulate!
 
-    add_breadcrumb title: work.collection.name, link: collection_path(work.collection)
+    add_breadcrumb title: work.collection.name, link: collection_path(work.collection), confirm: true
     add_breadcrumb title: 'New deposit'
   end
 
@@ -43,8 +43,8 @@ class WorksController < ObjectsController
     @form = WorkForm.new(work)
     @form.prepopulate!
 
-    add_breadcrumb title: work.collection.name, link: collection_path(work.collection)
-    add_breadcrumb title: work.title, link: work_path(work)
+    add_breadcrumb title: work.collection.name, link: collection_path(work.collection), confirm: true
+    add_breadcrumb title: work.title, link: work_path(work), confirm: true
     add_breadcrumb title: 'Edit'
   end
 

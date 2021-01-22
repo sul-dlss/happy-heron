@@ -23,15 +23,25 @@ class ApplicationController < ActionController::Base
   helper_method :user_with_groups
 
   def add_root_breadcrumb
-    @breadcrumbs = []
-    add_breadcrumb(title: 'Dashboard', link: dashboard_path) unless params[:controller] == 'welcome'
+    return unless show_breadcrumbs?
+
+    add_breadcrumb(title: 'Dashboard', link: dashboard_path)
   end
 
   def add_breadcrumb(breadcrumb)
-    @breadcrumbs.push({ title: breadcrumb[:title], link: breadcrumb[:link] || '' })
+    @breadcrumbs ||= []
+    @breadcrumbs.push({ title: breadcrumb[:title],
+                        link: breadcrumb[:link] || '',
+                        confirm: breadcrumb[:confirm] || false })
   end
 
   private
+
+  sig { returns(T::Boolean) }
+  # this can be overriden in other controllers to disable breadcrumb navigation
+  def show_breadcrumbs?
+    true
+  end
 
   sig { returns(T::Array[String]) }
   # This looks first in the session for groups, and then to the headers.

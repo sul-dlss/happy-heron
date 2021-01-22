@@ -14,7 +14,7 @@ class CollectionsController < ObjectsController
     @form = CollectionForm.new(collection)
     @form.prepopulate!
 
-    add_breadcrumb title: 'Create'
+    add_breadcrumb title: 'New collection', confirm: true
   end
 
   def edit
@@ -24,7 +24,7 @@ class CollectionsController < ObjectsController
     @form = CollectionForm.new(collection)
     @form.prepopulate!
 
-    add_breadcrumb title: collection.name, link: collection_path(collection)
+    add_breadcrumb title: collection.name, link: collection_path(collection), confirm: true
     add_breadcrumb title: 'Edit'
   end
 
