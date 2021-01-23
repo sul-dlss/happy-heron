@@ -34,5 +34,29 @@ RSpec.describe 'Create a new collection', js: true do
       # We should not see the delete button for this collection since it is not a draft
       expect(page).not_to have_selector("[aria-label='Delete #{Collection.last.name}']")
     end
+
+    it 'shows a confirmation if you cancel the collection deposit and goes back if confirmed' do
+      visit dashboard_path
+
+      click_link '+ Create a new collection'
+
+      accept_confirm do
+        click_link 'Cancel'
+      end
+
+      expect(page).to have_current_path(dashboard_path)
+    end
+
+    it 'shows a confirmation if you cancel the collection deposit and stays on the page if not confirmed' do
+      visit dashboard_path
+
+      click_link '+ Create a new collection'
+
+      dismiss_confirm do
+        click_link 'Cancel'
+      end
+
+      expect(page).to have_current_path(new_collection_path)
+    end
   end
 end
