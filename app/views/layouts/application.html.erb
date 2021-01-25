@@ -49,12 +49,7 @@
           </nav>
         </header>
 
-        <div>
-          <nav aria-label="breadcrumb" class="justify-content-between navbar navbar-light bg-light">
-            <%= yield :breadcrumbs %>
-          </nav>
-        </div>
-
+        <%= yield :breadcrumbs %>
         <%= render 'shared/flashes' %>
         <%= render Help::FormComponent.new(user: current_user) %>
         <%= yield %>

@@ -1,13 +1,15 @@
-<ol class="breadcrumb">
-  <% breadcrumbs.each do |breadcrumb| %>
-    <li class="breadcrumb-item">
-      <% if breadcrumb[:link].blank? %>
-        <span class="breadcrumb-link"><%= breadcrumb[:title] %></span>
-      <% else %>
-        <%= link_to breadcrumb[:title].presence || 'No title',
-                    breadcrumb[:link], class: 'breadcrumb-link',
-                    data: (breadcrumb[:confirm] ? { confirm: 'Are you sure you want to leave this page? Your changes will not be saved.' } : nil) %>
-      <% end %>
-    </li>
-  <% end %>
-</ol>
+<nav aria-label="breadcrumb" class="bg-light">
+  <ol class="breadcrumb">
+    <% breadcrumbs.each do |breadcrumb| %>
+      <li class="breadcrumb-item">
+        <% if breadcrumb[:link].blank? %>
+          <span class="breadcrumb-link"><%= breadcrumb[:title] %></span>
+        <% else %>
+          <%= link_to breadcrumb[:title].presence || 'No title',
+                      breadcrumb[:link], class: 'breadcrumb-link',
+                      data: (breadcrumb[:confirm] ? { confirm: 'Are you sure you want to leave this page? Your changes will not be saved.' } : nil) %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>
