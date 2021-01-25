@@ -574,6 +574,7 @@ class Rails::BacktraceCleaner < ActiveSupport::BacktraceCleaner
 end
 class Rails::ApplicationController < ActionController::Base
   def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
   def disable_content_security_policy_nonce!; end
   def local_request?; end
   def require_local!; end

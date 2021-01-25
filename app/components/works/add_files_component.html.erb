@@ -1,19 +1,19 @@
-<section data-controller="dropzone files" data-dropzone-max-file-size="2000" data-dropzone-max-files="1000" id="file">
+<section data-controller="dropzone" data-dropzone-max-file-size="2000" data-dropzone-max-files="1000" id="file">
   <header>Add your files</header>
   <p>All file types are accepted. If you have a deposit that is over 10GB, or
     have any trouble with adding your files, contact us.</p>
-  <div class="dropzone dropzone-default" data-files-target="container">
+  <div class="dropzone dropzone-default<%= ' is-invalid' if error? %>">
     <%= form.file_field :files, multiple: true, direct_upload: true,
                         data: { dropzone_target: 'input',
                                 edit_deposit_target: 'fileField',
                                 'progress-step': 'file',
-                                action: "change->progress#check change->files#clearErrors error->files#error" } %>
+                                action: "change->progress#check" } %>
     <div class="dz-message needsclick text-secondary">
       <p>Drop files here</p>
     </div>
   </div>
   <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
-  <div class="invalid-feedback" data-files-target="error"></div>
+  <div class="invalid-feedback"><%= error_message %></div>
   <div class="dropzone-previews" data-dropzone-target="previews">
     <%= form.fields_for :attached_files do |file_form| %>
       <%= render Works::FileRowComponent.new(form: file_form) %>

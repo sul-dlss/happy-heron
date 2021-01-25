@@ -176,11 +176,10 @@ RSpec.describe 'Updating an existing collection' do
 
         it 'renders the page again' do
           patch "/collections/#{collection.id}",
-                params: { collection: collection_params, format: :json, commit: deposit_button }
-          expect(response).to have_http_status(:bad_request)
-          json = JSON.parse(response.body)
-          expect(json['name']).to eq ["can't be blank"]
-          expect(json['reviewerSunets']).to eq ['must be provided when review is enabled']
+                params: { collection: collection_params, commit: deposit_button }
+          expect(response).to have_http_status :unprocessable_entity
+          expect(response.body).to include 'Name can&#39;t be blank'
+          expect(response.body).to include 'must be provided when review is enabled'
         end
       end
     end

@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 # The endpoint for the help modal
@@ -10,6 +10,8 @@ class HelpsController < ApplicationController
                      help_how: params[:help_how],
                      why_contact: params[:why_contact])
                .jira_email.deliver_later
-    render json: { status: 'success' }
+    respond_to do |format|
+      format.turbo_stream
+    end
   end
 end

@@ -468,9 +468,8 @@ GEM
       patience_diff
     thor (1.1.0)
     trollop (1.16.2)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (0.5.7)
+      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -554,7 +553,7 @@ DEPENDENCIES
   state_machines-activerecord
   state_machines-graphviz
   super_diff
-  turbolinks (~> 5)
+  turbo-rails
   view_component (~> 2.18)
   web-console (>= 3.3.0)
   webpacker (~> 5.0)

@@ -22,14 +22,13 @@ class WorksController < ObjectsController
   def create
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
-
     @form = work_form(work)
+
     if @form.validate(work_params) && @form.save
       work.event_context = { user: current_user }
       after_save(work)
     else
-      # Send form errors to client in JSON format to be parsed and rendered there
-      render 'errors', status: :bad_request
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -44,13 +43,12 @@ class WorksController < ObjectsController
   def update
     work = Work.find(params[:id])
     authorize! work
-
     @form = work_form(work)
+
     if @form.validate(work_params) && @form.save
       after_save(work)
     else
-      # Send form errors to client in JSON format to be parsed and rendered there
-      render 'errors', status: :bad_request
+      render :edit, status: :unprocessable_entity
     end
   end
 

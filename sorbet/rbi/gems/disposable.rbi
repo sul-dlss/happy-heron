@@ -219,8 +219,8 @@ module Disposable::Twin::Coercion
   def self.included(includer); end
 end
 module Disposable::Twin::Coercion::Types
-  extend Anonymous_Dry_Core_Deprecations_Tagged_81
-  extend Anonymous_Module_82
+  extend Anonymous_Dry_Core_Deprecations_Tagged_82
+  extend Anonymous_Module_83
   extend Dry::Core::Deprecations::Interface
   extend Dry::Types::BuilderMethods
   include Disposable::Twin::Coercion::Types::DRY_MODULE
@@ -247,9 +247,9 @@ module Disposable::Twin::Coercion::Types::DRY_MODULE
   def self.included(base); end
   extend Dry::Types::BuilderMethods
 end
-module Anonymous_Dry_Core_Deprecations_Tagged_81
+module Anonymous_Dry_Core_Deprecations_Tagged_82
 end
-module Anonymous_Module_82
+module Anonymous_Module_83
   def const_missing(missing); end
 end
 module Disposable::Twin::Coercion::ClassMethods

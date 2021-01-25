@@ -22,12 +22,6 @@ export default class extends Controller {
       this.displayOrganization()
   }
 
-  // Triggered when edit-deposit controller sends an error event
-  error(e) {
-    this.containerTarget.classList.add('is-invalid')
-    this.errorTarget.innerHTML = e.detail.join(' ')
-  }
-
   displayOrganization() {
     this.personNameTargets.forEach((element) => element.hidden = true)
     this.personNameInputTargets.forEach((element) => element.required = false)

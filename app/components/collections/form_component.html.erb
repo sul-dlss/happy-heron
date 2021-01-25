@@ -1,10 +1,20 @@
 <header>All fields are required, unless otherwise noted.</header>
-<%= form_with model: collection_form, remote: true,
-    data: {
-      controller: 'edit-collection',
-      action: 'ajax:error->edit-collection#displayErrors'
-    },
+<%= form_with model: collection_form,
+    data: { controller: 'edit-collection', },
     html: { class: 'needs-validation row collection-editor', novalidate: true, multipart: true } do |form| %>
+
+  <% if collection_form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(collection_form.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% collection_form.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <section id="details">
     <header>Details</header>
     <div class="mb-3 row">
@@ -166,11 +176,11 @@
 
     <!-- TODO: only display sunet entry field if reviewer workflow is enabled -->
     <p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
-    <div class="mb-3 row" data-controller="reviewer-sunets" data-action="error->reviewer-sunets#error" data-edit-collection-target="reviewerSunetsField">
+    <div class="mb-3 row" data-edit-collection-target="reviewerSunetsField">
       <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-sm-2 col-form-label' %>
       <div class="col-sm-10 col-xl-8">
-        <%= form.text_field :reviewer_sunets, class: "form-control", required: false, data: { reviewer_sunets_target: 'container' } %> <!-- TODO: should prob have at least one required if enabled? -->
-        <div data-reviewer-sunets-target="error" class="invalid-feedback">You must provide reviewers</div>
+        <%= form.text_field :reviewer_sunets, class: "form-control", required: false %> <!-- TODO: should prob have at least one required if enabled? -->
+        <div class="invalid-feedback">You must provide reviewers</div>
       </div>
     </div>
   </section>

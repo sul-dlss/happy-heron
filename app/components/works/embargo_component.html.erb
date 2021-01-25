@@ -11,8 +11,8 @@
     </div>
   </div>
 
-  <div class="embargo-date" data-controller="embargo-date" data-action="error->embargo-date#error" data-edit-deposit-target="embargo-dateField">
-    <div class="mb-5 row" data-embargo-date-target="container">
+  <div class="embargo-date" data-edit-deposit-target="embargo-dateField">
+    <div class="mb-5 row">
       <div class="col-sm-10 release-option">
         <%= form.radio_button :release, 'embargo', class: 'form-check-input' %>
         <%= form.label :release_embargo, 'On this date' %>

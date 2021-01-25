@@ -4,12 +4,12 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 import 'controllers'
 
 import '@popperjs/core'
+import '@hotwired/turbo'
 window.bootstrap = require("bootstrap") // Required for contact_us_controller
 require.context('../images', true)
 import 'stylesheets/main'

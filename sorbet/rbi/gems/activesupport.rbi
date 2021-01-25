@@ -2588,6 +2588,8 @@ class ActiveSupport::TestCase < Minitest::Test
   def assert_not_respond_to(obj, meth, msg = nil); end
   def assert_not_same(exp, act, msg = nil); end
   def assert_raise(*exp); end
+  def dom_class(**, &&); end
+  def dom_id(**, &&); end
   def file_fixture_path; end
   def file_fixture_path?; end
   def method_name; end
@@ -2617,6 +2619,7 @@ class ActiveSupport::TestCase < Minitest::Test
   include ActiveSupport::Testing::FileFixtures
   include ActiveSupport::Testing::TaggedLogging
   include ActiveSupport::Testing::TimeHelpers
+  include Turbo::TestAssertions
 end
 class ActiveSupport::Cache::FileStore < ActiveSupport::Cache::Store
   def cache_path; end
