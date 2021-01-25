@@ -1,3 +1,8 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(
+    breadcrumbs: [ { title: @work.collection.name, link: collection_path(@work.collection) },
+                   { title: @work.title } ]) %>
+<% end %>
 <div class="container" id="work" data-controller="state-updates" data-state-updates-work-id="<%= @work.id %>">
   <%= render Works::ApprovalComponent.new(work: @work) %>
 

@@ -39,10 +39,22 @@
               <% end %>
             </div>
 
+            <%= link_to('Help', '#contactUsModal',
+                        class: 'nav-link',
+                        data: {
+                          bs_toggle: 'modal',
+                          bs_target: '#contactUsModal',
+                          controller: 'contact-us'
+                        }) %>
           </nav>
         </header>
 
-        <%= render BreadcrumbNavComponent.new(breadcrumbs: @breadcrumbs) %>
+        <div>
+          <nav aria-label="breadcrumb" class="justify-content-between navbar navbar-light bg-light">
+            <%= yield :breadcrumbs %>
+          </nav>
+        </div>
+
         <%= render 'shared/flashes' %>
         <%= render Help::FormComponent.new(user: current_user) %>
         <%= yield %>

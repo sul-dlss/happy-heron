@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   # Smartly redirect user back to URL they requested before authenticating
   # From: https://github.com/heartcombo/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   before_action :store_user_location!, if: :storable_location?
-  before_action :add_root_breadcrumb
 
   rescue_from ActionPolicy::Unauthorized, with: :deny_access
 
@@ -22,26 +21,7 @@ class ApplicationController < ActionController::Base
   end
   helper_method :user_with_groups
 
-  def add_root_breadcrumb
-    return unless show_breadcrumbs?
-
-    add_breadcrumb(title: 'Dashboard', link: dashboard_path)
-  end
-
-  def add_breadcrumb(breadcrumb)
-    @breadcrumbs ||= []
-    @breadcrumbs.push({ title: breadcrumb[:title],
-                        link: breadcrumb[:link] || '',
-                        confirm: breadcrumb[:confirm] || false })
-  end
-
   private
-
-  sig { returns(T::Boolean) }
-  # this can be overriden in other controllers to disable breadcrumb navigation
-  def show_breadcrumbs?
-    true
-  end
 
   sig { returns(T::Array[String]) }
   # This looks first in the session for groups, and then to the headers.

@@ -1,28 +1,13 @@
-<div>
-  <nav aria-label="breadcrumb" class="justify-content-between navbar navbar-light bg-light">
-    <ol class="breadcrumb">
-      <% breadcrumbs.each do |breadcrumb| %>
-      <li class="breadcrumb-item">
-          <% if breadcrumb[:link].empty? %>
-            <span class="breadcrumb-link"><%= breadcrumb[:title] %></span>
-          <% else %>
-            <%= link_to breadcrumb[:title].presence || 'No title',
-                        breadcrumb[:link], class: 'breadcrumb-link',
-                        data: (breadcrumb[:confirm] ? { confirm: 'Are you sure you want to leave this page? Your changes will not be saved.' } : nil) %>
-          <% end %>
+<ol class="breadcrumb">
+  <% breadcrumbs.each do |breadcrumb| %>
+    <li class="breadcrumb-item">
+      <% if breadcrumb[:link].blank? %>
+        <span class="breadcrumb-link"><%= breadcrumb[:title] %></span>
+      <% else %>
+        <%= link_to breadcrumb[:title].presence || 'No title',
+                    breadcrumb[:link], class: 'breadcrumb-link',
+                    data: (breadcrumb[:confirm] ? { confirm: 'Are you sure you want to leave this page? Your changes will not be saved.' } : nil) %>
       <% end %>
-      </li>
-    </ol>
-    <ul class="navbar-nav mr-auto breadcrumb">
-      <li class="nav-item active">
-        <%= link_to('Help', '#contactUsModal',
-                    class: 'nav-link',
-                    data: {
-                      bs_toggle: 'modal',
-                      bs_target: '#contactUsModal',
-                      controller: 'contact-us'
-                    }) %>
-        </li>
-      </ul>
-  </nav>
-</div>
+    </li>
+  <% end %>
+</ol>

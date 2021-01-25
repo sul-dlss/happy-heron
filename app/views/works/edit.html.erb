@@ -1,3 +1,11 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(
+    confirm_dashboard: true,
+    breadcrumbs: [ { title: @form.model.collection.name, link: collection_path(@form.model.collection), confirm: true },
+                   { title: @form.title, link: work_path(@form.model), confirm: true },
+                   { title: 'Edit' } ])
+  %>
+<% end %>
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3">
     <%= render Works::FormComponent.new(work_form: @form) %>

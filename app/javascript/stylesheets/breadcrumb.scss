@@ -1,8 +1,8 @@
 .breadcrumb-link {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    color: #000000;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    color: $body-color;
+    text-decoration: none;
   }
 
 $breadcrumb-divider: quote(">");

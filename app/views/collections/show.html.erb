@@ -1,3 +1,7 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(
+    breadcrumbs: [ { title: @collection.name }]) %>
+<% end %>
 <main id="content" class="mb-3 mb-md-5">
   <div class="container px-4 px-md-3" id="collection" data-controller="state-updates" data-state-updates-collection-id="<%= @collection.id %>">
     <%= render Collections::TabsComponent.new(collection: @collection) %>

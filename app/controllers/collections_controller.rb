@@ -13,8 +13,6 @@ class CollectionsController < ObjectsController
 
     @form = CollectionForm.new(collection)
     @form.prepopulate!
-
-    add_breadcrumb title: 'New collection', confirm: true
   end
 
   def edit
@@ -23,9 +21,6 @@ class CollectionsController < ObjectsController
 
     @form = CollectionForm.new(collection)
     @form.prepopulate!
-
-    add_breadcrumb title: collection.name, link: collection_path(collection), confirm: true
-    add_breadcrumb title: 'Edit'
   end
 
   def create
@@ -57,8 +52,6 @@ class CollectionsController < ObjectsController
   def show
     @collection = Collection.find(params[:id])
     authorize! @collection
-
-    add_breadcrumb title: @collection.name
   end
 
   def destroy
