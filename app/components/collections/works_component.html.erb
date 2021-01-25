@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" data-controller="datatables">
   <thead class="table-light">
     <tr>
       <th width="18%"><%= I18n.t 'collection.deposits' %></th>
@@ -16,12 +16,3 @@
     <%= render Collections::WorkRowComponent.with_collection(works) %>
   </tbody>
 </table>
-
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@2.1.13"></script>
-<script>
-  new simpleDatatables.DataTable("table", {
-    columns: [
-        { select: 4, sort: "desc" },  // Sort the fifth column in ascending order
-        { select: [1, 5, 6, 7, 8], sortable: false } // Disable unsortable columns
-    ]});
-</script>
