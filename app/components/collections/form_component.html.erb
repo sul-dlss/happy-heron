@@ -48,17 +48,17 @@
   <section id="release_details">
     <header>Manage release of deposits for discovery and download</header>
 
-    <fieldset class="mb-5 release-option">
+    <fieldset class="mb-5 release-option" data-controller="complex-radio">
       <legend class="h5">When will files on deposits to this collection be downloadable?</legend>
-      <div class="form-check">
-        <%= form.radio_button :release_option, 'immediate', class: "form-check-input" %>
+      <div class="form-check" data-complex-radio-target="selection">
+        <%= form.radio_button :release_option, 'immediate', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_immediate', class: "form-check-label" do %>
           Immediately
         <% end %>
       </div>
 
-      <div class="form-check">
-        <%= form.radio_button :release_option, 'delay', class: "form-check-input" %>
+      <div class="form-check" data-complex-radio-target="selection">
+        <%= form.radio_button :release_option, 'delay', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_delay', class: "form-check-label" do %>
           Delay release until
         <% end %>
@@ -78,8 +78,8 @@
         </div>
       </div>
 
-      <div class="form-check">
-        <%= form.radio_button :release_option, 'depositor-selects', class: "form-check-input" %>
+      <div class="form-check" data-complex-radio-target="selection">
+        <%= form.radio_button :release_option, 'depositor-selects', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_depositor-selects', class: "form-check-label" do %>
           Depositor selects a date
         <% end %>
