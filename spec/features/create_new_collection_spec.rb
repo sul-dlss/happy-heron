@@ -25,6 +25,12 @@ RSpec.describe 'Create a new collection', js: true do
 
       expect(page).to have_content('Send email to Depositors whose status has changed.')
 
+      # breadcrumbs showing
+      find('#breadcrumbs') do |nav|
+        expect(nav).to have_content('Dashboard')
+        expect(nav).to have_content('New collection')
+      end
+
       click_button 'Deposit'
 
       expect(page).to have_content(collection_attrs.fetch(:name))

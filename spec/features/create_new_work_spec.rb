@@ -32,6 +32,12 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
       expect(page).to have_content 'Deposit your content'
 
+      # breadcrumbs showing
+      find('#breadcrumbs') do |nav|
+        expect(nav).to have_content('Dashboard')
+        expect(nav).to have_content('New deposit')
+      end
+
       # Test client-side validation messages
       fill_in 'Publication year', with: '2049'
       fill_in 'Created year', with: '999'

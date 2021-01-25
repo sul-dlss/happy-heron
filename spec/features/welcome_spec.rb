@@ -15,6 +15,7 @@ RSpec.describe 'Welcome page' do
     it 'displays logout link' do
       visit '/'
       expect(page).to have_link('Logout')
+      expect(page).not_to have_selector '#breadcrumbs'
     end
   end
 
@@ -26,6 +27,7 @@ RSpec.describe 'Welcome page' do
     it 'displays login link' do
       visit '/'
       expect(page).to have_link('Login')
+      expect(page).not_to have_selector '#breadcrumbs'
     end
   end
 end

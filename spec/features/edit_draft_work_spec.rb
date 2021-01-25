@@ -33,6 +33,14 @@ RSpec.describe 'Edit a draft work', js: true do
       expect(page).to have_content("You must provide a subtype for works of type 'Other'")
       # End of validation testing
 
+      # breadcrumbs showing
+      find('#breadcrumbs') do |nav|
+        expect(nav).to have_content('Dashboard')
+        expect(nav).to have_content(work.collection.name)
+        expect(nav).to have_content(work.title)
+        expect(nav).to have_content('Edit')
+      end
+
       fill_in 'Other', with: 'Comic book'
       click_button 'Deposit'
 
