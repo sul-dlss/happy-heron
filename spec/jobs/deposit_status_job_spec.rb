@@ -22,10 +22,25 @@ RSpec.describe DepositStatusJob do
 
     context 'with a work' do
       context 'with a citation' do
-        let(:work) { build(:work, :depositing, citation: 'Zappa, F. (2013) :link:') }
+        let(:work) do
+          build(:work, :depositing,
+                citation: 'Zappa, F. (2013) :link:', collection: collection,
+                depositor: collection.managers.first)
+        end
+        let(:collection) { build(:collection, :with_managers) }
 
         it 'updates the work' do
-          described_class.perform_now(object: work, job_id: job_id)
+          expect do
+            described_class.perform_now(object: work, job_id: job_id)
+          end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+            'CollectionsMailer', 'collection_activity', 'deliver_now',
+            { params: {
+              user: collection.managers.last,
+              depositor: work.depositor,
+              collection: collection
+            }, args: [] }
+          )
+
           expect(work.druid).to eq druid
           expect(work.citation).to eq 'Zappa, F. (2013) https://purl.stanford.edu/bc123df4567'
           expect(work.state_name).to eq :deposited
