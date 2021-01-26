@@ -28,7 +28,8 @@ module Works
       number_field_tag 'work[published(1i)]', published_year,
                        data: {
                          auto_citation_target: 'year',
-                         action: 'change->auto-citation#updateDisplay'
+                         date_validation_target: 'year',
+                         action: 'change->auto-citation#updateDisplay date-validation#change'
                        },
                        id: 'work_published_year',
                        class: 'form-control',
@@ -41,7 +42,8 @@ module Works
                    { prefix: 'work', field_name: 'published(2i)', prompt: 'month' },
                    data: {
                      auto_citation_target: 'month',
-                     action: 'change->auto-citation#updateDisplay'
+                     date_validation_target: 'month',
+                     action: 'change->auto-citation#updateDisplay date-validation#change'
                    },
                    id: 'work_published_month',
                    class: 'form-control'
@@ -52,7 +54,8 @@ module Works
                  { prefix: 'work', field_name: 'published(3i)', prompt: 'day' },
                  data: {
                    auto_citation_target: 'day',
-                   action: 'change->auto-citation#updateDisplay'
+                   date_validation_target: 'day',
+                   action: 'change->auto-citation#updateDisplay date-validation#change'
                  },
                  id: 'work_published_day',
                  class: 'form-control'
