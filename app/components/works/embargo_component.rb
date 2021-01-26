@@ -10,48 +10,25 @@ module Works
 
     attr_reader :form
 
-    delegate :embargo_date, to: :reform
-
-    def reform
-      form.object
+    def collection
+      form.object.model.collection
     end
 
-    def year_field
-      select_year embargo_year,
-                  {
-                    prefix: 'work',
-                    field_name: 'embargo_date(1i)',
-                    start_year: Time.zone.today.year,
-                    end_year: 3.years.from_now.year
-                  },
-                  id: 'work_embargo_year',
-                  class: 'form-control'
+    delegate :user_can_set_availability?, to: :collection
+
+    # The access level is specified by the collection
+    def user_can_set_access?
+      true # TODO: by https://github.com/sul-dlss/happy-heron/pull/884
     end
 
-    def month_field
-      select_month embargo_month,
-                   { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month' },
-                   id: 'work_embargo_month',
-                   class: 'form-control'
+    def availability_from_collection
+      return 'immediately upon deposit' if collection.release_option == 'immediate'
+
+      "starting on #{collection.release_date.to_formatted_s(:long)}"
     end
 
-    def day_field
-      select_day embargo_day,
-                 { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day' },
-                 id: 'work_embargo_day',
-                 class: 'form-control'
-    end
-
-    def embargo_year
-      embargo_date&.year || Time.zone.today.year
-    end
-
-    def embargo_month
-      embargo_date&.month
-    end
-
-    def embargo_day
-      embargo_date&.day
+    def access_from_collection
+      'TBD' # TODO: by https://github.com/sul-dlss/happy-heron/pull/884
     end
   end
 end

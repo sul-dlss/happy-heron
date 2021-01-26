@@ -1,0 +1,7 @@
+<p>Select which audience you would like to have access to download your files once they are available.</p>
+<div class="mb-3 row">
+  <%= form.label :access, 'Who can access?', class: 'col-sm-2 col-form-label' %>
+  <div class="col-sm-10">
+    <%= form.select :access, [['Stanford Community', 'stanford'], ['Everyone', 'world']], { disabled: "", prompt: "Select..." }, class: "form-select", required: true %>
+  </div>
+</div>

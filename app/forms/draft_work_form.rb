@@ -32,14 +32,34 @@ class DraftWorkForm < Reform::Form
 
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true
-  validates :embargo_date, embargo_date: true
-  validates_with EmbargoDateParts, unless: proc { |form| form.release == 'immediate' }
+  validates :embargo_date, embargo_date: true,
+                           if: proc { |form| form.model.collection.user_can_set_availability? }
+  validates_with EmbargoDateParts,
+                 if: proc { |form| form.model.collection.user_can_set_availability? && form.release != 'immediate' }
 
   def deserialize!(params)
     # Choose between using the user provided citation and the auto-generated citation
     params['citation'] = params.delete('citation_auto') if params['default_citation'] == 'true'
+    deserialize_embargo(params)
     super(params)
   end
+
+  # Ensure the collection default overwrite whatever the user supplied
+  # rubocop:disable Metrics/AbcSize
+  def deserialize_embargo(params)
+    case model.collection.release_option
+    when 'delay'
+      release_date = model.collection.release_date
+      params['embargo_date(1i)'] = release_date.year.to_s
+      params['embargo_date(2i)'] = release_date.month.to_s
+      params['embargo_date(3i)'] = release_date.day.to_s
+    when 'immediate'
+      params['embargo_date(1i)'] = nil
+      params['embargo_date(2i)'] = nil
+      params['embargo_date(3i)'] = nil
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
 
   collection :contributors,
              populator: ContributorPopulator.new(:contributors, Contributor),

@@ -25,6 +25,12 @@ class Collection < ApplicationRecord
     %w[first_draft depositing].exclude?(state)
   end
 
+  # The collection has allowed the user to specify availablity on the member works
+  sig { returns(T::Boolean) }
+  def user_can_set_availability?
+    release_option == 'depositor-selects'
+  end
+
   sig { returns(T.nilable(String)) }
   def purl
     return nil unless druid

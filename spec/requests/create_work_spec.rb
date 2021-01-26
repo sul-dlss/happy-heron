@@ -143,8 +143,10 @@ RSpec.describe 'Create a new work' do
         allow(DepositJob).to receive(:perform_later)
       end
 
-      context 'with everything' do
-        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+      context 'when a collection allows embargo and with everything' do
+        let(:collection) do
+          create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
+        end
 
         let(:contributors) do
           { '0' =>
@@ -472,8 +474,127 @@ RSpec.describe 'Create a new work' do
         end
       end
 
-      context 'with missing embargo month and day' do
-        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+      context 'with a collection with immediate release but a embargo is provided' do
+        let(:collection) do
+          create(:collection, :deposited, depositors: [user], release_option: 'immediate')
+        end
+        let(:work_params) do
+          {
+            title: 'Test title',
+            work_type: 'text',
+            contact_email: 'io@io.io',
+            abstract: 'test abstract',
+            contributors_attributes: contributors,
+            attached_files_attributes: files,
+            keywords_attributes: {
+              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+            },
+            license: 'CC0-1.0',
+            release: 'embargo',
+            'embargo(1i)': '2030',
+            'embargo(2i)': '09',
+            'embargo(3i)': '01'
+          }
+        end
+
+        let(:contributors) do
+          { '999' =>
+            { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
+              'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
+        end
+
+        let(:upload) do
+          ActiveStorage::Blob.create_and_upload!(
+            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            filename: 'apple-touch-icon.png',
+            content_type: 'image/png'
+          )
+        end
+
+        let(:files) do
+          {
+            '0' => {
+              '_destroy' => 'false',
+              'label' => 'My ICO',
+              'hide' => false,
+              'file' => upload.signed_id
+            }
+          }
+        end
+
+        it 'releases it immediately' do
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit' }
+          expect(response).to have_http_status(:found)
+          work = Work.last
+          expect(work.embargo_date).to be_nil
+          expect(DepositJob).to have_received(:perform_later)
+        end
+      end
+
+      context 'with a collection with delay release but a embargo is provided' do
+        let(:collection) do
+          create(:collection, :deposited, depositors: [user], release_option: 'delay', release_date: release_date)
+        end
+        let(:release_date) { Date.parse('2029-03-07') }
+        let(:work_params) do
+          {
+            title: 'Test title',
+            work_type: 'text',
+            contact_email: 'io@io.io',
+            abstract: 'test abstract',
+            contributors_attributes: contributors,
+            attached_files_attributes: files,
+            keywords_attributes: {
+              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+            },
+            license: 'CC0-1.0',
+            release: 'embargo',
+            'embargo(1i)': '2030',
+            'embargo(2i)': '09',
+            'embargo(3i)': '01'
+          }
+        end
+
+        let(:contributors) do
+          { '999' =>
+            { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
+              'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
+        end
+
+        let(:upload) do
+          ActiveStorage::Blob.create_and_upload!(
+            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            filename: 'apple-touch-icon.png',
+            content_type: 'image/png'
+          )
+        end
+
+        let(:files) do
+          {
+            '0' => {
+              '_destroy' => 'false',
+              'label' => 'My ICO',
+              'hide' => false,
+              'file' => upload.signed_id
+            }
+          }
+        end
+
+        it 'sets embargo to the date specified in the collection' do
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit' }
+          expect(response).to have_http_status(:found)
+          work = Work.last
+          expect(work.embargo_date).to eq release_date
+          expect(DepositJob).to have_received(:perform_later)
+        end
+      end
+
+      context 'with a collection that allows depositor to select embargo but missing embargo month and day' do
+        let(:collection) do
+          create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
+        end
         let(:work_params) do
           {
             title: 'A title of great import',

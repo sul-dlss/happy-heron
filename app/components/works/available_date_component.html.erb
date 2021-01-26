@@ -1,0 +1,31 @@
+<div class="mb-3 row">
+  <div class="col-sm-10 release-option">
+    <%= form.radio_button :release, 'immediate', class: 'form-check-input' %>
+    <%= form.label :release_immediate, 'Immediately once deposit is completed' %>
+  </div>
+</div>
+
+<div class="embargo-date" data-edit-deposit-target="embargo-dateField">
+  <div class="mb-5 row">
+    <div class="col-sm-10 release-option">
+      <%= form.radio_button :release, 'embargo', class: 'form-check-input' %>
+      <%= form.label :release_embargo, 'On this date' %>
+
+      <div class="year">
+        <label for="work_embargo_year" class="visually-hidden">Embargo year</label>
+        <%= year_field %>
+      </div>
+
+      <div class="month">
+        <label for="work_embargo_month" class="visually-hidden">Embargo month</label>
+        <%= month_field %>
+      </div>
+
+      <div class="day">
+        <label for="work_embargo_day" class="visually-hidden">Embargo day</label>
+        <%= day_field %>
+      </div>
+    </div>
+  </div>
+  <div data-embargo-date-target="error" class="invalid-feedback"></div>
+</div>
