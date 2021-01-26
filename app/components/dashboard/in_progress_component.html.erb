@@ -1,9 +1,4 @@
 <section class="mb-5" id="deposits-in-progress">
   <header>Deposits in progress</header>
-  <% in_progress.each do |work| %>
-    <div>
-      <%= Dashboard::CollectionHeaderComponent.new(collection: work.collection).name %> &gt; <%= link_to Works::DetailComponent.new(work: work).title, edit_work_path(work) %>
-      <%= render Works::DeleteComponent.new(work: work) %>
-    </div>
-  <% end %>
+  <%= render Dashboard::InProgressRowComponent.with_collection(in_progress) %>
 </section>
