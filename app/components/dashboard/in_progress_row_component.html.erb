@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-4">
+    <%= collection_name %> &gt; <%= edit_work_link %>
+  </div>
+  <div class="col-5">
+    <%= render Dashboard::DepositProgressComponent.new(work: work) %>
+  </div>
+  <div class="col-3">
+    <%= render Works::DeleteComponent.new(work: work) %>
+  </div>
+</div>

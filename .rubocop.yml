@@ -33,6 +33,9 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 15
 
+Naming/PredicateName:
+  ForbiddenPrefixes: is_
+
 RSpec/DescribeClass:
   Exclude:
     - spec/features/**/*
