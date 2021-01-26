@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Create a new work in a deposited collection', js: true do
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, :deposited, depositors: [user]) }
+  let!(:collection) { create(:collection, :deposited, :depositor_selects_access, depositors: [user]) }
 
   before do
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
