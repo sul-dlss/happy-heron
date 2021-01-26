@@ -1,46 +1,30 @@
 <section id="release">
-  <header>Manage release of this deposit for discovery and download after publication</header>
-  <p>Select when the files in your deposit will be downloadable from the PURL page.
-     If you select "Immediately", your files will be available shortly after you click
-     "Deposit" at the bottom of this page. Or you may specify a specific date in the future.</p>
+  <% if !user_can_set_availability? && !user_can_set_access? %>
+    <header>Release of this deposit for discovery and download after publication</header>
+  <% else %>
+    <header>Manage release of this deposit for discovery and download after publication</header>
+  <% end %>
 
-  <div class="mb-3 row">
-    <div class="col-sm-10 release-option">
-      <%= form.radio_button :release, 'immediate', class: 'form-check-input' %>
-      <%= form.label :release_immediate, 'Immediately once deposit is completed' %>
-    </div>
-  </div>
+  <% if user_can_set_availability? %>
+    <p>Select when the files in your deposit will be downloadable from the PURL page.
+      If you select "Immediately", your files will be available shortly after you click
+      "Deposit" at the bottom of this page. Or you may specify a specific date in the future.</p>
 
-  <div class="embargo-date" data-edit-deposit-target="embargo-dateField">
-    <div class="mb-5 row">
-      <div class="col-sm-10 release-option">
-        <%= form.radio_button :release, 'embargo', class: 'form-check-input' %>
-        <%= form.label :release_embargo, 'On this date' %>
+    <%= render Works::AvailableDateComponent.new(form: form) %>
+    <% if user_can_set_access? %>
+      <%= render Works::AccessComponent.new(form: form) %>
+    <% else %>
+      <p>The files in your deposit will be downloadable by <%= access_from_collection %>.</p>
+    <% end %>
+  <% else %>
+   <% if user_can_set_access?%>
+    <p>The files in your deposit will be downloadable from the PURL
+      page <%= availability_from_collection %>.</p>
+     <%= render Works::AccessComponent.new(form: form) %>
+   <% else %>
+     <p>The files in your deposit will be downloadable by <%= access_from_collection %>
+       from the PURL page <%= availability_from_collection %>.</p>
+   <% end %>
+  <% end %>
 
-        <div class="year">
-          <label for="work_embargo_year" class="visually-hidden">Embargo year</label>
-          <%= year_field %>
-        </div>
-
-        <div class="month">
-          <label for="work_embargo_month" class="visually-hidden">Embargo month</label>
-          <%= month_field %>
-        </div>
-
-        <div class="day">
-          <label for="work_embargo_day" class="visually-hidden">Embargo day</label>
-          <%= day_field %>
-        </div>
-      </div>
-    </div>
-    <div data-embargo-date-target="error" class="invalid-feedback"></div>
-  </div>
-
-  <p>Select which audience you would like to have access to download your files once they are available.</p>
-  <div class="mb-3 row">
-    <%= form.label :access, 'Who can access?', class: 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10">
-      <%= form.select :access, [['Stanford Community', 'stanford'], ['Everyone', 'world']], { disabled: "", prompt: "Select..." }, class: "form-select", required: true %>
-    </div>
-  </div>
 </section>

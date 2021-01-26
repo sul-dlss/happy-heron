@@ -23,7 +23,6 @@ class WorksController < ObjectsController
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
     authorize! work
     @form = work_form(work)
-
     if @form.validate(work_params) && @form.save
       work.event_context = { user: current_user }
       after_save(work)

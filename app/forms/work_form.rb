@@ -6,7 +6,8 @@ require 'reform/form/coercion'
 # The form for deposit work creation and editing (which includes validation)
 class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true
-  validates 'release', presence: true, inclusion: { in: %w[immediate embargo] }
+  validates 'release', presence: true, inclusion: { in: %w[immediate embargo] },
+                       if: proc { |form| form.model.collection.user_can_set_availability? }
   validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
   validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' }
   validates :contact_email, presence: true, format: { with: Devise.email_regexp }
