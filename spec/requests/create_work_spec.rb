@@ -100,7 +100,7 @@ RSpec.describe 'Create a new work' do
 
       context 'with a valid subtype/work_type combo' do
         it 'renders the form' do
-          get "/collections/#{collection.id}/works/new?work_type=text&subtype%5B%5D=Essay"
+          get "/collections/#{collection.id}/works/new?work_type=text&subtype%5B%5D=Thesis"
           expect(response).to have_http_status(:ok)
           expect(response.body).to include 'text'
         end
@@ -278,7 +278,7 @@ RSpec.describe 'Create a new work' do
           expect(work.published_edtf.to_edtf).to eq '2020-02-14'
           expect(work.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
           expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
-          expect(work.subtype).to eq ['Article', 'Presentation slides']
+          expect(work.subtype).to eq ['Article', 'Government document']
           expect(DepositJob).to have_received(:perform_later).with(work)
           expect(work.state).to eq 'depositing'
           expect(work.access).to eq 'world' # shows that `stanford` was overwritten

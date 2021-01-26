@@ -35,7 +35,7 @@ RSpec.describe DescriptionGenerator do
           },
           {
             type: 'subtype',
-            value: 'Presentation slides'
+            value: 'Government document'
           }
         ],
         type: 'resource type'
@@ -49,8 +49,12 @@ RSpec.describe DescriptionGenerator do
         value: 'articles'
       },
       {
+        source: {
+          code: 'aat'
+        },
         type: 'genre',
-        value: 'Presentation slides'
+        value: 'government records',
+        uri: 'http://vocab.getty.edu/aat/300027777'
       },
       {
         source: {

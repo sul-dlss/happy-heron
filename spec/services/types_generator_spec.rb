@@ -39,7 +39,7 @@ RSpec.describe TypesGenerator do
               ),
               Cocina::Models::DescriptiveValue.new(
                 type: 'subtype',
-                value: 'Presentation slides'
+                value: 'Government document'
               )
             ]
           )
@@ -56,7 +56,9 @@ RSpec.describe TypesGenerator do
           ),
           Cocina::Models::DescriptiveValue.new(
             type: 'genre',
-            value: 'Presentation slides'
+            value: 'government records',
+            uri: 'http://vocab.getty.edu/aat/300027777',
+            source: { code: 'aat' }
           )
         )
       end

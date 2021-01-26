@@ -9,36 +9,20 @@ class WorkType
 
   DATA_TYPES = [
     '3D model',
-    'Audio',
     'Database',
-    'GIS',
+    'Geospatial data',
     'Image',
-    'Questionnaire',
-    'Remote sensing imagery',
-    'Software/code',
-    'Statistical model',
     'Tabular data',
     'Text corpus',
-    'Text documentation',
-    'Video'
+    'Documentation'
   ].freeze
 
   VIDEO_TYPES = [
-    'Animation',
-    'Broadcast',
     'Conference session',
-    'Course/instruction',
     'Documentary',
-    'Ethnography',
     'Event',
-    'Experimental',
-    'Field recordings',
-    'Narrative film',
     'Oral history',
-    'Performance',
-    'Presentation',
-    'Unedited footage',
-    'Video art'
+    'Performance'
   ].freeze
 
   MIXED_TYPES = [
@@ -51,44 +35,20 @@ class WorkType
   ].freeze
 
   SOUND_TYPES = [
-    'Course/instruction',
-    'Documentary',
-    'Dramatic performance',
-    'Ethnography',
-    'Field recordings',
     'Interview',
-    'MIDI',
-    'Musical notation',
-    'Musical performance',
     'Oral history',
-    'Other spoken word',
     'Podcast',
-    'Poetry reading',
-    'Speech',
-    'Story',
-    'Transcript',
-    'Unedited recording'
+    'Speech'
   ].freeze
 
   TEXT_TYPES = [
     'Article',
-    'Book',
-    'Book chapter',
-    'Correspondence',
-    'Essay',
     'Government document',
-    'Journal/periodical',
-    'Manuscript',
-    'Poster',
-    'Presentation slides',
+    'Policy brief',
+    'Preprint',
     'Report',
-    'Speech',
-    'Syllabus',
-    'Teaching materials',
     'Technical report',
     'Thesis',
-    'Transcription',
-    'White paper',
     'Working paper'
   ].freeze
 

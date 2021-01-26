@@ -157,7 +157,7 @@ RSpec.describe WorkForm do
     end
 
     it 'validates with a valid subtype/work_type combo' do
-      form.validate(work_type: 'data', subtype: ['Software/code'])
+      form.validate(work_type: 'data', subtype: ['Database'])
       expect(messages).to be_empty
     end
   end

@@ -125,7 +125,7 @@ Data:
       uri: http://id.loc.gov/authorities/genreForms/gf2014026081
       source:
         code: lcgft
-  GIS:
+  Geospatial Data:
     - type: genre
       value: dataset
     - type: genre

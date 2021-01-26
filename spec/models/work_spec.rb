@@ -174,7 +174,7 @@ RSpec.describe Work do
     end
 
     context 'with a valid subtype/work_type combo ' do
-      let(:work) { build(:work, work_type: 'data', subtype: ['Software/code']) }
+      let(:work) { build(:work, work_type: 'data', subtype: ['Database']) }
 
       it 'validates' do
         expect(work).to be_valid

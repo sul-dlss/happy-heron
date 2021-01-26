@@ -7,7 +7,7 @@ FactoryBot.define do
       "Test title #{n}"
     end
     work_type { 'text' }
-    subtype { ['Article', 'Presentation slides'] } # Subtype values intentionally include an item with whitespace
+    subtype { ['Article', 'Government document'] } # Subtype values intentionally include an item with whitespace
     contact_email { 'io@io.io' }
     abstract { 'test abstract' }
     citation { 'test citation' }
