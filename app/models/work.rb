@@ -34,7 +34,10 @@ class Work < ApplicationRecord
     after_transition on: :reject, do: WorkObserver.method(:after_rejected)
     after_transition on: :submit_for_review, do: WorkObserver.method(:after_submit_for_review)
     after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
+    after_transition on: :deposit_complete, do: CollectionObserver.method(:collection_activity)
 
+    # Trigger the collection observer when starting a new draft,
+    # except when the previous state was draft.
     after_transition except_from: :first_draft, to: :first_draft, do: CollectionObserver.method(:collection_activity)
     after_transition except_from: :version_draft, to: :version_draft,
                      do: CollectionObserver.method(:collection_activity)
