@@ -31,10 +31,14 @@ module Works
       'TBD' # TODO: by https://github.com/sul-dlss/happy-heron/pull/884
     end
 
-    def default_access
-      return unless reform.collection_id
+    def collection_access_restriction
+      reform.model.collection.access
+    end
 
-      Collection.find_by(id: reform.collection_id)&.access
+    def depositor_selects_access?
+      return true if collection_access_restriction == 'depositor-selects'
+
+      false
     end
   end
 end
