@@ -49,6 +49,7 @@
           </nav>
         </header>
 
+        <%= yield :breadcrumbs %>
         <%= render 'shared/flashes' %>
         <%= render Help::FormComponent.new(user: current_user) %>
         <%= yield %>
