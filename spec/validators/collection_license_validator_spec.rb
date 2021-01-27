@@ -26,7 +26,7 @@ RSpec.describe CollectionLicenseValidator do
 
     it 'is invalid' do
       expect(record.errors.where(:license).first.message).to eq(
-        'Either required license or default license must be present'
+        'Either a required license or a default license must be present'
       )
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe CollectionLicenseValidator do
 
     it 'is invalid' do
       expect(record.errors.where(:license).first.message).to eq(
-        'Either required license or default license must be present'
+        'Either a required license or a default license must be present'
       )
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe CollectionLicenseValidator do
 
     it 'is invalid' do
       expect(record.errors.where(:license).first.message).to eq(
-        'Either required license or default license must be present'
+        'Either a required license or a default license must be present'
       )
     end
   end

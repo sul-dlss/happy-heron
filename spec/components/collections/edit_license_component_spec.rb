@@ -31,4 +31,20 @@ RSpec.describe Collections::EditLicenseComponent, type: :component do
       expect(rendered.to_html).to include('<option selected value="CC0-1.0">CC0-1.0</option>')
     end
   end
+
+  context 'with errors' do
+    let(:collection) { build(:collection, required_license: nil) }
+
+    before do
+      collection_form.errors.add(:license, 'Either a required license or a default license must be present')
+    end
+
+    it 'renders the message and adds invalid styles' do
+      expect(rendered.css('.is-invalid ~ .invalid-feedback').text).to eq(
+        'Either a required license or a default license must be present'
+      )
+      expect(rendered.css('#required_license.is-invalid')).to be_present
+      expect(rendered.css('#default_license.is-invalid')).to be_present
+    end
+  end
 end

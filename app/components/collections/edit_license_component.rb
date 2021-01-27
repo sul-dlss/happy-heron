@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -17,6 +17,20 @@ module Collections
     sig { returns(DraftCollectionForm) }
     def collection_form
       form.object
+    end
+
+    sig { returns(T::Boolean) }
+    def error?
+      errors.present?
+    end
+
+    def errors
+      collection_form.errors.where(:license)
+    end
+
+    sig { returns(String) }
+    def error_message
+      safe_join(errors.map(&:message), tag.br)
     end
   end
 end
