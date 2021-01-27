@@ -12,6 +12,7 @@ RSpec.describe Works::FormComponent do
 
   before do
     allow(controller).to receive(:allowed_to?).and_return(true)
+    work.collection.access = 'depositor-selects'
   end
 
   it 'renders the component' do

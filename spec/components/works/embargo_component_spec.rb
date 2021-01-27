@@ -13,6 +13,7 @@ RSpec.describe Works::EmbargoComponent do
 
   before do
     work_form.prepopulate!
+    collection.access = 'depositor-selects'
   end
 
   it 'renders the component' do
@@ -40,26 +41,6 @@ RSpec.describe Works::EmbargoComponent do
 
     it 'renders the component' do
       expect(rendered.to_html).to include 'starting on September 07, 2030.'
-    end
-  end
-
-  context 'when collection access is depositor selects' do
-    let(:work) { build(:work) }
-
-    it 'renders the access selector' do
-      expect(rendered.css('#access')).to be_present
-    end
-  end
-
-  context 'when collection access is set to world' do
-    let(:work) { build(:work) }
-
-    before do
-      work.collection.access = 'world'
-    end
-
-    it 'does not render the access selector' do
-      expect(rendered.css('#access')).not_to be_present
     end
   end
 end

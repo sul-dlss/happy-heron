@@ -18,7 +18,9 @@ module Works
 
     # The access level is specified by the collection
     def user_can_set_access?
-      true # TODO: by https://github.com/sul-dlss/happy-heron/pull/884
+      return true if access_from_collection == 'depositor-selects'
+
+      false
     end
 
     def availability_from_collection
@@ -28,17 +30,7 @@ module Works
     end
 
     def access_from_collection
-      'TBD' # TODO: by https://github.com/sul-dlss/happy-heron/pull/884
-    end
-
-    def collection_access_restriction
-      reform.model.collection.access
-    end
-
-    def depositor_selects_access?
-      return true if collection_access_restriction == 'depositor-selects'
-
-      false
+      collection.access
     end
   end
 end

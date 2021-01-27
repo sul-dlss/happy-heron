@@ -257,8 +257,7 @@ RSpec.describe 'Create a new work' do
                    'created_range(1i)' => '2020', 'created_range(2i)' => '3', 'created_range(3i)' => '4',
                    'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31',
                    'release' => 'embargo',
-                   'embargo_date(1i)' => embargo_year, 'embargo_date(2i)' => '4', 'embargo_date(3i)' => '4',
-                   access: collection.access)
+                   'embargo_date(1i)' => embargo_year, 'embargo_date(2i)' => '4', 'embargo_date(3i)' => '4')
         end
 
         it 'displays the work' do
