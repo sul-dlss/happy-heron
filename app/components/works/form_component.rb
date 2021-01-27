@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 module Works
@@ -16,6 +16,8 @@ module Works
     def url
       persisted? ? work_form : [model.collection, work_form]
     end
+
+    alias collection_draft_works_path collection_works_path
 
     sig { returns(String) }
     def page_title
