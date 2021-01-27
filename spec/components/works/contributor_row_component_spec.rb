@@ -36,6 +36,7 @@ RSpec.describe Works::ContributorRowComponent do
         <option value="organization|Data collector">Data collector</option>
         <option value="organization|Data contributor">Data contributor</option>
         <option value="organization|Degree granting institution">Degree granting institution</option>
+        <option value="organization|Distributor">Distributor</option>
         <option value="organization|Event">Event</option>
         <option value="organization|Event organizer">Event organizer</option>
         <option value="organization|Funder">Funder</option>

@@ -38,6 +38,7 @@ class Contributor < ApplicationRecord
         'Data collector',
         'Data contributor',
         'Degree granting institution',
+        'Distributor',
         'Event',
         'Event organizer',
         'Funder',
