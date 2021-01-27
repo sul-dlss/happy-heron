@@ -13,125 +13,166 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
   end
 
   context 'when successful deposit' do
-    it 'deposits and renders work show page' do
-      visit dashboard_path
+    context 'with a user-supplied citation' do
+      it 'deposits and renders work show page' do
+        visit dashboard_path
 
-      click_button '+ Deposit to this collection' # , match: :first
+        click_button '+ Deposit to this collection' # , match: :first
 
-      expect(page).to have_content 'What type of content will you deposit?'
+        expect(page).to have_content 'What type of content will you deposit?'
 
-      expect(page).not_to have_css('input#subtype_other')
-      find('label', text: 'Other').click
-      expect(page).to have_css('input#subtype_other')
-      find('label', text: 'Sound').click
+        expect(page).not_to have_css('input#subtype_other')
+        find('label', text: 'Other').click
+        expect(page).to have_css('input#subtype_other')
+        find('label', text: 'Sound').click
 
-      check 'Course/instruction'
-      check 'Poetry reading'
+        check 'Course/instruction'
+        check 'Poetry reading'
 
-      click_button 'Continue'
+        click_button 'Continue'
 
-      expect(page).to have_content 'Deposit your content'
+        expect(page).to have_content 'Deposit your content'
 
-      # breadcrumbs showing
-      find('#breadcrumbs') do |nav|
-        expect(nav).to have_content('Dashboard')
-        expect(nav).to have_content('New deposit')
+        # breadcrumbs showing
+        find('#breadcrumbs') do |nav|
+          expect(nav).to have_content('Dashboard')
+          expect(nav).to have_content('New deposit')
+        end
+
+        # Test client-side validation messages
+        fill_in 'Publication year', with: '2049'
+        fill_in 'Created year', with: '999'
+        click_button 'Deposit'
+        expect(page).to have_content(
+          "Publication year must be between #{Settings.earliest_year} and #{Time.zone.today.year}"
+        )
+        expect(page).to have_content(
+          "Created year must be between #{Settings.earliest_year} and #{Time.zone.today.year}"
+        )
+        expect(page).to have_content('You must provide an abstract')
+
+        fill_in 'Created year', with: ''
+        fill_in 'Publication year', with: ''
+        # End of client-side validation testing
+
+        page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
+          click_button('Choose files')
+        end
+
+        fill_in 'Title of deposit', with: 'My Title'
+        fill_in 'Contact email', with: user.email
+
+        fill_in 'First name', with: 'Contributor First Name'
+        fill_in 'Last name', with: 'Contributor Last Name'
+
+        # This is the div that contains the contributor remove button. The button
+        # should NOT be rendered since there's one and only one contributor at
+        # this point, which is not removable.
+        within('div.contributors-container') do
+          expect(page).not_to have_selector('button')
+        end
+
+        select 'Publisher', from: 'Role term'
+        fill_in 'Name', with: 'Best Publisher'
+
+        fill_in 'Publication year', with: '2020'
+        select 'February', from: 'Publication month'
+
+        choose 'Date range'
+
+        fill_in 'Created range start year', with: '2020'
+        select 'March', from: 'Created range start month'
+        select '6', from: 'Created range start day'
+        fill_in 'Created range end year', with: '2020'
+        select 'October', from: 'Created range end month'
+        select '30', from: 'Created range end day'
+        select 'Everyone', from: 'Who can access?'
+
+        fill_in 'Abstract', with: 'User provided abstract'
+        check 'Musical notation'
+
+        check 'I agree to the SDR Terms of Deposit'
+
+        # Test remote form validation which only happens once client-side validation passes
+        expect(page).not_to have_content('Please add at least one keyword')
+        expect(page).not_to have_css('.keywords-container.is-invalid')
+        expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
+
+        click_button 'Deposit'
+
+        expect(page).to have_content('Please add at least one keyword')
+        expect(page).to have_css('.keywords-container.is-invalid')
+        expect(page).to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
+
+        fill_in 'Keywords', with: 'Springs'
+        blur_from 'work_keywords'
+
+        uncheck 'Use default citation'
+        fill_in 'Provided citation', with: 'Citation from user input'
+
+        click_link 'Terms of Deposit'
+        expect(page).to have_content(
+          'the Depositor grants The Trustees of Leland Stanford Junior University'
+        )
+        find('.btn-close').click
+
+        check 'I agree to the SDR Terms of Deposit'
+        click_button 'Deposit'
+
+        expect(page).to have_content('My Title')
+        expect(page).to have_link(Collection.last.name)
+        expect(page).to have_content(user.email)
+        expect(page).to have_content('sound')
+        expect(page).to have_content('Course/instruction, Musical notation, Poetry reading')
+        expect(page).to have_content('Best Publisher')
+        expect(page).to have_content('2020-03-06/2020-10-30')
+        expect(page).to have_content 'User provided abstract'
+        expect(page).to have_content 'Citation from user input'
+        expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
+
+        visit dashboard_path
+
+        # We should not see the delete button for this work since it is not a draft
+        expect(page).not_to have_selector("[aria-label='Delete #{Work.last.title}']")
       end
+    end
 
-      # Test client-side validation messages
-      fill_in 'Publication year', with: '2049'
-      fill_in 'Created year', with: '999'
-      click_button 'Deposit'
-      expect(page).to have_content(
-        "Publication year must be between #{Settings.earliest_year} and #{Time.zone.today.year}"
-      )
-      expect(page).to have_content(
-        "Created year must be between #{Settings.earliest_year} and #{Time.zone.today.year}"
-      )
-      expect(page).to have_content('You must provide an abstract')
+    context 'with an auto generated citation' do
+      it 'deposits and renders work show page' do
+        visit dashboard_path
 
-      fill_in 'Created year', with: ''
-      fill_in 'Publication year', with: ''
-      # End of client-side validation testing
+        click_button '+ Deposit to this collection'
 
-      page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
-        click_button('Choose files')
+        expect(page).to have_content 'What type of content will you deposit?'
+
+        find('label', text: 'Sound').click
+
+        click_button 'Continue'
+
+        page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
+          click_button('Choose files')
+        end
+
+        fill_in 'Title of deposit', with: 'My Title'
+        fill_in 'Contact email', with: user.email
+
+        fill_in 'First name', with: 'Michael'
+        fill_in 'Last name', with: 'Keller'
+
+        fill_in 'Publication year', with: '2020'
+        select 'February', from: 'Publication month'
+
+        fill_in 'Abstract', with: 'User provided abstract'
+
+        fill_in 'Keywords', with: 'Springs'
+        blur_from 'work_keywords'
+
+        check 'I agree to the SDR Terms of Deposit'
+        click_button 'Deposit'
+
+        expect(page).to have_content 'Keller, M. (2020, February). My Title. ' \
+          'Stanford Digital Repository. Available at :link:'
       end
-
-      fill_in 'Title of deposit', with: 'My Title'
-      fill_in 'Contact email', with: user.email
-
-      fill_in 'First name', with: 'Contributor First Name'
-      fill_in 'Last name', with: 'Contributor Last Name'
-
-      # This is the div that contains the contributor remove button. The button
-      # should NOT be rendered since there's one and only one contributor at
-      # this point, which is not removable.
-      within('div.contributors-container') do
-        expect(page).not_to have_selector('button')
-      end
-
-      select 'Publisher', from: 'Role term'
-      fill_in 'Name', with: 'Best Publisher'
-
-      fill_in 'Publication year', with: '2020'
-      select 'February', from: 'Publication month'
-
-      choose 'Date range'
-
-      fill_in 'Created range start year', with: '2020'
-      select 'March', from: 'Created range start month'
-      select '6', from: 'Created range start day'
-      fill_in 'Created range end year', with: '2020'
-      select 'October', from: 'Created range end month'
-      select '30', from: 'Created range end day'
-      select 'Everyone', from: 'Who can access?'
-
-      fill_in 'Abstract', with: 'Whatever'
-      check 'Musical notation'
-
-      check 'I agree to the SDR Terms of Deposit'
-
-      # Test remote form validation which only happens once client-side validation passes
-      expect(page).not_to have_content('Please add at least one keyword')
-      expect(page).not_to have_css('.keywords-container.is-invalid')
-      expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
-
-      click_button 'Deposit'
-
-      expect(page).to have_content('Please add at least one keyword')
-      expect(page).to have_css('.keywords-container.is-invalid')
-      expect(page).to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
-
-      fill_in 'Keywords', with: 'Springs'
-      blur_from 'work_keywords'
-
-      uncheck 'Use default citation'
-      fill_in 'Provided citation', with: 'Whatever'
-
-      click_link 'Terms of Deposit'
-      expect(page).to have_content(
-        'the Depositor grants The Trustees of Leland Stanford Junior University'
-      )
-      find('.btn-close').click
-
-      check 'I agree to the SDR Terms of Deposit'
-      click_button 'Deposit'
-
-      expect(page).to have_content('My Title')
-      expect(page).to have_link(Collection.last.name)
-      expect(page).to have_content(user.email)
-      expect(page).to have_content('sound')
-      expect(page).to have_content('Course/instruction, Musical notation, Poetry reading')
-      expect(page).to have_content('Best Publisher')
-      expect(page).to have_content('2020-03-06/2020-10-30')
-      expect(page).to have_content('Whatever')
-      expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
-
-      visit dashboard_path
-
-      # We should not see the delete button for this work since it is not a draft
-      expect(page).not_to have_selector("[aria-label='Delete #{Work.last.title}']")
     end
   end
 

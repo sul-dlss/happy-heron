@@ -73,7 +73,7 @@
                            aria: { label: 'Provided citation' },
                            data: { auto_citation_target: 'manual' } %>
         <%= form.text_area :citation_auto,
-                           class: "form-control", disabled: true,
+                           class: "form-control", readonly: true,
                            aria: { label: 'Automatically generated citation' },
                            data: { auto_citation_target: 'auto' } %>
       </div>
