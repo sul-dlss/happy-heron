@@ -28,7 +28,7 @@ class DraftCollectionForm < Reform::Form
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
-  property :review_enabled, virtual: true, default: -> { model.review_enabled? ? 'true' : 'false' }
+  property :review_enabled
   property :reviewer_sunets, virtual: true, prepopulator: lambda { |_options|
     self.reviewer_sunets = reviewer_sunets_from_model.join(', ')
   }
@@ -41,7 +41,6 @@ class DraftCollectionForm < Reform::Form
     property :_destroy, virtual: true
   end
 
-  validate :reviewable_form
   validates :release_date, embargo_date: true
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
   validates :release_duration, inclusion: { in: EMBARGO_RELEASE_DURATION_OPTIONS.values }, allow_blank: true
@@ -55,13 +54,6 @@ class DraftCollectionForm < Reform::Form
   end
 
   private
-
-  sig { void }
-  def reviewable_form
-    return if review_enabled != 'true' || reviewer_sunets.present?
-
-    errors.add(:reviewer_sunets, 'must be provided when review is enabled')
-  end
 
   sig { void }
   def update_depositors

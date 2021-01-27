@@ -29,6 +29,7 @@ FactoryBot.define do
       reviewer_count { 2 }
     end
 
+    review_enabled { true }
     reviewed_by { build_list(:user, reviewer_count) }
   end
 

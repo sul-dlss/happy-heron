@@ -187,7 +187,8 @@ CREATE TABLE public.collections (
     state character varying DEFAULT 'new'::character varying NOT NULL,
     druid character varying,
     version integer DEFAULT 0 NOT NULL,
-    email_depositors_status_changed boolean
+    email_depositors_status_changed boolean,
+    review_enabled boolean DEFAULT false
 );
 
 
@@ -1068,6 +1069,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201214213408'),
 ('20210104185452'),
 ('20210104185453'),
-('20210114221943');
+('20210114221943'),
+('20210127133325');
 
 
