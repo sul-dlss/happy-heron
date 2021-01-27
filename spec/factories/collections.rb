@@ -9,8 +9,8 @@ FactoryBot.define do
     release_option { 'immediate' }
     release_date { '2020-10-09' }
     access { 'MyString' }
-    required_license { 'MyString' }
-    default_license { 'MyString' }
+    required_license { 'CC0-1.0' }
+    default_license { nil }
     email_when_participants_changed { false }
     state { 'first_draft' }
     creator

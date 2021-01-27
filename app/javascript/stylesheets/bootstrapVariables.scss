@@ -10,9 +10,12 @@ $modal-content-bg: $whisper;
 $modal-backdrop-bg: white;
 $modal-backdrop-opacity: 0.8;
 
-
 // Tables
 $table-border-color: $silver-sand;
 $table-group-separator-color: $silver-sand;
 
+// Breadcrumbs
 $breadcrumb-divider: quote(">");
+
+// Checkboxes + Radio buttons
+$form-check-margin-bottom: 1.25rem;

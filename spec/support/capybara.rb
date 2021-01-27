@@ -13,3 +13,4 @@ require 'capybara/rspec'
 Capybara.javascript_driver = :apparition
 Capybara.disable_animation = true
 Capybara.enable_aria_label = true
+Capybara.server = :puma, { Silent: true }

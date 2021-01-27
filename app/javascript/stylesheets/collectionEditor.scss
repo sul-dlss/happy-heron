@@ -1,7 +1,7 @@
 .collection-editor {
   @include editor;
 
-  .release-option {
+  .release-option, .license-option {
     .form-check {
       @include embargo;
     }
@@ -14,8 +14,17 @@
       margin: 0.25rem 0 0.4rem 0;
     }
 
-    .release-duration {
+    .form-select {
       width: auto;
     }
+
+    .default_license {
+      margin-left: 2.4rem;
+    }
+  }
+
+  .terms-of-use {
+    font-style: italic;
+    margin-left: 2.5rem;
   }
 }

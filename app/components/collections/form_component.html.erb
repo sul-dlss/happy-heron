@@ -89,7 +89,7 @@
         <%= form.select :release_duration,
           options_for_select(embargo_release_duration_options, selected: release_duration),
                               {},
-                              class: 'form-select release-duration' %>
+                              class: 'form-select' %>
       </div>
     </fieldset>
 
@@ -115,6 +115,8 @@
       </div>
     </fieldset>
   </section>
+
+  <%= render Collections::EditLicenseComponent.new(form: form) %>
 
   <section id="participants">
     <header>Collection participants</header>
@@ -154,7 +156,6 @@
          class: 'form-check-label' %>
       </div>
     </div>
-
   </section>
 
   <section id="review">

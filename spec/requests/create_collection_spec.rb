@@ -112,6 +112,8 @@ RSpec.describe 'Create a collection' do
             depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
             email_when_participants_changed: true,
             email_depositors_status_changed: true,
+            license_option: 'required',
+            required_license: 'CC0-1.0',
             'release_option' => 'delay',
             'release_date(1i)' => '2020',
             'release_date(2i)' => '7',
