@@ -6,7 +6,7 @@ export default class extends Controller {
     "year", "month", "day"];
 
   connect() {
-    this.purl = this.data.get("purl") || ":link:" // Use a real purl on a persisted item or a placeholder
+    this.purl = this.data.get("purl") || ":link will be inserted here automatically when available:" // Use a real purl on a persisted item or a placeholder
 
     this.updateDisplay()
 
