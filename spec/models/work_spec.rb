@@ -84,6 +84,28 @@ RSpec.describe Work do
     end
   end
 
+  describe 'published_edtf' do
+    describe 'serialization' do
+      subject(:work) { build(:work, published_edtf: date) }
+
+      context 'with a single point' do
+        let(:date) { EDTF.parse('2020-11') }
+
+        it 'records an EDTF string' do
+          expect(work.published_edtf.to_edtf).to eq '2020-11'
+        end
+      end
+
+      context 'with an interval' do
+        let(:date) { EDTF.parse('2020-11/2021') }
+
+        it 'records an EDTF string' do
+          expect(work.published_edtf.to_s).to eq '2020-11/2021'
+        end
+      end
+    end
+  end
+
   describe 'license validation' do
     context 'with an empty license' do
       let(:work) { build(:work, license: nil) }

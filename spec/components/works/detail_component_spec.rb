@@ -4,7 +4,8 @@
 require 'rails_helper'
 
 RSpec.describe Works::DetailComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(work: work)) }
+  let(:instance) { described_class.new(work: work) }
+  let(:rendered) { render_inline(instance) }
 
   context 'when a first draft' do
     let(:work) { build_stubbed(:work) }
@@ -67,6 +68,22 @@ RSpec.describe Works::DetailComponent, type: :component do
 
     it 'renders the event' do
       expect(rendered.css('#events').to_html).to include 'Add more keywords'
+    end
+  end
+
+  describe '#created' do
+    let(:work) { build_stubbed(:work, created_edtf: EDTF.parse('1982-09')) }
+
+    it 'renders the date' do
+      expect(instance.created).to eq '1982-09'
+    end
+  end
+
+  describe '#published' do
+    let(:work) { build_stubbed(:work, published_edtf: EDTF.parse('1987-04')) }
+
+    it 'renders the date' do
+      expect(instance.published).to eq '1987-04'
     end
   end
 end
