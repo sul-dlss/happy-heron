@@ -6,14 +6,13 @@ require 'rails_helper'
 RSpec.describe Works::EmbargoComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:work) { build(:work, collection: collection) }
-  let(:collection) { build(:collection, release_option: 'immediate') }
+  let(:collection) { build(:collection, :depositor_selects_access, release_option: 'immediate') }
 
   let(:work_form) { WorkForm.new(work) }
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   before do
     work_form.prepopulate!
-    collection.access = 'depositor-selects'
   end
 
   it 'renders the component' do

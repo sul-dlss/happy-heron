@@ -278,11 +278,12 @@ RSpec.describe 'Create a new work' do
           expect(work.subtype).to eq ['Article', 'Presentation slides']
           expect(DepositJob).to have_received(:perform_later).with(work)
           expect(work.state).to eq 'depositing'
+          expect(work.access).to eq 'world'
         end
       end
 
       context 'with a minimal set' do
-        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+        let(:collection) { create(:collection, :deposited, :depositor_selects_access, depositors: [user]) }
         let(:work_params) do
           {
             title: 'Test title',
@@ -295,7 +296,8 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
-            release: 'immediate'
+            release: 'immediate',
+            access: 'stanford'
           }
         end
 

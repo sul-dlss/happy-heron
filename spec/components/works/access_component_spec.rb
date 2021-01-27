@@ -20,11 +20,8 @@ RSpec.describe Works::AccessComponent, type: :component do
   end
 
   context 'when collection access is depositor selects' do
-    let(:work) { build(:work) }
-
-    before do
-      work.collection.access = 'depositor-selects'
-    end
+    let(:work) { build(:work, collection: collection) }
+    let(:collection) { build(:collection, :depositor_selects_access, release_option: 'immediate') }
 
     it 'renders the access selector' do
       expect(rendered.css('#access')).to be_present
