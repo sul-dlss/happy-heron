@@ -11,6 +11,7 @@ RSpec.describe DescriptionGenerator do
     build(:work, :with_creation_date_range, :published, :with_keywords,
           :with_some_untitled_related_links, :with_related_works,
           contributors: [contributor],
+          citation: "Test citation #{Work::LINK_TEXT}",
           title: 'Test title')
   end
   let(:citation_value) do
@@ -116,7 +117,7 @@ RSpec.describe DescriptionGenerator do
       ],
       note: [
         { type: 'summary', value: 'test abstract' },
-        { type: 'preferred citation', value: 'test citation' },
+        { type: 'preferred citation', value: 'Test citation :link:' },
         { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
       ],
       title: [{ value: 'Test title' }],

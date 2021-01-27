@@ -26,6 +26,8 @@ class Work < ApplicationRecord
     world: 'world'
   }
 
+  LINK_TEXT = ':link will be inserted here automatically when available:'
+
   state_machine initial: :new do
     before_transition WorkObserver.method(:before_transition)
 
@@ -79,7 +81,7 @@ class Work < ApplicationRecord
   def add_purl_to_citation
     return unless citation
 
-    self.citation = T.must(citation).gsub(/:link:/, T.must(purl))
+    self.citation = T.must(citation).gsub(LINK_TEXT, T.must(purl))
   end
 
   sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }

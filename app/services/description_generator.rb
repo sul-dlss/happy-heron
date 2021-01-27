@@ -73,8 +73,12 @@ class DescriptionGenerator
   def citation
     return unless work.citation
 
+    # :link: is a special placeholder in dor-services-app.
+    # See https://github.com/sul-dlss/dor-services-app/pull/1566/files#diff-30396654f0ad00ad1daa7292fd8327759d7ff7f3b92f98f40a2e25b6839807e2R13
+    exportable_citation = T.must(work.citation).gsub(Work::LINK_TEXT, ':link:')
+
     Cocina::Models::DescriptiveValue.new(
-      value: T.must(work.citation),
+      value: exportable_citation,
       type: 'preferred citation'
     )
   end
