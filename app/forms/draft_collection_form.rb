@@ -25,6 +25,12 @@ class DraftCollectionForm < Reform::Form
   property :release_duration
   property :release_date, embargo_date: true, assign_if: ->(params) { params['release_option'] == 'delay' }
 
+  property :license_option, virtual: true, prepopulator: (proc do |*|
+    self.license_option = default_license.present? ? 'depositor-selects' : 'required'
+  end)
+  property :required_license
+  property :default_license
+
   property :depositor_sunets, virtual: true, prepopulator: lambda { |_options|
     self.depositor_sunets = depositor_sunets_from_model.join(', ')
   }
@@ -45,6 +51,16 @@ class DraftCollectionForm < Reform::Form
   validates :release_date, embargo_date: true
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
   validates :release_duration, inclusion: { in: EMBARGO_RELEASE_DURATION_OPTIONS.values }, allow_blank: true
+
+  def deserialize!(params)
+    case params['license_option']
+    when 'required'
+      params['default_license'] = nil
+    when 'depositor-selects'
+      params['required_license'] = nil
+    end
+    super(params)
+  end
 
   def sync(*)
     update_depositors

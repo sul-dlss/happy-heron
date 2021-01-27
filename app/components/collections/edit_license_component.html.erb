@@ -1,0 +1,49 @@
+  <section id="terms-and-license" data-controller="complex-radio">
+    <header>Terms of use and license</header>
+
+    <p>
+      We highly recommend every deposit be assigned a license when possible. A
+      license helps others who access the content to understand what the
+      Depositor is allowing them to do with the work and under what
+      conditions.
+    </p>
+
+    <fieldset class="license-option">
+      <div class="form-check" data-complex-radio-target="selection">
+        <%= form.radio_button :license_option, 'required', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
+        <%= form.label :license_option_required, class: "form-check-label" do %>
+          Require license for all deposits
+        <% end %>
+        <%= form.label :required_license, class: 'form-check-label visually-hidden' %>
+        <%= form.select :required_license, grouped_options_for_select(License.grouped_options, required_license, prompt: 'Select...'),
+                        {}, class: "form-select" %>
+        <a href="https://library.stanford.edu/research/stanford-digital-repository/faqs/sdr-license-options" target="_blank">
+          Get help selecting a license
+        </a>
+      </div>
+
+      <div class="form-check license-option" data-complex-radio-target="selection">
+        <%= form.radio_button :license_option, 'depositor-selects', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
+        <%= form.label 'license_option_depositor-selects', class: "form-check-label" do %>
+          Depositor selects license
+        <% end %>
+        <%= form.label :default_license, class: 'form-check-label visually-hidden' %>
+        <%= form.select :default_license, grouped_options_for_select(License.grouped_options, default_license, prompt: 'Select default license...'),
+                        {}, class: "form-select default_license" %>
+      </div>
+    </fieldset>
+
+    <hr>
+
+    <p>
+      In addition to the license chosen, the following Terms of Use will also be displayed on your PURL page:
+    </p>
+
+    <p class="terms-of-use">
+      User agrees that, where applicable, content will not be used to identify
+      or to otherwise infringe the privacy or confidentiality rights of
+      individuals. Content distributed via the Stanford Digital Repository may
+      be subject to additional license and use restrictions applied by the
+      Depositor.
+    </p>
+  </section>

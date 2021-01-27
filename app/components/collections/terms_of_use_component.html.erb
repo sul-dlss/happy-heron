@@ -12,9 +12,16 @@
       <th>Terms of use</th>
       <td><%= I18n.t(:terms_of_use) %></td>
     </tr>
-    <tr>
-      <th>License</th>
-      <td><%= default_license %></td>
-    </tr>
+    <% if required_license.present? %>
+      <tr>
+        <th>Required license</th>
+        <td><%= required_license %></td>
+      </tr>
+    <% elsif default_license.present? %>
+      <tr>
+        <th>Default license (depositor selects)</th>
+        <td><%= default_license %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>

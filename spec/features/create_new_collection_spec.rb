@@ -23,6 +23,8 @@ RSpec.describe 'Create a new collection', js: true do
       fill_in 'Contact email', with: collection_attrs.fetch(:contact_email)
       check 'Send email to collection Managers and Reviewers when participants are added/removed.'
 
+      select 'Apache-2.0', from: 'collection_required_license'
+
       expect(page).to have_content('Send email to Depositors whose status has changed.')
 
       # breadcrumbs showing
