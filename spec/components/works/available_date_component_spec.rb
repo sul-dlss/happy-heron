@@ -42,4 +42,20 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
         .to eq embargo_date.day.to_s
     end
   end
+
+  context 'when there is an error' do
+    let(:embargo_date) { work.embargo_date }
+    let(:work) { build(:work, :embargoed) }
+
+    before do
+      work_form.errors.add(:embargo_date, 'Must be less than 3 years in the future')
+    end
+
+    it 'renders the message and adds invalid styles' do
+      expect(rendered.css('.is-invalid ~ .invalid-feedback').text).to eq 'Must be less than 3 years in the future'
+      expect(rendered.css('#work_embargo_year.is-invalid')).to be_present
+      expect(rendered.css('#work_embargo_month.is-invalid')).to be_present
+      expect(rendered.css('#work_embargo_day.is-invalid')).to be_present
+    end
+  end
 end

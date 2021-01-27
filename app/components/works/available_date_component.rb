@@ -16,6 +16,18 @@ module Works
       form.object
     end
 
+    def error?
+      errors.present?
+    end
+
+    def error_message
+      safe_join(errors.map(&:message), tag.br)
+    end
+
+    def errors
+      form.object.errors.where(:embargo_date)
+    end
+
     def year_field
       select_year embargo_year,
                   {
@@ -25,21 +37,21 @@ module Works
                     end_year: 3.years.from_now.year
                   },
                   id: 'work_embargo_year',
-                  class: 'form-control'
+                  class: "form-control#{' is-invalid' if error?}"
     end
 
     def month_field
       select_month embargo_month,
                    { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month' },
                    id: 'work_embargo_month',
-                   class: 'form-control'
+                   class: "form-control#{' is-invalid' if error?}"
     end
 
     def day_field
       select_day embargo_day,
                  { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day' },
                  id: 'work_embargo_day',
-                 class: 'form-control'
+                 class: "form-control#{' is-invalid' if error?}"
     end
 
     def embargo_year
