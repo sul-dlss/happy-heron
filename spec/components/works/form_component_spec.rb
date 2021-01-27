@@ -23,16 +23,5 @@ RSpec.describe Works::FormComponent do
                   'Describe your deposit',
                   'Manage release of this deposit',
                   'Select a license')
-    expect(rendered.css('.was-validated')).not_to be_present
-  end
-
-  context 'when there are errors' do
-    before do
-      work_form.validate({})
-    end
-
-    it 'renders the component errors' do
-      expect(rendered.css('form.was-validated')).to be_present
-    end
   end
 end

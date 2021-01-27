@@ -5,8 +5,8 @@
   </div>
 </div>
 
-<div class="embargo-date" data-edit-deposit-target="embargo-dateField">
-  <div class="mb-5 row">
+<div class="embargo-date mb-5" data-edit-deposit-target="embargo-dateField">
+  <div class="row<%= ' is-invalid' if error? %>">
     <div class="col-sm-10 release-option">
       <%= form.radio_button :release, 'embargo', class: 'form-check-input' %>
       <%= form.label :release_embargo, 'On this date' %>
@@ -27,5 +27,5 @@
       </div>
     </div>
   </div>
-  <div data-embargo-date-target="error" class="invalid-feedback"></div>
+  <div class="invalid-feedback"><%= error_message %></div>
 </div>

@@ -4,7 +4,7 @@
       controller: 'edit-deposit auto-citation',
       auto_citation_purl: purl
     },
-    html: { class: "needs-validation work-editor #{'was-validated' if work_form.errors.present?}", novalidate: true, multipart: true } do |f| %>
+    html: { class: "needs-validation work-editor", novalidate: true, multipart: true } do |f| %>
   <% if work_form.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(work_form.errors.count, "error") %> prohibited this item from being saved:</h2>
