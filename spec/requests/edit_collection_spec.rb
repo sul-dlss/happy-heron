@@ -168,9 +168,7 @@ RSpec.describe 'Updating an existing collection' do
       context 'when collection fails to save' do
         let(:collection_params) do
           {
-            name: '',
-            review_enabled: 'true',
-            reviewer_sunets: ''
+            name: ''
           }
         end
 
@@ -179,7 +177,6 @@ RSpec.describe 'Updating an existing collection' do
                 params: { collection: collection_params, commit: deposit_button }
           expect(response).to have_http_status :unprocessable_entity
           expect(response.body).to include 'Name can&#39;t be blank'
-          expect(response.body).to include 'must be provided when review is enabled'
         end
       end
     end

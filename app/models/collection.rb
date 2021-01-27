@@ -16,11 +16,6 @@ class Collection < ApplicationRecord
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
 
   sig { returns(T::Boolean) }
-  def review_enabled?
-    reviewed_by.present?
-  end
-
-  sig { returns(T::Boolean) }
   def accessioned?
     %w[first_draft depositing].exclude?(state)
   end

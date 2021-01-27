@@ -143,6 +143,15 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def required_license?; end
 
+  sig { returns(T.nilable(T::Boolean)) }
+  def review_enabled; end
+
+  sig { params(value: T.nilable(T::Boolean)).void }
+  def review_enabled=(value); end
+
+  sig { returns(T::Boolean) }
+  def review_enabled?; end
+
   sig { returns(String) }
   def state; end
 
