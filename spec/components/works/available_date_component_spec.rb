@@ -44,7 +44,6 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
   end
 
   context 'when there is an error' do
-    let(:embargo_date) { work.embargo_date }
     let(:work) { build(:work, :embargoed) }
 
     before do

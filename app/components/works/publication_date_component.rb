@@ -4,13 +4,31 @@
 module Works
   # Displays a form for providing publication date as an EDTF field
   class PublicationDateComponent < ApplicationComponent
-    def initialize(published_edtf:, min_year:, max_year:)
-      @published_edtf = published_edtf
+    def initialize(form:, min_year:, max_year:)
+      @form = form
       @min_year = min_year
       @max_year = max_year
     end
 
-    attr_reader :published_edtf, :min_year, :max_year
+    attr_reader :form, :min_year, :max_year
+
+    delegate :published_edtf, to: :reform
+
+    def reform
+      form.object
+    end
+
+    def error?
+      errors.present?
+    end
+
+    def error_message
+      safe_join(errors.map(&:message), tag.br)
+    end
+
+    def errors
+      reform.errors.where(:published_edtf)
+    end
 
     def published_year
       published_edtf&.year
@@ -32,7 +50,7 @@ module Works
                          action: 'change->auto-citation#updateDisplay date-validation#change'
                        },
                        id: 'work_published_year',
-                       class: 'form-control',
+                       class: "form-control#{' is-invalid' if error?}",
                        min: min_year,
                        max: max_year
     end
@@ -46,7 +64,7 @@ module Works
                      action: 'change->auto-citation#updateDisplay date-validation#change'
                    },
                    id: 'work_published_month',
-                   class: 'form-control'
+                   class: "form-control#{' is-invalid' if error?}"
     end
 
     def day_field
@@ -58,7 +76,7 @@ module Works
                    action: 'change->auto-citation#updateDisplay date-validation#change'
                  },
                  id: 'work_published_day',
-                 class: 'form-control'
+                 class: "form-control#{' is-invalid' if error?}"
     end
   end
 end

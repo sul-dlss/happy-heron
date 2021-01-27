@@ -25,7 +25,7 @@ module Works
     end
 
     def errors
-      form.object.errors.where(:embargo_date)
+      reform.errors.where(:embargo_date)
     end
 
     def year_field
