@@ -17,15 +17,25 @@ Ruby dependencies can be installed with `bundle install`, JavaScript dependencie
 
 NOTE: H2 uses Ruby 2.7.2.
 
-## Testing
+## Development
 
-Start up dependencies with `docker-compose up db` (with `-d` to run in background), then run tests with `bundle exec rspec`.
+Start up dependencies with `docker-compose up db redis` (with `-d` to run in background).
 
-To run the server in development mode set `REMOTE_USER` because we aren't running behind Shibboleth.
+To run the H2 application in development mode, set `REMOTE_USER` because we aren't running behind Shibboleth, and set the `ROLES` environment variable to grant your fake user session administrative privileges:
 
 ```shell
 REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/rails server
 ```
+
+If you are going to be changing any of the assets compiled by webpack (e.g., JavaScript code, stylesheets), you may also find it helpful to run the webpack dev server which speeds up page reloads after asset changes:
+
+```shell
+bin/webpack-dev-server
+```
+
+## Testing
+
+Start up dependencies with `docker-compose up db` (with `-d` to run in background), then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
 
 ### Integration
 
@@ -117,7 +127,7 @@ H2 is deployed via Capistrano to servers running the Passenger server in standal
 
 ## Architecture
 
-At the end of the 2020 workcycle, H2 should use sdr-api to do file and metadata deposits.
+H2 uses the [SDR API](https://github.com/sul-dlss/sdr-api) to deposit collections and works (both files and metadata) into SDR.
 
 ## Branch aliasing
 
