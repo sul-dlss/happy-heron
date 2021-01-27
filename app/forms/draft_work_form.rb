@@ -39,6 +39,7 @@ class DraftWorkForm < Reform::Form
     # Choose between using the user provided citation and the auto-generated citation
     params['citation'] = params.delete('citation_auto') if params['default_citation'] == 'true'
     deserialize_embargo(params)
+    access_from_collection(params)
     super(params)
   end
 
@@ -58,6 +59,12 @@ class DraftWorkForm < Reform::Form
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  def access_from_collection(params)
+    return if model.collection.access == 'depositor-selects'
+
+    params['access'] = model.collection.access
+  end
 
   collection :contributors,
              populator: ContributorPopulator.new(:contributors, Contributor),
