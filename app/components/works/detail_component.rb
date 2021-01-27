@@ -13,11 +13,22 @@ module Works
     attr_reader :work
 
     delegate :purl, :collection, :version, :work_type,
-             :contact_email,  :abstract, :citation,
-             :published_edtf, :created_edtf,
+             :contact_email, :abstract, :citation,
              :depositor, :attached_files, :contributors,
              :related_works, :related_links, :events,
              to: :work
+
+    # Displays the created date as edtf
+    sig { returns(T.nilable(String)) }
+    def created
+      work.created_edtf&.edtf
+    end
+
+    # Displays the published date as edtf
+    sig { returns(T.nilable(String)) }
+    def published
+      work.published_edtf&.edtf
+    end
 
     sig { returns(String) }
     def title

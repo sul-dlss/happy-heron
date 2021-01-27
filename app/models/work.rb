@@ -95,6 +95,17 @@ class Work < ApplicationRecord
     end
   end
 
+  sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }
+  # Ensure that EDTF dates get an EDTF serialization
+  def published_edtf=(edtf)
+    case edtf
+    when nil, EDTF::Interval
+      super
+    when Date
+      super(edtf.to_edtf)
+    end
+  end
+
   sig { returns(T.nilable(T.any(EDTF::Interval, Date))) }
   def published_edtf
     EDTF.parse(super)
