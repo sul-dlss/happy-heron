@@ -37,12 +37,11 @@ class WorkPolicy < ApplicationPolicy
   #     4. The user is a reviewer of the collection the work is in
   sig { returns(T::Boolean) }
   def update?
-    return false unless record.can_update_metadata?
+    return true if administrator? ||
+                   record.collection.managers.include?(user) ||
+                   record.collection.reviewed_by.include?(user)
 
-    administrator? ||
-      record.depositor == user ||
-      record.collection.managers.include?(user) ||
-      record.collection.reviewed_by.include?(user)
+    record.depositor == user && record.can_update_metadata?
   end
 
   # Can show a work iff any one of the following is true:
