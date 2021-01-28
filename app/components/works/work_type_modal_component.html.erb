@@ -14,7 +14,7 @@
   <form method="get" action="/collections/1/work/new" data-work-type-target="form">
     <div class="row">
       <% types.each do |type| %>
-        <div class="col-md-3" style="height: 4rem">
+        <div class="col-md-3 mb-5" style="height: 4rem">
           <%= render CheckboxButtonComponent.new(name: 'work_type', value: type.id, data: { action: "work-type#change" }) do %>
             <span class="fas fa-2x fa-<%= type.icon %>"></span> <div class="work-type-button-text"><%= type.label %></div>
           <% end %>

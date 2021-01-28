@@ -4,6 +4,8 @@
   .release-option, .license-option {
     .form-check {
       @include embargo;
+
+      margin-bottom: 1.25rem;
     }
 
     .form-check-input {
