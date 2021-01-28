@@ -106,6 +106,8 @@ class WorksController < ObjectsController
   sig { params(work: Work).void }
   def after_save(work)
     work.event_context = { user: current_user }
+    work.event_context[:description] = params[:work][:version_description] unless params[:work][:version_description].nil?
+
     work.update_metadata!
     if deposit_button_pushed?
       if work.collection.review_enabled?
@@ -127,7 +129,7 @@ class WorksController < ObjectsController
                      'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
                      'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
                      :abstract, :citation_auto, :citation, :default_citation,
-                     :access, :license,
+                     :access, :license, :version_description,
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
                      :agree_to_terms, subtype: [],
                                       attached_files_attributes: %i[_destroy id label hide file],
