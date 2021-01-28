@@ -15,4 +15,6 @@ class WorkForm < DraftWorkForm
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
   validates :contributors, length: { minimum: 1, message: 'Please add at least one contributor.' }
+  validates :created_edtf, created_in_past: true
+  validates :published_edtf, created_in_past: true
 end
