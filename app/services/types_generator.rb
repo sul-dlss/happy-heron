@@ -61,13 +61,20 @@ class TypesGenerator
   def build_genres
     return [] if work_type == 'Other'
 
+    # add the top level genre mapping (i.e. top level work type with no subtype)
+    type_genres = types_to_genres.dig(work_type, 'type') || []
+
+    all_genres = type_genres + subtype_genres
+    all_genres.map { |genre| Cocina::Models::DescriptiveValue.new(genre) }
+  end
+
+  sig { returns(T::Array[String]) }
+  def subtype_genres
     subtypes.flat_map do |subtype|
-      genres = types_to_genres.dig(work_type, subtype)
+      genres = types_to_genres.dig(work_type, 'subtypes', subtype)
       raise "Genre not found for #{work_type}, #{subtype} in types_to_genre.yml" unless genres
 
-      genres.map do |genre|
-        Cocina::Models::DescriptiveValue.new(genre)
-      end
+      genres
     end
   end
 
@@ -75,16 +82,21 @@ class TypesGenerator
   def build_resource_types
     return [] if work_type == 'Other'
 
-    resource_types = []
+    # add the top level resource type mapping (i.e. top level work type with no subtype)
+    resource_types = [types_to_resource_types.dig(work_type, 'type')]
 
+    # uniq and compact the list of resource types, since multiple subtypes can map
+    # to the same resource type but we only need them mapped once
+    all_resource_type = (resource_types + subtype_resource_types).compact.uniq
+    all_resource_type.map { |resource_type| Cocina::Models::DescriptiveValue.new(resource_type) }
+  end
+
+  sig { returns(T::Array[String]) }
+  def subtype_resource_types
     subtypes.flat_map do |subtype|
-      types_to_resource_types.dig(work_type, subtype).map do |resource_type|
-        # Multiple subtypes can map to the same resource type. Do not repeat if it already exists.
-        next if resource_types.include?(resource_type)
-
-        resource_types << resource_type
-        Cocina::Models::DescriptiveValue.new(resource_type)
-      end.compact
+      types_to_resource_types.dig(work_type, 'subtypes', subtype).map do |resource_type|
+        resource_type
+      end
     end
   end
 
