@@ -62,17 +62,27 @@ RSpec.describe WorkPolicy do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
 
+    succeed 'when user is an admin and status is pending_approval' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      let(:record) { build_stubbed :work, :pending_approval }
+    end
+
     succeed 'when user is a collection manager and status is not pending_approval' do
       let(:collection) { build_stubbed :collection, managers: [user] }
+    end
+
+    succeed 'when user is collection manager and status is pending_approval' do
+      let(:collection) { build_stubbed :collection, managers: [user] }
+      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
     end
 
     succeed 'when user is a collection reviewer and status is not pending_approval' do
       let(:collection) { build_stubbed :collection, reviewed_by: [user] }
     end
 
-    failed 'when user is an admin and status is pending_approval' do
-      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:record) { build_stubbed :work, :pending_approval }
+    succeed 'when user is a collection reviewer and status is pending_approval' do
+      let(:collection) { build_stubbed :collection, reviewed_by: [user] }
+      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
     end
   end
 
