@@ -143,7 +143,7 @@ RSpec.describe 'Create a new work' do
         allow(DepositJob).to receive(:perform_later)
       end
 
-      context 'when a collection allows embargo and with everything' do
+      context 'when a collection allows embargo but restricts access and with everything' do
         let(:collection) do
           create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
         end
@@ -257,7 +257,8 @@ RSpec.describe 'Create a new work' do
                    'created_range(1i)' => '2020', 'created_range(2i)' => '3', 'created_range(3i)' => '4',
                    'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31',
                    'release' => 'embargo',
-                   'embargo_date(1i)' => embargo_year, 'embargo_date(2i)' => '4', 'embargo_date(3i)' => '4')
+                   'embargo_date(1i)' => embargo_year, 'embargo_date(2i)' => '4', 'embargo_date(3i)' => '4',
+                   'access' => 'stanford') # an access selection that will be overwritten
         end
 
         it 'displays the work' do
@@ -278,11 +279,12 @@ RSpec.describe 'Create a new work' do
           expect(work.subtype).to eq ['Article', 'Presentation slides']
           expect(DepositJob).to have_received(:perform_later).with(work)
           expect(work.state).to eq 'depositing'
+          expect(work.access).to eq 'world' # shows that `stanford` was overwritten
         end
       end
 
       context 'with a minimal set' do
-        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+        let(:collection) { create(:collection, :deposited, :depositor_selects_access, depositors: [user]) }
         let(:work_params) do
           {
             title: 'Test title',
@@ -295,7 +297,8 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
-            release: 'immediate'
+            release: 'immediate',
+            access: 'stanford'
           }
         end
 

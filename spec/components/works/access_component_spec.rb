@@ -4,13 +4,27 @@
 require 'rails_helper'
 
 RSpec.describe Works::AccessComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+  let(:work) { build(:work, collection: collection) }
+  let(:collection) { build(:collection, release_option: 'immediate') }
+  let(:work_form) { WorkForm.new(work) }
+  let(:rendered) { render_inline(described_class.new(form: form)) }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  before do
+    work_form.prepopulate!
+  end
+
+  it 'renders the component' do
+    expect(rendered.to_html)
+      .to include('Select which audience you would like to have access to download')
+  end
+
+  context 'when collection access is depositor selects' do
+    let(:work) { build(:work, collection: collection) }
+    let(:collection) { build(:collection, :depositor_selects_access, release_option: 'immediate') }
+
+    it 'renders the access selector' do
+      expect(rendered.css('#access')).to be_present
+    end
+  end
 end

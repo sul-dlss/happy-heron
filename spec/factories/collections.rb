@@ -8,7 +8,7 @@ FactoryBot.define do
     contact_email { 'email@example.com' }
     release_option { 'immediate' }
     release_date { '2020-10-09' }
-    access { 'MyString' }
+    access { 'world' }
     required_license { 'CC0-1.0' }
     default_license { nil }
     email_when_participants_changed { false }
@@ -63,5 +63,9 @@ FactoryBot.define do
 
   trait :email_when_participants_changed do
     email_when_participants_changed { true }
+  end
+
+  trait :depositor_selects_access do
+    access { 'depositor-selects' }
   end
 end

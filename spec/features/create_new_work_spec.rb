@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Create a new work in a deposited collection', js: true do
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, :deposited, depositors: [user]) }
+  let!(:collection) { create(:collection, :deposited, :depositor_selects_access, depositors: [user]) }
 
   before do
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
@@ -128,6 +128,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_content('2020-03-06/2020-10-30')
         expect(page).to have_content 'User provided abstract'
         expect(page).to have_content 'Citation from user input'
+        expect(page).to have_content 'Everyone'
         expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
 
         visit dashboard_path
