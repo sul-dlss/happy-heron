@@ -143,7 +143,7 @@ RSpec.describe 'Create a new work' do
         allow(DepositJob).to receive(:perform_later)
       end
 
-      context 'when a collection allows embargo but restricts access and with everything' do
+      context 'when a collection allows embargo and a license but restricts access and with all fields provided' do
         let(:collection) do
           create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
         end
@@ -251,6 +251,7 @@ RSpec.describe 'Create a new work' do
                    related_works_attributes: related_works,
                    related_links_attributes: related_links,
                    default_citation: false,
+                   license: 'PDDL-1.0',
                    'published(1i)' => '2020', 'published(2i)' => '2', 'published(3i)' => '14',
                    created_type: 'range',
                    'created(1i)' => '2020', 'created(2i)' => '2', 'created(3i)' => '14',
@@ -273,6 +274,7 @@ RSpec.describe 'Create a new work' do
           expect(work.related_works.size).to eq 2
           expect(work.related_links.size).to eq 2
           expect(work.citation).to eq 'test citation'
+          expect(work.license).to eq 'PDDL-1.0'
           expect(work.published_edtf.to_edtf).to eq '2020-02-14'
           expect(work.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
           expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
@@ -617,6 +619,60 @@ RSpec.describe 'Create a new work' do
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.body).to include 'Must provide all parts'
+        end
+      end
+
+      context 'with a collection that dictates a license but a license is provided' do
+        let(:collection) do
+          create(:collection, :deposited, :with_required_license, depositors: [user])
+        end
+        let(:work_params) do
+          {
+            title: 'Test title',
+            work_type: 'text',
+            contact_email: 'io@io.io',
+            abstract: 'test abstract',
+            contributors_attributes: contributors,
+            attached_files_attributes: files,
+            keywords_attributes: {
+              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+            },
+            license: 'CC0-1.0'
+          }
+        end
+
+        let(:contributors) do
+          { '999' =>
+            { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
+              'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
+        end
+
+        let(:upload) do
+          ActiveStorage::Blob.create_and_upload!(
+            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            filename: 'apple-touch-icon.png',
+            content_type: 'image/png'
+          )
+        end
+
+        let(:files) do
+          {
+            '0' => {
+              '_destroy' => 'false',
+              'label' => 'My ICO',
+              'hide' => false,
+              'file' => upload.signed_id
+            }
+          }
+        end
+
+        it 'sets the license indicated by the collection' do
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Deposit' }
+          expect(response).to have_http_status(:found)
+          work = Work.last
+          expect(work.license).to eq 'CC-BY-4.0'
+          expect(DepositJob).to have_received(:perform_later)
         end
       end
     end

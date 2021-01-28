@@ -40,10 +40,11 @@ class DraftWorkForm < Reform::Form
     params['citation'] = params.delete('citation_auto') if params['default_citation'] == 'true'
     deserialize_embargo(params)
     access_from_collection(params)
+    deserialize_license(params)
     super(params)
   end
 
-  # Ensure the collection default overwrite whatever the user supplied
+  # Ensure the collection default overwrites whatever the user supplied
   # rubocop:disable Metrics/AbcSize
   def deserialize_embargo(params)
     case model.collection.release_option
@@ -64,6 +65,13 @@ class DraftWorkForm < Reform::Form
     return if model.collection.access == 'depositor-selects'
 
     params['access'] = model.collection.access
+  end
+
+  # Ensure the collection's required license overwrites whatever the user supplied
+  def deserialize_license(params)
+    return unless model.collection.required_license
+
+    params['license'] = model.collection.required_license
   end
 
   collection :contributors,
