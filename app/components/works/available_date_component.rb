@@ -37,21 +37,24 @@ module Works
                     end_year: 3.years.from_now.year
                   },
                   id: 'work_embargo_year',
-                  class: "form-control#{' is-invalid' if error?}"
+                  class: "form-control#{' is-invalid' if error?}",
+                  data: { available_date_target: 'year' }
     end
 
     def month_field
       select_month embargo_month,
                    { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month' },
                    id: 'work_embargo_month',
-                   class: "form-control#{' is-invalid' if error?}"
+                   class: "form-control#{' is-invalid' if error?}",
+                   data: { available_date_target: 'month' }
     end
 
     def day_field
       select_day embargo_day,
                  { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day' },
                  id: 'work_embargo_day',
-                 class: "form-control#{' is-invalid' if error?}"
+                 class: "form-control#{' is-invalid' if error?}",
+                 data: { available_date_target: 'day' }
     end
 
     def embargo_year
