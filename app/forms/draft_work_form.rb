@@ -30,8 +30,6 @@ class DraftWorkForm < Reform::Form
   end)
   property :embargo_date, embargo_date: true
 
-  validates :embargo_date, embargo_date: true,
-                           if: proc { |form| form.model.collection.user_can_set_availability? }
   validates_with EmbargoDateParts,
                  if: proc { |form| form.model.collection.user_can_set_availability? && form.release != 'immediate' }
 
