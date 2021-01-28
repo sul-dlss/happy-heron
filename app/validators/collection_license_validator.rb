@@ -8,6 +8,6 @@ class CollectionLicenseValidator < ActiveModel::Validator
     return if record.required_license.in?(License.license_list) ||
               record.default_license.in?(License.license_list)
 
-    record.errors.add('license', 'Either required license or default license must be present')
+    record.errors.add(:license, 'Either a required license or a default license must be present')
   end
 end
