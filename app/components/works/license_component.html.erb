@@ -1,13 +1,18 @@
 <section id="license">
   <header>Select a license</header>
-  <div class="mb-3 row">
-    <%= form.label :license, class: 'col-sm-2 col-form-label' %>
-    <div class="col-sm-10">
-      <%= form.select :license,
-                      grouped_options_for_select(License.grouped_options, license),
-                      {}, class: "form-select" %>
+  <% if user_can_set_license? %>
+    <div class="mb-3 row">
+      <%= form.label :license, class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-10">
+        <%= form.select :license,
+                        grouped_options_for_select(License.grouped_options, license),
+                        {}, class: "form-select" %>
+      </div>
     </div>
-  </div>
+  <% else %>
+    <p>The license for this deposit is <%= license_from_collection %>.</p>
+  <% end %>
+
   <hr>
   <p>In addition to the license, the following Terms of Use will also be displayed on your PURL page.</p>
   <p style="font-style: italic; margin-left: 2.5rem;">

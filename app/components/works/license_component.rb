@@ -15,5 +15,15 @@ module Works
     def reform
       form.object
     end
+
+    def collection
+      reform.model.collection
+    end
+
+    delegate :user_can_set_license?, to: :collection
+
+    def license_from_collection
+      License.label_for(collection.required_license)
+    end
   end
 end

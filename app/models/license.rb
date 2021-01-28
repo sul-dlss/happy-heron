@@ -43,8 +43,13 @@ class License
   sig { returns(T::Array[T::Array[T.any(String, T::Array[String])]]) }
   def self.grouped_options
     GROUPINGS.map do |key, group_label|
-      [group_label, GROUPED_LICENSES.fetch(key).map { |license_id| [ID_LABEL_HASH[license_id], license_id] }]
+      [group_label, GROUPED_LICENSES.fetch(key).map { |license_id| [label_for(license_id), license_id] }]
     end
+  end
+
+  sig { params(license_id: String).returns(String) }
+  def self.label_for(license_id)
+    ID_LABEL_HASH.fetch(license_id)
   end
 
   GROUPINGS = {

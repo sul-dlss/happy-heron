@@ -9,11 +9,14 @@ FactoryBot.define do
     release_option { 'immediate' }
     release_date { '2020-10-09' }
     access { 'world' }
-    required_license { 'CC0-1.0' }
     default_license { nil }
     email_when_participants_changed { false }
     state { 'first_draft' }
     creator
+  end
+
+  trait :with_required_license do
+    required_license { 'CC-BY-4.0' }
   end
 
   trait :with_works do

@@ -76,4 +76,18 @@ RSpec.describe Collection do
       end
     end
   end
+
+  describe '#user_can_set_license?' do
+    subject { collection.user_can_set_license? }
+
+    context 'when the required license is set' do
+      let(:collection) { build(:collection, :with_required_license) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the required license is not set' do
+      it { is_expected.to be true }
+    end
+  end
 end

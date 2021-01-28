@@ -34,6 +34,7 @@ RSpec.describe 'Updating an existing collection' do
             description: 'This is a very good collection.',
             contact_email: user.email,
             access: 'world',
+            required_license: 'CC0-1.0',
             manager_sunets: user.sunetid,
             depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
             email_depositors_status_changed: true
@@ -65,6 +66,7 @@ RSpec.describe 'Updating an existing collection' do
               description: 'This is a very good collection.',
               contact_email: user.email,
               access: 'world',
+              required_license: 'CC0-1.0',
               manager_sunets: user.sunetid,
               depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
               email_depositors_status_changed: true,

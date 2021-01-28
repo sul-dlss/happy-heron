@@ -26,6 +26,12 @@ class Collection < ApplicationRecord
     release_option == 'depositor-selects'
   end
 
+  # The collection has allowed the user to select a license for the member works
+  sig { returns(T::Boolean) }
+  def user_can_set_license?
+    required_license.nil?
+  end
+
   sig { returns(T.nilable(String)) }
   def purl
     return nil unless druid
