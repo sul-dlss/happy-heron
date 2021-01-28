@@ -128,6 +128,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_content('2020-03-06/2020-10-30')
         expect(page).to have_content 'User provided abstract'
         expect(page).to have_content 'Citation from user input'
+        expect(page).to have_content 'Everyone'
         expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
 
         visit dashboard_path
