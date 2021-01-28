@@ -143,7 +143,7 @@ RSpec.describe 'Create a new work' do
         allow(DepositJob).to receive(:perform_later)
       end
 
-      context 'when a collection allows embargo but sets access and with everything' do
+      context 'when a collection allows embargo but restricts access and with everything' do
         let(:collection) do
           create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
         end
