@@ -1,4 +1,4 @@
-<section id="dates">
+<section id="dates" data-controller="complex-radio">
   <header>Enter dates related to your deposit (optional)</header>
   <%= render Works::PublicationDateComponent.new(form: form,
                                                  min_year: min_year,
@@ -10,9 +10,9 @@
     </div>
   </div>
 
-  <div class="mb-3 row">
+  <div class="mb-3 row" data-complex-radio-target="selection">
     <div class="col-sm-2">
-      <%= form.radio_button :created_type, 'single', class: 'form-check-input' %>
+      <%= form.radio_button :created_type, 'single', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
       <%= form.label :created_type_single, 'Single date' %>
     </div>
     <div data-controller="date-validation" class="col-sm-10">
@@ -33,9 +33,9 @@
     </div>
   </div>
 
-  <div class="mb-3 row">
+  <div class="mb-3 row" data-complex-radio-target="selection">
     <div class="col-md-2">
-      <%= form.radio_button :created_type, 'range', class: 'form-check-input' %>
+      <%= form.radio_button :created_type, 'range', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
        <%= form.label :created_type_range, 'Date range' %>
     </div>
 
