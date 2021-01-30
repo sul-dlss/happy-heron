@@ -36,8 +36,9 @@ RSpec.describe 'Create a new collection', js: true do
       click_button 'Deposit'
 
       expect(page).to have_content(collection_attrs.fetch(:name))
-      # The deposit button is not present until the collection is accessioned
+      # The deposit button is not present until the collection is accessioned (nor is the button for reserving a PURL)
       expect(page).not_to have_content('+ Deposit to this collection')
+      expect(page).not_to have_content('Reserve a PURL')
 
       # We should not see the delete button for this collection since it is not a draft
       expect(page).not_to have_selector("[aria-label='Delete #{Collection.last.name}']")

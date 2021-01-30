@@ -13,6 +13,6 @@ class WorkTypeValidator < ActiveModel::EachValidator
   # validate these on the incoming works/new request before there is a model
   # instance to validate.
   def self.valid?(value)
-    value.in?(WorkType.type_list)
+    value.in?(WorkType.type_list) || value == WorkType.purl_reservation_type.id
   end
 end

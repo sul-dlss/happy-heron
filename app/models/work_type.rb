@@ -90,9 +90,14 @@ class WorkType
     @cocina_type = cocina_type
   end
 
+  sig { returns(WorkType) }
+  def self.purl_reservation_type
+    new(id: 'PURL reservation', label: 'PURL reservation', icon: '', subtypes: [], cocina_type: 'n/a')
+  end
+
   sig { params(id: T.nilable(String)).returns(WorkType) }
   def self.find(id)
-    all.find { |work| work.id == id } || raise(InvalidType, "Unknown worktype #{id}")
+    (all + [purl_reservation_type]).find { |work| work.id == id } || raise(InvalidType, "Unknown worktype #{id}")
   end
 
   # rubocop:disable Metrics/AbcSize

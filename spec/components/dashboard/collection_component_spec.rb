@@ -24,6 +24,10 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     it 'does not render the deposit button' do
       expect(rendered.to_html).not_to include '+ Deposit to this collection'
     end
+
+    it 'does not render the PURL reservation button' do
+      expect(rendered.to_html).not_to include 'Reserve a PURL'
+    end
   end
 
   context 'with a collection currently in the process of depositing' do
@@ -32,12 +36,16 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     it 'does not render the deposit button' do
       expect(rendered.to_html).not_to include '+ Deposit to this collection'
     end
+
+    it 'does not render the PURL reservation button' do
+      expect(rendered.to_html).not_to include 'Reserve a PURL'
+    end
   end
 
   context 'with a deposit ready collection' do
     let(:collection) { create(:collection) }
 
-    it 'renders the turbo-frame that holds the deposit button' do
+    it 'renders the turbo-frame that holds the deposit buttons' do
       expect(rendered.css("turbo-frame#deposit_collection_#{collection.id}").first['src']).to be_present
     end
   end

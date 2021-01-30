@@ -1,0 +1,34 @@
+<div class="modal fade" id="purlReservationModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="content-type-prompt"><label for="purl-reservation-title">Enter a title for this deposit</label></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" data-action="click->purl-reservation#cancel" aria-label="Close"></button>
+      </div>
+      <div class="modal-header">
+        <h6><em>(You can update this later.)</em></h6>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="" data-purl-reservation-target="form">
+          <div class="container-fluid">
+            <div>
+              <input type="text" name="work[title]" data-purl-reservation-target="title" id="purl-reservation-title">
+              <input type="hidden" name="commit" value="Deposit">
+              <input type="hidden" name="purl_reservation" value="true">
+            </div>
+            <div class="modal-footer">
+              <%= button_tag 'Cancel',
+                    data: {
+                      bs_dismiss: 'modal',
+                      bs_target: '#purlReservationModal',
+                      action: "purl-reservation#cancel"
+                    },
+                    class: 'btn btn-secondary' %>
+              <%= button_tag 'Submit', class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
