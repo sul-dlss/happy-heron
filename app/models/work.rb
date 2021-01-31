@@ -16,6 +16,7 @@ class Work < ApplicationRecord
   has_many :attached_files, dependent: :destroy
   has_many :keywords, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
+  has_many :versions, as: :versionable, dependent: :destroy
 
   validates :state, presence: true
   validates :license, presence: true, inclusion: { in: License.license_list }
