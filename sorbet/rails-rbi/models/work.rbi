@@ -221,6 +221,15 @@ module Work::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::AttachedFile]).void }
   def attached_files=(value); end
 
+  sig { returns(::Author::ActiveRecord_Associations_CollectionProxy) }
+  def authors; end
+
+  sig { returns(T::Array[Integer]) }
+  def author_ids; end
+
+  sig { params(value: T::Enumerable[::Author]).void }
+  def authors=(value); end
+
   sig { returns(::Collection) }
   def collection; end
 

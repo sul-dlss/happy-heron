@@ -7,21 +7,33 @@
     margin-bottom: 1rem;
     padding: 2rem;
     padding-left: 4rem;
+
+    .inner-container {
+      @extend .col-md-12;
+      @extend .mb-3;
+      border: 1px solid gray;
+      border-radius: .25rem;
+      background-color: $silver-sand;
+      padding: 1rem;
+      &.row {
+        --bs-gutter-x: 0; // remove outdent
+      }
+    }
+
+    // For authors/contributors
+    section {
+      background-color: $silver-sand;
+      padding-left: 2rem;
+      .inner-container {
+        background-color: $stanford-fog-light;
+      }
+    }
   }
 
   header {
     font-size: larger;
     font-weight: 700;
     margin-bottom: 1rem;
-  }
-
-  .inner-container {
-    @extend .col-md-12;
-    @extend .mb-3;
-    border: 1px solid gray;
-    border-radius: .25rem;
-    background-color: $silver-sand;
-    padding: 1rem;
   }
 
   .form-check .invalid-feedback::before {

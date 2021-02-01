@@ -117,6 +117,7 @@ class WorksController < ObjectsController
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
                      :agree_to_terms, subtype: [],
                                       attached_files_attributes: %i[_destroy id label hide file],
+                                      authors_attributes: %i[_destroy id full_name first_name last_name role_term],
                                       contributors_attributes: %i[_destroy id full_name first_name last_name role_term],
                                       keywords_attributes: %i[_destroy id label uri],
                                       related_works_attributes: %i[_destroy id citation],

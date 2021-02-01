@@ -20,7 +20,7 @@
   <%= render Works::DepositProgressComponent.new %>
   <%= render Works::AddFilesComponent.new(form: f) %>
   <%= render Works::TitleComponent.new(form: f) %>
-  <%= render Works::ContributorsComponent.new(form: f) %>
+  <%= render Works::AuthorsAndContributorsComponent.new(form: f) %>
   <%= render Works::DatesComponent.new(form: f,
                                        min_year: Settings.earliest_year,
                                        max_year: Time.zone.today.year) %>

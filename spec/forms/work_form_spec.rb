@@ -53,23 +53,23 @@ RSpec.describe WorkForm do
     end
   end
 
-  describe 'contributors validation' do
-    let(:contributor_error) { 'Please add at least one contributor.' }
+  describe 'authors validation' do
+    let(:author_error) { 'Please add at least one author.' }
 
     before do
-      form.validate(contributors: contributors)
+      form.validate(authors: authors)
     end
 
-    context 'with no contributors' do
-      let(:contributors) { [] }
+    context 'with no authors' do
+      let(:authors) { [] }
 
       it 'does not validate' do
-        expect(form.errors.where(:contributors).first.message).to include(contributor_error)
+        expect(form.errors.where(:authors).first.message).to include(author_error)
       end
     end
 
-    context 'with contributors' do
-      let(:contributors) do
+    context 'with authors' do
+      let(:authors) do
         [
           { '_destroy' => 'false', 'first_name' => 'Naomi',
             'last_name' => 'Dushay', 'full_name' => 'Stanford', 'role_term' => 'person|Author' },
@@ -78,9 +78,9 @@ RSpec.describe WorkForm do
             'role_term' => 'organization|Host institution' }
         ]
       end
-      let(:errors) { form.errors.where(:contributors) }
+      let(:errors) { form.errors.where(:authors) }
 
-      it 'validates with contributors in place' do
+      it 'validates with authors in place' do
         expect(errors).to be_empty
       end
     end

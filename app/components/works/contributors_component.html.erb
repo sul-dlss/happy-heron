@@ -1,6 +1,6 @@
-<section data-controller="nested-form" id="author">
-  <header>List authors and contributors</header>
-  <p>Enter the name(s) of people, organizations or events responsible for producing the deposit.</p>
+<section data-controller="nested-form">
+  <header>Additional contributors (optional)</header>
+  <p>Names will be listed in the order shown below.</p>
 
   <template data-nested-form-target='template'>
     <%= form.fields_for :contributors, Contributor.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
@@ -13,6 +13,6 @@
   <% end %>
 
   <div data-nested-form-target="add_item">
-    <%= button_tag '+ Add another author/contributor', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+    <%= button_tag '+ Add another contributor', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
   </div>
 </section>

@@ -6,6 +6,10 @@ module CapybaraActions
     field = find_field(locator)
     field.native.send_keys :tab
   end
+
+  def within_section(title, &block)
+    within :xpath, "//section[header/text() = '#{title}']", &block
+  end
 end
 
 RSpec.configure do |config|

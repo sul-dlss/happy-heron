@@ -148,7 +148,7 @@ RSpec.describe 'Create a new work' do
           create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
         end
 
-        let(:contributors) do
+        let(:authors) do
           { '0' =>
             { '_destroy' => '1', 'first_name' => 'Justin',
               'last_name' => 'Coyne', 'role_term' => 'person|Data collector' },
@@ -245,7 +245,7 @@ RSpec.describe 'Create a new work' do
 
         let(:work_params) do
           attributes_for(:work)
-            .merge(contributors_attributes: contributors,
+            .merge(authors_attributes: authors,
                    attached_files_attributes: files,
                    keywords_attributes: keywords,
                    related_works_attributes: related_works,
@@ -267,8 +267,8 @@ RSpec.describe 'Create a new work' do
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           work = Work.last
-          expect(work.contributors.size).to eq 2
-          expect(work.contributors.last.full_name).to eq 'The Leland Stanford Junior University'
+          expect(work.authors.size).to eq 2
+          expect(work.authors.last.full_name).to eq 'The Leland Stanford Junior University'
           expect(work.attached_files.size).to eq 2
           expect(work.keywords.size).to eq 2
           expect(work.related_works.size).to eq 2
@@ -294,7 +294,7 @@ RSpec.describe 'Create a new work' do
             contact_email: 'io@io.io',
             abstract: 'test abstract',
             attached_files_attributes: files,
-            contributors_attributes: contributors,
+            authors_attributes: authors,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
@@ -312,7 +312,7 @@ RSpec.describe 'Create a new work' do
           )
         end
 
-        let(:contributors) do
+        let(:authors) do
           { '999' =>
             { '_destroy' => 'false', 'first_name' => '', 'last_name' => '',
               'full_name' => 'Stanford', 'role_term' => 'organization|Host institution' } }
@@ -333,7 +333,7 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           work = Work.last
-          expect(work.contributors.size).to eq 1
+          expect(work.authors.size).to eq 1
           expect(work.attached_files.size).to eq 1
           expect(work.keywords.size).to eq 1
           expect(work.published_edtf).to be_nil
@@ -366,7 +366,7 @@ RSpec.describe 'Create a new work' do
           expect(work.title).to be_empty
           expect(work.contact_email).to be_empty
           expect(work.abstract).to be_empty
-          expect(work.contributors).to be_empty
+          expect(work.authors).to be_empty
           expect(work.attached_files).to be_empty
           expect(work.keywords.size).to eq 0
           expect(work.published_edtf).to be_nil
@@ -404,7 +404,7 @@ RSpec.describe 'Create a new work' do
           expect(work.title).to be_empty
           expect(work.contact_email).to be_empty
           expect(work.abstract).to be_empty
-          expect(work.contributors).to be_empty
+          expect(work.authors).to be_empty
           expect(work.attached_files).to be_empty
           expect(work.keywords.size).to eq 0
           expect(work.published_edtf).to be_nil
@@ -427,7 +427,7 @@ RSpec.describe 'Create a new work' do
             work_type: 'text',
             contact_email: 'io@io.io',
             abstract: 'test abstract',
-            contributors_attributes: contributors,
+            authors_attributes: authors,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -437,7 +437,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        let(:contributors) do
+        let(:authors) do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
@@ -467,7 +467,7 @@ RSpec.describe 'Create a new work' do
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:found)
           work = Work.last
-          expect(work.contributors.size).to eq 1
+          expect(work.authors.size).to eq 1
           expect(work.attached_files.size).to eq 1
           expect(work.keywords.size).to eq 1
           expect(work.published_edtf).to be_nil
@@ -489,7 +489,7 @@ RSpec.describe 'Create a new work' do
             work_type: 'text',
             contact_email: 'io@io.io',
             abstract: 'test abstract',
-            contributors_attributes: contributors,
+            authors_attributes: authors,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -502,7 +502,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        let(:contributors) do
+        let(:authors) do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
@@ -548,7 +548,7 @@ RSpec.describe 'Create a new work' do
             work_type: 'text',
             contact_email: 'io@io.io',
             abstract: 'test abstract',
-            contributors_attributes: contributors,
+            authors_attributes: authors,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -561,7 +561,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        let(:contributors) do
+        let(:authors) do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
@@ -632,7 +632,7 @@ RSpec.describe 'Create a new work' do
             work_type: 'text',
             contact_email: 'io@io.io',
             abstract: 'test abstract',
-            contributors_attributes: contributors,
+            authors_attributes: authors,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -641,7 +641,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        let(:contributors) do
+        let(:authors) do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
