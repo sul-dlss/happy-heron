@@ -1,6 +1,10 @@
 .work-editor {
   @include editor;
 
+  .form-instructions {
+    @extend header;  
+  }
+
   .agreement {
     padding-top: 2rem;
     padding-bottom: 1rem;
