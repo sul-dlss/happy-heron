@@ -1,0 +1,18 @@
+<section data-controller="nested-form">
+  <header>Authors to include in citation</header>
+  <p>Reorder authors so they are in the correct order</p>
+
+  <template data-nested-form-target='template'>
+    <%= form.fields_for :authors, Author.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
+      <%= render Works::ContributorRowComponent.new(form: contributor_form, required: true, citation: true) %>
+    <% end %>
+  </template>
+
+  <%= form.fields_for :authors do |contributor_form| %>
+    <%= render Works::ContributorRowComponent.new(form: contributor_form, required: true, citation: true) %>
+  <% end %>
+
+  <div data-nested-form-target="add_item">
+    <%= button_tag '+ Add another author', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+  </div>
+</section>

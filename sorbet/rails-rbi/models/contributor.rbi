@@ -71,6 +71,15 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def role?; end
 
+  sig { returns(T.nilable(String)) }
+  def type; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def type=(value); end
+
+  sig { returns(T::Boolean) }
+  def type?; end
+
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
 
@@ -124,7 +133,7 @@ module Contributor::CustomFinderMethods
   def find_by_id!(id); end
 end
 
-class Contributor < ApplicationRecord
+class Contributor < AbstractContributor
   include Contributor::GeneratedAttributeMethods
   include Contributor::GeneratedAssociationMethods
   extend Contributor::CustomFinderMethods

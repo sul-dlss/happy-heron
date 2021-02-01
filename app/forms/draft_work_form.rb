@@ -72,16 +72,24 @@ class DraftWorkForm < Reform::Form
     params['license'] = model.collection.required_license
   end
 
-  collection :contributors,
-             populator: ContributorPopulator.new(:contributors, Contributor),
-             prepopulator: ->(*) { contributors << Contributor.new if contributors.blank? } do
+  contributor = lambda { |*|
     property :id
     property :first_name
     property :last_name
     property :full_name
     property :role_term
     property :_destroy, virtual: true
-  end
+  }
+
+  collection :contributors,
+             populator: ContributorPopulator.new(:contributors, Contributor),
+             prepopulator: ->(*) { contributors << Contributor.new if contributors.blank? },
+             &contributor
+
+  collection :authors,
+             populator: ContributorPopulator.new(:authors, Author),
+             prepopulator: ->(*) { authors << Author.new if authors.blank? },
+             &contributor
 
   collection :attached_files, populator: AttachedFilesPopulator.new(:attached_files, AttachedFile) do
     property :id

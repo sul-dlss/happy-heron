@@ -62,18 +62,20 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         fill_in 'Title of deposit', with: 'My Title'
         fill_in 'Contact email', with: user.email
 
-        fill_in 'First name', with: 'Contributor First Name'
-        fill_in 'Last name', with: 'Contributor Last Name'
+        within_section 'Authors to include in citation' do
+          fill_in 'First name', with: 'Contributor First Name'
+          fill_in 'Last name', with: 'Contributor Last Name'
 
-        # This is the div that contains the contributor remove button. The button
-        # should NOT be rendered since there's one and only one contributor at
-        # this point, which is not removable.
-        within('div.contributors-container') do
-          expect(page).not_to have_selector('button')
+          # This is the div that contains the contributor remove button. The button
+          # should NOT be rendered since there's one and only one author at
+          # this point, which is not removable.
+          within '.contributors-container' do
+            expect(page).not_to have_selector('button')
+          end
+
+          select 'Publisher', from: 'Role term'
+          fill_in 'Name', with: 'Best Publisher'
         end
-
-        select 'Publisher', from: 'Role term'
-        fill_in 'Name', with: 'Best Publisher'
 
         fill_in 'Publication year', with: '2020'
         select 'February', from: 'Publication month'
@@ -157,8 +159,10 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         fill_in 'Title of deposit', with: 'My Title'
         fill_in 'Contact email', with: user.email
 
-        fill_in 'First name', with: 'Michael'
-        fill_in 'Last name', with: 'Keller'
+        within_section 'Authors to include in citation' do
+          fill_in 'First name', with: 'Michael'
+          fill_in 'Last name', with: 'Keller'
+        end
 
         fill_in 'Publication year', with: '2020'
         select 'February', from: 'Publication month'

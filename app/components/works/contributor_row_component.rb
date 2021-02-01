@@ -4,13 +4,25 @@
 module Works
   # Renders a widget corresponding to a single contributor to the work.
   class ContributorRowComponent < ApplicationComponent
-    sig { params(form: ActionView::Helpers::FormBuilder).void }
-    def initialize(form:)
+    sig { params(form: ActionView::Helpers::FormBuilder, required: T::Boolean, citation: T::Boolean).void }
+    def initialize(form:, required: false, citation: false)
       @form = form
+      @required = required
+      @citation = citation
     end
 
     sig { returns(ActionView::Helpers::FormBuilder) }
     attr_reader :form
+
+    sig { returns(T::Boolean) }
+    def required?
+      @required
+    end
+
+    sig { returns(T::Boolean) }
+    def citation?
+      @citation
+    end
 
     sig { returns(T::Boolean) }
     def not_first_contributor?
@@ -21,12 +33,39 @@ module Works
 
     def select_role
       grouped_collection_select :role_term, grouped_options, :roles, :label, :key, :label,
-                                {}, class: 'form-select',
-                                    data: {
-                                      action: 'change->contributors#typeChanged change->auto-citation#updateDisplay',
-                                      contributors_target: 'role',
-                                      auto_citation_target: 'contributorRole'
-                                    }
+                                {}, html_options_for_select
+    end
+
+    def html_options_for_select
+      options = {
+        class: 'form-select',
+        data: {
+          action: 'change->contributors#typeChanged',
+          contributors_target: 'role'
+        }
+      }
+      if citation?
+        options[:data][:action] += ' change->auto-citation#updateDisplay'
+        options[:data][:auto_citation_target] = 'contributorRole'
+      end
+      options
+    end
+
+    def html_options(contributors_target, auto_citation_target)
+      options = {
+        class: 'form-control',
+        data: {
+          action: 'change->contributors#inputChanged',
+          contributors_target: contributors_target
+        },
+        required: required?
+      }
+      if citation?
+        options[:data][:action] += ' change->auto-citation#updateDisplay'
+        options[:data][:auto_citation_target] = auto_citation_target
+      end
+
+      options
     end
 
     # Represents the type of contributor top level option for the role select
@@ -42,7 +81,7 @@ module Works
       end
 
       def roles
-        Contributor::GROUPED_ROLES.fetch(key).map { |label| Role.new(contributor_type: key, label: label) }
+        AbstractContributor::GROUPED_ROLES.fetch(key).map { |label| Role.new(contributor_type: key, label: label) }
       end
     end
 
@@ -56,7 +95,7 @@ module Works
       attr_reader :label, :contributor_type
 
       def key
-        [contributor_type, label].join(Contributor::SEPARATOR)
+        [contributor_type, label].join(AbstractContributor::SEPARATOR)
       end
     end
 

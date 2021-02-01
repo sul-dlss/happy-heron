@@ -7,7 +7,7 @@ RSpec.describe Works::ContributorRowComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
 
   describe '#select_role' do
-    subject(:select_role) { described_class.new(form: form).select_role }
+    subject(:select_role) { described_class.new(form: form, citation: true).select_role }
 
     it 'makes groups with headings' do
       expected = <<~HTML

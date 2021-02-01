@@ -10,7 +10,7 @@ class ContributorPopulator < ApplicationPopulator
     item = existing_record(form: form, id: fragment['id'])
 
     if fragment['_destroy'] == '1'
-      form.contributors.delete(item)
+      value(form).delete(item)
       return skip!
     elsif fragment['first_name'].blank? && fragment['full_name'].blank?
       return skip!
@@ -25,7 +25,7 @@ class ContributorPopulator < ApplicationPopulator
       fragment['first_name'] = nil
       fragment['last_name'] = nil
     end
-    item || form.contributors.append(Contributor.new)
+    item || value(form).append(klass.new)
   end
   # rubocop:enable Metrics/AbcSize
 end

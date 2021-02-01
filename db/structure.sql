@@ -224,7 +224,8 @@ CREATE TABLE public.contributors (
     updated_at timestamp(6) without time zone NOT NULL,
     contributor_type character varying NOT NULL,
     role character varying NOT NULL,
-    full_name character varying
+    full_name character varying,
+    type character varying
 );
 
 
@@ -1070,6 +1071,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210104185452'),
 ('20210104185453'),
 ('20210114221943'),
-('20210127133325');
+('20210127133325'),
+('20210201155622');
 
 
