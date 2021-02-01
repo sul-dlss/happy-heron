@@ -155,6 +155,13 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
           click_button('Choose files')
         end
+        sleep 1 # pause to ensure file upload completes before we proceed
+        # see https://github.com/sul-dlss/happy-heron/issues/978
+        # we were hoping the with block below would block until upload
+        # completes, but it did not
+        within '.dropzone-previews' do
+          expect(page).to have_content('sul.svg')
+        end
 
         fill_in 'Title of deposit', with: 'My Title'
         fill_in 'Contact email', with: user.email

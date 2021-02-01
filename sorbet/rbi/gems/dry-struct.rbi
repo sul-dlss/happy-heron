@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-struct/all/dry-struct.rbi
 #
-# dry-struct-1.3.0
+# dry-struct-1.4.0
 
 module Dry
   def self.Struct(attributes = nil, &block); end
@@ -17,22 +17,22 @@ class Dry::Struct
   def __attributes__; end
   def __new__(changeset); end
   def attributes; end
-  def deconstruct_keys(keys); end
+  def deconstruct_keys(_keys); end
   def initialize(attributes); end
   def inspect; end
   def new(changeset); end
   def self.prepend(*arg0); end
   def to_h; end
   def to_hash; end
-  extend Anonymous_Dry_Core_Deprecations_Tagged_67
-  extend Anonymous_Module_69
+  extend Anonymous_Dry_Core_Deprecations_Tagged_68
   extend Anonymous_Module_70
+  extend Anonymous_Module_71
   extend Dry::Core::Deprecations::Interface
   extend Dry::Core::Extensions
   extend Dry::Struct::ClassInterface
-  include Anonymous_Dry_Equalizer_68
+  include Anonymous_Dry_Core_Equalizer_69
   include Dry::Core::Constants
-  include Dry::Equalizer::Methods
+  include Dry::Core::Equalizer::Methods
 end
 class Dry::Struct::Error < TypeError
 end
@@ -108,8 +108,10 @@ class Dry::Struct::StructBuilder < Dry::Struct::Compiler
   def check_name(name); end
   def const_name(type, attr_name); end
   def initialize(struct); end
+  def optional?(type); end
   def parent(type); end
   def struct; end
+  def type?(type); end
   def visit_array(node); end
   def visit_constrained(node); end
   def visit_constructor(node); end
@@ -121,18 +123,18 @@ class Dry::Types::Printer
   def visit_struct_constructor(constructor); end
   def visit_struct_sum(sum); end
 end
-module Anonymous_Dry_Core_Deprecations_Tagged_67
+module Anonymous_Dry_Core_Deprecations_Tagged_68
 end
-module Anonymous_Dry_Equalizer_68
+module Anonymous_Dry_Core_Equalizer_69
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
 end
-module Anonymous_Module_69
+module Anonymous_Module_70
   def inherited(klass); end
   def schema(value = nil); end
 end
-module Anonymous_Module_70
+module Anonymous_Module_71
   def abstract_class(value = nil); end
   def inherited(klass); end
 end

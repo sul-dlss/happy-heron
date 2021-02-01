@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-ast/all/rubocop-ast.rbi
 #
-# rubocop-ast-1.4.0
+# rubocop-ast-1.4.1
 
 module RuboCop
 end
@@ -1119,6 +1119,9 @@ end
 class RuboCop::AST::StrNode < RuboCop::AST::Node
   def heredoc?; end
   include RuboCop::AST::BasicLiteralNode
+end
+class RuboCop::AST::DstrNode < RuboCop::AST::StrNode
+  def value; end
 end
 class RuboCop::AST::SuperNode < RuboCop::AST::Node
   def arguments; end

@@ -27,9 +27,9 @@ module Turbo::TestAssertions
 end
 class Turbo::Engine < Rails::Engine
 end
-module Anonymous_Module_89
-end
 module Anonymous_Module_90
+end
+module Anonymous_Module_91
 end
 module Turbo::Broadcastable
   def broadcast_action(action, target: nil, **rendering); end
@@ -131,9 +131,9 @@ class Turbo::Native::NavigationController < ActionController::Base
   def self.helpers_path; end
   def self.middleware_stack; end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_91
+  include Anonymous_Module_92
 end
-module Anonymous_Module_91
+module Anonymous_Module_92
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -145,11 +145,11 @@ module Anonymous_Module_91
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_89
   extend Anonymous_Module_90
+  extend Anonymous_Module_91
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_89
   include Anonymous_Module_90
+  include Anonymous_Module_91
 end
 class Turbo::Streams::BroadcastJob < ActiveJob::Base
   def perform(stream, **rendering); end

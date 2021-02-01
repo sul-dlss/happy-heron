@@ -35,12 +35,12 @@ class Dry::Logic::Operations::Abstract
   def rules; end
   def to_ast; end
   def with(new_options); end
-  include Anonymous_Dry_Equalizer_63
+  include Anonymous_Dry_Core_Equalizer_64
   include Dry::Core::Constants
-  include Dry::Equalizer::Methods
+  include Dry::Core::Equalizer::Methods
   include Dry::Logic::Operators
 end
-module Anonymous_Dry_Equalizer_63
+module Anonymous_Dry_Core_Equalizer_64
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
@@ -113,10 +113,10 @@ end
 class Dry::Logic::Evaluator
   def initialize(path); end
   def path; end
-  include Anonymous_Dry_Equalizer_64
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_65
+  include Dry::Core::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_64
+module Anonymous_Dry_Core_Equalizer_65
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
@@ -127,10 +127,10 @@ class Dry::Logic::Evaluator::Set
   def evaluators; end
   def initialize(evaluators); end
   def self.new(paths); end
-  include Anonymous_Dry_Equalizer_65
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_66
+  include Dry::Core::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_65
+module Anonymous_Dry_Core_Equalizer_66
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
@@ -198,9 +198,9 @@ class Dry::Logic::Rule
   def self.specialize(arity, curried, base = nil); end
   def type; end
   def with(new_opts); end
-  include Anonymous_Dry_Equalizer_66
+  include Anonymous_Dry_Core_Equalizer_67
   include Dry::Core::Constants
-  include Dry::Equalizer::Methods
+  include Dry::Core::Equalizer::Methods
   include Dry::Logic::Operators
 end
 class Dry::Logic::Rule::Interface < Module
@@ -218,7 +218,7 @@ class Dry::Logic::Rule::Interface < Module
   def unapplied_args; end
   def variable_arity?; end
 end
-module Anonymous_Dry_Equalizer_66
+module Anonymous_Dry_Core_Equalizer_67
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
