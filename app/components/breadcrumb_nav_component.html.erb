@@ -1,16 +1,13 @@
 <nav class="breadcrumbs">
   <nav id="breadcrumbs" aria-label="breadcrumb" class="container-xxl">
     <ol class="breadcrumb">
-      <% breadcrumbs.each do |breadcrumb|
-        full_title = breadcrumb[:title].presence || 'No title'
-        truncated_title = truncate(full_title, length: 150, separator: ' ')
-        %>
+      <% breadcrumbs.each do |breadcrumb| %>
         <li class="breadcrumb-item">
           <% if breadcrumb[:link].blank? %>
-            <span title="<%=full_title%>" class="breadcrumb-link"><%= truncated_title %></span>
+            <span title="<%=full_title(breadcrumb[:title])%>" class="breadcrumb-link"><%= truncated_title(breadcrumb[:title]) %></span>
           <% else %>
-            <%= link_to truncated_title,
-                          breadcrumb[:link], class: 'breadcrumb-link', title: full_title,
+            <%= link_to truncated_title(breadcrumb[:title]),
+                          breadcrumb[:link], class: 'breadcrumb-link', title: full_title(breadcrumb[:title]),
                           data: (breadcrumb[:confirm] ? { confirm: 'Are you sure you want to leave this page? Your changes will not be saved.' } : nil) %>
           <% end %>
         </li>
