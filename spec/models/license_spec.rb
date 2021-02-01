@@ -9,7 +9,6 @@ RSpec.describe License do
 
     it 'returns array of valid license strings' do
       expect(license_list).to eq [
-        'CC-PDDC',
         'CC0-1.0',
         'CC-BY-4.0',
         'CC-BY-SA-4.0',
@@ -20,6 +19,7 @@ RSpec.describe License do
         'PDDL-1.0',
         'ODC-By-1.0',
         'ODbL-1.0',
+        'CC-PDDC',
         'AGPL-3.0-only',
         'Apache-2.0',
         'BSD-2-Clause',

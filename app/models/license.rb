@@ -8,7 +8,6 @@ class License
 
   # valid values
   ID_LABEL_HASH = {
-    'CC-PDDC' => 'CC-PDDC Public Domain Dedication and Certification',
     'CC0-1.0' => 'CC0-1.0',
     'CC-BY-4.0' => 'CC-BY-4.0 Attribution International',
     'CC-BY-SA-4.0' => 'CC-BY-SA-4.0 Attribution-Share Alike International',
@@ -19,6 +18,7 @@ class License
     'PDDL-1.0' => 'PDDL-1.0 Public Domain Dedication and License',
     'ODC-By-1.0' => 'ODC-By-1.0 Attribution License',
     'ODbL-1.0' => 'ODbL-1.0 Open Database License',
+    'CC-PDDC' => 'CC-PDDC Public Domain Dedication and Certification',
     'AGPL-3.0-only' => 'AGPL-3.0-only GNU Affero General Public License',
     'Apache-2.0' => 'Apache-2.0',
     'BSD-2-Clause' => 'BSD-2-Clause "Simplified" License',
