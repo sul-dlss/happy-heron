@@ -510,15 +510,15 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection with immediate release but a embargo is provided' do
         let(:collection) do
-          create(:collection, :deposited, depositors: [user], release_option: 'immediate')
+          create(:collection, :deposited, :with_contact_emails, depositors: [user], release_option: 'immediate')
         end
         let(:work_params) do
           {
             title: 'Test title',
             work_type: 'text',
-            contact_email: 'io@io.io',
             abstract: 'test abstract',
             authors_attributes: authors,
+            contact_emails_attributes: contact_emails,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -535,6 +535,15 @@ RSpec.describe 'Create a new work' do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
+        end
+
+        let(:contact_emails) do
+          {
+            '0' =>
+            { '_destroy' => 'false', 'email': user.email },
+            '999' =>
+            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+          }
         end
 
         let(:upload) do
@@ -568,16 +577,16 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection with delay release but a embargo is provided' do
         let(:collection) do
-          create(:collection, :deposited, depositors: [user], release_option: 'delay', release_date: release_date)
+          create(:collection, :deposited,  :with_contact_emails, depositors: [user], release_option: 'delay', release_date: release_date)
         end
         let(:release_date) { Date.parse('2029-03-07') }
         let(:work_params) do
           {
             title: 'Test title',
             work_type: 'text',
-            contact_email: 'io@io.io',
             abstract: 'test abstract',
             authors_attributes: authors,
+            contact_emails_attributes: contact_emails,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -594,6 +603,15 @@ RSpec.describe 'Create a new work' do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
+        end
+
+        let(:contact_emails) do
+          {
+            '0' =>
+            { '_destroy' => 'false', 'email': user.email },
+            '999' =>
+            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+          }
         end
 
         let(:upload) do
@@ -653,15 +671,15 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection that dictates a license but a license is provided' do
         let(:collection) do
-          create(:collection, :deposited, :with_required_license, depositors: [user])
+          create(:collection, :deposited, :with_required_license, :with_contact_emails, depositors: [user])
         end
         let(:work_params) do
           {
             title: 'Test title',
             work_type: 'text',
-            contact_email: 'io@io.io',
             abstract: 'test abstract',
             authors_attributes: authors,
+            contact_emails_attributes: contact_emails,
             attached_files_attributes: files,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -674,6 +692,15 @@ RSpec.describe 'Create a new work' do
           { '999' =>
             { '_destroy' => 'false', 'full_name' => '', 'first_name' => 'Naomi',
               'last_name' => 'Dushay', 'role_term' => 'person|Author' } }
+        end
+
+        let(:contact_emails) do
+          {
+            '0' =>
+            { '_destroy' => 'false', 'email': user.email },
+            '999' =>
+            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+          }
         end
 
         let(:upload) do

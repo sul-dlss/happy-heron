@@ -37,6 +37,7 @@ FactoryBot.define do
     with_keywords
     with_authors
     with_attached_file
+    with_contact_emails
   end
 
   trait :with_creation_date_range do
