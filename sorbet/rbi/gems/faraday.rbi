@@ -117,7 +117,7 @@ class Faraday::Utils::ParamsHash < Hash
   def to_query(encoder = nil); end
   def update(params); end
 end
-class Anonymous_Faraday_Options_72 < Faraday::Options
+class Anonymous_Faraday_Options_73 < Faraday::Options
   def bind; end
   def bind=(_); end
   def boundary; end
@@ -145,11 +145,11 @@ class Anonymous_Faraday_Options_72 < Faraday::Options
   def write_timeout; end
   def write_timeout=(_); end
 end
-class Faraday::RequestOptions < Anonymous_Faraday_Options_72
+class Faraday::RequestOptions < Anonymous_Faraday_Options_73
   def []=(key, value); end
   def stream_response?; end
 end
-class Anonymous_Faraday_Options_73 < Faraday::Options
+class Anonymous_Faraday_Options_74 < Faraday::Options
   def ca_file; end
   def ca_file=(_); end
   def ca_path; end
@@ -181,11 +181,11 @@ class Anonymous_Faraday_Options_73 < Faraday::Options
   def version; end
   def version=(_); end
 end
-class Faraday::SSLOptions < Anonymous_Faraday_Options_73
+class Faraday::SSLOptions < Anonymous_Faraday_Options_74
   def disable?; end
   def verify?; end
 end
-class Anonymous_Faraday_Options_74 < Faraday::Options
+class Anonymous_Faraday_Options_75 < Faraday::Options
   def password; end
   def password=(_); end
   def self.[](*arg0); end
@@ -197,7 +197,7 @@ class Anonymous_Faraday_Options_74 < Faraday::Options
   def user; end
   def user=(_); end
 end
-class Faraday::ProxyOptions < Anonymous_Faraday_Options_74
+class Faraday::ProxyOptions < Anonymous_Faraday_Options_75
   def host(*args, &block); end
   def host=(*args, &block); end
   def password; end
@@ -211,7 +211,7 @@ class Faraday::ProxyOptions < Anonymous_Faraday_Options_74
   def user; end
   extend Forwardable
 end
-class Anonymous_Faraday_Options_75 < Faraday::Options
+class Anonymous_Faraday_Options_76 < Faraday::Options
   def builder; end
   def builder=(_); end
   def builder_class; end
@@ -235,13 +235,13 @@ class Anonymous_Faraday_Options_75 < Faraday::Options
   def url; end
   def url=(_); end
 end
-class Faraday::ConnectionOptions < Anonymous_Faraday_Options_75
+class Faraday::ConnectionOptions < Anonymous_Faraday_Options_76
   def builder_class; end
   def new_builder(block); end
   def request; end
   def ssl; end
 end
-class Anonymous_Faraday_Options_76 < Faraday::Options
+class Anonymous_Faraday_Options_77 < Faraday::Options
   def method; end
   def method=(_); end
   def parallel_manager; end
@@ -273,7 +273,7 @@ class Anonymous_Faraday_Options_76 < Faraday::Options
   def url; end
   def url=(_); end
 end
-class Faraday::Env < Anonymous_Faraday_Options_76
+class Faraday::Env < Anonymous_Faraday_Options_77
   def [](key); end
   def []=(key, value); end
   def body; end
@@ -482,7 +482,7 @@ module Faraday::Adapter::Parallelism
   def supports_parallel=(arg0); end
   def supports_parallel?; end
 end
-class Anonymous_Struct_77 < Struct
+class Anonymous_Struct_78 < Struct
   def body; end
   def body=(_); end
   def headers; end
@@ -500,7 +500,7 @@ class Anonymous_Struct_77 < Struct
   def self.members; end
   def self.new(*arg0); end
 end
-class Faraday::Request < Anonymous_Struct_77
+class Faraday::Request < Anonymous_Struct_78
   def [](key); end
   def []=(key, value); end
   def headers=(hash); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-types/all/dry-types.rbi
 #
-# dry-types-1.4.0
+# dry-types-1.5.0
 
 module Dry
   def self.Types(*namespaces, default: nil, **aliases); end
@@ -17,6 +17,7 @@ module Dry::Types
   def self.[](name); end
   def self.const_missing(const); end
   def self.container; end
+  def self.define_builder(method, &block); end
   def self.identifier(klass); end
   def self.included(*arg0); end
   def self.module(*args, &block); end
@@ -80,6 +81,7 @@ end
 class Dry::Types::Default
   def call_safe(input = nil, &block); end
   def call_unsafe(input = nil); end
+  def callable?; end
   def constrained(*args); end
   def default?; end
   def evaluate; end
@@ -88,24 +90,25 @@ class Dry::Types::Default
   def try(input); end
   def valid?(value = nil); end
   def value; end
-  include Anonymous_Dry_Equalizer_47
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_47
+  include Dry::Core::Equalizer::Methods
   include Dry::Types::Builder
   include Dry::Types::Decorator
   include Dry::Types::Printable
   include Dry::Types::Type
 end
 class Dry::Types::Default::Callable < Dry::Types::Default
+  def callable?; end
   def evaluate; end
-  include Anonymous_Dry_Equalizer_48
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_48
+  include Dry::Core::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_48
+module Anonymous_Dry_Core_Equalizer_48
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
 end
-module Anonymous_Dry_Equalizer_47
+module Anonymous_Dry_Core_Equalizer_47
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -123,8 +126,8 @@ class Dry::Types::Constrained
   def rule; end
   def to_ast(meta: nil); end
   def try(input, &block); end
-  include Anonymous_Dry_Equalizer_49
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_49
+  include Dry::Core::Equalizer::Methods
   include Dry::Types::Builder
   include Dry::Types::Decorator
   include Dry::Types::Printable
@@ -135,7 +138,7 @@ class Dry::Types::Constrained::Coercible < Dry::Types::Constrained
   def call_unsafe(input); end
   def try(input, &block); end
 end
-module Anonymous_Dry_Equalizer_49
+module Anonymous_Dry_Core_Equalizer_49
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -154,13 +157,13 @@ class Dry::Types::Enum
   def to_s; end
   def try(input); end
   def values; end
-  include Anonymous_Dry_Equalizer_50
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_50
+  include Dry::Core::Equalizer::Methods
   include Dry::Types::Builder
   include Dry::Types::Decorator
   include Dry::Types::Type
 end
-module Anonymous_Dry_Equalizer_50
+module Anonymous_Dry_Core_Equalizer_50
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -174,14 +177,14 @@ class Dry::Types::Lax
   def lax; end
   def to_ast(meta: nil); end
   def try(input, &block); end
-  include Anonymous_Dry_Equalizer_51
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_51
+  include Dry::Core::Equalizer::Methods
   include Dry::Types::Builder
   include Dry::Types::Decorator
   include Dry::Types::Printable
   include Dry::Types::Type
 end
-module Anonymous_Dry_Equalizer_51
+module Anonymous_Dry_Core_Equalizer_51
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -215,15 +218,15 @@ class Dry::Types::Sum
   def to_ast(meta: nil); end
   def to_proc; end
   def try(input); end
-  include Anonymous_Dry_Equalizer_52
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_52
+  include Dry::Core::Equalizer::Methods
   include Dry::Types::Builder
   include Dry::Types::Meta
   include Dry::Types::Options
   include Dry::Types::Printable
   include Dry::Types::Type
 end
-module Anonymous_Dry_Equalizer_52
+module Anonymous_Dry_Core_Equalizer_52
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -242,6 +245,7 @@ module Dry::Types::Builder
   def constructor_type; end
   def default(input = nil, options = nil, &block); end
   def enum(*values); end
+  def fallback(value = nil, shared: nil, &_fallback); end
   def lax; end
   def optional; end
   def prepend(constructor = nil, **options, &block); end
@@ -251,10 +255,10 @@ end
 class Dry::Types::Result
   def initialize(input); end
   def input; end
-  include Anonymous_Dry_Equalizer_53
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_53
+  include Dry::Core::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_53
+module Anonymous_Dry_Core_Equalizer_53
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -270,10 +274,10 @@ class Dry::Types::Result::Failure < Dry::Types::Result
   def initialize(input, error); end
   def success?; end
   def to_s; end
-  include Anonymous_Dry_Equalizer_54
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_54
+  include Dry::Core::Equalizer::Methods
 end
-module Anonymous_Dry_Equalizer_54
+module Anonymous_Dry_Core_Equalizer_54
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -299,26 +303,30 @@ class Dry::Types::Constructor < Dry::Types::Nominal
   def method_missing(method, *args, &block); end
   def prepend(new_fn = nil, **options, &block); end
   def respond_to_missing?(meth, include_private = nil); end
+  def self.[](type, fn:, **options); end
   def self.new(input, **options, &block); end
+  def self.wrapper_type; end
   def to_ast(meta: nil); end
   def to_proc; end
   def try(input, &block); end
   def type; end
-  include Anonymous_Dry_Equalizer_55
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_55
+  include Dry::Core::Equalizer::Methods
 end
 class Dry::Types::Constructor::Function
   def <<(other); end
   def >>(other); end
   def [](input, &block); end
+  def arity; end
   def call(input, &block); end
   def fn; end
   def initialize(fn); end
   def self.[](fn); end
   def self.yields_block?(fn); end
   def to_ast; end
-  include Anonymous_Dry_Equalizer_56
-  include Dry::Equalizer::Methods
+  def wrapper?; end
+  include Anonymous_Dry_Core_Equalizer_56
+  include Dry::Core::Equalizer::Methods
 end
 class Dry::Types::Constructor::Function::Safe < Dry::Types::Constructor::Function
   def call(input, &block); end
@@ -340,13 +348,30 @@ end
 class Dry::Types::Constructor::Function::MethodCall::PrivateSafeCall < Dry::Types::Constructor::Function::MethodCall::PrivateCall
   def call(input, &block); end
 end
-module Anonymous_Dry_Equalizer_56
+class Dry::Types::Constructor::Function::Wrapper < Dry::Types::Constructor::Function
+  def [](input, type, &block); end
+  def arity; end
+  def call(input, type, &block); end
+end
+module Anonymous_Dry_Core_Equalizer_56
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
   def inspect; end
 end
-module Anonymous_Dry_Equalizer_55
+module Dry::Types::Constructor::Wrapper
+  def <<(new_fn = nil, **options, &block); end
+  def >>(constructor = nil, **options, &block); end
+  def __new__(type); end
+  def append(constructor = nil, **options, &block); end
+  def call_safe(input, &block); end
+  def call_unsafe(input); end
+  def constructor(constructor = nil, **options, &block); end
+  def lax; end
+  def prepend(new_fn = nil, **options, &block); end
+  def try(input, &block); end
+end
+module Anonymous_Dry_Core_Equalizer_55
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -437,8 +462,8 @@ class Dry::Types::Schema::Key
   def try(input, &block); end
   extend Anonymous_Dry_Core_Deprecations_Tagged_57
   extend Dry::Core::Deprecations::Interface
-  include Anonymous_Dry_Equalizer_58
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_58
+  include Dry::Core::Equalizer::Methods
   include Dry::Types::Builder
   include Dry::Types::Decorator
   include Dry::Types::Printable
@@ -446,7 +471,7 @@ class Dry::Types::Schema::Key
 end
 module Anonymous_Dry_Core_Deprecations_Tagged_57
 end
-module Anonymous_Dry_Equalizer_58
+module Anonymous_Dry_Core_Equalizer_58
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -482,15 +507,15 @@ class Dry::Types::Nominal
   def to_proc; end
   def try(input); end
   def try_coerce(input); end
-  include Anonymous_Dry_Equalizer_59
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_59
+  include Dry::Core::Equalizer::Methods
   include Dry::Types::Builder
   include Dry::Types::Meta
   include Dry::Types::Options
   include Dry::Types::Printable
   include Dry::Types::Type
 end
-module Anonymous_Dry_Equalizer_59
+module Anonymous_Dry_Core_Equalizer_59
   def cmp?(comparator, other); end
   def freeze; end
   def hash; end
@@ -574,7 +599,7 @@ module Dry::Types::Coercions
 end
 module Dry::Types::Coercions::Params
   def self.to_ary(input, &_block); end
-  def self.to_decimal(input, &block); end
+  def self.to_decimal(input, &_block); end
   def self.to_false(input, &_block); end
   def self.to_float(input, &block); end
   def self.to_hash(input, &_block); end
@@ -584,7 +609,7 @@ module Dry::Types::Coercions::Params
   extend Dry::Types::Coercions
 end
 module Dry::Types::Coercions::JSON
-  def self.to_decimal(input, &block); end
+  def self.to_decimal(input, &_block); end
   def self.to_nil(input, &_block); end
   extend Dry::Types::Coercions
 end
@@ -687,6 +712,12 @@ class Dry::Types::PredicateInferrer::Compiler
   def visit_predicate(node); end
   def visit_schema(_); end
   def visit_sum(node); end
+  extend Anonymous_Module_63
+  extend Dry::Core::ClassAttributes
+end
+module Anonymous_Module_63
+  def infer_predicate_by_class_name(value = nil); end
+  def inherited(klass); end
 end
 class Dry::Types::PrimitiveInferrer
   def [](type); end

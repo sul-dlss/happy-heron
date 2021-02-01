@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sidekiq/all/sidekiq.rbi
 #
-# sidekiq-6.1.2
+# sidekiq-6.1.3
 
 module Sidekiq
   def self.average_scheduled_poll_interval=(interval); end
@@ -319,6 +319,7 @@ module Sidekiq::WebHelpers
   def environment_title_prefix; end
   def filtering(*arg0); end
   def find_locale_files(lang); end
+  def format_memory(rss_kb); end
   def get_locale; end
   def h(text); end
   def job_params(job, score); end
