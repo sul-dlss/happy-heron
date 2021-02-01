@@ -16,8 +16,13 @@ module Dashboard
       Dashboard::CollectionHeaderComponent.new(collection: work.collection).name
     end
 
+    def truncated_collection_name
+      truncate(collection_name, length: 100, separator: ' ')
+    end
+
     def edit_work_link
-      link_to Works::DetailComponent.new(work: work).title, edit_work_path(work)
+      title = Works::DetailComponent.new(work: work).title
+      link_to truncate(title, length: 100, separator: ' '), edit_work_path(work), title: title
     end
   end
 end
