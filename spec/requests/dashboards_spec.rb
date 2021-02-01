@@ -156,7 +156,6 @@ RSpec.describe 'Dashboard requests' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Deposit to this collection'
-      expect(response.body).not_to include 'Edit'
     end
   end
 
