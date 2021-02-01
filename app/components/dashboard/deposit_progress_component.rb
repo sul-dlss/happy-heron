@@ -41,5 +41,10 @@ module Dashboard
     def has_license?
       true # The license section is always done as it defaults to a valid choice.
     end
+
+    sig { returns(T.nilable(T::Boolean)) }
+    def has_terms?
+      work.agree_to_terms
+    end
   end
 end

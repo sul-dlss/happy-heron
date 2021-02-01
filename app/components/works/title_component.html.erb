@@ -4,7 +4,7 @@
      <%= form.label :title, 'Title of deposit', class: 'col-sm-2 col-form-label' %>
      <div class="col-sm-10">
        <%= form.text_field :title, class: "form-control", required: true,
-                           data: { action: "change->auto-citation#updateDisplay change->progress#check",
+                           data: { action: "change->auto-citation#updateDisplay change->edit-deposit#check",
                                    'progress-step': 'title',
                                    auto_citation_target: 'titleField',
                                    edit_deposit_target: 'titleField' } %>
