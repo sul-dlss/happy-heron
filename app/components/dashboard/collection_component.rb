@@ -23,7 +23,8 @@ module Dashboard
       # displayable works and add another query to get the overall count, but
       # that would double the number of queries run for each instance of this
       # component.
-      policy.authorized_scope(collection.works.limit(MAX_DEPOSITS_TO_SHOW + 1), as: :edits)
+      scope = collection.works.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
+      policy.authorized_scope(scope, as: :edits)
     end
 
     private
