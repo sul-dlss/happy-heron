@@ -5,7 +5,8 @@
 class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized
+  verify_authorized except: :delete_button
+  include ActionView::RecordIdentifier
 
   def new
     validate_work_types!
@@ -70,6 +71,15 @@ class WorksController < ObjectsController
     work.destroy
 
     redirect_to dashboard_path
+  end
+
+  # We render this button lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the collection.
+  def delete_button
+    work = Work.find(params[:id])
+    render turbo_stream: turbo_stream.replace(dom_id(work, :delete),
+                                              partial: 'works/delete_button',
+                                              locals: { work: work })
   end
 
   def normalize_key(key)

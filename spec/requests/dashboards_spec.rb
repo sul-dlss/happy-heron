@@ -153,7 +153,7 @@ RSpec.describe 'Dashboard requests' do
     end
 
     it 'shows a link to deposit in the collection' do
-      get collection_deposit_button_path(collection)
+      get deposit_button_collection_path(collection)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Deposit to this collection'
     end

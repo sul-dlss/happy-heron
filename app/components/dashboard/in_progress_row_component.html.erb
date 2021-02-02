@@ -6,6 +6,6 @@
     <%= render Dashboard::DepositProgressComponent.new(work: work) %>
   </div>
   <div class="col-3">
-    <%= render Works::DeleteComponent.new(work: work) %>
+    <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </div>
 </div>

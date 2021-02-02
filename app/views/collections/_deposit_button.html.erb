@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id(collection, :deposit) do %>
+  <% if allowed_to?(:create?, Work.new(collection: collection)) %>
+    <%= button_tag '+ Deposit to this collection',
+          data: {
+            destination: new_collection_work_path(collection),
+            bs_toggle: 'modal',
+            bs_target: '#workTypeModal',
+            action: "work-type#set_collection"
+          },
+          class: "btn btn-primary" %>
+  <% end %>
+<% end %>
