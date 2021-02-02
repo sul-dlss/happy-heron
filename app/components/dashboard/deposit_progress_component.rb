@@ -19,7 +19,7 @@ module Dashboard
 
     sig { returns(T::Boolean) }
     def has_title?
-      work.title.present?
+      work.title.present? && work.contact_email.present?
     end
 
     sig { returns(T::Boolean) }

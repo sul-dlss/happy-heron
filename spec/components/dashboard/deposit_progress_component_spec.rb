@@ -8,6 +8,14 @@ RSpec.describe Dashboard::DepositProgressComponent, type: :component do
   let(:work) { build_stubbed(:work, collection: build(:collection, id: 7)) }
   let(:rendered) { render_inline(component) }
 
+  context 'when work is new' do
+    let(:work) { Work.new }
+
+    it 'only license and release are marked as active' do
+      expect(rendered.css('li.active').size).to eq 2
+    end
+  end
+
   context 'when work has a title' do
     let(:work) { build_stubbed(:work) }
 
