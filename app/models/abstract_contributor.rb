@@ -5,9 +5,6 @@
 # It is necessary so that Rails STI will assign the proper type to each concrete model
 # and so that when you query Work#contributors you only get the non-author contributors.
 class AbstractContributor < ApplicationRecord
-  self.abstract_class = true
-  self.table_name = 'contributors'
-
   extend T::Sig
   SEPARATOR = '|'
 

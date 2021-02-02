@@ -8,8 +8,8 @@ class Work < ApplicationRecord
   belongs_to :collection
   belongs_to :depositor, class_name: 'User'
 
-  has_many :contributors, dependent: :destroy
-  has_many :authors, dependent: :destroy
+  has_many :contributors, dependent: :destroy, class_name: 'Contributor'
+  has_many :authors, dependent: :destroy, class_name: 'Author'
   has_many :related_links, as: :linkable, dependent: :destroy
   has_many :related_works, dependent: :destroy
   has_many :attached_files, dependent: :destroy

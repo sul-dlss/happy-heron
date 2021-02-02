@@ -36,7 +36,7 @@ FactoryBot.define do
 
   trait :with_required_associations do
     with_keywords
-    with_contributors
+    with_authors
     with_attached_file
   end
 
@@ -56,12 +56,12 @@ FactoryBot.define do
     keywords { build_list(:keyword, keywords_count) }
   end
 
-  trait :with_contributors do
+  trait :with_authors do
     transient do
-      contributors_count { 3 }
+      author_count { 3 }
     end
 
-    contributors { Array.new(contributors_count) { association(:person_contributor) } }
+    authors { Array.new(author_count) { association(:person_author) } }
   end
 
   trait :with_related_links do
