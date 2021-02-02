@@ -3,18 +3,9 @@
     breadcrumbs: [ { title: @collection.name }]) %>
 <% end %>
 <main id="content" class="mb-3 mb-md-5">
-  <div class="container px-4 px-md-3" id="collection" data-controller="state-updates" data-state-updates-collection-id="<%= @collection.id %>">
+  <div class="container px-4 px-md-3" id="collection">
     <%= render Collections::TabsComponent.new(collection: @collection) %>
-    <section data-controller="work-type">
-      <%= render Collections::HeaderComponent.new(collection: @collection) %>
-      <%= render Collections::InformationComponent.new(collection: @collection) %>
-      <%= render Collections::DetailComponent.new(collection: @collection) %>
-      <%= render Collections::LinksComponent.new(collection: @collection) %>
-      <%= render Collections::ReleaseComponent.new(collection: @collection) %>
-      <%= render Collections::TermsOfUseComponent.new(collection: @collection) %>
-      <%= render Collections::ParticipantsComponent.new(collection: @collection) %>
-      <%= render Collections::WorkflowReviewComponent.new(collection: @collection) %>
-      <%= render Collections::HistoryComponent.new(collection: @collection) %>
-    </section>
+    <%= turbo_stream_from @collection %>
+    <%= render @collection %>
   </div>
 </main>

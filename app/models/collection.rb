@@ -14,6 +14,8 @@ class Collection < ApplicationRecord
   has_and_belongs_to_many :reviewed_by, class_name: 'User', join_table: 'reviewers'
   has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
 
+  after_update_commit -> { broadcast_replace_to self }
+
   sig { returns(T::Boolean) }
   def accessioned?
     %w[first_draft depositing].exclude?(state)
