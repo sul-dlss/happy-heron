@@ -1,7 +1,11 @@
 <section data-controller="dropzone" data-dropzone-max-file-size="2000" data-dropzone-max-files="1000" id="file">
   <header>Add your files</header>
   <p>All file types are accepted. If you have a deposit that is over 10GB, or
-    have any trouble with adding your files, contact us.</p>
+    have any trouble with adding your files,
+    <%= link_to('contact us.', '#contactUsModal', data: {
+                              bs_toggle: 'modal',
+                              bs_target: '#contactUsModal' }) %>
+  </p>
   <div class="dropzone dropzone-default<%= ' is-invalid' if error? %>">
     <%= form.file_field :files, multiple: true, direct_upload: true,
                         data: { dropzone_target: 'input',
