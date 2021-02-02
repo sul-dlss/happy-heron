@@ -206,10 +206,6 @@ RSpec.describe Work do
   end
 
   describe 'state machine flow' do
-    before do
-      allow(WorkUpdatesChannel).to receive(:broadcast_to)
-    end
-
     it 'starts in first draft' do
       expect(work.state).to eq('first_draft')
     end
@@ -224,8 +220,6 @@ RSpec.describe Work do
           .to change(work, :state)
           .to('depositing')
           .and change(Event, :count).by(1)
-        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-          .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>')
         expect(DepositJob).to have_received(:perform_later).with(work)
       end
 
@@ -237,8 +231,6 @@ RSpec.describe Work do
             .to change(work, :state)
             .to('depositing')
             .and change(Event, :count).by(1)
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Deposit in progress <span class="fas fa-spinner fa-pulse"></span>')
           expect(DepositJob).to have_received(:perform_later).with(work)
         end
       end
@@ -264,8 +256,6 @@ RSpec.describe Work do
                                                collection: collection
                                              }, args: [] }
                                            ))
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'New version in draft')
         end
       end
 
@@ -285,8 +275,6 @@ RSpec.describe Work do
                                                collection: collection
                                              }, args: [] }
                                            ))
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Draft - Not deposited')
         end
       end
     end
@@ -306,10 +294,6 @@ RSpec.describe Work do
                    { params: { user: work.depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Deposited',
-                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>',
-                        citation: 'test citation')
         end
       end
 
@@ -326,10 +310,6 @@ RSpec.describe Work do
                    { params: { user: work.depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Deposited',
-                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>',
-                        citation: 'test citation')
         end
       end
 
@@ -345,10 +325,6 @@ RSpec.describe Work do
                    { params: { user: work.depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Deposited',
-                        purl: '<a href="https://purl.stanford.edu/foo">https://purl.stanford.edu/foo</a>',
-                        citation: 'test citation')
         end
       end
     end
@@ -374,8 +350,6 @@ RSpec.describe Work do
                    { params: { user: depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Pending approval')
         end
       end
 
@@ -395,8 +369,6 @@ RSpec.describe Work do
                    { params: { user: depositor, work: work }, args: [] }
                  ))
             .and change(Event, :count).by(1)
-          expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-            .with(work, state: 'Pending approval')
         end
       end
     end
@@ -412,8 +384,6 @@ RSpec.describe Work do
                  'WorksMailer', 'reject_email', 'deliver_now',
                  { params: { user: work.depositor, work: work }, args: [] }
                ))
-        expect(WorkUpdatesChannel).to have_received(:broadcast_to)
-          .with(work, state: 'Returned')
       end
     end
   end

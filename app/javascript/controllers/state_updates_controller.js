@@ -6,12 +6,9 @@ export default class extends Controller {
 
   connect() {
     let controller = this
-    const workId = this.data.get('workId')
     const collectionId = this.data.get('collectionId')
     let args = {}
-    if (workId) {
-      args = { channel: 'WorkUpdatesChannel', workId: workId }
-    } else if (collectionId) {
+    if (collectionId) {
       args = { channel: 'CollectionUpdatesChannel', id: collectionId }
     }
     this.subscription = consumer.subscriptions.create(

@@ -8,7 +8,7 @@ class WorkObserver
   end
 
   def self.after_transition(work, transition)
-    BroadcastWorkChange.call(work: work, state: transition.to_name)
+    # nop
   end
 
   def self.after_begin_deposit(work, _transition)
