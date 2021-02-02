@@ -20754,11 +20754,6 @@ class BreadcrumbNavComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class BroadcastCollectionChange
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Bundler::APIResponseInvalidDependenciesError
   def status_code(); end
 end
@@ -27861,11 +27856,6 @@ class CollectionPolicy
   def __scoping__active_record_relation__deposit(relation); end
 end
 
-class CollectionUpdatesChannel
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Collections::CancelComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -33979,6 +33969,14 @@ module GeneratedUrlHelpers
   def contact_form_path(*args); end
 
   def contact_form_url(*args); end
+
+  def delete_button_work_path(*args); end
+
+  def delete_button_work_url(*args); end
+
+  def deposit_button_collection_path(*args); end
+
+  def deposit_button_collection_url(*args); end
 
   def preview_view_component_path(*args); end
 

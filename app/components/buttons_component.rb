@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 # Displays the button for saving a draft or depositing
@@ -16,8 +16,10 @@ class ButtonsComponent < ApplicationComponent
 
   sig { returns(T.nilable(String)) }
   def delete_button
+    return unless object.model.persisted?
+
     if model_type == 'Work'
-      render Works::DeleteComponent.new(work: object.model, style: :button)
+      helpers.turbo_frame_tag dom_id(object.model, :delete), src: delete_button_work_path(object.model, style: :button)
     else
       render Collections::DeleteComponent.new(collection: object.model, style: :button)
     end

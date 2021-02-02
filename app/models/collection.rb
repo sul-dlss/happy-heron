@@ -15,7 +15,11 @@ class Collection < ApplicationRecord
   has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
 
   after_update_commit -> { broadcast_replace_to self }
-  after_update_commit -> { broadcast_replace_to :collection_summary, partial: 'dashboards/collection_summary' }
+  after_update_commit :broadcast_update_collection_summary
+
+  def broadcast_update_collection_summary
+    broadcast_replace_to :collection_summary, partial: 'dashboards/collection_summary'
+  end
 
   sig { returns(T::Boolean) }
   def accessioned?
@@ -66,10 +70,6 @@ class Collection < ApplicationRecord
     end
 
     after_transition to: :version_draft, do: CollectionObserver.method(:after_update_published)
-
-    after_transition do |collection, transition|
-      BroadcastCollectionChange.call(collection: collection, state: transition.to_name)
-    end
 
     event :begin_deposit do
       transition %i[first_draft version_draft] => :depositing

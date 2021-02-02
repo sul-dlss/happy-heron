@@ -23,6 +23,7 @@ class Work < ApplicationRecord
   validates :work_type, presence: true, work_type: true
 
   after_update_commit -> { broadcast_replace_to self }
+  after_update_commit -> { collection.broadcast_update_collection_summary }
 
   enum access: {
     stanford: 'stanford',
