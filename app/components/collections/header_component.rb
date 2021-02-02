@@ -25,7 +25,7 @@ module Collections
     end
 
     def can_create_work?
-      helpers.allowed_to?(:create?, Work.new(collection: collection))
+      collection.accessioned?
     end
   end
 end

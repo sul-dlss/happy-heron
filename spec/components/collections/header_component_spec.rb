@@ -6,10 +6,6 @@ require 'rails_helper'
 RSpec.describe Collections::HeaderComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
-  before do
-    allow(controller).to receive_messages(allowed_to?: false)
-  end
-
   context 'with a new, first draft collection' do
     let(:collection) { create(:collection, :first_draft) }
 

@@ -15,6 +15,8 @@ class Collection < ApplicationRecord
 
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
 
+  after_update_commit -> { broadcast_replace_to self }
+
   sig { returns(T::Boolean) }
   def accessioned?
     %w[first_draft depositing].exclude?(state)
