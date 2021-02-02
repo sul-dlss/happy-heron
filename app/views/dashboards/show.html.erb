@@ -12,15 +12,15 @@
           <%= link_to '+ Create a new collection', new_collection_path, class: "btn btn-outline-primary float-end" %>
         <% end %>
       </header>
-      <% if @presenter.collections.present? %>
-        <ul class="collections">
-          <% @presenter.collections.each do |collection| %>
-            <li class="mb-5">
-              <%= render Dashboard::CollectionComponent.new(collection: collection) %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+
+      <%= turbo_stream_from :collection_summary %>
+
+      <ul class="collections">
+        <% @presenter.collections.each do |collection| %>
+          <%= render 'collection_summary', collection: collection %>
+
+        <% end %>
+      </ul>
 
       <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">

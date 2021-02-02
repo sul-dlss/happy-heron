@@ -11,7 +11,6 @@ module Dashboard
 
     attr_reader :collection
 
-    delegate :allowed_to?, to: :helpers
     delegate :depositing?, to: :collection
 
     sig { returns(String) }

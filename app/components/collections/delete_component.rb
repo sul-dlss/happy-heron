@@ -20,7 +20,7 @@ module Collections
 
     sig { returns(T::Boolean) }
     def render?
-      helpers.allowed_to?(:delete?, collection)
+      collection.persisted?
     end
   end
 end

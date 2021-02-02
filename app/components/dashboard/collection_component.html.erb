@@ -18,7 +18,7 @@
         <tr>
           <%= render Works::LinkToShowComponent.new(work: work) %>
           <td>
-            <% if allowed_to? :edit?, work %>
+            <% if true || allowed_to?(:edit?, work) %>
               <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work: work).title}" } do %>
                 <span class="fas fa-pencil-alt"></span>
               <% end %>
@@ -44,14 +44,5 @@
     <div class="mb-3"><%= link_to 'See all deposits', collection_works_path(collection) %></div>
   <% end %>
 
-  <% if allowed_to?(:create?, Work.new(collection: collection)) %>
-    <%= button_tag '+ Deposit to this collection',
-          data: {
-            destination: new_collection_work_path(collection),
-            bs_toggle: 'modal',
-            bs_target: '#workTypeModal',
-            action: "work-type#set_collection"
-          },
-          class: "btn btn-primary" %>
-  <% end %>
+  <%= helpers.turbo_frame_tag dom_id(collection, :deposit), src: collection_deposit_button_path(collection) %>
 </section>

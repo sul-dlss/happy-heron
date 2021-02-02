@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show
 
   resources :collections, only: %i[new create show edit update destroy] do
+    get :deposit_button
     resources :works, shallow: true do
       resource :review, only: :create
     end

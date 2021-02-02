@@ -16,6 +16,7 @@ class Collection < ApplicationRecord
   validates :contact_email, format: { with: Devise.email_regexp }, allow_blank: true
 
   after_update_commit -> { broadcast_replace_to self }
+  after_update_commit -> { broadcast_replace_to :collection_summary, partial: 'dashboards/collection_summary' }
 
   sig { returns(T::Boolean) }
   def accessioned?

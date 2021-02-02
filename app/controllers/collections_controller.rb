@@ -5,7 +5,7 @@
 class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized
+  verify_authorized except: :deposit_button
 
   def new
     collection = Collection.new(creator: current_user)
@@ -59,6 +59,17 @@ class CollectionsController < ObjectsController
     collection.destroy
 
     redirect_to dashboard_path
+  end
+
+  include ActionView::RecordIdentifier
+
+  # We render this button lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the collection.
+  def deposit_button
+    collection = Collection.find(params[:collection_id])
+    render turbo_stream: turbo_stream.replace(dom_id(collection, :deposit),
+                                            partial: "collections/deposit_button",
+                                            locals: { collection: collection })
   end
 
   private
