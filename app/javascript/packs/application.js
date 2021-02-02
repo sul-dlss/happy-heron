@@ -9,7 +9,7 @@ require("channels")
 import 'controllers'
 
 import '@popperjs/core'
-import '@hotwired/turbo'
+import '@hotwired/turbo-rails'
 window.bootstrap = require("bootstrap") // Required for contact_us_controller
 require.context('../images', true)
 import 'stylesheets/main'

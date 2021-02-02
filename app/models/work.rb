@@ -22,6 +22,8 @@ class Work < ApplicationRecord
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
 
+  after_update_commit -> { broadcast_replace_to self }
+
   enum access: {
     stanford: 'stanford',
     world: 'world'
