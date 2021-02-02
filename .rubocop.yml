@@ -139,6 +139,14 @@ Lint/UselessMethodDefinition: # (new in 0.90)
     - app/models/concerns/eventable.rb
 Lint/UselessTimes: # (new in 0.91)
   Enabled: true
+Lint/NumberedParameterAssignment: # (new in 1.9)
+  Enabled: true
+Lint/OrAssignmentToConstant: # (new in 1.9)
+  Enabled: true
+Lint/SymbolConversion: # (new in 1.9)
+  Enabled: true
+Lint/TripleQuotes: # (new in 1.9)
+  Enabled: true
 
 Performance/AncestorsInclude: # (new in 1.7)
   Enabled: true
@@ -278,4 +286,6 @@ Style/SoleNestedConditional: # (new in 0.89)
 Style/StringConcatenation: # (new in 0.89)
   Enabled: true
 Style/SwapValues: # (new in 1.1)
+  Enabled: true
+Style/IfWithBooleanLiteralBranches: # (new in 1.9)
   Enabled: true
