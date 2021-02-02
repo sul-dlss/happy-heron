@@ -24,7 +24,7 @@ module Dashboard
 
     sig { returns(T::Boolean) }
     def has_author?
-      work.contributors.any?
+      work.authors.any?
     end
 
     sig { returns(T::Boolean) }

@@ -22,6 +22,43 @@ CREATE TYPE public.work_access AS ENUM (
 SET default_tablespace = '';
 
 --
+-- Name: abstract_contributors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.abstract_contributors (
+    id bigint NOT NULL,
+    work_id bigint NOT NULL,
+    first_name character varying,
+    last_name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    contributor_type character varying NOT NULL,
+    role character varying NOT NULL,
+    full_name character varying,
+    type character varying
+);
+
+
+--
+-- Name: abstract_contributors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.abstract_contributors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: abstract_contributors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.abstract_contributors_id_seq OWNED BY public.abstract_contributors.id;
+
+
+--
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -209,43 +246,6 @@ CREATE SEQUENCE public.collections_id_seq
 --
 
 ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
-
-
---
--- Name: contributors; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.contributors (
-    id bigint NOT NULL,
-    work_id bigint NOT NULL,
-    first_name character varying,
-    last_name character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    contributor_type character varying NOT NULL,
-    role character varying NOT NULL,
-    full_name character varying,
-    type character varying
-);
-
-
---
--- Name: contributors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.contributors_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: contributors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.contributors_id_seq OWNED BY public.contributors.id;
 
 
 --
@@ -538,6 +538,13 @@ ALTER SEQUENCE public.works_id_seq OWNED BY public.works.id;
 
 
 --
+-- Name: abstract_contributors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.abstract_contributors ALTER COLUMN id SET DEFAULT nextval('public.abstract_contributors_id_seq'::regclass);
+
+
+--
 -- Name: active_storage_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -570,13 +577,6 @@ ALTER TABLE ONLY public.attached_files ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.collections ALTER COLUMN id SET DEFAULT nextval('public.collections_id_seq'::regclass);
-
-
---
--- Name: contributors id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.contributors ALTER COLUMN id SET DEFAULT nextval('public.contributors_id_seq'::regclass);
 
 
 --
@@ -629,6 +629,14 @@ ALTER TABLE ONLY public.works ALTER COLUMN id SET DEFAULT nextval('public.works_
 
 
 --
+-- Name: abstract_contributors abstract_contributors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.abstract_contributors
+    ADD CONSTRAINT abstract_contributors_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: active_storage_attachments active_storage_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -674,14 +682,6 @@ ALTER TABLE ONLY public.attached_files
 
 ALTER TABLE ONLY public.collections
     ADD CONSTRAINT collections_pkey PRIMARY KEY (id);
-
-
---
--- Name: contributors contributors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.contributors
-    ADD CONSTRAINT contributors_pkey PRIMARY KEY (id);
 
 
 --
@@ -749,6 +749,13 @@ ALTER TABLE ONLY public.works
 
 
 --
+-- Name: index_abstract_contributors_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_abstract_contributors_on_work_id ON public.abstract_contributors USING btree (work_id);
+
+
+--
 -- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -802,13 +809,6 @@ CREATE UNIQUE INDEX index_collections_on_druid ON public.collections USING btree
 --
 
 CREATE INDEX index_collections_on_state ON public.collections USING btree (state);
-
-
---
--- Name: index_contributors_on_work_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_contributors_on_work_id ON public.contributors USING btree (work_id);
 
 
 --
@@ -954,10 +954,10 @@ ALTER TABLE ONLY public.related_works
 
 
 --
--- Name: contributors fk_rails_736fa9cbfb; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: abstract_contributors fk_rails_736fa9cbfb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.contributors
+ALTER TABLE ONLY public.abstract_contributors
     ADD CONSTRAINT fk_rails_736fa9cbfb FOREIGN KEY (work_id) REFERENCES public.works(id);
 
 
@@ -1072,6 +1072,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210104185453'),
 ('20210114221943'),
 ('20210127133325'),
-('20210201155622');
+('20210201155622'),
+('20210202044303');
 
 

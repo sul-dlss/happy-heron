@@ -14,9 +14,14 @@ module Works
 
     delegate :purl, :collection, :version, :work_type,
              :contact_email, :abstract, :citation,
-             :depositor, :attached_files, :contributors,
+             :depositor, :attached_files,
              :related_works, :related_links, :events,
              to: :work
+
+    sig { returns(T::Array[AbstractContributor]) }
+    def contributors
+      work.authors + work.contributors
+    end
 
     # Displays the created date as edtf
     sig { returns(T.nilable(String)) }
