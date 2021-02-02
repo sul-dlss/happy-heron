@@ -71,15 +71,6 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def role?; end
 
-  sig { returns(T.nilable(String)) }
-  def type; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def type=(value); end
-
-  sig { returns(T::Boolean) }
-  def type?; end
-
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
 
