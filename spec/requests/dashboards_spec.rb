@@ -153,7 +153,7 @@ RSpec.describe 'Dashboard requests' do
     end
 
     it 'shows a link to deposit in the collection' do
-      get '/dashboard'
+      get collection_deposit_button_path(collection)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Deposit to this collection'
     end
@@ -170,19 +170,15 @@ RSpec.describe 'Dashboard requests' do
       sign_in user
     end
 
-    it 'shows a link to deposit in the collection' do
-      get '/dashboard'
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include 'Deposit to this collection'
-      expect(response.body).to include 'Edit'
-    end
-
     it 'shows statuses Pending Approval, Returned, First Draft' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Pending approval'
       expect(response.body).to include 'Draft - Not deposited'
       expect(response.body).to include 'Returned'
+
+      # and a link to edit
+      expect(response.body).to include 'Edit'
     end
   end
 end

@@ -15,6 +15,7 @@ class Collection < ApplicationRecord
   has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
 
   after_update_commit -> { broadcast_replace_to self }
+  after_update_commit -> { broadcast_replace_to :collection_summary, partial: 'dashboards/collection_summary' }
 
   sig { returns(T::Boolean) }
   def accessioned?

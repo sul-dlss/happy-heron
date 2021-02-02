@@ -13,7 +13,7 @@ module Dashboard
 
     attr_reader :collection
 
-    delegate :allowed_to?, :current_user, :user_with_groups, to: :helpers
+    delegate :current_user, :user_with_groups, to: :helpers
 
     sig { returns(ActiveRecord::Relation) }
     def visible_deposits
@@ -23,8 +23,7 @@ module Dashboard
       # displayable works and add another query to get the overall count, but
       # that would double the number of queries run for each instance of this
       # component.
-      scope = collection.works.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
-      policy.authorized_scope(scope, as: :edits)
+      collection.works.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
     end
 
     private
