@@ -3,7 +3,7 @@
 #
 # If you would like to make changes to this file, great! Please upstream any changes you make here:
 #
-#   https://github.com/sorbet/sorbet-typed/edit/master/lib/activerecord/~>6.0.0/activerecord.rbi
+#   https://github.com/sorbet/sorbet-typed/edit/master/lib/activerecord/~>6.1.0.rc1/activerecord.rbi
 #
 # typed: strong
 
@@ -11,7 +11,7 @@ class ActiveRecord::Migration::Compatibility::V5_1 < ActiveRecord::Migration::Co
 
 # 5.2 has a different definition for create_table because 6.0 adds a new option.
 # This is the only difference between 5.2 and 6.0.
-class ActiveRecord::Migration::Compatibility::V5_2 < ActiveRecord::Migration::Current
+class ActiveRecord::Migration::Compatibility::V5_2 < ActiveRecord::Migration::Compatibility::V6_0
   # https://github.com/rails/rails/blob/v5.2.3/activerecord/lib/active_record/connection_adapters/abstract/schema_statements.rb#L151-L290
   sig do
     params(
@@ -39,14 +39,16 @@ class ActiveRecord::Migration::Compatibility::V5_2 < ActiveRecord::Migration::Cu
   ); end
 end
 
-ActiveRecord::Migration::Compatibility::V6_0 = ActiveRecord::Migration::Current
+class ActiveRecord::Migration::Compatibility::V6_0 < ActiveRecord::Migration::Compatibility::V6_1; end
+
+ActiveRecord::Migration::Compatibility::V6_1 = ActiveRecord::Migration::Current
 
 # Method definitions are documented here:
-# https://api.rubyonrails.org/v6.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html
+# https://api.rubyonrails.org/v6.1/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html
 class ActiveRecord::Migration::Current < ActiveRecord::Migration
   # Tables
 
-  # https://github.com/rails/rails/blob/v6.0.0/activerecord/lib/active_record/connection_adapters/abstract/schema_statements.rb#L152-L292
+  # https://github.com/rails/rails/blob/v6.1.0.rc1/activerecord/lib/active_record/connection_adapters/abstract/schema_statements.rb#L154-L295
   sig do
     params(
       table_name: T.any(String, Symbol),
@@ -155,7 +157,8 @@ class ActiveRecord::Migration::Current < ActiveRecord::Migration
       null: T::Boolean,
       precision: Integer,
       scale: Integer,
-      comment: String
+      comment: String,
+      array: T::Boolean
     ).void
   end
   def add_column(
@@ -167,7 +170,8 @@ class ActiveRecord::Migration::Current < ActiveRecord::Migration
     null: nil,
     precision: nil,
     scale: nil,
-    comment: nil
+    comment: nil,
+    array: nil
   ); end
 
   sig do
@@ -487,4 +491,12 @@ module ActiveRecord::ConnectionHandling
   def connected_to?(role:); end
   def connects_to(database: T.unsafe(nil)); end
   def current_role; end
+end
+
+# In ActiveRecord >= 6.1, the parent classes of these errors have changed.
+# https://github.com/rails/rails/commit/730d810b0dd24e80c1e88d56a5e6960363a25dbb
+module ActiveRecord
+  class StatementTimeout < QueryAborted; end
+  class QueryCanceled < QueryAborted; end
+  class QueryAborted < StatementInvalid; end
 end

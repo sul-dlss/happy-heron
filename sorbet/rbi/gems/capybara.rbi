@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/capybara/all/capybara.rbi
 #
-# capybara-3.34.0
+# capybara-3.35.3
 
 module Capybara
   def self.HTML(html); end
@@ -781,6 +781,7 @@ class Capybara::Queries::SelectorQuery < Capybara::Queries::BaseQuery
   def matches_visibility_filters?(node); end
   def matching_text; end
   def name; end
+  def need_to_process_classes?; end
   def negative_failure_message; end
   def node_filters; end
   def normalize_ws; end
@@ -1458,6 +1459,7 @@ class Capybara::Selenium::FirefoxNode < Capybara::Selenium::Node
   def click(keys = nil, **options); end
   def disabled?; end
   def drop(*args); end
+  def focused?; end
   def hover; end
   def native_displayed?; end
   def perform_with_options(click_options); end
@@ -1592,6 +1594,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
   def selenium_4?; end
   def self.load_selenium; end
   def self.register_specialization(browser_name, specialization); end
+  def self.selenium_webdriver_version; end
   def self.specializations; end
   def send_keys(*args); end
   def setup_exit_handler; end

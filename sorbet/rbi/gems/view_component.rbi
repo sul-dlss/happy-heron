@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.24.0
+# view_component-2.25.0
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -102,6 +102,7 @@ class ViewComponent::Base < ActionView::Base
   def self.format; end
   def self.identifier; end
   def self.inherited(child); end
+  def self.initialize_parameter_names; end
   def self.initialize_parameters; end
   def self.preview_controller; end
   def self.preview_controller=(val); end
@@ -124,6 +125,7 @@ class ViewComponent::Base < ActionView::Base
   def self.test_controller=(val); end
   def self.type; end
   def self.validate_collection_parameter!(validate_default: nil); end
+  def self.validate_initialization_parameters!; end
   def self.virtual_path; end
   def self.virtual_path=(arg0); end
   def self.with_collection(collection, **args); end
