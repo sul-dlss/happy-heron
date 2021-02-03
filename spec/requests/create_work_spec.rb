@@ -188,9 +188,9 @@ RSpec.describe 'Create a new work' do
         let(:contact_emails) do
           {
             '0' =>
-            { '_destroy' => 'false', 'email': user.email },
+            { '_destroy' => 'false', email: user.email },
             '999' =>
-            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+            { '_destroy' => 'false', email: 'contact_email@example.com' }
           }
         end
 
@@ -540,9 +540,9 @@ RSpec.describe 'Create a new work' do
         let(:contact_emails) do
           {
             '0' =>
-            { '_destroy' => 'false', 'email': user.email },
+            { '_destroy' => 'false', email: user.email },
             '999' =>
-            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+            { '_destroy' => 'false', email: 'contact_email@example.com' }
           }
         end
 
@@ -577,7 +577,8 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection with delay release but a embargo is provided' do
         let(:collection) do
-          create(:collection, :deposited,  :with_contact_emails, depositors: [user], release_option: 'delay', release_date: release_date)
+          create(:collection, :deposited, :with_contact_emails, depositors: [user], release_option: 'delay',
+                                                                release_date: release_date)
         end
         let(:release_date) { Date.parse('2029-03-07') }
         let(:work_params) do
@@ -608,9 +609,9 @@ RSpec.describe 'Create a new work' do
         let(:contact_emails) do
           {
             '0' =>
-            { '_destroy' => 'false', 'email': user.email },
+            { '_destroy' => 'false', email: user.email },
             '999' =>
-            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+            { '_destroy' => 'false', email: 'contact_email@example.com' }
           }
         end
 
@@ -697,9 +698,9 @@ RSpec.describe 'Create a new work' do
         let(:contact_emails) do
           {
             '0' =>
-            { '_destroy' => 'false', 'email': user.email },
+            { '_destroy' => 'false', email: user.email },
             '999' =>
-            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+            { '_destroy' => 'false', email: 'contact_email@example.com' }
           }
         end
 

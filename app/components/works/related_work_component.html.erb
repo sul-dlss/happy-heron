@@ -1,7 +1,7 @@
 <fieldset class="mb-5">
   <legend class="h5">Related works (optional)</legend>
 
-  <div class="mb-3" data-controller="nested-form">
+  <div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".inner-container">
     <template data-nested-form-target='template'>
       <%= form.fields_for :related_works, RelatedWork.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
         <%= render Works::RelatedWorkRowComponent.new(form: contributor_form) %>

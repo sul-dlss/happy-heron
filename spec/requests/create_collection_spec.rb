@@ -106,9 +106,9 @@ RSpec.describe 'Create a collection' do
         let(:contact_emails) do
           {
             '0' =>
-            { '_destroy' => 'false', 'email': user.email },
+            { '_destroy' => 'false', email: user.email },
             '999' =>
-            { '_destroy' => 'false', 'email': 'contact_email@example.com' }
+            { '_destroy' => 'false', email: 'contact_email@example.com' }
           }
         end
 

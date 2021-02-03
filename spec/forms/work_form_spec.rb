@@ -89,9 +89,9 @@ RSpec.describe WorkForm do
   describe 'populator on contact email' do
     let(:emails) do
       [
-        { '_destroy': 'false', 'email': 'avalidemail@test.com' },
-        { '_destroy': 'false', 'email': 'anothervalid@test.com' },
-        { '_destroy': 'false', 'email': 'third@example.com' }
+        { _destroy: 'false', email: 'avalidemail@test.com' },
+        { _destroy: 'false', email: 'anothervalid@test.com' },
+        { _destroy: 'false', email: 'third@example.com' }
       ]
     end
 
@@ -102,22 +102,11 @@ RSpec.describe WorkForm do
   end
 
   describe 'email validation' do
-    let(:invalid_email) do
-      [
-        { '_destroy': 'false', 'email': 'notavalidemail' }
-      ]
-    end
     let(:valid_email) do
       [
-        { '_destroy': 'false', 'email': 'avalidemail@test.com' },
-        { '_destroy': 'false', 'email': 'anothervalid@test.com' }
+        { _destroy: 'false', email: 'avalidemail@test.com' },
+        { _destroy: 'false', email: 'anothervalid@test.com' }
       ]
-    end
-
-    it 'does not validate with an invalid contact email' do
-      form.validate(contact_emails: invalid_email)
-      expect(form).not_to be_valid
-      expect(form.errors.messages).to include({ "contact_emails.email": ['is invalid'] })
     end
 
     it 'validates with a correct contact email' do
