@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/jbuilder/all/jbuilder.rbi
 #
-# jbuilder-2.11.1
+# jbuilder-2.11.2
 
 class Jbuilder < ActiveSupport::ProxyObject
   def _blank?(value = nil); end
@@ -26,6 +26,7 @@ class Jbuilder < ActiveSupport::ProxyObject
   def attributes!; end
   def call(object, *attributes, &block); end
   def child!; end
+  def deep_format_keys!(value = nil); end
   def extract!(object, *attributes); end
   def ignore_nil!(value = nil); end
   def initialize(options = nil); end
@@ -34,6 +35,7 @@ class Jbuilder < ActiveSupport::ProxyObject
   def method_missing(*args, &block); end
   def nil!; end
   def null!; end
+  def self.deep_format_keys(value = nil); end
   def self.encode(*args, &block); end
   def self.ignore_nil(value = nil); end
   def self.key_format(*args); end

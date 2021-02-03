@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/turbo-rails/all/turbo-rails.rbi
 #
-# turbo-rails-0.5.7
+# turbo-rails-0.5.9
 
 module Turbo
   def self.railtie_helpers_paths; end
@@ -92,7 +92,7 @@ module Turbo::StreamsHelper
   def turbo_stream_from(*streamables); end
 end
 module Turbo::Streams::ActionHelper
-  def convert_to_turbo_stream_dom_id(element_or_dom_id); end
+  def convert_to_turbo_stream_dom_id(target); end
   def turbo_stream_action_tag(action, target:, template: nil); end
 end
 module Turbo::Streams::Broadcasts

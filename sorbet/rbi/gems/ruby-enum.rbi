@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/ruby-enum/all/ruby-enum.rbi
 #
-# ruby-enum-0.8.0
+# ruby-enum-0.9.0
 
 module Ruby
 end
@@ -19,7 +19,7 @@ module Ruby::Enum
 end
 module Ruby::Enum::ClassMethods
   def const_missing(key); end
-  def define(key, value); end
+  def define(key, value = nil); end
   def each(&block); end
   def each_key(&_block); end
   def each_value(&_block); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/cocina-models/all/cocina-models.rbi
 #
-# cocina-models-0.45.0
+# cocina-models-0.46.0
 
 module Cocina
 end
