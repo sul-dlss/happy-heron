@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :works, shallow: true do
       member do
         get :delete_button
+        get :edit_button
       end
 
       resource :review, only: :create
