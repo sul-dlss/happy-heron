@@ -1,7 +1,0 @@
-<%= link_to collection_path(collection), method: :delete, aria: { label: "Delete #{collection.name}" }, data: { confirm: "Are you sure you want to delete this draft collection? It cannot be undone." } do %>
-  <% if icon? %>
-    <span class="far fa-trash-alt"></span>
-  <% else %>
-    <span class="btn btn-primary"><span class="far fa-trash-alt"></span> Discard draft</span>
-  <% end %>
-<% end %>

@@ -3,5 +3,5 @@
   <span class="state">Depositing <%= spinner %></span>
 <% else %>
   <%= render Collections::EditLinkComponent.new(collection: collection, anchor: '', label: "Edit #{name}") %>
-  <%= render Collections::DeleteComponent.new(collection: collection) %>
+  <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if first_draft?%>
 <% end %>

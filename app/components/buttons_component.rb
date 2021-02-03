@@ -18,11 +18,13 @@ class ButtonsComponent < ApplicationComponent
   def delete_button
     return unless object.model.persisted?
 
-    if model_type == 'Work'
-      helpers.turbo_frame_tag dom_id(object.model, :delete), src: delete_button_work_path(object.model, style: :button)
-    else
-      render Collections::DeleteComponent.new(collection: object.model, style: :button)
-    end
+    path = if model_type == 'Work'
+             delete_button_work_path(object.model, style: :button)
+           else
+             delete_button_collection_path(object.model, style: :button)
+           end
+
+    helpers.turbo_frame_tag dom_id(object.model, :delete), src: path
   end
 
   sig { returns(T.nilable(String)) }

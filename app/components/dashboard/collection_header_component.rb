@@ -11,7 +11,7 @@ module Dashboard
 
     attr_reader :collection
 
-    delegate :depositing?, to: :collection
+    delegate :depositing?, :first_draft?, to: :collection
 
     sig { returns(String) }
     def name

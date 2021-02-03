@@ -24,6 +24,7 @@ Lint/MissingSuper: # (new in 0.89)
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+    - config/routes.rb
   IgnoredMethods:
     - state_machine
 
