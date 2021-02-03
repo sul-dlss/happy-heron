@@ -6,7 +6,6 @@ class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
   verify_authorized except: %i[deposit_button delete_button]
-  include ActionView::RecordIdentifier
 
   def new
     collection = Collection.new(creator: current_user)
@@ -66,18 +65,14 @@ class CollectionsController < ObjectsController
   # The access can vary depending on the user and the state of the collection.
   def deposit_button
     collection = Collection.find(params[:id])
-    render turbo_stream: turbo_stream.replace(dom_id(collection, :deposit),
-                                              partial: 'collections/deposit_button',
-                                              locals: { collection: collection })
+    render partial: 'collections/deposit_button', locals: { collection: collection }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.
   def delete_button
     collection = Collection.find(params[:id])
-    render turbo_stream: turbo_stream.replace(dom_id(collection, :delete),
-                                              partial: 'collections/delete_button',
-                                              locals: { collection: collection })
+    render partial: 'collections/delete_button', locals: { collection: collection }
   end
 
   private
