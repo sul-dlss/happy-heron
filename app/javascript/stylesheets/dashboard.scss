@@ -28,9 +28,17 @@
     padding: 0.375rem 0.375rem;
   }
 
+  .work-type-box {
+    @extend .col-md-3;
+    @extend .mb-5;
+
+    height: 2rem;
+  }
+
   .work-type-button-text {
     display: inline-block;
     max-width: 60%;
+    padding-left: 1rem;
     vertical-align: middle;
   }
 
