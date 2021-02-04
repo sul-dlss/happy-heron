@@ -38,7 +38,7 @@ RSpec.describe Works::DatesComponent do
     end
   end
 
-  context 'with a populated form with a single craeation_date' do
+  context 'with a populated form with a single creation_date' do
     let(:work) { build(:work, :with_creation_date) }
 
     it 'renders the component' do
@@ -48,6 +48,28 @@ RSpec.describe Works::DatesComponent do
       expect(rendered.css('#work_created_year').first['value']).to eq '2020'
       expect(rendered.css('#work_created_month option[@selected="selected"]').first['value']).to eq '3'
       expect(rendered.css('#work_created_day option[@selected="selected"]').first['value']).to eq '8'
+    end
+  end
+
+  context 'with a populated form containing only year for single creation_date' do
+    let(:year_only_creation_date) { EDTF.parse('2020') }
+    let(:work) { build(:work, created_edtf: year_only_creation_date) }
+
+    it 'renders the component without month or day selected' do
+      expect(rendered.css('#work_created_year').first['value']).to eq '2020'
+      expect(rendered.css('#work_created_month option[@selected="selected"]')).to match_array([])
+      expect(rendered.css('#work_created_day option[@selected="selected"]')).to match_array([])
+    end
+  end
+
+  context 'with a populated form containing year and month for single creation_date' do
+    let(:year_month_creation_date) { EDTF.parse('2020-05') }
+    let(:work) { build(:work, created_edtf: year_month_creation_date) }
+
+    it 'renders the component without day selected' do
+      expect(rendered.css('#work_created_year').first['value']).to eq '2020'
+      expect(rendered.css('#work_created_month option[@selected="selected"]').first['value']).to eq '5'
+      expect(rendered.css('#work_created_day option[@selected="selected"]')).to match_array([])
     end
   end
 end

@@ -86,15 +86,17 @@ module Works
     sig { params(created_date: T.nilable(Date)).returns(T.nilable(Integer)) }
     def resolve_day(created_date)
       return unless created_date
-      created_date&.day if created_date.precision == :day
+
+      created_date.day if created_date.precision == :day
     end
 
     sig { params(created_date: T.nilable(Date)).returns(T.nilable(Integer)) }
     def resolve_month(created_date)
       return unless created_date
+
       case created_date.precision
       when :month, :day
-        created_date&.month
+        created_date.month
       end
     end
   end
