@@ -1,9 +1,5 @@
 <script>
-  document.subtypes = {
-    <% WorkType.all.each do |type| %>
-      "<%= type.id %>": <%= type.subtypes.to_json.html_safe %>,
-    <% end %>
-  }
+  document.subtypes = <%= WorkType.to_json.html_safe %>
 </script>
 
 <div class="modal-header">

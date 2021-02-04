@@ -8,102 +8,40 @@ class WorkType
   class InvalidType < StandardError; end
 
   DATA_TYPES = [
-    '3D model',
-    'Audio',
-    'Database',
-    'GIS',
-    'Image',
-    'Questionnaire',
-    'Remote sensing imagery',
-    'Software/code',
-    'Statistical model',
-    'Tabular data',
-    'Text corpus',
-    'Text documentation',
-    'Video'
+    '3D model', 'Audio', 'Database', 'GIS', 'Image', 'Questionnaire',
+    'Remote sensing imagery', 'Software/code', 'Statistical model',
+    'Tabular data', 'Text corpus', 'Text documentation', 'Video'
   ].freeze
 
   VIDEO_TYPES = [
-    'Animation',
-    'Broadcast',
-    'Conference session',
-    'Course/instruction',
-    'Documentary',
-    'Ethnography',
-    'Event',
-    'Experimental',
-    'Field recordings',
-    'Narrative film',
-    'Oral history',
-    'Performance',
-    'Presentation',
-    'Unedited footage',
-    'Video art'
+    'Animation', 'Broadcast', 'Conference session', 'Course/instruction',
+    'Documentary', 'Ethnography', 'Event', 'Experimental', 'Field recordings',
+    'Narrative film', 'Oral history', 'Performance', 'Presentation',
+    'Unedited footage', 'Video art'
   ].freeze
 
   MIXED_TYPES = [
-    'Data',
-    'Image',
-    'Software/Code',
-    'Sound',
-    'Text',
-    'Video'
+    'Data', 'Image', 'Software/Code', 'Sound', 'Text', 'Video'
   ].freeze
 
   SOUND_TYPES = [
-    'Course/instruction',
-    'Documentary',
-    'Dramatic performance',
-    'Ethnography',
-    'Field recordings',
-    'Interview',
-    'MIDI',
-    'Musical notation',
-    'Musical performance',
-    'Oral history',
-    'Other spoken word',
-    'Podcast',
-    'Poetry reading',
-    'Speech',
-    'Story',
-    'Transcript',
-    'Unedited recording'
+    'Course/instruction', 'Documentary', 'Dramatic performance', 'Ethnography',
+    'Field recordings', 'Interview', 'MIDI', 'Musical notation',
+    'Musical performance', 'Oral history', 'Other spoken word', 'Podcast',
+    'Poetry reading', 'Speech', 'Story', 'Transcript', 'Unedited recording'
   ].freeze
 
   TEXT_TYPES = [
-    'Article',
-    'Book',
-    'Book chapter',
-    'Correspondence',
-    'Essay',
-    'Government document',
-    'Journal/periodical',
-    'Manuscript',
-    'Poster',
-    'Presentation slides',
-    'Report',
-    'Speech',
-    'Syllabus',
-    'Teaching materials',
-    'Technical report',
-    'Thesis',
-    'Transcription',
-    'White paper',
-    'Working paper'
+    'Article', 'Book', 'Book chapter', 'Correspondence', 'Essay',
+    'Government document', 'Journal/periodical', 'Manuscript', 'Poster',
+    'Presentation slides', 'Report', 'Speech', 'Syllabus', 'Teaching materials',
+    'Technical report', 'Thesis', 'Transcription', 'White paper', 'Working paper'
   ].freeze
 
-  SOFTWARE_TYPES = %w[
-    Code
-    Documentation
-    Game
-  ].freeze
+  SOFTWARE_TYPES = %w[Code Documentation Game].freeze
 
   IMAGE_TYPES = [
-    'CAD',
-    'Map',
-    'Photograph',
-    'Poster',
-    'Presentation slides'
+    'CAD', 'Map', 'Photograph', 'Poster', 'Presentation slides'
   ].freeze
 
   sig { returns(String) }
@@ -168,5 +106,15 @@ class WorkType
   sig { params(id: T.nilable(String)).returns(T::Array[String]) }
   def self.subtypes_for(id)
     find(id).subtypes
+  end
+
+  sig { returns(T::Hash[String, T::Array[String]]) }
+  def self.to_h
+    all.map { |type| [type.id, type.subtypes] }.to_h
+  end
+
+  sig { returns(String) }
+  def self.to_json
+    to_h.to_json
   end
 end
