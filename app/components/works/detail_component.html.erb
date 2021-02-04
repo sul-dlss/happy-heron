@@ -105,8 +105,16 @@
       <td><%= title %></td>
     </tr>
     <tr>
-      <th scope="row">Contact</th>
-      <td><%= contact_email %></td>
+      <th>Contact emails</th>
+      <% if contact_emails.empty? %>
+      <td>None provided</td>
+      <% else %>
+      <td>
+        <% contact_emails.each do |email| %>
+         <%= email.email %>
+        <% end %>
+      </td>
+      <% end %>
     </tr>
     </tbody>
   </table>

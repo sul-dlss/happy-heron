@@ -210,7 +210,6 @@ CREATE TABLE public.collections (
     id bigint NOT NULL,
     name character varying NOT NULL,
     description character varying,
-    contact_email character varying,
     release_option character varying,
     release_duration character varying,
     release_date date,
@@ -246,6 +245,39 @@ CREATE SEQUENCE public.collections_id_seq
 --
 
 ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
+
+
+--
+-- Name: contact_emails; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_emails (
+    id bigint NOT NULL,
+    email character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    emailable_type character varying,
+    emailable_id bigint
+);
+
+
+--
+-- Name: contact_emails_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.contact_emails_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contact_emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.contact_emails_id_seq OWNED BY public.contact_emails.id;
 
 
 --
@@ -500,7 +532,6 @@ CREATE TABLE public.works (
     version integer DEFAULT 0,
     title character varying NOT NULL,
     work_type character varying NOT NULL,
-    contact_email character varying NOT NULL,
     created_edtf character varying,
     abstract text NOT NULL,
     citation character varying,
@@ -577,6 +608,13 @@ ALTER TABLE ONLY public.attached_files ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.collections ALTER COLUMN id SET DEFAULT nextval('public.collections_id_seq'::regclass);
+
+
+--
+-- Name: contact_emails id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_emails ALTER COLUMN id SET DEFAULT nextval('public.contact_emails_id_seq'::regclass);
 
 
 --
@@ -682,6 +720,14 @@ ALTER TABLE ONLY public.attached_files
 
 ALTER TABLE ONLY public.collections
     ADD CONSTRAINT collections_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_emails contact_emails_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_emails
+    ADD CONSTRAINT contact_emails_pkey PRIMARY KEY (id);
 
 
 --
@@ -809,6 +855,13 @@ CREATE UNIQUE INDEX index_collections_on_druid ON public.collections USING btree
 --
 
 CREATE INDEX index_collections_on_state ON public.collections USING btree (state);
+
+
+--
+-- Name: index_contact_emails_on_emailable_type_and_emailable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contact_emails_on_emailable_type_and_emailable_id ON public.contact_emails USING btree (emailable_type, emailable_id);
 
 
 --
@@ -1070,6 +1123,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201214213408'),
 ('20210104185452'),
 ('20210104185453'),
+('20210113173329'),
 ('20210114221943'),
 ('20210127133325'),
 ('20210201155622'),

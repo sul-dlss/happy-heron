@@ -8,7 +8,6 @@ FactoryBot.define do
     end
     work_type { 'text' }
     subtype { ['Article', 'Presentation slides'] } # Subtype values intentionally include an item with whitespace
-    contact_email { 'io@io.io' }
     abstract { 'test abstract' }
     citation { 'test citation' }
     license { 'CC0-1.0' }
@@ -38,6 +37,7 @@ FactoryBot.define do
     with_keywords
     with_authors
     with_attached_file
+    with_contact_emails
   end
 
   trait :with_creation_date_range do
@@ -62,6 +62,14 @@ FactoryBot.define do
     end
 
     authors { Array.new(author_count) { association(:person_author) } }
+  end
+
+  trait :with_contact_emails do
+    transient do
+      contact_emails_count { 1 }
+    end
+
+    contact_emails { Array.new(contact_emails_count) { association(:contact_email) } }
   end
 
   trait :with_related_links do

@@ -7,11 +7,11 @@ RSpec.describe Collections::DetailComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
   context 'when a first draft' do
-    let(:collection) { build_stubbed(:collection) }
+    let(:collection) { build_stubbed(:collection, :with_contact_emails) }
 
     it 'renders the detail component' do
       expect(rendered.css('table').to_html).to include('MyString').twice
-      expect(rendered.css('table').to_html).to include('email@example.com').once
+      expect(rendered.css('table').to_html).to include('io@io.io').once
     end
   end
 end

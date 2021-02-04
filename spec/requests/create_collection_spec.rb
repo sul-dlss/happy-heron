@@ -102,11 +102,20 @@ RSpec.describe 'Create a collection' do
             { '_destroy' => 'false', 'link_title' => 'link 3', 'url' => 'https://example.com' }
           }
         end
+
+        let(:contact_emails) do
+          {
+            '0' =>
+            { '_destroy' => 'false', email: user.email },
+            '999' =>
+            { '_destroy' => 'false', email: 'contact_email@example.com' }
+          }
+        end
+
         let(:collection_params) do
           {
             name: 'My Test Collection',
             description: 'This is a very good collection.',
-            contact_email: user.email,
             access: 'world',
             manager_sunets: user.sunetid,
             depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
@@ -119,6 +128,7 @@ RSpec.describe 'Create a collection' do
             'release_date(2i)' => '7',
             'release_date(3i)' => '14',
             'release_duration' => '1 year',
+            contact_emails_attributes: contact_emails,
             related_links_attributes: related_links
           }
         end
@@ -134,6 +144,8 @@ RSpec.describe 'Create a collection' do
           expect(collection.managers).to eq [user]
           expect(collection.email_when_participants_changed).to eq true
           expect(collection.email_depositors_status_changed).to eq true
+          expect(collection.contact_emails.size).to eq 2
+          expect(collection.contact_emails).to all(be_kind_of(ContactEmail))
           expect(collection.related_links.size).to eq 2
           expect(collection.related_links).to all(be_kind_of(RelatedLink))
           expect(collection.release_option).to eq 'delay'

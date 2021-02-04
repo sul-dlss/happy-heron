@@ -13,7 +13,7 @@ RSpec.describe 'Updating an existing collection' do
 
   context 'with an authenticated collection manager' do
     let(:user) { create(:user) }
-    let(:collection) { create(:collection, managers: [user]) }
+    let(:collection) { create(:collection, :with_contact_emails, managers: [user]) }
 
     before do
       sign_in user
@@ -32,7 +32,6 @@ RSpec.describe 'Updating an existing collection' do
           {
             name: 'My Test Collection',
             description: 'This is a very good collection.',
-            contact_email: user.email,
             access: 'world',
             required_license: 'CC0-1.0',
             manager_sunets: user.sunetid,
@@ -58,13 +57,12 @@ RSpec.describe 'Updating an existing collection' do
         end
 
         context 'when the review workflow is set to disabled' do
-          let(:collection) { create(:collection, :with_reviewers, managers: [user]) }
+          let(:collection) { create(:collection, :with_reviewers, :with_contact_emails, managers: [user]) }
 
           let(:collection_params) do
             {
               name: 'My Test Collection',
               description: 'This is a very good collection.',
-              contact_email: user.email,
               access: 'world',
               required_license: 'CC0-1.0',
               manager_sunets: user.sunetid,

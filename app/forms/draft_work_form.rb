@@ -11,7 +11,6 @@ class DraftWorkForm < Reform::Form
   property :work_type
   property :subtype
   property :title
-  property :contact_email
   property :abstract
   property :citation
   property :default_citation, virtual: true, default: true
@@ -99,6 +98,13 @@ class DraftWorkForm < Reform::Form
     # ArgumentError: Could not find or build blob
     # So we set it manually when creating.
     property :file, virtual: true
+    property :_destroy, virtual: true
+  end
+
+  collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
+                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? } do
+    property :id
+    property :email
     property :_destroy, virtual: true
   end
 

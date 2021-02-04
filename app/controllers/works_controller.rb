@@ -106,7 +106,7 @@ class WorksController < ObjectsController
   # rubocop:disable Metrics/MethodLength
   def work_params
     top_level = T.cast(params.require(:work), ActionController::Parameters)
-    top_level.permit(:title, :work_type, :contact_email,
+    top_level.permit(:title, :work_type,
                      'published(1i)', 'published(2i)', 'published(3i)',
                      :created_type,
                      'created(1i)', 'created(2i)', 'created(3i)',
@@ -119,6 +119,7 @@ class WorksController < ObjectsController
                                       attached_files_attributes: %i[_destroy id label hide file],
                                       authors_attributes: %i[_destroy id full_name first_name last_name role_term],
                                       contributors_attributes: %i[_destroy id full_name first_name last_name role_term],
+                                      contact_emails_attributes: %i[_destroy id email],
                                       keywords_attributes: %i[_destroy id label uri],
                                       related_works_attributes: %i[_destroy id citation],
                                       related_links_attributes: %i[_destroy id link_title url])

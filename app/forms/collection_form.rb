@@ -6,6 +6,6 @@ class CollectionForm < DraftCollectionForm
   extend T::Sig
 
   validates :name, :description, :manager_sunets, :access, presence: true
-  validates :contact_email, presence: true, format: { with: Devise.email_regexp }
+  validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates_with CollectionLicenseValidator
 end

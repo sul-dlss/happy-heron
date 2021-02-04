@@ -32,13 +32,7 @@
       </div>
     </div>
 
-    <div class="mb-3 row">
-      <%= form.label :contact_email, 'Contact email', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10 col-xl-8">
-        <%= form.email_field :contact_email, class: "form-control", required: true, pattern: Devise.email_regexp.source %>
-        <div class="invalid-feedback">You must provide a valid email address</div>
-      </div>
-    </div>
+    <%= render Works::ContactEmailComponent.new(form: form) %>
   </section>
 
   <section id="links">

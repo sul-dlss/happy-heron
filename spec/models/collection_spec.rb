@@ -10,11 +10,6 @@ RSpec.describe Collection do
     expect(collection.works).to all(be_a(Work))
   end
 
-  it 'has a valid contact email' do
-    collection.contact_email = 'notavalidemail'
-    expect { collection.save! }.to raise_error(ActiveRecord::RecordInvalid, /Contact email is invalid/)
-  end
-
   describe '#purl' do
     context 'with a druid' do
       it 'constructs purl' do

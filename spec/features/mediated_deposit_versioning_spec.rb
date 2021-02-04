@@ -10,9 +10,11 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
   let(:newest_work_title) { 'Indigo is preferred' }
   let(:user) { create(:user) }
   # Work (and collection) needs to exist before user hits dashboard
+  let(:contact_email) { build(:contact_email) }
   let!(:work) do
     create(:valid_deposited_work,
            depositor: user,
+           contact_emails: [contact_email],
            collection: collection)
   end
 
@@ -23,6 +25,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       find("a[aria-label='Edit #{work.title}']").click
       fill_in 'Title of deposit', with: new_work_title
       check 'I agree to the SDR Terms of Deposit'
+
       click_button 'Submit for approval'
 
       expect(page).to have_content(new_work_title)

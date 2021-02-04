@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::DepositProgressComponent, type: :component do
   let(:component) { described_class.new(work: work) }
-  let(:work) { build_stubbed(:work, collection: build(:collection, id: 7)) }
+  let(:work) { build_stubbed(:work, collection: build(:collection, :with_contact_emails, id: 7)) }
   let(:rendered) { render_inline(component) }
 
   context 'when work is new' do
@@ -17,7 +17,7 @@ RSpec.describe Dashboard::DepositProgressComponent, type: :component do
   end
 
   context 'when work has a title' do
-    let(:work) { build_stubbed(:work) }
+    let(:work) { build_stubbed(:work, :with_contact_emails) }
 
     it 'marks some steps as active' do
       expect(rendered.css('li.active').size).to eq 3

@@ -8,7 +8,7 @@ class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true
   validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
   validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' }
-  validates :contact_email, presence: true, format: { with: Devise.email_regexp }
+  validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true

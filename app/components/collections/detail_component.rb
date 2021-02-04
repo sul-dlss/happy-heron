@@ -12,6 +12,6 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :name, :description, :contact_email, to: :collection
+    delegate :name, :description, :contact_emails, to: :collection
   end
 end
