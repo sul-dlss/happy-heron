@@ -16,18 +16,12 @@ module Dashboard
       Dashboard::CollectionHeaderComponent.new(collection: work.collection).name
     end
 
-    def edit_work_link
-      link_to edit_work_path(work), aria: { label: "Edit #{title}" } do
-        tag.span class: 'fas fa-pencil-alt'
-      end
-    end
-
     def title
       @title ||= Works::DetailComponent.new(work: work).title
     end
 
     def work_link
-      link_to truncate(title, length: 100, separator: ' '), edit_work_path(work), title: title
+      link_to truncate(title, length: 100, separator: ' '), work_path(work), title: title
     end
 
     def show_collection_link

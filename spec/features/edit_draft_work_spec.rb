@@ -20,7 +20,7 @@ RSpec.describe 'Edit a draft work', js: true do
       visit dashboard_path
 
       within('#deposits-in-progress') do
-        click_link work.title
+        click_link "Edit #{work.title}"
       end
 
       expect(page).to have_content work.title
@@ -63,7 +63,7 @@ RSpec.describe 'Edit a draft work', js: true do
     visit dashboard_path
 
     within('#deposits-in-progress') do
-      click_link work.title
+      click_link "Edit #{work.title}"
     end
 
     accept_confirm do
@@ -77,7 +77,7 @@ RSpec.describe 'Edit a draft work', js: true do
     visit dashboard_path
 
     within('#deposits-in-progress') do
-      click_link work.title
+      click_link "Edit #{work.title}"
     end
 
     dismiss_confirm do
@@ -99,7 +99,7 @@ RSpec.describe 'Edit a draft work', js: true do
       visit dashboard_path
 
       within('#deposits-in-progress') do
-        click_link work.title
+        click_link "Edit #{work.title}"
       end
 
       expect(page).to have_content work.title

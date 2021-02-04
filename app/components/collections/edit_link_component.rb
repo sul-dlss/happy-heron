@@ -11,6 +11,11 @@ module Collections
       @label = label
     end
 
+    sig { returns(T::Boolean) }
+    def render?
+      collection.can_update_metadata?
+    end
+
     attr_reader :collection, :anchor, :label
   end
 end
