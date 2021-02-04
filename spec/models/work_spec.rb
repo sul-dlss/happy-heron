@@ -289,6 +289,15 @@ RSpec.describe Work do
             .with(work, state: 'Draft - Not deposited')
         end
       end
+
+      context 'when the state is pending_approval' do
+        let(:work) { create(:work, :pending_approval) }
+
+        it 'does not transition the state' do
+          work.update_metadata!
+          expect(work.state).to eq 'pending_approval'
+        end
+      end
     end
 
     describe 'a deposit_complete event' do

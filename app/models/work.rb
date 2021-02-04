@@ -57,6 +57,7 @@ class Work < ApplicationRecord
 
     event :submit_for_review do
       transition %i[first_draft version_draft rejected] => :pending_approval
+      transition pending_approval: same
     end
 
     event :reject do
@@ -67,7 +68,7 @@ class Work < ApplicationRecord
       transition deposited: :version_draft
       transition new: :first_draft
 
-      transition %i[first_draft version_draft rejected] => same
+      transition %i[first_draft version_draft pending_approval rejected] => same
     end
   end
 
