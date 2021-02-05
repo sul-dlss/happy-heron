@@ -17,11 +17,11 @@ module Works
     end
 
     def created_month
-      created_edtf&.month
+      resolve_month(created_edtf)
     end
 
     def created_day
-      created_edtf&.day
+      resolve_day(created_edtf)
     end
 
     delegate :published_edtf, to: :reform
@@ -31,11 +31,11 @@ module Works
     end
 
     def created_range_start_month
-      created_range_start&.month
+      resolve_month(created_range_start)
     end
 
     def created_range_start_day
-      created_range_start&.day
+      resolve_day(created_range_start)
     end
 
     def created_range_end_year
@@ -43,11 +43,11 @@ module Works
     end
 
     def created_range_end_month
-      created_range_end&.month
+      resolve_month(created_range_end)
     end
 
     def created_range_end_day
-      created_range_end&.day
+      resolve_day(created_range_end)
     end
 
     sig { returns(T.nilable(Date)) }
@@ -79,6 +79,25 @@ module Works
     sig { returns(DraftWorkForm) }
     def reform
       form.object
+    end
+
+    private
+
+    sig { params(created_date: T.nilable(Date)).returns(T.nilable(Integer)) }
+    def resolve_day(created_date)
+      return unless created_date
+
+      created_date.day if created_date.precision == :day
+    end
+
+    sig { params(created_date: T.nilable(Date)).returns(T.nilable(Integer)) }
+    def resolve_month(created_date)
+      return unless created_date
+
+      case created_date.precision
+      when :month, :day
+        created_date.month
+      end
     end
   end
 end

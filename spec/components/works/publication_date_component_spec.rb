@@ -21,4 +21,26 @@ RSpec.describe Works::PublicationDateComponent, type: :component do
       expect(rendered.css('#work_published_day.is-invalid')).to be_present
     end
   end
+
+  context 'with a populated form containing only year for publication_date' do
+    let(:year_only_pub_date) { EDTF.parse('2020') }
+    let(:work) { build(:work, published_edtf: year_only_pub_date) }
+
+    it 'renders the component without month or day selected' do
+      expect(rendered.css('#work_published_year').first['value']).to eq '2020'
+      expect(rendered.css('#work_published_month option[@selected="selected"]')).to be_empty
+      expect(rendered.css('#work_published_day option[@selected="selected"]')).to be_empty
+    end
+  end
+
+  context 'with a populated form containing year and month for publication_date' do
+    let(:year_month_pub_date) { EDTF.parse('2020-05') }
+    let(:work) { build(:work, published_edtf: year_month_pub_date) }
+
+    it 'renders the component without day selected' do
+      expect(rendered.css('#work_published_year').first['value']).to eq '2020'
+      expect(rendered.css('#work_published_month option[@selected="selected"]').first['value']).to eq '5'
+      expect(rendered.css('#work_published_day option[@selected="selected"]')).to be_empty
+    end
+  end
 end

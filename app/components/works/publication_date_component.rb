@@ -35,11 +35,18 @@ module Works
     end
 
     def published_month
-      published_edtf&.month
+      return unless published_edtf
+
+      case published_edtf.precision
+      when :month, :day
+        published_edtf.month
+      end
     end
 
     def published_day
-      published_edtf&.day
+      return unless published_edtf
+
+      published_edtf.day if published_edtf.precision == :day
     end
 
     def year_field
