@@ -77,10 +77,10 @@ RSpec.describe TypesGenerator do
       end
     end
 
-    context 'with a work lacking subtypes' do
+    context 'with a work of type Text lacking subtypes' do
       let(:work) { build(:work, work_type: 'text', subtype: []) }
 
-      it 'generates a single structured value' do
+      it 'generates a single structured value, a single resource type and no genre' do
         expect(generated).to eq(
           [
             Cocina::Models::DescriptiveValue.new(
@@ -92,6 +92,43 @@ RSpec.describe TypesGenerator do
                   value: 'Text'
                 )
               ]
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'text',
+              source: { value: 'MODS resource types' }
+            )
+          ]
+        )
+      end
+    end
+
+    context 'with a work of type Sound lacking subtypes' do
+      let(:work) { build(:work, work_type: 'sound', subtype: []) }
+
+      it 'generates a single structured value, a single resource type, and a single genre' do
+        expect(generated).to eq(
+          [
+            Cocina::Models::DescriptiveValue.new(
+              source: { value: 'Stanford self-deposit resource types' },
+              type: 'resource type',
+              structuredValue: [
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'type',
+                  value: 'Sound'
+                )
+              ]
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'genre',
+              value: 'Sound recordings',
+              uri: 'http://id.loc.gov/authorities/genreForms/gf2011026594',
+              source: { code: 'lcgft' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'sound recording',
+              source: { value: 'MODS resource types' }
             )
           ]
         )

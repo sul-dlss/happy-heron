@@ -17,15 +17,6 @@ module Collection::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def access?; end
 
-  sig { returns(T.nilable(String)) }
-  def contact_email; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def contact_email=(value); end
-
-  sig { returns(T::Boolean) }
-  def contact_email?; end
-
   sig { returns(ActiveSupport::TimeWithZone) }
   def created_at; end
 
@@ -181,6 +172,15 @@ module Collection::GeneratedAttributeMethods
 end
 
 module Collection::GeneratedAssociationMethods
+  sig { returns(::ContactEmail::ActiveRecord_Associations_CollectionProxy) }
+  def contact_emails; end
+
+  sig { returns(T::Array[Integer]) }
+  def contact_email_ids; end
+
+  sig { params(value: T::Enumerable[::ContactEmail]).void }
+  def contact_emails=(value); end
+
   sig { returns(::User) }
   def creator; end
 
