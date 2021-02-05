@@ -40,6 +40,17 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
       # getting the PURL to show up requires a page refresh
       visit dashboard_path
       expect(page).to have_content "https://purl.stanford.edu/#{bare_druid}"
+
+      click_link "Choose Type and Edit #{title}"
+      find('label', text: 'Music').click
+      check 'Sound'
+      check 'Image'
+      click_button 'Continue'
+
+      expect(work_version.reload.work_type).to eq 'music'
+      expect(work_version.subtype.sort).to eq %w[Image Sound]
+      # TODO: the redirect to edit page behavior being tested here works IRL in FF, but test gets bounced to /dashboard
+      # expect(page.current_path).to eq "/works/#{work_version.work.id}/edit"
     end
   end
 

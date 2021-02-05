@@ -10,7 +10,17 @@ export default class extends Controller {
   // Sets the form in the popup to use the action in the data-destination attribute
   set_collection(event) {
     event.preventDefault()
-    this.formTarget.action = event.target.dataset.destination
+    // Use currentTarget (instead of target) because it gets the element with the Stimulus data attributes. Useful
+    // when the data attributes and Stimulus action are defined on an element that wraps other elements. E.g. when an
+    // a tag wraps a span tag with an icon (with the Stimulus data on the a tag), if the user clicks the linked span
+    // icon, target is the span and currentTarget is the anchor.
+    this.formTarget.action = event.currentTarget.dataset.destination
+    if (event.currentTarget.dataset.formMethod) {
+      this.formTarget.method = event.currentTarget.dataset.formMethod
+    } else {
+      // reset to default in case prior caller popped used model with non-default
+      this.formTarget.method = 'get'
+    }
   }
 
   change(event) {

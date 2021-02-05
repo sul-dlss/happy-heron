@@ -96,4 +96,13 @@ FactoryBot.define do
 
     related_works { Array.new(related_works_count) { association(:related_work) } }
   end
+
+  trait :purl_reserved do
+    work_type { WorkType.purl_reservation_type.id }
+    subtype { [] }
+    abstract { '' }
+    citation { nil }
+    license { 'none' }
+    state { 'purl_reserved' }
+  end
 end

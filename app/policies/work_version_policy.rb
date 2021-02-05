@@ -3,7 +3,7 @@
 
 # Authorization policy for Work objects
 class WorkVersionPolicy < ApplicationPolicy
-  alias_rule :edit?, to: :update?
+  alias_rule :edit?, :update_type?, to: :update?
   alias_rule :delete?, to: :destroy?
 
   relation_scope :edits do |scope|

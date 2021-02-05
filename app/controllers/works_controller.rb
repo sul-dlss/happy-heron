@@ -49,6 +49,25 @@ class WorksController < ObjectsController
     @form.prepopulate!
   end
 
+  def update_type
+    work = Work.find(params[:id])
+    work_version = work.head
+    authorize! work_version
+
+    begin
+      work_version.choose_type_for_purl_reservation(params[:work_type], params[:subtype], current_user)
+
+      # from https://apidock.com/rails/ActionController/Redirecting/redirect_to
+      # "If you are using XHR requests other than GET or POST and redirecting after the request then some
+      # browsers will follow the redirect using the original request method... To work around this... return
+      # a 303 See Other status code which will be followed using a GET request."
+      redirect_to action: 'edit', status: :see_other
+    rescue WorkVersion::WorkTypeUpdateError
+      flash[:error] = 'Unexpected error attempting to edit PURL reservation'
+      redirect_to dashboard_path, status: :see_other
+    end
+  end
+
   def update
     work = Work.find(params[:id])
     work_version = work.head
@@ -134,10 +153,17 @@ class WorksController < ObjectsController
     DraftWorkForm.new(work_version: work_version, work: work_version.work)
   end
 
+  # rubocop:disable Metrics/MethodLength
   sig { params(work_version: WorkVersion, work: Work).void }
   def after_save(work_version:, work:)
     work.event_context = { user: current_user }
-    work_version.update_metadata!
+
+    if purl_reservation?
+      work_version.reserve_purl!
+    else
+      work_version.update_metadata!
+    end
+
     if deposit_button_pushed?
       if work.collection.review_enabled?
         work_version.submit_for_review!
@@ -152,6 +178,7 @@ class WorksController < ObjectsController
       redirect_to work
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Metrics/MethodLength
   def work_params
