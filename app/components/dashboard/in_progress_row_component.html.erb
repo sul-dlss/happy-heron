@@ -5,7 +5,10 @@
   <div class="col-5">
     <%= render Dashboard::DepositProgressComponent.new(work: work) %>
   </div>
-  <div class="col-3">
+  <div class="col-1">
     <%= render Works::DeleteComponent.new(work: work) %>
+  </div>
+  <div class="col-2">
+    <span class="state-display"><%= render Works::StateDisplayComponent.new(work: work) %></span>
   </div>
 </div>
