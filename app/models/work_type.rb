@@ -92,7 +92,7 @@ class WorkType
 
   sig { returns(WorkType) }
   def self.purl_reservation_type
-    new(id: 'PURL reservation', label: 'PURL reservation', icon: '', subtypes: [], cocina_type: 'n/a')
+    new(id: 'purl_reservation', label: 'PURL reservation', icon: '', subtypes: [], cocina_type: 'n/a')
   end
 
   sig { params(id: T.nilable(String)).returns(WorkType) }

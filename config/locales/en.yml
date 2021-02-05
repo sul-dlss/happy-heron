@@ -18,6 +18,8 @@ en:
       organization: Organization
   work:
     state:
+      reserving_purl: Reserving PURL
+      purl_reserved: PURL Reserved
       first_draft: Draft - Not deposited
       version_draft: New version in draft
       pending_approval: Pending approval

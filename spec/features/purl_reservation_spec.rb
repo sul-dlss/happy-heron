@@ -24,6 +24,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
       click_button 'Submit'
 
       expect(page).to have_content title
+      expect(page).to have_content 'Reserving PURL'
 
       work_version = WorkVersion.find_by!(title: title)
       expect(work_version.work.collection).to eq collection
@@ -34,7 +35,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
       DepositStatusJob.new.complete_deposit(work_version, druid)
 
       # this should be updated automatically
-      expect(page).to have_content 'Deposited'
+      expect(page).to have_content 'PURL Reserved'
 
       # getting the PURL to show up requires a page refresh
       visit dashboard_path
