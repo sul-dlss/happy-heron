@@ -28,8 +28,8 @@ RSpec.describe Works::PublicationDateComponent, type: :component do
 
     it 'renders the component without month or day selected' do
       expect(rendered.css('#work_published_year').first['value']).to eq '2020'
-      expect(rendered.css('#work_published_month option[@selected="selected"]')).to match_array([])
-      expect(rendered.css('#work_published_day option[@selected="selected"]')).to match_array([])
+      expect(rendered.css('#work_published_month option[@selected="selected"]')).to be_empty
+      expect(rendered.css('#work_published_day option[@selected="selected"]')).to be_empty
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe Works::PublicationDateComponent, type: :component do
     it 'renders the component without day selected' do
       expect(rendered.css('#work_published_year').first['value']).to eq '2020'
       expect(rendered.css('#work_published_month option[@selected="selected"]').first['value']).to eq '5'
-      expect(rendered.css('#work_published_day option[@selected="selected"]')).to match_array([])
+      expect(rendered.css('#work_published_day option[@selected="selected"]')).to be_empty
     end
   end
 end
