@@ -39,7 +39,7 @@ RSpec.describe TypesGenerator do
               ),
               Cocina::Models::DescriptiveValue.new(
                 type: 'subtype',
-                value: 'Presentation slides'
+                value: 'Technical report'
               )
             ]
           )
@@ -56,7 +56,9 @@ RSpec.describe TypesGenerator do
           ),
           Cocina::Models::DescriptiveValue.new(
             type: 'genre',
-            value: 'Presentation slides'
+            value: 'Technical reports',
+            uri: 'http://id.loc.gov/authorities/genreForms/gf2015026093',
+            source: { code: 'lcgft' }
           )
         )
       end

@@ -106,9 +106,17 @@ class WorkType
     all.map(&:id).sort
   end
 
-  sig { params(id: T.nilable(String)).returns(T::Array[String]) }
-  def self.subtypes_for(id)
-    find(id).subtypes
+  sig { returns(T::Array[String]) }
+  def self.more_types
+    MORE_TYPES
+  end
+
+  sig { params(id: T.nilable(String), include_more_types: T::Boolean).returns(T::Array[String]) }
+  def self.subtypes_for(id, include_more_types: false)
+    subtypes = find(id).subtypes
+    return subtypes unless include_more_types
+
+    subtypes + more_types
   end
 
   sig { returns(T::Hash[String, T::Array[String]]) }

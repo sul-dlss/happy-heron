@@ -36,7 +36,7 @@ RSpec.describe DescriptionGenerator do
           },
           {
             type: 'subtype',
-            value: 'Presentation slides'
+            value: 'Technical report'
           }
         ],
         type: 'resource type'
@@ -51,7 +51,11 @@ RSpec.describe DescriptionGenerator do
       },
       {
         type: 'genre',
-        value: 'Presentation slides'
+        value: 'Technical reports',
+        uri: 'http://id.loc.gov/authorities/genreForms/gf2015026093',
+        source: {
+          code: 'lcgft'
+        }
       },
       {
         source: {

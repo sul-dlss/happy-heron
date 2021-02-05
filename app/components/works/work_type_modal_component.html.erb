@@ -1,6 +1,6 @@
 <script>
   document.subtypes = <%= WorkType.to_json.html_safe %>;
-  document.moreTypes = <%= WorkType::MORE_TYPES.to_json.html_safe %>
+  document.moreTypes = <%= WorkType.more_types.to_json.html_safe %>
 </script>
 
 <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">

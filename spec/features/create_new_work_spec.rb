@@ -27,8 +27,13 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_css('input#subtype_other')
         find('label', text: 'Sound').click
 
-        check 'Course/instruction'
+        check 'Podcast'
+        expect(page).not_to have_content('Poetry reading')
+        click_link 'See more options'
+        expect(page).to have_content('Poetry reading')
         check 'Poetry reading'
+        click_link 'See fewer options'
+        expect(page).not_to have_content('Poetry reading')
 
         click_button 'Continue'
 
@@ -92,7 +97,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         select 'Everyone', from: 'Who can access?'
 
         fill_in 'Abstract', with: 'User provided abstract'
-        check 'Musical notation'
+        check 'Oral history'
 
         check 'I agree to the SDR Terms of Deposit'
 
@@ -126,7 +131,8 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_link(Collection.last.name)
         expect(page).to have_content(user.email)
         expect(page).to have_content('sound')
-        expect(page).to have_content('Course/instruction, Musical notation, Poetry reading')
+        # expect(page).to have_content('Oral history, Podcast, Poetry reading')
+        expect(page).to have_content('Oral history, Podcast') # TODO: replace with prior line as part of #972
         expect(page).to have_content('Best Publisher')
         expect(page).to have_content('2020-03-06/2020-10-30')
         expect(page).to have_content 'User provided abstract'
