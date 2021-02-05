@@ -2,7 +2,8 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static targets = [
-    "form", "template", "otherTemplate", "subtype", "area", "templateHeader", "otherTemplateHeader"
+    "form", "template", "otherTemplate", "subtype", "area", "templateHeader",
+    "otherTemplateHeader", "moreTypesLink", "moreTypes", "continueButton"
   ]
 
   // Sets the form in the popup to use the action in the data-destination attribute
@@ -23,17 +24,59 @@ export default class extends Controller {
     this.areaTarget.hidden = false
   }
 
+  toggleMoreTypes(event) {
+    event.preventDefault()
+
+    this.moreTypesTarget.hidden ?
+      this.showMoreTypes() :
+      this.hideMoreTypes()
+  }
+
+  showMoreTypes() {
+    this.moreTypesTarget.hidden = false
+    this.moreTypesLinkTarget.innerHTML = 'See fewer options'
+    this.moreTypesLinkTarget.classList.toggle('collapsed', false)
+    this.continueButtonTarget.focus()
+  }
+
+  hideMoreTypes() {
+    this.moreTypesTarget.hidden = true
+    this.moreTypesLinkTarget.innerHTML = 'See more options'
+    this.moreTypesLinkTarget.classList.toggle('collapsed', true)
+  }
+
   displaySubtypeOptions(type) {
-    const subtypes = document.subtypes[type].map((subtype)=> {
-      const id = subtype.replace(/\s/g, '_')
-      return this.templateTarget.innerHTML.replace(/SUBTYPE_LABEL/g, subtype).replace(/SUBTYPE_ID/g, id)
-    })
-    this.subtypeTarget.innerHTML = subtypes.join('')
+    // Show the more options link
+    this.moreTypesLinkTarget.hidden = false
+    this.subtypeTarget.innerHTML = this.subtypesFor(type).join('')
+    this.moreTypesTarget.innerHTML = this.moreTypesFor(type).join('')
     this.areaTarget.innerHTML = this.templateHeaderTarget.innerHTML
   }
 
   displayOtherSubtypeOptions() {
+    // Hide the more options link
+    this.moreTypesLinkTarget.hidden = true
+    this.hideMoreTypes()
     this.subtypeTarget.innerHTML = this.otherTemplateTarget.innerHTML
     this.areaTarget.innerHTML = this.otherTemplateHeaderTarget.innerHTML
+  }
+
+  subtypesFor(type) {
+    return document
+      .subtypes[type]
+      .map((subtype)=> {
+        const id = subtype.replace(/\s/g, '_')
+        return this.templateTarget.innerHTML.replace(/SUBTYPE_LABEL/g, subtype).replace(/SUBTYPE_ID/g, id)
+      })
+  }
+
+  moreTypesFor(type) {
+    return document
+      .moreTypes
+      .filter(moreType => !document.subtypes[type].includes(moreType))
+      .map((moreType) => {
+        const id = moreType.replace(/\s/g, '_')
+        return this.templateTarget.innerHTML.replace(/SUBTYPE_LABEL/g, moreType).replace(/SUBTYPE_ID/g, id)
+      })
   }
 }

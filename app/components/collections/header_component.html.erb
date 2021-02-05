@@ -17,13 +17,7 @@
             },
             class: "btn btn-primary" %>
 
-      <div class="modal fade" id="workTypeModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
-            <%= render Works::WorkTypeModalComponent.new %>
-          </div>
-        </div>
-      </div>
+      <%= render Works::WorkTypeModalComponent.new %>
     </span>
   <% end %>
 </header>
