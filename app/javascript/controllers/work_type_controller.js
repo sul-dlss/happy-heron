@@ -1,7 +1,9 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "template", "otherTemplate", "subtype", "area"]
+  static targets = [
+    "form", "template", "otherTemplate", "subtype", "area", "templateHeader", "otherTemplateHeader"
+  ]
 
   // Sets the form in the popup to use the action in the data-destination attribute
   set_collection(event) {
@@ -27,11 +29,11 @@ export default class extends Controller {
       return this.templateTarget.innerHTML.replace(/SUBTYPE_LABEL/g, subtype).replace(/SUBTYPE_ID/g, id)
     })
     this.subtypeTarget.innerHTML = subtypes.join('')
-    this.areaTarget.innerHTML = '<h5>Which of the following terms further describe your deposit?</h5>'
+    this.areaTarget.innerHTML = this.templateHeaderTarget.innerHTML
   }
 
   displayOtherSubtypeOptions() {
     this.subtypeTarget.innerHTML = this.otherTemplateTarget.innerHTML
-    this.areaTarget.innerHTML = '<h5>Specify "Other" type</h5>'
+    this.areaTarget.innerHTML = this.otherTemplateHeaderTarget.innerHTML
   }
 }

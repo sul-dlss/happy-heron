@@ -4,14 +4,17 @@ input[type="radio"].toggle {
 
 input[type="radio"].toggle:checked + label {
   border: 3px solid $primary;
-  background-color: rgba($primary, 0.3);
+  background-color: rgba($primary, 0.1);
   left: -1.5px;
   position: relative;
   top: -1.5px; /* keeps the button from moving when the border grows */
 
   .check {
+    color: $primary;
     display: inline-block;
+    font-size: 1.5rem;
   }
+
   .uncheck {
     display: none;
   }
@@ -19,9 +22,9 @@ input[type="radio"].toggle:checked + label {
 
 input[type="radio"].toggle:focus + label {
   border: 3px solid $primary;
-  background-color: rgba($primary, 0.3);
+  background-color: rgba($primary, 0.1);
   left: -1.5px;
-  position: relative;  
+  position: relative;
   top: -1.5px;
 }
 
