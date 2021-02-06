@@ -8,7 +8,8 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
     DashboardPresenter.new(
       in_progress: works,
       approvals: Work.none,
-      collections: Collection.none
+      collections: Collection.none,
+      collection_managers_in_progress: Collection.none
     )
   end
   let(:rendered) { render_inline(described_class.new(presenter: presenter)) }

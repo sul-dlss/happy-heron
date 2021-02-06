@@ -16,7 +16,9 @@ RSpec.describe 'Delete a draft collection', js: true do
       visit dashboard_path
 
       accept_confirm do
-        click_link "Delete #{collection.name}"
+        within '#your-collections' do
+          click_link "Delete #{collection.name}"
+        end
       end
       expect(Collection.find_by(id: collection.id)).to be(nil)
     end
