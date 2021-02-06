@@ -71,6 +71,13 @@ export default class extends Controller {
   }
 
   moreTypesFor(type) {
+    // Work types have a small number of primary subtypes and they share a large
+    // number of general subtypes, which we refer to as "more types." Some work types
+    // have primary subtypes that also appear in the list of "more types" and we
+    // don't want users to be able to see and select multiple types of the same value,
+    // so we only return the "more types" for a given type that do not match any of
+    // the type's primary subtypes, hence the filtering in this function.
+
     return document
       .moreTypes
       .filter(moreType => !document.subtypes[type].includes(moreType))

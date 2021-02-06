@@ -21,8 +21,8 @@ class WorkType
   SOUND_TYPES = ['Interview', 'Oral history', 'Podcast', 'Speech'].freeze
 
   TEXT_TYPES = [
-    'Article', 'Government document', 'Preprint', 'Report', 'Technical report',
-    'Thesis', 'Working paper'
+    'Article', 'Government document', 'Policy brief', 'Preprint', 'Report',
+    'Technical report', 'Thesis', 'Working paper'
   ].freeze
 
   SOFTWARE_TYPES = %w[Code Documentation Game].freeze
@@ -85,7 +85,7 @@ class WorkType
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'data', label: 'Data', icon: 'chart-bar', subtypes: DATA_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'software, multimedia', label: 'Software or Code', icon: 'mouse', subtypes: SOFTWARE_TYPES,
+      new(id: 'software, multimedia', label: 'Software/Code', icon: 'mouse', subtypes: SOFTWARE_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'image', label: 'Image', icon: 'images', subtypes: IMAGE_TYPES,
           cocina_type: Cocina::Models::Vocab.image),
