@@ -468,7 +468,7 @@ GEM
       patience_diff
     thor (1.1.0)
     trollop (1.16.2)
-    turbo-rails (0.5.1)
+    turbo-rails (0.5.9)
       rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
