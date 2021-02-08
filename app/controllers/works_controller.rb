@@ -5,7 +5,7 @@
 class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized
+  verify_authorized except: %i[delete_button edit_button]
 
   def new
     validate_work_types!
@@ -70,6 +70,20 @@ class WorksController < ObjectsController
     work.destroy
 
     redirect_to dashboard_path
+  end
+
+  # We render this button lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the work.
+  def delete_button
+    work = Work.find(params[:id])
+    render partial: 'works/delete_button', locals: { work: work }
+  end
+
+  # We render this button lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the work.
+  def edit_button
+    work = Work.find(params[:id])
+    render partial: 'works/edit_button', locals: { work: work }
   end
 
   def normalize_key(key)

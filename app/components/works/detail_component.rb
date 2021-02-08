@@ -77,10 +77,10 @@ module Works
 
     sig { returns(T::Boolean) }
     def display_approval?
-      work.pending_approval? && !helpers.allowed_to?(:review?, work)
+      work.pending_approval?
     end
 
-    sig { returns(String) }
+    sig { returns(T.nilable(String)) }
     def rejection_reason
       work.last_rejection_description
     end

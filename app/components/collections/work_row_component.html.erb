@@ -6,7 +6,7 @@
         <span class="fas fa-pencil-alt"></span>
       <% end %>
     <% end %>
-    <%= render Works::DeleteComponent.new(work: work) %>
+    <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </td>
   <td><%= work.depositor.sunetid %></td>
   <td><%= render Works::StateDisplayComponent.new(work: work) %></td>

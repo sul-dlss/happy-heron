@@ -2,9 +2,7 @@
   <span class="header-text"><%= name %></span>
   <%= render Collections::EditLinkComponent.new(collection: collection, anchor: '', label: "Edit #{name}") %>
   <% if depositing? %>
-    <span data-state-updates-target="state" class="state">
-      Depositing <%= spinner %>
-    </span>
+    <span class="state">Depositing <%= spinner %></span>
   <% end %>
   <% if can_create_work? %>
     <span class="deposit-button" data-controller="work-type">

@@ -1,6 +1,6 @@
-<section class="details">
+<section class="details" id="<%= dom_id(work) %>">
   <% if display_approval? %>
-    <div class="alert alert-warning alert-dismissible" role="alert">
+    <div class="alert alert-warning alert-dismissible visible-to-depositor" role="alert">
       Your deposit has been sent for approval. You will receive an email once your deposit has been approved.
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -17,7 +17,7 @@
   <header class="title">
     <span class="header-text"><%= title %></span>
     <%= render Works::EditLinkComponent.new(work: work, anchor: '', label: "Edit #{title}") %>
-    <span data-state-updates-target="state" class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
+    <span class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
   </header>
 
   <table class="table table-sm mb-5">
@@ -29,7 +29,7 @@
     <tbody>
       <tr>
         <th scope="row">Persistent link</th>
-        <td data-state-updates-target="purl">
+        <td>
           <% if purl %>
             <%= link_to purl, purl %>
           <% else %>
@@ -210,7 +210,7 @@
   <table class="table table-sm mb-5">
     <thead class="table-light">
     <tr>
-      <th scope="col" colspan="2' class="table-title col-3">Release data and visibility
+      <th scope="col" colspan="2" class="table-title col-3">Release data and visibility
         <%= render Works::EditLinkComponent.new(work: work, anchor: 'release', label: 'Edit release data and visibility') %>
       </th>
     </tr>

@@ -1,9 +1,7 @@
 <%= link_to name, collection %>
-<% if allowed_to?(:edit?, collection) %>
+<% if depositing? %>
+  <span class="state">Depositing <%= spinner %></span>
+<% else %>
   <%= render Collections::EditLinkComponent.new(collection: collection, anchor: '', label: "Edit #{name}") %>
-<% elsif depositing? %>
-  <span class="state" data-controller="state-updates" data-state-updates-collection-id="<%= collection.id %>" data-state-updates-target="state">
-    Depositing <%= spinner %>
-  </span>
+  <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if first_draft?%>
 <% end %>
-<%= render Collections::DeleteComponent.new(collection: collection) %>

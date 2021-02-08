@@ -3,8 +3,19 @@
     breadcrumbs: [ { title: @work.collection.name, link: collection_path(@work.collection) },
                    { title: @work.title } ]) %>
 <% end %>
-<div class="container" id="work" data-controller="state-updates" data-state-updates-work-id="<%= @work.id %>">
-  <%= render Works::ApprovalComponent.new(work: @work) %>
 
-  <%= render Works::DetailComponent.new(work: @work) %>
+<% cache [current_user, @work] do %>
+  <style>
+    <% if current_user != @work.depositor %>
+      .visible-to-depositor {
+        display: none;
+      }
+    <% end %>
+  </style>
+<% end %>
+
+<div class="container" id="work">
+  <%= render Works::ApprovalComponent.new(work: @work) %>
+  <%= turbo_stream_from @work %>
+  <%= render @work %>
 </div>

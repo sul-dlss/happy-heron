@@ -18,19 +18,10 @@
         <tr>
           <%= render Works::LinkToShowComponent.new(work: work) %>
           <td>
-            <% if allowed_to? :edit?, work %>
-              <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work: work).title}" } do %>
-                <span class="fas fa-pencil-alt"></span>
-              <% end %>
-            <% end %>
-            <%= render Works::DeleteComponent.new(work: work) %>
+            <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
+            <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
           </td>
-          <% if work.depositing? %>
-            <td data-controller="state-updates" data-state-updates-work-id="<%= work.id %>" data-state-updates-target="state">
-          <% else %>
-            <td>
-          <% end %>
-          <%= render Works::StateDisplayComponent.new(work: work) %></td>
+          <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
           <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
           <td><%= link_to work.purl, work.purl if work.purl %></td>
           <td><span class="fas fa-quote-left"></span> Cite</td>
@@ -44,14 +35,5 @@
     <div class="mb-3"><%= link_to 'See all deposits', collection_works_path(collection) %></div>
   <% end %>
 
-  <% if allowed_to?(:create?, Work.new(collection: collection)) %>
-    <%= button_tag '+ Deposit to this collection',
-          data: {
-            destination: new_collection_work_path(collection),
-            bs_toggle: 'modal',
-            bs_target: '#workTypeModal',
-            action: "work-type#set_collection"
-          },
-          class: "btn btn-primary" %>
-  <% end %>
+  <%= helpers.turbo_frame_tag dom_id(collection, :deposit), src: deposit_button_collection_path(collection) %>
 </section>

@@ -26,26 +26,10 @@ RSpec.describe Works::DetailComponent, type: :component do
   context 'when pending approval' do
     let(:work) { build_stubbed(:work, state: 'pending_approval') }
 
-    context 'when not an approver' do
-      before do
-        allow(controller).to receive(:allowed_to?).and_return(false)
-      end
-
-      it 'renders the messge about review' do
-        expect(rendered.css('.alert-warning').to_html).to include(
-          'Your deposit has been sent for approval. You will receive an email once your deposit has been approved.'
-        )
-      end
-    end
-
-    context 'when an approver' do
-      before do
-        allow(controller).to receive(:allowed_to?).and_return(true)
-      end
-
-      it 'renders the messge about review' do
-        expect(rendered.css('.alert-warning').to_html).to be_blank
-      end
+    it 'renders the messge about review' do
+      expect(rendered.css('.alert-warning.visible-to-depositor').to_html).to include(
+        'Your deposit has been sent for approval. You will receive an email once your deposit has been approved.'
+      )
     end
   end
 
@@ -54,7 +38,6 @@ RSpec.describe Works::DetailComponent, type: :component do
     let(:work) { create(:work, :rejected) }
 
     before do
-      allow(controller).to receive(:allowed_to?).and_return(true)
       create(:event, description: rejection_reason, event_type: 'reject', eventable: work)
     end
 

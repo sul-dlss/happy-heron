@@ -35,14 +35,10 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with a deposit ready collection' do
-    before do
-      allow(controller).to receive_messages(allowed_to?: true)
-    end
-
     let(:collection) { create(:collection) }
 
-    it 'renders the deposit button' do
-      expect(rendered.to_html).to include '+ Deposit to this collection'
+    it 'renders the turbo-frame that holds the deposit button' do
+      expect(rendered.css("turbo-frame#deposit_collection_#{collection.id}").first['src']).to be_present
     end
   end
 
