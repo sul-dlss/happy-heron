@@ -12,6 +12,6 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :default_license, :required_license, to: :collection
+    delegate :default_license, :required_license, :user_can_set_license?, to: :collection
   end
 end

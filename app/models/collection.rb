@@ -35,7 +35,7 @@ class Collection < ApplicationRecord
   # The collection has allowed the user to select a license for the member works
   sig { returns(T::Boolean) }
   def user_can_set_license?
-    required_license.nil?
+    license_option == 'depositor-selects'
   end
 
   sig { returns(T.nilable(String)) }

@@ -8,7 +8,7 @@ FactoryBot.define do
     release_option { 'immediate' }
     release_date { '2020-10-09' }
     access { 'world' }
-    default_license { nil }
+    license_option { 'depositor-selects' }
     email_when_participants_changed { false }
     state { 'first_draft' }
     creator
@@ -16,6 +16,7 @@ FactoryBot.define do
 
   trait :with_required_license do
     required_license { 'CC-BY-4.0' }
+    license_option { 'required' }
   end
 
   trait :with_works do

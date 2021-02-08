@@ -56,7 +56,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
     end
 
     describe 'license option' do
-      let(:collection) { create(:collection, managers: [user]) }
+      let(:collection) { create(:collection, managers: [user], license_option: 'required') }
 
       before { visit edit_collection_path(collection) }
 

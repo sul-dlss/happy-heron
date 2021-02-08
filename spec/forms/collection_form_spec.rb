@@ -10,30 +10,6 @@ RSpec.describe CollectionForm do
   let(:default_license) { nil }
   let(:required_license) { nil }
 
-  # NOTE: license validation is not tested in this spec; it is tested in the
-  #       CollectionLicenseValidator spec.
-  describe 'license_option prepopulator' do
-    before do
-      form.prepopulate!
-    end
-
-    context 'when default_license is set' do
-      let(:default_license) { 'CC0-1.0' }
-
-      it 'sets license_option to "depositor-selects"' do
-        expect(form.license_option).to eq('depositor-selects')
-      end
-    end
-
-    context 'when required_license is set' do
-      let(:required_license) { 'Apache-2.0' }
-
-      it 'sets license_option to "required"' do
-        expect(form.license_option).to eq('required')
-      end
-    end
-  end
-
   describe '#deserialize!' do
     subject(:deserialized) { form.deserialize!(params) }
 
