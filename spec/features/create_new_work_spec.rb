@@ -132,7 +132,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_content 'User provided abstract'
         expect(page).to have_content 'Citation from user input'
         expect(page).to have_content 'Everyone'
-        expect(page).to have_content('CC-PDDC Public Domain Dedication and Certification')
+        expect(page).to have_content 'CC0-1.0'
 
         visit dashboard_path
 

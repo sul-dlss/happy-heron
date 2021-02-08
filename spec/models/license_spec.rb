@@ -42,12 +42,6 @@ RSpec.describe License do
     it 'makes groups with headings' do
       expect(grouped_options).to eq [
         [
-          'CC-PDDC Public Domain Dedication and Certification',
-          [
-            ['CC-PDDC Public Domain Dedication and Certification', 'CC-PDDC']
-          ]
-        ],
-        [
           'Creative Commons',
           [
             ['CC0-1.0', 'CC0-1.0'],
@@ -57,6 +51,12 @@ RSpec.describe License do
             ['CC-BY-NC-4.0 Attribution-NonCommercial International', 'CC-BY-NC-4.0'],
             ['CC-BY-NC-SA-4.0 Attribution-NonCommercial-Share Alike International', 'CC-BY-NC-SA-4.0'],
             ['CC-BY-NC-ND-4.0 Attribution-NonCommercial-No Derivatives', 'CC-BY-NC-ND-4.0']
+          ]
+        ],
+        [
+          'CC-PDDC Public Domain Dedication and Certification',
+          [
+            ['CC-PDDC Public Domain Dedication and Certification', 'CC-PDDC']
           ]
         ],
         [
