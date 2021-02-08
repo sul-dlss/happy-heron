@@ -111,6 +111,7 @@ RSpec.describe 'Create a collection' do
             { '_destroy' => 'false', email: 'contact_email@example.com' }
           }
         end
+        let(:next_year) { (Time.zone.today + 1.year).year.to_s }
 
         let(:collection_params) do
           {
@@ -124,7 +125,7 @@ RSpec.describe 'Create a collection' do
             license_option: 'required',
             required_license: 'CC0-1.0',
             'release_option' => 'delay',
-            'release_date(1i)' => '2020',
+            'release_date(1i)' => next_year,
             'release_date(2i)' => '7',
             'release_date(3i)' => '14',
             'release_duration' => '1 year',
@@ -149,7 +150,7 @@ RSpec.describe 'Create a collection' do
           expect(collection.related_links.size).to eq 2
           expect(collection.related_links).to all(be_kind_of(RelatedLink))
           expect(collection.release_option).to eq 'delay'
-          expect(collection.release_date).to eq Date.parse('2020-7-14')
+          expect(collection.release_date).to eq Date.parse("#{next_year}-7-14")
         end
 
         it 'sends emails to depositors when a new collection is created and deposited' do
