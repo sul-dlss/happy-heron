@@ -70,13 +70,13 @@ RSpec.describe 'Create a new work' do
         end
       end
 
-      context 'with an invalid subtype/work_type combo' do
+      context 'with a valid work_type and a missing subtype' do
         it 'redirects to dashboard with an informative flash message' do
-          get "/collections/#{collection.id}/works/new?work_type=sound&subtype%5B%5D=Essay"
+          get "/collections/#{collection.id}/works/new?work_type=sound&subtype%5B%5D=Foobar"
           expect(response).to redirect_to(dashboard_path)
           follow_redirect!
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include 'Invalid subtype value for work_type &#39;sound&#39;: Essay'
+          expect(response.body).to include 'Invalid subtype value for work_type &#39;sound&#39;: Foobar'
         end
       end
 
@@ -99,6 +99,14 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with a valid subtype/work_type combo' do
+        it 'renders the form' do
+          get "/collections/#{collection.id}/works/new?work_type=text&subtype%5B%5D=Article"
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'text'
+        end
+      end
+
+      context 'with a valid "more" type/work_type combo' do
         it 'renders the form' do
           get "/collections/#{collection.id}/works/new?work_type=text&subtype%5B%5D=Essay"
           expect(response).to have_http_status(:ok)
@@ -289,7 +297,7 @@ RSpec.describe 'Create a new work' do
           expect(work.published_edtf.to_edtf).to eq '2020-02-14'
           expect(work.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
           expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
-          expect(work.subtype).to eq ['Article', 'Presentation slides']
+          expect(work.subtype).to eq ['Article', 'Technical report']
           expect(DepositJob).to have_received(:perform_later).with(work)
           expect(work.state).to eq 'depositing'
           expect(work.access).to eq 'world' # shows that `stanford` was overwritten

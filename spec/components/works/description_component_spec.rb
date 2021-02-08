@@ -15,7 +15,7 @@ RSpec.describe Works::DescriptionComponent do
   end
 
   it 'has a checkbox with a label' do
-    expect(rendered.css('#work_subtype_journalperiodical')).to be_present
-    expect(rendered.css("label[for='work_subtype_journalperiodical']")).to be_present
+    expect(rendered.css('#work_subtype_government_document')).to be_present
+    expect(rendered.css("label[for='work_subtype_government_document']")).to be_present
   end
 end

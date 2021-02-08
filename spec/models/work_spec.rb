@@ -135,14 +135,6 @@ RSpec.describe Work do
       end
     end
 
-    context 'with an invalid subtype/work_type combo' do
-      let(:work) { build(:work, work_type: 'data', subtype: ['Animation']) }
-
-      it 'does not validate' do
-        expect(work).not_to be_valid
-      end
-    end
-
     context 'with a work_type that requires a user-supplied subtype and is empty' do
       let(:work) { build(:work, work_type: 'other', subtype: []) }
 
@@ -159,8 +151,16 @@ RSpec.describe Work do
       end
     end
 
-    context 'with a valid subtype/work_type combo ' do
-      let(:work) { build(:work, work_type: 'data', subtype: ['Software/code']) }
+    context 'with a work_type and a primary subtype' do
+      let(:work) { build(:work, work_type: 'data', subtype: ['Database']) }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+
+    context 'with a work_type and a "more" subtype' do
+      let(:work) { build(:work, work_type: 'data', subtype: ['Essay']) }
 
       it 'validates' do
         expect(work).to be_valid

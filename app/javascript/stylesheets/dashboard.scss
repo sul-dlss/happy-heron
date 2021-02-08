@@ -54,3 +54,19 @@
 ul.collections {
   list-style-type: none;
 }
+
+#workTypeModal {
+  a {
+    text-decoration: none;
+
+    &:after {
+      content: '\f078';
+      font-family: Fontawesome;
+      padding-left: 0.5rem;
+    }
+
+    &.collapsed:after {
+      content: '\f054';
+    }
+  }
+}

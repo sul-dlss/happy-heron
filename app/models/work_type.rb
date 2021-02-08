@@ -8,40 +8,43 @@ class WorkType
   class InvalidType < StandardError; end
 
   DATA_TYPES = [
-    '3D model', 'Audio', 'Database', 'GIS', 'Image', 'Questionnaire',
-    'Remote sensing imagery', 'Software/code', 'Statistical model',
-    'Tabular data', 'Text corpus', 'Text documentation', 'Video'
+    '3D model', 'Database', 'Documentation', 'Geospatial data', 'Image',
+    'Tabular data', 'Text corpus'
   ].freeze
 
   VIDEO_TYPES = [
-    'Animation', 'Broadcast', 'Conference session', 'Course/instruction',
-    'Documentary', 'Ethnography', 'Event', 'Experimental', 'Field recordings',
-    'Narrative film', 'Oral history', 'Performance', 'Presentation',
-    'Unedited footage', 'Video art'
+    'Conference session', 'Documentary', 'Event', 'Oral history', 'Performance'
   ].freeze
 
-  MIXED_TYPES = [
-    'Data', 'Image', 'Software/Code', 'Sound', 'Text', 'Video'
-  ].freeze
+  MIXED_TYPES = %w[Data Image Software/Code Sound Text Video].freeze
 
-  SOUND_TYPES = [
-    'Course/instruction', 'Documentary', 'Dramatic performance', 'Ethnography',
-    'Field recordings', 'Interview', 'MIDI', 'Musical notation',
-    'Musical performance', 'Oral history', 'Other spoken word', 'Podcast',
-    'Poetry reading', 'Speech', 'Story', 'Transcript', 'Unedited recording'
-  ].freeze
+  SOUND_TYPES = ['Interview', 'Oral history', 'Podcast', 'Speech'].freeze
 
   TEXT_TYPES = [
-    'Article', 'Book', 'Book chapter', 'Correspondence', 'Essay',
-    'Government document', 'Journal/periodical', 'Manuscript', 'Poster',
-    'Presentation slides', 'Report', 'Speech', 'Syllabus', 'Teaching materials',
-    'Technical report', 'Thesis', 'Transcription', 'White paper', 'Working paper'
+    'Article', 'Government document', 'Policy brief', 'Preprint', 'Report',
+    'Technical report', 'Thesis', 'Working paper'
   ].freeze
 
   SOFTWARE_TYPES = %w[Code Documentation Game].freeze
 
-  IMAGE_TYPES = [
-    'CAD', 'Map', 'Photograph', 'Poster', 'Presentation slides'
+  IMAGE_TYPES = ['CAD', 'Map', 'Photograph', 'Poster', 'Presentation slides'].freeze
+
+  # These types appear below the fold and may be expanded
+  MORE_TYPES = [
+    '3D model', 'Animation', 'Article', 'Book', 'Book chapter', 'Broadcast', 'CAD',
+    'Code', 'Conference session', 'Correspondence', 'Course/instructional materials',
+    'Data', 'Database', 'Documentary', 'Documentation', 'Dramatic performance',
+    'Essay', 'Ethnography', 'Event', 'Experimental audio/video', 'Field recording',
+    'Game', 'Geospatial data', 'Government document', 'Image', 'Interview',
+    'Journal/periodical issue', 'Manuscript', 'Map', 'MIDI', 'Musical transcription',
+    'Narrative film', 'Notated music', 'Oral history', 'Other spoken word',
+    'Performance', 'Photograph', 'Piano roll', 'Podcast', 'Poetry reading',
+    'Policy brief', 'Poster', 'Preprint', 'Presentation recording',
+    'Presentation slides', 'Questionnaire', 'Remote sensing imagery', 'Report',
+    'Software', 'Sound recording', 'Speaker notes', 'Speech', 'Story', 'Syllabus',
+    'Tabular data', 'Technical report', 'Text', 'Text corpus', 'Thesis',
+    'Transcript', 'Unedited recording', 'Video recording', 'Video art',
+    'White paper', 'Working paper'
   ].freeze
 
   sig { returns(String) }
@@ -82,7 +85,7 @@ class WorkType
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'data', label: 'Data', icon: 'chart-bar', subtypes: DATA_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'software, multimedia', label: 'Software or Code', icon: 'mouse', subtypes: SOFTWARE_TYPES,
+      new(id: 'software, multimedia', label: 'Software/Code', icon: 'mouse', subtypes: SOFTWARE_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'image', label: 'Image', icon: 'images', subtypes: IMAGE_TYPES,
           cocina_type: Cocina::Models::Vocab.image),
@@ -103,9 +106,17 @@ class WorkType
     all.map(&:id).sort
   end
 
-  sig { params(id: T.nilable(String)).returns(T::Array[String]) }
-  def self.subtypes_for(id)
-    find(id).subtypes
+  sig { returns(T::Array[String]) }
+  def self.more_types
+    MORE_TYPES
+  end
+
+  sig { params(id: T.nilable(String), include_more_types: T::Boolean).returns(T::Array[String]) }
+  def self.subtypes_for(id, include_more_types: false)
+    subtypes = find(id).subtypes
+    return subtypes unless include_more_types
+
+    subtypes + more_types
   end
 
   sig { returns(T::Hash[String, T::Array[String]]) }

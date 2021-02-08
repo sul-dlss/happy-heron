@@ -159,10 +159,9 @@ RSpec.describe WorkForm do
     let(:errors) { form.errors.where(:subtype) }
     let(:messages) { errors.map(&:message) }
 
-    it 'does not validate with an invalid subtype/work_type combo' do
+    it 'validates with a valid work_type and a "more" type' do
       form.validate(work_type: 'data', subtype: ['Animation'])
-      expect(form).not_to be_valid
-      expect(messages).to eq ['is not a valid subtype for work type data']
+      expect(messages).to be_empty
     end
 
     it 'does not validate with a work_type that requires a user-supplied subtype and is empty' do
@@ -172,7 +171,7 @@ RSpec.describe WorkForm do
     end
 
     it 'validates with a valid subtype/work_type combo' do
-      form.validate(work_type: 'data', subtype: ['Software/code'])
+      form.validate(work_type: 'data', subtype: ['Documentation'])
       expect(messages).to be_empty
     end
   end

@@ -39,7 +39,7 @@ RSpec.describe TypesGenerator do
               ),
               Cocina::Models::DescriptiveValue.new(
                 type: 'subtype',
-                value: 'Presentation slides'
+                value: 'Technical report'
               )
             ]
           )
@@ -56,7 +56,9 @@ RSpec.describe TypesGenerator do
           ),
           Cocina::Models::DescriptiveValue.new(
             type: 'genre',
-            value: 'Presentation slides'
+            value: 'Technical reports',
+            uri: 'http://id.loc.gov/authorities/genreForms/gf2015026093',
+            source: { code: 'lcgft' }
           )
         )
       end
@@ -157,6 +159,82 @@ RSpec.describe TypesGenerator do
             )
           ]
         )
+      end
+    end
+  end
+
+  describe 'cocina mapping' do
+    non_other_work_types = WorkType.all.reject { |work_type| work_type.id == 'other' }
+
+    let(:generator) { described_class.new(work: work) }
+    let(:types_to_genres) { generator.send(:types_to_genres) }
+    let(:types_to_resource_types) { generator.send(:types_to_resource_types) }
+
+    describe 'for work types' do
+      # NOTE: the Other type has no mappings
+      let(:work_type_labels) { non_other_work_types.map(&:label) }
+
+      it 'has one genre for each' do
+        # NOTE: General mappings do not correspond to a particular type
+        expect(work_type_labels).to match_array(types_to_genres.keys - ['General'])
+      end
+
+      it 'has one resource type for each' do
+        # NOTE: General mappings do not correspond to a particular type
+        expect(work_type_labels).to match_array(types_to_resource_types.keys - ['General'])
+      end
+    end
+
+    describe 'for subtypes' do
+      non_other_work_types.each do |work_type|
+        context "with type #{work_type.label}" do
+          let(:known_genreless) do
+            case work_type.label
+            when 'Data'
+              ['Documentation']
+            when 'Text'
+              ['Policy brief']
+            else
+              []
+            end
+          end
+
+          it 'has a one-to-one genre mapping to subtypes' do
+            expect(work_type.subtypes - known_genreless).to eq(types_to_genres[work_type.label]['subtypes'].keys)
+          end
+
+          it 'has a one-to-one resource type mapping to subtypes' do
+            expect(work_type.subtypes).to eq(types_to_resource_types[work_type.label]['subtypes'].keys)
+          end
+        end
+      end
+    end
+
+    describe 'for "more" types' do
+      let(:all_type_genres) do
+        types_to_genres
+          .values
+          .map { |work_type| work_type['subtypes'].keys }
+          .flatten
+          .sort
+          .uniq
+      end
+      let(:all_type_resource_types) do
+        types_to_resource_types
+          .values
+          .map { |work_type| work_type['subtypes'].keys }
+          .flatten
+          .sort
+          .uniq
+      end
+      let(:known_genreless) { ['Policy brief', 'Speaker notes'] }
+
+      it 'has one genre for each' do
+        expect(all_type_genres).to include(*(WorkType.more_types - known_genreless))
+      end
+
+      it 'has one resource type for each' do
+        expect(all_type_resource_types).to include(*WorkType.more_types)
       end
     end
   end
