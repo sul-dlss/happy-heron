@@ -24,6 +24,12 @@ module Works
       resolve_day(created_edtf)
     end
 
+    def created_approximate?
+      return false unless created_edtf
+
+      created_edtf.uncertain?
+    end
+
     delegate :published_edtf, to: :reform
 
     def created_range_start_year
@@ -38,6 +44,12 @@ module Works
       resolve_day(created_range_start)
     end
 
+    def created_range_start_approximate?
+      return false unless created_range_start
+
+      created_range_start.uncertain?
+    end
+
     def created_range_end_year
       created_range_end&.year
     end
@@ -48,6 +60,12 @@ module Works
 
     def created_range_end_day
       resolve_day(created_range_end)
+    end
+
+    def created_range_end_approximate?
+      return false unless created_range_end
+
+      created_range_end.uncertain?
     end
 
     sig { returns(T.nilable(Date)) }

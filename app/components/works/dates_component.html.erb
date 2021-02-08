@@ -30,8 +30,13 @@
         <label for="work_created_day" class="visually-hidden">Created day</label>
         <%= select_day created_day, { prefix: 'work', field_name: 'created(3i)', prompt: 'day'}, data: { date_validation_target: 'day', action: 'date-validation#change' }, id: 'work_created_day', class: "form-control" %>
       </div>
+       <div>
+       <%= check_box_tag 'work[created(approx)]', 1, created_approximate? %>
+       <%= form.label 'created(approx)', 'Approximate' %>
+      </div>
     </div>
   </div>
+
 
   <div class="mb-3 row" data-complex-radio-target="selection">
     <div class="col-md-2">
@@ -65,6 +70,10 @@
               id: 'work_created_range_start_day',
               class: "form-control" %>
         </div>
+        <div>
+         <%= check_box_tag 'work[created_range(approx0)]', 1, created_range_start_approximate? %>
+         <label for='work_created_range_start_approx'>Approximate</label>
+        </div>
       </div>
 
       <div class="range-separator">
@@ -94,7 +103,12 @@
               data: { date_validation_target: 'day', action: 'date-validation#change' },
               id: 'work_created_range_end_day', class: "form-control" %>
         </div>
+        <div>
+         <%= check_box_tag 'work[created_range(approx3)]', 1, created_range_end_approximate? %>
+         <label for='work_created_range_end_approx'>Approximate</label>
+        </div>
       </div>
     </div>
   </div>
+
 </section>
