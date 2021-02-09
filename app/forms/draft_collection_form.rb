@@ -24,9 +24,7 @@ class DraftCollectionForm < Reform::Form
   property :release_duration
   property :release_date, embargo_date: true, assign_if: ->(params) { params['release_option'] == 'delay' }
 
-  property :license_option, virtual: true, prepopulator: (proc do |*|
-    self.license_option = default_license.present? ? 'depositor-selects' : 'required'
-  end)
+  property :license_option
   property :required_license
   property :default_license
 

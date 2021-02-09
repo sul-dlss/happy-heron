@@ -224,7 +224,8 @@ CREATE TABLE public.collections (
     druid character varying,
     version integer DEFAULT 0 NOT NULL,
     email_depositors_status_changed boolean,
-    review_enabled boolean DEFAULT false
+    review_enabled boolean DEFAULT false,
+    license_option character varying DEFAULT 'required'::character varying NOT NULL
 );
 
 
@@ -1127,6 +1128,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210114221943'),
 ('20210127133325'),
 ('20210201155622'),
-('20210202044303');
+('20210202044303'),
+('20210208201246');
 
 
