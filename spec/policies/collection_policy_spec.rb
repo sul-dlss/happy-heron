@@ -37,11 +37,11 @@ RSpec.describe CollectionPolicy do
     end
 
     succeed 'when user is a collection manager' do
-      let(:record) { build_stubbed(:collection, managers: [user]) }
+      let(:record) { build_stubbed(:collection, managed_by: [user]) }
     end
 
     failed 'when user is a collection manager and status is depositing' do
-      let(:record) { build_stubbed :collection, :depositing, managers: [user] }
+      let(:record) { build_stubbed :collection, :depositing, managed_by: [user] }
     end
 
     succeed 'when user is an admin' do
@@ -61,7 +61,7 @@ RSpec.describe CollectionPolicy do
     end
 
     succeed 'when the user manages the collection' do
-      let(:record) { build_stubbed(:collection, managers: [user]) }
+      let(:record) { build_stubbed(:collection, managed_by: [user]) }
     end
 
     succeed 'when the user is a collection reviewer' do
@@ -80,7 +80,7 @@ RSpec.describe CollectionPolicy do
     end
 
     context 'when the user is a manager' do
-      let!(:collection) { create(:collection, managers: [user]) }
+      let!(:collection) { create(:collection, managed_by: [user]) }
 
       it { is_expected.to include(collection) }
     end

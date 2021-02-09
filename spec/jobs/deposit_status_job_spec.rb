@@ -25,7 +25,7 @@ RSpec.describe DepositStatusJob do
         let(:work) do
           build(:work, :depositing,
                 citation: "Zappa, F. (2013) #{Work::LINK_TEXT}", collection: collection,
-                depositor: collection.managers.first)
+                depositor: collection.managed_by.first)
         end
         let(:collection) { build(:collection, :with_managers) }
 
@@ -35,7 +35,7 @@ RSpec.describe DepositStatusJob do
           end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'collection_activity', 'deliver_now',
             { params: {
-              user: collection.managers.last,
+              user: collection.managed_by.last,
               depositor: work.depositor,
               collection: collection
             }, args: [] }

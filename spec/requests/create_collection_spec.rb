@@ -141,7 +141,7 @@ RSpec.describe 'Create a collection' do
           expect(collection.depositors.size).to eq 6
           expect(collection.depositors).to all(be_kind_of(User))
           expect(collection.depositors).to include(User.find_by!(email: 'maya.aguirre@stanford.edu'))
-          expect(collection.managers).to eq [user]
+          expect(collection.managed_by).to eq [user]
           expect(collection.email_when_participants_changed).to eq true
           expect(collection.email_depositors_status_changed).to eq true
           expect(collection.contact_emails.size).to eq 2
@@ -173,7 +173,7 @@ RSpec.describe 'Create a collection' do
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
-            expect(collection.managers.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
+            expect(collection.managed_by.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
             expect(collection.reviewed_by.map(&:email)).to eq %w[maya.aguirre@stanford.edu
                                                                  jcairns@stanford.edu faridz@stanford.edu]
           end

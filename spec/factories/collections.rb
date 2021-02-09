@@ -41,7 +41,7 @@ FactoryBot.define do
       manager_count { 2 }
     end
 
-    managers { build_list(:user, manager_count) }
+    managed_by { build_list(:user, manager_count) }
   end
 
   trait :with_depositors do

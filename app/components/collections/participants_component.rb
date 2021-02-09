@@ -19,7 +19,7 @@ module Collections
 
     sig { returns(T.nilable(String)) }
     def managers
-      collection.managers.map(&:sunetid).join(', ')
+      collection.managed_by.map(&:sunetid).join(', ')
     end
   end
 end

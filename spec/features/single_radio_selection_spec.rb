@@ -12,7 +12,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
 
   context 'with collection form' do
     describe 'release option' do
-      let(:collection) { create(:collection, managers: [user], release_option: 'depositor-selects') }
+      let(:collection) { create(:collection, managed_by: [user], release_option: 'depositor-selects') }
 
       before { visit edit_collection_path(collection) }
 
@@ -56,7 +56,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
     end
 
     describe 'license option' do
-      let(:collection) { create(:collection, managers: [user], license_option: 'required') }
+      let(:collection) { create(:collection, managed_by: [user], license_option: 'required') }
 
       before { visit edit_collection_path(collection) }
 

@@ -83,7 +83,7 @@ class DraftCollectionForm < Reform::Form
 
   sig { void }
   def update_managers
-    model.managers = field_to_users(manager_sunets)
+    model.managed_by = field_to_users(manager_sunets)
   end
 
   sig { void }
@@ -116,6 +116,6 @@ class DraftCollectionForm < Reform::Form
 
   sig { returns(T::Array[String]) }
   def manager_sunets_from_model
-    (model.managers.presence || [model.creator]).map(&:sunetid)
+    (model.managed_by.presence || [model.creator]).map(&:sunetid)
   end
 end

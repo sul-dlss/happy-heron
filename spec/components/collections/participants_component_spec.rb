@@ -8,7 +8,7 @@ RSpec.describe Collections::ParticipantsComponent, type: :component do
 
   context 'when displaying a collection' do
     let(:depositors) { collection.depositors.map(&:sunetid).join(', ') }
-    let(:managers) { collection.managers.map(&:sunetid).join(', ') }
+    let(:managers) { collection.managed_by.map(&:sunetid).join(', ') }
     let(:collection) { build_stubbed(:collection, :with_managers, :with_depositors) }
 
     it 'renders the participant component' do

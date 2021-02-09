@@ -10,7 +10,7 @@ RSpec.describe 'Show the collection detail page' do
   context 'with an admin user' do
     let(:user) { create(:user) }
     let(:depositors) { collection.depositors.map(&:sunetid).join(', ') }
-    let(:managers) { collection.managers.map(&:sunetid).join(', ') }
+    let(:managers) { collection.managed_by.map(&:sunetid).join(', ') }
     let(:reviewers) { collection2.reviewed_by.map(&:sunetid).join(', ') }
 
     before do

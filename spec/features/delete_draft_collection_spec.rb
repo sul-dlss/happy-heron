@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Delete a draft collection', js: true do
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, managers: [user]) }
+  let!(:collection) { create(:collection, managed_by: [user]) }
 
   before do
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']

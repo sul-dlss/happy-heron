@@ -29,7 +29,7 @@ RSpec.describe 'Show the collection work list page' do
 
   context 'with a manager' do
     let(:collection) { create(:collection, :with_managers, :with_works) }
-    let(:user) { collection.managers.first }
+    let(:user) { collection.managed_by.first }
 
     before do
       sign_in user

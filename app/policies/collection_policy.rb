@@ -27,7 +27,7 @@ class CollectionPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def show?
     administrator? ||
-      record.managers.include?(user) ||
+      record.managed_by.include?(user) ||
       record.reviewed_by.include?(user) ||
       record.depositor_ids.include?(user.id)
   end

@@ -39,7 +39,7 @@ class WorkPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def update?
     return true if administrator? ||
-                   record.collection.managers.include?(user) ||
+                   record.collection.managed_by.include?(user) ||
                    record.collection.reviewed_by.include?(user)
 
     record.depositor == user && record.can_update_metadata? && !record.pending_approval?
@@ -55,7 +55,7 @@ class WorkPolicy < ApplicationPolicy
   def show?
     administrator? ||
       record.depositor == user ||
-      record.collection.managers.include?(user) ||
+      record.collection.managed_by.include?(user) ||
       record.collection.reviewed_by.include?(user)
   end
 

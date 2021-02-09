@@ -12,7 +12,7 @@ class Collection < ApplicationRecord
   belongs_to :creator, class_name: 'User'
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
   has_and_belongs_to_many :reviewed_by, class_name: 'User', join_table: 'reviewers'
-  has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
+  has_and_belongs_to_many :managed_by, class_name: 'User', join_table: 'managers'
 
   after_update_commit -> { broadcast_replace_to self }
   after_update_commit :broadcast_update_collection_summary

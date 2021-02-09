@@ -90,6 +90,15 @@ module Collection::GeneratedAttributeMethods
   def id?; end
 
   sig { returns(String) }
+  def license_option; end
+
+  sig { params(value: T.any(String, Symbol)).void }
+  def license_option=(value); end
+
+  sig { returns(T::Boolean) }
+  def license_option?; end
+
+  sig { returns(String) }
   def name; end
 
   sig { params(value: T.any(String, Symbol)).void }
@@ -215,13 +224,13 @@ module Collection::GeneratedAssociationMethods
   def events=(value); end
 
   sig { returns(::User::ActiveRecord_Associations_CollectionProxy) }
-  def managers; end
+  def managed_by; end
 
   sig { returns(T::Array[Integer]) }
-  def manager_ids; end
+  def managed_by_ids; end
 
   sig { params(value: T::Enumerable[::User]).void }
-  def managers=(value); end
+  def managed_by=(value); end
 
   sig { returns(::RelatedLink::ActiveRecord_Associations_CollectionProxy) }
   def related_links; end

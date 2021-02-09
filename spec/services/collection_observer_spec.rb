@@ -37,7 +37,7 @@ RSpec.describe CollectionObserver do
         let(:manager) { create(:user) }
         let(:collection) do
           create(:collection, :deposited, :with_depositors, :email_when_participants_changed,
-                 managers: [manager], reviewed_by: [reviewer, reviewer2], depositor_count: 2)
+                 managed_by: [manager], reviewed_by: [reviewer, reviewer2], depositor_count: 2)
         end
 
         it 'sends emails to the managers about the participants change' do
@@ -86,7 +86,7 @@ RSpec.describe CollectionObserver do
     context 'when managers are added to a collection' do
       let(:collection) { create(:collection, :deposited) }
       let(:manager) { create(:user) }
-      let(:collection_after) { collection.dup.tap { |col| col.managers = [manager] } }
+      let(:collection_after) { collection.dup.tap { |col| col.managed_by = [manager] } }
 
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
@@ -97,7 +97,7 @@ RSpec.describe CollectionObserver do
     end
 
     context 'when managers are removed from a collection' do
-      let(:collection_after) { collection.dup.tap { |col| col.managers = [collection.managers.first] } }
+      let(:collection_after) { collection.dup.tap { |col| col.managed_by = [collection.managed_by.first] } }
       let(:collection) do
         create(:collection, :deposited, :with_managers, manager_count: 2)
       end
@@ -105,7 +105,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'manage_access_removed_email', 'deliver_now',
-          { params: { user: collection.managers.last, collection: collection }, args: [] }
+          { params: { user: collection.managed_by.last, collection: collection }, args: [] }
         )
       end
     end
