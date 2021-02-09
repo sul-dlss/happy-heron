@@ -5,6 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Dashboard requests' do
   let(:user) { create(:user) }
+  let(:collection_manager) { create(:user) }
 
   context 'when user has no deposits' do
     before { sign_in user }
@@ -45,6 +46,24 @@ RSpec.describe 'Dashboard requests' do
       expect(response).to be_successful
       expect(response.body).to include 'No title' # this is the default title when none is provided for a draft
       expect(response.body).not_to include 'Secret'
+    end
+  end
+
+  context 'when user is a collection manager and there is a collection in progress' do
+    let(:collection) do
+      create(:collection, :first_draft, creator: user, managers: [collection_manager], name: 'Happy little collection')
+    end
+
+    before do
+      sign_in collection_manager
+      create(:work, collection: collection, depositor: collection_manager)
+    end
+
+    it 'shows the collection in progress' do
+      get '/dashboard'
+      expect(response).to be_successful
+      expect(response.body).to include('Collections in progress')
+      expect(response.body).to include(collection.name)
     end
   end
 
