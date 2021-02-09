@@ -105,8 +105,10 @@ class WorksController < ObjectsController
 
   sig { params(work: Work).void }
   def after_save(work)
-    work.event_context = { user: current_user }
-    work.event_context[:description] = params[:work][:version_description] unless params[:work][:version_description].nil?
+    work.event_context = { 
+      user: current_user, 
+      description: params.dig(:work, :version_description) 
+    }.compact
 
     work.update_metadata!
     if deposit_button_pushed?
