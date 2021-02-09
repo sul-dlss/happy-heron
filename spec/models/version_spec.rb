@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Version, type: :model do

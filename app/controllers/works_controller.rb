@@ -105,9 +105,9 @@ class WorksController < ObjectsController
 
   sig { params(work: Work).void }
   def after_save(work)
-    work.event_context = { 
-      user: current_user, 
-      description: params.dig(:work, :version_description) 
+    work.event_context = {
+      user: current_user,
+      description: params.dig(:work, :version_description)
     }.compact
 
     work.update_metadata!
