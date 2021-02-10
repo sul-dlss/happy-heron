@@ -4,9 +4,10 @@
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="dashboard">
     <%= render Dashboard::InProgressComponent.new(presenter: @presenter) %>
+    <%= render Dashboard::InProgressCollectionComponent.new(presenter: @presenter) %>
     <%= render Dashboard::ApprovalsComponent.new(presenter: @presenter) %>
 
-    <section data-controller="work-type">
+    <section id="your-collections" data-controller="work-type">
       <header>Your collections
         <% if allowed_to?(:create?, Collection) %>
           <%= link_to '+ Create a new collection', new_collection_path, class: "btn btn-outline-primary float-end" %>

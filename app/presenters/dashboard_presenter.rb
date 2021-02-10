@@ -8,16 +8,21 @@ class DashboardPresenter
   sig do
     params(in_progress: ActiveRecord::Relation,
            approvals: ActiveRecord::Relation,
-           collections: ActiveRecord::Relation).void
+           collections: ActiveRecord::Relation,
+           collection_managers_in_progress: ActiveRecord::Relation).void
   end
-  def initialize(in_progress:, approvals:, collections:)
+  def initialize(in_progress:, approvals:, collections:, collection_managers_in_progress:)
     @in_progress = in_progress
     @approvals = approvals
     @collections = collections
+    @collection_managers_in_progress = collection_managers_in_progress
   end
 
   sig { returns(ActiveRecord::Relation) }
   attr_reader :in_progress
+
+  sig { returns(ActiveRecord::Relation) }
+  attr_reader :collection_managers_in_progress
 
   sig { returns(ActiveRecord::Relation) }
   attr_reader :approvals
