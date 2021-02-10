@@ -38,6 +38,18 @@ RSpec.describe Works::DatesComponent do
     end
   end
 
+  context 'with a populated form with an approximate date range' do
+    let(:approx_date_range) { EDTF.parse('2019-05?/2020-07?') }
+    let(:work) { build(:work, created_edtf: approx_date_range) }
+
+    it 'renders the component with both start and end approximate checkbox selected' do
+      expect(rendered.css('#work_created_range_start_year').first['value']).to eq '2019'
+      expect(rendered.css('#work_created_range_approx0_').first.attribute('checked').value).to eq 'checked'
+      expect(rendered.css('#work_created_range_end_year').first['value']).to eq '2020'
+      expect(rendered.css('#work_created_range_approx3_').first.attribute('checked').value).to eq 'checked'
+    end
+  end
+
   context 'with a populated form with a single creation_date' do
     let(:work) { build(:work, :with_creation_date) }
 
@@ -70,6 +82,16 @@ RSpec.describe Works::DatesComponent do
       expect(rendered.css('#work_created_year').first['value']).to eq '2020'
       expect(rendered.css('#work_created_month option[@selected="selected"]').first['value']).to eq '5'
       expect(rendered.css('#work_created_day option[@selected="selected"]')).to be_empty
+    end
+  end
+
+  context 'with a populated form containing an approximate date' do
+    let(:creation_date) { EDTF.parse('2020-05-09?') }
+    let(:work) { build(:work, created_edtf: creation_date) }
+
+    it 'renders the component with the approximate check-box selected' do
+      expect(rendered.css('#work_created_year').first['value']).to eq '2020'
+      expect(rendered.css('#work_created_approx_').first.attribute('checked').value).to eq 'checked'
     end
   end
 end

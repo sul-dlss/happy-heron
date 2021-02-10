@@ -27,7 +27,7 @@ module Works
     def created_approximate?
       return false unless created_edtf
 
-      created_edtf.uncertain?
+      T.must(created_edtf).uncertain?
     end
 
     delegate :published_edtf, to: :reform
@@ -47,7 +47,7 @@ module Works
     def created_range_start_approximate?
       return false unless created_range_start
 
-      created_range_start.uncertain?
+      T.must(created_range_start).uncertain?
     end
 
     def created_range_end_year
@@ -65,7 +65,7 @@ module Works
     def created_range_end_approximate?
       return false unless created_range_end
 
-      created_range_end.uncertain?
+      T.must(created_range_end).uncertain?
     end
 
     sig { returns(T.nilable(Date)) }
