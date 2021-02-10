@@ -42,8 +42,8 @@ class License
   # list for the work form pulldown
   sig { returns(T::Array[T::Array[T.any(String, T::Array[String])]]) }
   def self.grouped_options
-    GROUPINGS.map do |key, group_label|
-      [group_label, GROUPED_LICENSES.fetch(key).map { |license_id| [label_for(license_id), license_id] }]
+    GROUPINGS.map do |group|
+      [group.fetch(:label), group.fetch(:options).map { |license_id| [label_for(license_id), license_id] }]
     end
   end
 
@@ -52,18 +52,10 @@ class License
     ID_LABEL_HASH.fetch(license_id)
   end
 
-  GROUPINGS = {
-    'cc-pdcc' => 'CC-PDDC Public Domain Dedication and Certification',
-    'cc' => 'Creative Commons',
-    'odc' => 'Open Data Commons (ODC) licenses',
-    'software' => 'Software Licenses',
-    'none' => 'No License'
-  }.freeze
-
-  GROUPED_LICENSES = {
-    'cc-pdcc' => ['CC-PDDC'],
-    'cc' =>
-      [
+  GROUPINGS = [
+    {
+      label: 'Creative Commons',
+      options: [
         'CC0-1.0',
         'CC-BY-4.0',
         'CC-BY-SA-4.0',
@@ -71,15 +63,23 @@ class License
         'CC-BY-NC-4.0',
         'CC-BY-NC-SA-4.0',
         'CC-BY-NC-ND-4.0'
-      ],
-    'odc' =>
-      [
+      ]
+    },
+    {
+      label: 'CC-PDDC Public Domain Dedication and Certification',
+      options: ['CC-PDDC']
+    },
+    {
+      label: 'Open Data Commons (ODC) licenses',
+      options: [
         'PDDL-1.0',
         'ODC-By-1.0',
         'ODbL-1.0'
-      ],
-    'software' =>
-      [
+      ]
+    },
+    {
+      label: 'Software Licenses',
+      options: [
         'AGPL-3.0-only',
         'Apache-2.0',
         'BSD-2-Clause',
@@ -91,7 +91,11 @@ class License
         'LGPL-3.0-only',
         'MIT',
         'MPL-2.0'
-      ],
-    'none' => ['none']
-  }.freeze
+      ]
+    },
+    {
+      label: 'No License',
+      options: ['none']
+    }
+  ].freeze
 end
