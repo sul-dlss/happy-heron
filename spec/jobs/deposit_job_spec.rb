@@ -15,7 +15,10 @@ RSpec.describe DepositJob do
     )
   end
   let(:attached_file) { build(:attached_file) }
-  let(:work) { build(:work, id: 8, attached_files: [attached_file], collection: collection) }
+  let(:work) { build(:work, collection: collection) }
+  let(:work_version) do
+    build(:work_version, id: 8, work: work, attached_files: [attached_file])
+  end
   let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
 
   before do
@@ -40,16 +43,18 @@ RSpec.describe DepositJob do
     end
 
     it 'initiates a DepositStatusJob' do
-      described_class.perform_now(work)
+      described_class.perform_now(work_version)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: work, job_id: 1234)
+      expect(DepositStatusJob).to have_received(:perform_later).with(object: work_version, job_id: 1234)
     end
   end
 
   context 'when the work has already been accessioned' do
     let(:work) do
-      build(:work, id: 8, version: 1, druid: 'druid:bk123gh4567',
-                   attached_files: [attached_file], collection: collection)
+      build(:work, druid: 'druid:bk123gh4567', collection: collection)
+    end
+    let(:work_version) do
+      build(:work_version, id: 8, version: 1, work: work, attached_files: [attached_file])
     end
 
     before do
@@ -59,10 +64,10 @@ RSpec.describe DepositJob do
     end
 
     it 'initiates a DepositStatusJob' do
-      described_class.perform_now(work)
+      described_class.perform_now(work_version)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: work, job_id: 1234)
-      expect(work.version).to eq 2
+      expect(DepositStatusJob).to have_received(:perform_later).with(object: work_version, job_id: 1234)
+      expect(work_version.version).to eq 2
     end
   end
 
@@ -73,7 +78,7 @@ RSpec.describe DepositJob do
     end
 
     it 'notifies' do
-      described_class.perform_now(work)
+      described_class.perform_now(work_version)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       expect(DepositStatusJob).not_to have_received(:perform_later)
       expect(Honeybadger).to have_received(:notify)

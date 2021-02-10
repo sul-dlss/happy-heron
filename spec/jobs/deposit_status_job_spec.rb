@@ -22,16 +22,16 @@ RSpec.describe DepositStatusJob do
 
     context 'with a work' do
       context 'with a citation' do
-        let(:work) do
-          build(:work, :depositing,
-                citation: "Zappa, F. (2013) #{WorkVersion::LINK_TEXT}", collection: collection,
-                depositor: collection.managed_by.first)
+        let(:work_version) do
+          build(:work_version, :depositing, work: work,
+                citation: "Zappa, F. (2013) #{WorkVersion::LINK_TEXT}")
         end
+        let(:work) { build(:work, collection: collection, depositor: collection.managed_by.first) }
         let(:collection) { build(:collection, :with_managers) }
 
-        it 'updates the work' do
+        it 'updates the work version' do
           expect do
-            described_class.perform_now(object: work, job_id: job_id)
+            described_class.perform_now(object: work_version, job_id: job_id)
           end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'collection_activity', 'deliver_now',
             { params: {
@@ -42,18 +42,19 @@ RSpec.describe DepositStatusJob do
           )
 
           expect(work.druid).to eq druid
-          expect(work.citation).to eq 'Zappa, F. (2013) https://purl.stanford.edu/bc123df4567'
-          expect(work.state_name).to eq :deposited
+          expect(work_version.citation).to eq 'Zappa, F. (2013) https://purl.stanford.edu/bc123df4567'
+          expect(work_version.state_name).to eq :deposited
         end
       end
 
       context 'without a citation' do
-        let(:work) { build(:work, :depositing, citation: nil) }
+        let(:work_version) { build(:work_version, :depositing, citation: nil) }
+        let(:work) { work_version.work }
 
         it 'adds a druid and transitions to deposited state' do
-          described_class.perform_now(object: work, job_id: job_id)
+          described_class.perform_now(object: work_version, job_id: job_id)
           expect(work.druid).to eq druid
-          expect(work.state_name).to eq :deposited
+          expect(work_version.state_name).to eq :deposited
         end
       end
     end
@@ -71,22 +72,23 @@ RSpec.describe DepositStatusJob do
 
   context 'when the job is not successful' do
     let(:background_result) { { status: 'complete', output: { errors: [{ title: 'something went wrong' }] } } }
-    let(:work) { build(:work, state: 'depositing') }
+    let(:work_version) { build(:work_version, :depositing) }
+    let(:work) { work_version.work }
 
     it 'notifies' do
-      described_class.perform_now(object: work, job_id: job_id)
+      described_class.perform_now(object: work_version, job_id: job_id)
       expect(work.druid).to be_nil
-      expect(work.state_name).to eq :depositing
+      expect(work_version.state_name).to eq :depositing
       expect(Honeybadger).to have_received(:notify)
     end
   end
 
   context 'when the job is not completed' do
     let(:background_result) { { status: 'incomplete' } }
-    let(:work) { build(:work, state: 'depositing') }
+    let(:work_version) { build(:work_version, :depositing) }
 
     it 'raises a custom exception (so it can be ignored by Honeybadger)' do
-      expect { described_class.perform_now(object: work, job_id: job_id) }.to raise_error(
+      expect { described_class.perform_now(object: work_version, job_id: job_id) }.to raise_error(
         TryAgainLater, 'No result yet for job 1234'
       )
     end

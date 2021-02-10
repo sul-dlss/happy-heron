@@ -5,7 +5,7 @@
 class DepositStatusJob < BaseDepositJob
   queue_as :default
 
-  sig { params(object: T.any(Work, Collection), job_id: Integer).void }
+  sig { params(object: T.any(WorkVersion, Collection), job_id: Integer).void }
   def perform(object:, job_id:)
     result = status(job_id: job_id)
     # This will force a recheck of status (and should be ignored by Honeybadger)
@@ -20,14 +20,26 @@ class DepositStatusJob < BaseDepositJob
 
   # Assigns druid, adds the purl to the citation (if one exists), updates the state and saves.
   def complete_deposit(object, druid)
-    object.druid = druid
-    object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
-    # Force a save because state_machine-activerecord wraps its update in a transaction.
-    # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
-    # It's possible the mailer job is started before the transaction in the main thread is completed,
-    # which means the mailer may not have access to the druid.
-    object.save!
-    object.deposit_complete!
+    if object.is_a? WorkVersion
+      object.work.druid = druid
+      object.add_purl_to_citation
+      object.work.save!
+      # Force a save because state_machine-activerecord wraps its update in a transaction.
+      # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
+      # It's possible the mailer job is started before the transaction in the main thread is completed,
+      # which means the mailer may not have access to the druid.
+      object.save!
+      object.deposit_complete!
+    else
+      object.druid = druid
+      object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
+      # Force a save because state_machine-activerecord wraps its update in a transaction.
+      # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
+      # It's possible the mailer job is started before the transaction in the main thread is completed,
+      # which means the mailer may not have access to the druid.
+      object.save!
+      object.deposit_complete!
+    end
   end
 
   private
