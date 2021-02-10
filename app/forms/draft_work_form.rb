@@ -7,30 +7,31 @@ require 'reform/form/coercion'
 class DraftWorkForm < Reform::Form
   feature Edtf
   feature EmbargoDate
+  include Composition
 
-  property :work_type
-  property :subtype
-  property :title
-  property :abstract
-  property :citation
+  property :work_type, on: :work_version
+  property :subtype, on: :work_version
+  property :title, on: :work_version
+  property :abstract, on: :work_version
+  property :citation, on: :work_version
   property :default_citation, virtual: true, default: true
   property :citation_auto, virtual: true
-  property :collection_id
-  property :access
-  property :license
-  property :agree_to_terms
+  property :collection_id, on: :work
+  property :access, on: :work_version
+  property :license, on: :work_version
+  property :agree_to_terms, on: :work_version
   property :created_type, virtual: true, prepopulator: (proc do |*|
     self.created_type = created_edtf.is_a?(EDTF::Interval) ? 'range' : 'single'
   end)
-  property :created_edtf, edtf: true, range: true
-  property :published_edtf, edtf: true
+  property :created_edtf, edtf: true, range: true, on: :work_version
+  property :published_edtf, edtf: true, on: :work_version
   property :release, virtual: true, prepopulator: (proc do |*|
     self.release = embargo_date.present? ? 'embargo' : 'immediate'
   end)
-  property :embargo_date, embargo_date: true
+  property :embargo_date, embargo_date: true, on: :work_version
 
   validates_with EmbargoDateParts,
-                 if: proc { |form| form.model.collection.user_can_set_availability? && form.release != 'immediate' }
+                 if: proc { |form| form.collection.user_can_set_availability? && form.release != 'immediate' }
 
   def deserialize!(params)
     # Choose between using the user provided citation and the auto-generated citation
@@ -44,9 +45,9 @@ class DraftWorkForm < Reform::Form
   # Ensure the collection default overwrites whatever the user supplied
   # rubocop:disable Metrics/AbcSize
   def deserialize_embargo(params)
-    case model.collection.release_option
+    case collection.release_option
     when 'delay'
-      release_date = model.collection.release_date
+      release_date = collection.release_date
       params['embargo_date(1i)'] = release_date.year.to_s
       params['embargo_date(2i)'] = release_date.month.to_s
       params['embargo_date(3i)'] = release_date.day.to_s
@@ -59,16 +60,16 @@ class DraftWorkForm < Reform::Form
   # rubocop:enable Metrics/AbcSize
 
   def access_from_collection(params)
-    return if model.collection.access == 'depositor-selects'
+    return if collection.access == 'depositor-selects'
 
-    params['access'] = model.collection.access
+    params['access'] = collection.access
   end
 
   # Ensure the collection's required license overwrites whatever the user supplied
   def deserialize_license(params)
-    return unless model.collection.required_license
+    return unless collection.required_license
 
-    params['license'] = model.collection.required_license
+    params['license'] = collection.required_license
   end
 
   contributor = lambda { |*|
@@ -83,14 +84,18 @@ class DraftWorkForm < Reform::Form
   collection :contributors,
              populator: ContributorPopulator.new(:contributors, Contributor),
              prepopulator: ->(*) { contributors << Contributor.new if contributors.blank? },
+             on: :work_version,
              &contributor
 
   collection :authors,
              populator: ContributorPopulator.new(:authors, Author),
              prepopulator: ->(*) { authors << Author.new if authors.blank? },
+             on: :work_version,
              &contributor
 
-  collection :attached_files, populator: AttachedFilesPopulator.new(:attached_files, AttachedFile) do
+  collection :attached_files,
+             populator: AttachedFilesPopulator.new(:attached_files, AttachedFile),
+             on: :work_version do
     property :id
     property :label
     property :hide
@@ -102,13 +107,14 @@ class DraftWorkForm < Reform::Form
   end
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
-                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? } do
+                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
+                              on: :work_version do
     property :id
     property :email
     property :_destroy, virtual: true
   end
 
-  collection :keywords, populator: KeywordsPopulator.new(:keywords, Keyword) do
+  collection :keywords, populator: KeywordsPopulator.new(:keywords, Keyword), on: :work_version do
     property :id
     property :label
     property :uri
@@ -117,17 +123,34 @@ class DraftWorkForm < Reform::Form
 
   collection :related_works,
              populator: RelatedWorksPopulator.new(:related_works, RelatedWork),
-             prepopulator: ->(*) { related_works << RelatedWork.new if related_works.blank? } do
+             prepopulator: ->(*) { related_works << RelatedWork.new if related_works.blank? },
+             on: :work_version do
     property :id
     property :citation
     property :_destroy, virtual: true
   end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
-                             prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? } do
+                             prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
+                             on: :work_version do
     property :id
     property :link_title
     property :url
     property :_destroy, virtual: true
+  end
+
+  def collection
+    model.fetch(:work).collection
+  end
+
+  def persisted?
+    model.fetch(:work).persisted?
+  end
+
+  def save_model
+    Work.transaction do
+      super
+      model.fetch(:work).update(head: model.fetch(:work_version))
+    end
   end
 end

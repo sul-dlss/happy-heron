@@ -17,7 +17,7 @@ module Works
     end
 
     def collection
-      reform.model.collection
+      reform.model.fetch(:work).collection
     end
 
     delegate :user_can_set_license?, to: :collection

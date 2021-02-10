@@ -10,9 +10,12 @@ class DashboardsController < ApplicationController
     authorize! :dashboard
     @presenter = DashboardPresenter.new(
       collections: authorized_scope(Collection.all, as: :deposit),
-      approvals: Work.awaiting_review_by(current_user),
-      in_progress: Work.with_state(:first_draft, :version_draft, :rejected)
-                       .where(depositor: current_user),
+      approvals: WorkVersion.with_state(:pending_approval)
+                     .joins(work: { collection: :reviewed_by })
+                     .where('reviewers.user_id' => current_user),
+      in_progress: WorkVersion.with_state(:first_draft, :version_draft, :rejected)
+                     .joins(:work)
+                     .where('works.depositor' => current_user),
       collection_managers_in_progress: current_user.manages_collections.with_state(:first_draft, :version_draft)
     )
 

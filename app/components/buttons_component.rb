@@ -16,29 +16,42 @@ class ButtonsComponent < ApplicationComponent
 
   sig { returns(T.nilable(String)) }
   def delete_button
-    return unless object.model.persisted?
+    return unless persisted?
 
-    path = if model_type == 'Work'
-             delete_button_work_path(object.model, style: :button)
+    path = if work_form?
+             delete_button_work_path(model, style: :button)
            else
-             delete_button_collection_path(object.model, style: :button)
+             delete_button_collection_path(model, style: :button)
            end
 
-    helpers.turbo_frame_tag dom_id(object.model, :delete), src: path
+    helpers.turbo_frame_tag dom_id(model, :delete), src: path
   end
 
   sig { returns(T.nilable(String)) }
   def cancel_button
-    if model_type == 'Work'
-      render Works::CancelComponent.new(work: object.model)
+    if work_form?
+      render Works::CancelComponent.new(work: model)
     else
-      render Collections::CancelComponent.new(collection: object.model)
+      render Collections::CancelComponent.new(collection: model)
     end
   end
 
   private
 
   delegate :object, to: :form
+  delegate :persisted?, to: :model
+
+  def work_form?
+    model_type == 'Hash'
+  end
+
+  def model
+    work_form? ? work : object.model
+  end
+
+  def work
+    object.model.fetch(:work)
+  end
 
   sig { returns(T.nilable(String)) }
   def model_type

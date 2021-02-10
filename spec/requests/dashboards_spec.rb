@@ -20,10 +20,14 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user has deposits' do
+    let(:work1) { create(:work, depositor: user) }
+    let(:work_version1) { create(:work_version, title: 'Happy little title', work: work1) }
+    let(:work_version2) { create(:work_version, title: 'Secret') }
+
     before do
+      work1.update(head: work_version1)
+      work_version2.work.update(head: work_version2)
       sign_in user
-      create(:work, depositor: user, title: 'Happy little title')
-      create(:work, title: 'Secret')
     end
 
     it 'shows the deposits that belong to the user' do
@@ -35,10 +39,14 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user has a draft deposit with no title' do
+    let(:work1) { create(:work, depositor: user) }
+    let(:work_version1) { create(:work_version, title: '', work: work1) }
+    let(:work_version2) { create(:work_version, title: 'Secret') }
+
     before do
+      work1.update(head: work_version1)
+      work_version2.work.update(head: work_version2)
       sign_in user
-      create(:work, depositor: user, title: '')
-      create(:work, title: 'Secret')
     end
 
     it 'shows the deposits that belong to the user with the default title' do
@@ -68,14 +76,28 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user has in progress deposits in different states' do
+    let(:work1) { create(:work, depositor: user) }
+    let(:work_version1) { create(:work_version, state: 'first_draft', title: 'I am a first draft', work: work1) }
+    let(:work2) { create(:work, depositor: user) }
+    let(:work_version2) { create(:work_version, state: 'version_draft', title: 'I am a version draft', work: work2) }
+    let(:work3) { create(:work, depositor: user) }
+    let(:work_version3) { create(:work_version, state: 'rejected', title: 'I am rejected', work: work3) }
+    let(:work4) { create(:work, depositor: user) }
+    let(:work_version4) { create(:work_version, state: 'deposited', title: 'I am deposited', work: work4) }
+    let(:work5) { create(:work, depositor: user) }
+    let(:work_version5) { create(:work_version, state: 'depositing', title: 'I am depositing', work: work5) }
+    let(:work6) { create(:work, depositor: user) }
+    let(:work_version6) { create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6) }
+
     before do
+      work1.update(head: work_version1)
+      work2.update(head: work_version2)
+      work3.update(head: work_version3)
+      work4.update(head: work_version4)
+      work5.update(head: work_version5)
+      work6.update(head: work_version6)
+
       sign_in user
-      create(:work, depositor: user, state: 'first_draft', title: 'I am a first draft')
-      create(:work, depositor: user, state: 'version_draft', title: 'I am a version draft')
-      create(:work, depositor: user, state: 'rejected', title: 'I am rejected')
-      create(:work, depositor: user, state: 'deposited', title: 'I am deposited')
-      create(:work, depositor: user, state: 'depositing', title: 'I am depositing')
-      create(:work, depositor: user, state: 'pending_approval', title: 'I am pending approval')
     end
 
     it 'shows draft and rejected deposits as being in progress' do
@@ -105,13 +127,26 @@ RSpec.describe 'Dashboard requests' do
     let(:workful_collection) { create(:collection, creator: user, updated_at: '2020-12-02') }
     let!(:workless_collection) { create(:collection, creator: user, updated_at: '2020-12-03') }
 
+    let(:work1) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work_version1) { create(:work_version, state: 'deposited', work: work1) }
+    let(:work2) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work_version2) { create(:work_version, state: 'first_draft', work: work2) }
+    let(:work3) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work_version3) { create(:work_version, state: 'version_draft', work: work3) }
+    let(:work4) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work_version4) { create(:work_version, state: 'pending_approval', work: work4) }
+    let(:work5) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work_version5) { create(:work_version, state: 'rejected', work: work5) }
+
+
     before do
+      work1.update(head: work_version1)
+      work2.update(head: work_version2)
+      work3.update(head: work_version3)
+      work4.update(head: work_version4)
+      work5.update(head: work_version5)
+
       sign_in user, groups: ['dlss:hydrus-app-administrators']
-      create(:work, :deposited, collection: workful_collection, depositor: user)
-      create(:work, :first_draft, collection: workful_collection, depositor: user)
-      create(:work, :version_draft, collection: workful_collection, depositor: user)
-      create(:work, :pending_approval, collection: workful_collection, depositor: user)
-      create(:work, :rejected, collection: workful_collection, depositor: user)
     end
 
     it 'shows a link to create collections and the all collections table' do
@@ -149,9 +184,11 @@ RSpec.describe 'Dashboard requests' do
   context 'when user is a reviewer' do
     let(:collection) { create(:collection, :deposited, :with_reviewers) }
     let(:user) { collection.reviewed_by.first }
+    let(:work) { create(:work, collection: collection) }
+    let(:work_version) { create(:work_version, :pending_approval, title: 'To Review', work: work) }
 
     before do
-      create(:work, collection: collection, state: 'pending_approval', title: 'To Review')
+      work.update(head: work_version)
       sign_in user
     end
 
@@ -165,9 +202,10 @@ RSpec.describe 'Dashboard requests' do
   context 'when user is a depositor in a collection with reviewers' do
     let(:collection) { create(:collection, :deposited, :with_depositors) }
     let(:user) { collection.depositors.first }
+    let(:work) { create(:work, depositor: user) }
+    let!(:work_version) { create(:work_version, work: work) } # Must have a deposit to visit the dashboard
 
     before do
-      create(:work, depositor: user) # Must have a deposit to visit the dashboard
       sign_in user
     end
 
@@ -182,10 +220,17 @@ RSpec.describe 'Dashboard requests' do
     let(:collection) { create(:collection, :deposited, :with_reviewers, :with_depositors) }
     let(:user) { collection.depositors.first }
 
+    let(:work1) { create(:work, depositor: user, collection: collection) }
+    let(:work_version1) { create(:work_version, :pending_approval, title: 'To Review', work: work1) }
+    let(:work2) { create(:work, depositor: user, collection: collection) }
+    let(:work_version2) { create(:work_version, :first_draft, title: 'No Review', work: work2) }
+    let(:work3) { create(:work, depositor: user, collection: collection) }
+    let(:work_version3) { create(:work_version, :rejected, title: 'Rejected Upon Review', work: work3) }
+
     before do
-      create(:work, depositor: user, collection: collection, state: 'pending_approval', title: 'To Review')
-      create(:work, depositor: user, collection: collection, state: 'first_draft', title: 'No Review')
-      create(:work, depositor: user, collection: collection, state: 'rejected', title: 'Rejected Upon Review')
+      work1.update(head: work_version1)
+      work2.update(head: work_version2)
+      work3.update(head: work_version3)
       sign_in user
     end
 

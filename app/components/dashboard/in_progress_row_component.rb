@@ -4,13 +4,14 @@
 module Dashboard
   # Display some information about a work that is in progress
   class InProgressRowComponent < ApplicationComponent
-    with_collection_parameter :work
+    with_collection_parameter :work_version
 
-    def initialize(work:)
-      @work = work
+    def initialize(work_version:)
+      @work_version = work_version
     end
 
-    attr_reader :work
+    attr_reader :work_version
+    delegate :work, to: :work_version
 
     def collection_name
       Dashboard::CollectionHeaderComponent.new(collection: work.collection).name
@@ -23,7 +24,7 @@ module Dashboard
     end
 
     def title
-      @title ||= Works::DetailComponent.new(work: work).title
+      @title ||= Works::DetailComponent.new(work_version: work_version).title
     end
 
     def work_link

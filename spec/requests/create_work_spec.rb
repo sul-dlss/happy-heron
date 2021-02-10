@@ -261,7 +261,7 @@ RSpec.describe 'Create a new work' do
         let(:embargo_year) { Time.zone.today.year + 1 }
 
         let(:work_params) do
-          attributes_for(:work)
+          attributes_for(:work_version)
             .merge(authors_attributes: authors,
                    attached_files_attributes: files,
                    contact_emails_attributes: contact_emails,
@@ -284,23 +284,23 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.authors.size).to eq 2
-          expect(work.authors.last.full_name).to eq 'The Leland Stanford Junior University'
-          expect(work.attached_files.size).to eq 2
-          expect(work.contact_emails.size).to eq 2
-          expect(work.keywords.size).to eq 2
-          expect(work.related_works.size).to eq 2
-          expect(work.related_links.size).to eq 2
-          expect(work.citation).to eq 'test citation'
-          expect(work.license).to eq 'PDDL-1.0'
-          expect(work.published_edtf.to_edtf).to eq '2020-02-14'
-          expect(work.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
-          expect(work.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
-          expect(work.subtype).to eq ['Article', 'Technical report']
-          expect(DepositJob).to have_received(:perform_later).with(work)
-          expect(work.state).to eq 'depositing'
-          expect(work.access).to eq 'world' # shows that `stanford` was overwritten
+          work_version = Work.last.head
+          expect(work_version.authors.size).to eq 2
+          expect(work_version.authors.last.full_name).to eq 'The Leland Stanford Junior University'
+          expect(work_version.attached_files.size).to eq 2
+          expect(work_version.contact_emails.size).to eq 2
+          expect(work_version.keywords.size).to eq 2
+          expect(work_version.related_works.size).to eq 2
+          expect(work_version.related_links.size).to eq 2
+          expect(work_version.citation).to eq 'test citation'
+          expect(work_version.license).to eq 'PDDL-1.0'
+          expect(work_version.published_edtf.to_edtf).to eq '2020-02-14'
+          expect(work_version.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
+          expect(work_version.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
+          expect(work_version.subtype).to eq ['Article', 'Technical report']
+          expect(DepositJob).to have_received(:perform_later).with(work_version)
+          expect(work_version.state).to eq 'depositing'
+          expect(work_version.access).to eq 'world' # shows that `stanford` was overwritten
         end
       end
 
@@ -360,16 +360,16 @@ RSpec.describe 'Create a new work' do
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.authors.size).to eq 1
-          expect(work.attached_files.size).to eq 1
-          expect(work.keywords.size).to eq 1
-          expect(work.contact_emails.size).to eq 1
-          expect(work.published_edtf).to be_nil
-          expect(work.created_edtf).to be_nil
-          expect(work.embargo_date).to be_nil
-          expect(work.subtype).to be_empty
-          expect(work.state).to eq 'depositing'
+          work_version = Work.last.head
+          expect(work_version.authors.size).to eq 1
+          expect(work_version.attached_files.size).to eq 1
+          expect(work_version.keywords.size).to eq 1
+          expect(work_version.contact_emails.size).to eq 1
+          expect(work_version.published_edtf).to be_nil
+          expect(work_version.created_edtf).to be_nil
+          expect(work_version.embargo_date).to be_nil
+          expect(work_version.subtype).to be_empty
+          expect(work_version.state).to eq 'depositing'
           expect(DepositJob).to have_received(:perform_later)
         end
       end
@@ -390,19 +390,19 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Save as draft' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.title).to be_empty
-          expect(work.contact_emails).to be_empty
-          expect(work.abstract).to be_empty
-          expect(work.authors).to be_empty
-          expect(work.attached_files).to be_empty
-          expect(work.keywords.size).to eq 0
-          expect(work.published_edtf).to be_nil
-          expect(work.created_edtf).to be_nil
-          expect(work.embargo_date).to be_nil
-          expect(work.subtype).to be_empty
-          expect(work.license).to eq License.license_list.first
-          expect(work.state).to eq 'first_draft'
+          work_version = Work.last.head
+          expect(work_version.title).to be_empty
+          expect(work_version.contact_emails).to be_empty
+          expect(work_version.abstract).to be_empty
+          expect(work_version.authors).to be_empty
+          expect(work_version.attached_files).to be_empty
+          expect(work_version.keywords.size).to eq 0
+          expect(work_version.published_edtf).to be_nil
+          expect(work_version.created_edtf).to be_nil
+          expect(work_version.embargo_date).to be_nil
+          expect(work_version.subtype).to be_empty
+          expect(work_version.license).to eq License.license_list.first
+          expect(work_version.state).to eq 'first_draft'
           expect(DepositJob).not_to have_received(:perform_later)
         end
       end
@@ -427,21 +427,21 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Save as draft' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.title).to be_empty
-          expect(work.contact_emails).to be_empty
-          expect(work.abstract).to be_empty
-          expect(work.authors).to be_empty
-          expect(work.attached_files).to be_empty
-          expect(work.keywords.size).to eq 0
-          expect(work.published_edtf).to be_nil
-          expect(work.created_edtf).to be_nil
-          expect(work.embargo_date).to be_nil
-          expect(work.subtype).to be_empty
-          expect(work.citation).to eq 'Zappa, F. (2020). Test publication yy/mm ' \
+          work_version = Work.last.head
+          expect(work_version.title).to be_empty
+          expect(work_version.contact_emails).to be_empty
+          expect(work_version.abstract).to be_empty
+          expect(work_version.authors).to be_empty
+          expect(work_version.attached_files).to be_empty
+          expect(work_version.keywords.size).to eq 0
+          expect(work_version.published_edtf).to be_nil
+          expect(work_version.created_edtf).to be_nil
+          expect(work_version.embargo_date).to be_nil
+          expect(work_version.subtype).to be_empty
+          expect(work_version.citation).to eq 'Zappa, F. (2020). Test publication yy/mm ' \
             'date in past. Stanford Digital Repository. Available at :link:'
-          expect(work.license).to eq License.license_list.first
-          expect(work.state).to eq 'first_draft'
+          expect(work_version.license).to eq License.license_list.first
+          expect(work_version.state).to eq 'first_draft'
           expect(DepositJob).not_to have_received(:perform_later)
         end
       end
@@ -502,16 +502,16 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.authors.size).to eq 1
-          expect(work.attached_files.size).to eq 1
-          expect(work.contact_emails.size).to eq 1
-          expect(work.keywords.size).to eq 1
-          expect(work.published_edtf).to be_nil
-          expect(work.created_edtf).to be_nil
-          expect(work.embargo_date).to be_nil
-          expect(work.subtype).to be_empty
-          expect(work.state).to eq 'pending_approval'
+          work_version = Work.last.head
+          expect(work_version.authors.size).to eq 1
+          expect(work_version.attached_files.size).to eq 1
+          expect(work_version.contact_emails.size).to eq 1
+          expect(work_version.keywords.size).to eq 1
+          expect(work_version.published_edtf).to be_nil
+          expect(work_version.created_edtf).to be_nil
+          expect(work_version.embargo_date).to be_nil
+          expect(work_version.subtype).to be_empty
+          expect(work_version.state).to eq 'pending_approval'
           expect(DepositJob).not_to have_received(:perform_later)
         end
       end
@@ -577,8 +577,8 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.embargo_date).to be_nil
+          work_version = Work.last.head
+          expect(work_version.embargo_date).to be_nil
           expect(DepositJob).to have_received(:perform_later)
         end
       end
@@ -646,8 +646,8 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.embargo_date).to eq release_date
+          work_version = Work.last.head
+          expect(work_version.embargo_date).to eq release_date
           expect(DepositJob).to have_received(:perform_later)
         end
       end
@@ -735,8 +735,8 @@ RSpec.describe 'Create a new work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
           expect(response).to have_http_status(:found)
-          work = Work.last
-          expect(work.license).to eq 'CC-BY-4.0'
+          work_version = Work.last.head
+          expect(work_version.license).to eq 'CC-BY-4.0'
           expect(DepositJob).to have_received(:perform_later)
         end
       end

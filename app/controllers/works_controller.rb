@@ -10,22 +10,23 @@ class WorksController < ObjectsController
   def new
     validate_work_types!
     collection = Collection.find(params[:collection_id])
-    work = Work.new(work_type: params[:work_type],
-                    subtype: params[:subtype],
-                    collection: collection)
-    authorize! work
+    work = Work.new(collection: collection)
+    work_version = WorkVersion.new(work_type: params[:work_type], subtype: params[:subtype], work: work)
+    authorize! work_version
 
-    @form = WorkForm.new(work)
+    @form = WorkForm.new(work_version: work_version, work: work)
     @form.prepopulate!
   end
 
   def create
     work = Work.new(collection_id: params[:collection_id], depositor: current_user)
-    authorize! work
-    @form = work_form(work)
+    work_version = WorkVersion.new(work: work)
+
+    authorize! work_version
+    @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
       work.event_context = { user: current_user }
-      after_save(work)
+      after_save(work_version: work_version, work: work)
     else
       render :new, status: :unprocessable_entity
     end
@@ -33,19 +34,21 @@ class WorksController < ObjectsController
 
   def edit
     work = Work.find(params[:id])
-    authorize! work
+    work_version = work.head
+    authorize! work_version
 
-    @form = WorkForm.new(work)
+    @form = WorkForm.new(work_version: work_version, work: work_version.work)
     @form.prepopulate!
   end
 
   def update
     work = Work.find(params[:id])
-    authorize! work
-    @form = work_form(work)
+    work_version = work.head
+    authorize! work_version
+    @form = work_form(work_version)
 
     if @form.validate(work_params) && @form.save
-      after_save(work)
+      after_save(work_version: work_version, work: work)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -55,7 +58,7 @@ class WorksController < ObjectsController
     @collection = Collection.find(params[:collection_id])
     authorize! @collection, to: :show?
 
-    @works = authorized_scope(@collection.works, as: :edits)
+    @works = authorized_scope(@collection.works, as: :edits, with: WorkVersionPolicy)
   end
 
   def show
@@ -96,22 +99,22 @@ class WorksController < ObjectsController
 
   private
 
-  sig { params(work: Work).returns(Reform::Form) }
-  def work_form(work)
-    return WorkForm.new(work) if deposit_button_pushed?
+  sig { params(work_version: WorkVersion).returns(Reform::Form) }
+  def work_form(work_version)
+    return WorkForm.new(work_version: work_version, work: work_version.work) if deposit_button_pushed?
 
-    DraftWorkForm.new(work)
+    DraftWorkForm.new(work_version: work_version, work: work_version.work)
   end
 
-  sig { params(work: Work).void }
-  def after_save(work)
+  sig { params(work_version: WorkVersion, work: Work).void }
+  def after_save(work_version:, work:)
     work.event_context = { user: current_user }
-    work.update_metadata!
+    work_version.update_metadata!
     if deposit_button_pushed?
       if work.collection.review_enabled?
-        work.submit_for_review!
+        work_version.submit_for_review!
       else
-        work.begin_deposit!
+        work_version.begin_deposit!
       end
     end
     redirect_to work

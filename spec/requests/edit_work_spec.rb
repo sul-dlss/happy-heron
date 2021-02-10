@@ -4,8 +4,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Updating an existing work' do
+  let(:work) { work_version.work }
+
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
+    work.update(head: work_version)
   end
 
   context 'with an authenticated user' do
@@ -16,7 +19,7 @@ RSpec.describe 'Updating an existing work' do
     end
 
     describe 'display the form' do
-      let(:work) { create(:work, :published, :with_creation_date_range) }
+      let(:work_version) { create(:work_version, :published, :with_creation_date_range) }
 
       it 'shows the form' do
         get "/works/#{work.id}/edit"
@@ -26,7 +29,8 @@ RSpec.describe 'Updating an existing work' do
 
     describe 'submit the form' do
       context 'with an attachment' do
-        let(:work) { create(:work, :with_attached_file, :deposited) }
+        let(:work) { work_version.work }
+        let(:work_version) { create(:work_version, :deposited, :with_attached_file) }
         let(:user) { work.depositor }
         let(:work_params) do
           {
@@ -35,7 +39,7 @@ RSpec.describe 'Updating an existing work' do
             contact_email: 'io@io.io',
             abstract: 'test abstract',
             attached_files_attributes: {
-              '0' => { 'label' => 'two', '_destroy' => '', 'hide' => '0', 'id' => work.attached_files.first.id }
+              '0' => { 'label' => 'two', '_destroy' => '', 'hide' => '0', 'id' => work_version.attached_files.first.id }
             },
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -47,13 +51,14 @@ RSpec.describe 'Updating an existing work' do
 
         it 'redirects to the work page' do
           patch "/works/#{work.id}", params: { work: work_params }
-          expect(work.reload).to be_version_draft
+          expect(work_version.reload).to be_version_draft
           expect(response).to redirect_to(work)
         end
       end
 
       context 'with a validation problem' do
-        let(:work) { create(:work) }
+        let(:work) { work_version.work }
+        let(:work_version) { create(:work_version) }
         let(:user) { work.depositor }
         let(:work_params) do
           {

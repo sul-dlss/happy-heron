@@ -1,17 +1,17 @@
 <tr>
-  <%= render Works::LinkToShowComponent.new(work: work) %>
+  <%= render Works::LinkToShowComponent.new(work_version: work_version) %>
   <td>
-    <% if allowed_to? :edit?, work %>
-      <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work: work).title}" } do %>
+    <% if allowed_to? :edit?, work_version %>
+      <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work_version: work_version).title}" } do %>
         <span class="fas fa-pencil-alt"></span>
       <% end %>
     <% end %>
     <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </td>
   <td><%= work.depositor.sunetid %></td>
-  <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
+  <td><%= render Works::StateDisplayComponent.new(work_version: work_version) %></td>
   <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
-  <td><%= work.attached_files.count %></td>
+  <td><%= attached_files.count %></td>
   <td><%= size %></td>
   <td><%= link_to work.purl, work.purl if work.purl %></td>
   <td><span class="fas fa-quote-left"></span> Cite</td>

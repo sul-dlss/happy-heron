@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(collection, :deposit) do %>
-  <% if allowed_to?(:create?, Work.new(collection: collection)) %>
+  <% if allowed_to?(:create?, WorkVersion.new(work: Work.new(collection: collection))) %>
     <%= button_tag '+ Deposit to this collection',
           data: {
             destination: new_collection_work_path(collection),

@@ -15,15 +15,15 @@ module Collections
     delegate :current_user, :user_with_groups, to: :helpers
 
     def works
-      policy.authorized_scope(collection.works, as: :edits)
+      policy.authorized_scope(collection.works, as: :edits, with: WorkVersionPolicy)
             .order('updated_at DESC')
     end
 
     private
 
-    sig { returns(WorkPolicy) }
+    sig { returns(WorkVersionPolicy) }
     def policy
-      WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
+      WorkVersionPolicy.new(user: current_user, user_with_groups: user_with_groups)
     end
   end
 end

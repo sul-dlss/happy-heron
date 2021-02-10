@@ -4,24 +4,19 @@
 module Works
   # Renders the details about the work (show page)
   class DetailComponent < ApplicationComponent
-    sig { params(work: Work).void }
-    def initialize(work:)
-      @work = work
+    sig { params(work_version: WorkVersion).void }
+    def initialize(work_version:)
+      @work_version = work_version
     end
 
-    sig { returns(Work) }
-    attr_reader :work
+    sig { returns(WorkVersion) }
+    attr_reader :work_version
 
     delegate :purl, :collection, :depositor, :events, to: :work
 
     delegate :version, :work_type, :contact_emails, :abstract, :citation,
              :attached_files, :related_works, :related_links,
-             :created_edtf, :published_edtf, :rejected?, to: :work_version
-
-    sig { returns(WorkVersion) }
-    def work_version
-      work.head
-    end
+             :created_edtf, :published_edtf, :rejected?, :work, to: :work_version
 
     sig { returns(T::Array[AbstractContributor]) }
     def contributors
@@ -87,7 +82,7 @@ module Works
 
     sig { returns(T.nilable(String)) }
     def rejection_reason
-      work_version.last_rejection_description
+      work.last_rejection_description
     end
   end
 end
