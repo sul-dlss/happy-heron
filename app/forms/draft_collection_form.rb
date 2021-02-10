@@ -41,7 +41,6 @@ class DraftCollectionForm < Reform::Form
     property :id
     property :email
     property :_destroy, virtual: true
-    validates :email, format: { with: Devise.email_regexp }, allow_blank: true
   end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
