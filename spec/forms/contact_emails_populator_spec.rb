@@ -6,8 +6,9 @@ require 'rails_helper'
 RSpec.describe ContactEmailsPopulator do
   subject(:contact_email_populator) { described_class.new(work_form, ContactEmail) }
 
-  let(:work) { build(:work) }
-  let(:work_form) { WorkForm.new(work) }
+  let(:work) { work_version.work }
+  let(:work_version) { build(:work_version) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
 
   it 'renders a contact email row' do
     keep_fragment = ActionController::Parameters.new({ _destroy: 'false', email: 'test@local.edu' })
