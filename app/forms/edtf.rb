@@ -11,6 +11,7 @@ module Edtf
         property "#{prop_name}(1i)", virtual: true
         property "#{prop_name}(2i)", virtual: true
         property "#{prop_name}(3i)", virtual: true
+        property "#{prop_name}(approx)", virtual: true
 
         create_range(prop_name) if options[:range]
       end
