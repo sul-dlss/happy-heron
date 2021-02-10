@@ -25,6 +25,14 @@ class Work < ApplicationRecord
   after_update_commit -> { broadcast_replace_to self }
   after_update_commit -> { collection.broadcast_update_collection_summary }
 
+  scope :awaiting_review_by, lambda { |user|
+    with_state(:pending_approval)
+      .left_outer_joins(collection: :reviewed_by)
+      .left_outer_joins(collection: :managed_by)
+      .where('reviewers.user_id' => user)
+      .or(where('managers.user_id' => user))
+  }
+
   enum access: {
     stanford: 'stanford',
     world: 'world'

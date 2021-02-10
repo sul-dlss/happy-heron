@@ -71,7 +71,7 @@ class CollectionChangeSet
       # underlying data in the database is mutable
       @depositors = T.let(collection.depositors.to_a, T::Array[User])
       @reviewers = T.let(collection.reviewed_by.to_a, T::Array[User])
-      @managers = T.let(collection.managers.to_a, T::Array[User])
+      @managers = T.let(collection.managed_by.to_a, T::Array[User])
     end
 
     sig { returns(T::Array[User]) }

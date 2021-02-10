@@ -5,7 +5,7 @@
    in this collection. Please contact the collection Managers below if you have questions about this change.</p>
 
 <p>Collection Managers:<br>
-  <% @collection.managers.each do |manager| %>
+  <% @collection.managed_by.each do |manager| %>
     <%= manager.email %><br>
   <% end %>
 </p>

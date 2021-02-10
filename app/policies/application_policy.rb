@@ -10,6 +10,6 @@ class ApplicationPolicy < ActionPolicy::Base
 
   sig { params(collection: Collection).returns(T::Boolean) }
   def manages_collection?(collection)
-    collection.managers.include?(user)
+    collection.managed_by.include?(user)
   end
 end

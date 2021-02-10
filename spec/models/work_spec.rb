@@ -30,6 +30,33 @@ RSpec.describe Work do
     expect(work.contact_emails).to all(be_a(ContactEmail))
   end
 
+  describe '.awaiting_review_by' do
+    subject { described_class.awaiting_review_by(user) }
+
+    let(:work) { create(:work, :pending_approval, collection: collection) }
+
+    context 'when the user is a reviewer' do
+      let(:collection) { create(:collection, :with_reviewers) }
+      let(:user) { collection.reviewed_by.first }
+
+      it { is_expected.to include(work) }
+    end
+
+    context 'when the user is a manager' do
+      let(:collection) { create(:collection, :with_managers) }
+      let(:user) { collection.managed_by.first }
+
+      it { is_expected.to include(work) }
+    end
+
+    context 'when the user is an unrelated user' do
+      let(:collection) { create(:collection, :with_managers) }
+      let(:user) { create(:user) }
+
+      it { is_expected.to be_empty }
+    end
+  end
+
   describe 'created_edtf' do
     describe 'validation' do
       subject(:work) { build(:work, created_edtf: date_string) }
@@ -224,7 +251,7 @@ RSpec.describe Work do
 
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :with_managers) }
-      let(:work) { create(:work, state: state, collection: collection, depositor: collection.managers.first) }
+      let(:work) { create(:work, state: state, collection: collection, depositor: collection.managed_by.first) }
 
       context 'when the state was deposited' do
         let(:state) { 'deposited' }
@@ -237,7 +264,7 @@ RSpec.describe Work do
                                       .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                              'CollectionsMailer', 'collection_activity', 'deliver_now',
                                              { params: {
-                                               user: collection.managers.last,
+                                               user: collection.managed_by.last,
                                                depositor: work.depositor,
                                                collection: collection
                                              }, args: [] }
@@ -256,7 +283,7 @@ RSpec.describe Work do
                                       .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                              'CollectionsMailer', 'collection_activity', 'deliver_now',
                                              { params: {
-                                               user: collection.managers.last,
+                                               user: collection.managed_by.last,
                                                depositor: work.depositor,
                                                collection: collection
                                              }, args: [] }

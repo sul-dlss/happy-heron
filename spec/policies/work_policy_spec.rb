@@ -35,7 +35,7 @@ RSpec.describe WorkPolicy do
     end
 
     succeed 'when user is a collection manager' do
-      before { collection.managers = [user] }
+      before { collection.managed_by = [user] }
     end
 
     succeed 'when user is an admin' do
@@ -68,11 +68,11 @@ RSpec.describe WorkPolicy do
     end
 
     succeed 'when user is a collection manager and status is not pending_approval' do
-      let(:collection) { build_stubbed :collection, managers: [user] }
+      let(:collection) { build_stubbed :collection, managed_by: [user] }
     end
 
     succeed 'when user is collection manager and status is pending_approval' do
-      let(:collection) { build_stubbed :collection, managers: [user] }
+      let(:collection) { build_stubbed :collection, managed_by: [user] }
       let(:record) { build_stubbed :work, :pending_approval, collection: collection }
     end
 
@@ -98,7 +98,7 @@ RSpec.describe WorkPolicy do
     end
 
     succeed 'when user is a collection manager' do
-      let(:collection) { build_stubbed :collection, managers: [user] }
+      let(:collection) { build_stubbed :collection, managed_by: [user] }
     end
 
     succeed 'when user is a collection reviewer' do
@@ -155,7 +155,7 @@ RSpec.describe WorkPolicy do
     end
 
     context 'when the user is a manager' do
-      let(:collection) { create(:collection, managers: [user]) }
+      let(:collection) { create(:collection, managed_by: [user]) }
 
       it { is_expected.to include(work) }
     end

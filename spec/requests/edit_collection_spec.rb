@@ -13,7 +13,7 @@ RSpec.describe 'Updating an existing collection' do
 
   context 'with an authenticated collection manager' do
     let(:user) { create(:user) }
-    let(:collection) { create(:collection, :with_contact_emails, managers: [user]) }
+    let(:collection) { create(:collection, :with_contact_emails, managed_by: [user]) }
 
     before do
       sign_in user
@@ -57,7 +57,7 @@ RSpec.describe 'Updating an existing collection' do
         end
 
         context 'when the review workflow is set to disabled' do
-          let(:collection) { create(:collection, :with_reviewers, :with_contact_emails, managers: [user]) }
+          let(:collection) { create(:collection, :with_reviewers, :with_contact_emails, managed_by: [user]) }
 
           let(:collection_params) do
             {
@@ -84,7 +84,7 @@ RSpec.describe 'Updating an existing collection' do
         context 'when the collection was previously deposited' do
           let(:collection) do
             create(:collection, :deposited, :with_depositors, :email_depositors_status_changed, depositor_count: 2,
-                                                                                                managers: [user])
+                                                                                                managed_by: [user])
           end
           let(:collection_params) do
             {
@@ -127,7 +127,7 @@ RSpec.describe 'Updating an existing collection' do
           let!(:removed_depositor) { collection.depositors.second } # needs to be instantiated before collection edit
           let(:collection) do
             create(:collection, :deposited, :with_depositors, :email_when_participants_changed,
-                   depositor_count: 2, managers: [user], reviewed_by: [reviewer, reviewer2])
+                   depositor_count: 2, managed_by: [user], reviewed_by: [reviewer, reviewer2])
           end
           let(:collection_params) do
             {

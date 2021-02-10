@@ -335,6 +335,9 @@ class Work < ApplicationRecord
   def self.accesses; end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def self.awaiting_review_by(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
   def self.not_stanford(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
@@ -360,6 +363,9 @@ class Work::ActiveRecord_Relation < ActiveRecord::Relation
   Elem = type_member(fixed: Work)
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
+  def awaiting_review_by(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
   def not_stanford(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
@@ -379,6 +385,9 @@ class Work::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
   Elem = type_member(fixed: Work)
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def awaiting_review_by(*args); end
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
   def not_stanford(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
@@ -395,6 +404,9 @@ class Work::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associatio
   include Work::CustomFinderMethods
   include Work::QueryMethodsReturningAssociationRelation
   Elem = type_member(fixed: Work)
+
+  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
+  def awaiting_review_by(*args); end
 
   sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
   def not_stanford(*args); end
