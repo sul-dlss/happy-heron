@@ -58,13 +58,8 @@ class ButtonsComponent < ApplicationComponent
     object.model.class.to_s
   end
 
-  sig { returns(T.nilable(Work)) }
-  def maybe_work
-    object.model if object.model.is_a?(Work)
-  end
-
   sig { returns(T.nilable(T::Boolean)) }
   def work_in_reviewed_coll?
-    maybe_work&.collection&.review_enabled?
+    work_form? && work.collection.review_enabled?
   end
 end

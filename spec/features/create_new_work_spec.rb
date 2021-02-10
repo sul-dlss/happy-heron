@@ -142,7 +142,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         visit dashboard_path
 
         # We should not see the delete button for this work since it is not a draft
-        expect(page).not_to have_selector("[aria-label='Delete #{Work.last.title}']")
+        expect(page).not_to have_selector("[aria-label='Delete #{WorkVersion.last.title}']")
       end
     end
 

@@ -153,4 +153,8 @@ class DraftWorkForm < Reform::Form
       model.fetch(:work).update(head: model.fetch(:work_version))
     end
   end
+
+  def to_param
+    model.fetch(:work).to_param
+  end
 end

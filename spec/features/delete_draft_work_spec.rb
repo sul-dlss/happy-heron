@@ -4,10 +4,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Delete a draft work', js: true do
-  let(:work) { create(:work, title: 'Delete me') }
+  let(:work) { work_version.work }
+  let(:work_version) { create(:work_version, title: 'Delete me') }
   let(:user) { work.depositor }
 
   before do
+    work.update(head: work_version)
     sign_in user
   end
 
@@ -15,7 +17,7 @@ RSpec.describe 'Delete a draft work', js: true do
     it 'allow users to delete the work and destroys the model from the dashboard' do
       visit dashboard_path
       accept_confirm do
-        click_link "Delete #{work.title}"
+        click_link "Delete #{work_version.title}"
       end
       expect(Work.exists?(work.id)).to be false
     end

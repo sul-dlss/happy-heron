@@ -15,5 +15,7 @@ module Works
     def render?
       helpers.allowed_to?(:review?, work_version)
     end
+
+    delegate :work, to: :work_version
   end
 end

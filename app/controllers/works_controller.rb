@@ -68,9 +68,13 @@ class WorksController < ObjectsController
 
   def destroy
     work = Work.find(params[:id])
-    authorize! work
-
-    work.destroy
+    authorize! work.head
+    work.transaction do
+      version = work.head
+      work.update(head: nil)
+      version.destroy
+      work.destroy
+    end
 
     redirect_to dashboard_path
   end
