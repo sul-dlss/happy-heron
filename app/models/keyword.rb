@@ -3,5 +3,5 @@
 
 # Models keywords that describe a work
 class Keyword < ApplicationRecord
-  belongs_to :work
+  belongs_to :work_version
 end

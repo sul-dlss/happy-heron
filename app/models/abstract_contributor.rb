@@ -52,7 +52,7 @@ class AbstractContributor < ApplicationRecord
       ]
   }.freeze
 
-  belongs_to :work
+  belongs_to :work_version
 
   validates :first_name, presence: true, if: :person?
   validates :last_name, presence: true, if: :person?

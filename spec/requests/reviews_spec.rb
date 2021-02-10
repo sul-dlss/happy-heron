@@ -21,9 +21,11 @@ RSpec.describe 'Works requests' do
   context 'with an authenticated user' do
     let(:user) { collection.reviewed_by.first }
     let(:collection) { create(:collection, :with_reviewers) }
-    let(:work) { create(:work, :pending_approval, collection: collection) }
+    let(:work) { create(:work, collection: collection) }
+    let(:work_version) { create(:work_version, :pending_approval, work: work) }
 
     before do
+      work.update(head: work_version)
       sign_in user
       allow(DepositJob).to receive(:perform_later)
     end
@@ -44,8 +46,8 @@ RSpec.describe 'Works requests' do
         expect(response).to redirect_to(dashboard_path)
         expect(DepositJob).not_to have_received(:perform_later)
 
-        expect(work.reload).to be_rejected
-        expect(work.events.last.description).to eq 'Add more stuff'
+        expect(work_version.reload).to be_rejected
+        expect(work.reload.events.last.description).to eq 'Add more stuff'
       end
     end
   end

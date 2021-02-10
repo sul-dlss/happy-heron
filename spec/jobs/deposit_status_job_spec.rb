@@ -24,7 +24,7 @@ RSpec.describe DepositStatusJob do
       context 'with a citation' do
         let(:work) do
           build(:work, :depositing,
-                citation: "Zappa, F. (2013) #{Work::LINK_TEXT}", collection: collection,
+                citation: "Zappa, F. (2013) #{WorkVersion::LINK_TEXT}", collection: collection,
                 depositor: collection.managed_by.first)
         end
         let(:collection) { build(:collection, :with_managers) }

@@ -5,42 +5,42 @@
 class StructuralGenerator
   extend T::Sig
 
-  sig { params(work: Work).returns(T.any(Cocina::Models::DROStructural, Cocina::Models::RequestDROStructural)) }
-  def self.generate(work:)
-    new(work: work).generate
+  sig { params(work_version: WorkVersion).returns(T.any(Cocina::Models::DROStructural, Cocina::Models::RequestDROStructural)) }
+  def self.generate(work_version:)
+    new(work_version: work_version).generate
   end
 
-  sig { params(work: Work).void }
-  def initialize(work:)
-    @work = work
+  sig { params(work_version: WorkVersion).void }
+  def initialize(work_version:)
+    @work_version = work_version
   end
 
-  attr_reader :work
+  attr_reader :work_version
 
   sig { returns(T.any(Cocina::Models::DROStructural, Cocina::Models::RequestDROStructural)) }
   def generate
-    klass = work.druid ? Cocina::Models::DROStructural : Cocina::Models::RequestDROStructural
+    klass = work_version.work.druid ? Cocina::Models::DROStructural : Cocina::Models::RequestDROStructural
     klass.new(
       contains: build_filesets,
-      isMemberOf: [work.collection.druid]
+      isMemberOf: [work_version.work.collection.druid]
     )
   end
 
   def build_filesets
-    work.attached_files.map.with_index(1) { |af, n| build_fileset(af, n) }
+    work_version.attached_files.map.with_index(1) { |af, n| build_fileset(af, n) }
   end
 
   sig { params(attached_file: AttachedFile, offset: Integer).returns(Hash) }
   def build_fileset(attached_file, offset)
     {
       type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
-      version: work.version,
+      version: work_version.version,
       label: attached_file.label,
       structural: {
-        contains: [FileGenerator.generate(work: work, attached_file: attached_file)]
+        contains: [FileGenerator.generate(work_version: work_version, attached_file: attached_file)]
       }
     }.tap do |fileset|
-      fileset[:externalIdentifier] = "#{work.druid.delete_prefix('druid:')}_#{offset}" if work.druid
+      fileset[:externalIdentifier] = "#{work_version.work.druid.delete_prefix('druid:')}_#{offset}" if work_version.work.druid
     end
   end
 end

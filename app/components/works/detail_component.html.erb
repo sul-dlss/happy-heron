@@ -5,7 +5,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
-  <% if work.rejected? %>
+  <% if rejected? %>
     <div class="alert alert-danger alert-dismissible text-dark" role="alert">
       <h3>Approver has returned your deposit</h3>
       <p>Fix the following and then submit it again for approval.</p>
@@ -17,7 +17,7 @@
   <header class="title">
     <span class="header-text"><%= title %></span>
     <%= render Works::EditLinkComponent.new(work: work, anchor: '', label: "Edit #{title}") %>
-    <span class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
+    <span class="state"><%= render Works::StateDisplayComponent.new(work_version: work_version) %></span>
   </header>
 
   <table class="table table-sm mb-5">

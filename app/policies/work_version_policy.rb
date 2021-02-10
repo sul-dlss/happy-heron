@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Authorization policy for Work objects
-class WorkPolicy < ApplicationPolicy
+class WorkVersionPolicy < ApplicationPolicy
   alias_rule :edit?, to: :update?
   alias_rule :delete?, to: :destroy?
 
@@ -20,7 +20,6 @@ class WorkPolicy < ApplicationPolicy
   #   2. The user is an administrator, or a depositor or a manager of this collection
   sig { returns(T::Boolean) }
   def create?
-    collection = record.collection
     return false unless collection.accessioned?
 
     return true if administrator?
@@ -39,10 +38,10 @@ class WorkPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def update?
     return true if administrator? ||
-                   record.collection.managed_by.include?(user) ||
-                   record.collection.reviewed_by.include?(user)
+                   collection.managed_by.include?(user) ||
+                   collection.reviewed_by.include?(user)
 
-    record.depositor == user && record.can_update_metadata? && !record.pending_approval?
+    depositor? && record.can_update_metadata? && !record.pending_approval?
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -53,22 +52,29 @@ class WorkPolicy < ApplicationPolicy
   #   4. The user is a reviewer of the collection the work is in
   sig { returns(T::Boolean) }
   def show?
-    administrator? ||
-      record.depositor == user ||
-      record.collection.managed_by.include?(user) ||
-      record.collection.reviewed_by.include?(user)
+    administrator? || depositor? ||
+      collection.managed_by.include?(user) ||
+      collection.reviewed_by.include?(user)
   end
 
   # The collection reviewers can review a work
   sig { returns(T::Boolean) }
   def review?
-    record.pending_approval? && (administrator? || record.collection.reviewed_by.include?(user))
+    record.pending_approval? && (administrator? || collection.reviewed_by.include?(user))
   end
 
   sig { returns(T::Boolean) }
   def destroy?
-    (administrator? || record.depositor == user) && record.persisted? && record.first_draft?
+    (administrator? || depositor?) && record.persisted? && record.first_draft?
   end
 
   delegate :administrator?, to: :user_with_groups
+
+  def collection
+    record.work.collection
+  end
+
+  def depositor?
+    record.work.depositor == user
+  end
 end

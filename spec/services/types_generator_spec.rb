@@ -4,23 +4,10 @@
 require 'rails_helper'
 
 RSpec.describe TypesGenerator do
-  let(:work) { build(:work) }
+  let(:work_version) { build(:work_version) }
 
   describe '.generate' do
-    let(:instance) { instance_double(described_class, generate: []) }
-
-    before do
-      allow(described_class).to receive(:new).and_return(instance)
-    end
-
-    it 'calls #generate on a new instance' do
-      described_class.generate(work: work)
-      expect(instance).to have_received(:generate).once
-    end
-  end
-
-  describe '#generate' do
-    subject(:generated) { described_class.generate(work: work) }
+    subject(:generated) { described_class.generate(work_version: work_version) }
 
     context 'with a work containing multiple subtypes' do
       it 'generates a flat array of structured values for the work type and subtypes' do
@@ -80,7 +67,7 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type Text lacking subtypes' do
-      let(:work) { build(:work, work_type: 'text', subtype: []) }
+      let(:work_version) { build(:work_version, work_type: 'text', subtype: []) }
 
       it 'generates a single structured value, a single resource type and no genre' do
         expect(generated).to eq(
@@ -106,7 +93,7 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type Sound lacking subtypes' do
-      let(:work) { build(:work, work_type: 'sound', subtype: []) }
+      let(:work_version) { build(:work_version, work_type: 'sound', subtype: []) }
 
       it 'generates a single structured value, a single resource type, and a single genre' do
         expect(generated).to eq(
@@ -138,7 +125,7 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type "Other"' do
-      let(:work) { build(:work, work_type: 'other', subtype: ['Dance notation']) }
+      let(:work_version) { build(:work_version, work_type: 'other', subtype: ['Dance notation']) }
 
       it 'generates only a structured value' do
         expect(generated).to eq(
@@ -166,7 +153,7 @@ RSpec.describe TypesGenerator do
   describe 'cocina mapping' do
     non_other_work_types = WorkType.all.reject { |work_type| work_type.id == 'other' }
 
-    let(:generator) { described_class.new(work: work) }
+    let(:generator) { described_class.new(work_version: work_version) }
     let(:types_to_genres) { generator.send(:types_to_genres) }
     let(:types_to_resource_types) { generator.send(:types_to_resource_types) }
 

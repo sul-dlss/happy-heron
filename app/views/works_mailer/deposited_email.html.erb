@@ -1,14 +1,14 @@
 <p>Dear <%= @user.name %>,</p>
 
-<p>Your deposit, “<%= @work.title %>” is now published in the <%= @work.collection_name %> collection
+<p>Your deposit, “<%= @work_version.title %>” is now published in the <%= @work.collection_name %> collection
   in the Stanford Digital Repository. The persistent URL (PURL) for this deposit is
   <%= link_to @work.purl, @work.purl %>. Please use this when citing your work.</p>
 
 
 <p>You selected the following options:<br>
-License: <%= @work.license %><br>
-Access level: <%= @work.access %><br>
-Release:  <%= @work.embargo_date.presence || 'now available' %></p>
+License: <%= @work_version.license %><br>
+Access level: <%= @work_version.access %><br>
+Release:  <%= @work_version.embargo_date.presence || 'now available' %></p>
 
 <p>If you need to make changes to your deposit, you can do so at <%= link_to root_url, root_url %>.</p>
 

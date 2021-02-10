@@ -54,13 +54,13 @@ module AttachedFile::GeneratedAttributeMethods
   def updated_at?; end
 
   sig { returns(Integer) }
-  def work_id; end
+  def work_version_id; end
 
   sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
-  def work_id=(value); end
+  def work_version_id=(value); end
 
   sig { returns(T::Boolean) }
-  def work_id?; end
+  def work_version_id?; end
 end
 
 module AttachedFile::CustomFinderMethods
@@ -389,20 +389,20 @@ module AttachedFile::GeneratedAssociationMethods
   sig { params(value: T.nilable(::ActiveStorage::Blob)).void }
   def file_blob=(value); end
 
-  sig { returns(::Work) }
-  def work; end
+  sig { returns(::WorkVersion) }
+  def work_version; end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def build_work(*args, &block); end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::WorkVersion).void)).returns(::WorkVersion) }
+  def build_work_version(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def create_work(*args, &block); end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::WorkVersion).void)).returns(::WorkVersion) }
+  def create_work_version(*args, &block); end
 
-  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::Work).void)).returns(::Work) }
-  def create_work!(*args, &block); end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::WorkVersion).void)).returns(::WorkVersion) }
+  def create_work_version!(*args, &block); end
 
-  sig { params(value: ::Work).void }
-  def work=(value); end
+  sig { params(value: ::WorkVersion).void }
+  def work_version=(value); end
 
   sig { returns(T.nilable(ActiveStorage::Attached::One)) }
   def file; end

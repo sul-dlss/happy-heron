@@ -3,7 +3,7 @@
 
 FactoryBot.define do
   factory :keyword do
-    work { nil }
+    work_version { nil }
     label { 'MyString' }
     uri { 'MyString' }
   end

@@ -3,7 +3,7 @@
     <%= show_collection_link %> &gt; <%= work_link %> <%= edit_work_link %>
   </div>
   <div class="col-5">
-    <%= render Dashboard::DepositProgressComponent.new(work: work) %>
+    <%= render Dashboard::DepositProgressComponent.new(work_version: work.head) %>
   </div>
   <div class="col-1">
     <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>

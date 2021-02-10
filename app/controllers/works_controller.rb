@@ -60,7 +60,7 @@ class WorksController < ObjectsController
 
   def show
     @work = Work.find(params[:id])
-    authorize! @work
+    authorize! @work.head
   end
 
   def destroy
