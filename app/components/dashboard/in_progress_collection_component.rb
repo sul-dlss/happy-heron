@@ -16,7 +16,7 @@ module Dashboard
 
     sig { returns(T::Boolean) }
     def render?
-      user_with_groups.administrator? || collection_managers_in_progress.size.positive?
+      user_with_groups.administrator? || collection_managers_in_progress.present?
     end
   end
 end

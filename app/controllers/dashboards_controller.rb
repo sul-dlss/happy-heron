@@ -16,8 +16,7 @@ class DashboardsController < ApplicationController
                      .where('reviewers.user_id' => current_user),
       in_progress: Work.with_state(:first_draft, :version_draft, :rejected)
                        .where(depositor: current_user),
-      collection_managers_in_progress: Collection.with_state(:first_draft, :version_draft)
-                                                 .joins(:managers).where("managers.user_id = #{current_user.id}")
+      collection_managers_in_progress: current_user.manages_collections.with_state(:first_draft, :version_draft)
     )
 
     @presenter.work_stats = StatBuilder.build_stats if user_with_groups.administrator?
