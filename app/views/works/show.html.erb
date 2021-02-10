@@ -1,7 +1,7 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
     breadcrumbs: [ { title: @work.collection.name, link: collection_path(@work.collection) },
-                   { title: @work.title } ]) %>
+                   { title: @work.head.title } ]) %>
 <% end %>
 
 <% cache [current_user, @work] do %>
@@ -15,7 +15,7 @@
 <% end %>
 
 <div class="container" id="work">
-  <%= render Works::ApprovalComponent.new(work: @work) %>
+  <%= render Works::ApprovalComponent.new(work_version: @work.head) %>
   <%= turbo_stream_from @work %>
   <%= render @work %>
 </div>

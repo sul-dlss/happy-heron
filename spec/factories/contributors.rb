@@ -3,7 +3,7 @@
 
 FactoryBot.define do
   factory :contributor do
-    work
+    work_version
 
     factory :person_contributor do
       sequence :first_name do |n|

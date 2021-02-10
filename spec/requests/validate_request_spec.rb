@@ -14,12 +14,17 @@ RSpec.describe 'Validates', type: :request do
   end
 
   context 'when the work is persisted' do
-    let(:work) { create(:work) }
+    let(:work_version) { create(:work_version) }
+    let(:work) { work_version.work }
+
+    before do
+      work.update(head: work_version)
+    end
 
     it 'is successful' do
-      get "/works/#{work.id}/validate?work[citation]=foo&work[keywords_attributes][0][label]=key"
+      get "/works/#{work_version.work.id}/validate?work[citation]=foo&work[keywords_attributes][0][label]=key"
       expect(response).to be_successful
-      expect(work.keywords).to be_empty
+      expect(work_version.keywords).to be_empty
     end
   end
 end

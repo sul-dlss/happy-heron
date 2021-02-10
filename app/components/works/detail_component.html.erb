@@ -5,7 +5,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
-  <% if work.rejected? %>
+  <% if rejected? %>
     <div class="alert alert-danger alert-dismissible text-dark" role="alert">
       <h3>Approver has returned your deposit</h3>
       <p>Fix the following and then submit it again for approval.</p>
@@ -16,8 +16,8 @@
 
   <header class="title">
     <span class="header-text"><%= title %></span>
-    <%= render Works::EditLinkComponent.new(work: work, anchor: '', label: "Edit #{title}") %>
-    <span class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
+    <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: '', label: "Edit #{title}") %>
+    <span class="state"><%= render Works::StateDisplayComponent.new(work_version: work_version) %></span>
   </header>
 
   <table class="table table-sm mb-5 caption-header">
@@ -70,7 +70,7 @@
     <thead class="table-light">
     <tr>
       <th scope="col" class="table-title col-3">Files
-        <%= render Works::EditLinkComponent.new(work: work, anchor: 'file', label: 'Edit files') %>
+        <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'file', label: 'Edit files') %>
       </th>
       <th scope="col">Description</th>
       <th scope="col">Hide file</th>
@@ -89,7 +89,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Title and contact
-      <%= render Works::EditLinkComponent.new(work: work, anchor: 'title', label: 'Edit title and contact') %>
+      <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'title', label: 'Edit title and contact') %>
     </caption>
     <tbody>
     <tr>
@@ -113,7 +113,7 @@
 
   <table class="table table-sm caption-header">
     <caption>Authors and contributors
-      <%= render Works::EditLinkComponent.new(work: work, anchor: 'author', label: 'Edit authors and contributors') %>
+      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'author', label: 'Edit authors and contributors') %>
     </caption>
     <tbody>
     <% contributors.each do |contributor| %>
@@ -131,7 +131,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Dates
-      <%= render Works::EditLinkComponent.new(work: work, anchor: 'dates', label: 'Edit dates') %>
+      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'dates', label: 'Edit dates') %>
     </caption>
     <tbody>
     <tr>
@@ -147,7 +147,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Description
-      <%= render Works::EditLinkComponent.new(work: work, anchor: 'description', label: 'Edit description') %>
+      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'description', label: 'Edit description') %>
     </caption>
     <tbody>
     <tr>
@@ -189,7 +189,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Release data and visibility
-      <%= render Works::EditLinkComponent.new(work: work, anchor: 'release', label: 'Edit release data and visibility') %>
+      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'release', label: 'Edit release data and visibility') %>
     </caption>
     <tbody>
     <tr>
@@ -205,7 +205,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Terms of use and license
-      <%= render Works::EditLinkComponent.new(work: work, anchor: 'license', label: 'Edit terms of use and license') %>
+      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'license', label: 'Edit terms of use and license') %>
     </caption>
     <tbody>
     <tr>

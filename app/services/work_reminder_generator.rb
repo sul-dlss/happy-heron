@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 # This creates and queues reminder emails for in-progress drafts
@@ -18,8 +18,8 @@ class WorkReminderGenerator
     subsequent_interval = Settings.notifications.first_draft_reminder.subsequent_interval
 
     eligible_works(first_interval, subsequent_interval).each do |state, scope|
-      scope.find_each do |work|
-        mailer = WorksMailer.with(work: work)
+      scope.find_each do |work_version|
+        mailer = WorksMailer.with(work_version: work_version)
         case state
         when :first_draft
           mailer.first_draft_reminder_email.deliver_later
@@ -33,9 +33,9 @@ class WorkReminderGenerator
   sig { params(first_interval: Integer, subsequent_interval: Integer).returns(T::Hash[Symbol, ActiveRecord::Relation]) }
   private_class_method def self.eligible_works(first_interval, subsequent_interval)
     %i[first_draft version_draft].index_with do |state|
-      Work.with_state(state)
-          .where('(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0',
-                 first_interval: first_interval, subsequent_interval: subsequent_interval)
+      WorkVersion.with_state(state)
+                 .where('(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0',
+                        first_interval: first_interval, subsequent_interval: subsequent_interval)
     end
   end
 end

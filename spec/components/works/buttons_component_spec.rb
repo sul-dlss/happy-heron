@@ -3,11 +3,12 @@
 
 require 'rails_helper'
 
-RSpec.describe ButtonsComponent do
+RSpec.describe Works::ButtonsComponent do
   let(:component) { described_class.new(form: form) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:work) { build_stubbed(:work, collection: build(:collection, id: 7)) }
-  let(:work_form) { WorkForm.new(work) }
+  let(:work_version) { build(:work_version, work: work) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
   let(:rendered) { render_inline(component) }
 
   before do

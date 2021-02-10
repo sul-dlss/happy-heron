@@ -15,7 +15,10 @@ RSpec.describe DepositJob do
     )
   end
   let(:attached_file) { build(:attached_file) }
-  let(:work) { build(:work, id: 8, attached_files: [attached_file], collection: collection) }
+  let(:work) { build(:work, collection: collection) }
+  let(:work_version) do
+    build(:work_version, id: 8, work: work, attached_files: [attached_file])
+  end
   let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
 
   before do
@@ -40,29 +43,9 @@ RSpec.describe DepositJob do
     end
 
     it 'initiates a DepositStatusJob' do
-      described_class.perform_now(work)
+      described_class.perform_now(work_version)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: work, job_id: 1234)
-    end
-  end
-
-  context 'when the work has already been accessioned' do
-    let(:work) do
-      build(:work, id: 8, version: 1, druid: 'druid:bk123gh4567',
-                   attached_files: [attached_file], collection: collection)
-    end
-
-    before do
-      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
-      allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)
-    end
-
-    it 'initiates a DepositStatusJob' do
-      described_class.perform_now(work)
-      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: work, job_id: 1234)
-      expect(work.version).to eq 2
+      expect(DepositStatusJob).to have_received(:perform_later).with(object: work_version, job_id: 1234)
     end
   end
 
@@ -73,7 +56,7 @@ RSpec.describe DepositJob do
     end
 
     it 'notifies' do
-      described_class.perform_now(work)
+      described_class.perform_now(work_version)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       expect(DepositStatusJob).not_to have_received(:perform_later)
       expect(Honeybadger).to have_received(:notify)

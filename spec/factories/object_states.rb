@@ -20,12 +20,12 @@ FactoryBot.define do
 
   trait :deposited do
     state { 'deposited' }
-    druid { 'druid:bc123df4567' }
+    # druid { 'druid:bc123df4567' }
   end
 
   trait :rejected do
     state { 'rejected' }
 
-    events { [build(:event, event_type: 'reject', description: 'Add something to make it pop.')] }
+    # events { [build(:event, event_type: 'reject', description: 'Add something to make it pop.')] }
   end
 end

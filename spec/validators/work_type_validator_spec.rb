@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe WorkTypeValidator do
-  let(:record) { WorkForm.new(Work.new) }
+  let(:record) { WorkForm.new(work: Work.new, work_version: WorkVersion.new) }
   let(:validator) { described_class.new({ attributes: ['stub'] }) }
 
   before do

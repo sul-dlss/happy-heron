@@ -4,18 +4,20 @@
 module Works
   # Renders a link to the collection edit page
   class EditLinkComponent < ApplicationComponent
-    sig { params(work: Work, anchor: String, label: String).void }
-    def initialize(work:, anchor:, label:)
-      @work = work
+    sig { params(work_version: WorkVersion, anchor: String, label: String).void }
+    def initialize(work_version:, anchor:, label:)
+      @work_version = work_version
       @anchor = anchor
       @label = label
     end
 
+    delegate :work, to: :work_version
+
     sig { returns(T::Boolean) }
     def render?
-      work.can_update_metadata?
+      work_version.can_update_metadata?
     end
 
-    attr_reader :work, :anchor, :label
+    attr_reader :work_version, :anchor, :label
   end
 end

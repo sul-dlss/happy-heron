@@ -5,7 +5,7 @@ FactoryBot.define do
   factory :attached_file do
     label { 'MyString' }
     hide { false }
-    work
+    work_version
   end
 
   trait :with_file do

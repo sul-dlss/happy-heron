@@ -7,10 +7,11 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/nio4r/all/nio4r.rbi
 #
-# nio4r-2.5.4
+# nio4r-2.5.5
 
 module NIO
   def self.engine; end
+  def self.pure?(env = nil); end
 end
 class NIO::Selector
   def backend; end

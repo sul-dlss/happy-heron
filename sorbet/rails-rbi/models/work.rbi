@@ -2,66 +2,16 @@
 # Please rerun bundle exec rake rails_rbi:models[Work] to regenerate.
 
 # typed: strong
-module Work::EnumInstanceMethods
-  sig { returns(T::Boolean) }
-  def stanford?; end
-
-  sig { void }
-  def stanford!; end
-
-  sig { returns(T::Boolean) }
-  def world?; end
-
-  sig { void }
-  def world!; end
-end
-
 module Work::ActiveRelation_WhereNot
   sig { params(opts: T.untyped, rest: T.untyped).returns(T.self_type) }
   def not(opts, *rest); end
 end
 
 module Work::GeneratedAttributeMethods
-  sig { returns(String) }
-  def abstract; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def abstract=(value); end
-
-  sig { returns(T::Boolean) }
-  def abstract?; end
-
-  sig { returns(String) }
-  def access; end
-
-  sig { params(value: T.any(Integer, String, Symbol)).void }
-  def access=(value); end
-
-  sig { returns(T::Boolean) }
-  def access?; end
-
-  sig { returns(T.nilable(T::Boolean)) }
-  def agree_to_terms; end
-
-  sig { params(value: T.nilable(T::Boolean)).void }
-  def agree_to_terms=(value); end
-
-  sig { returns(T::Boolean) }
-  def agree_to_terms?; end
-
-  sig { returns(T.nilable(String)) }
-  def citation; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def citation=(value); end
-
-  sig { returns(T::Boolean) }
-  def citation?; end
-
-  sig { returns(Integer) }
+  sig { returns(T.nilable(Integer)) }
   def collection_id; end
 
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
   def collection_id=(value); end
 
   sig { returns(T::Boolean) }
@@ -76,19 +26,10 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def created_at?; end
 
-  sig { returns(T.nilable(String)) }
-  def created_edtf; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def created_edtf=(value); end
-
-  sig { returns(T::Boolean) }
-  def created_edtf?; end
-
-  sig { returns(Integer) }
+  sig { returns(T.nilable(Integer)) }
   def depositor_id; end
 
-  sig { params(value: T.any(Numeric, ActiveSupport::Duration)).void }
+  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
   def depositor_id=(value); end
 
   sig { returns(T::Boolean) }
@@ -103,14 +44,14 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def druid?; end
 
-  sig { returns(T.nilable(Date)) }
-  def embargo_date; end
+  sig { returns(T.nilable(Integer)) }
+  def head_id; end
 
-  sig { params(value: T.nilable(Date)).void }
-  def embargo_date=(value); end
+  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
+  def head_id=(value); end
 
   sig { returns(T::Boolean) }
-  def embargo_date?; end
+  def head_id?; end
 
   sig { returns(Integer) }
   def id; end
@@ -121,51 +62,6 @@ module Work::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def id?; end
 
-  sig { returns(String) }
-  def license; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def license=(value); end
-
-  sig { returns(T::Boolean) }
-  def license?; end
-
-  sig { returns(T.nilable(String)) }
-  def published_edtf; end
-
-  sig { params(value: T.nilable(T.any(String, Symbol))).void }
-  def published_edtf=(value); end
-
-  sig { returns(T::Boolean) }
-  def published_edtf?; end
-
-  sig { returns(String) }
-  def state; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def state=(value); end
-
-  sig { returns(T::Boolean) }
-  def state?; end
-
-  sig { returns(T.nilable(T::Array[String])) }
-  def subtype; end
-
-  sig { params(value: T.nilable(T::Array[T.any(String, Symbol)])).void }
-  def subtype=(value); end
-
-  sig { returns(T::Boolean) }
-  def subtype?; end
-
-  sig { returns(String) }
-  def title; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def title=(value); end
-
-  sig { returns(T::Boolean) }
-  def title?; end
-
   sig { returns(ActiveSupport::TimeWithZone) }
   def updated_at; end
 
@@ -174,53 +70,9 @@ module Work::GeneratedAttributeMethods
 
   sig { returns(T::Boolean) }
   def updated_at?; end
-
-  sig { returns(T.nilable(Integer)) }
-  def version; end
-
-  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
-  def version=(value); end
-
-  sig { returns(T::Boolean) }
-  def version?; end
-
-  sig { returns(String) }
-  def work_type; end
-
-  sig { params(value: T.any(String, Symbol)).void }
-  def work_type=(value); end
-
-  sig { returns(T::Boolean) }
-  def work_type?; end
-end
-
-class Work::Access < T::Enum
-  enums do
-    Stanford = new(%q{stanford})
-    World = new(%q{world})
-  end
-
 end
 
 module Work::GeneratedAssociationMethods
-  sig { returns(::AttachedFile::ActiveRecord_Associations_CollectionProxy) }
-  def attached_files; end
-
-  sig { returns(T::Array[Integer]) }
-  def attached_file_ids; end
-
-  sig { params(value: T::Enumerable[::AttachedFile]).void }
-  def attached_files=(value); end
-
-  sig { returns(::Author::ActiveRecord_Associations_CollectionProxy) }
-  def authors; end
-
-  sig { returns(T::Array[Integer]) }
-  def author_ids; end
-
-  sig { params(value: T::Enumerable[::Author]).void }
-  def authors=(value); end
-
   sig { returns(::Collection) }
   def collection; end
 
@@ -235,24 +87,6 @@ module Work::GeneratedAssociationMethods
 
   sig { params(value: ::Collection).void }
   def collection=(value); end
-
-  sig { returns(::ContactEmail::ActiveRecord_Associations_CollectionProxy) }
-  def contact_emails; end
-
-  sig { returns(T::Array[Integer]) }
-  def contact_email_ids; end
-
-  sig { params(value: T::Enumerable[::ContactEmail]).void }
-  def contact_emails=(value); end
-
-  sig { returns(::Contributor::ActiveRecord_Associations_CollectionProxy) }
-  def contributors; end
-
-  sig { returns(T::Array[Integer]) }
-  def contributor_ids; end
-
-  sig { params(value: T::Enumerable[::Contributor]).void }
-  def contributors=(value); end
 
   sig { returns(::User) }
   def depositor; end
@@ -278,32 +112,20 @@ module Work::GeneratedAssociationMethods
   sig { params(value: T::Enumerable[::Event]).void }
   def events=(value); end
 
-  sig { returns(::Keyword::ActiveRecord_Associations_CollectionProxy) }
-  def keywords; end
+  sig { returns(T.nilable(::WorkVersion)) }
+  def head; end
 
-  sig { returns(T::Array[Integer]) }
-  def keyword_ids; end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::WorkVersion).void)).returns(::WorkVersion) }
+  def build_head(*args, &block); end
 
-  sig { params(value: T::Enumerable[::Keyword]).void }
-  def keywords=(value); end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::WorkVersion).void)).returns(::WorkVersion) }
+  def create_head(*args, &block); end
 
-  sig { returns(::RelatedLink::ActiveRecord_Associations_CollectionProxy) }
-  def related_links; end
+  sig { params(args: T.untyped, block: T.nilable(T.proc.params(object: ::WorkVersion).void)).returns(::WorkVersion) }
+  def create_head!(*args, &block); end
 
-  sig { returns(T::Array[Integer]) }
-  def related_link_ids; end
-
-  sig { params(value: T::Enumerable[::RelatedLink]).void }
-  def related_links=(value); end
-
-  sig { returns(::RelatedWork::ActiveRecord_Associations_CollectionProxy) }
-  def related_works; end
-
-  sig { returns(T::Array[Integer]) }
-  def related_work_ids; end
-
-  sig { params(value: T::Enumerable[::RelatedWork]).void }
-  def related_works=(value); end
+  sig { params(value: T.nilable(::WorkVersion)).void }
+  def head=(value); end
 end
 
 module Work::CustomFinderMethods
@@ -324,113 +146,11 @@ module Work::CustomFinderMethods
 end
 
 class Work < ApplicationRecord
-  include Work::EnumInstanceMethods
   include Work::GeneratedAttributeMethods
   include Work::GeneratedAssociationMethods
   extend Work::CustomFinderMethods
   extend Work::QueryMethodsReturningRelation
   RelationType = T.type_alias { T.any(Work::ActiveRecord_Relation, Work::ActiveRecord_Associations_CollectionProxy, Work::ActiveRecord_AssociationRelation) }
-
-  sig { returns(T::Hash[T.any(String, Symbol), String]) }
-  def self.accesses; end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def self.awaiting_review_by(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def self.not_stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def self.not_world(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def self.stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def self.world(*args); end
-
-  sig { returns(Work::Access) }
-  def typed_access; end
-
-  sig { params(value: Work::Access).void }
-  def typed_access=(value); end
-end
-
-class Work::ActiveRecord_Relation < ActiveRecord::Relation
-  include Work::ActiveRelation_WhereNot
-  include Work::CustomFinderMethods
-  include Work::QueryMethodsReturningRelation
-  Elem = type_member(fixed: Work)
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def awaiting_review_by(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def not_stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def not_world(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_Relation) }
-  def world(*args); end
-end
-
-class Work::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
-  include Work::ActiveRelation_WhereNot
-  include Work::CustomFinderMethods
-  include Work::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: Work)
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def awaiting_review_by(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def not_stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def not_world(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def world(*args); end
-end
-
-class Work::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
-  include Work::CustomFinderMethods
-  include Work::QueryMethodsReturningAssociationRelation
-  Elem = type_member(fixed: Work)
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def awaiting_review_by(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def not_stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def not_world(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def stanford(*args); end
-
-  sig { params(args: T.untyped).returns(Work::ActiveRecord_AssociationRelation) }
-  def world(*args); end
-
-  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
-  def <<(*records); end
-
-  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
-  def append(*records); end
-
-  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
-  def push(*records); end
-
-  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
-  def concat(*records); end
 end
 
 module Work::QueryMethodsReturningRelation
@@ -657,4 +377,36 @@ module Work::QueryMethodsReturningAssociationRelation
     ).returns(ActiveRecord::Batches::BatchEnumerator)
   end
   def in_batches(of: 1000, start: nil, finish: nil, load: false, error_on_ignore: nil, &block); end
+end
+
+class Work::ActiveRecord_Relation < ActiveRecord::Relation
+  include Work::ActiveRelation_WhereNot
+  include Work::CustomFinderMethods
+  include Work::QueryMethodsReturningRelation
+  Elem = type_member(fixed: Work)
+end
+
+class Work::ActiveRecord_AssociationRelation < ActiveRecord::AssociationRelation
+  include Work::ActiveRelation_WhereNot
+  include Work::CustomFinderMethods
+  include Work::QueryMethodsReturningAssociationRelation
+  Elem = type_member(fixed: Work)
+end
+
+class Work::ActiveRecord_Associations_CollectionProxy < ActiveRecord::Associations::CollectionProxy
+  include Work::CustomFinderMethods
+  include Work::QueryMethodsReturningAssociationRelation
+  Elem = type_member(fixed: Work)
+
+  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
+  def <<(*records); end
+
+  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
+  def append(*records); end
+
+  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
+  def push(*records); end
+
+  sig { params(records: T.any(Work, T::Array[Work])).returns(T.self_type) }
+  def concat(*records); end
 end

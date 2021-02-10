@@ -12,10 +12,10 @@ module Dashboard
       @presenter.show_popup?
     end
 
-    def work
+    def work_version
       @presenter.in_progress.first
     end
 
-    delegate :title, to: :work
+    delegate :title, :work, to: :work_version
   end
 end

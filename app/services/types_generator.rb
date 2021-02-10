@@ -7,14 +7,14 @@ class TypesGenerator
 
   RESOURCE_TYPE_SOURCE_LABEL = 'Stanford self-deposit resource types'
 
-  sig { params(work: Work).returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def self.generate(work:)
-    new(work: work).generate
+  sig { params(work_version: WorkVersion).returns(T::Array[Cocina::Models::DescriptiveValue]) }
+  def self.generate(work_version:)
+    new(work_version: work_version).generate
   end
 
-  sig { params(work: Work).void }
-  def initialize(work:)
-    @work = work
+  sig { params(work_version: WorkVersion).void }
+  def initialize(work_version:)
+    @work_version = work_version
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
@@ -24,17 +24,17 @@ class TypesGenerator
 
   private
 
-  sig { returns(Work) }
-  attr_reader :work
+  sig { returns(WorkVersion) }
+  attr_reader :work_version
 
   sig { returns(T::Array[T.nilable(String)]) }
   def subtypes
-    Array(work.subtype)
+    Array(work_version.subtype)
   end
 
   sig { returns(String) }
   def work_type
-    WorkType.find(work.work_type).label
+    WorkType.find(work_version.work_type).label
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }

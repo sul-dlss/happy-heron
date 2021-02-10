@@ -11,7 +11,7 @@ module Works
     attr_reader :form
 
     def collection
-      form.object.model.collection
+      form.object.model.fetch(:work).collection
     end
 
     delegate :user_can_set_availability?, to: :collection

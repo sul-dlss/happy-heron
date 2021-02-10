@@ -6,7 +6,9 @@ require 'rails_helper'
 RSpec.describe EmbargoDateValidator do
   let(:options) { { attributes: ['hi'] } }
   let(:validator) { described_class.new(options) }
-  let(:record) { WorkForm.new(Work.new) }
+  let(:work) { work_version.work }
+  let(:work_version) { build(:work_version) }
+  let(:record) { WorkForm.new(work_version: work_version, work: work) }
 
   before do
     validator.validate_each(record, attribute, value)

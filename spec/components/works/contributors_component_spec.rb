@@ -5,8 +5,9 @@ require 'rails_helper'
 
 RSpec.describe Works::ContributorsComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:work) { build(:work) }
-  let(:work_form) { WorkForm.new(work) }
+  let(:work) { work_version.work }
+  let(:work_version) { build(:work_version) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   it 'renders the component' do
@@ -14,7 +15,7 @@ RSpec.describe Works::ContributorsComponent do
   end
 
   context 'with an existing organizational contributor' do
-    let(:work) { build(:work, contributors: [build(:org_contributor)]) }
+    let(:work_version) { build(:work_version, contributors: [build(:org_contributor)]) }
 
     it 'renders the component' do
       expect(rendered.css('option[@selected="selected"][@value="organization|Sponsor"]')).to be_present

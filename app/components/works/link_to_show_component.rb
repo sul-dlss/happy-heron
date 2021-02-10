@@ -4,8 +4,8 @@
 module Works
   # Draws the link to the show page
   class LinkToShowComponent < ApplicationComponent
-    def initialize(work:)
-      @work = work
+    def initialize(work_version:)
+      @work_version = work_version
     end
 
     def link
@@ -13,9 +13,11 @@ module Works
     end
 
     def title
-      @title ||= Works::DetailComponent.new(work: work).title
+      @title ||= Works::DetailComponent.new(work_version: work_version).title
     end
 
-    attr_reader :work
+    attr_reader :work_version
+
+    delegate :work, to: :work_version
   end
 end

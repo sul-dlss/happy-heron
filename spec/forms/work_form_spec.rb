@@ -4,9 +4,10 @@
 require 'rails_helper'
 
 RSpec.describe WorkForm do
-  subject(:form) { described_class.new(work) }
+  subject(:form) { described_class.new(work_version: work_version, work: work) }
 
-  let(:work) { build(:work) }
+  let(:work) { work_version.work }
+  let(:work_version) { build(:work_version) }
 
   describe 'populator on files' do
     let!(:blob) do

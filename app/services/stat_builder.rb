@@ -7,7 +7,7 @@ class StatBuilder
 
   sig { returns(T::Hash[Collection, T::Hash[String, Integer]]) }
   def self.build_stats
-    works = Work.all.group(:collection_id, :state).count
+    works = Work.joins(:head).group(:collection_id, :state).count
 
     # We only use a few fields from the collection, so don't waste time
     # pulling back the other attributes.
