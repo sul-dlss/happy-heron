@@ -91,7 +91,7 @@ RSpec.describe Works::DatesComponent do
 
     it 'renders the component with the approximate check-box selected' do
       expect(rendered.css('#work_created_year').first['value']).to eq '2020'
-      expect(rendered.css('#work_created_approx_').first.attribute('checked').value).to eq 'checked'
+      expect(rendered.css('#work_created_approx0_').first.attribute('checked').value).to eq 'checked'
     end
   end
 end

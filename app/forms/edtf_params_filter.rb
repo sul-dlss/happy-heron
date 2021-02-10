@@ -47,7 +47,7 @@ class EdtfParamsFilter
       date += "-#{format('%<month>02d', month: month)}"
       date += "-#{format('%<day>02d', day: day)}" if day.present?
     end
-    date += '?' if uncertain == '1'
+    date += '?' if uncertain
     date
   end
 end

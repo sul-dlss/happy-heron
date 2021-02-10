@@ -123,7 +123,7 @@ class WorksController < ObjectsController
     top_level.permit(:title, :work_type,
                      'published(1i)', 'published(2i)', 'published(3i)',
                      :created_type,
-                     'created(1i)', 'created(2i)', 'created(3i)', 'created(approx)',
+                     'created(1i)', 'created(2i)', 'created(3i)', 'created(approx0)',
                      'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
                      'created_range(approx0)',
                      'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
