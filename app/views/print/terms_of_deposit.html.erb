@@ -1,0 +1,9 @@
+<script language='javascript'>
+  window.onload = function() { 
+    document.getElementById("print-link").style.display='none';
+    window.print(); 
+  }
+</script>
+<link rel="stylesheet" type="text/css" media="print" href="bootstrap.min.css"> 
+<a href="javascript:window.close();">Close window</a>
+<%= render partial: 'shared/terms_of_deposit' %>
