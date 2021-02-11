@@ -87,10 +87,11 @@ RSpec.describe 'Edit a draft work', js: true do
     expect(page).to have_current_path(edit_work_path(work))
   end
 
-  context 'when successful deposit of non-"other" type work' do
+  context 'when successful deposit of "music" type work' do
     let(:work) do
       create(:valid_work, title: 'My Preprint/Data',
                           depositor: depositor,
+                          work_type: 'music',
                           subtype: %w[Data Preprint])
     end
 
@@ -102,17 +103,18 @@ RSpec.describe 'Edit a draft work', js: true do
       end
 
       expect(page).to have_content work.title
-      expect(page).to have_content('Work types (optional)')
-      expect(find('#work_subtype_data', visible: :all)).not_to be_visible
-      expect(find('#work_subtype_preprint')).to be_visible
-      expect(find('#work_subtype_preprint')).to be_checked
-      click_link 'See more options'
+      expect(page).to have_content('Work types')
+      expect(page).to have_content('Select at least one term below')
+      expect(find('#work_subtype_preprint', visible: :all)).not_to be_visible
       expect(find('#work_subtype_data')).to be_visible
       expect(find('#work_subtype_data')).to be_checked
-      uncheck 'Data'
-      check 'Database'
+      click_link 'See more options'
+      expect(find('#work_subtype_preprint')).to be_visible
+      expect(find('#work_subtype_preprint')).to be_checked
+      uncheck 'Preprint'
+      check 'Technical report'
       click_link 'See fewer options'
-      expect(find('#work_subtype_data', visible: :all)).not_to be_visible
+      expect(find('#work_subtype_preprint', visible: :all)).not_to be_visible
 
       # TODO: we should be able to remove this once accepting is persisted.
       # See https://github.com/sul-dlss/happy-heron/issues/243
@@ -121,7 +123,7 @@ RSpec.describe 'Edit a draft work', js: true do
       click_button 'Deposit'
 
       expect(page).to have_content('My Preprint/Data')
-      expect(page).to have_content('Preprint, Database')
+      expect(page).to have_content('Data, Technical report')
     end
   end
 end

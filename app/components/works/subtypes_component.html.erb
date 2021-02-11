@@ -1,6 +1,6 @@
 <div class="mb-3 row">
   <div class="col-sm-12 h5">
-    Work types <%= '(optional)' if !other_type? %>
+    Work types <%= '(optional)' if optional? %>
   </div>
 </div>
 
@@ -12,6 +12,9 @@
       <div class="invalid-feedback">You must provide a subtype for works of type 'Other'</div>
     </div>
   <% else %>
+    <% if music_type? %>
+      <h6>Select at least one term below:</h6>
+    <% end %>
     <% subtypes.each do |subtype| %>
       <div class="col-sm-4">
         <div class="form-check">

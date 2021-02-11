@@ -80,6 +80,26 @@ RSpec.describe 'Create a new work' do
         end
       end
 
+      context 'with a valid work_type and a missing required subtype' do
+        it 'redirects to dashboard with an informative flash message' do
+          get "/collections/#{collection.id}/works/new?work_type=music"
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Invalid subtype value for work_type &#39;music&#39;: missing'
+        end
+      end
+
+      context 'with a valid work_type and an invalid required subtype' do
+        it 'redirects to dashboard with an informative flash message' do
+          get "/collections/#{collection.id}/works/new?work_type=music&subtype%5B%5D=Preprint"
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Invalid subtype value for work_type &#39;music&#39;: Preprint'
+        end
+      end
+
       context 'with a work_type that is missing a required user-supplied subtype' do
         it 'redirects to dashboard with an informative flash message' do
           get "/collections/#{collection.id}/works/new?work_type=other"

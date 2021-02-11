@@ -29,6 +29,19 @@ class WorkType
 
   IMAGE_TYPES = ['CAD', 'Map', 'Photograph', 'Poster', 'Presentation slides'].freeze
 
+  MUSIC_TYPES = [
+    'Data',
+    'Image',
+    'MIDI',
+    'Musical transcription',
+    'Notated music',
+    'Piano roll',
+    'Software/Code',
+    'Sound',
+    'Text',
+    'Video'
+  ].freeze
+
   # These types appear below the fold and may be expanded
   MORE_TYPES = [
     '3D model', 'Animation', 'Article', 'Book', 'Book chapter', 'Broadcast', 'CAD',
@@ -76,8 +89,9 @@ class WorkType
     all.find { |work| work.id == id } || raise(InvalidType, "Unknown worktype #{id}")
   end
 
-  # id is a value acceptable for MODS typeOfResource
+  # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # id is a value acceptable for MODS typeOfResource
   sig { returns(T::Array[WorkType]) }
   def self.all
     [
@@ -93,6 +107,8 @@ class WorkType
           cocina_type: Cocina::Models::Vocab.media),
       new(id: 'video', label: 'Video', icon: 'film', subtypes: VIDEO_TYPES,
           cocina_type: Cocina::Models::Vocab.media),
+      new(id: 'music', label: 'Music', icon: 'music', subtypes: MUSIC_TYPES,
+          cocina_type: Cocina::Models::Vocab.object),
       new(id: 'mixed material', label: 'Mixed Materials', icon: 'play', subtypes: MIXED_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'other', label: 'Other', icon: 'archive', subtypes: [],
@@ -100,6 +116,7 @@ class WorkType
     ]
   end
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   sig { returns(T::Array[String]) }
   def self.type_list

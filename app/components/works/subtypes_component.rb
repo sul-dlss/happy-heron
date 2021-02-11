@@ -18,6 +18,14 @@ module Works
       work_type == 'other'
     end
 
+    def music_type?
+      work_type == 'music'
+    end
+
+    def optional?
+      !work_type.in?(%w[other music])
+    end
+
     def subtypes
       WorkType.subtypes_for(work_type)
     end

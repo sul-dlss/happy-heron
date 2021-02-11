@@ -215,6 +215,76 @@ Video:
         uri: http://id.loc.gov/authorities/genreForms/gf2011026276
         source:
           code: lcgft
+Music:
+  type:
+    - type: genre
+      value: Music
+      uri: https://id.loc.gov/authorities/genreForms/gf2014026952
+      source:
+        code: lcgft
+  subtypes:
+    Data:
+      - type: genre
+        value: dataset
+      - type: genre
+        value: Data sets
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Software/Code:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Sound:
+      - type: genre
+        value: Sound recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+        source:
+          code: lcgft
+    Text:
+      - type: genre
+        value: texts (documents)
+        uri: http://vocab.getty.edu/aat/300263751
+        source:
+          code: aat
+    Video:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
 Mixed Materials:
   subtypes:
     Data:

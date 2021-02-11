@@ -9,12 +9,19 @@ class WorkSubtypeValidator < ActiveModel::EachValidator
     record.errors.add attribute, "is not a valid subtype for work type #{record.work_type}"
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   # Public class method so that it can be called from a controller. We want to
   # validate these on the incoming works/new request before there is a model
   # instance to validate.
   def self.valid?(work_type, value)
-    # A subtype is required for the "other" work type
+    # A subtype is required for the "other" work type and the value must merely be present
     return Array(value).first.present? if work_type == 'other'
+
+    # A subtype is required for the "music" work type and at least one must come from a defined list
+    if work_type == 'music'
+      return value.present? &&
+             value.any? { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) }
+    end
 
     return true if value.nil?
 
@@ -22,4 +29,5 @@ class WorkSubtypeValidator < ActiveModel::EachValidator
   rescue WorkType::InvalidType
     false
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 end
