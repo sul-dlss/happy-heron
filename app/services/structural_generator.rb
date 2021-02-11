@@ -5,7 +5,10 @@
 class StructuralGenerator
   extend T::Sig
 
-  sig { params(work_version: WorkVersion).returns(T.any(Cocina::Models::DROStructural, Cocina::Models::RequestDROStructural)) }
+  sig do
+    params(work_version: WorkVersion).returns(T.any(Cocina::Models::DROStructural,
+                                                    Cocina::Models::RequestDROStructural))
+  end
   def self.generate(work_version:)
     new(work_version: work_version).generate
   end
@@ -40,7 +43,10 @@ class StructuralGenerator
         contains: [FileGenerator.generate(work_version: work_version, attached_file: attached_file)]
       }
     }.tap do |fileset|
-      fileset[:externalIdentifier] = "#{work_version.work.druid.delete_prefix('druid:')}_#{offset}" if work_version.work.druid
+      if work_version.work.druid
+        fileset[:externalIdentifier] =
+          "#{work_version.work.druid.delete_prefix('druid:')}_#{offset}"
+      end
     end
   end
 end

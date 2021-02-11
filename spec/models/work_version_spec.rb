@@ -4,7 +4,9 @@
 require 'rails_helper'
 
 RSpec.describe WorkVersion do
-  subject(:work_version) { build(:work_version, :with_authors, :with_related_links, :with_related_works, :with_attached_file) }
+  subject(:work_version) do
+    build(:work_version, :with_authors, :with_related_links, :with_related_works, :with_attached_file)
+  end
 
   it 'has many contributors' do
     expect(work_version.contributors).to all(be_a(Contributor))
@@ -29,20 +31,21 @@ RSpec.describe WorkVersion do
   describe '.awaiting_review_by' do
     subject { described_class.awaiting_review_by(user) }
 
-    let(:work) { create(:work, :pending_approval, collection: collection) }
+    let(:work) { create(:work, collection: collection) }
+    let(:work_version) { create(:work_version, :pending_approval, work: work) }
 
     context 'when the user is a reviewer' do
       let(:collection) { create(:collection, :with_reviewers) }
       let(:user) { collection.reviewed_by.first }
 
-      it { is_expected.to include(work) }
+      it { is_expected.to include(work_version) }
     end
 
     context 'when the user is a manager' do
       let(:collection) { create(:collection, :with_managers) }
       let(:user) { collection.managed_by.first }
 
-      it { is_expected.to include(work) }
+      it { is_expected.to include(work_version) }
     end
 
     context 'when the user is an unrelated user' do
@@ -209,7 +212,9 @@ RSpec.describe WorkVersion do
       let(:access) { 'rutgers' }
 
       it 'raises ArgumentError' do
-        expect { work_version.update(access: access) }.to raise_error(ArgumentError, /'#{access}' is not a valid access/)
+        expect do
+          work_version.update(access: access)
+        end.to raise_error(ArgumentError, /'#{access}' is not a valid access/)
       end
     end
   end
@@ -248,7 +253,7 @@ RSpec.describe WorkVersion do
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :with_managers) }
       let(:work_version) { create(:work_version, state: state, work: work) }
-      let(:work) { create(:work, collection: collection, depositor: collection.managers.first) }
+      let(:work) { create(:work, collection: collection, depositor: collection.managed_by.first) }
 
       context 'when the state was deposited' do
         let(:state) { 'deposited' }
@@ -261,7 +266,7 @@ RSpec.describe WorkVersion do
                                       .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                              'CollectionsMailer', 'collection_activity', 'deliver_now',
                                              { params: {
-                                               user: collection.managers.last,
+                                               user: collection.managed_by.last,
                                                depositor: work.depositor,
                                                collection: collection
                                              }, args: [] }
@@ -280,7 +285,7 @@ RSpec.describe WorkVersion do
                                       .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                              'CollectionsMailer', 'collection_activity', 'deliver_now',
                                              { params: {
-                                               user: collection.managers.last,
+                                               user: collection.managed_by.last,
                                                depositor: work.depositor,
                                                collection: collection
                                              }, args: [] }

@@ -17,6 +17,7 @@ module Works
     end
 
     attr_reader :work_version
+
     delegate :work, to: :work_version
   end
 end

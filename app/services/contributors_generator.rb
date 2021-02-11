@@ -34,12 +34,12 @@ class ContributorsGenerator
   def generate
     count = 0
     work_version.contributors.reject { |c| c.role == 'Publisher' }
-        .map do |work_form_contributor|
-          count += 1
-          # First entered contributor is always status: "primary" (except for Publisher)
-          primary = count == 1
-          contributor(work_form_contributor, primary)
-        end
+                .map do |work_form_contributor|
+      count += 1
+      # First entered contributor is always status: "primary" (except for Publisher)
+      primary = count == 1
+      contributor(work_form_contributor, primary)
+    end
   end
 
   ROLES_FOR_FORM = %w[Event Conference].freeze

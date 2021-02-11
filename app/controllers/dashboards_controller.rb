@@ -8,7 +8,15 @@ class DashboardsController < ApplicationController
 
   def show
     authorize! :dashboard
-    @presenter = DashboardPresenter.new(
+    @presenter = build_presenter
+
+    @presenter.work_stats = StatBuilder.build_stats if user_with_groups.administrator?
+  end
+
+  private
+
+  def build_presenter
+    DashboardPresenter.new(
       collections: authorized_scope(Collection.all, as: :deposit),
       approvals: WorkVersion.with_state(:pending_approval)
                      .joins(work: { collection: :reviewed_by })
@@ -18,7 +26,5 @@ class DashboardsController < ApplicationController
                      .where('works.depositor' => current_user),
       collection_managers_in_progress: current_user.manages_collections.with_state(:first_draft, :version_draft)
     )
-
-    @presenter.work_stats = StatBuilder.build_stats if user_with_groups.administrator?
   end
 end

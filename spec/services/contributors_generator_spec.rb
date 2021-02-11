@@ -159,7 +159,9 @@ RSpec.describe ContributorsGenerator do
       context 'with no publisher' do
         let(:contributor) { build(:person_contributor) }
         let(:work_version) { build(:work_version, contributors: [contributor]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date) }
+        let(:cocina_model) do
+          described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date)
+        end
 
         it 'returns empty Array' do
           expect(cocina_model).to eq []
@@ -170,7 +172,9 @@ RSpec.describe ContributorsGenerator do
         let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
         let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
         let(:work_version) { build(:work_version, contributors: [org_contrib1, org_contrib2]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date) }
+        let(:cocina_model) do
+          described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date)
+        end
 
         it 'returns Array of populated cocina model events, one for each publisher' do
           expect(cocina_model).to eq(

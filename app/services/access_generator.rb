@@ -19,7 +19,8 @@ class AccessGenerator
   def generate
     return { access: work_version.access, download: work_version.access } unless work_version.embargo_date
 
-    { access: 'citation-only', download: 'none', embargo: { access: 'world', releaseDate: work_version.embargo_date.iso8601 } }
+    { access: 'citation-only', download: 'none',
+      embargo: { access: 'world', releaseDate: work_version.embargo_date.iso8601 } }
   end
 
   private

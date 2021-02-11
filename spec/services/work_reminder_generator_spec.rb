@@ -27,9 +27,13 @@ RSpec.describe WorkReminderGenerator do
     let(:first_draft1) { create(:work_version, :first_draft) }
     let(:first_draft2) { create(:work_version, :first_draft, created_at: 3.days.ago) }
     let(:first_draft3) { create(:work_version, :first_draft, created_at: 7.days.ago) }
-    let(:first_draft4) { create(:work_version, :first_draft, created_at: 14.days.ago) } # 1st reminder at 14 days by default
+    let(:first_draft4) do
+      create(:work_version, :first_draft, created_at: 14.days.ago)
+    end
     let(:first_draft5) { create(:work_version, :first_draft, created_at: 28.days.ago) }
-    let(:first_draft6) { create(:work_version, :first_draft, created_at: 42.days.ago) } # then 2nd reminder 28 days after 1st
+    let(:first_draft6) do
+      create(:work_version, :first_draft, created_at: 42.days.ago)
+    end
     let(:first_draft7) { create(:work_version, :first_draft, created_at: 47.days.ago) }
     let(:first_draft8) { create(:work_version, :first_draft, created_at: 70.days.ago) } # every 28 days from there
 

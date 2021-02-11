@@ -34,7 +34,6 @@ class WorkVersionPolicy < ApplicationPolicy
   #     2. The user is the depositor of the work and it is not currently pending approval (review workflow)
   #     3. The user is a manager of the collection the work is in
   #     4. The user is a reviewer of the collection the work is in
-  # rubocop:disable Metrics/AbcSize
   sig { returns(T::Boolean) }
   def update?
     return true if administrator? ||
@@ -43,8 +42,6 @@ class WorkVersionPolicy < ApplicationPolicy
 
     depositor? && record.can_update_metadata? && !record.pending_approval?
   end
-  # rubocop:enable Metrics/AbcSize
-
   # Can show a work iff any one of the following is true:
   #   1. The user is an administrator
   #   2. The user is the depositor of the work

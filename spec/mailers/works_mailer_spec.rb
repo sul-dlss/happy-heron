@@ -7,7 +7,9 @@ RSpec.describe WorksMailer, type: :mailer do
   describe 'reject_email' do
     let(:user) { work.depositor }
     let(:mail) { described_class.with(user: user, work_version: work_version).reject_email }
-    let(:work) { create(:work, events: [build(:event, event_type: 'reject', description: 'Add something to make it pop.')]) }
+    let(:work) do
+      create(:work, events: [build(:event, event_type: 'reject', description: 'Add something to make it pop.')])
+    end
     let(:work_version) { build_stubbed(:work_version, :rejected, work: work) }
 
     it 'renders the headers' do

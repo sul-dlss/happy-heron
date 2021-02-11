@@ -21,15 +21,17 @@ class DepositStatusJob < BaseDepositJob
   # Assigns druid, adds the purl to the citation (if one exists), updates the state and saves.
   def complete_deposit(object, druid)
     if object.is_a? WorkVersion
-      object.work.druid = druid
-      object.add_purl_to_citation
-      object.work.save!
-      # Force a save because state_machine-activerecord wraps its update in a transaction.
-      # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
-      # It's possible the mailer job is started before the transaction in the main thread is completed,
-      # which means the mailer may not have access to the druid.
-      object.save!
-      object.deposit_complete!
+      object.transaction do
+        object.work.druid = druid
+        object.add_purl_to_citation
+        object.work.save!
+        # Force a save because state_machine-activerecord wraps its update in a transaction.
+        # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
+        # It's possible the mailer job is started before the transaction in the main thread is completed,
+        # which means the mailer may not have access to the druid.
+        object.save!
+        object.deposit_complete!
+      end
     else
       object.druid = druid
       object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)

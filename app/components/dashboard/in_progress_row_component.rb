@@ -11,6 +11,7 @@ module Dashboard
     end
 
     attr_reader :work_version
+
     delegate :work, to: :work_version
 
     def collection_name

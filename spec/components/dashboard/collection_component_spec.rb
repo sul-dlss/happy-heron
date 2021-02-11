@@ -72,7 +72,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with a work that has a druid' do
-    let(:work) { create(:work, collection: collection, depositor: user,  druid: 'druid:yq268qt4607') }
+    let(:work) { create(:work, collection: collection, depositor: user, druid: 'druid:yq268qt4607') }
 
     before do
       version = create(:work_version, work: work)

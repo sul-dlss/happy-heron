@@ -42,7 +42,8 @@ class DescriptionGenerator
 
   sig { returns(T::Array[Cocina::Models::Event]) }
   def generate_events
-    pub_events = ContributorsGenerator.events_from_publisher_contributors(work_version: work_version, pub_date: published_date)
+    pub_events = ContributorsGenerator.events_from_publisher_contributors(work_version: work_version,
+                                                                          pub_date: published_date)
     return [T.must(created_date)] + pub_events if pub_events.present? && created_date
     return pub_events if pub_events.present? # and no created_date
 
@@ -51,7 +52,8 @@ class DescriptionGenerator
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def generate_form
-    TypesGenerator.generate(work_version: work_version) + ContributorsGenerator.form_array_from_contributor_event(work_version: work_version)
+    TypesGenerator.generate(work_version: work_version) +
+      ContributorsGenerator.form_array_from_contributor_event(work_version: work_version)
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }

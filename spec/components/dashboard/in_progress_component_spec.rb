@@ -29,6 +29,7 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
 
   context 'when presenter has one or more in progress works' do
     let(:work_versions) { WorkVersion.all }
+
     before do
       create(:work_version)
       create(:work_version)

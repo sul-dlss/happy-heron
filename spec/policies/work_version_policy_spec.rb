@@ -48,7 +48,7 @@ RSpec.describe WorkVersionPolicy do
     failed 'when user is not the depositor'
 
     succeed 'when user is the depositor and status is not pending_approval' do
-      let(:work) { build_stubbed :work, collection: collection, depositor: user}
+      let(:work) { build_stubbed :work, collection: collection, depositor: user }
       let(:record) { build_stubbed :work_version, work: work }
     end
 
@@ -118,7 +118,7 @@ RSpec.describe WorkVersionPolicy do
 
     succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work}
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
 
     succeed 'when user is a reviewer and status is pending_approval' do

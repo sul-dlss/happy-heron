@@ -29,7 +29,7 @@ RSpec.describe 'Show the collection work list page' do
     it 'displays all of the works in the collection' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |work|
+      collection.works.each do |_work|
         expect(response.body).to include work_version1.title
       end
       expect(response.body).to include '17.3 KB'
@@ -45,7 +45,7 @@ RSpec.describe 'Show the collection work list page' do
     it 'displays all of the works in the collection' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |work|
+      collection.works.each do |_work|
         expect(response.body).to include work_version1.title
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe 'Show the collection work list page' do
     it 'displays all of the works in the collection' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |work|
+      collection.works.each do |_work|
         expect(response.body).to include work_version1.title
       end
     end
@@ -75,7 +75,7 @@ RSpec.describe 'Show the collection work list page' do
     it 'displays none of the works in the collection' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |work|
+      collection.works.each do |_work|
         expect(response.body).not_to include work_version1.title
       end
     end

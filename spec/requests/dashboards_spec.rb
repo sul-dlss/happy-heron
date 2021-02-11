@@ -61,10 +61,12 @@ RSpec.describe 'Dashboard requests' do
     let(:collection) do
       create(:collection, :first_draft, creator: user, managed_by: [collection_manager], name: 'Happy collection')
     end
+    let(:work) { create(:work, collection: collection, depositor: collection_manager) }
+    let(:work_version) { create(:work_version, work: work) }
 
     before do
+      work.update(head: work_version)
       sign_in collection_manager
-      create(:work, collection: collection, depositor: collection_manager)
     end
 
     it 'shows the collection in progress' do
@@ -87,7 +89,9 @@ RSpec.describe 'Dashboard requests' do
     let(:work5) { create(:work, depositor: user) }
     let(:work_version5) { create(:work_version, state: 'depositing', title: 'I am depositing', work: work5) }
     let(:work6) { create(:work, depositor: user) }
-    let(:work_version6) { create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6) }
+    let(:work_version6) do
+      create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6)
+    end
 
     before do
       work1.update(head: work_version1)
@@ -137,7 +141,6 @@ RSpec.describe 'Dashboard requests' do
     let(:work_version4) { create(:work_version, state: 'pending_approval', work: work4) }
     let(:work5) { create(:work, depositor: user, collection: workful_collection) }
     let(:work_version5) { create(:work_version, state: 'rejected', work: work5) }
-
 
     before do
       work1.update(head: work_version1)
@@ -203,9 +206,9 @@ RSpec.describe 'Dashboard requests' do
     let(:collection) { create(:collection, :deposited, :with_depositors) }
     let(:user) { collection.depositors.first }
     let(:work) { create(:work, depositor: user) }
-    let!(:work_version) { create(:work_version, work: work) } # Must have a deposit to visit the dashboard
 
     before do
+      create(:work_version, work: work) # Must have a deposit to visit the dashboard
       sign_in user
     end
 
