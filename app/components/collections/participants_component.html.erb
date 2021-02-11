@@ -1,12 +1,7 @@
 <table class="table table-sm mb-5">
-  <thead class="table-light">
-    <tr>
-      <th scope="col" class="table-title col-3">Collection participants
-        <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'participants', label: 'Edit collection participants') %>
-      </th>
-      <td scope="col"></td>
-    </tr>
-  </thead>
+  <caption>Collection participants
+    <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'participants', label: 'Edit collection participants') %>
+  </caption>
   <tbody>
     <tr>
       <th>Managers</th>

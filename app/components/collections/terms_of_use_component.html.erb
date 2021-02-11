@@ -1,12 +1,7 @@
-<table class="table table-sm mb-5">
-  <thead class="table-light">
-    <tr>
-      <th scope="col" class="table-title col-3">Terms of use and licenses
-        <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'terms', label: 'Edit terms of use and license') %>
-      </th>
-      <td scope="col"></td>
-    </tr>
-  </thead>
+<table class="table table-sm mb-5 caption-header">
+  <caption>Terms of use and licenses
+    <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'terms', label: 'Edit terms of use and license') %>
+  </caption>
   <tbody>
     <tr>
       <th>Terms of use</th>

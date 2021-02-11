@@ -1,12 +1,7 @@
-<table class="table table-sm mb-5">
-  <thead class="table-light">
-    <tr>
-      <th scope="col" class="table-title col-3">Release and visibility
-        <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'release_details', label: 'Edit release options') %>
-      </th>
-      <td scope="col"></td>
-    </tr>
-  </thead>
+<table class="table table-sm mb-5 caption-header">
+  <caption>Release and visibility
+    <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'release_details', label: 'Edit release options') %>
+  </caption>
   <tbody>
     <tr>
       <th>Release</th>

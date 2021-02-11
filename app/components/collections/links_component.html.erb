@@ -1,12 +1,7 @@
-<table class="table table-sm mb-5">
-  <thead class="table-light">
-    <tr>
-      <th class="table-title col-3">Links to related information
-        <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'links', label: 'Edit links to related information') %>
-      </th>
-      <td></td>
-    </tr>
-  </thead>
+<table class="table table-sm mb-5 caption-header">
+  <caption>Links to related information
+    <%= render Collections::EditLinkComponent.new(collection: collection, anchor: 'links', label: 'Edit links to related information') %>
+  </caption>
   <tbody>
     <tr>
       <th scope="row">Related links</th>
