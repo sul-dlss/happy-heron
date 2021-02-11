@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-4">
-    <%= show_collection_link %> &gt; <%= work_link %> <%= render Works::EditLinkComponent.new(work: work, anchor: '', label: "Edit #{title}") %>
+    <%= show_collection_link %> &gt; <%= work_link %> <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
   </div>
   <div class="col-5">
     <%= render Dashboard::DepositProgressComponent.new(work: work) %>
