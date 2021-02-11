@@ -11,6 +11,11 @@ module Works
       @label = label
     end
 
+    sig { returns(T::Boolean) }
+    def render?
+      work.can_update_metadata?
+    end
+
     attr_reader :work, :anchor, :label
   end
 end
