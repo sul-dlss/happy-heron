@@ -12,8 +12,9 @@ RSpec.describe Works::RelatedWorkComponent, type: :component do
     ]
   end
   let(:rendered) { render_inline(described_class.new(form: form)) }
-  let(:work_form) { WorkForm.new(work) }
-  let(:work) { build_stubbed(:work, related_works: related_works) }
+  let(:work) { work_version.work }
+  let(:work_version) { build_stubbed(:work_version, related_works: related_works) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
 
   it 'renders a delete button for all works but the first' do
     expect(rendered.css('button[@aria-label="Remove Second Citation"]')).to be_present

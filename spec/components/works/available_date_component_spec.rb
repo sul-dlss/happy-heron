@@ -5,8 +5,9 @@ require 'rails_helper'
 
 RSpec.describe Works::AvailableDateComponent, type: :component do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:work) { build(:work) }
-  let(:work_form) { WorkForm.new(work) }
+  let(:work) { work_version.work }
+  let(:work_version) { build(:work_version) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   before do
@@ -19,8 +20,8 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
   end
 
   context 'when the embargo date is set' do
-    let(:embargo_date) { work.embargo_date }
-    let(:work) { build(:work, :embargoed) }
+    let(:embargo_date) { work_version.embargo_date }
+    let(:work_version) { build(:work_version, :embargoed) }
 
     it 'checks the embargo release radio button' do
       expect(rendered.css('#release_embargo[@checked]')).to be_present
@@ -44,7 +45,7 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
   end
 
   context 'when there is an error' do
-    let(:work) { build(:work, :embargoed) }
+    let(:work_version) { build(:work_version, :embargoed) }
 
     before do
       work_form.errors.add(:embargo_date, 'Must be less than 3 years in the future')

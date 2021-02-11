@@ -5,10 +5,10 @@ require 'rails_helper'
 
 RSpec.describe Works::EmbargoComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:work) { build(:work, collection: collection) }
   let(:collection) { build(:collection, :depositor_selects_access, release_option: 'immediate') }
-
-  let(:work_form) { WorkForm.new(work) }
+  let(:work) { build(:work, collection: collection) }
+  let(:work_version) { build(:work_version, work: work) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   before do

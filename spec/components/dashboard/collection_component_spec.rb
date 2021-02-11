@@ -44,7 +44,11 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
   context 'with 4 works' do
     before do
-      create_list(:work, 4, collection: collection, depositor: user)
+      4.times do
+        work = create(:work, collection: collection, depositor: user)
+        version = create(:work_version, work: work)
+        work.update(head: version)
+      end
     end
 
     it 'renders a table of works' do
@@ -55,7 +59,11 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
   context 'with 5 works' do
     before do
-      create_list(:work, 5, collection: collection, depositor: user)
+      5.times do
+        work = create(:work, collection: collection, depositor: user)
+        version = create(:work_version, work: work)
+        work.update(head: version)
+      end
     end
 
     it 'renders an indication that more works exist' do
@@ -64,8 +72,11 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with a work that has a druid' do
+    let(:work) { create(:work, collection: collection, depositor: user,  druid: 'druid:yq268qt4607') }
+
     before do
-      create(:work, collection: collection, depositor: user, druid: 'druid:yq268qt4607')
+      version = create(:work_version, work: work)
+      work.update(head: version)
     end
 
     it 'renders a link to purl' do

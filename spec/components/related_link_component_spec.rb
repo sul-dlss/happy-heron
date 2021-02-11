@@ -14,8 +14,9 @@ RSpec.describe RelatedLinkComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   context 'with a work' do
-    let(:model_form) { WorkForm.new(model) }
-    let(:model) { build_stubbed(:work, related_links: related_links) }
+    let(:work) { work_version.work }
+    let(:work_version) { build_stubbed(:work_version, related_links: related_links) }
+    let(:model_form) { WorkForm.new(work_version: work_version, work: work) }
 
     it 'renders a delete button for all links but the first' do
       expect(rendered.css('button[@aria-label="Remove Second Link"]')).to be_present

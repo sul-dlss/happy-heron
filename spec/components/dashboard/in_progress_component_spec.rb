@@ -6,7 +6,7 @@ require 'rails_helper'
 RSpec.describe Dashboard::InProgressComponent, type: :component do
   let(:presenter) do
     DashboardPresenter.new(
-      in_progress: works,
+      in_progress: work_versions,
       approvals: Work.none,
       collections: Collection.none,
       collection_managers_in_progress: Collection.none
@@ -16,13 +16,10 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
 
   before do
     allow(controller).to receive(:allowed_to?).and_return(true)
-    create(:work)
-    create(:work)
-    create(:work)
   end
 
   context 'when presenter has zero in progress works' do
-    let(:works) { Work.none }
+    let(:work_versions) { WorkVersion.none }
 
     it 'renders the component with a header alone' do
       expect(rendered.to_html).to include('Deposits in progress')
@@ -31,11 +28,16 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
   end
 
   context 'when presenter has one or more in progress works' do
-    let(:works) { Work.all }
+    let(:work_versions) { WorkVersion.all }
+    before do
+      create(:work_version)
+      create(:work_version)
+      create(:work_version)
+    end
 
     it 'renders the component with works' do
       expect(rendered.to_html).to include('Deposits in progress')
-      works.pluck(:title).each do |title|
+      work_versions.pluck(:title).each do |title|
         expect(rendered.to_html).to include(title)
       end
     end

@@ -4,8 +4,8 @@
 require 'rails_helper'
 
 RSpec.describe Works::ApprovalComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(work: work)) }
-  let(:work) { build_stubbed(:work) }
+  let(:rendered) { render_inline(described_class.new(work_version: work_version)) }
+  let(:work_version) { build_stubbed(:work_version) }
 
   context 'when not needing approval' do
     before do
