@@ -5,6 +5,7 @@
 module ::Anonymous_Delegator_10; end
 module ::Anonymous_Delegator_96; end
 module ::Capistrano::OneTimeKey; end
+module ActiveRecord::Reflection::HasManyReflection; end
 module Dashboard::CollectionComponent::WorkPolicy; end
 module OkComputer::OkComputerController::Anonymous_Module_81; end
 module T::InterfaceWrapper::Helpers; end

@@ -44,10 +44,17 @@ class WorksController < ObjectsController
   def update
     work = Work.find(params[:id])
     work_version = work.head
+    clean_params = work_params
+
+    if work_version.deposited?
+      work_version = create_new_version(work_version)
+      NewVersionParameterFilter.call(clean_params, work.head)
+    end
+
     authorize! work_version
     @form = work_form(work_version)
 
-    if @form.validate(work_params) && @form.save
+    if @form.validate(clean_params) && @form.save
       after_save(work_version: work_version, work: work)
     else
       render :edit, status: :unprocessable_entity
@@ -102,6 +109,15 @@ class WorksController < ObjectsController
   helper_method :normalize_key
 
   private
+
+  # Create the next WorkVersion for this work
+  def create_new_version(previous_version)
+    previous_version.dup.tap do |work_version|
+      work_version.state = 'version_draft'
+      work_version.version = previous_version.version + 1
+      CollectionObserver.collection_activity(work_version, nil)
+    end
+  end
 
   sig { params(work_version: WorkVersion).returns(Reform::Form) }
   def work_form(work_version)

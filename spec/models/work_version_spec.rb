@@ -267,25 +267,6 @@ RSpec.describe WorkVersion do
       let(:work_version) { create(:work_version, state: state, work: work) }
       let(:work) { create(:work, collection: collection, depositor: collection.managed_by.first) }
 
-      context 'when the state was deposited' do
-        let(:state) { 'deposited' }
-
-        it 'transitions to version draft' do
-          expect { work_version.update_metadata! }
-            .to change(work_version, :state)
-            .from('deposited').to('version_draft')
-            .and change(Event, :count).by(1)
-                                      .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                                             'CollectionsMailer', 'collection_activity', 'deliver_now',
-                                             { params: {
-                                               user: collection.managed_by.last,
-                                               depositor: work.depositor,
-                                               collection: collection
-                                             }, args: [] }
-                                           ))
-        end
-      end
-
       context 'when the state was new' do
         let(:state) { 'new' }
 

@@ -65,7 +65,7 @@ RSpec.describe RequestGenerator do
         {
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
-          version: 0,
+          version: 1,
           access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
@@ -119,7 +119,7 @@ RSpec.describe RequestGenerator do
           externalIdentifier: 'druid:bk123gh4567',
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
-          version: 0,
+          version: 1,
           access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',

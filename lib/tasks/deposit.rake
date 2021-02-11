@@ -13,7 +13,7 @@ task complete_deposits: :environment do
 end
 
 def objects_awaiting_deposit
-  Collection.with_state('depositing') + Work.with_state('depositing')
+  Collection.with_state('depositing') + WorkVersion.with_state('depositing')
 end
 
 def random_druid

@@ -72,11 +72,17 @@ class WorkVersion < ApplicationRecord
     end
 
     event :update_metadata do
-      transition deposited: :version_draft
       transition new: :first_draft
 
       transition %i[first_draft version_draft pending_approval rejected] => same
     end
+  end
+
+  # Which assocations are has_many?
+  def self.aggregate_associations
+    reflections.values
+               .select { |ref| ref.is_a?(ActiveRecord::Reflection::HasManyReflection) }
+               .map(&:name)
   end
 
   sig { void }

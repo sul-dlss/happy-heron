@@ -49,28 +49,6 @@ RSpec.describe DepositJob do
     end
   end
 
-  context 'when the work has already been accessioned' do
-    let(:work) do
-      build(:work, druid: 'druid:bk123gh4567', collection: collection)
-    end
-    let(:work_version) do
-      build(:work_version, id: 8, version: 1, work: work, attached_files: [attached_file])
-    end
-
-    before do
-      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
-      allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)
-    end
-
-    it 'initiates a DepositStatusJob' do
-      described_class.perform_now(work_version)
-      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: work_version, job_id: 1234)
-      expect(work_version.version).to eq 2
-    end
-  end
-
   context 'when the deposit request is not successful' do
     before do
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)

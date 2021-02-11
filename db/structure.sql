@@ -529,7 +529,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 CREATE TABLE public.work_versions (
     id bigint NOT NULL,
-    version integer DEFAULT 0,
+    version integer DEFAULT 1,
     title character varying NOT NULL,
     work_type character varying NOT NULL,
     created_edtf character varying,
@@ -1207,6 +1207,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210201155622'),
 ('20210202044303'),
 ('20210208201246'),
-('20210209204542');
+('20210209204542'),
+('20210211170008');
 
 
