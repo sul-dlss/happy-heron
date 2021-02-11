@@ -112,6 +112,10 @@ RSpec.describe 'Create a collection' do
           }
         end
 
+        let(:no_contact_emails) do
+          { '0' => { '_destroy' => 'false', email: '' } }
+        end
+
         let(:collection_params) do
           {
             name: 'My Test Collection',
@@ -203,7 +207,7 @@ RSpec.describe 'Create a collection' do
             {
               name: '',
               description: '',
-              contact_email: '',
+              contact_emails_attributes: no_contact_emails,
               manager_sunets: user.sunetid,
               access: 'world',
               depositor_sunets: ''
@@ -212,10 +216,32 @@ RSpec.describe 'Create a collection' do
 
           it 'saves the draft collection' do
             post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
+            expect(response).to have_http_status(:found)
             collection = Collection.last
             expect(collection.name).to be_empty
             expect(collection.depositors.size).to eq 0
+            expect(response).to redirect_to(collection_path(collection))
+          end
+        end
+
+        context 'with an invalid contact email' do
+          let(:draft_collection_params) do
+            {
+              name: '',
+              description: '',
+              contact_emails_attributes: { '0' => { '_destroy' => 'false', email: 'bogus' } },
+              manager_sunets: user.sunetid,
+              access: 'world',
+              depositor_sunets: ''
+            }
+          end
+
+          it 'saves the draft collection' do
+            post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
             expect(response).to have_http_status(:found)
+            collection = Collection.last
+            expect(collection.name).to be_empty
+            expect(collection.depositors.size).to eq 0
             expect(response).to redirect_to(collection_path(collection))
           end
         end
@@ -225,7 +251,7 @@ RSpec.describe 'Create a collection' do
             {
               name: '',
               description: '',
-              contact_email: '',
+              contact_emails_attributes: no_contact_emails,
               manager_sunets: user.sunetid,
               access: 'world',
               depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi'
