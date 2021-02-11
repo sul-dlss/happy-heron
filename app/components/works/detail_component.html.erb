@@ -20,12 +20,8 @@
     <span class="state"><%= render Works::StateDisplayComponent.new(work: work) %></span>
   </header>
 
-  <table class="table table-sm mb-5">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Details</th>
-    </tr>
-    </thead>
+  <table class="table table-sm mb-5 caption-header">
+    <caption>Details</caption>
     <tbody>
       <tr>
         <th scope="row">Persistent link</th>
@@ -37,36 +33,36 @@
           <% end %>
         </td>
       </tr>
-    <tr>
-      <th scope="row">Collection</th>
-      <td><%= link_to collection.name, collection %></td>
-    </tr>
-    <tr>
-      <th scope="row">Deposit type</th>
-      <td><%= work_type %></td>
-    </tr>
-    <tr>
-      <th scope="row">Depositor</th>
-      <td><%= depositor %></td>
-    </tr>
-    <tr>
-      <th scope="row">Version details</th>
-      <td><%= version %></td>
-    </tr>
-    <tr>
-      <th scope="row">Deposit created</th>
-      <td><%= created_at %></td>
-    </tr>
-    <!--
-    <tr>
-      <th scope="row">Version started</th>
-      <td>NOT IMPLEMENTED</td>
-    </tr>
-    -->
-    <tr>
-      <th scope="row">Last saved</th>
-      <td><%= updated_at %></td>
-    </tr>
+      <tr>
+        <th scope="row">Collection</th>
+        <td><%= link_to collection.name, collection %></td>
+      </tr>
+      <tr>
+        <th scope="row">Deposit type</th>
+        <td><%= work_type %></td>
+      </tr>
+      <tr>
+        <th scope="row">Depositor</th>
+        <td><%= depositor %></td>
+      </tr>
+      <tr>
+        <th scope="row">Version details</th>
+        <td><%= version %></td>
+      </tr>
+      <tr>
+        <th scope="row">Deposit created</th>
+        <td><%= created_at %></td>
+      </tr>
+      <!--
+      <tr>
+        <th scope="row">Version started</th>
+        <td>NOT IMPLEMENTED</td>
+      </tr>
+      -->
+      <tr>
+        <th scope="row">Last saved</th>
+        <td><%= updated_at %></td>
+      </tr>
     </tbody>
   </table>
 
@@ -91,14 +87,10 @@
     </tbody>
   </table>
 
-  <table class="table table-sm mb-5">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Title and contact
-        <%= render Works::EditLinkComponent.new(work: work, anchor: 'title', label: 'Edit title and contact') %>
-      </th>
-    </tr>
-    </thead>
+  <table class="table table-sm mb-5 caption-header">
+    <caption>Title and contact
+      <%= render Works::EditLinkComponent.new(work: work, anchor: 'title', label: 'Edit title and contact') %>
+    </caption>
     <tbody>
     <tr>
       <th scope="row">Title</th>
@@ -119,14 +111,10 @@
     </tbody>
   </table>
 
-  <table class="table table-sm">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Authors and contributors
-        <%= render Works::EditLinkComponent.new(work: work, anchor: 'author', label: 'Edit authors and contributors') %>
-      </th>
-    </tr>
-    </thead>
+  <table class="table table-sm caption-header">
+    <caption>Authors and contributors
+      <%= render Works::EditLinkComponent.new(work: work, anchor: 'author', label: 'Edit authors and contributors') %>
+    </caption>
     <tbody>
     <% contributors.each do |contributor| %>
       <tr>
@@ -141,14 +129,10 @@
     </tbody>
   </table>
 
-  <table class="table table-sm mb-5">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Dates
-        <%= render Works::EditLinkComponent.new(work: work, anchor: 'dates', label: 'Edit dates') %>
-      </th>
-    </tr>
-    </thead>
+  <table class="table table-sm mb-5 caption-header">
+    <caption>Dates
+      <%= render Works::EditLinkComponent.new(work: work, anchor: 'dates', label: 'Edit dates') %>
+    </caption>
     <tbody>
     <tr>
       <th scope="row">Publication date</th>
@@ -161,14 +145,10 @@
     </tbody>
   </table>
 
-  <table class="table table-sm mb-5">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Description
-        <%= render Works::EditLinkComponent.new(work: work, anchor: 'description', label: 'Edit description') %>
-      </th>
-    </tr>
-    </thead>
+  <table class="table table-sm mb-5 caption-header">
+    <caption>Description
+      <%= render Works::EditLinkComponent.new(work: work, anchor: 'description', label: 'Edit description') %>
+    </caption>
     <tbody>
     <tr>
       <th scope="row">Abstract</th>
@@ -207,14 +187,10 @@
     </tbody>
   </table>
 
-  <table class="table table-sm mb-5">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Release data and visibility
-        <%= render Works::EditLinkComponent.new(work: work, anchor: 'release', label: 'Edit release data and visibility') %>
-      </th>
-    </tr>
-    </thead>
+  <table class="table table-sm mb-5 caption-header">
+    <caption>Release data and visibility
+      <%= render Works::EditLinkComponent.new(work: work, anchor: 'release', label: 'Edit release data and visibility') %>
+    </caption>
     <tbody>
     <tr>
       <th scope="row">Available</th>
@@ -227,14 +203,10 @@
     </tbody>
   </table>
 
-  <table class="table table-sm mb-5">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" colspan="2" class="table-title col-3">Terms of use and license
-        <%= render Works::EditLinkComponent.new(work: work, anchor: 'license', label: 'Edit terms of use and license') %>
-      </th>
-    </tr>
-    </thead>
+  <table class="table table-sm mb-5 caption-header">
+    <caption>Terms of use and license
+      <%= render Works::EditLinkComponent.new(work: work, anchor: 'license', label: 'Edit terms of use and license') %>
+    </caption>
     <tbody>
     <tr>
       <th scope="row">License</th>

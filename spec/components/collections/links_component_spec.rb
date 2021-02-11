@@ -10,7 +10,7 @@ RSpec.describe Collections::LinksComponent, type: :component do
     let(:collection) { build_stubbed(:collection, :with_related_links) }
 
     it 'renders the links' do
-      expect(rendered.css('thead th').to_html).to include 'Links to related information'
+      expect(rendered.css('caption').to_html).to include 'Links to related information'
       expect(rendered.css('tbody tr td p').size).to eq 2
     end
   end
