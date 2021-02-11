@@ -80,7 +80,7 @@ RSpec.describe 'Edit a draft work', js: true do
     visit dashboard_path
 
     within('#deposits-in-progress') do
-      click_link work.title
+      click_link work_version.title
     end
 
     dismiss_confirm do
@@ -91,10 +91,10 @@ RSpec.describe 'Edit a draft work', js: true do
   end
 
   context 'when successful deposit of non-"other" type work' do
-    let(:work) do
-      create(:valid_work, title: 'My Preprint/Data',
-                          depositor: depositor,
-                          subtype: %w[Data Preprint])
+    let(:work_version) do
+      create(:valid_work_version, title: 'My Preprint/Data',
+                                  subtype: %w[Data Preprint],
+                                  work: work)
     end
 
     it 'deposits and renders work show page' do
@@ -104,7 +104,7 @@ RSpec.describe 'Edit a draft work', js: true do
         click_link work_version.title
       end
 
-      expect(page).to have_content work.title
+      expect(page).to have_content work_version.title
       expect(page).to have_content('Work types (optional)')
       expect(find('#work_subtype_data', visible: :all)).not_to be_visible
       expect(find('#work_subtype_preprint')).to be_visible

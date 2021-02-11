@@ -6,8 +6,9 @@ require 'rails_helper'
 RSpec.describe Works::AgreementComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:rendered) { render_inline(described_class.new(form: form)) }
-  let(:work_form) { WorkForm.new(work) }
-  let(:work) { build_stubbed(:work) }
+  let(:work) { build(:work) }
+  let(:work_version) { build(:work_version, work: work) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
 
   it 'renders the component' do
     expect(rendered.to_html)
