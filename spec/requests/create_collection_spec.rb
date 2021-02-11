@@ -116,10 +116,6 @@ RSpec.describe 'Create a collection' do
           { '0' => { '_destroy' => 'false', email: '' } }
         end
 
-        let(:invalid_contact_email) do
-          { '0' => { '_destroy' => 'false', email: 'bogus' } }
-        end
-
         let(:collection_params) do
           {
             name: 'My Test Collection',
@@ -233,7 +229,7 @@ RSpec.describe 'Create a collection' do
             {
               name: '',
               description: '',
-              contact_emails_attributes: invalid_contact_email,
+              contact_emails_attributes: { '0' => { '_destroy' => 'false', email: 'bogus' } },
               manager_sunets: user.sunetid,
               access: 'world',
               depositor_sunets: ''
