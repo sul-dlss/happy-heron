@@ -62,7 +62,7 @@ class WorkVersionPolicy < ApplicationPolicy
 
   sig { returns(T::Boolean) }
   def destroy?
-    (administrator? || depositor?) && record.persisted? && record.first_draft?
+    (administrator? || depositor?) && record.persisted? && record.version_draft?
   end
 
   delegate :administrator?, to: :user_with_groups

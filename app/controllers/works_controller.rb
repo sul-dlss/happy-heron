@@ -75,11 +75,9 @@ class WorksController < ObjectsController
 
   def destroy
     work = Work.find(params[:id])
-    authorize! work.head
+    authorize! work
     work.transaction do
-      version = work.head
       work.update(head: nil)
-      version.destroy
       work.destroy
     end
 

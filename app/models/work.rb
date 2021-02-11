@@ -10,6 +10,7 @@ class Work < ApplicationRecord
   belongs_to :head, class_name: 'WorkVersion', optional: true
 
   has_many :events, as: :eventable, dependent: :destroy
+  has_many :work_versions, dependent: :destroy
 
   def broadcast_update
     broadcast_replace_to self

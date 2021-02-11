@@ -16,13 +16,6 @@ module Works
     end
 
     sig { returns(T.nilable(String)) }
-    def delete_button
-      return unless persisted?
-
-      helpers.turbo_frame_tag dom_id(model, :delete), src: delete_button_work_path(model, style: :button)
-    end
-
-    sig { returns(T.nilable(String)) }
     def cancel_button
       render Works::CancelComponent.new(work: model)
     end
@@ -30,7 +23,11 @@ module Works
     private
 
     delegate :object, to: :form
-    delegate :persisted?, to: :model
+    delegate :first_draft?, :version_draft?, :title, to: :work_version
+
+    def work_version
+      object.model.fetch(:work_version)
+    end
 
     def model
       object.model.fetch(:work)

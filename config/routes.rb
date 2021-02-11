@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :work_versions, only: :destroy
+
   direct :contact_form do
     { controller: 'welcome', action: 'show', anchor: 'help' }
   end
