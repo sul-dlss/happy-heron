@@ -254,6 +254,12 @@ class Concurrent::Map < Concurrent::Collection::MriMapBackend
   def value?(value); end
   def values; end
 end
+module Concurrent::ThreadSafe
+end
+module Concurrent::ThreadSafe::Util
+end
+class Concurrent::Hash < Hash
+end
 class Concurrent::Error < StandardError
 end
 class Concurrent::ConfigurationError < Concurrent::Error
@@ -906,13 +912,7 @@ class Concurrent::Atom < Concurrent::Synchronization::Object
   def value=(value); end
   include Concurrent::Concern::Observable
 end
-module Concurrent::ThreadSafe
-end
-module Concurrent::ThreadSafe::Util
-end
 class Concurrent::Array < Array
-end
-class Concurrent::Hash < Hash
 end
 class Concurrent::Set < Set
 end

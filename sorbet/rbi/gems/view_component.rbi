@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.25.0
+# view_component-2.25.1
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -51,6 +51,7 @@ class ViewComponent::SlotV2
   def _component_instance=(arg0); end
   def _content=(arg0); end
   def _content_block=(arg0); end
+  def html_safe?; end
   def initialize(parent); end
   def method_missing(symbol, *args, &block); end
   def respond_to_missing?(symbol, include_all = nil); end
@@ -92,6 +93,7 @@ class ViewComponent::Base < ActionView::Base
   def render_in(view_context, &block); end
   def render_monkey_patch_enabled; end
   def request; end
+  def self._after_compile; end
   def self.compile(raise_errors: nil); end
   def self.compiled?; end
   def self.content_areas; end

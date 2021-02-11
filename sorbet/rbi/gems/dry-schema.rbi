@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-schema/all/dry-schema.rbi
 #
-# dry-schema-1.6.0
+# dry-schema-1.6.1
 
 module Dry
 end
@@ -130,31 +130,6 @@ module Anonymous_Module_115
   def text; end
   extend Dry::Initializer::Mixin::Local
 end
-class Dry::Schema::MessageSet
-  def [](key); end
-  def combine_message_hashes(hashes); end
-  def combine_message_values(values); end
-  def each(&block); end
-  def empty?; end
-  def fetch(key); end
-  def freeze; end
-  def initialize(messages, options = nil); end
-  def messages; end
-  def messages_map(messages = nil); end
-  def options; end
-  def partition_message_values(values); end
-  def self.[](messages, options = nil); end
-  def to_h; end
-  def to_hash; end
-  include Anonymous_Dry_Equalizer_116
-  include Dry::Equalizer::Methods
-  include Enumerable
-end
-module Anonymous_Dry_Equalizer_116
-  def cmp?(comparator, other); end
-  def hash; end
-  def inspect; end
-end
 class Dry::Schema::MessageCompiler
   def append_mapped_size_tokens(tokens); end
   def call(ast); end
@@ -177,11 +152,11 @@ class Dry::Schema::MessageCompiler
   def visit_or(node, opts); end
   def visit_predicate(node, opts); end
   def visit_set(node, opts); end
-  def visit_unexpected_key(node, _opts); end
+  def visit_unexpected_key(node, opts); end
   def visit_xor(node, opts); end
   def with(new_options); end
   extend Dry::Initializer
-  include Anonymous_Module_117
+  include Anonymous_Module_116
   include Dry::Initializer::Mixin::Root
 end
 class Dry::Schema::MessageCompiler::VisitorOpts < Hash
@@ -194,7 +169,32 @@ class Dry::Schema::MessageCompiler::VisitorOpts < Hash
   def path; end
   def self.new; end
 end
-module Anonymous_Module_117
+class Dry::Schema::MessageSet
+  def [](key); end
+  def combine_message_hashes(hashes); end
+  def combine_message_values(values); end
+  def each(&block); end
+  def empty?; end
+  def fetch(key); end
+  def freeze; end
+  def initialize(messages, options = nil); end
+  def messages; end
+  def messages_map(messages = nil); end
+  def options; end
+  def partition_message_values(values); end
+  def self.[](messages, options = nil); end
+  def to_h; end
+  def to_hash; end
+  include Anonymous_Dry_Equalizer_117
+  include Dry::Equalizer::Methods
+  include Enumerable
+end
+module Anonymous_Dry_Equalizer_117
+  def cmp?(comparator, other); end
+  def hash; end
+  def inspect; end
+end
+module Anonymous_Module_116
   def __dry_initializer_config__; end
   def __dry_initializer_initialize__(messages, *arg1, **__dry_initializer_options__); end
   def full; end

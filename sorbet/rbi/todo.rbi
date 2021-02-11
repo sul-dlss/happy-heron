@@ -5,8 +5,8 @@
 module ::Anonymous_Delegator_10; end
 module ::Anonymous_Delegator_96; end
 module ::Capistrano::OneTimeKey; end
+module Dashboard::CollectionComponent::WorkPolicy; end
 module OkComputer::OkComputerController::Anonymous_Module_81; end
-module Rake::TaskLib::Cloneable; end
 module T::InterfaceWrapper::Helpers; end
 module T::Private::Abstract::Hooks; end
 module T::Private::Methods::MethodHooks; end
