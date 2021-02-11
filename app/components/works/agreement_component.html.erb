@@ -1,15 +1,18 @@
-<div class="row justify-content-end agreement">
-  <div class="form-check col-auto">
-    <%= form.check_box :agree_to_terms, required: true, class: 'form-check-input',
-        data: { action: "change->edit-deposit#check",
-                        'progress-step': 'terms', edit_deposit_target: 'termsField' }
-     %>
-    <%= form.label :agree_to_terms,
-     "I agree to the #{link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'}}".html_safe,
-     class: 'form-check-label' %>
-     <div class="invalid-feedback">You must agree to the Terms of Deposit.</div>
+<section>
+  <header>Terms of Deposit</header>
+  <div class="row">
+    <div class="form-check col-auto">
+      <%= form.check_box :agree_to_terms, required: true, class: 'form-check-input',
+          data: { action: "change->edit-deposit#check",
+                          'progress-step': 'terms', edit_deposit_target: 'termsField' }
+       %>
+      <%= form.label :agree_to_terms,
+       "I agree to the #{link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'}}".html_safe,
+       class: 'form-check-label' %>
+       <div class="invalid-feedback">You must agree to the Terms of Deposit.</div>
+    </div>
   </div>
-</div>
+</section>
 
 <div class="modal" id="termsOfDepositModal" tabindex="-1" aria-labelledby="content-type-prompt" aria-hidden="true">
   <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
