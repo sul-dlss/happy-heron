@@ -62,20 +62,10 @@
         <%= form.label 'release_option_delay', class: "form-check-label" do %>
           Delay release until
         <% end %>
-        <div class="year">
-          <label for="collection_release_date_year" class="visually-hidden">Embargo year</label>
-          <%= select_year release_date_year, { prefix: 'collection', field_name: 'release_date(1i)', start_year: Time.zone.today.year, end_year: 3.years.from_now.year }, id: 'collection_release_date_year', class: "form-control" %>
-        </div>
-
-        <div class="month">
-          <label for="collection_release_date_month" class="visually-hidden">Embargo month</label>
-          <%= select_month release_date_month, { prefix: 'collection', field_name: 'release_date(2i)', prompt: 'month'}, id: 'collection_release_date_month', class: "form-control" %>
-        </div>
-
-        <div class="day">
-          <label for="collection_release_date_day" class="visually-hidden">Embargo day</label>
-          <%= select_day release_date_day, { prefix: 'collection', field_name: 'release_date(3i)', prompt: 'day'}, id: 'collection_release_date_day', class: "form-control" %>
-        </div>
+        <%= form.select :default_release_duration,
+          options_for_select(embargo_release_duration_options, selected: release_duration),
+                              {},
+                              class: 'form-select' %>
       </div>
 
       <div class="form-check" data-complex-radio-target="selection">

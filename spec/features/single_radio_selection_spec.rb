@@ -23,9 +23,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
 
         expect(find('#collection_release_duration')).not_to be_disabled
 
-        expect(find('#collection_release_date_year')).to be_disabled
-        expect(find('#collection_release_date_month')).to be_disabled
-        expect(find('#collection_release_date_day')).to be_disabled
+        expect(find('#collection_default_release_duration')).to be_disabled
 
         # Disable "depositor-selects" select when "delay" selected
         choose('Delay release until')
@@ -36,9 +34,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
 
         expect(find('#collection_release_duration')).to be_disabled
 
-        expect(find('#collection_release_date_year')).not_to be_disabled
-        expect(find('#collection_release_date_month')).not_to be_disabled
-        expect(find('#collection_release_date_day')).not_to be_disabled
+        expect(find('#collection_default_release_duration')).not_to be_disabled
 
         # Disable "depositor-selects" and "delay" selects when "immediately" selected
         choose('Immediately')
@@ -49,9 +45,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
 
         expect(find('#collection_release_duration')).to be_disabled
 
-        expect(find('#collection_release_date_year')).to be_disabled
-        expect(find('#collection_release_date_month')).to be_disabled
-        expect(find('#collection_release_date_day')).to be_disabled
+        expect(find('#collection_default_release_duration')).to be_disabled
       end
     end
 
