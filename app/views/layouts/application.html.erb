@@ -46,6 +46,12 @@
                           bs_target: '#contactUsModal',
                           controller: 'contact-us'
                         }) %>
+            <%= link_to('Terms of Deposit', '#termsOfDepositModal', 
+                        class: 'nav-link',
+                        data: { 
+                          bs_toggle: 'modal', 
+                          bs_target: '#termsOfDepositModal'
+                        }) %>                        
           </nav>
         </header>
         <% if controller_name != 'welcome' %>
