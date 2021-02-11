@@ -30,7 +30,11 @@ class DraftWorkForm < Reform::Form
   property :embargo_date, embargo_date: true
 
   validates_with EmbargoDateParts,
-                 if: proc { |form| form.model.collection.user_can_set_availability? && form.release != 'immediate' }
+                 if: proc { |form| form.user_can_set_availability? && form.release != 'immediate' }
+
+  def user_can_set_availability?
+    model.collection.user_can_set_availability?
+  end
 
   def deserialize!(params)
     # Choose between using the user provided citation and the auto-generated citation
