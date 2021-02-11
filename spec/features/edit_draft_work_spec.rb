@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Edit a draft work', js: true do
   let(:depositor) { create(:user) }
-  let!(:work) do
+  let(:work) do
     create(:work, :with_keywords, :with_attached_file,
            work_type: 'other', subtype: ['Graphic novel'], depositor: depositor)
   end
@@ -15,7 +15,7 @@ RSpec.describe 'Edit a draft work', js: true do
     sign_in depositor
   end
 
-  context 'when successful deposit' do
+  context 'when successful deposit of "other" type work' do
     it 'deposits and renders work show page' do
       visit dashboard_path
 
@@ -47,6 +47,9 @@ RSpec.describe 'Edit a draft work', js: true do
         expect(nav).to have_content('Edit')
       end
 
+      expect(page).to have_content('Work types')
+      expect(page).not_to have_content('Work types (optional)')
+
       fill_in 'Other', with: 'Comic book'
       click_button 'Deposit'
 
@@ -54,33 +57,71 @@ RSpec.describe 'Edit a draft work', js: true do
       # Attached file should now be gone
       expect(page).not_to have_content(work.attached_files.first.filename.to_s)
     end
+  end
 
-    it 'shows a confirmation if you cancel the deposit and goes back if confirmed' do
-      visit dashboard_path
+  it 'shows a confirmation if you cancel the deposit and goes back if confirmed' do
+    visit dashboard_path
 
-      within('#deposits-in-progress') do
-        click_link work.title
-      end
-
-      accept_confirm do
-        click_link 'Cancel'
-      end
-
-      expect(page).to have_current_path(collection_works_path(work.collection))
+    within('#deposits-in-progress') do
+      click_link work.title
     end
 
-    it 'shows a confirmation if you cancel the deposit and stays on the page if not confirmed' do
+    accept_confirm do
+      click_link 'Cancel'
+    end
+
+    expect(page).to have_current_path(collection_works_path(work.collection))
+  end
+
+  it 'shows a confirmation if you cancel the deposit and stays on the page if not confirmed' do
+    visit dashboard_path
+
+    within('#deposits-in-progress') do
+      click_link work.title
+    end
+
+    dismiss_confirm do
+      click_link 'Cancel'
+    end
+
+    expect(page).to have_current_path(edit_work_path(work))
+  end
+
+  context 'when successful deposit of non-"other" type work' do
+    let(:work) do
+      create(:valid_work, title: 'My Preprint/Data',
+                          depositor: depositor,
+                          subtype: %w[Data Preprint])
+    end
+
+    it 'deposits and renders work show page' do
       visit dashboard_path
 
       within('#deposits-in-progress') do
         click_link work.title
       end
 
-      dismiss_confirm do
-        click_link 'Cancel'
-      end
+      expect(page).to have_content work.title
+      expect(page).to have_content('Work types (optional)')
+      expect(find('#work_subtype_data', visible: :all)).not_to be_visible
+      expect(find('#work_subtype_preprint')).to be_visible
+      expect(find('#work_subtype_preprint')).to be_checked
+      click_link 'See more options'
+      expect(find('#work_subtype_data')).to be_visible
+      expect(find('#work_subtype_data')).to be_checked
+      uncheck 'Data'
+      check 'Database'
+      click_link 'See fewer options'
+      expect(find('#work_subtype_data', visible: :all)).not_to be_visible
 
-      expect(page).to have_current_path(edit_work_path(work))
+      # TODO: we should be able to remove this once accepting is persisted.
+      # See https://github.com/sul-dlss/happy-heron/issues/243
+      check 'I agree to the SDR Terms of Deposit'
+
+      click_button 'Deposit'
+
+      expect(page).to have_content('My Preprint/Data')
+      expect(page).to have_content('Preprint, Database')
     end
   end
 end
