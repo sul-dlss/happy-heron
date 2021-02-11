@@ -33,6 +33,9 @@ class WorkVersion < ApplicationRecord
 
   LINK_TEXT = ':link will be inserted here automatically when available:'
 
+  after_update_commit -> { work.broadcast_update }
+  after_update_commit -> { work.collection.broadcast_update_collection_summary }
+
   state_machine initial: :new do
     before_transition WorkObserver.method(:before_transition)
 

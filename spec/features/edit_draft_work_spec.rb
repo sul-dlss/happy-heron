@@ -6,13 +6,14 @@ require 'rails_helper'
 RSpec.describe 'Edit a draft work', js: true do
   let(:depositor) { create(:user) }
   let!(:work_version) do
-    create(:work_version, :with_keywords, :with_attached_file,
+    create(:work_version, :with_keywords,
            work_type: 'other', subtype: ['Graphic novel'], work: work)
   end
   let(:work) { create(:work, depositor: depositor) }
 
   before do
     work.update(head: work_version)
+    create(:attached_file, :with_file, work_version: work_version)
     work.collection.depositors = [depositor]
     sign_in depositor
   end

@@ -29,8 +29,7 @@ RSpec.describe 'Updating an existing work' do
 
     describe 'submit the form' do
       context 'with an attachment' do
-        let(:work) { work_version.work }
-        let(:work_version) { create(:work_version, :deposited, :with_attached_file) }
+        let(:work_version) { create(:work_version, :deposited) }
         let(:user) { work.depositor }
         let(:work_params) do
           {
@@ -47,6 +46,10 @@ RSpec.describe 'Updating an existing work' do
             license: 'CC0-1.0',
             release: 'immediate'
           }
+        end
+
+        before do
+          create(:attached_file, :with_file, work_version: work_version)
         end
 
         it 'redirects to the work page' do

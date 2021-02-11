@@ -16,6 +16,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
 
   before do
     work.update(head: work_version)
+    create(:attached_file, :with_file, work_version: work_version)
   end
 
   context 'when reviewer rejects, then approves work' do

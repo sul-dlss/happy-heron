@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe WorkVersion do
   subject(:work_version) do
-    build(:work_version, :with_authors, :with_related_links, :with_related_works, :with_attached_file)
+    build(:work_version, :with_authors, :with_related_links, :with_related_works)
   end
 
   it 'has many contributors' do
@@ -20,8 +20,14 @@ RSpec.describe WorkVersion do
     expect(work_version.related_works).to all(be_a(RelatedWork))
   end
 
-  it 'has attached files' do
-    expect(work_version.attached_files).to be_present
+  describe '#attached_files' do
+    before do
+      create(:attached_file, :with_file, work_version: work_version)
+    end
+
+    it 'has attached files' do
+      expect(work_version.attached_files).to be_present
+    end
   end
 
   it 'has many contact emails' do
@@ -203,7 +209,7 @@ RSpec.describe WorkVersion do
       let(:access) { 'stanford' }
 
       it 'is valid' do
-        work_version.update(access: access)
+        work_version.access = access
         expect(work_version).to be_valid
       end
     end
@@ -213,13 +219,18 @@ RSpec.describe WorkVersion do
 
       it 'raises ArgumentError' do
         expect do
-          work_version.update(access: access)
+          work_version.access = access
         end.to raise_error(ArgumentError, /'#{access}' is not a valid access/)
       end
     end
   end
 
   describe 'state machine flow' do
+    before do
+      allow(work_version.work.collection).to receive(:broadcast_update_collection_summary)
+      allow(work_version.work).to receive(:broadcast_update)
+    end
+
     it 'starts in first draft' do
       expect(work_version.state).to eq('first_draft')
     end
@@ -227,6 +238,7 @@ RSpec.describe WorkVersion do
     describe 'a begin_deposit event' do
       before do
         allow(DepositJob).to receive(:perform_later)
+        work_version.save!
       end
 
       it 'transitions from first_draft to depositing' do

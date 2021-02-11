@@ -34,7 +34,6 @@ FactoryBot.define do
   trait :with_required_associations do
     with_keywords
     with_authors
-    with_attached_file
     with_contact_emails
   end
 
@@ -96,11 +95,5 @@ FactoryBot.define do
     end
 
     related_works { Array.new(related_works_count) { association(:related_work) } }
-  end
-
-  trait :with_attached_file do
-    after(:build) do |work_version|
-      create(:attached_file, :with_file, work_version: work_version)
-    end
   end
 end

@@ -11,8 +11,9 @@ class Work < ApplicationRecord
 
   has_many :events, as: :eventable, dependent: :destroy
 
-  after_update_commit -> { broadcast_replace_to self }
-  after_update_commit -> { collection.broadcast_update_collection_summary }
+  def broadcast_update
+    broadcast_replace_to self
+  end
 
   sig { returns(T.nilable(String)) }
   def purl
