@@ -1,9 +1,9 @@
-<div class="mb-2" class="row">
+<div class="row">
   <div class="col-4">
     <%= show_collection_link %>
   </div>
   <div class="col-3">
-    <%= link_to 'Complete draft', edit_collection_path(collection), class: "btn btn-primary" %>
+    <%= link_to 'Complete draft', edit_collection_path(collection), class: "mb-2 btn btn-primary" %>
   </div>
   <div class="col-5">
     <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if collection.first_draft?%>
