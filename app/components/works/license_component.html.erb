@@ -3,10 +3,13 @@
   <% if user_can_set_license? %>
     <div class="mb-3 row">
       <%= form.label :license, class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <%= form.select :license,
                         grouped_options_for_select(License.grouped_options, license),
                         {}, class: "form-select" %>
+      </div>
+      <div class="col-sm-5">
+        <%= link_to 'Get help selecting a license', 'https://library.stanford.edu/research/stanford-digital-repository/faqs/sdr-license-options', target: '_blank' %>
       </div>
     </div>
   <% else %>
