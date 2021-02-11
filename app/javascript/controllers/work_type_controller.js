@@ -3,7 +3,8 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = [
     "form", "template", "otherTemplate", "subtype", "area", "templateHeader",
-    "otherTemplateHeader", "moreTypesLink", "moreTypes", "continueButton"
+    "otherTemplateHeader", "moreTypesLink", "moreTypes", "continueButton",
+    "musicTemplateSubheader"
   ]
 
   // Sets the form in the popup to use the action in the data-destination attribute
@@ -51,6 +52,7 @@ export default class extends Controller {
     this.subtypeTarget.innerHTML = this.subtypesFor(type).join('')
     this.moreTypesTarget.innerHTML = this.moreTypesFor(type).join('')
     this.areaTarget.innerHTML = this.templateHeaderTarget.innerHTML
+    if (type == 'music') this.areaTarget.innerHTML += this.musicTemplateSubheaderTarget.innerHTML
   }
 
   displayOtherSubtypeOptions() {

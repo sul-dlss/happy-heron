@@ -204,6 +204,63 @@ Video:
         value: moving image
         source:
           value: MODS resource types
+Music:
+  type:
+    type: resource type
+    value: music
+    source:
+      value: MODS resource types
+  subtypes:
+    Data:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Software/Code:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Video:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
 Mixed Materials:
   type:
     type: resource type
