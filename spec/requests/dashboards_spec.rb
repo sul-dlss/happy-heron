@@ -51,7 +51,7 @@ RSpec.describe 'Dashboard requests' do
 
   context 'when user is a collection manager and there is a collection in progress' do
     let(:collection) do
-      create(:collection, :first_draft, creator: user, managers: [collection_manager], name: 'Happy little collection')
+      create(:collection, :first_draft, creator: user, managed_by: [collection_manager], name: 'Happy collection')
     end
 
     before do

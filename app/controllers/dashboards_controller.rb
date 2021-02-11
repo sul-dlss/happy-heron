@@ -6,7 +6,6 @@ class DashboardsController < ApplicationController
   before_action :authenticate_user!
   verify_authorized
 
-  # rubocop:disable Metrics/AbcSize
   def show
     authorize! :dashboard
     @presenter = DashboardPresenter.new(
@@ -19,5 +18,4 @@ class DashboardsController < ApplicationController
 
     @presenter.work_stats = StatBuilder.build_stats if user_with_groups.administrator?
   end
-  # rubocop:enable Metrics/AbcSize
 end
