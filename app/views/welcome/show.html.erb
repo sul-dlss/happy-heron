@@ -1,24 +1,151 @@
-<main class="stanford-masthead mb-3 mb-md-5" id="content">
-  <div class="container px-4 px-md-3">
-    <div class="row align-items-lg-center">
-      <div class="col-8 mx-auto col-md-4 order-md-2 col-lg-5">
-        <img src="https://picsum.photos/300/300">
+<main class="stanford-masthead" id="content"
+  style="background-image: url(<%= asset_pack_path 'media/images/splash.webp' %>); background-position: center; ">
+  <div class="container flex-wrap flex-md-nowrap">
+    <div class="row">
+      <div class="col-md-10">
+        <h1 class="me-auto">Digital Repository</h1>
       </div>
+      <div class="col-md-2">
+        <a href="#terms-of-deposit" class="terms">Terms of deposit</a>
+      </div>
+    </div
+    <p class="fs-4">Long term preservation of scholarly works at Stanford</p>
+    <div class="text-center text-md-left way-down">
+      <h2 class="mb-5">Make a deposit today!</h2>
+      <%= link_to dashboard_path, class: 'btn btn-primary btn-xl mb-3 mr-md-3' do %>
+        <span class="me-5">Start here</span><span class="fas fa-arrow-right ml-2"></span>
+      <% end %>
+    </div>
+    <a href="#photo-credit" class="credit">Photo credit<sup>*</sup></a>
+  </div>
+</main>
+<div class="benefits">
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>The process is simple</h3>
+        <ol>
+          <li>Describe your work and upload your file(s).</li>
+          <li>Choose a license and access settings.</li>
+          <li>Click "Deposit" to submit.</li>
+        </ol>
+      </div>
+      <div class="col-md-4">
+        <h3>Small effort for large payoff</h3>
+        <ul class="fa-ul">
+          <li><span class="fa-li"><span class="fas fa-check"></span></span>Persistent link for sharing your content</li>
+          <li><span class="fa-li"><span class="fas fa-check"></span></span>Preserved by the Libraries</li>
+          <li><span class="fa-li"><span class="fas fa-check"></span></span>Discoverable by all via SearchWorks</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <div class="card news">
+          <div class="text-center">
+            <div class="fs-4">news</div>
+            <h3 class="fs-5">Latest SDR news</h3>
+          </div>
 
-      <div class="col-md-8 order-md-1 col-lg-7 text-center text-md-left">
-        <h1 class="mb-3">Make a deposit today!</h1>
-        <p class="lead mb-4">
-          Request access from your student services coordinator, or if you need help,
-            contact the SDR team
-        </p>
+          <form action="https://stanford.us20.list-manage.com/subscribe/post?u=139e1b2d3df8f8cacd77c8160&amp;id=4f4148a871"
+            method="post" data-turbo="false" id="mc-embedded-subscribe-form"
+            name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        	   <label for="mce-EMAIL">Sign up for our newsletter</label>
+             <div class="row">
+               <div class="col-sm-9">
+        	      <input type="email" value="" name="EMAIL" class="form-control form-control-sm" id="mce-EMAIL" placeholder="Enter your email address" required>
+             <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_139e1b2d3df8f8cacd77c8160_4f4148a871" tabindex="-1" value=""></div>
+                </div>
+                <div class="col-sm-3">
+                  <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-sm">
+                </div>
+             </div>
+          </form>
 
-        <div class="d-flex flex-column flex-md-row">
-          <%= link_to 'Start here', dashboard_path, class: 'btn btn-primary btn-lg mb-3 mr-md-3' %>
         </div>
-        <p class="text-muted mb-0">
-           Not ready to deposit? Learn more about the process. It's a few simple steps and often takes less than 10 minutes
-        </p>
       </div>
     </div>
   </div>
-</main>
+</div>
+
+<div class="whys">
+  <div class="container p-4">
+    <div class="row">
+      <div class="col-md-3">
+        <%= image_pack_tag 'media/images/home_who.webp', height: 80, width: 80 %>
+      </div>
+      <div class="col-md-3">
+        <%= image_pack_tag 'media/images/home_what.webp', height: 80, width: 80 %>
+      </div>
+      <div class="col-md-3">
+        <%= image_pack_tag 'media/images/home_why.webp', height: 88, width: 80 %>
+      </div>
+      <div class="col-md-3">
+        <%= image_pack_tag 'media/images/home_when.webp', height: 80, width: 80 %>
+      </div>
+    </div>
+
+    <div class="row text-row">
+      <div class="col-md-3">
+        <h3>Who can deposit?</h3>
+        <p>Members of the Stanford community:</p>
+        <ul>
+          <li>Students</li>
+          <li>Faculty</li>
+          <li>Postdocs</li>
+          <li>Staff</li>
+        </ul>
+
+
+      </div>
+      <div class="col-md-3">
+        <h3>What can I deposit?</h3>
+        <p>Material of scholarly value:</p>
+        <ul>
+          <li>Research data in any format, including data for publications</li>
+          <li>Articles, working paper, pre-prints, technical reports, etc</li>
+          <li>Student works, such as honors theses and course research projects</li>
+          <li>Artistic works</li>
+          <li>Conference materials, like slides and posters</li>
+          <li>Archival documents, recordings, oral histories, etc.</li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3>Why should I deposit?</h3>
+
+        <p>Features of SDR:</p>
+        <ul>
+          <li>Shareable, persistent link for citing your work</li>
+          <li>Findable in SearchWorks, the library catalog, which is crawled by Google</li>
+          <li>Easily shareable via social media and embeddable in other websites</li>
+          <li>Available to the world or just Stanford -- you decide!</li>
+          <li>Embargos available up to 3 years </li>
+          <li>Your choice of licenses</li>
+          <li>Digital preservation by Stanford Libraries</li>
+          <li>DOIs also available</li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h3>When should I deposit?</h3>
+
+        <p>Deposit your works:</p>
+        <ul>
+          <li>When they are complete and ready to share</li>
+          <li>To accompany an article at the time of the article's publication</li>
+          <li>To fulfill the sharing requirements of a grant</li>
+          <li>Before you or your colleagues move on from Stanford</li>
+        </ul>
+        <p>The SDR is not designed as working space or backup storage.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col footnote" id="photo-credit">
+        *Visualization Lab of SLAC’s Kavli Institute for Particle Astrophysics
+        and Cosmology (KIPAC). Dwarf Galaxy animation. 3-D videos, created from
+        actual data, show the origins of the universe. Credit: Linda A. Cicero
+        and Steve Fyffe / Stanford News Service; Kavli Institute for Particle
+        Astrophysics and Cosmology May 30, 2012
+      </div>
+    </div>
+  </div>
+</div>

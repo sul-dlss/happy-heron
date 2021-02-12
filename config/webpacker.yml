@@ -30,6 +30,7 @@ default: &default
     - .eot
     - .otf
     - .ttf
+    - .webp
     - .woff
     - .woff2
 
@@ -47,6 +48,7 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
+    - .webp
 
 development:
   <<: *default
