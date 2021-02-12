@@ -14,7 +14,10 @@
   <% else %>
     <% if music_type? %>
       <h6>Select at least one term below:</h6>
+    <% elsif mixed_material_type? %>
+      <h6>Select at least two terms below:</h6>
     <% end %>
+
     <% subtypes.each do |subtype| %>
       <div class="col-sm-4">
         <div class="form-check">

@@ -26,8 +26,21 @@ RSpec.describe Works::SubtypesComponent do
       expect(rendered.to_html).not_to include('optional')
     end
 
-    it 'renders a header about selecting one term' do
+    it 'renders a header about selecting one or more terms' do
       expect(rendered.to_html).to include('Select at least one term below')
+    end
+  end
+
+  context 'when work type is "mixed material"' do
+    let(:work) { build_stubbed(:work, work_type: 'mixed material', subtype: %w[Data Sound]) }
+
+    it 'does not label subtypes as optional' do
+      expect(rendered.to_html).to include('Work types')
+      expect(rendered.to_html).not_to include('optional')
+    end
+
+    it 'renders a header about selecting two or more terms' do
+      expect(rendered.to_html).to include('Select at least two terms below')
     end
   end
 

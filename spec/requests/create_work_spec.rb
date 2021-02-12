@@ -100,6 +100,25 @@ RSpec.describe 'Create a new work' do
         end
       end
 
+      context 'with a valid work_type and not enough valid required subtypes' do
+        it 'redirects to dashboard with an informative flash message' do
+          get "/collections/#{collection.id}/works/new?work_type=mixed+material&subtype%5B%5D=Data"
+          expect(response).to redirect_to(dashboard_path)
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Invalid subtype value for work_type &#39;mixed material&#39;: Data'
+        end
+      end
+
+      context 'with a valid work_type and enough valid required subtypes' do
+        it 'renders the form' do
+          get "/collections/#{collection.id}/works/new?work_type=mixed+material&subtype%5B%5D=Data&subtype%5B%5D=Text"
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include 'Data'
+          expect(response.body).to include 'Text'
+        end
+      end
+
       context 'with a work_type that is missing a required user-supplied subtype' do
         it 'redirects to dashboard with an informative flash message' do
           get "/collections/#{collection.id}/works/new?work_type=other"

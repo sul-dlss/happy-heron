@@ -14,18 +14,27 @@ class WorkSubtypeValidator < ActiveModel::EachValidator
   # validate these on the incoming works/new request before there is a model
   # instance to validate.
   def self.valid?(work_type, value)
-    # A subtype is required for the "other" work type and the value must merely be present
-    return Array(value).first.present? if work_type == 'other'
+    subtypes = Array(value)
 
-    # A subtype is required for the "music" work type and at least one must come from a defined list
-    if work_type == 'music'
-      return value.present? &&
-             value.any? { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) }
+    case work_type
+    when 'other'
+      # A subtype is required for the "other" work type and the value
+      # must merely be present
+      return subtypes.first.present?
+    when 'music'
+      # A subtype is required for the "music" work type and at least one
+      # must come from a defined list
+      return subtypes.count { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) } >=
+             WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES
+    when 'mixed material'
+      # A subtype is required for the "mixed material" work type and at
+      # least two must come from a defined list
+      return subtypes.count { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) } >=
+             WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES
     end
 
-    return true if value.nil?
-
-    value.all? { |subtype| subtype.in?(WorkType.subtypes_for(work_type, include_more_types: true)) }
+    # NOTE: this also handles the case when `value` is `nil` correctly: returning `true`
+    subtypes.all? { |subtype| subtype.in?(WorkType.subtypes_for(work_type, include_more_types: true)) }
   rescue WorkType::InvalidType
     false
   end

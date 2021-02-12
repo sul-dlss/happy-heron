@@ -22,8 +22,12 @@ module Works
       work_type == 'music'
     end
 
+    def mixed_material_type?
+      work_type == 'mixed material'
+    end
+
     def optional?
-      !work_type.in?(%w[other music])
+      !work_type.in?(['mixed material', 'music', 'other'])
     end
 
     def subtypes

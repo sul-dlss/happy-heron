@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = [
     "form", "template", "otherTemplate", "subtype", "area", "templateHeader",
     "otherTemplateHeader", "moreTypesLink", "moreTypes", "continueButton",
-    "musicTemplateSubheader"
+    "musicTemplateSubheader", "mixedMaterialTemplateSubheader"
   ]
 
   // Sets the form in the popup to use the action in the data-destination attribute
@@ -52,7 +52,14 @@ export default class extends Controller {
     this.subtypeTarget.innerHTML = this.subtypesFor(type).join('')
     this.moreTypesTarget.innerHTML = this.moreTypesFor(type).join('')
     this.areaTarget.innerHTML = this.templateHeaderTarget.innerHTML
-    if (type == 'music') this.areaTarget.innerHTML += this.musicTemplateSubheaderTarget.innerHTML
+    switch(type) {
+      case 'music':
+        this.areaTarget.innerHTML += this.musicTemplateSubheaderTarget.innerHTML
+        break
+      case 'mixed material':
+        this.areaTarget.innerHTML += this.mixedMaterialTemplateSubheaderTarget.innerHTML
+        break
+    }
   }
 
   displayOtherSubtypeOptions() {
