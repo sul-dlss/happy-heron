@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     { controller: 'welcome', action: 'show', anchor: 'help' }
   end
   resource :help, only: :create
+  get 'print_terms_of_deposit', to: 'print#terms_of_deposit'
 
   # @note Only admins should be able to access the Sidekiq web UI.  But this is accomplished by Puppet
   # configuration restricting access using a shib workgroup, so the request doesn't reach the app if the user

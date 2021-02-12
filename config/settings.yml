@@ -34,6 +34,7 @@ authorization_workgroup_names:
 file_uploads_root: tmp/uploads
 
 purl_url: https://purl.stanford.edu
+terms_url: https://stanford.app.box.com/s/lozngarhdzj56z44la38v1zn3a1ggbyu
 
 host: <%= Socket.gethostname %>
 
