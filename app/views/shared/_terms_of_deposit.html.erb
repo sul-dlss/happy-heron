@@ -2,11 +2,16 @@
   <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="row justify-content-between modal-header">
-          <div class="col-9">
+          <div class="col-7">
             <h3 class="modal-title" id="content-type-prompt">Terms of Deposit</h3>
           </div>
           <div class="col-2">
-            <%= link_to print_terms_of_deposit_path, aria: { label: 'Print Terms of Deposit' }, id: 'print-link', class: 'text-decoration-none', target: '_blank' do %>
+            <%= link_to Settings.terms_url, aria: { label: 'Save Terms of Deposit' }, id: 'print-link', class: 'text-decoration-none', target: '_blank' do %>
+              <span class="fa fa-save"></span> Save
+            <% end %>
+          </div>
+          <div class="col-2">
+            <%= link_to print_terms_of_deposit_path, aria: { label: 'Print Terms of Deposit' }, id: 'save-link', class: 'text-decoration-none', target: '_blank' do %>
               <span class="fa fa-print"></span> Print
             <% end %>
           </div>
