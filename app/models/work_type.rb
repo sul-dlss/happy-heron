@@ -7,6 +7,9 @@ class WorkType
 
   class InvalidType < StandardError; end
 
+  MINIMUM_REQUIRED_MUSIC_SUBTYPES = 1
+  MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES = 2
+
   DATA_TYPES = [
     '3D model', 'Database', 'Documentation', 'Geospatial data', 'Image',
     'Tabular data', 'Text corpus'
