@@ -10,14 +10,16 @@ module Works
 
     attr_reader :form
 
-    delegate :license, to: :reform
-
     def reform
       form.object
     end
 
     def collection
       reform.model.collection
+    end
+
+    def license
+      reform.model.license || collection.default_license
     end
 
     delegate :user_can_set_license?, to: :collection
