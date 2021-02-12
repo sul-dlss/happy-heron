@@ -9,6 +9,9 @@ class WorkType
 
   MINIMUM_REQUIRED_MUSIC_SUBTYPES = 1
   MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES = 2
+  MIXED_MATERIAL = 'mixed material'
+  MUSIC = 'music'
+  OTHER = 'other'
 
   DATA_TYPES = [
     '3D model', 'Database', 'Documentation', 'Geospatial data', 'Image',

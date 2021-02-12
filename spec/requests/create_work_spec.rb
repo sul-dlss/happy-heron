@@ -202,7 +202,8 @@ RSpec.describe 'Create a new work' do
                    'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31',
                    'release' => 'embargo',
                    'embargo_date(1i)' => embargo_year, 'embargo_date(2i)' => '4', 'embargo_date(3i)' => '4',
-                   'access' => 'stanford') # an access selection that will be overwritten
+                   access: 'stanford', # an access selection that will be overwritten
+                   agree_to_terms: '1')
         end
 
         it 'displays the work' do
@@ -244,7 +245,8 @@ RSpec.describe 'Create a new work' do
             },
             license: 'CC0-1.0',
             release: 'immediate',
-            access: 'stanford'
+            access: 'stanford',
+            agree_to_terms: '1'
           }
         end
 
@@ -385,7 +387,8 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
-            release: 'immediate'
+            release: 'immediate',
+            agree_to_terms: '1'
           }
         end
 
@@ -460,7 +463,8 @@ RSpec.describe 'Create a new work' do
             release: 'embargo',
             'embargo(1i)': '2030',
             'embargo(2i)': '09',
-            'embargo(3i)': '01'
+            'embargo(3i)': '01',
+            agree_to_terms: '1'
           }
         end
 
@@ -529,7 +533,8 @@ RSpec.describe 'Create a new work' do
             release: 'embargo',
             'embargo(1i)': '2030',
             'embargo(2i)': '09',
-            'embargo(3i)': '01'
+            'embargo(3i)': '01',
+            agree_to_terms: '1'
           }
         end
 
@@ -618,7 +623,8 @@ RSpec.describe 'Create a new work' do
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
-            license: 'CC0-1.0'
+            license: 'CC0-1.0',
+            agree_to_terms: '1'
           }
         end
 

@@ -17,16 +17,16 @@ class WorkSubtypeValidator < ActiveModel::EachValidator
     subtypes = Array(value)
 
     case work_type
-    when 'other'
+    when WorkType::OTHER
       # A subtype is required for the "other" work type and the value
       # must merely be present
       return subtypes.first.present?
-    when 'music'
+    when WorkType::MUSIC
       # A subtype is required for the "music" work type and at least one
       # must come from a defined list
       return false if subtypes.count { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) } <
                       WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES
-    when 'mixed material'
+    when WorkType::MIXED_MATERIAL
       # A subtype is required for the "mixed material" work type and at
       # least two must come from a defined list
       return false if subtypes.count { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) } <
