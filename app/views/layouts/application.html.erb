@@ -25,7 +25,7 @@
       <div id="su-content">
         <header class="navbar navbar-expand navbar-dark stanford-navbar">
           <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
-            <a class="navbar-brand p-0 mr-2 me-auto" href="/" aria-label="Stanford Digital Repository">
+            <a class="navbar-brand p-0 me-auto" href="/" aria-label="Stanford Digital Repository">
               <%= image_pack_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
             </a>
 
@@ -48,14 +48,17 @@
                         }) %>
           </nav>
         </header>
-        <div class="background-holder">
-          <div class="sdr-header">
-            <div class="container-xxl">
-              <span class="stanford">Stanford</span><span class="digital-repo">Digital Repository</span>
+        <% if controller_name != 'welcome' %>
+          <div class="background-holder">
+            <div class="sdr-header">
+              <div class="container-xxl">
+                <span class="stanford">Stanford</span><span class="digital-repo">Digital Repository</span>
+              </div>
             </div>
+            <%= yield :breadcrumbs %>
           </div>
-          <%= yield :breadcrumbs %>
-        </div>
+        <% end %>
+
 
         <%= render 'shared/flashes' %>
         <%= render Help::FormComponent.new(user: current_user) %>

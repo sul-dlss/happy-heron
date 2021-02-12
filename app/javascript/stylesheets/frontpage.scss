@@ -1,0 +1,96 @@
+
+.stanford-masthead {
+  background-color: black;
+  color: $alabaster;
+  height: 500px;  padding: 1rem 0;
+  position: relative;
+
+  h1, h2 {
+    font-weight: 700;
+  }
+
+  .btn-xl {
+    padding: 0.5rem 8rem;
+    font-size: 2rem;
+  }
+
+  .way-down {
+    margin-top: $spacer * 8;
+  }
+
+  .credit {
+    bottom: 10px;
+    color: $alabaster;
+    font-size: 0.8rem;
+    font-style: italic;
+    position: absolute;
+    text-decoration: none;
+  }
+  .terms {
+    @extend .fs-6;
+    @extend .me-auto;
+    color: $alabaster;
+    // right: 5rem;
+    text-decoration: none;
+    // top: 10px;
+  }
+}
+
+.benefits {
+  background-color: $stanford-cardinal;
+  color: $alabaster;
+  ol {
+    padding-left: 1rem;
+  }
+  .fa-ul {
+    margin-left: 1.5rem;
+  }
+
+  .news {
+    padding: 1rem;
+    color: $body-color;
+
+    h3 {
+      color: $stanford-cardinal;
+    }
+
+    input:placeholder-shown {
+       font-style: italic;
+    }
+
+  }
+
+}
+
+.whys {
+  @extend .fw-lighter;
+  @extend .fs-5;
+
+  img {
+    display: block;
+    margin-bottom: 0.7rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .text-row {
+    .col-md-3 {
+      border-left: 1px solid $gray-400;
+      padding: .7rem 2rem;
+
+      &:first-child {
+        border-left: 0;
+      }
+    }
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .footnote {
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 2rem;
+  }
+}
