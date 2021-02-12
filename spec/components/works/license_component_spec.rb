@@ -25,6 +25,16 @@ RSpec.describe Works::LicenseComponent do
         expect(rendered.to_html).to include('<option selected value="ODbL-1.0">')
       end
     end
+
+    context 'when collection has a default license' do
+      let(:collection) { build(:collection, default_license: 'PDDL-1.0') }
+      let(:work) { build(:work, collection: collection, license: nil) }
+
+      it 'renders the component with the collection default' do
+        expect(rendered.css('option[selected]')).not_to be_empty
+        expect(rendered.to_html).to include('<option selected value="PDDL-1.0">')
+      end
+    end
   end
 
   context 'when the collection has a required license' do
