@@ -18,7 +18,7 @@ class Work < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
 
   validates :state, presence: true
-  validates :license, presence: true, inclusion: { in: License.license_list }
+  validates :license, inclusion: { in: License.license_list(include_displayable: true) }, allow_nil: true
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
 
