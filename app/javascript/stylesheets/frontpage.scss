@@ -26,14 +26,6 @@
     position: absolute;
     text-decoration: none;
   }
-  .terms {
-    @extend .fs-6;
-    @extend .me-auto;
-    color: $alabaster;
-    // right: 5rem;
-    text-decoration: none;
-    // top: 10px;
-  }
 }
 
 .benefits {
