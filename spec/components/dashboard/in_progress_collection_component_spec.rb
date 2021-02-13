@@ -5,12 +5,7 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::InProgressCollectionComponent, type: :component do
   let(:presenter) do
-    DashboardPresenter.new(
-      in_progress: Work.none,
-      approvals: Work.none,
-      collections: Collection.none,
-      collection_managers_in_progress: collections
-    )
+    instance_double(DashboardPresenter, collection_managers_in_progress: collections)
   end
   let(:user_with_groups) { UserWithGroups.new(user: user, groups: []) }
   let(:user) { create(:user) }

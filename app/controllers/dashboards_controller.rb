@@ -6,9 +6,12 @@ class DashboardsController < ApplicationController
   before_action :authenticate_user!
   verify_authorized
 
+  # rubocop:disable Metrics/AbcSize
   def show
     authorize! :dashboard
+
     @presenter = DashboardPresenter.new(
+      just_signed_in: current_user.just_signed_in,
       collections: authorized_scope(Collection.all, as: :deposit),
       approvals: Work.awaiting_review_by(current_user),
       in_progress: Work.with_state(:first_draft, :version_draft, :rejected)
@@ -18,4 +21,5 @@ class DashboardsController < ApplicationController
 
     @presenter.work_stats = StatBuilder.build_stats if user_with_groups.administrator?
   end
+  # rubocop:enable Metrics/AbcSize
 end

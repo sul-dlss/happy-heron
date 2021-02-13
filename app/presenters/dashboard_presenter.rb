@@ -6,12 +6,14 @@ class DashboardPresenter
   extend T::Sig
 
   sig do
-    params(in_progress: ActiveRecord::Relation,
+    params(just_signed_in: T.nilable(T::Boolean),
+           in_progress: ActiveRecord::Relation,
            approvals: ActiveRecord::Relation,
            collections: ActiveRecord::Relation,
            collection_managers_in_progress: ActiveRecord::Relation).void
   end
-  def initialize(in_progress:, approvals:, collections:, collection_managers_in_progress:)
+  def initialize(just_signed_in:, in_progress:, approvals:, collections:, collection_managers_in_progress:)
+    @just_signed_in = just_signed_in
     @in_progress = in_progress
     @approvals = approvals
     @collections = collections
@@ -32,4 +34,9 @@ class DashboardPresenter
 
   sig { returns(T.nilable(T::Hash[Collection, T::Hash[String, Integer]])) }
   attr_accessor :work_stats
+
+  sig { returns(T.nilable(T::Boolean)) }
+  def show_popup?
+    @just_signed_in && in_progress.any?
+  end
 end

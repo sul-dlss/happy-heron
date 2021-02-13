@@ -14,6 +14,8 @@ RSpec.describe 'Delete a draft work', js: true do
   context 'when draft' do
     it 'allow users to delete the work and destroys the model from the dashboard' do
       visit dashboard_path
+      click_button 'No'
+
       accept_confirm do
         click_link "Delete #{work.title}"
       end

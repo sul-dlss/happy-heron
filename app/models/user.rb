@@ -5,6 +5,13 @@
 class User < ApplicationRecord
   extend T::Sig
 
+  Warden::Manager.after_set_user except: :fetch do |record, warden, options|
+    record.just_signed_in = true if warden.authenticated?(options[:scope])
+  end
+
+  sig { returns(T.nilable(T::Boolean)) }
+  attr_accessor :just_signed_in
+
   validates :email,
             presence: true,
             uniqueness: { case_sensitive: false }

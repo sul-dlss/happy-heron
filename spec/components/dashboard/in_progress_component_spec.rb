@@ -5,12 +5,7 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::InProgressComponent, type: :component do
   let(:presenter) do
-    DashboardPresenter.new(
-      in_progress: works,
-      approvals: Work.none,
-      collections: Collection.none,
-      collection_managers_in_progress: Collection.none
-    )
+    instance_double(DashboardPresenter, in_progress: works)
   end
   let(:rendered) { render_inline(described_class.new(presenter: presenter)) }
 
