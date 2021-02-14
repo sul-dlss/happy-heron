@@ -1,36 +1,29 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["title", "titleField",
-                    "file", "fileField",
-                    "keywordsField",
-                    "contributorsField",
-                    "embargo-dateField",
-                    "terms", "termsField",
-                    "moreTypesLink", "moreTypes"];
+  static targets = ["moreTypesLink",
+                    "moreTypes",
+                    "frame"]
+  static values = { endpoint: String }
 
   connect() {
-    // TODO see what of the things are already valid
-    this.checkField(this.fileFieldTarget)
-    this.checkField(this.titleFieldTarget)
-    this.checkField(this.termsFieldTarget)
+    this.check()
+    this.element.addEventListener('change', () => this.check())
   }
 
   check(e) {
-    this.checkField(e.target)
-  }
+    const form = this.element
+    const data = new FormData(form)
 
-  checkField(field) {
-    const stepName = field.getAttribute("data-progress-step")
-    const step = this.targets.find(stepName)
-    let isComplete = field.value !== ''
-    if (stepName === 'file') {
-      isComplete = document.querySelectorAll('.dz-preview').length > 0
+    // Discard any template records
+    for(const key of data.keys()) {
+      if (key.match(/TEMPLATE_RECORD/)) {
+        data.delete(key)
+      }
     }
-    if (stepName === 'terms') {
-      isComplete = document.querySelector('#work_agree_to_terms').checked
-    }
-    step.classList.toggle('active', isComplete)
+
+    const queryString = new URLSearchParams(data).toString();
+    this.frameTarget.src = `${this.endpointValue}?${queryString}`
   }
 
   toggleMoreTypes(event) {

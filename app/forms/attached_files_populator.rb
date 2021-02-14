@@ -9,15 +9,15 @@ class AttachedFilesPopulator < ApplicationPopulator
     item = existing_record(form: form, id: fragment['id'])
 
     if fragment['_destroy'] == '1'
-      # Remove AttachedFile and associated AS model instances if AF exists
-      # Else, there is no AF, so remove the AS::Blob directly
-      if item
-        form.attached_files.delete(item)
-      else
-        ActiveStorage::Blob.find_signed!(fragment['file']).purge_later
-      end
+      # Remove AttachedFile and associated ActiveStorage objects
+      form.attached_files.delete(item) if item
       return skip!
     end
-    item || form.attached_files.append(AttachedFile.new(file: fragment['file']))
+    return item if item
+
+    # When in the ValidationController, sometimes fragment['file'] is an empty string. Avoid trying to load that.
+    return skip! if fragment['file'].blank?
+
+    form.attached_files.append(AttachedFile.new(file: fragment['file']))
   end
 end
