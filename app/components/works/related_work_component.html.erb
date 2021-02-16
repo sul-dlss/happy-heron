@@ -1,5 +1,8 @@
 <fieldset class="mb-5">
-  <legend class="h5">Related works (optional)</legend>
+  <legend class="h5">
+    Related works (optional)
+    <%= render PopoverComponent.new key: 'work.related_work' %>
+  </legend>
 
   <div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".inner-container">
     <template data-nested-form-target='template'>

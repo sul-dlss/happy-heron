@@ -1,5 +1,7 @@
 <section data-controller="nested-form" data-nested-form-selector-value=".inner-container">
-  <header>Additional contributors (optional)</header>
+  <header>Additional contributors (optional)
+   <%= render PopoverComponent.new key: 'work.contributor' %>
+  </header>
   <p>Names will be listed in the order shown below.</p>
 
   <template data-nested-form-target='template'>

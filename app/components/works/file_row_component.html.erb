@@ -18,7 +18,10 @@
   </div>
 
   <div class="upload-description col row">
-    <%= form.label :label, 'Description', class: 'col-form-label col-md-3' %>
+    <div class="col-md-3">
+      <%= form.label :label, 'Description', class: 'col-form-label' %>
+      <%= render PopoverComponent.new key: 'work.description' %>
+    </div>
     <div class="col-md-9">
     <%= form.text_field :label, class: 'form-control' %>
     </div>
@@ -29,6 +32,7 @@
     <%= form.hidden_field :file %>
     <%= form.check_box :hide, class: 'form-check-input' %>
     <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
+    <%= render PopoverComponent.new key: 'work.hide_file' %>
   </div>
 
   <div class="col-md-1">
