@@ -12,7 +12,9 @@ class ValidatesController < ApplicationController
 
     form = WorkForm.new(work)
     form.validate(params[:work])
-    form.sync
+    # If you call sync on a persisted model, ActiveRecord will overwrite has_many assocations.
+    # If you don't call sync on a new record, it won't show any of the validations.
+    form.sync unless work.persisted?
     render partial: 'validate', locals: { work: work }
   end
 
