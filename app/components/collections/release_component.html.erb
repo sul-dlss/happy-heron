@@ -5,7 +5,7 @@
   <tbody>
     <tr>
       <th>Release</th>
-      <td><%= release_option %></td>
+      <td><%= release_option %> <%= "(#{release_duration})" unless release_option == 'immediate' %></td>
     </tr>
     <tr>
       <th>Visibility</th>
