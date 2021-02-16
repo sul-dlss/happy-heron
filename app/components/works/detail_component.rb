@@ -4,80 +4,80 @@
 module Works
   # Renders the details about the work (show page)
   class DetailComponent < ApplicationComponent
-    sig { params(work: Work).void }
-    def initialize(work:)
-      @work = work
+    sig { params(work_version: WorkVersion).void }
+    def initialize(work_version:)
+      @work_version = work_version
     end
 
-    sig { returns(Work) }
-    attr_reader :work
+    sig { returns(WorkVersion) }
+    attr_reader :work_version
 
-    delegate :purl, :collection, :version, :work_type,
-             :contact_emails, :abstract, :citation,
-             :depositor, :attached_files,
-             :related_works, :related_links, :events,
-             to: :work
+    delegate :purl, :collection, :depositor, :events, to: :work
+
+    delegate :version, :work_type, :contact_emails, :abstract, :citation,
+             :attached_files, :related_works, :related_links,
+             :created_edtf, :published_edtf, :rejected?, :work, to: :work_version
 
     sig { returns(T::Array[AbstractContributor]) }
     def contributors
-      work.authors + work.contributors
+      work_version.authors + work_version.contributors
     end
 
     # Displays the created date as edtf
     sig { returns(T.nilable(String)) }
     def created
-      work.created_edtf&.edtf
+      created_edtf&.edtf
     end
 
     # Displays the published date as edtf
     sig { returns(T.nilable(String)) }
     def published
-      work.published_edtf&.edtf
+      published_edtf&.edtf
     end
 
     sig { returns(String) }
     def title
-      work.title.presence || 'No title'
+      work_version.title.presence || 'No title'
     end
 
     sig { returns(String) }
     def created_at
-      work.created_at.to_formatted_s(:long)
+      work_version.created_at.to_formatted_s(:long)
     end
 
     sig { returns(String) }
     def updated_at
-      work.updated_at.to_formatted_s(:long)
+      work_version.updated_at.to_formatted_s(:long)
     end
 
     sig { returns(String) }
     def embargo_date
-      work.embargo_date ? T.must(work.embargo_date).to_formatted_s(:long) : 'Immediately'
+      work_version.embargo_date ? T.must(work_version.embargo_date).to_formatted_s(:long) : 'Immediately'
     end
 
     sig { returns(String) }
     def access
-      work.access == 'stanford' ? 'Stanford Community' : 'Everyone'
+      work_version.access == 'stanford' ? 'Stanford Community' : 'Everyone'
     end
 
     sig { returns(String) }
     def license
-      License.label_for(work.license)
+      License.label_for(work_version.license)
     end
 
     sig { returns(String) }
     def subtypes
-      Array(work.subtype).join(', ')
+      Array(work_version.subtype).join(', ')
     end
 
     sig { returns(String) }
     def keywords
-      work.keywords.map(&:label).join(', ')
+      work_version.keywords.map(&:label).join(', ')
     end
 
     sig { returns(T::Boolean) }
     def display_approval?
-      work.pending_approval?
+      work_version.pending_approval?
     end
 
     sig { returns(T.nilable(String)) }

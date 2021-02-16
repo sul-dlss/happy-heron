@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe RequestGenerator do
   let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
-  let(:model) { described_class.generate_model(work: work) }
+  let(:model) { described_class.generate_model(work_version: work_version) }
   let(:project_tag) { Settings.h2.project_tag }
   let(:types_form) do
     [
@@ -57,14 +57,15 @@ RSpec.describe RequestGenerator do
 
   context 'when files are not present' do
     context 'without a druid' do
-      let(:work) do
-        build(:work, id: 7, work_type: 'text', collection: collection, title: 'Test title')
+      let(:work_version) do
+        build(:work_version, work_type: 'text', work: work, title: 'Test title')
       end
+      let(:work) { build(:work, id: 7, collection: collection) }
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
-          version: 0,
+          version: 1,
           access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
@@ -93,7 +94,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work.id}"
+            sourceId: "hydrus:#{work_version.work.id}"
           },
           structural: {
             contains: [],
@@ -108,16 +109,17 @@ RSpec.describe RequestGenerator do
     end
 
     context 'with a druid' do
-      let(:work) do
-        build(:work, id: 7, work_type: 'text', druid: 'druid:bk123gh4567',
-                     title: 'Test title', collection: collection)
+      let(:work_version) do
+        build(:work_version, work_type: 'text', title: 'Test title', work: work)
       end
+      let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection: collection) }
+
       let(:expected_model) do
         {
           externalIdentifier: 'druid:bk123gh4567',
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
-          version: 0,
+          version: 1,
           access: { access: 'world', download: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
@@ -146,7 +148,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work.id}"
+            sourceId: "hydrus:#{work_version.work.id}"
           },
           structural: {
             contains: [],
@@ -182,9 +184,11 @@ RSpec.describe RequestGenerator do
     end
 
     context 'without a druid' do
-      let(:work) do
-        build(:work, id: 7, version: 1, attached_files: [attached_file], collection: collection, title: 'Test title')
+      let(:work_version) do
+        build(:work_version, version: 1, attached_files: [attached_file], title: 'Test title', work: work)
       end
+      let(:work) { build(:work, id: 7, collection: collection) }
+
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
@@ -223,7 +227,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work.id}"
+            sourceId: "hydrus:#{work_version.work.id}"
           },
           structural: {
             contains: [
@@ -260,12 +264,11 @@ RSpec.describe RequestGenerator do
     end
 
     context 'with a druid' do
-      let(:work) do
-        build(:work, id: 7, version: 1, attached_files: [attached_file],
-                     druid: 'druid:bk123gh4567',
-                     collection: collection,
-                     title: 'Test title')
+      let(:work_version) do
+        build(:work_version, version: 1, attached_files: [attached_file], title: 'Test title', work: work)
       end
+      let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection: collection) }
+
       let(:expected_model) do
         {
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
@@ -300,7 +303,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work.id}"
+            sourceId: "hydrus:#{work_version.work.id}"
           },
           structural: {
             contains: [

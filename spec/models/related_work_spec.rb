@@ -9,8 +9,4 @@ RSpec.describe RelatedWork do
   it 'has a citation' do
     expect(related_work.citation).to be_present
   end
-
-  it 'belongs to a work' do
-    expect(related_work.work).to be_a(Work)
-  end
 end

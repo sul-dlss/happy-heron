@@ -5,13 +5,11 @@
 class DepositJob < BaseDepositJob
   queue_as :default
 
-  sig { params(work: Work).void }
-  def perform(work)
-    work.update(version: work.version + 1)
-
-    job_id = deposit(request_dro: RequestGenerator.generate_model(work: work),
-                     blobs: work.attached_files.map { |af| af.file.attachment.blob })
-    DepositStatusJob.perform_later(object: work, job_id: job_id)
+  sig { params(work_version: WorkVersion).void }
+  def perform(work_version)
+    job_id = deposit(request_dro: RequestGenerator.generate_model(work_version: work_version),
+                     blobs: work_version.attached_files.map { |af| af.file.attachment.blob })
+    DepositStatusJob.perform_later(object: work_version, job_id: job_id)
   rescue StandardError => e
     Honeybadger.notify(e)
   end
@@ -24,7 +22,6 @@ class DepositJob < BaseDepositJob
   end
   def deposit(request_dro:, blobs:)
     login_result = login
-
     raise login_result.failure unless login_result.success?
 
     new_request_dro = SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,

@@ -4,18 +4,18 @@
 module Works
   # Displays information about the current state of the deposit
   class StateDisplayComponent < ApplicationComponent
-    sig { params(work: Work).void }
-    def initialize(work:)
-      @work = work
+    sig { params(work_version: WorkVersion).void }
+    def initialize(work_version:)
+      @work_version = work_version
     end
 
-    sig { returns(Work) }
-    attr_reader :work
+    sig { returns(WorkVersion) }
+    attr_reader :work_version
 
     sig { returns(T.nilable(String)) }
     def call
-      value = I18n.t(work.state, scope: 'work.state')
-      return value unless work.depositing?
+      value = I18n.t(work_version.state, scope: 'work.state')
+      return value unless work_version.depositing?
 
       safe_join([value, spinner], ' ')
     end

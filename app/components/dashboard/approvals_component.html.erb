@@ -14,10 +14,10 @@
     <tbody>
     <% approvals.each do |submission| %>
       <tr>
-        <%= render Works::LinkToShowComponent.new(work: submission) %>
-        <td><%= submission.depositor.sunetid %></td>
-        <td><%= submission.collection.name %></td>
-        <td><%= render Works::StateDisplayComponent.new(work: submission) %></td>
+        <%= render Works::LinkToShowComponent.new(work_version: submission) %>
+        <td><%= submission.work.depositor.sunetid %></td>
+        <td><%= submission.work.collection.name %></td>
+        <td><%= render Works::StateDisplayComponent.new(work_version: submission) %></td>
         <td><%= I18n.l(submission.updated_at.to_date, format: :abbr_month) %></td>
       </tr>
     <% end %>

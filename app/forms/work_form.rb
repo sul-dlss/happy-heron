@@ -21,7 +21,5 @@ class WorkForm < DraftWorkForm
   validates :embargo_date, embargo_date: true, if: :user_can_set_availability?
   validates :agree_to_terms, presence: true
 
-  def user_can_set_availability?
-    model.collection.user_can_set_availability?
-  end
+  delegate :user_can_set_availability?, to: :collection
 end

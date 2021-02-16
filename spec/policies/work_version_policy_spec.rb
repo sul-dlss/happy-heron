@@ -3,10 +3,11 @@
 
 require 'rails_helper'
 
-RSpec.describe WorkPolicy do
+RSpec.describe WorkVersionPolicy do
   let(:user) { build_stubbed :user }
   # `record` must be defined - it is the authorization target
-  let(:record) { build_stubbed :work, collection: collection }
+  let(:record) { build_stubbed :work_version, work: work }
+  let(:work) { build_stubbed :work, collection: collection }
   let(:collection) { build_stubbed :collection, :deposited }
 
   # `context` is the authorization context
@@ -47,15 +48,18 @@ RSpec.describe WorkPolicy do
     failed 'when user is not the depositor'
 
     succeed 'when user is the depositor and status is not pending_approval' do
-      let(:record) { build_stubbed :work, depositor: user }
+      let(:work) { build_stubbed :work, collection: collection, depositor: user }
+      let(:record) { build_stubbed :work_version, work: work }
     end
 
     failed 'when user is a depositor and status is pending_approval' do
-      let(:record) { build_stubbed :work, :pending_approval, depositor: user }
+      let(:work) { build_stubbed :work, collection: collection, depositor: user }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
 
     failed 'when user is a depositor and status is depositing' do
-      let(:record) { build_stubbed :work, :depositing, depositor: user }
+      let(:work) { build_stubbed :work, collection: collection, depositor: user }
+      let(:record) { build_stubbed :work_version, :depositing, work: work }
     end
 
     succeed 'when user is an admin and status is not pending_approval' do
@@ -64,7 +68,7 @@ RSpec.describe WorkPolicy do
 
     succeed 'when user is an admin and status is pending_approval' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:record) { build_stubbed :work, :pending_approval }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
 
     succeed 'when user is a collection manager and status is not pending_approval' do
@@ -73,7 +77,7 @@ RSpec.describe WorkPolicy do
 
     succeed 'when user is collection manager and status is pending_approval' do
       let(:collection) { build_stubbed :collection, managed_by: [user] }
-      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
 
     succeed 'when user is a collection reviewer and status is not pending_approval' do
@@ -82,7 +86,7 @@ RSpec.describe WorkPolicy do
 
     succeed 'when user is a collection reviewer and status is pending_approval' do
       let(:collection) { build_stubbed :collection, reviewed_by: [user] }
-      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
   end
 
@@ -90,7 +94,8 @@ RSpec.describe WorkPolicy do
     failed 'when user is not the depositor'
 
     succeed 'when user is the depositor' do
-      let(:record) { build_stubbed :work, depositor: user }
+      let(:work) { build_stubbed :work, depositor: user }
+      let(:record) { build_stubbed :work_version, work: work }
     end
 
     succeed 'when user is an admin' do
@@ -108,16 +113,16 @@ RSpec.describe WorkPolicy do
 
   describe_rule :review? do
     failed 'when user is not a reviewer the collection' do
-      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
 
     succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
 
     succeed 'when user is a reviewer and status is pending_approval' do
-      let(:record) { build_stubbed :work, :pending_approval, collection: collection }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
       before { collection.reviewed_by = [user] }
     end
 

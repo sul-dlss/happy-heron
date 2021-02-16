@@ -15,11 +15,11 @@ module Works
     end
 
     def collection
-      reform.model.collection
+      reform.model.fetch(:work).collection
     end
 
     def license
-      reform.model.license || collection.default_license
+      reform.model.fetch(:work_version).license || collection.default_license
     end
 
     delegate :user_can_set_license?, to: :collection

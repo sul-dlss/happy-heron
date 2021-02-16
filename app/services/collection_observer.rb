@@ -3,9 +3,11 @@
 
 # Actions that happen when something happens to a collection
 class CollectionObserver
-  def self.collection_activity(work, _transition)
-    work.collection.managed_by.reject { |manager| manager == work.depositor }.each do |user|
-      mailer = CollectionsMailer.with(user: user, collection: work.collection, depositor: work.depositor)
+  def self.collection_activity(work_version, _transition)
+    depositor = work_version.work.depositor
+    collection = work_version.work.collection
+    collection.managed_by.reject { |manager| manager == depositor }.each do |user|
+      mailer = CollectionsMailer.with(user: user, collection: collection, depositor: depositor)
       mailer.collection_activity.deliver_later
     end
   end

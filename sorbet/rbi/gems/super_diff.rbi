@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/super_diff/all/super_diff.rbi
 #
-# super_diff-0.5.3
+# super_diff-0.6.0
 
 module SuperDiff
   def self.configuration; end

@@ -4,17 +4,18 @@
 require 'rails_helper'
 
 RSpec.describe DescriptionGenerator do
-  subject(:model) { described_class.generate(work: work).to_h }
+  subject(:model) { described_class.generate(work_version: work_version).to_h }
 
   let(:contributor) { build(:org_contributor) }
-  let(:work) do
-    build(:work, :with_creation_date_range, :published, :with_keywords,
+  let(:work_version) do
+    build(:work_version, :with_creation_date_range, :published, :with_keywords,
           :with_some_untitled_related_links, :with_related_works,
           :with_contact_emails,
           contributors: [contributor],
-          citation: "Test citation #{Work::LINK_TEXT}",
+          citation: "Test citation #{WorkVersion::LINK_TEXT}",
           title: 'Test title')
   end
+
   let(:citation_value) do
     'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
         'Journal of Librarianship and Scholarly Communication, 1(3).'
@@ -194,8 +195,8 @@ RSpec.describe DescriptionGenerator do
     let(:contributor1) { build(:org_contributor, role: 'Event') }
     let(:contributor2) { build(:person_contributor, role: 'Author') }
     let(:contributor3) { build(:org_contributor, role: 'Conference') }
-    let(:work) do
-      build(:work, :with_contact_emails,
+    let(:work_version) do
+      build(:work_version, :with_contact_emails,
             contributors: [contributor1, contributor2, contributor3],
             title: 'Test title')
     end
@@ -287,8 +288,8 @@ RSpec.describe DescriptionGenerator do
   #   example 12
   context 'when publisher and publication date are entered by user' do
     let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work) do
-      build(:work, :published, :with_contact_emails,
+    let(:work_version) do
+      build(:work_version, :published, :with_contact_emails,
             contributors: [contributor],
             title: 'Test title')
     end
@@ -333,8 +334,8 @@ RSpec.describe DescriptionGenerator do
   #   Note:  no top level contributor -- publisher is under event
   context 'when publisher entered by user, no publication date' do
     let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work) do
-      build(:work, :with_contact_emails,
+    let(:work_version) do
+      build(:work_version, :with_contact_emails,
             contributors: [contributor], title: 'Test title')
     end
 
@@ -370,8 +371,8 @@ RSpec.describe DescriptionGenerator do
   context 'when author, publisher and publication date are entered by user' do
     let(:person_contrib) { build(:person_contributor, role: 'Author') }
     let(:pub_contrib) { build(:org_contributor, role: 'Publisher') }
-    let(:work) do
-      build(:work, :published, :with_contact_emails,
+    let(:work_version) do
+      build(:work_version, :published, :with_contact_emails,
             contributors: [person_contrib, pub_contrib], title: 'Test title')
     end
 

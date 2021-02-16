@@ -5,7 +5,8 @@
 class ReviewersMailer < ApplicationMailer
   def submitted_email
     @user = params[:user]
-    @work = params[:work]
+    @work_version = params[:work_version]
+    @work = @work_version.work
     mail(to: @user.email, subject: "New deposit activity in the #{@work.collection_name} collection")
   end
 end

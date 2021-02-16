@@ -2,7 +2,7 @@
 <%= form_with model: work_form, url: url,
     data: {
       controller: 'edit-deposit auto-citation',
-      edit_deposit_endpoint_value: work_form.persisted? ? work_validate_path(work_form.model.id) : collection_validate_path(work_form.collection_id),
+      edit_deposit_endpoint_value: work_form.persisted? ? work_validate_path(work.id) : collection_validate_path(work_form.collection_id),
       auto_citation_purl: purl
     },
     html: { class: "needs-validation work-editor", novalidate: true, multipart: true } do |f| %>
@@ -30,5 +30,5 @@
   <%= render Works::EmbargoComponent.new(form: f) %>
   <%= render Works::LicenseComponent.new(form: f) %>
   <%= render Works::AgreementComponent.new(form: f) %>
-  <%= render ButtonsComponent.new(form: f) %>
+  <%= render Works::ButtonsComponent.new(form: f) %>
 <% end %>

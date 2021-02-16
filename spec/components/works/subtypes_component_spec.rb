@@ -5,12 +5,12 @@ require 'rails_helper'
 
 RSpec.describe Works::SubtypesComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new('work', work_form, controller.view_context, {}) }
-  let(:work) { build_stubbed(:work) }
-  let(:work_form) { WorkForm.new(work) }
+  let(:work_version) { build_stubbed(:work_version) }
+  let(:work_form) { WorkForm.new(work: work_version.work, work_version: work_version) }
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   context 'when work type is "other"' do
-    let(:work) { build_stubbed(:work, work_type: 'other', subtype: ['femur']) }
+    let(:work_version) { build_stubbed(:work_version, work_type: 'other', subtype: ['femur']) }
 
     it 'does not label subtypes as optional' do
       expect(rendered.to_html).to include('Work types')
@@ -19,7 +19,7 @@ RSpec.describe Works::SubtypesComponent do
   end
 
   context 'when work type is "music"' do
-    let(:work) { build_stubbed(:work, work_type: 'music', subtype: ['Data']) }
+    let(:work_version) { build_stubbed(:work_version, work_type: 'music', subtype: ['Data']) }
 
     it 'does not label subtypes as optional' do
       expect(rendered.to_html).to include('Work types')
@@ -32,7 +32,7 @@ RSpec.describe Works::SubtypesComponent do
   end
 
   context 'when work type is "mixed material"' do
-    let(:work) { build_stubbed(:work, work_type: 'mixed material', subtype: %w[Data Sound]) }
+    let(:work_version) { build_stubbed(:work_version, work_type: 'mixed material', subtype: %w[Data Sound]) }
 
     it 'does not label subtypes as optional' do
       expect(rendered.to_html).to include('Work types')

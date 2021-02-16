@@ -14,18 +14,24 @@ module Works
 
     sig { returns(T.any(DraftWorkForm, T::Array[T.any(Collection, DraftWorkForm)])) }
     def url
-      persisted? ? work_form : [model.collection, work_form]
+      persisted? ? work_form : [work.collection, work_form]
     end
 
     alias collection_draft_works_path collection_works_path
 
     sig { returns(String) }
     def page_title
-      persisted? ? model.title : 'Deposit your content'
+      persisted? ? work_version.title : 'Deposit your content'
     end
 
-    delegate :model, to: :work_form
+    delegate :persisted?, :purl, to: :work
 
-    delegate :persisted?, :purl, to: :model
+    def work
+      work_form.model.fetch(:work)
+    end
+
+    def work_version
+      work_form.model.fetch(:work_version)
+    end
   end
 end

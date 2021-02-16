@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-rspec/all/rubocop-rspec.rbi
 #
-# rubocop-rspec-2.1.0
+# rubocop-rspec-2.2.0
 
 module RuboCop
 end
@@ -119,6 +119,14 @@ end
 module RuboCop::Cop::RSpec::FinalEndLocation
   def final_end_location(start_node); end
 end
+module RuboCop::Cop::RSpec::CommentsHelp
+  def begin_pos_with_comment(node); end
+  def buffer; end
+  def end_line_position(node); end
+  def source_range_with_comment(node); end
+  def start_line_position(node); end
+  include RuboCop::Cop::RSpec::FinalEndLocation
+end
 module RuboCop::Cop::RSpec::EmptyLineSeparation
   def last_child?(node); end
   def missing_separating_line(node); end
@@ -204,6 +212,7 @@ class RuboCop::RSpec::Corrector::MoveNode
   def original; end
   def processed_source; end
   def source(node); end
+  include RuboCop::Cop::RSpec::CommentsHelp
   include RuboCop::Cop::RSpec::FinalEndLocation
   include RuboCop::Cop::RangeHelp
 end
@@ -340,7 +349,6 @@ class RuboCop::Cop::RSpec::AlignRightLetBrace < RuboCop::Cop::RSpec::Base
   extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::RSpec::AnyInstance < RuboCop::Cop::RSpec::Base
-  def disallowed_stub(param0 = nil); end
   def on_send(node); end
 end
 class RuboCop::Cop::RSpec::AroundBlock < RuboCop::Cop::RSpec::Base
@@ -668,7 +676,6 @@ class RuboCop::Cop::RSpec::LetSetup < RuboCop::Cop::RSpec::Base
   def unused_let_bang(node); end
 end
 class RuboCop::Cop::RSpec::MessageChain < RuboCop::Cop::RSpec::Base
-  def message_chain(param0 = nil); end
   def on_send(node); end
 end
 class RuboCop::Cop::RSpec::MessageExpectation < RuboCop::Cop::RSpec::Base

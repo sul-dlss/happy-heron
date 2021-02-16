@@ -6,40 +6,40 @@
 class ContributorsGenerator
   extend T::Sig
 
-  sig { params(work: Work).returns(T::Array[Cocina::Models::Contributor]) }
-  def self.generate(work:)
-    new(work: work).generate
+  sig { params(work_version: WorkVersion).returns(T::Array[Cocina::Models::Contributor]) }
+  def self.generate(work_version:)
+    new(work_version: work_version).generate
   end
 
-  sig { params(work: Work).returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def self.form_array_from_contributor_event(work:)
-    new(work: work).form_array_from_contributor_event
+  sig { params(work_version: WorkVersion).returns(T::Array[Cocina::Models::DescriptiveValue]) }
+  def self.form_array_from_contributor_event(work_version:)
+    new(work_version: work_version).form_array_from_contributor_event
   end
 
   sig do
-    params(work: Work, pub_date: T.nilable(Cocina::Models::Event))
+    params(work_version: WorkVersion, pub_date: T.nilable(Cocina::Models::Event))
       .returns(T::Array[Cocina::Models::Event])
   end
-  def self.events_from_publisher_contributors(work:, pub_date: nil)
-    new(work: work).publication_event_values(pub_date)
+  def self.events_from_publisher_contributors(work_version:, pub_date: nil)
+    new(work_version: work_version).publication_event_values(pub_date)
   end
 
-  sig { params(work: Work).void }
-  def initialize(work:)
-    @work = work
+  sig { params(work_version: WorkVersion).void }
+  def initialize(work_version:)
+    @work_version = work_version
   end
 
   # H2 Publisher becomes a Cocina::Models::Event, not a Contributor.  See events_from_publisher_contributors.
   sig { returns(T::Array[T.nilable(Cocina::Models::Contributor)]) }
   def generate
     count = 0
-    work.contributors.reject { |c| c.role == 'Publisher' }
-        .map do |work_form_contributor|
-          count += 1
-          # First entered contributor is always status: "primary" (except for Publisher)
-          primary = count == 1
-          contributor(work_form_contributor, primary)
-        end
+    work_version.contributors.reject { |c| c.role == 'Publisher' }
+                .map do |work_form_contributor|
+      count += 1
+      # First entered contributor is always status: "primary" (except for Publisher)
+      primary = count == 1
+      contributor(work_form_contributor, primary)
+    end
   end
 
   ROLES_FOR_FORM = %w[Event Conference].freeze
@@ -47,7 +47,7 @@ class ContributorsGenerator
   # when there is an organization role of 'Event' or 'Conference', a form value must be added to descriptive metadata
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def form_array_from_contributor_event
-    return [] if work.contributors.select { |c| ROLES_FOR_FORM.include?(c.role) }.empty?
+    return [] if work_version.contributors.select { |c| ROLES_FOR_FORM.include?(c.role) }.empty?
 
     [
       Cocina::Models::DescriptiveValue.new(
@@ -60,7 +60,7 @@ class ContributorsGenerator
 
   sig { params(pub_date: T.nilable(Cocina::Models::Event)).returns(T::Array[Cocina::Models::Event]) }
   def publication_event_values(pub_date)
-    work.contributors.select { |c| c.role == 'Publisher' }.map do |publisher|
+    work_version.contributors.select { |c| c.role == 'Publisher' }.map do |publisher|
       event = {
         type: 'publication',
         contributor: [contributor(publisher, false)]
@@ -73,8 +73,8 @@ class ContributorsGenerator
 
   private
 
-  sig { returns(Work) }
-  attr_reader :work
+  sig { returns(WorkVersion) }
+  attr_reader :work_version
 
   sig { params(contributor: Contributor, primary: T::Boolean).returns(Cocina::Models::Contributor) }
   def contributor(contributor, primary)

@@ -3,7 +3,7 @@
 
 # Models a File that is attached to a Work
 class AttachedFile < ApplicationRecord
-  belongs_to :work
+  belongs_to :work_version
   has_one_attached :file
 
   def blob

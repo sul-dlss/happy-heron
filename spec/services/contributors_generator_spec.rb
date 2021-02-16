@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe ContributorsGenerator do
-  subject(:cocina_model) { described_class.generate(work: work) }
+  subject(:cocina_model) { described_class.generate(work_version: work_version) }
 
   let(:stanford_self_deposit_source) do
     {
@@ -97,8 +97,8 @@ RSpec.describe ContributorsGenerator do
     context 'with no pub_date' do
       context 'with no publisher' do
         let(:contributor) { build(:person_contributor) }
-        let(:work) { build(:work, contributors: [contributor]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work) }
+        let(:work_version) { build(:work_version, contributors: [contributor]) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version: work_version) }
 
         it 'returns empty Array' do
           expect(cocina_model).to eq []
@@ -108,8 +108,8 @@ RSpec.describe ContributorsGenerator do
       context 'with multiple publishers' do
         let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
         let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
-        let(:work) { build(:work, contributors: [org_contrib1, org_contrib2]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work) }
+        let(:work_version) { build(:work_version, contributors: [org_contrib1, org_contrib2]) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version: work_version) }
 
         it 'returns Array of populated cocina model events, one for each publisher' do
           expect(cocina_model).to eq(
@@ -144,7 +144,7 @@ RSpec.describe ContributorsGenerator do
       let(:pub_date_value) do
         [
           {
-            value: work.published_edtf,
+            value: work_version.published_edtf,
             encoding: { code: 'edtf' }
           }
         ]
@@ -158,8 +158,10 @@ RSpec.describe ContributorsGenerator do
 
       context 'with no publisher' do
         let(:contributor) { build(:person_contributor) }
-        let(:work) { build(:work, contributors: [contributor]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work, pub_date: pub_date) }
+        let(:work_version) { build(:work_version, contributors: [contributor]) }
+        let(:cocina_model) do
+          described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date)
+        end
 
         it 'returns empty Array' do
           expect(cocina_model).to eq []
@@ -169,8 +171,10 @@ RSpec.describe ContributorsGenerator do
       context 'with multiple publishers' do
         let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
         let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
-        let(:work) { build(:work, contributors: [org_contrib1, org_contrib2]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work: work, pub_date: pub_date) }
+        let(:work_version) { build(:work_version, contributors: [org_contrib1, org_contrib2]) }
+        let(:cocina_model) do
+          described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date)
+        end
 
         it 'returns Array of populated cocina model events, one for each publisher' do
           expect(cocina_model).to eq(
@@ -206,7 +210,7 @@ RSpec.describe ContributorsGenerator do
 
   context 'without marcrelator mapping' do
     let(:contributor) { build(:org_contributor, role: 'Conference') }
-    let(:work) { build(:work, contributors: [contributor]) }
+    let(:work_version) { build(:work_version, contributors: [contributor]) }
 
     it 'creates Cocina::Models::Contributor without marc relator role' do
       expect(cocina_model).to eq(
@@ -229,7 +233,7 @@ RSpec.describe ContributorsGenerator do
 
   context 'with DataCite creator mapping for role' do
     let(:contributor) { build(:person_contributor) }
-    let(:work) { build(:work, contributors: [contributor]) }
+    let(:work_version) { build(:work_version, contributors: [contributor]) }
 
     it 'creates Cocina::Models::Contributor with DataCite role' do
       expect(cocina_model).to eq(
@@ -254,7 +258,7 @@ RSpec.describe ContributorsGenerator do
   describe 'h2 mapping specification examples' do
     context 'with person with single role' do
       let(:contributor) { build(:person_contributor, role: 'Data collector') }
-      let(:work) { build(:work, contributors: [contributor]) }
+      let(:work_version) { build(:work_version, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor with DataCite role' do
         expect(cocina_model).to eq(
@@ -292,7 +296,7 @@ RSpec.describe ContributorsGenerator do
       end
 
       it 'ContributorsGenerator.form_array_from_contributor_event returns []' do
-        expect(described_class.form_array_from_contributor_event(work: work)).to eq []
+        expect(described_class.form_array_from_contributor_event(work_version: work_version)).to eq []
       end
     end
 
@@ -303,7 +307,7 @@ RSpec.describe ContributorsGenerator do
 
     context 'with organization with single role' do
       let(:contributor) { build(:org_contributor, role: 'Host institution') }
-      let(:work) { build(:work, contributors: [contributor]) }
+      let(:work_version) { build(:work_version, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor without marc relator role' do
         expect(cocina_model).to eq(
@@ -343,7 +347,7 @@ RSpec.describe ContributorsGenerator do
 
     context 'with conference as contributor' do
       let(:contributor) { build(:org_contributor, role: 'Conference') }
-      let(:work) { build(:work, contributors: [contributor]) }
+      let(:work_version) { build(:work_version, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor' do
         expect(cocina_model).to eq(
@@ -364,14 +368,14 @@ RSpec.describe ContributorsGenerator do
       end
 
       it 'ContributorsGenerator.form_array_from_contributor_event returns populated form attribute' do
-        form = described_class.form_array_from_contributor_event(work: work)
+        form = described_class.form_array_from_contributor_event(work_version: work_version)
         expect(form).to eq [event_form]
       end
     end
 
     context 'with event as contributor' do
       let(:contributor) { build(:org_contributor, role: 'Event') }
-      let(:work) { build(:work, contributors: [contributor]) }
+      let(:work_version) { build(:work_version, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor with DataCite role' do
         expect(cocina_model).to eq(
@@ -392,7 +396,7 @@ RSpec.describe ContributorsGenerator do
       end
 
       it 'ContributorsGenerator.form_array_from_contributor_event returns populated form attribute' do
-        form = described_class.form_array_from_contributor_event(work: work)
+        form = described_class.form_array_from_contributor_event(work_version: work_version)
         expect(form).to eq [event_form]
       end
     end
@@ -400,7 +404,7 @@ RSpec.describe ContributorsGenerator do
     context 'with multiple person contributors' do
       let(:contributor1) { build(:person_contributor, role: 'Author') }
       let(:contributor2) { build(:person_contributor, role: 'Author') }
-      let(:work) { build(:work, contributors: [contributor1, contributor2]) }
+      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2]) }
 
       # TODO: implement order
 
@@ -438,7 +442,7 @@ RSpec.describe ContributorsGenerator do
     context 'with multiple contributors - person and organization' do
       let(:contributor1) { build(:person_contributor, role: 'Author') }
       let(:contributor2) { build(:org_contributor, role: 'Sponsor') }
-      let(:work) { build(:work, contributors: [contributor1, contributor2]) }
+      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2]) }
 
       it 'creates array of Cocina::Models::Contributors' do
         expect(cocina_model).to eq(
@@ -468,7 +472,7 @@ RSpec.describe ContributorsGenerator do
       let(:contributor1) { build(:person_contributor, role: 'Author') }
       let(:contributor2) { build(:org_contributor, role: 'Author') }
       let(:contributor3) { build(:person_contributor, role: 'Author') }
-      let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
+      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2, contributor3]) }
 
       # TODO: implement order
 
@@ -513,7 +517,7 @@ RSpec.describe ContributorsGenerator do
       let(:contributor1) { build(:person_contributor, role: 'Author') }
       let(:contributor2) { build(:org_contributor, role: 'Sponsor') }
       let(:contributor3) { build(:person_contributor, role: 'Author') }
-      let(:work) { build(:work, contributors: [contributor1, contributor2, contributor3]) }
+      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2, contributor3]) }
 
       # TODO: implement order
 
@@ -555,7 +559,7 @@ RSpec.describe ContributorsGenerator do
 
     context 'with organization as funder' do
       let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Funder') }
-      let(:work) { build(:work, contributors: [contributor]) }
+      let(:work_version) { build(:work_version, contributors: [contributor]) }
 
       it 'creates Cocina::Models::Contributor per spec' do
         expect(cocina_model).to eq(
@@ -589,7 +593,7 @@ RSpec.describe ContributorsGenerator do
       let(:contributor) do
         build(:org_contributor, full_name: 'Stanford University Press', role: 'Publisher')
       end
-      let(:work) { build(:work, contributors: [contributor]) }
+      let(:work_version) { build(:work_version, contributors: [contributor]) }
 
       it 'does not create Cocina::Models::Contributor' do
         expect(cocina_model).to eq []

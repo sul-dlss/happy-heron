@@ -5,12 +5,15 @@ require 'rails_helper'
 
 RSpec.describe 'Edit a draft work', js: true do
   let(:depositor) { create(:user) }
-  let(:work) do
-    create(:work, :with_keywords, :with_attached_file,
-           work_type: 'other', subtype: ['Graphic novel'], depositor: depositor)
+  let!(:work_version) do
+    create(:work_version, :with_keywords,
+           work_type: 'other', subtype: ['Graphic novel'], work: work)
   end
+  let(:work) { create(:work, depositor: depositor) }
 
   before do
+    work.update(head: work_version)
+    create(:attached_file, :with_file, work_version: work_version)
     work.collection.depositors = [depositor]
     sign_in depositor
   end
@@ -21,13 +24,14 @@ RSpec.describe 'Edit a draft work', js: true do
 
       click_link 'Yes!'
 
-      expect(page).to have_content work.title
+      expect(page).to have_content work_version.title
 
       # TODO: we should be able to remove this once accepting is persisted.
       # See https://github.com/sul-dlss/happy-heron/issues/243
       check 'I agree to the SDR Terms of Deposit'
 
-      expect(page).to have_content(work.attached_files.first.filename.to_s)
+      filename = work_version.attached_files.first.filename.to_s
+      expect(page).to have_content(filename)
       # File removal should not raise an error
       find('button.dz-remove').click
 
@@ -41,7 +45,7 @@ RSpec.describe 'Edit a draft work', js: true do
       find('#breadcrumbs') do |nav|
         expect(nav).to have_content('Dashboard')
         expect(nav).to have_content(work.collection.name)
-        expect(nav).to have_content(work.title)
+        expect(nav).to have_content(work_version.title)
         expect(nav).to have_content('Edit')
       end
 
@@ -53,7 +57,7 @@ RSpec.describe 'Edit a draft work', js: true do
 
       expect(page).to have_content('Test title')
       # Attached file should now be gone
-      expect(page).not_to have_content(work.attached_files.first.filename.to_s)
+      expect(page).not_to have_content(filename)
     end
   end
 
@@ -82,11 +86,11 @@ RSpec.describe 'Edit a draft work', js: true do
   end
 
   context 'when successful deposit of "music" type work' do
-    let(:work) do
-      create(:valid_work, title: 'My Preprint/Data',
-                          depositor: depositor,
-                          work_type: 'music',
-                          subtype: %w[Data Preprint])
+    let(:work_version) do
+      create(:valid_work_version, title: 'My Preprint/Data',
+                                  work: work,
+                                  work_type: 'music',
+                                  subtype: %w[Data Preprint])
     end
 
     it 'deposits and renders work show page' do
@@ -94,7 +98,7 @@ RSpec.describe 'Edit a draft work', js: true do
 
       click_link 'Yes!'
 
-      expect(page).to have_content work.title
+      expect(page).to have_content work_version.title
       expect(page).to have_content('Work types')
       expect(page).to have_content('Select at least one term below')
       expect(find('#work_subtype_preprint', visible: :all)).not_to be_visible

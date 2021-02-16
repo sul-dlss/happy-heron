@@ -7,27 +7,27 @@ class FileGenerator
 
   sig do
     params(
-      work: Work,
+      work_version: WorkVersion,
       attached_file: AttachedFile
     ).returns(T.nilable(T.any(Cocina::Models::File, Cocina::Models::RequestFile)))
   end
-  def self.generate(work:, attached_file:)
-    new(work: work, attached_file: attached_file).generate
+  def self.generate(work_version:, attached_file:)
+    new(work_version: work_version, attached_file: attached_file).generate
   end
 
-  sig { params(work: Work, attached_file: AttachedFile).void }
-  def initialize(work:, attached_file:)
-    @work = work
+  sig { params(work_version: WorkVersion, attached_file: AttachedFile).void }
+  def initialize(work_version:, attached_file:)
+    @work_version = work_version
     @attached_file = attached_file
   end
 
-  attr_reader :work, :attached_file
+  attr_reader :work_version, :attached_file
 
   sig { returns(T.nilable(T.any(Cocina::Models::File, Cocina::Models::RequestFile))) }
   def generate
     return nil unless blob
 
-    if work.druid
+    if work_version.work.druid
       Cocina::Models::File.new(file_attributes)
     else
       Cocina::Models::RequestFile.new(request_file_attributes)
@@ -37,7 +37,7 @@ class FileGenerator
   def request_file_attributes
     {
       type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
-      version: work.version,
+      version: work_version.version,
       label: attached_file.label,
       filename: filename,
       access: access,
@@ -57,7 +57,7 @@ class FileGenerator
   end
 
   def external_identifier
-    "#{work.druid}/#{filename}" if work.druid
+    "#{work_version.work.druid}/#{filename}" if work_version.work.druid
   end
 
   def administrative

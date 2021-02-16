@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/okcomputer/all/okcomputer.rbi
 #
-# okcomputer-1.18.2
+# okcomputer-1.18.4
 
 module OkComputer
   def self.analytics_ignore; end
@@ -169,6 +169,13 @@ class OkComputer::ActiveRecordMigrationsCheck < OkComputer::Check
 end
 class OkComputer::AppVersionCheck < OkComputer::Check
   def check; end
+  def env; end
+  def env=(arg0); end
+  def file; end
+  def file=(arg0); end
+  def initialize(file: nil, env: nil, &transform); end
+  def transform; end
+  def transform=(arg0); end
   def version; end
   def version_from_env; end
   def version_from_file; end

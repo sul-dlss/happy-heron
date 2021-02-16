@@ -5,8 +5,9 @@ require 'rails_helper'
 
 RSpec.describe Works::PublicationDateComponent, type: :component do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:work) { build(:work) }
-  let(:work_form) { WorkForm.new(work) }
+  let(:work) { work_version.work }
+  let(:work_version) { build(:work_version) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
   let(:rendered) { render_inline(described_class.new(form: form, min_year: 999, max_year: 2040)) }
 
   context 'when there is an error' do
@@ -24,7 +25,7 @@ RSpec.describe Works::PublicationDateComponent, type: :component do
 
   context 'with a populated form containing only year for publication_date' do
     let(:year_only_pub_date) { EDTF.parse('2020') }
-    let(:work) { build(:work, published_edtf: year_only_pub_date) }
+    let(:work_version) { build(:work_version, published_edtf: year_only_pub_date) }
 
     it 'renders the component without month or day selected' do
       expect(rendered.css('#work_published_year').first['value']).to eq '2020'
@@ -35,7 +36,7 @@ RSpec.describe Works::PublicationDateComponent, type: :component do
 
   context 'with a populated form containing year and month for publication_date' do
     let(:year_month_pub_date) { EDTF.parse('2020-05') }
-    let(:work) { build(:work, published_edtf: year_month_pub_date) }
+    let(:work_version) { build(:work_version, published_edtf: year_month_pub_date) }
 
     it 'renders the component without day selected' do
       expect(rendered.css('#work_published_year').first['value']).to eq '2020'

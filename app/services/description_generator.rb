@@ -5,21 +5,21 @@
 class DescriptionGenerator
   extend T::Sig
 
-  sig { params(work: Work).returns(Cocina::Models::Description) }
-  def self.generate(work:)
-    new(work: work).generate
+  sig { params(work_version: WorkVersion).returns(Cocina::Models::Description) }
+  def self.generate(work_version:)
+    new(work_version: work_version).generate
   end
 
-  sig { params(work: Work).void }
-  def initialize(work:)
-    @work = work
+  sig { params(work_version: WorkVersion).void }
+  def initialize(work_version:)
+    @work_version = work_version
   end
 
   sig { returns(Cocina::Models::Description) }
   def generate
     Cocina::Models::Description.new({
                                       title: title,
-                                      contributor: ContributorsGenerator.generate(work: work),
+                                      contributor: ContributorsGenerator.generate(work_version: work_version),
                                       subject: keywords,
                                       note: [abstract, citation] + contacts,
                                       event: generate_events,
@@ -30,19 +30,20 @@ class DescriptionGenerator
 
   private
 
-  sig { returns(Work) }
-  attr_reader :work
+  sig { returns(WorkVersion) }
+  attr_reader :work_version
 
   sig { returns(T::Array[Cocina::Models::Title]) }
   def title
     [
-      Cocina::Models::Title.new(value: work.title)
+      Cocina::Models::Title.new(value: work_version.title)
     ]
   end
 
   sig { returns(T::Array[Cocina::Models::Event]) }
   def generate_events
-    pub_events = ContributorsGenerator.events_from_publisher_contributors(work: work, pub_date: published_date)
+    pub_events = ContributorsGenerator.events_from_publisher_contributors(work_version: work_version,
+                                                                          pub_date: published_date)
     return [T.must(created_date)] + pub_events if pub_events.present? && created_date
     return pub_events if pub_events.present? # and no created_date
 
@@ -51,12 +52,13 @@ class DescriptionGenerator
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def generate_form
-    TypesGenerator.generate(work: work) + ContributorsGenerator.form_array_from_contributor_event(work: work)
+    TypesGenerator.generate(work_version: work_version) +
+      ContributorsGenerator.form_array_from_contributor_event(work_version: work_version)
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def keywords
-    work.keywords.map do |keyword|
+    work_version.keywords.map do |keyword|
       Cocina::Models::DescriptiveValue.new(value: T.must(keyword.label), type: 'topic')
     end
   end
@@ -64,18 +66,18 @@ class DescriptionGenerator
   sig { returns(Cocina::Models::DescriptiveValue) }
   def abstract
     Cocina::Models::DescriptiveValue.new(
-      value: work.abstract,
+      value: work_version.abstract,
       type: 'summary'
     )
   end
 
   sig { returns(T.nilable(Cocina::Models::DescriptiveValue)) }
   def citation
-    return unless work.citation
+    return unless work_version.citation
 
     # :link: is a special placeholder in dor-services-app.
     # See https://github.com/sul-dlss/dor-services-app/pull/1566/files#diff-30396654f0ad00ad1daa7292fd8327759d7ff7f3b92f98f40a2e25b6839807e2R13
-    exportable_citation = T.must(work.citation).gsub(Work::LINK_TEXT, ':link:')
+    exportable_citation = T.must(work_version.citation).gsub(WorkVersion::LINK_TEXT, ':link:')
 
     Cocina::Models::DescriptiveValue.new(
       value: exportable_citation,
@@ -85,7 +87,7 @@ class DescriptionGenerator
 
   sig { returns(T.nilable(Cocina::Models::Event)) }
   def created_date
-    date = work.created_edtf
+    date = work_version.created_edtf
     return unless date
 
     Cocina::Models::Event.new(
@@ -101,7 +103,7 @@ class DescriptionGenerator
 
   sig { returns(T.nilable(Cocina::Models::Event)) }
   def published_date
-    date = work.published_edtf
+    date = work_version.published_edtf
     return unless date
 
     Cocina::Models::Event.new(
@@ -118,7 +120,7 @@ class DescriptionGenerator
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def contacts
-    work.contact_emails.map do |email|
+    work_version.contact_emails.map do |email|
       Cocina::Models::DescriptiveValue.new(
         value: email.email,
         type: 'contact',
@@ -129,7 +131,7 @@ class DescriptionGenerator
 
   sig { returns(T::Array[Cocina::Models::RelatedResource]) }
   def related_links
-    work.related_links.map do |rel_link|
+    work_version.related_links.map do |rel_link|
       resource_attrs = {
         type: 'related to',
         access: Cocina::Models::DescriptiveAccessMetadata.new(
@@ -143,7 +145,7 @@ class DescriptionGenerator
 
   sig { returns(T::Array[Cocina::Models::RelatedResource]) }
   def related_works
-    work.related_works.map do |rel_work|
+    work_version.related_works.map do |rel_work|
       Cocina::Models::RelatedResource.new(
         type: 'related to',
         note: [

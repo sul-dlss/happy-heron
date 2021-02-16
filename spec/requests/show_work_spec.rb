@@ -4,8 +4,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Show a work detail' do
-  let(:work) { create(:work) }
+  let(:work) { work_version.work }
+  let(:work_version) { create(:work_version) }
   let(:collection) { create(:collection) }
+
+  before do
+    work.update(head: work_version)
+  end
 
   context 'with unauthenticated user' do
     before do
@@ -43,11 +48,11 @@ RSpec.describe 'Show a work detail' do
 
     it 'displays the work' do
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include work.title
+      expect(response.body).to include work_version.title
     end
 
     context 'when the work has a blank title' do
-      let(:work) { create(:work, title: '') }
+      let(:work_version) { create(:work_version, title: '') }
 
       it 'displays a default title for a work when it is blank' do
         expect(response).to have_http_status(:ok)

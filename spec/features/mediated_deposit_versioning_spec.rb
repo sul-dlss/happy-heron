@@ -9,20 +9,21 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
   let(:rejection_reason) { 'I do not like the color' }
   let(:newest_work_title) { 'Indigo is preferred' }
   let(:user) { create(:user) }
-  # Work (and collection) needs to exist before user hits dashboard
   let(:contact_email) { build(:contact_email) }
-  let!(:work) do
-    create(:valid_deposited_work,
-           depositor: user,
-           contact_emails: [contact_email],
-           collection: collection)
+  # Work, WorkVersion, and Collection need to exist before user hits dashboard
+  let!(:work_version) { create(:valid_deposited_work_version, contact_emails: [contact_email], work: work) }
+  let(:work) { create(:work, druid: 'druid:bc123df4567', depositor: user, collection: collection) }
+
+  before do
+    work.update(head: work_version)
+    create(:attached_file, :with_file, work_version: work_version)
   end
 
   context 'when reviewer rejects, then approves work' do
     it 'works as expected' do
       sign_in user
       visit dashboard_path
-      find("a[aria-label='Edit #{work.title}']").click
+      find("a[aria-label='Edit #{work_version.title}']").click
       fill_in 'Title of deposit', with: new_work_title
       check 'I agree to the SDR Terms of Deposit'
 

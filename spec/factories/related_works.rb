@@ -7,6 +7,6 @@ FactoryBot.define do
       'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
         'Journal of Librarianship and Scholarly Communication, 1(3).'
     end
-    work
+    work_version
   end
 end

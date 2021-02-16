@@ -4,9 +4,9 @@
 module Dashboard
   # displays the progress of this item on the dashboard
   class DepositProgressComponent < ApplicationComponent
-    sig { params(work: Work).void }
-    def initialize(work:)
-      @form = T.let(WorkForm.new(work), WorkForm)
+    sig { params(work_version: WorkVersion).void }
+    def initialize(work_version:)
+      @form = T.let(WorkForm.new(work_version: work_version, work: work_version.work), WorkForm)
       @form.valid? # This triggers the form to run validations, so we can then query "valid_for?"
     end
 

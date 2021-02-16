@@ -4,11 +4,11 @@
 require 'rails_helper'
 
 RSpec.describe Works::DetailComponent, type: :component do
-  let(:instance) { described_class.new(work: work) }
+  let(:instance) { described_class.new(work_version: work_version) }
   let(:rendered) { render_inline(instance) }
 
   context 'when a first draft' do
-    let(:work) { build_stubbed(:work) }
+    let(:work_version) { build_stubbed(:work_version) }
 
     it 'renders the draft title' do
       expect(rendered.css('.state').to_html).to include('Draft - Not deposited')
@@ -16,7 +16,7 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   context 'when deposited' do
-    let(:work) { build_stubbed(:work, :deposited) }
+    let(:work_version) { build_stubbed(:work_version, :deposited) }
 
     it 'renders the draft title' do
       expect(rendered.css('.state').to_html).not_to include('Not deposited')
@@ -24,7 +24,7 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   context 'when pending approval' do
-    let(:work) { build_stubbed(:work, state: 'pending_approval') }
+    let(:work_version) { build_stubbed(:work_version, :pending_approval) }
 
     it 'renders the messge about review' do
       expect(rendered.css('.alert-warning.visible-to-depositor').to_html).to include(
@@ -35,7 +35,8 @@ RSpec.describe Works::DetailComponent, type: :component do
 
   context 'when rejected' do
     let(:rejection_reason) { 'Why did you dye your hair chartreuse?' }
-    let(:work) { create(:work, :rejected) }
+    let(:work) { build_stubbed(:work) }
+    let(:work_version) { build_stubbed(:work_version, :rejected, work: work) }
 
     before do
       create(:event, description: rejection_reason, event_type: 'reject', eventable: work)
@@ -48,6 +49,7 @@ RSpec.describe Works::DetailComponent, type: :component do
 
   describe 'events' do
     let(:work) { build_stubbed(:work, events: [build_stubbed(:event, description: 'Add more keywords')]) }
+    let(:work_version) { build_stubbed(:work_version, work: work) }
 
     it 'renders the event' do
       expect(rendered.css('#events').to_html).to include 'Add more keywords'
@@ -55,7 +57,7 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   describe '#created' do
-    let(:work) { build_stubbed(:work, created_edtf: EDTF.parse('1982-09')) }
+    let(:work_version) { build_stubbed(:work_version, created_edtf: EDTF.parse('1982-09')) }
 
     it 'renders the date' do
       expect(instance.created).to eq '1982-09'
@@ -63,7 +65,7 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   describe '#published' do
-    let(:work) { build_stubbed(:work, published_edtf: EDTF.parse('1987-04')) }
+    let(:work_version) { build_stubbed(:work_version, published_edtf: EDTF.parse('1987-04')) }
 
     it 'renders the date' do
       expect(instance.published).to eq '1987-04'

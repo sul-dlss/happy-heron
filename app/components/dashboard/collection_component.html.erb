@@ -16,12 +16,12 @@
     <tbody>
       <% visible_deposits.take(MAX_DEPOSITS_TO_SHOW).each do |work| %>
         <tr>
-          <%= render Works::LinkToShowComponent.new(work: work) %>
+          <%= render Works::LinkToShowComponent.new(work_version: work.head) %>
           <td>
             <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
             <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
           </td>
-          <td><%= render Works::StateDisplayComponent.new(work: work) %></td>
+          <td><%= render Works::StateDisplayComponent.new(work_version: work.head) %></td>
           <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
           <td><%= link_to work.purl, work.purl if work.purl %></td>
           <td><span class="fas fa-quote-left"></span> Cite</td>

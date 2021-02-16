@@ -14,10 +14,6 @@ RSpec.describe Contributor do
     expect(contributor.last_name).to be_present
   end
 
-  it 'belongs to a work' do
-    expect(contributor.work).to be_a(Work)
-  end
-
   describe '#role_term=' do
     it 'assigns both role and contributor_type' do
       contributor.role_term = 'organization|Contributing author'
