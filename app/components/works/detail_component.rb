@@ -62,7 +62,7 @@ module Works
 
     sig { returns(String) }
     def license
-      License::ID_LABEL_HASH[work.license]
+      License.label_for(work.license)
     end
 
     sig { returns(String) }

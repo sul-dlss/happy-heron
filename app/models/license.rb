@@ -6,8 +6,8 @@
 class License
   extend T::Sig
 
-  # valid values
-  ID_LABEL_HASH = {
+  # valid, selectable licenses
+  SELECTABLE_LICENSES = {
     'CC0-1.0' => 'CC0-1.0',
     'CC-BY-4.0' => 'CC-BY-4.0 Attribution International',
     'CC-BY-SA-4.0' => 'CC-BY-SA-4.0 Attribution-Share Alike International',
@@ -33,23 +33,46 @@ class License
     'none' => 'No License'
   }.freeze
 
+  # valid, displayable (not selectable) licenses --- used to allow migration of legacy system data
+  DISPLAYABLE_LICENSES = {
+    'CC-BY-3.0' => 'CC Attribution 3.0 (Unsupported)',
+    'CC-BY-SA-3.0' => 'CC Attribution Share Alike 3.0 (Unsupported)',
+    'CC-BY-ND-3.0' => 'CC Attribution No Derivatives 3.0 (Unsupported)',
+    'CC-BY-NC-3.0' => 'CC Attribution Non Commercial 3.0 (Unsupported)',
+    'CC-BY-NC-SA-3.0' => 'CC Attribution Non Commercial Share Alike 3.0 (Unsupported)',
+    'CC-BY-NC-ND-3.0' => 'CC Attribution Non Commercial No Derivatives 3.0 (Unsupported)'
+  }.freeze
+
   # used for validation in work model
-  sig { returns(T::Array[String]) }
-  def self.license_list
-    ID_LABEL_HASH.keys
+  sig { params(include_displayable: T::Boolean).returns(T::Array[String]) }
+  def self.license_list(include_displayable: false)
+    return SELECTABLE_LICENSES.keys unless include_displayable
+
+    SELECTABLE_LICENSES.keys + DISPLAYABLE_LICENSES.keys
   end
 
   # list for the work form pulldown
-  sig { returns(T::Array[T::Array[T.any(String, T::Array[String])]]) }
-  def self.grouped_options
-    GROUPINGS.map do |group|
+  sig { params(license: T.nilable(String)).returns(T::Array[T::Array[T.any(String, T::Array[String])]]) }
+  def self.grouped_options(license = nil)
+    options = GROUPINGS.map do |group|
       [group.fetch(:label), group.fetch(:options).map { |license_id| [label_for(license_id), license_id] }]
     end
+    return options unless license.in?(DISPLAYABLE_LICENSES)
+
+    # If the current license is merely displayable, add the displayable licenses to the dropdown as disabled options
+    options.append(
+      [
+        'Creative Commons 3.0 (Unsupported)',
+        DISPLAYABLE_LICENSES.map do |license_id, license_label|
+          [license_label, license_id, { disabled: true }]
+        end
+      ]
+    )
   end
 
   sig { params(license_id: String).returns(String) }
   def self.label_for(license_id)
-    ID_LABEL_HASH.fetch(license_id)
+    SELECTABLE_LICENSES.merge(DISPLAYABLE_LICENSES).fetch(license_id)
   end
 
   GROUPINGS = [

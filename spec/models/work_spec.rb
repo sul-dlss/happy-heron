@@ -120,8 +120,16 @@ RSpec.describe Work do
   end
 
   describe 'license validation' do
-    context 'with an empty license' do
+    context 'with a nil license' do
       let(:work) { build(:work, license: nil) }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+
+    context 'with a blank license' do
+      let(:work) { build(:work, license: '') }
 
       it 'does not validate' do
         expect(work).not_to be_valid
@@ -136,8 +144,16 @@ RSpec.describe Work do
       end
     end
 
-    context 'with a valid license' do
+    context 'with a valid selectable license' do
       let(:work) { build(:work, license: License.license_list.first) }
+
+      it 'validates' do
+        expect(work).to be_valid
+      end
+    end
+
+    context 'with a valid displayable license' do
+      let(:work) { build(:work, license: License.license_list(include_displayable: true).last) }
 
       it 'validates' do
         expect(work).to be_valid

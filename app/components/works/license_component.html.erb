@@ -8,7 +8,7 @@
       </div>
       <div class="col-sm-5">
         <%= form.select :license,
-                        grouped_options_for_select(License.grouped_options, license),
+                        grouped_options_for_select(License.grouped_options(license), license),
                         {}, class: "form-select" %>
       </div>
       <div class="col-sm-5">
