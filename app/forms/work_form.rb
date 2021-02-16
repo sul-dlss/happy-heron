@@ -19,6 +19,7 @@ class WorkForm < DraftWorkForm
                       inclusion: { in: %w[immediate embargo] },
                       if: :user_can_set_availability?
   validates :embargo_date, embargo_date: true, if: :user_can_set_availability?
+  validates :agree_to_terms, presence: true
 
   def user_can_set_availability?
     model.collection.user_can_set_availability?

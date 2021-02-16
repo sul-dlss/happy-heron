@@ -6,30 +6,31 @@ module Dashboard
   class DepositProgressComponent < ApplicationComponent
     sig { params(work: Work).void }
     def initialize(work:)
-      @work = work
+      @form = T.let(WorkForm.new(work), WorkForm)
+      @form.valid? # This triggers the form to run validations, so we can then query "valid_for?"
     end
 
-    sig { returns(Work) }
-    attr_reader :work
+    sig { returns(WorkForm) }
+    attr_reader :form
 
     sig { returns(T::Boolean) }
     def has_file?
-      work.attached_files.any?
+      valid_for?(:attached_files)
     end
 
     sig { returns(T::Boolean) }
     def has_title?
-      work.title.present? && work.contact_emails.any?
+      valid_for?(:title, :contact_emails)
     end
 
     sig { returns(T::Boolean) }
     def has_author?
-      work.authors.any?
+      valid_for?(:authors)
     end
 
     sig { returns(T::Boolean) }
     def has_description?
-      work.abstract.present? && work.keywords.any?
+      valid_for?(:abstract, :keywords, :subtype)
     end
 
     sig { returns(TrueClass) }
@@ -44,7 +45,14 @@ module Dashboard
 
     sig { returns(T.nilable(T::Boolean)) }
     def has_terms?
-      work.agree_to_terms
+      valid_for?(:agree_to_terms)
+    end
+
+    private
+
+    sig { params(args: Symbol).returns(T::Boolean) }
+    def valid_for?(*args)
+      args.all? { |arg| form.errors.where(arg).empty? }
     end
   end
 end
