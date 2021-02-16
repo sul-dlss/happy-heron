@@ -8,7 +8,7 @@ module CapybaraActions
   end
 
   def within_section(title, &block)
-    within :xpath, "//section[header/text() = '#{title}']", &block
+    within :xpath, "//section[contains(header/text(),'#{title}')]", &block
   end
 end
 
