@@ -1,6 +1,7 @@
 <div class="mb-3 row">
   <div class="col-sm-12 h5">
     Work types <%= '(optional)' if optional? %>
+    <%= render PopoverComponent.new key: 'work.subtypes' %>
   </div>
 </div>
 

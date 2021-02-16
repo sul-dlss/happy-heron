@@ -1,5 +1,8 @@
 <section data-controller="nested-form" data-nested-form-select-value=".inner-container">
-  <header>Authors to include in citation</header>
+  <header>
+    Authors to include in citation
+    <%= render PopoverComponent.new key: 'work.author' %>
+  </header>
   <p>Reorder authors so they are in the correct order</p>
 
   <template data-nested-form-target='template'>

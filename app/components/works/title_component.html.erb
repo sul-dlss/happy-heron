@@ -1,7 +1,10 @@
 <section id="title">
    <header>Title of deposit and contact information</header>
    <div class="mb-3 row">
-     <%= form.label :title, 'Title of deposit', class: 'col-sm-2 col-form-label' %>
+     <div class='col-sm-2'>
+       <%= form.label :title, 'Title of deposit', class: 'col-form-label' %>
+       <%= render PopoverComponent.new key: 'work.title' %>
+     </div>
      <div class="col-sm-9">
        <%= form.text_field :title, class: "form-control", required: true,
                            data: { action: "change->auto-citation#updateDisplay change->edit-deposit#check",

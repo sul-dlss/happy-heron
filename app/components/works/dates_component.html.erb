@@ -1,5 +1,7 @@
 <section id="dates" data-controller="complex-radio">
-  <header>Enter dates related to your deposit (optional)</header>
+  <header>Enter dates related to your deposit (optional)
+    <%= render PopoverComponent.new key: 'work.date' %>
+  </header>
   <%= render Works::PublicationDateComponent.new(form: form,
                                                  min_year: min_year,
                                                  max_year: max_year) %>
@@ -7,6 +9,7 @@
   <div class="mb-3 row">
     <div class="col-sm-3 h6">
       Creation date
+      <%= render PopoverComponent.new key: 'work.creation_date' %>
     </div>
   </div>
 
