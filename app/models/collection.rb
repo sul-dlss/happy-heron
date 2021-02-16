@@ -27,7 +27,8 @@ class Collection < ApplicationRecord
   end
 
   sig { returns(T.nilable(Date)) }
-  def embargo_release_date
+  def release_date
+    return nil if release_duration.nil?
     return Time.zone.today + 6.months if release_duration == '6 months'
 
     Time.zone.today + release_duration.gsub(/[^\d]/, '').to_i.years

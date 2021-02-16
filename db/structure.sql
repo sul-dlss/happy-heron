@@ -212,7 +212,6 @@ CREATE TABLE public.collections (
     description character varying,
     release_option character varying,
     release_duration character varying,
-    release_date date,
     access character varying,
     required_license character varying,
     default_license character varying,
@@ -1129,6 +1128,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210127133325'),
 ('20210201155622'),
 ('20210202044303'),
-('20210208201246');
+('20210208201246'),
+('20210216220559');
 
 

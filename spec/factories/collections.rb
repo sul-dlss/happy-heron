@@ -6,7 +6,6 @@ FactoryBot.define do
     name { 'MyString' }
     description { 'MyString' }
     release_option { 'immediate' }
-    release_date { '2020-10-09' }
     access { 'world' }
     license_option { 'depositor-selects' }
     email_when_participants_changed { false }
