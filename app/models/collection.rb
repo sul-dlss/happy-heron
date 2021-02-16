@@ -26,6 +26,13 @@ class Collection < ApplicationRecord
     %w[first_draft depositing].exclude?(state)
   end
 
+  sig { returns(T.nilable(Date)) }
+  def embargo_release_date
+    return Time.zone.today + 6.months if release_duration == '6 months'
+
+    Time.zone.today + release_duration.gsub(/[^\d]/, '').to_i.years
+  end
+
   # The collection has allowed the user to specify availablity on the member works
   sig { returns(T::Boolean) }
   def user_can_set_availability?
