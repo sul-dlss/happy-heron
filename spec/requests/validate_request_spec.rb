@@ -17,8 +17,9 @@ RSpec.describe 'Validates', type: :request do
     let(:work) { create(:work) }
 
     it 'is successful' do
-      get "/works/#{work.id}/validate?work[citation]=foo"
+      get "/works/#{work.id}/validate?work[citation]=foo&work[keywords_attributes][0][label]=key"
       expect(response).to be_successful
+      expect(work.keywords).to be_empty
     end
   end
 end
