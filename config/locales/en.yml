@@ -35,3 +35,6 @@ en:
     last_modified: Modified
     number_of_files: Files
     persistent_link: Persistent link
+  tooltip:
+    what_type: Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
+    further_types:  You have the option to choose one or more of the following terms to describe the work you are depositing. Click "See more options" for additional terms you may use to describe your work.
