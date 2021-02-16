@@ -2,12 +2,12 @@
 
   <template data-nested-form-target='template'>
     <%= form.fields_for :contact_emails, ContactEmail.new, child_index: 'TEMPLATE_RECORD' do |email_form| %>
-      <%= render Works::ContactEmailRowComponent.new(form: email_form) %>
+      <%= row(email_form) %>
     <% end %>
   </template>
 
   <%= form.fields_for :contact_emails do |email_form| %>
-    <%= render Works::ContactEmailRowComponent.new(form: email_form) %>
+    <%= row(email_form) %>
   <% end %>
 
   <div data-nested-form-target="add_item">

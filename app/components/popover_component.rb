@@ -10,4 +10,8 @@ class PopoverComponent < ApplicationComponent
   def text
     t(@key, scope: :tooltip)
   end
+
+  def render?
+    I18n.exists?("tooltip.#{@key}")
+  end
 end
