@@ -31,7 +31,7 @@
         <%= select_day created_day, { prefix: 'work', field_name: 'created(3i)', prompt: 'day'}, data: { date_validation_target: 'day', action: 'date-validation#change' }, id: 'work_created_day', class: "form-control" %>
       </div>
        <div>
-       <%= check_box_tag 'work[created(approx0)]', true, created_approximate? %>
+       <%= check_box_tag 'work[created(approx0)]', true, created_approximate?, class: 'form-check-input' %>
        <%= form.label 'created(approx0)', 'Approximate' %>
       </div>
     </div>
@@ -71,7 +71,7 @@
               class: "form-control" %>
         </div>
         <div>
-         <%= check_box_tag 'work[created_range(approx0)]', true, created_range_start_approximate? %>
+         <%= check_box_tag 'work[created_range(approx0)]', true, created_range_start_approximate?, class: 'form-check-input' %>
          <label for='work_created_range_start_approx'>Approximate</label>
         </div>
       </div>
@@ -104,7 +104,7 @@
               id: 'work_created_range_end_day', class: "form-control" %>
         </div>
         <div>
-         <%= check_box_tag 'work[created_range(approx3)]', true, created_range_end_approximate? %>
+         <%= check_box_tag 'work[created_range(approx3)]', true, created_range_end_approximate?, class: 'form-check-input' %>
          <label for='work_created_range_end_approx'>Approximate</label>
         </div>
       </div>
