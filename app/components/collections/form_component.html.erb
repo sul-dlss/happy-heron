@@ -18,32 +18,38 @@
   <section id="details">
     <header>Details</header>
     <div class="mb-3 row">
-      <%= form.label :name, 'Collection name', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-2">
+        <%= form.label :name, 'Collection name', class: 'col-form-label' %>
+        <%= render PopoverComponent.new key: 'collection.name' %>
+      </div>
       <div class="col-sm-10 col-xl-8">
         <%= form.text_field :name, class: "form-control", required: true %>
         <div class="invalid-feedback">You must provide a name</div>
       </div>
     </div>
     <div class="mb-3 row">
-      <%= form.label :description, 'Description', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-2">
+        <%= form.label :description, 'Description', class: 'col-form-label' %>
+        <%= render PopoverComponent.new key: 'collection.description' %>
+      </div>
       <div class="col-sm-10 col-xl-8">
         <%= form.text_field :description, class: "form-control", required: true %>
         <div class="invalid-feedback">You must provide a description</div>
       </div>
     </div>
 
-    <%= render Works::ContactEmailComponent.new(form: form) %>
+    <%= render Works::ContactEmailComponent.new(form: form, key: 'collection.contact_email') %>
   </section>
 
   <section id="links">
-    <%= render RelatedLinkComponent.new(form: form) %>
+    <%= render RelatedLinkComponent.new(form: form, key: 'collection.related_link') %>
   </section>
 
   <section id="release_details">
     <header>Manage release of deposits for discovery and download</header>
 
     <fieldset class="mb-5 release-option" data-controller="complex-radio">
-      <legend class="h5">When will files on deposits to this collection be downloadable?</legend>
+      <legend class="h5">When will files on deposits to this collection be downloadable? <%= render PopoverComponent.new key: 'collection.release' %></legend>
       <div class="form-check" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'immediate', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_immediate', class: "form-check-label" do %>
@@ -88,7 +94,7 @@
     </fieldset>
 
     <fieldset>
-      <legend class="h5">Who will have permission to download files for deposits to this collection?</legend>
+      <legend class="h5">Who will have permission to download files for deposits to this collection? <%= render PopoverComponent.new key: 'collection.access' %></legend>
       <div class="form-check">
         <%= form.radio_button :access, 'world', class: "form-check-input" %>
         <%= form.label 'access_world', class: "form-check-label" do %>
@@ -119,7 +125,10 @@
     </div>
 
     <div class="mb-3 row">
-      <%= form.label :manager_sunets, 'Managers', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-2">
+        <%= form.label :manager_sunets, 'Managers', class: 'col-form-label' %>
+        <%= render PopoverComponent.new key: 'collection.managers' %>
+      </div>
       <div class="col-sm-10 col-xl-8">
         <%= form.text_field :manager_sunets, class: "form-control", required: true %>
         <div class="invalid-feedback">You must provide managers</div>
@@ -127,7 +136,10 @@
     </div>
 
     <div class="mb-3 row">
-      <%= form.label :depositor_sunets, 'Depositors', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-2">
+        <%= form.label :depositor_sunets, 'Depositors', class: 'col-form-label' %>
+        <%= render PopoverComponent.new key: 'collection.depositors' %>
+      </div>
       <div class="col-sm-10 col-xl-8">
         <%= form.text_field :depositor_sunets, class: "form-control" %>
       </div>
@@ -172,7 +184,10 @@
     <!-- TODO: only display sunet entry field if reviewer workflow is enabled -->
     <p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
     <div class="mb-3 row" data-edit-collection-target="reviewerSunetsField">
-      <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-sm-2 col-form-label' %>
+      <div class="col-sm-2">
+        <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-form-label' %>
+        <%= render PopoverComponent.new key: 'collection.reviewers' %>
+      </div>
       <div class="col-sm-10 col-xl-8">
         <%= form.text_field :reviewer_sunets, class: "form-control", required: false %> <!-- TODO: should prob have at least one required if enabled? -->
         <div class="invalid-feedback">You must provide reviewers</div>

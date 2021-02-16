@@ -4,11 +4,16 @@
 module Works
   # Renders a widget for describing a related link.
   class ContactEmailRowComponent < ApplicationComponent
-    def initialize(form:)
+    def initialize(form:, key:)
       @form = form
+      @key = key
     end
 
-    attr_reader :form
+    attr_reader :form, :key
+
+    def tooltip
+      render PopoverComponent.new key: key
+    end
 
     sig { returns(T::Boolean) }
     def not_first_email?

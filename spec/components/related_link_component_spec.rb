@@ -11,7 +11,7 @@ RSpec.describe RelatedLinkComponent, type: :component do
       build_stubbed(:related_link, link_title: 'Second Link')
     ]
   end
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:rendered) { render_inline(described_class.new(form: form, key: 'foo')) }
 
   context 'with a work' do
     let(:model_form) { WorkForm.new(model) }
