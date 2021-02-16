@@ -22,7 +22,6 @@ class DraftCollectionForm < Reform::Form
 
   property :release_option, default: 'immediate'
   property :release_duration
-  property :release_date, embargo_date: true, assign_if: ->(params) { params['release_option'] == 'delay' }
 
   property :license_option
   property :required_license
@@ -51,7 +50,6 @@ class DraftCollectionForm < Reform::Form
     property :_destroy, virtual: true
   end
 
-  validates :release_date, embargo_date: true
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
   validates :release_duration, inclusion: { in: EMBARGO_RELEASE_DURATION_OPTIONS.values }, allow_blank: true
 

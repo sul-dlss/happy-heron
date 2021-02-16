@@ -17,41 +17,32 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
       before { visit edit_collection_path(collection) }
 
       it 'shows only one release option as checked and disables child select elements of other options' do
+        # We need duplicate select lists with the same CSS selector
+        delayed_release = all('#collection_release_duration').first
+        depositor_selects = all('#collection_release_duration').last
+
         expect(find('#collection_release_option_immediate')).not_to be_checked
         expect(find('#collection_release_option_delay')).not_to be_checked
         expect(find('#collection_release_option_depositor-selects')).to be_checked
-
-        expect(find('#collection_release_duration')).not_to be_disabled
-
-        expect(find('#collection_release_date_year')).to be_disabled
-        expect(find('#collection_release_date_month')).to be_disabled
-        expect(find('#collection_release_date_day')).to be_disabled
+        expect(delayed_release).to be_disabled
+        expect(depositor_selects).not_to be_disabled
 
         # Disable "depositor-selects" select when "delay" selected
         choose('Delay release until')
-
         expect(find('#collection_release_option_immediate')).not_to be_checked
         expect(find('#collection_release_option_delay')).to be_checked
         expect(find('#collection_release_option_depositor-selects')).not_to be_checked
+        expect(delayed_release).not_to be_disabled
+        expect(depositor_selects).to be_disabled
 
-        expect(find('#collection_release_duration')).to be_disabled
-
-        expect(find('#collection_release_date_year')).not_to be_disabled
-        expect(find('#collection_release_date_month')).not_to be_disabled
-        expect(find('#collection_release_date_day')).not_to be_disabled
-
+        # When depositor_selects was clicked, it should have disabled the delay selection
         # Disable "depositor-selects" and "delay" selects when "immediately" selected
         choose('Immediately')
-
         expect(find('#collection_release_option_immediate')).to be_checked
         expect(find('#collection_release_option_delay')).not_to be_checked
         expect(find('#collection_release_option_depositor-selects')).not_to be_checked
-
-        expect(find('#collection_release_duration')).to be_disabled
-
-        expect(find('#collection_release_date_year')).to be_disabled
-        expect(find('#collection_release_date_month')).to be_disabled
-        expect(find('#collection_release_date_day')).to be_disabled
+        expect(depositor_selects).to be_disabled
+        expect(delayed_release).to be_disabled
       end
     end
 

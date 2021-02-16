@@ -12,6 +12,6 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :release_option, :access, to: :collection
+    delegate :release_option, :release_duration, :access, to: :collection
   end
 end

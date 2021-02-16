@@ -515,9 +515,9 @@ RSpec.describe 'Create a new work' do
       context 'with a collection with delay release but a embargo is provided' do
         let(:collection) do
           create(:collection, :deposited, :with_contact_emails, depositors: [user], release_option: 'delay',
-                                                                release_date: release_date)
+                                                                release_duration: '1 year')
         end
-        let(:release_date) { Date.parse('2029-03-07') }
+        let(:release_date) { Time.zone.today + 1.year }
         let(:work_params) do
           {
             title: 'Test title',
@@ -531,9 +531,6 @@ RSpec.describe 'Create a new work' do
             },
             license: 'CC0-1.0',
             release: 'embargo',
-            'embargo(1i)': '2030',
-            'embargo(2i)': '09',
-            'embargo(3i)': '01',
             agree_to_terms: '1'
           }
         end
