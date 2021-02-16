@@ -19,9 +19,7 @@ RSpec.describe 'Edit a draft work', js: true do
     it 'deposits and renders work show page' do
       visit dashboard_path
 
-      within('#deposits-in-progress') do
-        click_link "Edit #{work.title}"
-      end
+      click_link 'Yes!'
 
       expect(page).to have_content work.title
 
@@ -62,9 +60,7 @@ RSpec.describe 'Edit a draft work', js: true do
   it 'shows a confirmation if you cancel the deposit and goes back if confirmed' do
     visit dashboard_path
 
-    within('#deposits-in-progress') do
-      click_link "Edit #{work.title}"
-    end
+    click_link 'Yes!'
 
     accept_confirm do
       click_link 'Cancel'
@@ -76,9 +72,7 @@ RSpec.describe 'Edit a draft work', js: true do
   it 'shows a confirmation if you cancel the deposit and stays on the page if not confirmed' do
     visit dashboard_path
 
-    within('#deposits-in-progress') do
-      click_link "Edit #{work.title}"
-    end
+    click_link 'Yes!'
 
     dismiss_confirm do
       click_link 'Cancel'
@@ -98,9 +92,7 @@ RSpec.describe 'Edit a draft work', js: true do
     it 'deposits and renders work show page' do
       visit dashboard_path
 
-      within('#deposits-in-progress') do
-        click_link "Edit #{work.title}"
-      end
+      click_link 'Yes!'
 
       expect(page).to have_content work.title
       expect(page).to have_content('Work types')
