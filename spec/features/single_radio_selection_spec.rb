@@ -21,9 +21,11 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
         expect(find('#collection_release_option_delay')).not_to be_checked
         expect(find('#collection_release_option_depositor-selects')).to be_checked
 
-        expect(find('#collection_release_duration')).not_to be_disabled
+        delayed_release = all('#collection_release_duration').first
+        expect(delayed_release).to be_disabled
 
-        expect(find('#collection_default_release_duration')).to be_disabled
+        depositor_selects = all('#collection_release_duration').last
+        expect(depositor_selects).not_to be_disabled
 
         # Disable "depositor-selects" select when "delay" selected
         choose('Delay release until')
@@ -32,9 +34,10 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
         expect(find('#collection_release_option_delay')).to be_checked
         expect(find('#collection_release_option_depositor-selects')).not_to be_checked
 
-        expect(find('#collection_release_duration')).to be_disabled
+        # expect(find('#collection_release_duration')).to be_disabled
+        expect(depositor_selects).to be_disabled
 
-        expect(find('#collection_default_release_duration')).not_to be_disabled
+        expect(delayed_release).not_to be_disabled
 
         # Disable "depositor-selects" and "delay" selects when "immediately" selected
         choose('Immediately')
@@ -43,9 +46,9 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
         expect(find('#collection_release_option_delay')).not_to be_checked
         expect(find('#collection_release_option_depositor-selects')).not_to be_checked
 
-        expect(find('#collection_release_duration')).to be_disabled
+        expect(depositor_selects).to be_disabled
 
-        expect(find('#collection_default_release_duration')).to be_disabled
+        expect(delayed_release).to be_disabled
       end
     end
 

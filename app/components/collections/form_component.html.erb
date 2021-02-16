@@ -62,7 +62,7 @@
         <%= form.label 'release_option_delay', class: "form-check-label" do %>
           Delay release until
         <% end %>
-        <%= form.select :default_release_duration,
+        <%= form.select :release_duration,
           options_for_select(embargo_release_duration_options, selected: release_duration),
                               {},
                               class: 'form-select' %>
