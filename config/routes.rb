@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       get :delete_button
     end
 
+    resource :validate, only: :show
+
     resources :works, shallow: true do
       member do
         get :delete_button
@@ -29,6 +31,7 @@ Rails.application.routes.draw do
       end
 
       resource :review, only: :create
+      resource :validate, only: :show
     end
   end
 

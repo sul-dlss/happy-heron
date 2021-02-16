@@ -8,10 +8,7 @@
   </p>
   <div class="dropzone dropzone-default<%= ' is-invalid' if error? %>">
     <%= form.file_field :files, multiple: true, direct_upload: true,
-                        data: { dropzone_target: 'input',
-                                edit_deposit_target: 'fileField',
-                                'progress-step': 'file',
-                                action: "change->edit-deposit#check" } %>
+                        data: { dropzone_target: 'input' } %>
     <div class="dz-message needsclick text-secondary">
       <p>Drop files here</p>
     </div>

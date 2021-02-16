@@ -16,7 +16,7 @@ RSpec.describe Works::FormComponent do
 
   it 'renders the component' do
     expect(rendered.to_html)
-      .to include('Deposit', 'Save as draft', 'File', 'Add your files',
+      .to include('Deposit', 'Save as draft', 'Add your files',
                   'Title of deposit and contact information',
                   'List authors and contributors',
                   'Enter dates related to your deposit',
