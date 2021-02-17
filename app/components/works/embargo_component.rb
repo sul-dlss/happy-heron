@@ -32,5 +32,11 @@ module Works
     def access_from_collection
       collection.access
     end
+
+    def when_available_statement
+      return 'your deposit is approved' if collection.review_enabled?
+
+      'you click "Deposit" at the bottom of this page'
+    end
   end
 end

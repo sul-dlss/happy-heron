@@ -35,6 +35,28 @@ RSpec.describe Works::EmbargoComponent do
     end
   end
 
+  context 'when the collection allows depositor to select release timing' do
+    let(:collection) do
+      build(:collection, :depositor_selects_access, release_option: 'depositor-selects', review_enabled: review_enabled)
+    end
+
+    context 'when collection does not require review' do
+      let(:review_enabled) { false }
+
+      it 'renders the component' do
+        expect(rendered.to_html).to include 'you click "Deposit" at the bottom of this page'
+      end
+    end
+
+    context 'when collection requires review' do
+      let(:review_enabled) { true }
+
+      it 'renders the component' do
+        expect(rendered.to_html).to include 'your deposit is approved'
+      end
+    end
+  end
+
   context 'when the collection is configured for a specific date' do
     let(:collection) { build(:collection, release_option: 'delay', release_duration: '1 year') }
     let(:release_date) { (Time.zone.today + 1.year).to_formatted_s(:long) }
