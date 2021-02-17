@@ -7,8 +7,8 @@
 
   <% if user_can_set_availability? %>
     <p>Select when the files in your deposit will be downloadable from the PURL page.
-      If you select "Immediately", your files will be available shortly after you click
-      "Deposit" at the bottom of this page. Or you may specify a specific date in the future.</p>
+      If you select "Immediately", your files will be available shortly after <%= when_available_statement %>.
+      Or you may specify a specific date in the future.</p>
 
     <%= render Works::AvailableDateComponent.new(form: form) %>
     <% if user_can_set_access? %>
