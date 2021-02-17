@@ -3,13 +3,21 @@
     text-decoration: none;
 
     &:after {
-      content: '\f078';
-      font-family: Fontawesome;
+      background-image: escape-svg($accordion-button-active-icon);
+      background-repeat: no-repeat;
+      background-size: 1rem;
+      content: "";
+      display: inline-block;
+      height: 1rem;
+      margin-left: 0.7rem;
       padding-left: 0.5rem;
+      padding-bottom: 0;
+      transition: transform .2s ease-in-out;
+      width: 1rem;
     }
 
     &.collapsed:after {
-      content: '\f054';
+      transform: rotate(-90deg);
     }
   }
 
