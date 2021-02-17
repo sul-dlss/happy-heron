@@ -36,7 +36,12 @@ class CollectionGenerator
         hasAdminPolicy: Settings.h2.hydrus_apo,
         partOfProject: Settings.h2.project_tag
       },
-      identification: {},
+      identification: {
+        # It would be great if we could send a sourceId with a collection, because then we
+        # could receive a message knowing when it was deposited. Currently cocina-models doesn't
+        # support sourceIds on collections
+        # sourceId: "hydrus:collection-#{collection.id}"
+      },
       label: collection.name,
       type: Cocina::Models::Vocab.collection,
       description: { title: [{ value: collection.name }] },

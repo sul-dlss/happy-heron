@@ -37,7 +37,7 @@ class RequestGenerator
         partOfProject: Settings.h2.project_tag
       },
       identification: {
-        sourceId: "hydrus:#{work_version.work.id}" # TODO: what should this be?
+        sourceId: "hydrus:object-#{work_version.work.id}" # TODO: what should this be?
       },
       structural: structural,
       label: work_version.title,
