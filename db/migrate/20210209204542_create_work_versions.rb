@@ -16,7 +16,7 @@ class CreateWorkVersions < ActiveRecord::Migration[6.1]
     WorkVersion.all.each do |version|
       work = Work.find_or_initialize_by(druid: version.druid)
       work.update(collection_id: version.collection_id,
-                  depositor: version.depositor_id,
+                  depositor_id: version.depositor_id,
                   head_id: version.id)
       version.update(work: work)
     end
