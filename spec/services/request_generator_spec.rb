@@ -94,7 +94,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work_version.work.id}"
+            sourceId: "hydrus:object-#{work_version.work.id}"
           },
           structural: {
             contains: [],
@@ -148,7 +148,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work_version.work.id}"
+            sourceId: "hydrus:object-#{work_version.work.id}"
           },
           structural: {
             contains: [],
@@ -227,7 +227,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work_version.work.id}"
+            sourceId: "hydrus:object-#{work_version.work.id}"
           },
           structural: {
             contains: [
@@ -303,7 +303,7 @@ RSpec.describe RequestGenerator do
             form: types_form
           },
           identification: {
-            sourceId: "hydrus:#{work_version.work.id}"
+            sourceId: "hydrus:object-#{work_version.work.id}"
           },
           structural: {
             contains: [

@@ -26,7 +26,9 @@ RSpec.describe CollectionGenerator do
             }
           ]
         },
-        identification: {}
+        identification: {
+          # sourceId: "hydrus:collection-#{collection.id}"
+        }
       }
     end
 
