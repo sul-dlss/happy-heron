@@ -8,6 +8,6 @@ RSpec.describe CitationModalComponent, type: :component do
 
   it 'renders the component' do
     expect(rendered.css('#citationModal h5')).to be_present
-    expect(rendered.css('#citationModal .modal-body')).to be_present
+    expect(rendered.css('#citationModal #citationValue')).to be_present
   end
 end

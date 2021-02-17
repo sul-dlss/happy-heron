@@ -6,7 +6,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body" data-controller="clipboard">
+        <div id="citationValue" data-clipboard-target="value">
+        </div>
+        <button data-action="clipboard#copy" class="mt-5 me-3 float-end btn btn-outline-primary">Copy citation <span class="fas fa-copy"></span></button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-link" data-bs-dismiss="modal">Close</button>
