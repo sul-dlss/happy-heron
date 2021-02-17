@@ -14,5 +14,5 @@
   <td><%= attached_files.count %></td>
   <td><%= size %></td>
   <td><%= link_to work.purl, work.purl if work.purl %></td>
-  <td><span class="fas fa-quote-left"></span> Cite</td>
+  <td><%= render CitationComponent.new(work_version: work_version) %></td>
 </tr>
