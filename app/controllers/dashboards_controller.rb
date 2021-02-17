@@ -19,9 +19,7 @@ class DashboardsController < ApplicationController
     DashboardPresenter.new(
       just_signed_in: current_user.just_signed_in,
       collections: authorized_scope(Collection.all, as: :deposit),
-      approvals: WorkVersion.with_state(:pending_approval)
-                     .joins(work: { collection: :reviewed_by })
-                     .where('reviewers.user_id' => current_user),
+      approvals: WorkVersion.awaiting_review_by(current_user),
       in_progress: WorkVersion.with_state(:first_draft, :version_draft, :rejected)
                      .joins(:work)
                      .where('works.depositor' => current_user),
