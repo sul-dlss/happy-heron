@@ -16,6 +16,10 @@ module Dashboard
       @presenter.in_progress.first
     end
 
-    delegate :title, :work, to: :work_version
+    delegate :work, to: :work_version
+
+    def title
+      @title ||= Works::DetailComponent.new(work_version: work_version).title
+    end
   end
 end

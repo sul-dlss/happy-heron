@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   # Smartly redirect user back to URL they requested before authenticating
   # From: https://github.com/heartcombo/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   before_action :store_user_location!, if: :storable_location?
+  before_action :copy_just_signed_in_to_session
 
   rescue_from ActionPolicy::Unauthorized, with: :deny_access
 
@@ -22,6 +23,11 @@ class ApplicationController < ActionController::Base
   helper_method :user_with_groups
 
   private
+
+  # If User#just_signed_in is set, copy that into the session
+  def copy_just_signed_in_to_session
+    session[:just_signed_in] = current_user.just_signed_in if current_user&.just_signed_in
+  end
 
   sig { returns(T::Array[String]) }
   # This looks first in the session for groups, and then to the headers.
