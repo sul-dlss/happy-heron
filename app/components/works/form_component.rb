@@ -33,5 +33,13 @@ module Works
     def work_version
       work_form.model.fetch(:work_version)
     end
+
+    sig { returns(T::Boolean) }
+    def version_description_required?
+      byebug
+      return true if ['deposited', 'version_draft'].include? work_version.state
+
+      false
+    end
   end
 end
