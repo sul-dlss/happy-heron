@@ -89,6 +89,7 @@ class WorkVersion < ApplicationRecord
   end
 
   # Which assocations are has_many?
+  sig { returns(T::Array[Symbol]) }
   def self.aggregate_associations
     reflections.values
                .select { |ref| ref.is_a?(ActiveRecord::Reflection::HasManyReflection) }
