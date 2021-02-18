@@ -8,48 +8,50 @@ class AbstractContributor < ApplicationRecord
   extend T::Sig
   SEPARATOR = '|'
 
+  PERSON_ROLES = [
+    'Author',
+    'Composer',
+    'Contributing author',
+    'Copyright holder',
+    'Creator',
+    'Data collector',
+    'Data contributor',
+    'Editor',
+    'Event organizer',
+    'Interviewee',
+    'Interviewer',
+    'Performer',
+    'Photographer',
+    'Primary thesis advisor',
+    'Principal investigator',
+    'Researcher',
+    'Software developer',
+    'Speaker',
+    'Thesis advisor'
+  ].freeze
+
+  ORGANIZATION_ROLES = [
+    'Author',
+    'Conference',
+    'Contributing author',
+    'Copyright holder',
+    'Data collector',
+    'Data contributor',
+    'Degree granting institution',
+    'Distributor',
+    'Event',
+    'Event organizer',
+    'Funder',
+    'Host institution',
+    'Issuing body',
+    'Publisher',
+    'Research group',
+    'Sponsor'
+  ].freeze
+
   GROUPED_ROLES = {
-    'person' =>
-      [
-        'Author',
-        'Composer',
-        'Contributing author',
-        'Copyright holder',
-        'Creator',
-        'Data collector',
-        'Data contributor',
-        'Editor',
-        'Event organizer',
-        'Interviewee',
-        'Interviewer',
-        'Performer',
-        'Photographer',
-        'Primary thesis advisor',
-        'Principal investigator',
-        'Researcher',
-        'Software developer',
-        'Speaker',
-        'Thesis advisor'
-      ],
-    'organization' =>
-      [
-        'Author',
-        'Conference',
-        'Contributing author',
-        'Copyright holder',
-        'Data collector',
-        'Data contributor',
-        'Degree granting institution',
-        'Distributor',
-        'Event',
-        'Event organizer',
-        'Funder',
-        'Host institution',
-        'Issuing body',
-        'Publisher',
-        'Research group',
-        'Sponsor'
-      ]
+    'person' => PERSON_ROLES,
+    'organization' => ORGANIZATION_ROLES
   }.freeze
 
   belongs_to :work_version
@@ -59,7 +61,18 @@ class AbstractContributor < ApplicationRecord
   validates :full_name, presence: true, unless: :person?
 
   validates :contributor_type, presence: true, inclusion: { in: %w[person organization] }
-  validates :role, presence: true, inclusion: { in: GROUPED_ROLES.values.flatten }
+
+  sig { params(citable: T::Boolean).returns(T::Hash[String, T::Array[String]]) }
+  def self.grouped_roles(citable:)
+    return GROUPED_ROLES if citable
+
+    {
+      'person' => PERSON_ROLES,
+      'organization' => (ORGANIZATION_ROLES + ['Department']).sort
+    }
+  end
+
+  validates :role, presence: true, inclusion: { in: grouped_roles(citable: true).values.flatten }
 
   sig { returns(T::Boolean) }
   def person?
