@@ -27,10 +27,8 @@ class WorkSubtypeValidator < ActiveModel::EachValidator
       return false if subtypes.count { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) } <
                       WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES
     when WorkType::MIXED_MATERIAL
-      # A subtype is required for the "mixed material" work type and at
-      # least two must come from a defined list
-      return false if subtypes.count { |subtype| subtype.in?(WorkType.subtypes_for(work_type)) } <
-                      WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES
+      # At least two subtypes ared required for the "mixed material" work type
+      return false if subtypes.count < WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES
     end
 
     # NOTE: this also handles the case when `value` is `nil` correctly: returning `true`
