@@ -2,10 +2,12 @@
 # frozen_string_literal: true
 
 # Usage:
-#   bin/migrate-items items.jsonl 0 /opt/app/local-files
+#   RAILS_ENV=production bin/migrate-items items.jsonl 0 /opt/app/local-files
+#
 #   These two just load metadata:
-#   bin/migrate-items items.jsonl 1000
-#   bin/migrate-items items.jsonl
+#
+#   RAILS_ENV=production bin/migrate-items items.jsonl 1000
+#   RAILS_ENV=production bin/migrate-items items.jsonl
 
 require_relative '../config/environment'
 DEFAULT_DATA_ROOT = '/data/hydrus-files'
@@ -136,11 +138,14 @@ INVALID_ROLES = [
 ]
 
 def contact_email(json)
-  return json['contact_email'] if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
+  return ContactEmail.new(email: json['contact_email']) if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
+  # return ContactEmail.create(email: json['contact_email']) if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
 
   warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}. Setting a dummy value."
   warn json
-  'no-reply@sdr.stanford.edu'
+
+  ContactEmail.new(email: 'no-reply@sdr.stanford.edu')
+  # ContactEmail.create(email: 'no-reply@sdr.stanford.edu')
 end
 
 def abstract(json)
@@ -207,7 +212,7 @@ def build_work_attributes(json)
     return
   end
 
-  depositor = User.find_or_initialize_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  depositor = User.find_or_initialize_by(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
   # depositor = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
   {
     depositor: depositor,
@@ -235,7 +240,7 @@ def build_work_version_attributes(json)
   {
     version: json.fetch('version'),
     abstract: abstract(json),
-    contact_email: contact_email(json),
+    contact_emails: [contact_email(json)],
     license: license(json),
     access: json.fetch('visibility', 'stanford'),
     title: title,

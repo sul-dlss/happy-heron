@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Usage:
-#   bin/migrate-collections collections.jsonl
+#   RAILS_ENV=production bin/migrate-collections collections.jsonl
 
 require_relative '../config/environment'
 
@@ -10,12 +10,6 @@ STATES = {
   'published_open' => 'deposited',
   'published_closed' => 'deposited',
   'draft' => 'first_draft'
-}
-
-ACCESS = {
-  'everyone' => 'world',
-  'stanford' => 'stanford',
-  'varies' => 'depositor-selects'
 }
 
 RELEASE_OPTION = {
@@ -35,7 +29,7 @@ LICENSE = {
   'cc-by-nc' => 'CC-BY-NC-3.0',
   'cc-by-nc-nd' => 'CC-BY-NC-ND-3.0',
   'cc-by-nc-sa' => 'CC-BY-NC-SA-3.0',
-  'cc-by-nd' => 'CC-BY-ND-3.0'
+  'cc-by-nd' => 'CC-BY-ND-3.0',
   'cc-by-sa' => 'CC-BY-SA-3.0',
   'none' => 'none',
   'odc-by' => 'ODC-By-1.0',
@@ -43,19 +37,27 @@ LICENSE = {
   'pddl' => 'PDDL-1.0'
 }
 
-def contact_email(json)
-  if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
-    json['contact_email']
-  elsif json['contact_email'].present?
-    warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}"
-    nil
-  end
+def contact_emails(json)
+  json['contact_email'].split(', ').map do |email|
+    if URI::MailTo::EMAIL_REGEXP.match(email)
+      ContactEmail.create(email: email)
+    elsif email.present?
+      warn "Invalid contact email found in #{json['druid']}: #{email}"
+      nil
+    end
+  end.compact
 end
 
 def release_attributes(json)
-  data = {
-    access: ACCESS.fetch(json.fetch('visibility_option_value'))
-  }
+  data = case json.fetch('visibility_option')
+         when 'varies'
+           { access: 'depositor-selects' }
+         when 'fixed'
+           { access: json.fetch('visibility').first }
+         else
+           warn "unexpected collection visibility option: #{json.fetch('visibility_option').inspect}"
+           {}
+         end
 
   release_option = RELEASE_OPTION.fetch(json.fetch('embargo_option'))
   data[:release_option] = release_option
@@ -85,32 +87,28 @@ end
 
 def participants_attributes(json)
   managers = json['managers'].map do |sunetid|
-    User.find_or_initialize_by!(email: "#{sunetid.downcase}@stanford.edu")
-    # User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   depositors = json['depositors'].map do |sunetid|
-    User.find_or_initialize_by!(email: "#{sunetid.downcase}@stanford.edu")
-    # User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   reviewers = json['reviewers'].map do |sunetid|
-    User.find_or_initialize_by!(email: "#{sunetid.downcase}@stanford.edu")
-    # User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   {
-    managers: managers,
+    managed_by: managers,
     depositors: depositors,
-    reviewers: reviewers
+    reviewed_by: reviewers
   }
 end
 
 def build_collection_attributes(json)
-  creator = User.find_or_initialize_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
-  # creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
 
   {
     version: json.fetch('version'),
     description: json.fetch('description'),
-    contact_email: contact_email(json),
+    contact_emails: contact_emails(json),
     creator: creator,
     name: json.fetch('name'),
     state: STATES.fetch(json.fetch('object_status')),
@@ -125,10 +123,6 @@ File.foreach(ARGV[0]) do |data|
   next unless json.present?
   collection = Collection.find_or_initialize_by(druid: json['druid'])
   collection_attributes = build_collection_attributes(json)
-  puts collection_attributes.inspect
-  puts collection.assign_attributes(collection_attributes)
-  puts collection.valid?
-  puts collection.errors.full_messages
-  # collection.update!(collection_attributes)
-  puts "collection #{collection.id}"
+  collection.update!(collection_attributes)
+  puts "collection ID: #{collection.id.inspect}"
 end
