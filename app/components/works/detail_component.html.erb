@@ -66,26 +66,7 @@
     </tbody>
   </table>
 
-  <table class="table table-sm mb-5">
-    <thead class="table-light">
-    <tr>
-      <th scope="col" class="table-title col-3">Files
-        <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'file', label: 'Edit files') %>
-      </th>
-      <th scope="col">Description</th>
-      <th scope="col">Hide file</th>
-    </tr>
-    </thead>
-    <tbody>
-      <% attached_files.each do |af| %>
-        <tr>
-          <td><%= af.filename %></td>
-          <td><%= af.label %></td>
-          <td><%= af.hide? %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render Works::Show::FilesComponent.new work_version: work_version %>
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Title and contact
