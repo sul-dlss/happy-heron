@@ -95,7 +95,7 @@ jobs:
             - happy-heron-bundle-
       - run:
           name: Install psql
-          command: sudo apt install -y postgresql-client || true
+          command: sudo apt update && sudo apt install -y postgresql-client
       - run:
           name: Wait for database
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
