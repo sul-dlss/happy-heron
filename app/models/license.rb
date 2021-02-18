@@ -18,7 +18,6 @@ class License
     'PDDL-1.0' => 'PDDL-1.0 Public Domain Dedication and License',
     'ODC-By-1.0' => 'ODC-By-1.0 Attribution License',
     'ODbL-1.0' => 'ODbL-1.0 Open Database License',
-    'CC-PDDC' => 'CC-PDDC Public Domain Dedication and Certification',
     'AGPL-3.0-only' => 'AGPL-3.0-only GNU Affero General Public License',
     'Apache-2.0' => 'Apache-2.0',
     'BSD-2-Clause' => 'BSD-2-Clause "Simplified" License',
@@ -87,10 +86,6 @@ class License
         'CC-BY-NC-SA-4.0',
         'CC-BY-NC-ND-4.0'
       ]
-    },
-    {
-      label: 'CC-PDDC Public Domain Dedication and Certification',
-      options: ['CC-PDDC']
     },
     {
       label: 'Open Data Commons (ODC) licenses',
