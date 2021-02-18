@@ -66,9 +66,8 @@ module Works
       select_month published_month,
                    { prefix: 'work', field_name: 'published(2i)', prompt: 'month' },
                    data: {
-                     auto_citation_target: 'month',
                      date_validation_target: 'month',
-                     action: 'change->auto-citation#updateDisplay date-validation#change'
+                     action: 'date-validation#change'
                    },
                    id: 'work_published_month',
                    class: "form-control#{' is-invalid' if error?}"
@@ -78,9 +77,8 @@ module Works
       select_day published_day,
                  { prefix: 'work', field_name: 'published(3i)', prompt: 'day' },
                  data: {
-                   auto_citation_target: 'day',
                    date_validation_target: 'day',
-                   action: 'change->auto-citation#updateDisplay date-validation#change'
+                   action: 'date-validation#change'
                  },
                  id: 'work_published_day',
                  class: "form-control#{' is-invalid' if error?}"

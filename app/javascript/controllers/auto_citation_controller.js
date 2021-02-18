@@ -3,7 +3,7 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["titleField", "manual", "auto", "switch",
     "contributorFirst", "contributorLast", "contributorRole", "contributorOrg",
-    "year", "month", "day", "embargoYear"];
+    "year", "embargoYear"];
 
   connect() {
     this.purl = this.data.get("purl") || ":link will be inserted here automatically when available:" // Use a real purl on a persisted item or a placeholder
@@ -79,30 +79,10 @@ export default class extends Controller {
     return this.yearTarget.value
   }
 
-  get month() {
-    return this.monthTarget.value
-  }
-
-  get day() {
-    return this.dayTarget.value
-  }
-
   get date() {
     const date = new Date();
     if (this.year) {
-
       date.setYear(this.year)
-      if (this.month) {
-        date.setMonth(this.month - 1)
-        const month = date.toLocaleString('default', { month: 'long' });
-
-        if (this.day) {
-          date.setDate(this.day)
-          return `${date.getFullYear()}, ${month} ${date.getDate()}`
-        } else {
-          return `${date.getFullYear()}, ${month}`
-        }
-      }
     }
     return `${date.getFullYear()}`
   }
