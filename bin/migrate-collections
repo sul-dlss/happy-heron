@@ -5,6 +5,7 @@
 #   bin/migrate-collections collections.jsonl
 
 require_relative '../config/environment'
+
 STATES = {
   'published_open' => 'deposited',
   'published_closed' => 'deposited',
@@ -20,8 +21,27 @@ ACCESS = {
 RELEASE_OPTION = {
   'varies' => 'depositor-selects',
   'none' => 'immediate',
+  'fixed' => 'delay'
 }
 
+LICENSE_OPTION = {
+  'varies' => 'depositor-selects',
+  'none' => 'immediate',
+  'fixed' => 'required'
+}
+
+LICENSE = {
+  'cc-by' => 'CC-BY-3.0',
+  'cc-by-nc' => 'CC-BY-NC-3.0',
+  'cc-by-nc-nd' => 'CC-BY-NC-ND-3.0',
+  'cc-by-nc-sa' => 'CC-BY-NC-SA-3.0',
+  'cc-by-nd' => 'CC-BY-ND-3.0'
+  'cc-by-sa' => 'CC-BY-SA-3.0',
+  'none' => 'none',
+  'odc-by' => 'ODC-By-1.0',
+  'odc-odbl' => 'ODbL-1.0',
+  'pddl' => 'PDDL-1.0'
+}
 
 def contact_email(json)
   if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
@@ -36,11 +56,6 @@ def release_attributes(json)
   data = {
     access: ACCESS.fetch(json.fetch('visibility_option_value'))
   }
-  if json['embargo_option'] == 'fixed'
-    puts "#{json['druid']} has embargo option of 'fixed', which cannot be mapped to h2"
-    # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
-    return data
-  end
 
   release_option = RELEASE_OPTION.fetch(json.fetch('embargo_option'))
   data[:release_option] = release_option
@@ -51,22 +66,35 @@ def release_attributes(json)
 end
 
 def license_attributes(json)
-  # TODO: h2 doesn't set these fields yet, so it's unclear how to migrate to them:
-  {
-    # attr_reader :attr_namesequired_license - license_option_fixed
-    # default_license - license_option_varies
+  license_option = LICENSE_OPTION.fetch(json.fetch('license_option'))
+  license = LICENSE.fetch(json.fetch('license'))
+
+  data = {
+    license_option: license_option
   }
+
+  case license_option
+  when 'required'
+    data[:required_license] = license
+  when 'depositor-selects'
+    data[:default_license] = license
+  end
+
+  data
 end
 
 def participants_attributes(json)
   managers = json['managers'].map do |sunetid|
-    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+    User.find_or_initialize_by!(email: "#{sunetid.downcase}@stanford.edu")
+    # User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   depositors = json['depositors'].map do |sunetid|
-    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+    User.find_or_initialize_by!(email: "#{sunetid.downcase}@stanford.edu")
+    # User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   reviewers = json['reviewers'].map do |sunetid|
-    User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
+    User.find_or_initialize_by!(email: "#{sunetid.downcase}@stanford.edu")
+    # User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   {
     managers: managers,
@@ -76,7 +104,8 @@ def participants_attributes(json)
 end
 
 def build_collection_attributes(json)
-  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  creator = User.find_or_initialize_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  # creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
 
   {
     version: json.fetch('version'),
@@ -96,6 +125,10 @@ File.foreach(ARGV[0]) do |data|
   next unless json.present?
   collection = Collection.find_or_initialize_by(druid: json['druid'])
   collection_attributes = build_collection_attributes(json)
-  collection.update!(collection_attributes)
+  puts collection_attributes.inspect
+  puts collection.assign_attributes(collection_attributes)
+  puts collection.valid?
+  puts collection.errors.full_messages
+  # collection.update!(collection_attributes)
   puts "collection #{collection.id}"
 end

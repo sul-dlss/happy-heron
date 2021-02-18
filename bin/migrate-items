@@ -20,20 +20,14 @@ STATES = {
   'returned' => 'rejected'
 }
 
-# ACCESS = {
-#   'everyone' => 'world',
-#   'stanford' => 'stanford',
-#   'varies' => 'depositor-selects'
-# }
-
 LICENSE = {
   'pddl' => 'PDDL-1.0',
-  'cc-by' => 'CC-BY-4.0',
-  'cc-by-sa' => 'CC-BY-SA-4.0',
-  'cc-by-nc' => 'CC-BY-NC-4.0',
-  'cc-by-nc-sa' => 'CC-BY-NC-SA-4.0',
-  'cc-by-nc-nd' => 'CC-BY-NC-ND-4.0',
-  'cc-by-nd' => 'CC-BY-ND-4.0',
+  'cc-by' => 'CC-BY-3.0',
+  'cc-by-sa' => 'CC-BY-SA-3.0',
+  'cc-by-nc' => 'CC-BY-NC-3.0',
+  'cc-by-nc-sa' => 'CC-BY-NC-SA-3.0',
+  'cc-by-nc-nd' => 'CC-BY-NC-ND-3.0',
+  'cc-by-nd' => 'CC-BY-ND-3.0',
   'cc-pdm' => 'PDDL-1.0',
   'cc-cc0' => 'CC0-1.0',
   'odc-by' => 'ODC-By-1.0',
@@ -50,9 +44,9 @@ WORK_TYPE = {
   'other' => 'other',
   'class project' => 'other',
   'textbook' => 'other',
-  'thesis' => 'other',
-  'article' => 'other',
-  'technical report' => 'other',
+  'thesis' => 'text',
+  'article' => 'text',
+  'technical report' => 'text',
   'conference paper / presentation' => 'other',
   'software' => 'software, multimedia',
   'computer game' => 'software, multimedia',
@@ -200,7 +194,7 @@ def related_works(json)
   json.fetch('related_citations').reject(&:blank?).map { |citation| RelatedWork.new(citation: citation) }
 end
 
-def build_attributes(json)
+def build_work_attributes(json)
   collection_id = json['collection']
   unless collection_id
     warn "No collection exists for #{json['druid']}. Skipping."
@@ -209,11 +203,19 @@ def build_attributes(json)
 
   collection = Collection.find_by(druid: collection_id)
   unless collection
-    warn "Unable to find Collection #{collection_id}"
+    warn "Unable to find Collection #{collection_id}. Skipping"
     return
   end
 
-  depositor = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  depositor = User.find_or_initialize_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  # depositor = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  {
+    depositor: depositor,
+    collection: collection,
+  }
+end
+
+def build_work_version_attributes(json)
   work_type = WORK_TYPE.fetch(json.fetch('item_type'))
   subtype = if work_type == 'other'
     warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
@@ -234,9 +236,8 @@ def build_attributes(json)
     version: json.fetch('version'),
     abstract: abstract(json),
     contact_email: contact_email(json),
-    depositor: depositor,
-    collection: collection,
     license: license(json),
+    access: json.fetch('visibility', 'stanford'),
     title: title,
     work_type: work_type,
     subtype: subtype,
@@ -254,18 +255,18 @@ def resolve_file(hydrus_path)
   hydrus_path.sub(DEFAULT_DATA_ROOT, DATA_ROOT)
 end
 
-def attach_files(json, work)
+def attach_files(json, work_version)
   return unless DATA_ROOT
   json['files'].each do |file_data|
     pathname = resolve_file(file_data['path'])
     filename = File.basename(pathname)
-    attached_file = work.attached_files.find { |attached| attached.filename == filename }
+    attached_file = work_version.attached_files.find { |attached| attached.filename == filename }
     next if attached_file
-
-    file = File.open(pathname)
-    attached_file = work.attached_files.build(label: file_data['label'])
-    attached_file.file.attach(io: file, filename: filename)
-    attached_file.save!
+    puts "this is where we'd be attaching #{pathname} to #{work_version.work.druid} as #{filename} with label #{file_data['label']}"
+    # file = File.open(pathname)
+    # attached_file = work_version.attached_files.build(label: file_data['label'])
+    # attached_file.file.attach(io: file, filename: filename)
+    # attached_file.save!
   end
 end
 
@@ -277,14 +278,31 @@ File.foreach(ARGV[0]) do |data|
   json = JSON.parse(data)
   next unless json.present?
   work = Work.find_or_initialize_by(druid: json['druid'])
-  attributes = build_attributes(json)
-  next if attributes.blank?
+  work_attributes = build_work_attributes(json)
+  work_version = WorkVersion.find_or_initialize_by(work: work)
+  work_version_attributes = build_work_version_attributes(json)
+
+  if work_attributes.blank?
+    warn "attrs blank for work #{json['druid']}: #{work_attributes.inspect}"
+    next
+  end
+
+  if work_version_attributes.blank?
+    warn "attrs blank for work #{json['druid']} version: #{work_version_attributes}"
+    next
+  end
+
   begin
-    if work.update(attributes)
-      attach_files(json, work)
-      puts "Work #{work.id} - #{work.druid}"
+    work_update_successful = work.assign_attributes(work_attributes) && work.valid?
+    work_version_update_successful = work_version.assign_attributes(work_version_attributes) && work_version.valid?
+    # work_update_successful = work.update(work_attributes)
+    # work_version_update_successful = work_version.update(work_version_attributes)
+
+    if work_update_successful && work_version_update_successful
+      attach_files(json, work_version)
+      puts "Work #{work.id} (v#{work_version.version}): #{work.druid}"
     else
-      warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+      warn "Validation failed on #{json['druid']}, #{work.errors.full_messages} #{work_version.errors.full_messages}"
     end
   rescue ActiveRecord::RecordNotSaved => e
     warn "unable to save #{json['druid']} because contributors: " \
