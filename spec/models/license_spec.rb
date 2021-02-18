@@ -20,7 +20,6 @@ RSpec.describe License do
           'PDDL-1.0',
           'ODC-By-1.0',
           'ODbL-1.0',
-          'CC-PDDC',
           'AGPL-3.0-only',
           'Apache-2.0',
           'BSD-2-Clause',
@@ -52,7 +51,6 @@ RSpec.describe License do
           'PDDL-1.0',
           'ODC-By-1.0',
           'ODbL-1.0',
-          'CC-PDDC',
           'AGPL-3.0-only',
           'Apache-2.0',
           'BSD-2-Clause',
@@ -94,12 +92,6 @@ RSpec.describe License do
               ['CC-BY-NC-4.0 Attribution-NonCommercial International', 'CC-BY-NC-4.0'],
               ['CC-BY-NC-SA-4.0 Attribution-NonCommercial-Share Alike International', 'CC-BY-NC-SA-4.0'],
               ['CC-BY-NC-ND-4.0 Attribution-NonCommercial-No Derivatives', 'CC-BY-NC-ND-4.0']
-            ]
-          ],
-          [
-            'CC-PDDC Public Domain Dedication and Certification',
-            [
-              ['CC-PDDC Public Domain Dedication and Certification', 'CC-PDDC']
             ]
           ],
           [
