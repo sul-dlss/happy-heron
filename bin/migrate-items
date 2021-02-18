@@ -52,7 +52,7 @@ WORK_TYPE = {
   'conference paper / presentation' => 'other',
   'software' => 'software, multimedia',
   'computer game' => 'software, multimedia',
-  'archival mixed material' => 'mixed material'
+  'archival mixed material' => 'other'
 }
 
 CONTRIBUTOR_TYPE = {
@@ -62,45 +62,62 @@ CONTRIBUTOR_TYPE = {
 }
 
 CONTRIBUTOR_ROLE = {
+  'Advisor' => 'Thesis advisor',
   'Author' => 'Author',
+  'Conference' => 'Conference',
+  'Contributing author' => 'Contributing author',
+  'Creator' => 'Creator',
+  'Degree granting institution' => 'Degree granting institution',
+  'Department' => 'Research group',
+  'Editor' => 'Editor',
+  'Primary advisor' => 'Primary thesis advisor',
+  'Principal investigator' => 'Principal investigator',
+  'Publisher' => 'Publisher',
+  'Sponsor' => 'Sponsor',
   'author' => 'Author', # Bad data? about 1000 items are like this.
   'author,' => 'Author', # Bad data? 4 items have this role
   'author.' => 'Author', # Bad data? 207 items have this role
   'autor' => 'Author', # Bad data? 7 items have this role
-  'Department' => 'Research group',
-  'Editor' => 'Editor',
-  'editor' => 'Editor',
-  'editor.' => 'Editor',
-  'Advisor' => 'Thesis advisor',
-  'Primary advisor' => 'Primary thesis advisor',
-  'Degree granting institution' => 'Degree granting institution',
-  'Publisher' => 'Publisher',
-  'publisher.' => 'Publisher',
-  'publisher' => 'Publisher',
-  'publisher,' => 'Publisher',
-  'Creator' => 'Creator',
-  'creator' => 'Creator', # Bad data? 3 items have this role
-  'Conference' => 'Conference',
-  'conference' => 'Conference',
   'composer' => 'Composer',
   'composer.' => 'Composer',
-  'Contributing author' => 'Contributing author',
-  'Principal investigator' => 'Principal investigator',
-  'principal investigator and author.' => 'Principal investigator',
-  'Sponsor' => 'Sponsor',
-  'sponsoring body' => 'Sponsor',
-  'sponsoring body.' => 'Sponsor',
-  'sponsoring and issuing body.' => 'Sponsor',
-  'sponsor.' => 'Sponsor',
-  'speaker.' => 'Speaker', # Bad data? druid:kp775fq5022
-  'issuing body.' => "Issuing body",
-  'issuing body,' => "Issuing body",
+  'conference' => 'Conference',
+  'creator' => 'Creator', # Bad data? 3 items have this role
+  'editor' => 'Editor',
+  'editor.' => 'Editor',
   'issuing body' => "Issuing body",
+  'issuing body,' => "Issuing body",
+  'issuing body.' => "Issuing body",
   'issuing boyd.' => "Issuing body", # bad data: druid:nn568sd8519
   'photographer,' => 'Photographer', # bad data? druid:hs463hp0639, druid:wz110cw1514
+  'principal investigator and author.' => 'Principal investigator',
+  'publisher' => 'Publisher',
+  'publisher,' => 'Publisher',
+  'publisher.' => 'Publisher',
   'researcher' => 'Researcher',
   'researcher.' => 'Researcher',
+  'speaker.' => 'Speaker', # Bad data? druid:kp775fq5022
+  'sponsor.' => 'Sponsor',
+  'sponsoring and issuing body.' => 'Sponsor',
+  'sponsoring body' => 'Sponsor',
+  'sponsoring body.' => 'Sponsor',
 }
+
+AUTHOR_ROLES = [
+  'Author',
+  'Composer',
+  'Conference',
+  'Contributing author',
+  'Creator',
+  'Degree granting institution',
+  'Editor',
+  'Issuing body',
+  'Photographer',
+  'Principal investigator',
+  'Publisher',
+  'Researcher',
+  'Speaker',
+  'Sponsor'
+]
 
 INVALID_ROLES = [
   'Collector',
@@ -139,13 +156,10 @@ INVALID_ROLES = [
 
 def contact_email(json)
   return ContactEmail.new(email: json['contact_email']) if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
-  # return ContactEmail.create(email: json['contact_email']) if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
 
   warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}. Setting a dummy value."
-  warn json
 
   ContactEmail.new(email: 'no-reply@sdr.stanford.edu')
-  # ContactEmail.create(email: 'no-reply@sdr.stanford.edu')
 end
 
 def abstract(json)
@@ -169,7 +183,12 @@ def split_name(full_name)
   end
 end
 
-def contributors(json)
+def contributors_and_authors(json)
+  data = {
+    contributors: [],
+    authors: []
+  }
+
   json.fetch('contributors').map do |attributes|
     contributor_attributes = attributes.dup
     hydrus_role = contributor_attributes.delete('role')
@@ -187,8 +206,14 @@ def contributors(json)
     if type == 'person'
       contributor_attributes.merge!(split_name(contributor_attributes.delete('full_name')))
     end
-    Contributor.new(contributor_attributes.merge(contributor_type: type, role: role))
-  end.compact
+    if role.in?(AUTHOR_ROLES)
+      data[:authors] << Author.new(contributor_attributes.merge(contributor_type: type, role: role))
+    else
+      data[:contributors] << Contributor.new(contributor_attributes.merge(contributor_type: type, role: role))
+    end
+  end
+
+  data
 end
 
 def related_links(json)
@@ -212,8 +237,7 @@ def build_work_attributes(json)
     return
   end
 
-  depositor = User.find_or_initialize_by(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
-  # depositor = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+  depositor = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
   {
     depositor: depositor,
     collection: collection,
@@ -251,9 +275,8 @@ def build_work_version_attributes(json)
     created_edtf: created_edtf,
     state: STATES.fetch(json.fetch('object_status')),
     related_links: related_links(json),
-    related_works: related_works(json),
-    contributors: contributors(json)
-  }
+    related_works: related_works(json)
+  }.merge(contributors_and_authors(json))
 end
 
 def resolve_file(hydrus_path)
@@ -267,11 +290,11 @@ def attach_files(json, work_version)
     filename = File.basename(pathname)
     attached_file = work_version.attached_files.find { |attached| attached.filename == filename }
     next if attached_file
-    puts "this is where we'd be attaching #{pathname} to #{work_version.work.druid} as #{filename} with label #{file_data['label']}"
-    # file = File.open(pathname)
-    # attached_file = work_version.attached_files.build(label: file_data['label'])
-    # attached_file.file.attach(io: file, filename: filename)
-    # attached_file.save!
+
+    file = File.open(pathname)
+    attached_file = work_version.attached_files.build(label: file_data['label'])
+    attached_file.file.attach(io: file, filename: filename)
+    attached_file.save!
   end
 end
 
@@ -298,10 +321,8 @@ File.foreach(ARGV[0]) do |data|
   end
 
   begin
-    work_update_successful = work.assign_attributes(work_attributes) && work.valid?
-    work_version_update_successful = work_version.assign_attributes(work_version_attributes) && work_version.valid?
-    # work_update_successful = work.update(work_attributes)
-    # work_version_update_successful = work_version.update(work_version_attributes)
+    work_update_successful = work.update(work_attributes)
+    work_version_update_successful = work_version.update(work_version_attributes)
 
     if work_update_successful && work_version_update_successful
       attach_files(json, work_version)
