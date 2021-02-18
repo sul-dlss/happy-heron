@@ -12,6 +12,18 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :release_option, :release_duration, :access, to: :collection
+    delegate :access, to: :collection
+
+    sig { returns(T.nilable(String)) }
+    def release_info
+      case collection.release_option
+      when 'immediate'
+        'Immediately'
+      when 'delay'
+        "#{collection.release_duration} from date of deposit"
+      when 'depositor-selects'
+        "depositor selects release date at no more than #{collection.release_duration} from date of deposit"
+      end
+    end
   end
 end
