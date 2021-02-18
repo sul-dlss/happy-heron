@@ -291,10 +291,11 @@ def attach_files(json, work_version)
     attached_file = work_version.attached_files.find { |attached| attached.filename == filename }
     next if attached_file
 
-    file = File.open(pathname)
-    attached_file = work_version.attached_files.build(label: file_data['label'])
-    attached_file.file.attach(io: file, filename: filename)
-    attached_file.save!
+    File.open(pathname) do |file|
+      attached_file = work_version.attached_files.build(label: file_data['label'])
+      attached_file.file.attach(io: file, filename: filename)
+      attached_file.save!
+    end
   end
 end
 
@@ -323,6 +324,7 @@ File.foreach(ARGV[0]) do |data|
   begin
     work_update_successful = work.update(work_attributes)
     work_version_update_successful = work_version.update(work_version_attributes)
+    work.update(head: work_version)
 
     if work_update_successful && work_version_update_successful
       attach_files(json, work_version)
