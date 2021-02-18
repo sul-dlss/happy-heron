@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@2.1.1
+  node: circleci/node@4.1.0
 references:
   default_ruby_version: &default_ruby_version 2.7.1-node-browsers
   default_postgres_version: &default_postgres_version 11-alpine
@@ -103,7 +103,6 @@ jobs:
           name: Database setup
           command: bin/rails db:setup
       - node/install-packages:
-          cache-key: yarn.lock
           pkg-manager: yarn
       - run:
           name: Install CodeClimate coverage reporter
