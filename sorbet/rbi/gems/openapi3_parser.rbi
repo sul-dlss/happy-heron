@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/openapi3_parser/all/openapi3_parser.rbi
 #
-# openapi3_parser-0.8.2
+# openapi3_parser-0.9.0
 
 module Openapi3Parser
   def self.load(input); end
@@ -510,8 +510,8 @@ end
 module Openapi3Parser::NodeFactory::ObjectFactory
 end
 class Openapi3Parser::NodeFactory::ObjectFactory::FieldConfig
-  def check_input_type(validatable, building_node); end
-  def default(factory); end
+  def check_input_type(validatable, building_node: nil); end
+  def default(factory = nil); end
   def factory?; end
   def given_default; end
   def given_factory; end
@@ -519,10 +519,10 @@ class Openapi3Parser::NodeFactory::ObjectFactory::FieldConfig
   def given_required; end
   def given_validate; end
   def initialize(input_type: nil, factory: nil, required: nil, default: nil, validate: nil); end
-  def initialize_factory(context, parent_factory); end
+  def initialize_factory(context, parent_factory = nil); end
   def required?; end
   def run_validation(validatable); end
-  def validate_field(validatable, building_node); end
+  def validate_field(validatable, building_node: nil); end
 end
 module Openapi3Parser::NodeFactory::ObjectFactory::Dsl
   def allow_extensions; end
@@ -533,6 +533,16 @@ module Openapi3Parser::NodeFactory::ObjectFactory::Dsl
   def mutually_exclusive_fields; end
   def validate(*items, &block); end
   def validations; end
+end
+class Openapi3Parser::NodeFactory::ObjectFactory::Dsl::MutuallyExclusiveField < Struct
+  def fields; end
+  def fields=(_); end
+  def required; end
+  def required=(_); end
+  def self.[](*arg0); end
+  def self.inspect; end
+  def self.members; end
+  def self.new(*arg0); end
 end
 class Openapi3Parser::NodeFactory::Object
   def allowed_default?(*args, &block); end
@@ -726,22 +736,21 @@ class Openapi3Parser::NodeFactory::OauthFlows < Openapi3Parser::NodeFactory::Obj
   def oauth_flow_factory(context); end
 end
 class Openapi3Parser::NodeFactory::ObjectFactory::NodeBuilder
-  def build_node_data(parent_context); end
+  def build_node_data(node_context); end
   def determine_value_or_default(key, value); end
   def empty_and_allowed_to_be?; end
   def errors; end
   def factory; end
   def initialize(factory); end
-  def node_data(parent_context); end
-  def resolve_value(key, value, parent_context); end
+  def node_data(node_context); end
+  def resolve_value(key, value, node_context); end
   def self.errors(factory); end
   def self.new(*arg0); end
-  def self.node_data(factory, parent_context); end
+  def self.node_data(factory, node_context); end
   def validatable; end
   def validate(raise_on_invalid:); end
 end
 class Openapi3Parser::NodeFactory::ObjectFactory::Validator
-  def building_node; end
   def call; end
   def check_factory_validations; end
   def check_invalid_fields; end
@@ -749,19 +758,20 @@ class Openapi3Parser::NodeFactory::ObjectFactory::Validator
   def check_required_fields; end
   def check_unexpected_fields; end
   def factory; end
-  def initialize(factory, building_node); end
-  def self.call(*args); end
+  def initialize(factory, raise_on_invalid: nil); end
+  def raise_on_invalid; end
+  def self.call(*args, **kwargs); end
   def self.new(*arg0); end
   def validatable; end
 end
 class Openapi3Parser::NodeFactory::ObjectFactory::Validator::CheckInvalidFields
-  def building_node(*args, &block); end
   def call; end
   def check_field(name, field_config); end
   def factory(*args, &block); end
   def handle_factory_checks(name); end
   def in_recursive_loop?(field); end
   def initialize(validator); end
+  def raise_on_invalid(*args, &block); end
   def self.call(validator); end
   def self.new(*arg0); end
   def validatable(*args, &block); end
@@ -946,7 +956,7 @@ class Openapi3Parser::Source::Pointer
   def ==(other); end
   def absolute; end
   def fragment; end
-  def initialize(segments, absolute = nil); end
+  def initialize(segments, absolute: nil); end
   def inspect; end
   def root?; end
   def segments; end
@@ -998,7 +1008,7 @@ class Openapi3Parser::SourceInput
   def access_error; end
   def available?; end
   def contents; end
-  def initialize_contents; end
+  def initialize; end
   def parse_error; end
   def relative_to(_source_input); end
   def resolve_next(_reference); end

@@ -10114,8 +10114,6 @@ class ActiveRecord::Base
 
   def self._validators?(); end
 
-  def self.abstract_base_class(); end
-
   def self.action_on_strict_loading_violation(); end
 
   def self.action_on_strict_loading_violation=(val); end
@@ -10189,6 +10187,14 @@ class ActiveRecord::Base
   def self.configurations=(config); end
 
   def self.connected_to_stack(); end
+
+  def self.connection_class(); end
+
+  def self.connection_class=(b); end
+
+  def self.connection_class?(); end
+
+  def self.connection_classes(); end
 
   def self.connection_handler(); end
 
@@ -10388,7 +10394,7 @@ class ActiveRecord::Base
 
   def self.strict_loading_by_default?(); end
 
-  def self.strict_loading_violation!(owner:, association:); end
+  def self.strict_loading_violation!(owner:, reflection:); end
 
   def self.suppress_multiple_database_warning(); end
 
@@ -10522,6 +10528,10 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
 
   def close(); end
 
+  def connection_klass(); end
+
+  def create(*_); end
+
   def database_version(); end
 
   def default_index_type?(index); end
@@ -10569,8 +10579,6 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
   def migrations_paths(); end
 
   def owner(); end
-
-  def owner_name(); end
 
   def pool(); end
 
@@ -10833,6 +10841,10 @@ class ActiveRecord::ConnectionAdapters::Column
   extend ::ActiveRecord::ConnectionAdapters::Deduplicable::ClassMethods
 end
 
+class ActiveRecord::ConnectionAdapters::ColumnDefinition
+  def aliased_types(name, fallback); end
+end
+
 module ActiveRecord::ConnectionAdapters::ColumnMethods::ClassMethods
 end
 
@@ -10877,6 +10889,8 @@ class ActiveRecord::ConnectionAdapters::ConnectionPool
 
   def connection(); end
 
+  def connection_klass(); end
+
   def connections(); end
 
   def db_config(); end
@@ -10898,8 +10912,6 @@ class ActiveRecord::ConnectionAdapters::ConnectionPool
   def lock_thread=(lock_thread); end
 
   def num_waiting_in_queue(); end
-
-  def owner_name(); end
 
   def pool_config(); end
 
@@ -11249,7 +11261,7 @@ end
 
 class ActiveRecord::ConnectionAdapters::NullPool
   include ::ActiveRecord::ConnectionAdapters::AbstractPool
-  def owner_name(); end
+  def connection_klass(); end
 
   def schema_cache(); end
 
@@ -11276,6 +11288,8 @@ end
 
 class ActiveRecord::ConnectionAdapters::PoolConfig
   include ::Mutex_m
+  def connection_klass(); end
+
   def connection_specification_name(); end
 
   def db_config(); end
@@ -11284,7 +11298,7 @@ class ActiveRecord::ConnectionAdapters::PoolConfig
 
   def disconnect!(); end
 
-  def initialize(connection_specification_name, db_config); end
+  def initialize(connection_klass, db_config); end
 
   def lock(); end
 
@@ -12639,7 +12653,7 @@ module ActiveRecord::ConnectionAdapters
 end
 
 module ActiveRecord::ConnectionHandling
-  def connected_to_many(classes, role:, shard: T.unsafe(nil), prevent_writes: T.unsafe(nil)); end
+  def connected_to_many(*classes, role:, shard: T.unsafe(nil), prevent_writes: T.unsafe(nil)); end
 
   def connecting_to(role: T.unsafe(nil), shard: T.unsafe(nil), prevent_writes: T.unsafe(nil)); end
 
@@ -15779,7 +15793,9 @@ class ActiveStorage::Blob
 
   def self.create_before_direct_upload!(filename:, byte_size:, checksum:, key: T.unsafe(nil), content_type: T.unsafe(nil), metadata: T.unsafe(nil), service_name: T.unsafe(nil), record: T.unsafe(nil)); end
 
-  def self.find_signed!(id, record: T.unsafe(nil)); end
+  def self.find_signed(id, record: T.unsafe(nil), purpose: T.unsafe(nil)); end
+
+  def self.find_signed!(id, record: T.unsafe(nil), purpose: T.unsafe(nil)); end
 
   def self.service(); end
 
@@ -20763,7 +20779,11 @@ class Bundler::APIResponseInvalidDependenciesError
 end
 
 class Bundler::Definition
+  def allow_multisource!(); end
+
   def dependencies_for(groups); end
+
+  def disable_multisource?(); end
 
   def most_specific_locked_platform(); end
 
@@ -20787,6 +20807,10 @@ class Bundler::Dependency
 end
 
 Bundler::Deprecate = Gem::Deprecate
+
+class Bundler::Dsl
+  def check_primary_source_safety(); end
+end
 
 class Bundler::Env
 end
@@ -21318,6 +21342,7 @@ end
 
 class Bundler::Resolver
   include ::Bundler::GemHelpers
+  def results_for(dependency, base); end
 end
 
 class Bundler::Resolver::SpecGroup
@@ -21455,6 +21480,22 @@ class Bundler::Source::Git
   def glob(); end
 
   def local?(); end
+end
+
+class Bundler::Source::Rubygems
+  def allow_multisource!(); end
+
+  def disable_multisource?(); end
+end
+
+class Bundler::SourceList
+  def allow_multisource!(); end
+
+  def disable_multisource(); end
+
+  def disable_multisource?(); end
+
+  def global_path_source(); end
 end
 
 class Bundler::SpecSet
@@ -23148,11 +23189,6 @@ module Bundler
   def self.unbundled_system(*args); end
 
   def self.with_unbundled_env(); end
-end
-
-class ButtonsComponent
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 module Byebug
@@ -27890,6 +27926,11 @@ class CollectionPolicy
   def __scoping__active_record_relation__deposit(relation); end
 end
 
+class Collections::ButtonsComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Collections::CancelComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -27984,6 +28025,7 @@ end
 
 class CommonMarker::Config::Render
   DEFAULT = ::T.let(nil, ::T.untyped)
+  FOOTNOTES = ::T.let(nil, ::T.untyped)
   FULL_INFO_STRING = ::T.let(nil, ::T.untyped)
   GITHUB_PRE_LANG = ::T.let(nil, ::T.untyped)
   HARDBREAKS = ::T.let(nil, ::T.untyped)
@@ -31006,7 +31048,7 @@ class Dry::Configurable::DSL
 end
 
 class Dry::Configurable::Setting
-  CLONABLE_VALUE_TYPES = ::T.let(nil, ::T.untyped)
+  CLONEABLE_VALUE_TYPES = ::T.let(nil, ::T.untyped)
   DEFAULT_CONSTRUCTOR = ::T.let(nil, ::T.untyped)
   OPTIONS = ::T.let(nil, ::T.untyped)
 end
@@ -31157,8 +31199,7 @@ module Dry::Schema
 end
 
 class Dry::Schema::Config
-  include ::Dry::Configurable::InstanceMethods
-  include ::Dry::Configurable::Methods
+  include ::Dry::Configurable::Initializer
 end
 
 Dry::Schema::DSL::Types = Dry::Schema::Types
@@ -31189,8 +31230,7 @@ module Dry::Schema::Messages
 end
 
 class Dry::Schema::Messages::Abstract
-  include ::Dry::Configurable::InstanceMethods
-  include ::Dry::Configurable::Methods
+  include ::Dry::Configurable::Initializer
 end
 
 class Dry::Schema::Messages::YAML
@@ -34039,6 +34079,10 @@ Gem::Version::Requirement = Gem::Requirement
 module GeneratedUrlHelpers
   def _routes(); end
 
+  def collection_validate_path(*args); end
+
+  def collection_validate_url(*args); end
+
   def contact_form_path(*args); end
 
   def contact_form_url(*args); end
@@ -34067,6 +34111,10 @@ module GeneratedUrlHelpers
 
   def preview_view_components_url(*args); end
 
+  def print_terms_of_deposit_path(*args); end
+
+  def print_terms_of_deposit_url(*args); end
+
   def rails_info_path(*args); end
 
   def rails_info_properties_path(*args); end
@@ -34082,6 +34130,18 @@ module GeneratedUrlHelpers
   def rails_mailers_path(*args); end
 
   def rails_mailers_url(*args); end
+
+  def work_validate_path(*args); end
+
+  def work_validate_url(*args); end
+
+  def work_version_path(*args); end
+
+  def work_version_url(*args); end
+
+  def work_zip_path(*args); end
+
+  def work_zip_url(*args); end
 end
 
 module GeneratedUrlHelpers
@@ -36397,8 +36457,6 @@ end
 class Net::HTTPAlreadyReported
 end
 
-Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
-
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
 class Net::HTTPEarlyHints
@@ -36460,8 +36518,6 @@ end
 class Net::HTTPRangeNotSatisfiable
 end
 
-Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
-
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
 Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
@@ -36470,15 +36526,17 @@ Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
-Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
-
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPSuccess
+end
 
-Net::HTTPSuccessCode = Net::HTTPSuccess
+Net::HTTPSuccessCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPSuccess
+end
 
 class Net::HTTPURITooLong
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -44008,6 +44066,10 @@ module RuboCop::Cop::FrozenStringLiteral
   FROZEN_STRING_LITERAL_TYPES = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Gemspec::DateAssignment
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Gemspec::DuplicatedAssignment
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -44507,6 +44569,7 @@ end
 
 class RuboCop::Cop::Lint::DeprecatedOpenSSLConstant
   MSG = ::T.let(nil, ::T.untyped)
+  NO_ARG_ALGORITHM = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::DisjunctiveAssignmentInConstructor
@@ -44701,6 +44764,7 @@ class RuboCop::Cop::Lint::MultipleComparison
   COMPARISON_METHODS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+  SET_OPERATION_OPERATORS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::NestedMethodDefinition
@@ -46458,6 +46522,14 @@ end
 
 class RuboCop::Cop::Style::GuardClause
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::HashConversion
+  MSG_LITERAL_HASH_ARG = ::T.let(nil, ::T.untyped)
+  MSG_LITERAL_MULTI_ARG = ::T.let(nil, ::T.untyped)
+  MSG_SPLAT = ::T.let(nil, ::T.untyped)
+  MSG_TO_H = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::HashEachMethods
@@ -49638,7 +49710,7 @@ end
 class Time
   def self.===(other); end
 
-  def self.at_with_coercion(*args); end
+  def self.at_with_coercion(*args, **kwargs); end
 
   def self.at_without_coercion(*_); end
 
@@ -49936,9 +50008,9 @@ module User::GeneratedRelationMethods
 end
 
 class User
-  extend ::Devise::Models::Authenticatable::ClassMethods
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::Devise::Models::Authenticatable::ClassMethods
   def self.after_add_for_deposits(); end
 
   def self.after_add_for_deposits=(value); end
@@ -51229,7 +51301,11 @@ class Work
 
   def autosave_associated_records_for_head(*args); end
 
+  def autosave_associated_records_for_work_versions(*args); end
+
   def validate_associated_records_for_events(*args); end
+
+  def validate_associated_records_for_work_versions(*args); end
 end
 
 class Work::ActiveRecord_AssociationRelation
@@ -51255,6 +51331,14 @@ module Work::GeneratedAssociationMethods
   def reload_depositor(); end
 
   def reload_head(); end
+
+  def work_version_ids(); end
+
+  def work_version_ids=(ids); end
+
+  def work_versions(); end
+
+  def work_versions=(value); end
 end
 
 module Work::GeneratedAttributeMethods
@@ -51275,17 +51359,33 @@ class Work
 
   def self.after_add_for_events=(value); end
 
+  def self.after_add_for_work_versions(); end
+
+  def self.after_add_for_work_versions=(value); end
+
   def self.after_remove_for_events(); end
 
   def self.after_remove_for_events=(value); end
+
+  def self.after_remove_for_work_versions(); end
+
+  def self.after_remove_for_work_versions=(value); end
 
   def self.before_add_for_events(); end
 
   def self.before_add_for_events=(value); end
 
+  def self.before_add_for_work_versions(); end
+
+  def self.before_add_for_work_versions=(value); end
+
   def self.before_remove_for_events(); end
 
   def self.before_remove_for_events=(value); end
+
+  def self.before_remove_for_work_versions(); end
+
+  def self.before_remove_for_work_versions=(value); end
 end
 
 class WorkReminderGenerator
@@ -51522,6 +51622,11 @@ class Works::AuthorsComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Works::ButtonsComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Works::CancelComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -51606,6 +51711,38 @@ end
 
 module Zeitwerk::ExplicitNamespace
   extend ::Zeitwerk::RealModName
+end
+
+module ZipTricks
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class ZipTricks::BlockDeflate
+  DEFAULT_BLOCKSIZE = ::T.let(nil, ::T.untyped)
+  END_MARKER = ::T.let(nil, ::T.untyped)
+  VALID_COMPRESSIONS = ::T.let(nil, ::T.untyped)
+end
+
+class ZipTricks::OutputEnumerator
+  DEFAULT_WRITE_BUFFER_SIZE = ::T.let(nil, ::T.untyped)
+end
+
+class ZipTricks::Streamer::DeflatedWriter
+  CRC32_BUFFER_SIZE = ::T.let(nil, ::T.untyped)
+end
+
+class ZipTricks::Streamer::StoredWriter
+  CRC32_BUFFER_SIZE = ::T.let(nil, ::T.untyped)
+end
+
+class ZipTricks::ZipWriter
+  C_CHAR = ::T.let(nil, ::T.untyped)
+  C_INT4 = ::T.let(nil, ::T.untyped)
+  EMPTY_DIRECTORY_EXTERNAL_ATTRS = ::T.let(nil, ::T.untyped)
+end
+
+module Zipline
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class Zlib::Deflate

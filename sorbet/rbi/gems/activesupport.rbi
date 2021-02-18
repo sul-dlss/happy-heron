@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.1.1
+# activesupport-6.1.2.1
 
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end
@@ -340,7 +340,7 @@ class Time
   def seconds_since_midnight; end
   def seconds_until_end_of_day; end
   def self.===(other); end
-  def self.at_with_coercion(*args); end
+  def self.at_with_coercion(*args, **kwargs); end
   def self.at_without_coercion(*arg0); end
   def self.current; end
   def self.days_in_month(month, year = nil); end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/commonmarker/all/commonmarker.rbi
 #
-# commonmarker-0.21.1
+# commonmarker-0.21.2
 
 module CommonMarker
   def self.extensions; end

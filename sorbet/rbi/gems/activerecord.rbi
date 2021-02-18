@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activerecord/all/activerecord.rbi
 #
-# activerecord-6.1.1
+# activerecord-6.1.2.1
 
 module Arel
   def self.arel_node?(value); end
@@ -2042,7 +2042,7 @@ module ActiveRecord::ConnectionHandling
   def connected?; end
   def connected_to(database: nil, role: nil, shard: nil, prevent_writes: nil, &blk); end
   def connected_to?(role:, shard: nil); end
-  def connected_to_many(classes, role:, shard: nil, prevent_writes: nil); end
+  def connected_to_many(*classes, role:, shard: nil, prevent_writes: nil); end
   def connecting_to(role: nil, shard: nil, prevent_writes: nil); end
   def connection; end
   def connection_config(*args, &block); end
@@ -2333,7 +2333,7 @@ class ActiveRecord::Enum::EnumType < ActiveModel::Type::Value
   def type(**, &&); end
 end
 class ActiveRecord::Enum::EnumMethods < Module
-  def define_enum_methods(name, value_method_name, label, enum_scopes); end
+  def define_enum_methods(name, value_method_name, value, enum_scopes); end
   def initialize(klass); end
   def klass; end
 end
@@ -2433,7 +2433,7 @@ module ActiveRecord::ConnectionAdapters::AbstractPool
   def set_schema_cache(cache); end
 end
 class ActiveRecord::ConnectionAdapters::NullPool
-  def owner_name; end
+  def connection_klass; end
   def schema_cache; end
   def schema_cache=(arg0); end
   include ActiveRecord::ConnectionAdapters::AbstractPool
@@ -2458,6 +2458,7 @@ class ActiveRecord::ConnectionAdapters::ConnectionPool
   def connected?; end
   def connection; end
   def connection_cache_key(thread); end
+  def connection_klass; end
   def connections; end
   def current_thread; end
   def db_config; end
@@ -2471,7 +2472,6 @@ class ActiveRecord::ConnectionAdapters::ConnectionPool
   def lock_thread=(lock_thread); end
   def new_connection; end
   def num_waiting_in_queue; end
-  def owner_name; end
   def pool_config; end
   def reap; end
   def reaper; end
@@ -2819,6 +2819,7 @@ module ActiveRecord::CounterCache::ClassMethods
 end
 module ActiveRecord::Locking::Optimistic
   def _create_record(attribute_names = nil); end
+  def _lock_value_for_database(locking_column); end
   def _touch_row(attribute_names, time); end
   def _update_row(attribute_names, attempted_action = nil); end
   def destroy_row; end
@@ -3107,6 +3108,7 @@ module ActiveRecord::AutosaveAssociation::ClassMethods
   def define_non_cyclic_method(name, &block); end
 end
 class ActiveRecord::Associations::Builder::Association
+  def self.add_after_commit_jobs_callback(model, dependent); end
   def self.add_destroy_callbacks(model, reflection); end
   def self.build(model, name, scope, options, &block); end
   def self.build_scope(scope); end
@@ -3691,6 +3693,8 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
   def collector; end
   def column_for(table_name, column_name); end
   def column_for_attribute(attribute); end
+  def connection_klass; end
+  def create(*arg0); end
   def database_version; end
   def default_index_type?(index); end
   def default_uniqueness_comparison(attribute, value); end
@@ -3720,7 +3724,6 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
   def migration_context; end
   def migrations_paths; end
   def owner; end
-  def owner_name; end
   def pool; end
   def pool=(arg0); end
   def prefetch_primary_key?(table_name = nil); end
@@ -4135,6 +4138,7 @@ class ActiveRecord::ConnectionAdapters::IndexDefinition
   def where; end
 end
 class ActiveRecord::ConnectionAdapters::ColumnDefinition < Struct
+  def aliased_types(name, fallback); end
   def collation; end
   def collation=(value); end
   def comment; end
@@ -4651,11 +4655,12 @@ class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::MoneyDecoder < PG::Si
   def decode(value, tuple = nil, field = nil); end
 end
 class ActiveRecord::ConnectionAdapters::PoolConfig
+  def connection_klass; end
   def connection_specification_name; end
   def db_config; end
   def discard_pool!; end
   def disconnect!; end
-  def initialize(connection_specification_name, db_config); end
+  def initialize(connection_klass, db_config); end
   def lock; end
   def locked?; end
   def pool; end
@@ -5254,7 +5259,6 @@ class ActiveRecord::Base
   def self._attr_readonly; end
   def self._attr_readonly=(value); end
   def self._attr_readonly?; end
-  def self.abstract_base_class; end
   def self.action_on_strict_loading_violation; end
   def self.action_on_strict_loading_violation=(val); end
   def self.allow_unsafe_raw_sql; end
@@ -5265,6 +5269,10 @@ class ActiveRecord::Base
   def self.configurations; end
   def self.configurations=(config); end
   def self.connected_to_stack; end
+  def self.connection_class; end
+  def self.connection_class=(b); end
+  def self.connection_class?; end
+  def self.connection_classes; end
   def self.connection_handler; end
   def self.connection_handler=(handler); end
   def self.connection_handlers; end
@@ -5338,7 +5346,7 @@ class ActiveRecord::Base
   def self.strict_loading_by_default; end
   def self.strict_loading_by_default=(value); end
   def self.strict_loading_by_default?; end
-  def self.strict_loading_violation!(owner:, association:); end
+  def self.strict_loading_violation!(owner:, reflection:); end
   def self.suppress_multiple_database_warning; end
   def self.suppress_multiple_database_warning=(val); end
   def self.table_name_prefix; end
@@ -5680,12 +5688,14 @@ class ActiveRecord::AssociationRelation < ActiveRecord::Relation
   def _create!(attributes, &block); end
   def _create(attributes, &block); end
   def _new(attributes, &block); end
+  def build(attributes = nil, &block); end
   def exec_queries; end
   def initialize(klass, association, **arg2); end
   def insert!(attributes, **kwargs); end
   def insert(attributes, **kwargs); end
   def insert_all!(attributes, **kwargs); end
   def insert_all(attributes, **kwargs); end
+  def new(attributes = nil, &block); end
   def proxy_association; end
   def upsert(attributes, **kwargs); end
   def upsert_all(attributes, **kwargs); end

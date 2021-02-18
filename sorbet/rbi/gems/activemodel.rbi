@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activemodel/all/activemodel.rbi
 #
-# activemodel-6.1.1
+# activemodel-6.1.2.1
 
 module ActiveModel
   def self.eager_load!; end
@@ -420,6 +420,7 @@ class ActiveModel::Validations::NumericalityValidator < ActiveModel::EachValidat
   def parse_float(raw_value, precision, scale); end
   def prepare_value_for_validation(value, record, attr_name); end
   def record_attribute_changed_in_place?(record, attr_name); end
+  def round(raw_value, scale); end
   def validate_each(record, attr_name, value, precision: nil, scale: nil); end
 end
 module ActiveModel::Validations::Callbacks

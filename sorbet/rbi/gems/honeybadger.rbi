@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/honeybadger/all/honeybadger.rbi
 #
-# honeybadger-4.7.2
+# honeybadger-4.7.3
 
 module Honeybadger
   def add_breadcrumb(*args, &block); end

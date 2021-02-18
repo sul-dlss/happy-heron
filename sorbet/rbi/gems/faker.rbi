@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faker/all/faker.rbi
 #
-# faker-2.15.1
+# faker-2.16.0
 
 module Faker
 end
@@ -53,6 +53,8 @@ class Faker::Blockchain::Tezos < Faker::Base
   def self.contract; end
   def self.encode_tz(prefix, payload_size); end
   def self.operation; end
+  def self.public_key; end
+  def self.secret_key; end
   def self.signature; end
 end
 class Faker::Book < Faker::Base
@@ -1145,6 +1147,13 @@ class Faker::Games::SuperSmashBros < Faker::Base
   def self.fighter; end
   def self.stage; end
 end
+class Faker::Games::Touhou < Faker::Base
+  def self.character; end
+  def self.game; end
+  def self.location; end
+  def self.song; end
+  def self.spell_card; end
+end
 class Faker::Games::WarhammerFantasy < Faker::Base
   def self.creature; end
   def self.faction; end
@@ -1373,6 +1382,7 @@ class Faker::Music::Prince < Faker::Base
 end
 class Faker::Music::RockBand < Faker::Base
   def self.name; end
+  def self.song; end
 end
 class Faker::Music::Rush < Faker::Base
   def self.album; end
