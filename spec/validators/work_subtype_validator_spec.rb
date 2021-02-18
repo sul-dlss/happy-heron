@@ -47,7 +47,7 @@ RSpec.describe WorkSubtypeValidator do
     let(:work_type_id) { 'mixed material' }
 
     context 'with two valid subtypes' do
-      let(:value) { %w[Data Sound] }
+      let(:value) { %w[Data CAD] }
 
       it 'validates' do
         expect(record.errors).to be_empty
