@@ -35,16 +35,13 @@ class WorkObserver
     work_mailer(work_version).reject_email.deliver_later
   end
 
-  # rubocop:disable Metrics/AbcSize
   def self.after_submit_for_review(work_version, _transition)
-    work_mailer(work_version).reject_email.deliver_later
     collection = work_version.work.collection
     (collection.reviewed_by + collection.managed_by - [work_version.work.depositor]).each do |recipient|
       ReviewersMailer.with(user: recipient, work_version: work_version).submitted_email.deliver_later
     end
     work_mailer(work_version).submitted_email.deliver_later
   end
-  # rubocop:enable Metrics/AbcSize
 
   def self.work_mailer(work_version)
     WorksMailer.with(user: work_version.work.depositor, work_version: work_version)
