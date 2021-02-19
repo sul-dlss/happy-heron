@@ -1,6 +1,6 @@
 <header class="title">
   <span class="header-text"><%= name %></span>
-  <%= render Collections::EditLinkComponent.new(collection: collection, anchor: '', label: "Edit #{name}") %>
+  <%= render Collections::EditLinkComponent.new(collection_version: collection_version, anchor: '', label: "Edit #{name}") %>
   <% if depositing? %>
     <span class="state">Depositing <%= spinner %></span>
   <% end %>
@@ -8,7 +8,7 @@
     <span class="deposit-button" data-controller="work-type">
       <%= button_tag '+ Deposit to this collection',
             data: {
-              destination: new_collection_work_path(@collection),
+              destination: new_collection_work_path(collection),
               bs_toggle: 'modal',
               bs_target: '#workTypeModal',
               action: "work-type#set_collection"

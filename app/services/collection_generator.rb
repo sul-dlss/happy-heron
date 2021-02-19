@@ -5,20 +5,20 @@
 class CollectionGenerator
   extend T::Sig
 
-  sig { params(collection: Collection).returns(T.any(Cocina::Models::RequestCollection, Cocina::Models::Collection)) }
-  def self.generate_model(collection:)
-    new(collection: collection).generate_model
+  sig { params(collection_version: CollectionVersion).returns(T.any(Cocina::Models::RequestCollection, Cocina::Models::Collection)) }
+  def self.generate_model(collection_version:)
+    new(collection_version: collection_version).generate_model
   end
 
-  sig { params(collection: Collection).void }
-  def initialize(collection:)
-    @collection = collection
+  sig { params(collection_version: CollectionVersion).void }
+  def initialize(collection_version:)
+    @collection_version = collection_version
   end
 
   sig { returns(T.any(Cocina::Models::RequestCollection, Cocina::Models::Collection)) }
   def generate_model
-    if collection.druid
-      Cocina::Models::Collection.new(model_attributes.merge(externalIdentifier: collection.druid), false, false)
+    if collection_version.collection.druid
+      Cocina::Models::Collection.new(model_attributes.merge(externalIdentifier: collection_version.collection.druid), false, false)
     else
       Cocina::Models::RequestCollection.new(model_attributes, false, false)
     end
@@ -26,7 +26,7 @@ class CollectionGenerator
 
   private
 
-  attr_reader :collection
+  attr_reader :collection_version
 
   sig { returns(Hash) }
   def model_attributes
@@ -37,15 +37,16 @@ class CollectionGenerator
         partOfProject: Settings.h2.project_tag
       },
       identification: {
+        # TODO: Uncomment when cocina-models 0.45.0 is published
         # It would be great if we could send a sourceId with a collection, because then we
         # could receive a message knowing when it was deposited. Currently cocina-models doesn't
         # support sourceIds on collections
         # sourceId: "hydrus:collection-#{collection.id}"
       },
-      label: collection.name,
+      label: collection_version.name,
       type: Cocina::Models::Vocab.collection,
-      description: { title: [{ value: collection.name }] },
-      version: collection.version
+      description: { title: [{ value: collection_version.name }] },
+      version: collection_version.version
     }
   end
 

@@ -60,12 +60,13 @@ RSpec.describe DepositStatusJob do
     end
 
     context 'with a collection' do
-      let(:collection) { build(:collection, :depositing) }
+      let(:collection_version) { build(:collection_version, :depositing, collection: collection) }
+      let(:collection) { build(:collection) }
 
       it 'adds a druid and transitions to deposited state' do
-        described_class.perform_now(object: collection, job_id: job_id)
+        described_class.perform_now(object: collection_version, job_id: job_id)
         expect(collection.druid).to eq druid
-        expect(collection.state_name).to eq :deposited
+        expect(collection_version.state_name).to eq :deposited
       end
     end
   end

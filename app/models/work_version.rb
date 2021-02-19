@@ -4,6 +4,7 @@
 # Models the deposit of an single version of a digital repository object
 class WorkVersion < ApplicationRecord
   class WorkTypeUpdateError < RuntimeError; end
+  include AggregateAssociations
 
   belongs_to :work
   has_many :contributors, dependent: :destroy, class_name: 'Contributor'
@@ -89,14 +90,6 @@ class WorkVersion < ApplicationRecord
 
   def updatable?
     can_update_metadata? || deposited?
-  end
-
-  # Which assocations are has_many?
-  sig { returns(T::Array[Symbol]) }
-  def self.aggregate_associations
-    reflections.values
-               .select { |ref| ref.is_a?(ActiveRecord::Reflection::HasManyReflection) }
-               .map(&:name)
   end
 
   sig { void }

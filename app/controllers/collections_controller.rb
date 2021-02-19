@@ -37,10 +37,18 @@ class CollectionsController < ObjectsController
 
   def update
     collection = Collection.find(params[:id])
-    authorize! collection
+    collection_version = collection.head
+    clean_params = collection_params
+
+    if work_version.deposited?
+      work_version = create_new_version(collection_version)
+      NewCollectionVersionParameterFilter.call(clean_params, collection_version.head)
+    end
+
+    authorize! collection_version
     point1 = CollectionChangeSet::PointInTime.new(collection)
     @form = collection_form(collection)
-    if @form.validate(collection_params) && @form.save
+    if @form.validate(clean_params) && @form.save
       after_save(collection, context: { change_set: point1.diff(collection) })
     else
       render :edit, status: :unprocessable_entity
@@ -76,6 +84,14 @@ class CollectionsController < ObjectsController
   end
 
   private
+
+  # Create the next CollectionVersion for this Collection
+  def create_new_version(previous_version)
+    previous_version.dup.tap do |work_version|
+      work_version.state = 'version_draft'
+      work_version.version = previous_version.version + 1
+    end
+  end
 
   sig { params(collection: Collection, context: Hash).void }
   def after_save(collection, context: {})

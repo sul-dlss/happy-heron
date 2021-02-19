@@ -12,6 +12,10 @@ module Collections
     sig { returns(Collection) }
     attr_reader :collection
 
+    def collection_version
+      collection.head
+    end
+
     sig { returns(T.nilable(String)) }
     def depositors
       collection.depositors.map(&:sunetid).join(', ')

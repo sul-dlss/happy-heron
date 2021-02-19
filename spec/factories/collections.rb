@@ -3,13 +3,10 @@
 
 FactoryBot.define do
   factory :collection do
-    name { 'MyString' }
-    description { 'MyString' }
     release_option { 'immediate' }
     access { 'world' }
     license_option { 'depositor-selects' }
     email_when_participants_changed { false }
-    state { 'first_draft' }
     creator
   end
 

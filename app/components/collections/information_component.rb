@@ -4,16 +4,16 @@
 module Collections
   # Renders the information section of the collection (show page)
   class InformationComponent < ApplicationComponent
-    sig { params(collection: Collection).void }
-    def initialize(collection:)
-      @collection = collection
+    sig { params(collection_version: CollectionVersion).void }
+    def initialize(collection_version:)
+      @collection_version = collection_version
     end
 
-    sig { returns(Collection) }
-    attr_reader :collection
+    sig { returns(CollectionVersion) }
+    attr_reader :collection_version
 
-    delegate :creator, :druid, :version, :purl,
-             to: :collection
+    delegate :collection, :version, to: :collection_version
+    delegate :creator, :druid, :purl, to: :collection
 
     sig { returns(String) }
     def created
@@ -22,7 +22,7 @@ module Collections
 
     sig { returns(String) }
     def last_saved
-      format_date_string(collection.updated_at)
+      format_date_string(collection_version.updated_at)
     end
 
     private

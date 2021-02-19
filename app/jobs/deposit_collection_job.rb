@@ -5,12 +5,10 @@
 class DepositCollectionJob < BaseDepositJob
   queue_as :default
 
-  sig { params(collection: Collection).void }
-  def perform(collection)
-    collection.update(version: collection.version + 1)
-
-    job_id = deposit(request_dro: CollectionGenerator.generate_model(collection: collection))
-    DepositStatusJob.perform_later(object: collection, job_id: job_id)
+  sig { params(collection_version: CollectionVersion).void }
+  def perform(collection_version)
+    job_id = deposit(request_dro: CollectionGenerator.generate_model(collection_version: collection_version))
+    DepositStatusJob.perform_later(object: collection_version, job_id: job_id)
   rescue StandardError => e
     Honeybadger.notify(e)
   end

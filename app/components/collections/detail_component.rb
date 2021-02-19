@@ -4,14 +4,14 @@
 module Collections
   # Renders the details section of the collection (show page)
   class DetailComponent < ApplicationComponent
-    sig { params(collection: Collection).void }
-    def initialize(collection:)
-      @collection = collection
+    sig { params(collection_version: CollectionVersion).void }
+    def initialize(collection_version:)
+      @collection_version = collection_version
     end
 
-    sig { returns(Collection) }
-    attr_reader :collection
+    sig { returns(CollectionVersion) }
+    attr_reader :collection_version
 
-    delegate :name, :description, :contact_emails, to: :collection
+    delegate :name, :description, :contact_emails, to: :collection_version
   end
 end

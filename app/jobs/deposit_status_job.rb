@@ -5,7 +5,7 @@
 class DepositStatusJob < BaseDepositJob
   queue_as :default
 
-  sig { params(object: T.any(WorkVersion, Collection), job_id: Integer).void }
+  sig { params(object: T.any(WorkVersion, CollectionVersion), job_id: Integer).void }
   def perform(object:, job_id:)
     result = status(job_id: job_id)
     # This will force a recheck of status (and should be ignored by Honeybadger)
@@ -33,14 +33,16 @@ class DepositStatusJob < BaseDepositJob
         object.deposit_complete!
       end
     else
-      object.druid = druid
-      object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
-      # Force a save because state_machine-activerecord wraps its update in a transaction.
-      # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
-      # It's possible the mailer job is started before the transaction in the main thread is completed,
-      # which means the mailer may not have access to the druid.
-      object.save!
-      object.deposit_complete!
+      object.transaction do
+        object.collection.druid = druid
+        object.collection.save!
+        # Force a save because state_machine-activerecord wraps its update in a transaction.
+        # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
+        # It's possible the mailer job is started before the transaction in the main thread is completed,
+        # which means the mailer may not have access to the druid.
+        object.save!
+        object.deposit_complete!
+      end
     end
   end
 

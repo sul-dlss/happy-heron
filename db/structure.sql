@@ -203,13 +203,46 @@ ALTER SEQUENCE public.attached_files_id_seq OWNED BY public.attached_files.id;
 
 
 --
+-- Name: collection_versions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.collection_versions (
+    id bigint NOT NULL,
+    version integer DEFAULT 1 NOT NULL,
+    state character varying NOT NULL,
+    name character varying NOT NULL,
+    description character varying,
+    collection_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: collection_versions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.collection_versions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: collection_versions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.collection_versions_id_seq OWNED BY public.collection_versions.id;
+
+
+--
 -- Name: collections; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.collections (
     id bigint NOT NULL,
-    name character varying NOT NULL,
-    description character varying,
     release_option character varying,
     release_duration character varying,
     access character varying,
@@ -219,12 +252,11 @@ CREATE TABLE public.collections (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
-    state character varying DEFAULT 'new'::character varying NOT NULL,
     druid character varying,
-    version integer DEFAULT 0 NOT NULL,
     email_depositors_status_changed boolean,
     review_enabled boolean DEFAULT false,
-    license_option character varying DEFAULT 'required'::character varying NOT NULL
+    license_option character varying DEFAULT 'required'::character varying NOT NULL,
+    head_id bigint
 );
 
 
@@ -636,6 +668,13 @@ ALTER TABLE ONLY public.attached_files ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: collection_versions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collection_versions ALTER COLUMN id SET DEFAULT nextval('public.collection_versions_id_seq'::regclass);
+
+
+--
 -- Name: collections id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -751,6 +790,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.attached_files
     ADD CONSTRAINT attached_files_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collection_versions collection_versions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collection_versions
+    ADD CONSTRAINT collection_versions_pkey PRIMARY KEY (id);
 
 
 --
@@ -884,6 +931,13 @@ CREATE INDEX index_attached_files_on_work_version_id ON public.attached_files US
 
 
 --
+-- Name: index_collection_versions_on_collection_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_collection_versions_on_collection_id ON public.collection_versions USING btree (collection_id);
+
+
+--
 -- Name: index_collections_on_creator_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -898,10 +952,10 @@ CREATE UNIQUE INDEX index_collections_on_druid ON public.collections USING btree
 
 
 --
--- Name: index_collections_on_state; Type: INDEX; Schema: public; Owner: -
+-- Name: index_collections_on_head_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_collections_on_state ON public.collections USING btree (state);
+CREATE INDEX index_collections_on_head_id ON public.collections USING btree (head_id);
 
 
 --
@@ -1156,6 +1210,22 @@ ALTER TABLE ONLY public.keywords
 
 
 --
+-- Name: collection_versions fk_rails_e110e4f591; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collection_versions
+    ADD CONSTRAINT fk_rails_e110e4f591 FOREIGN KEY (collection_id) REFERENCES public.collections(id);
+
+
+--
+-- Name: collections fk_rails_eafc3da026; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collections
+    ADD CONSTRAINT fk_rails_eafc3da026 FOREIGN KEY (head_id) REFERENCES public.collection_versions(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1208,6 +1278,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210208201246'),
 ('20210209204542'),
 ('20210211170008'),
-('20210216220559');
+('20210216220559'),
+('20210219142356');
 
 
