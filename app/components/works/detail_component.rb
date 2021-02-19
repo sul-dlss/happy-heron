@@ -16,7 +16,7 @@ module Works
 
     delegate :version, :work_type, :contact_emails, :abstract, :citation,
              :attached_files, :related_works, :related_links,
-             :created_edtf, :published_edtf, :rejected?, :work, to: :work_version
+             :created_edtf, :published_edtf, :rejected?, :work, :description, to: :work_version
 
     sig { returns(T::Array[AbstractContributor]) }
     def contributors

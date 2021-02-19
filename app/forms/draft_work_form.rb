@@ -10,6 +10,7 @@ class DraftWorkForm < Reform::Form
   include Composition
 
   property :work_type, on: :work_version
+  property :description, on: :work_version
   property :subtype, on: :work_version
   property :title, on: :work_version
   property :abstract, on: :work_version

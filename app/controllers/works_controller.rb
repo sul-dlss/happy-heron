@@ -192,7 +192,7 @@ class WorksController < ObjectsController
                      'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
                      'created_range(approx3)',
                      :abstract, :citation_auto, :citation, :default_citation,
-                     :access, :license,
+                     :access, :license, :description,
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
                      :agree_to_terms, subtype: [],
                                       attached_files_attributes: %i[_destroy id label hide file],

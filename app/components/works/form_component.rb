@@ -36,7 +36,6 @@ module Works
 
     sig { returns(T::Boolean) }
     def version_description_required?
-      byebug
       return true if ['deposited', 'version_draft'].include? work_version.state
 
       false
