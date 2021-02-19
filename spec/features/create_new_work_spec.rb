@@ -188,7 +188,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         check 'I agree to the SDR Terms of Deposit'
         click_button 'Deposit'
 
-        expect(page).to have_content 'Keller, M. (2020, February). My Title. ' \
+        expect(page).to have_content 'Keller, M. (2020). My Title. ' \
           "Stanford Digital Repository. Available at #{WorkVersion::LINK_TEXT}"
       end
     end

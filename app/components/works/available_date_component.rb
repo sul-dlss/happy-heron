@@ -36,6 +36,10 @@ module Works
                     start_year: Time.zone.today.year,
                     end_year: 3.years.from_now.year
                   },
+                  data: {
+                    auto_citation_target: 'embargoYear',
+                    action: 'change->auto-citation#updateDisplay'
+                  },
                   id: 'work_embargo_year',
                   class: "form-control#{' is-invalid' if error?}"
     end
