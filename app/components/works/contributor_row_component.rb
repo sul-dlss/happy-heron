@@ -70,18 +70,20 @@ module Works
 
     # Represents the type of contributor top level option for the role select
     class ContributorType
-      def initialize(key:)
+      def initialize(key:, citable:)
         @key = key
+        @citable = citable
       end
 
-      attr_reader :key
+      attr_reader :key, :citable
 
       def label
         I18n.t(key, scope: 'contributor.roles')
       end
 
       def roles
-        AbstractContributor::GROUPED_ROLES.fetch(key).map { |label| Role.new(contributor_type: key, label: label) }
+        AbstractContributor.grouped_roles(citable: citable)
+                           .fetch(key).map { |label| Role.new(contributor_type: key, label: label) }
       end
     end
 
@@ -103,7 +105,7 @@ module Works
     sig { returns(T::Array[ContributorType]) }
     def grouped_options
       %w[person organization].map do |key|
-        ContributorType.new(key: key)
+        ContributorType.new(key: key, citable: citation?)
       end
     end
   end
