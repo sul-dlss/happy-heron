@@ -25,5 +25,7 @@ RSpec.describe Works::FormComponent do
                   'Describe your deposit',
                   'Manage release of this deposit',
                   'Select a license')
+    expect(rendered.to_html)
+      .not_to include("What's changing?")
   end
 end
