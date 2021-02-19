@@ -36,7 +36,7 @@ module Works
 
     sig { returns(T::Boolean) }
     def version_description_required?
-      return true if ['deposited', 'version_draft'].include? work_version.state
+      return true if %w[deposited version_draft].include? work_version.state
 
       false
     end
