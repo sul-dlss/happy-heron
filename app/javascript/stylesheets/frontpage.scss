@@ -7,6 +7,19 @@
 
   h1, h2 {
     font-weight: 700;
+
+    .stanford {
+      font-weight: normal;
+      font-family: Palatino, ‘Palatino Linotype’, ‘Hoefler Text’, Times, ‘Times New Roman’, serif;
+      padding-right: 1rem;
+      border-right: 1px solid #f2f1eb;
+    }
+
+    .digital-repo {
+      font-weight: 500;
+      padding-left: 1rem;
+      text-transform: uppercase;
+    }
   }
 
   .btn-xl {
