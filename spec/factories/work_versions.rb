@@ -105,4 +105,13 @@ FactoryBot.define do
     license { 'none' }
     state { 'purl_reserved' }
   end
+
+  trait :reserving_purl do
+    work_type { WorkType.purl_reservation_type.id }
+    subtype { [] }
+    abstract { '' }
+    citation { nil }
+    license { 'none' }
+    state { 'purl_reserved' }
+  end
 end
