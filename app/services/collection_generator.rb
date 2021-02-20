@@ -5,7 +5,10 @@
 class CollectionGenerator
   extend T::Sig
 
-  sig { params(collection_version: CollectionVersion).returns(T.any(Cocina::Models::RequestCollection, Cocina::Models::Collection)) }
+  sig do
+    params(collection_version: CollectionVersion).returns(T.any(Cocina::Models::RequestCollection,
+                                                                Cocina::Models::Collection))
+  end
   def self.generate_model(collection_version:)
     new(collection_version: collection_version).generate_model
   end
@@ -18,7 +21,8 @@ class CollectionGenerator
   sig { returns(T.any(Cocina::Models::RequestCollection, Cocina::Models::Collection)) }
   def generate_model
     if collection_version.collection.druid
-      Cocina::Models::Collection.new(model_attributes.merge(externalIdentifier: collection_version.collection.druid), false, false)
+      Cocina::Models::Collection.new(model_attributes.merge(externalIdentifier: collection_version.collection.druid),
+                                     false, false)
     else
       Cocina::Models::RequestCollection.new(model_attributes, false, false)
     end

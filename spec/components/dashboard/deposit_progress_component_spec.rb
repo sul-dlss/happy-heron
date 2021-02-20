@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::DepositProgressComponent, type: :component do
   let(:component) { described_class.new(work_version: work_version) }
-  let(:work) { build_stubbed(:work, collection: build(:collection, :with_contact_emails, id: 7)) }
+  let(:work) { build_stubbed(:work) }
   let(:work_version) { build_stubbed(:work_version, work: work) }
   let(:rendered) { render_inline(component) }
 

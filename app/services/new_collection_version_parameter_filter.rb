@@ -12,7 +12,9 @@ class NewCollectionVersionParameterFilter
 
   def self.filter_relation_params(clean_params, old_version, relation)
     old_version.public_send(relation).each do |existing|
-      existing_params = clean_params["#{relation}_attributes"].values.find { |hash| hash['id'] == existing.id.to_s }
+      existing_params = clean_params.fetch("#{relation}_attributes").values.find do |hash|
+        hash['id'] == existing.id.to_s
+      end
       existing_params.delete('id')
     end
   end

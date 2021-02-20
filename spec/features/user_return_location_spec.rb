@@ -4,10 +4,11 @@
 require 'rails_helper'
 
 RSpec.describe 'User return location' do
-  let(:collection) { create(:collection, :deposited, depositors: [user]) }
+  let(:collection) { create(:collection, depositors: [user]) }
   let(:user) { create(:user) }
 
   before do
+    collection.update(head: create(:collection_version, :deposited, collection: collection))
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end

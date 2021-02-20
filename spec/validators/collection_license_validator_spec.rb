@@ -5,7 +5,7 @@ require 'rails_helper'
 
 RSpec.describe CollectionLicenseValidator do
   let(:validator) { described_class.new }
-  let(:record) { CollectionForm.new(Collection.new) }
+  let(:record) { CreateCollectionForm.new(collection: Collection.new, collection_version: CollectionVersion.new) }
 
   context 'when a valid default license is provided' do
     before do

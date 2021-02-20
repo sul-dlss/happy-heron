@@ -4,7 +4,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
-  let(:collection) { create(:collection, :deposited, :with_depositors) }
+  let(:collection_version) { create(:collection_version, :deposited) }
+  let(:collection) { create(:collection, :with_depositors, head: collection_version) }
   let(:user) { collection.depositors.first }
   let(:work_title) { 'Pearlescence: An Ontology' }
 
@@ -19,10 +20,11 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
 
     describe 'submit to the work creation route in PURL reservation mode' do
       let(:hidden_form_params) { { commit: 'Deposit', purl_reservation: 'true' } }
+      let(:form_params) { hidden_form_params.merge(work: { title: work_title }) }
 
       it 'creates a stub work to get the PURL' do
         expect do
-          post "/collections/#{collection.id}/works", params: hidden_form_params.merge({ work: { title: work_title } })
+          post "/collections/#{collection.id}/works", params: form_params
         end.to change(WorkVersion, :count).by(1)
 
         work_version = WorkVersion.find_by!(title: work_title)

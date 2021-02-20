@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-types/all/dry-types.rbi
 #
-# dry-types-1.5.0
+# dry-types-1.5.1
 
 module Dry
   def self.Types(*namespaces, default: nil, **aliases); end

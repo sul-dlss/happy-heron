@@ -11,19 +11,20 @@ module Collections
     attr_reader :form
 
     sig { returns(T.nilable(String)) }
-    def delete_button
-      return unless persisted?
-
-      helpers.turbo_frame_tag dom_id(model, :delete), src: delete_button_collection_path(model, style: :button)
-    end
-
-    sig { returns(T.nilable(String)) }
     def cancel_button
       render Collections::CancelComponent.new(collection: model)
     end
 
     delegate :object, to: :form
-    delegate :model, to: :object
-    delegate :persisted?, to: :model
+    delegate :persisted?, to: :object
+    delegate :first_draft?, :version_draft?, :name, to: :collection_version
+
+    def model
+      object.collection
+    end
+
+    def collection_version
+      object.model.fetch(:collection_version)
+    end
   end
 end

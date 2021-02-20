@@ -13,10 +13,11 @@ module Collections
 
     sig { returns(T::Boolean) }
     def render?
-      collection_version.can_update_metadata?
+      collection_version.updatable?
     end
 
     attr_reader :collection_version, :anchor, :label
+
     delegate :collection, to: :collection_version
   end
 end

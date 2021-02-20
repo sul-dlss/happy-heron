@@ -36,7 +36,10 @@ class Work < ApplicationRecord
     events.latest_by_type('reject')&.description
   end
 
-  delegate :name, to: :collection, prefix: true
+  def collection_name
+    collection.head.name
+  end
+
   delegate :name, to: :depositor, prefix: true
   delegate :purl_reservation?, to: :head
 

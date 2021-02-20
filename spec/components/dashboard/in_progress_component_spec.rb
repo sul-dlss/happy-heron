@@ -26,9 +26,10 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
     let(:work_versions) { WorkVersion.all }
 
     before do
-      create(:work_version)
-      create(:work_version)
-      create(:work_version)
+      collection = create(:collection_version_with_collection).collection
+      create(:work_version, work: create(:work, collection: collection))
+      create(:work_version, work: create(:work, collection: collection))
+      create(:work_version, work: create(:work, collection: collection))
     end
 
     it 'renders the component with works' do

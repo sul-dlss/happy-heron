@@ -7,6 +7,10 @@ RSpec.describe Works::DetailComponent, type: :component do
   let(:instance) { described_class.new(work_version: work_version) }
   let(:rendered) { render_inline(instance) }
 
+  before do
+    allow(work_version.work.collection).to receive(:head).and_return(build_stubbed(:collection_version))
+  end
+
   context 'when a first draft' do
     let(:work_version) { build_stubbed(:work_version) }
 

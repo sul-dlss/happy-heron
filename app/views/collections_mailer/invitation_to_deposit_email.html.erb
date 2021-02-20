@@ -1,6 +1,6 @@
 <p>Dear <%= @user.name %>,</p>
 
-<p>You have been invited to deposit to the <%= @collection.name %> collection in the Stanford Digital Repository.
+<p>You have been invited to deposit to the <%= @collection_version.name %> collection in the Stanford Digital Repository.
   Start your deposit at <%= link_to collection_url(@collection), collection_url(@collection, anchor: 'deposits') %>.</p>
 
 <p>SDR deposits can be discovered in the Stanford library catalog and can be accessed by others at a persistent link (PURL). <a href="https://purl.stanford.edu/wd068fv8349">Example of a PURL.</a>

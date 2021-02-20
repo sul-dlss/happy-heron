@@ -7,6 +7,8 @@ class Collection < ApplicationRecord
 
   has_many :works, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
+  has_many :collection_versions, dependent: :destroy
+
   belongs_to :creator, class_name: 'User'
   belongs_to :head, class_name: 'CollectionVersion', optional: true
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
@@ -16,7 +18,7 @@ class Collection < ApplicationRecord
   def broadcast_update
     broadcast_replace_to self
   end
-  
+
   def broadcast_update_collection_summary
     broadcast_replace_to :collection_summary, partial: 'dashboards/collection_summary'
   end

@@ -9,7 +9,8 @@ RSpec.describe 'Edit a draft work', js: true do
     create(:work_version, :with_keywords,
            work_type: 'other', subtype: ['Graphic novel'], work: work)
   end
-  let(:work) { create(:work, depositor: depositor) }
+  let(:collection) { create(:collection_version_with_collection).collection }
+  let(:work) { create(:work, depositor: depositor, collection: collection) }
 
   before do
     work.update(head: work_version)
@@ -44,7 +45,7 @@ RSpec.describe 'Edit a draft work', js: true do
       # breadcrumbs showing
       find('#breadcrumbs') do |nav|
         expect(nav).to have_content('Dashboard')
-        expect(nav).to have_content(work.collection.name)
+        expect(nav).to have_content(work.collection.head.name)
         expect(nav).to have_content(work_version.title)
         expect(nav).to have_content('Edit')
       end

@@ -20,7 +20,7 @@ class WorkVersionPolicy < ApplicationPolicy
   #   2. The user is an administrator, or a depositor or a manager of this collection
   sig { returns(T::Boolean) }
   def create?
-    return false unless collection.accessioned?
+    return false unless collection.head.accessioned?
 
     return true if administrator?
 
@@ -40,7 +40,7 @@ class WorkVersionPolicy < ApplicationPolicy
                    collection.managed_by.include?(user) ||
                    collection.reviewed_by.include?(user)
 
-    depositor? && record.can_update_metadata? && !record.pending_approval?
+    depositor? && record.updatable? && !record.pending_approval?
   end
   # Can show a work iff any one of the following is true:
   #   1. The user is an administrator

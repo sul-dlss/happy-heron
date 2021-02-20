@@ -6,6 +6,28 @@ require 'rails_helper'
 RSpec.describe CollectionVersion do
   subject(:collection_version) { build(:collection_version) }
 
+  describe '#updatable?' do
+    subject { collection_version.updatable? }
+
+    context 'when depositing' do
+      let(:collection_version) { build(:collection_version, :depositing) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when deposited' do
+      let(:collection_version) { build(:collection_version, :deposited) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when a draft' do
+      let(:collection_version) { build(:collection_version, :version_draft) }
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe 'state machine flow' do
     let(:collection) { collection_version.collection }
 

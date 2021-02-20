@@ -12036,8 +12036,6 @@ end
 ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::OID = ActiveRecord::ConnectionAdapters::PostgreSQL::OID
 
 class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::StatementPool
-  def []=(sql, key); end
-
   def initialize(connection, max); end
 
   def next_key(); end
@@ -18642,6 +18640,13 @@ end
 
 class Addrinfo
   def connect_internal(local_addrinfo, timeout=T.unsafe(nil)); end
+end
+
+module AggregateAssociations::ClassMethods
+  def aggregate_associations(); end
+end
+
+module AggregateAssociations::ClassMethods
 end
 
 class ApplicationCable::Channel
@@ -27654,14 +27659,13 @@ class Cocina::Models::Vocab
 end
 
 class Collection
-  include ::StateMachines::InstanceMethods
+  def autosave_associated_records_for_collection_versions(*args); end
+
   def autosave_associated_records_for_collections_depositors(*args); end
 
   def autosave_associated_records_for_collections_managed_by(*args); end
 
   def autosave_associated_records_for_collections_reviewed_by(*args); end
-
-  def autosave_associated_records_for_contact_emails(*args); end
 
   def autosave_associated_records_for_creator(*args); end
 
@@ -27669,13 +27673,15 @@ class Collection
 
   def autosave_associated_records_for_events(*args); end
 
-  def autosave_associated_records_for_managed_by(*args); end
+  def autosave_associated_records_for_head(*args); end
 
-  def autosave_associated_records_for_related_links(*args); end
+  def autosave_associated_records_for_managed_by(*args); end
 
   def autosave_associated_records_for_reviewed_by(*args); end
 
   def autosave_associated_records_for_works(*args); end
+
+  def validate_associated_records_for_collection_versions(*args); end
 
   def validate_associated_records_for_collections_depositors(*args); end
 
@@ -27683,15 +27689,11 @@ class Collection
 
   def validate_associated_records_for_collections_reviewed_by(*args); end
 
-  def validate_associated_records_for_contact_emails(*args); end
-
   def validate_associated_records_for_depositors(*args); end
 
   def validate_associated_records_for_events(*args); end
 
   def validate_associated_records_for_managed_by(*args); end
-
-  def validate_associated_records_for_related_links(*args); end
 
   def validate_associated_records_for_reviewed_by(*args); end
 
@@ -27714,17 +27716,33 @@ class Collection::ActiveRecord_Relation
 end
 
 module Collection::GeneratedAssociationMethods
-  def contact_email_ids=(ids); end
+  def build_head(*args, &block); end
+
+  def collection_version_ids(); end
+
+  def collection_version_ids=(ids); end
+
+  def collection_versions(); end
+
+  def collection_versions=(value); end
+
+  def create_head(*args, &block); end
+
+  def create_head!(*args, &block); end
 
   def depositor_ids=(ids); end
 
   def event_ids=(ids); end
 
+  def head(); end
+
+  def head=(value); end
+
   def managed_by_ids=(ids); end
 
-  def related_link_ids=(ids); end
-
   def reload_creator(); end
+
+  def reload_head(); end
 
   def reviewed_by_ids=(ids); end
 
@@ -27745,7 +27763,10 @@ end
 class Collection
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
-  extend ::StateMachines::ClassMethods
+  def self.after_add_for_collection_versions(); end
+
+  def self.after_add_for_collection_versions=(value); end
+
   def self.after_add_for_collections_depositors(); end
 
   def self.after_add_for_collections_depositors=(value); end
@@ -27757,10 +27778,6 @@ class Collection
   def self.after_add_for_collections_reviewed_by(); end
 
   def self.after_add_for_collections_reviewed_by=(value); end
-
-  def self.after_add_for_contact_emails(); end
-
-  def self.after_add_for_contact_emails=(value); end
 
   def self.after_add_for_depositors(); end
 
@@ -27774,10 +27791,6 @@ class Collection
 
   def self.after_add_for_managed_by=(value); end
 
-  def self.after_add_for_related_links(); end
-
-  def self.after_add_for_related_links=(value); end
-
   def self.after_add_for_reviewed_by(); end
 
   def self.after_add_for_reviewed_by=(value); end
@@ -27785,6 +27798,10 @@ class Collection
   def self.after_add_for_works(); end
 
   def self.after_add_for_works=(value); end
+
+  def self.after_remove_for_collection_versions(); end
+
+  def self.after_remove_for_collection_versions=(value); end
 
   def self.after_remove_for_collections_depositors(); end
 
@@ -27798,10 +27815,6 @@ class Collection
 
   def self.after_remove_for_collections_reviewed_by=(value); end
 
-  def self.after_remove_for_contact_emails(); end
-
-  def self.after_remove_for_contact_emails=(value); end
-
   def self.after_remove_for_depositors(); end
 
   def self.after_remove_for_depositors=(value); end
@@ -27814,10 +27827,6 @@ class Collection
 
   def self.after_remove_for_managed_by=(value); end
 
-  def self.after_remove_for_related_links(); end
-
-  def self.after_remove_for_related_links=(value); end
-
   def self.after_remove_for_reviewed_by(); end
 
   def self.after_remove_for_reviewed_by=(value); end
@@ -27825,6 +27834,10 @@ class Collection
   def self.after_remove_for_works(); end
 
   def self.after_remove_for_works=(value); end
+
+  def self.before_add_for_collection_versions(); end
+
+  def self.before_add_for_collection_versions=(value); end
 
   def self.before_add_for_collections_depositors(); end
 
@@ -27838,10 +27851,6 @@ class Collection
 
   def self.before_add_for_collections_reviewed_by=(value); end
 
-  def self.before_add_for_contact_emails(); end
-
-  def self.before_add_for_contact_emails=(value); end
-
   def self.before_add_for_depositors(); end
 
   def self.before_add_for_depositors=(value); end
@@ -27854,10 +27863,6 @@ class Collection
 
   def self.before_add_for_managed_by=(value); end
 
-  def self.before_add_for_related_links(); end
-
-  def self.before_add_for_related_links=(value); end
-
   def self.before_add_for_reviewed_by(); end
 
   def self.before_add_for_reviewed_by=(value); end
@@ -27865,6 +27870,10 @@ class Collection
   def self.before_add_for_works(); end
 
   def self.before_add_for_works=(value); end
+
+  def self.before_remove_for_collection_versions(); end
+
+  def self.before_remove_for_collection_versions=(value); end
 
   def self.before_remove_for_collections_depositors(); end
 
@@ -27878,10 +27887,6 @@ class Collection
 
   def self.before_remove_for_collections_reviewed_by=(value); end
 
-  def self.before_remove_for_contact_emails(); end
-
-  def self.before_remove_for_contact_emails=(value); end
-
   def self.before_remove_for_depositors(); end
 
   def self.before_remove_for_depositors=(value); end
@@ -27893,10 +27898,6 @@ class Collection
   def self.before_remove_for_managed_by(); end
 
   def self.before_remove_for_managed_by=(value); end
-
-  def self.before_remove_for_related_links(); end
-
-  def self.before_remove_for_related_links=(value); end
 
   def self.before_remove_for_reviewed_by(); end
 
@@ -27924,6 +27925,131 @@ end
 
 class CollectionPolicy
   def __scoping__active_record_relation__deposit(relation); end
+end
+
+class CollectionVersion
+  include ::CollectionVersion::GeneratedAttributeMethods
+  include ::CollectionVersion::GeneratedAssociationMethods
+  include ::StateMachines::InstanceMethods
+  def autosave_associated_records_for_collection(*args); end
+
+  def autosave_associated_records_for_contact_emails(*args); end
+
+  def autosave_associated_records_for_related_links(*args); end
+
+  def validate_associated_records_for_contact_emails(*args); end
+
+  def validate_associated_records_for_related_links(*args); end
+  RelationType = ::T.let(nil, ::T.untyped)
+end
+
+class CollectionVersion::ActiveRecord_AssociationRelation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::CollectionVersion::GeneratedRelationMethods
+end
+
+class CollectionVersion::ActiveRecord_AssociationRelation
+end
+
+class CollectionVersion::ActiveRecord_Associations_CollectionProxy
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::CollectionVersion::GeneratedRelationMethods
+end
+
+class CollectionVersion::ActiveRecord_Associations_CollectionProxy
+end
+
+class CollectionVersion::ActiveRecord_Relation
+  include ::ActiveRecord::Delegation::ClassSpecificRelation
+  include ::CollectionVersion::GeneratedRelationMethods
+end
+
+class CollectionVersion::ActiveRecord_Relation
+end
+
+module CollectionVersion::GeneratedAssociationMethods
+  def build_collection(*args, &block); end
+
+  def collection(); end
+
+  def collection=(value); end
+
+  def contact_email_ids(); end
+
+  def contact_email_ids=(ids); end
+
+  def contact_emails(); end
+
+  def contact_emails=(value); end
+
+  def create_collection(*args, &block); end
+
+  def create_collection!(*args, &block); end
+
+  def related_link_ids(); end
+
+  def related_link_ids=(ids); end
+
+  def related_links(); end
+
+  def related_links=(value); end
+
+  def reload_collection(); end
+end
+
+module CollectionVersion::GeneratedAssociationMethods
+end
+
+module CollectionVersion::GeneratedAttributeMethods
+end
+
+module CollectionVersion::GeneratedAttributeMethods
+  extend ::Mutex_m
+end
+
+module CollectionVersion::GeneratedRelationMethods
+end
+
+module CollectionVersion::GeneratedRelationMethods
+  extend ::Mutex_m
+end
+
+class CollectionVersion
+  extend ::AggregateAssociations::ClassMethods
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+  extend ::StateMachines::ClassMethods
+  def self.after_add_for_contact_emails(); end
+
+  def self.after_add_for_contact_emails=(value); end
+
+  def self.after_add_for_related_links(); end
+
+  def self.after_add_for_related_links=(value); end
+
+  def self.after_remove_for_contact_emails(); end
+
+  def self.after_remove_for_contact_emails=(value); end
+
+  def self.after_remove_for_related_links(); end
+
+  def self.after_remove_for_related_links=(value); end
+
+  def self.before_add_for_contact_emails(); end
+
+  def self.before_add_for_contact_emails=(value); end
+
+  def self.before_add_for_related_links(); end
+
+  def self.before_add_for_related_links=(value); end
+
+  def self.before_remove_for_contact_emails(); end
+
+  def self.before_remove_for_contact_emails=(value); end
+
+  def self.before_remove_for_related_links(); end
+
+  def self.before_remove_for_related_links=(value); end
 end
 
 class Collections::ButtonsComponent
@@ -30985,9 +31111,12 @@ end
 
 class DraftCollectionForm
   include ::EmbargoDate
+  include ::Disposable::Twin::Composition
   def contact_emails_attributes=(); end
 
   def related_links_attributes=(); end
+
+  def to_key(); end
 end
 
 class DraftCollectionForm
@@ -36468,9 +36597,13 @@ end
 
 Net::HTTPFatalErrorCode = Net::HTTPClientError
 
-Net::HTTPInformation::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPInformation
+end
 
-Net::HTTPInformationCode = Net::HTTPInformation
+Net::HTTPInformationCode::EXCEPTION_TYPE = Net::HTTPError
+
+class Net::HTTPInformation
+end
 
 class Net::HTTPLoopDetected
   HAS_BODY = ::T.let(nil, ::T.untyped)
@@ -51485,6 +51618,7 @@ module WorkVersion::GeneratedRelationMethods
 end
 
 class WorkVersion
+  extend ::AggregateAssociations::ClassMethods
   extend ::StateMachines::ClassMethods
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks

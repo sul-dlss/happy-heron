@@ -23,7 +23,9 @@ class DashboardsController < ApplicationController
       in_progress: WorkVersion.with_state(:first_draft, :version_draft, :rejected)
                      .joins(:work)
                      .where('works.depositor' => current_user),
-      collection_managers_in_progress: current_user.manages_collections.with_state(:first_draft, :version_draft)
+      collection_managers_in_progress: CollectionVersion.with_state(:first_draft, :version_draft)
+                                         .joins(:collection).left_outer_joins(collection: :managed_by)
+                                         .where('managers.user_id' => current_user)
     )
   end
 end

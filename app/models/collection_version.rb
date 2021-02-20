@@ -56,4 +56,9 @@ class CollectionVersion < ApplicationRecord
       transition %i[first_draft version_draft] => same
     end
   end
+
+  sig { returns(T::Boolean) }
+  def updatable?
+    can_update_metadata? || deposited?
+  end
 end

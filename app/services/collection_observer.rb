@@ -13,7 +13,8 @@ class CollectionObserver
   end
 
   # When an already published collection is updated
-  def self.after_update_published(collection, _transition)
+  def self.after_update_published(collection_version, _transition)
+    collection = collection_version.collection
     managers_added(collection)
     managers_removed(collection)
     depositors_added(collection)

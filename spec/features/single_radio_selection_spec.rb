@@ -14,7 +14,10 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
     describe 'release option' do
       let(:collection) { create(:collection, managed_by: [user], release_option: 'depositor-selects') }
 
-      before { visit edit_collection_path(collection) }
+      before do
+        create(:collection_version_with_collection, :version_draft, collection: collection)
+        visit edit_collection_path(collection)
+      end
 
       it 'shows only one release option as checked and disables child select elements of other options' do
         # We need duplicate select lists with the same CSS selector
@@ -49,7 +52,10 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
     describe 'license option' do
       let(:collection) { create(:collection, managed_by: [user], license_option: 'required') }
 
-      before { visit edit_collection_path(collection) }
+      before do
+        create(:collection_version_with_collection, :version_draft, collection: collection)
+        visit edit_collection_path(collection)
+      end
 
       it 'shows only one license option as checked and disables child select elements of other options' do
         expect(find('#collection_license_option_required')).to be_checked

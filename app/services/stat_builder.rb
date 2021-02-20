@@ -11,7 +11,7 @@ class StatBuilder
 
     # We only use a few fields from the collection, so don't waste time
     # pulling back the other attributes.
-    Collection.select(:id, :name, :updated_at).index_with do |collection|
+    Collection.select(:id, :head_id, :name, :updated_at).joins(:head).index_with do |collection|
       works
         # filter works to those that belong to the collection in the current iteration of the block
         .select { |(collection_id, _state), _count| collection_id == collection.id }

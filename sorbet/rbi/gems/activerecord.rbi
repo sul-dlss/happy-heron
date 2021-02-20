@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activerecord/all/activerecord.rbi
 #
-# activerecord-6.1.2.1
+# activerecord-6.1.3
 
 module Arel
   def self.arel_node?(value); end
@@ -4645,7 +4645,6 @@ class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter < ActiveRecord::Connec
   include ActiveRecord::ConnectionAdapters::PostgreSQL::SchemaStatements
 end
 class ActiveRecord::ConnectionAdapters::PostgreSQLAdapter::StatementPool < ActiveRecord::ConnectionAdapters::StatementPool
-  def []=(sql, key); end
   def connection_active?; end
   def dealloc(key); end
   def initialize(connection, max); end
@@ -4897,7 +4896,7 @@ class ActiveRecord::Relation::WhereClause
   def ast; end
   def contradiction?; end
   def empty?(**, &&); end
-  def equalities(predicates); end
+  def equalities(predicates, equality_only); end
   def equality_node?(node); end
   def except(*columns); end
   def except_predicates(columns); end
@@ -4915,7 +4914,7 @@ class ActiveRecord::Relation::WhereClause
   def predicates_with_wrapped_sql_literals; end
   def referenced_columns; end
   def self.empty; end
-  def to_h(table_name = nil); end
+  def to_h(table_name = nil, equality_only: nil); end
   def wrap_sql_literal(node); end
   def |(other); end
 end

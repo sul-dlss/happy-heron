@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.1.2.1
+# activesupport-6.1.3
 
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end

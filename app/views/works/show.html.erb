@@ -1,6 +1,6 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: @work.collection.name, link: collection_path(@work.collection) },
+    breadcrumbs: [ { title: @work.collection.head.name, link: collection_path(@work.collection) },
                    { title: @work.head.title } ]) %>
 <% end %>
 

@@ -5,9 +5,11 @@ require 'rails_helper'
 
 RSpec.describe 'Automatically generate a citation', js: true do
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, :deposited, release_option: 'depositor-selects', depositors: [user]) }
+  let(:collection) { create(:collection, release_option: 'depositor-selects', depositors: [user]) }
+  let(:collection_version) { create(:collection_version, :deposited, collection: collection) }
 
   before do
+    collection.update(head: collection_version)
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
@@ -16,7 +18,7 @@ RSpec.describe 'Automatically generate a citation', js: true do
     it 'default, publication, and embargo year in citation' do
       visit dashboard_path
 
-      expect(page).to have_content collection.name
+      expect(page).to have_content collection_version.name
 
       click_button '+ Deposit to this collection'
 

@@ -4,9 +4,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Delete a draft work', js: true do
-  let(:work) { create(:work) }
-  let!(:version1) { create(:work_version, :deposited, version: 1, title: 'First version', work: work) }
-  let(:version2) { create(:work_version, :version_draft, version: 2, title: 'Second version', work: work) }
+  let(:collection) { create(:collection_version_with_collection).collection }
+  let(:work) { create(:work, collection: collection) }
+  let!(:version1) { create(:work_version, :deposited, version: 1, work: work) }
+  let(:version2) { create(:work_version, :version_draft, version: 2, work: work) }
   let(:user) { work.depositor }
 
   before do
@@ -14,7 +15,7 @@ RSpec.describe 'Delete a draft work', js: true do
     sign_in user
   end
 
-  it 'allow users to delete the work and destroys the model from the work edit page' do
+  it 'reverts to the previous version' do
     visit edit_work_path(work)
     accept_confirm do
       click_link 'Discard draft'

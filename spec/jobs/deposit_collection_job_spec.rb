@@ -29,7 +29,7 @@ RSpec.describe DepositCollectionJob do
 
   context 'when the collection has already been accessioned' do
     let(:collection) { build(:collection, druid: 'druid:bk123gh4567') }
-    let(:collection_version) { build_stubbed(:collection_version, collection: collection)}
+    let(:collection_version) { build_stubbed(:collection_version, collection: collection) }
 
     before do
       allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)

@@ -1,6 +1,6 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: @collection.name, link: collection_path(@collection) },
+    breadcrumbs: [ { title: @collection.head.name, link: collection_path(@collection) },
                    { title: 'Deposits' } ])
   %>
 <% end %>
@@ -8,7 +8,7 @@
   <div class="container px-4 px-md-3" id="collection">
     <%= render Collections::TabsComponent.new(collection: @collection) %>
     <section data-controller="work-type">
-      <%= render Collections::HeaderComponent.new(collection: @collection) %>
+      <%= render Collections::HeaderComponent.new(collection_version: @collection.head) %>
       <%= render Collections::WorksComponent.new(collection: @collection) %>
     </section>
   </div>

@@ -18,9 +18,9 @@ class CreateCollectionVersions < ActiveRecord::Migration[6.1]
                                          collection: collection,
                                          version: collection.version)
       collection.update(head: version)
-      RelatedLink.where(linkable_type: 'Collection', linkable_id: 5)
+      RelatedLink.where(linkable_type: 'Collection', linkable_id: collection.id)
         .update_all(linkable_type: 'CollectionVersion', linkable_id: version.id)
-      ContactEmail.where(emailable_type: 'Collection', emailable_id: 5)
+      ContactEmail.where(emailable_type: 'Collection', emailable_id: collection.id)
         .update_all(emailable_type: 'CollectionVersion', emailable_id: version.id)
     end
 
