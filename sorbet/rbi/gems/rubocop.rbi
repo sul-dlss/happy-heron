@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop/all/rubocop.rbi
 #
-# rubocop-1.9.1
+# rubocop-1.10.0
 
 module RuboCop
 end
@@ -1836,6 +1836,12 @@ class RuboCop::Cop::Bundler::OrderedGems < RuboCop::Cop::Cop
 end
 module RuboCop::Cop::Gemspec
 end
+class RuboCop::Cop::Gemspec::DateAssignment < RuboCop::Cop::Base
+  def gem_specification(param0 = nil); end
+  def on_block(block_node); end
+  extend RuboCop::Cop::AutoCorrector
+  include RuboCop::Cop::RangeHelp
+end
 class RuboCop::Cop::Gemspec::DuplicatedAssignment < RuboCop::Cop::Base
   def assignment_method?(method_name); end
   def assignment_method_declarations(param0); end
@@ -3189,10 +3195,12 @@ class RuboCop::Cop::Lint::ConstantResolution < RuboCop::Cop::Base
   def unqualified_const?(param0 = nil); end
 end
 class RuboCop::Cop::Lint::Debugger < RuboCop::Cop::Base
-  def debugger_method?(name); end
-  def debugger_receiver?(node); end
+  def debugger_method?(send_node); end
+  def debugger_methods; end
+  def kernel?(param0 = nil); end
   def message(node); end
   def on_send(node); end
+  def valid_receiver?(param0 = nil, param1); end
 end
 class RuboCop::Cop::Lint::DeprecatedClassMethods < RuboCop::Cop::Base
   def check(node); end
@@ -3221,7 +3229,7 @@ class RuboCop::Cop::Lint::DeprecatedOpenSSLConstant < RuboCop::Cop::Base
   def algorithm_const(param0 = nil); end
   def algorithm_name(node); end
   def autocorrect(corrector, node); end
-  def build_cipher_arguments(node, algorithm_name); end
+  def build_cipher_arguments(node, algorithm_name, no_arguments); end
   def correction_range(node); end
   def message(node); end
   def on_send(node); end
@@ -4860,8 +4868,10 @@ class RuboCop::Cop::Style::CaseCorrector
 end
 class RuboCop::Cop::Style::ConstantVisibility < RuboCop::Cop::Base
   def class_or_module_scope?(node); end
+  def ignore_modules?; end
   def match_name?(name, constant_name); end
   def message(node); end
+  def module?(node); end
   def on_casgn(node); end
   def visibility_declaration?(node); end
   def visibility_declaration_for?(param0 = nil, param1); end
@@ -5073,19 +5083,27 @@ class RuboCop::Cop::Style::EndBlock < RuboCop::Cop::Base
 end
 class RuboCop::Cop::Style::EvalWithLocation < RuboCop::Cop::Base
   def add_offense_for_different_line(node, line_node, line_diff); end
+  def add_offense_for_incorrect_line(method_name, line_node, sign, line_diff); end
+  def add_offense_for_missing_line(node, code); end
+  def add_offense_for_missing_location(node, code); end
   def add_offense_for_same_line(node, line_node); end
   def check_file(node, file_node); end
   def check_line(node, code); end
+  def check_location(node, code); end
+  def expected_line(sign, line_diff); end
   def file_and_line(node); end
+  def line_difference(line_node, code); end
   def line_with_offset?(param0 = nil, param1, param2); end
-  def message_incorrect_line(method_name, actual, sign, line_diff); end
+  def missing_line(node, code); end
   def on_send(node); end
-  def register_offense(node); end
+  def register_offense(node, &block); end
   def special_file_keyword?(node); end
   def special_line_keyword?(node); end
   def string_first_line(str_node); end
   def valid_eval_receiver?(param0 = nil); end
+  def with_binding?(node); end
   def with_lineno?(node); end
+  extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Style::EvenOdd < RuboCop::Cop::Base
   def even_odd_candidate?(param0 = nil); end
@@ -5243,6 +5261,14 @@ class RuboCop::Cop::Style::HashAsLastArrayItem < RuboCop::Cop::Base
   def on_hash(node); end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::ConfigurableEnforcedStyle
+end
+class RuboCop::Cop::Style::HashConversion < RuboCop::Cop::Base
+  def args_to_hash(args); end
+  def hash_from_array?(param0 = nil); end
+  def multi_argument(node); end
+  def on_send(node); end
+  def single_argument(node); end
+  extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Style::HashEachMethods < RuboCop::Cop::Base
   def check_argument(variable); end

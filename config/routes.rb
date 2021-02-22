@@ -28,11 +28,12 @@ Rails.application.routes.draw do
       member do
         get :delete_button
         get :edit_button
+        patch 'update_type'
       end
 
       resource :review, only: :create
       resource :validate, only: :show
-      patch 'update_type', on: :member
+      resource :zip, only: :show
     end
   end
 

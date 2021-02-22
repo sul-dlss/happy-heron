@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-configurable/all/dry-configurable.rbi
 #
-# dry-configurable-0.12.0
+# dry-configurable-0.12.1
 
 module Dry
 end
@@ -47,6 +47,7 @@ module Anonymous_Dry_Core_Equalizer_37
   def inspect; end
 end
 class Dry::Configurable::Setting
+  def cloneable?; end
   def constructor; end
   def default; end
   def evaluate; end
@@ -60,7 +61,7 @@ class Dry::Configurable::Setting
   def options; end
   def pristine; end
   def reader?; end
-  def self.clonable_value?(value); end
+  def self.cloneable_value?(value); end
   def value; end
   def with(new_opts); end
   def writer?(meth); end
@@ -133,10 +134,12 @@ module Dry::Configurable::ClassMethods
   def settings; end
   include Dry::Configurable::Methods
 end
+module Dry::Configurable::Initializer
+  def initialize(*arg0); end
+end
 module Dry::Configurable::InstanceMethods
   def config; end
   def finalize!; end
-  def initialize(*arg0); end
   def initialize_copy(source); end
   include Dry::Configurable::Methods
 end
