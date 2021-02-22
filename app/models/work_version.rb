@@ -148,4 +148,11 @@ class WorkVersion < ApplicationRecord
       update_metadata!
     end
   end
+
+  sig { returns(T.nilable(String)) }
+  def description
+    return nil unless %w[version_draft].include? state
+
+    super
+  end
 end
