@@ -37,21 +37,27 @@ RSpec.describe WorkVersion do
   describe '.awaiting_review_by' do
     subject { described_class.awaiting_review_by(user) }
 
-    let(:work) { create(:work, collection: collection) }
-    let(:work_version) { create(:work_version, :pending_approval, work: work) }
+    let(:work1) { create(:work, collection: collection) }
+    let!(:work_version1) { create(:work_version, :pending_approval, work: work1) }
+    let(:work2) { create(:work, collection: collection) }
+
+    before do
+      # We should not see this draft work in the query results
+      create(:work_version, :first_draft, work: work2)
+    end
 
     context 'when the user is a reviewer' do
       let(:collection) { create(:collection, :with_reviewers) }
       let(:user) { collection.reviewed_by.first }
 
-      it { is_expected.to include(work_version) }
+      it { is_expected.to eq [work_version1] }
     end
 
     context 'when the user is a manager' do
       let(:collection) { create(:collection, :with_managers) }
       let(:user) { collection.managed_by.first }
 
-      it { is_expected.to include(work_version) }
+      it { is_expected.to eq [work_version1] }
     end
 
     context 'when the user is an unrelated user' do
