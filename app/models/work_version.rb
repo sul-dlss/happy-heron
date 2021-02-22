@@ -78,6 +78,10 @@ class WorkVersion < ApplicationRecord
     end
   end
 
+  def updatable?
+    can_update_metadata? || deposited?
+  end
+
   # Which assocations are has_many?
   def self.aggregate_associations
     reflections.values

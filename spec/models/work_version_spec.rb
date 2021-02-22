@@ -20,6 +20,28 @@ RSpec.describe WorkVersion do
     expect(work_version.related_works).to all(be_a(RelatedWork))
   end
 
+  describe '#updatable?' do
+    subject { work_version.updatable? }
+
+    context 'when depositing' do
+      let(:work_version) { build(:work_version, :depositing) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when deposited' do
+      let(:work_version) { build(:work_version, :deposited) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when a draft' do
+      let(:work_version) { build(:work_version, :version_draft) }
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe '#attached_files' do
     before do
       create(:attached_file, :with_file, work_version: work_version)

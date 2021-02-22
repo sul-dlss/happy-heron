@@ -15,7 +15,7 @@ module Works
 
     sig { returns(T::Boolean) }
     def render?
-      work_version.can_update_metadata?
+      work_version.updatable?
     end
 
     attr_reader :work_version, :anchor, :label
