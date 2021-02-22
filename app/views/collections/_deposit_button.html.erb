@@ -8,5 +8,14 @@
             action: "work-type#set_collection"
           },
           class: "btn btn-primary" %>
+
+    <%= button_tag 'Reserve a PURL',
+          data: {
+            destination: collection_works_path(collection),
+            bs_toggle: 'modal',
+            bs_target: '#purlReservationModal',
+            action: "purl-reservation#set_collection"
+          },
+          class: "btn btn btn-outline-primary" %>
   <% end %>
 <% end %>

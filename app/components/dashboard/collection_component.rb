@@ -11,6 +11,7 @@ module Dashboard
       @collection = collection
     end
 
+    sig { returns(Collection) }
     attr_reader :collection
 
     delegate :current_user, :user_with_groups, to: :helpers

@@ -47,6 +47,18 @@ RSpec.describe DepositJob do
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       expect(DepositStatusJob).to have_received(:perform_later).with(object: work_version, job_id: 1234)
     end
+
+    context 'when the deposit is for a PURL reservation' do
+      let(:work_version) do
+        build(:work_version, :reserving_purl, work: work)
+      end
+
+      # TODO: failing because purl reservation placeholder type is not valid cocina type
+      xit 'calls CreateResource.run with false for the accession param' do
+        described_class.perform_now(work_version)
+        expect(SdrClient::Deposit::CreateResource).to have_received(:run).with(a_hash_including(accession: false))
+      end
+    end
   end
 
   context 'when the deposit request is not successful' do

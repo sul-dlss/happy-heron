@@ -38,6 +38,7 @@ class Work < ApplicationRecord
 
   delegate :name, to: :collection, prefix: true
   delegate :name, to: :depositor, prefix: true
+  delegate :purl_reservation?, to: :head
 
   private
 

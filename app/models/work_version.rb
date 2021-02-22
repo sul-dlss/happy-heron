@@ -3,6 +3,8 @@
 
 # Models the deposit of an single version of a digital repository object
 class WorkVersion < ApplicationRecord
+  class WorkTypeUpdateError < RuntimeError; end
+
   belongs_to :work
   has_many :contributors, dependent: :destroy, class_name: 'Contributor'
   has_many :authors, dependent: :destroy, class_name: 'Author'
@@ -40,6 +42,7 @@ class WorkVersion < ApplicationRecord
 
     after_transition WorkObserver.method(:after_transition)
     after_transition on: :begin_deposit, do: WorkObserver.method(:after_begin_deposit)
+    after_transition on: :reserve_purl, do: WorkObserver.method(:after_begin_deposit)
     after_transition on: :reject, do: WorkObserver.method(:after_rejected)
     after_transition on: :submit_for_review, do: WorkObserver.method(:after_submit_for_review)
     after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
@@ -55,10 +58,12 @@ class WorkVersion < ApplicationRecord
     # directly to begin_deposit event, which will transition it to depositing
     event :begin_deposit do
       transition %i[first_draft version_draft pending_approval] => :depositing
+      transition purl_requested: :reserving_purl
     end
 
     event :deposit_complete do
       transition depositing: :deposited
+      transition reserving_purl: :purl_reserved
     end
 
     event :submit_for_review do
@@ -70,10 +75,15 @@ class WorkVersion < ApplicationRecord
       transition pending_approval: :rejected
     end
 
+    event :reserve_purl do
+      transition new: :purl_requested
+    end
+
     event :update_metadata do
       transition new: :first_draft
 
       transition %i[first_draft version_draft pending_approval rejected] => same
+      transition purl_reserved: :version_draft
     end
   end
 
@@ -82,6 +92,7 @@ class WorkVersion < ApplicationRecord
   end
 
   # Which assocations are has_many?
+  sig { returns(T::Array[Symbol]) }
   def self.aggregate_associations
     reflections.values
                .select { |ref| ref.is_a?(ActiveRecord::Reflection::HasManyReflection) }
@@ -125,5 +136,23 @@ class WorkVersion < ApplicationRecord
   sig { returns(T.nilable(T.any(EDTF::Interval, Date))) }
   def created_edtf
     EDTF.parse(super)
+  end
+
+  sig { returns(T::Boolean) }
+  def purl_reservation?
+    work_type == WorkType.purl_reservation_type.id
+  end
+
+  sig { params(work_type: String, subtype: T::Array[String], modifier: User).void }
+  def choose_type_for_purl_reservation(work_type, subtype, modifier)
+    raise WorkTypeUpdateError, 'Cannot update Work Version type, no longer PURL reservation' unless purl_reservation?
+
+    self.work_type = work_type
+    self.subtype = subtype
+    work.events.create(user: modifier, event_type: 'type_selected')
+    transaction do
+      save!
+      update_metadata!
+    end
   end
 end

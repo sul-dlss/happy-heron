@@ -7,17 +7,21 @@ en:
       abbr_month: '%b %d, %Y %-I:%M %p'
   event:
     type:
+      reserve_purl: PURL requested
       begin_deposit: Submitted for deposit
       deposit_complete: Deposit completed
       update_metadata: Updated by user
       submit_for_review: Submitted for review
       reject: Returned by reviewer
+      type_selected: Type selected for reserved PURL
   contributor:
     roles:
       person: Individual
       organization: Organization
   work:
     state:
+      reserving_purl: Reserving PURL
+      purl_reserved: PURL Reserved
       first_draft: Draft - Not deposited
       version_draft: New version in draft
       pending_approval: Pending approval

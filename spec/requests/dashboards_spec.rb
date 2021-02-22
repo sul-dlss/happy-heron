@@ -212,10 +212,11 @@ RSpec.describe 'Dashboard requests' do
       sign_in user
     end
 
-    it 'shows a link to deposit in the collection' do
+    it 'shows links to deposit in the collection and to reserve a PURL' do
       get deposit_button_collection_path(collection)
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Deposit to this collection'
+      expect(response.body).to include 'Reserve a PURL'
     end
   end
 

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
       resource :review, only: :create
       resource :validate, only: :show
+      patch 'update_type', on: :member
     end
   end
 

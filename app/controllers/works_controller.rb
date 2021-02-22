@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 # The endpoint for CRUD about a Work
+# rubocop:disable Metrics/ClassLength
 class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
@@ -23,6 +24,13 @@ class WorksController < ObjectsController
     work_version = WorkVersion.new(work: work)
 
     authorize! work_version
+
+    if purl_reservation?
+      work_version.abstract = ''
+      work_version.license = 'none'
+      work_version.work_type = WorkType.purl_reservation_type.id
+    end
+
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
       work.event_context = { user: current_user }
@@ -39,6 +47,25 @@ class WorksController < ObjectsController
 
     @form = WorkForm.new(work_version: work_version, work: work_version.work)
     @form.prepopulate!
+  end
+
+  def update_type
+    work = Work.find(params[:id])
+    work_version = work.head
+    authorize! work_version
+
+    begin
+      work_version.choose_type_for_purl_reservation(params[:work_type], params[:subtype], current_user)
+
+      # from https://apidock.com/rails/ActionController/Redirecting/redirect_to
+      # "If you are using XHR requests other than GET or POST and redirecting after the request then some
+      # browsers will follow the redirect using the original request method... To work around this... return
+      # a 303 See Other status code which will be followed using a GET request."
+      redirect_to action: 'edit', status: :see_other
+    rescue WorkVersion::WorkTypeUpdateError
+      flash[:error] = 'Unexpected error attempting to edit PURL reservation'
+      redirect_to dashboard_path, status: :see_other
+    end
   end
 
   def update
@@ -119,15 +146,24 @@ class WorksController < ObjectsController
 
   sig { params(work_version: WorkVersion).returns(Reform::Form) }
   def work_form(work_version)
-    return WorkForm.new(work_version: work_version, work: work_version.work) if deposit_button_pushed?
+    if deposit_button_pushed? && !purl_reservation?
+      return WorkForm.new(work_version: work_version, work: work_version.work)
+    end
 
     DraftWorkForm.new(work_version: work_version, work: work_version.work)
   end
 
+  # rubocop:disable Metrics/MethodLength
   sig { params(work_version: WorkVersion, work: Work).void }
   def after_save(work_version:, work:)
     work.event_context = { user: current_user }
-    work_version.update_metadata!
+
+    if purl_reservation?
+      work_version.reserve_purl!
+    else
+      work_version.update_metadata!
+    end
+
     if deposit_button_pushed?
       if work.collection.review_enabled?
         work_version.submit_for_review!
@@ -135,8 +171,14 @@ class WorksController < ObjectsController
         work_version.begin_deposit!
       end
     end
-    redirect_to work
+
+    if purl_reservation?
+      redirect_to dashboard_path
+    else
+      redirect_to work
+    end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Metrics/MethodLength
   def work_params
@@ -180,4 +222,9 @@ class WorksController < ObjectsController
     flash[:error] = errors.join("\n")
     redirect_to dashboard_path
   end
+
+  def purl_reservation?
+    params[:purl_reservation] == 'true'
+  end
 end
+# rubocop:enable Metrics/ClassLength
