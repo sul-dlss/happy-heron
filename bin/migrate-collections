@@ -67,6 +67,18 @@ def release_attributes(json)
   data.merge(release_duration: json.fetch('embargo_terms'))
 end
 
+def add_events!(collection, json)
+  json.fetch('events').each do |event|
+    collection.events.create(
+        user: User.find_or_create_by!(email: "#{event['who'].downcase}@stanford.edu"),
+        created_at: Time.parse(event['when']),
+        updated_at: Time.parse(event['when']),
+        event_type: 'update_metadata', # is this OK?
+        description: event['text']
+      )
+  end
+end
+
 def license_attributes(json)
   license_option = LICENSE_OPTION.fetch(json.fetch('license_option'))
   license = LICENSE.fetch(json.fetch('license'))
@@ -124,5 +136,6 @@ File.foreach(ARGV[0]) do |data|
   collection = Collection.find_or_initialize_by(druid: json['druid'])
   collection_attributes = build_collection_attributes(json)
   collection.update!(collection_attributes)
+  add_events!(collection, json)
   puts "collection ID: #{collection.id.inspect}"
 end
