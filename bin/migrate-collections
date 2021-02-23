@@ -124,7 +124,9 @@ def build_collection_attributes(json)
     creator: creator,
     name: json.fetch('name'),
     state: STATES.fetch(json.fetch('object_status')),
-    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) },
+    created_at: Time.parse(json['created_at']),
+    updated_at: Time.parse(json['updated_at'])
   }.merge(release_attributes(json)).
     merge(license_attributes(json)).
     merge(participants_attributes(json))
