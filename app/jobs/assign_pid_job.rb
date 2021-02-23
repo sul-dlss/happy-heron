@@ -14,23 +14,33 @@ class AssignPidJob
   def work(msg)
     json = JSON.parse(msg)
     Honeybadger.context({
-      model: json
-    })
+                          model: json
+                        })
 
     model = Cocina::Models.build(json.fetch('model'))
     source_id = model.identification.sourceId
 
     return ack! unless source_id.start_with?('hydrus:')
 
+    assign_druid(source_id, model.externalIdentifier)
+    ack!
+  end
+
+  def assign_druid(source_id, druid)
     unprefixed = source_id.delete_prefix('hydrus:')
     object = if unprefixed.start_with?('object-')
-      Work.find(unprefixed.delete_prefix('object-'))
+               Work.find(unprefixed.delete_prefix('object-'))
+             else
+               Collection.find(unprefixed.delete_prefix('collection-'))
+             end
+
+    if object.is_a? Work
+      version = object.head
+      version.druid = druid
+      version.add_purl_to_citation
+      version.save!
     else
-      Collection.find(unprefixed.delete_prefix('collection-'))
+      object.update(druid: druid)
     end
-    object.druid = model.externalIdentifier
-    object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
-    object.save!
-    ack!
   end
 end

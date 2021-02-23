@@ -1,5 +1,8 @@
+# typed: false
+# frozen_string_literal: true
+
 namespace :rabbitmq do
-  desc "Setup routing"
+  desc 'Setup routing'
   task setup: :environment do
     require 'bunny'
 

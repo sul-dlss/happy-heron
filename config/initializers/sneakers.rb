@@ -1,3 +1,6 @@
+# typed: false
+# frozen_string_literal: true
+
 conn = Bunny.new(hostname: Settings.rabbitmq.hostname,
                  username: Settings.rabbitmq.username,
                  password: Settings.rabbitmq.password)
