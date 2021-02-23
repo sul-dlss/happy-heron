@@ -169,6 +169,18 @@ def abstract(json)
   'No abstract entered'
 end
 
+def add_events!(work, json)
+  json.fetch('events').each do |event|
+    work.events.create(
+      user: User.find_or_create_by!(email: "#{event['who'].downcase}@stanford.edu"),
+      created_at: Time.parse(event['when']),
+      updated_at: Time.parse(event['when']),
+      event_type: 'update_metadata', # is this OK?
+      description: event['text']
+    )
+  end
+end
+
 def license(json)
   LICENSE.fetch(json.fetch('license'))
 end
@@ -310,6 +322,7 @@ File.foreach(ARGV[0]) do |data|
   work_attributes = build_work_attributes(json)
   work_version = WorkVersion.find_or_initialize_by(work: work)
   work_version_attributes = build_work_version_attributes(json)
+  add_events!(work, json)
 
   if work_attributes.blank?
     warn "attrs blank for work #{json['druid']}: #{work_attributes.inspect}"
