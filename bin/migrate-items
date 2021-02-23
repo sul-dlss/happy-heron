@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Usage:
-#   RAILS_ENV=production bin/migrate-items items.jsonl 0 /opt/app/local-files
+#   RAILS_ENV=production bin/migrate-items items.jsonl 0 /opt/app/local-files 2>&1 | tee -a migrate-items.log
 #
 #   These two just load metadata:
 #
@@ -10,6 +10,7 @@
 #   RAILS_ENV=production bin/migrate-items items.jsonl
 
 require_relative '../config/environment'
+
 DEFAULT_DATA_ROOT = '/data/hydrus-files'
 DATA_ROOT = ARGV[2]
 
@@ -318,6 +319,7 @@ end
 OFFSET = ARGV[1].present? ? ARGV[1].to_i : 0
 count = 0
 File.foreach(ARGV[0]) do |data|
+  puts "STARTING NEW COLLECTION MIGRATION: #{Time.now}"
   count += 1
   next if count < OFFSET
   json = JSON.parse(data)
@@ -350,7 +352,11 @@ File.foreach(ARGV[0]) do |data|
       warn "Validation failed on #{json['druid']}, #{work.errors.full_messages} #{work_version.errors.full_messages}"
     end
   rescue ActiveRecord::RecordNotSaved => e
-    warn "unable to save #{json['druid']} because contributors: " \
+    warn "unable to migrate #{json['druid']} because contributors: " \
       "#{attributes[:contributors].reject(&:valid?).map { |c| c.errors.full_messages.join(', ') + " " + c.inspect }}"
+  rescue Errno::ENOENT => e
+    warn "unable to migrate #{json['druid']} because of a file problem: #{e}"
   end
+
+  puts
 end

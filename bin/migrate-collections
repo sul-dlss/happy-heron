@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 # Usage:
-#   RAILS_ENV=production bin/migrate-collections collections.jsonl
+#   RAILS_ENV=production bin/migrate-collections collections.jsonl 2>&1 | tee -a migrate-collections.log
 
 require_relative '../config/environment'
 
@@ -138,6 +138,8 @@ def build_collection_version_attributes(json)
 end
 
 File.foreach(ARGV[0]) do |data|
+  puts "STARTING NEW COLLECTION MIGRATION: #{Time.now}"
+  puts
   json = JSON.parse(data)
   next unless json.present?
   collection = Collection.find_or_initialize_by(druid: json['druid'])
@@ -169,4 +171,5 @@ File.foreach(ARGV[0]) do |data|
   rescue ActiveRecord::RecordNotSaved => e
     warn "unable to save #{json['druid']}: #{e}"
   end
+  puts
 end
