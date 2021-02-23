@@ -13,8 +13,9 @@ class DepositStatusJob
   sig { params(msg: String).void }
   def work(msg)
     json = JSON.parse(msg)
-
     druid = json.fetch('druid')
+    raise "Unable to find required field 'druid' in payload:\n\t#{json}" if druid.blank?
+
     object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
     return ack! unless object # could be an object from a different project
 

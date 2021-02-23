@@ -397,3 +397,141 @@ module Thor::Base::ClassMethods
   def strict_args_position?(config); end
   def tasks; end
 end
+module Thor::Actions
+  def _cleanup_options_and_set(options, key); end
+  def _shared_configuration; end
+  def action(instance); end
+  def add_file(destination, *args, &block); end
+  def add_link(destination, *args); end
+  def append_file(path, *args, &block); end
+  def append_to_file(path, *args, &block); end
+  def apply(path, config = nil); end
+  def behavior; end
+  def behavior=(arg0); end
+  def capture(*args); end
+  def chmod(path, mode, config = nil); end
+  def comment_lines(path, flag, *args); end
+  def concat(string); end
+  def copy_file(source, *args, &block); end
+  def create_file(destination, *args, &block); end
+  def create_link(destination, *args); end
+  def destination_root; end
+  def destination_root=(root); end
+  def directory(source, *args, &block); end
+  def empty_directory(destination, config = nil); end
+  def find_in_source_paths(file); end
+  def get(source, *args, &block); end
+  def gsub_file(path, flag, *args, &block); end
+  def in_root; end
+  def initialize(args = nil, options = nil, config = nil); end
+  def inject_into_class(path, klass, *args, &block); end
+  def inject_into_file(destination, *args, &block); end
+  def inject_into_module(path, module_name, *args, &block); end
+  def insert_into_file(destination, *args, &block); end
+  def inside(dir = nil, config = nil, &block); end
+  def link_file(source, *args); end
+  def output_buffer; end
+  def output_buffer=(arg0); end
+  def prepend_file(path, *args, &block); end
+  def prepend_to_file(path, *args, &block); end
+  def relative_to_original_destination_root(path, remove_dot = nil); end
+  def remove_dir(path, config = nil); end
+  def remove_file(path, config = nil); end
+  def run(command, config = nil); end
+  def run_ruby_script(command, config = nil); end
+  def self.included(base); end
+  def source_paths; end
+  def template(source, *args, &block); end
+  def thor(command, *args); end
+  def uncomment_lines(path, flag, *args); end
+  def with_output_buffer(buf = nil); end
+end
+class Thor::Actions::EmptyDirectory
+  def base; end
+  def config; end
+  def convert_encoded_instructions(filename); end
+  def destination; end
+  def destination=(destination); end
+  def exists?; end
+  def given_destination; end
+  def initialize(base, destination, config = nil); end
+  def invoke!; end
+  def invoke_with_conflict_check(&block); end
+  def on_conflict_behavior; end
+  def on_file_clash_behavior; end
+  def pretend?; end
+  def relative_destination; end
+  def revoke!; end
+  def say_status(status, color); end
+end
+class Thor::Actions::CreateFile < Thor::Actions::EmptyDirectory
+  def data; end
+  def force_on_collision?; end
+  def force_or_skip_or_conflict(force, skip, &block); end
+  def identical?; end
+  def initialize(base, destination, data, config = nil); end
+  def invoke!; end
+  def on_conflict_behavior(&block); end
+  def render; end
+end
+class Thor::Actions::CreateLink < Thor::Actions::CreateFile
+  def data; end
+  def exists?; end
+  def identical?; end
+  def invoke!; end
+end
+class Thor::Actions::Directory < Thor::Actions::EmptyDirectory
+  def execute!; end
+  def file_level_lookup(previous_lookup); end
+  def files(lookup); end
+  def initialize(base, source, destination = nil, config = nil, &block); end
+  def invoke!; end
+  def revoke!; end
+  def source; end
+end
+class Thor::Actions::CapturableERB < ERB
+  def set_eoutvar(compiler, eoutvar = nil); end
+end
+class Thor::Actions::InjectIntoFile < Thor::Actions::EmptyDirectory
+  def behavior; end
+  def flag; end
+  def initialize(base, destination, data, config); end
+  def invoke!; end
+  def replace!(regexp, string, force); end
+  def replacement; end
+  def revoke!; end
+  def say_status(behavior, warning: nil, color: nil); end
+end
+module Thor::Actions::ClassMethods
+  def add_runtime_options!; end
+  def source_paths; end
+  def source_paths_for_search; end
+  def source_root(path = nil); end
+end
+class Thor::Group
+  def _invoke_for_class_method(klass, command = nil, *args, &block); end
+  def self.banner; end
+  def self.baseclass; end
+  def self.class_options_help(shell, groups = nil); end
+  def self.create_command(meth); end
+  def self.create_task(meth); end
+  def self.desc(description = nil); end
+  def self.dispatch(command, given_args, given_opts, config); end
+  def self.get_options_from_invocations(group_options, base_options); end
+  def self.handle_argument_error(command, error, _args, arity); end
+  def self.help(shell); end
+  def self.invocation_blocks; end
+  def self.invocations; end
+  def self.invoke(*names, &block); end
+  def self.invoke_from_option(*names, &block); end
+  def self.printable_commands(*arg0); end
+  def self.printable_tasks(*arg0); end
+  def self.remove_invocation(*names); end
+  def self.self_command; end
+  def self.self_task; end
+  extend Thor::Base::ClassMethods
+  extend Thor::Invocation::ClassMethods
+  include Thor::Base
+  include Thor::Invocation
+  include Thor::Shell
+end

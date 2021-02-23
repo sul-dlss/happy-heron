@@ -7,4 +7,8 @@ FactoryBot.define do
     head { nil }
     collection
   end
+
+  trait :with_druid do
+    druid { 'druid:bc123df4567' }
+  end
 end

@@ -12,7 +12,6 @@ RSpec.describe DepositCollectionJob do
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
     allow(SdrClient::Connection).to receive(:new).and_return(conn)
-    allow(DepositStatusJob).to receive(:perform_later)
     allow(Honeybadger).to receive(:notify)
   end
 
@@ -21,23 +20,9 @@ RSpec.describe DepositCollectionJob do
       allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
     end
 
-    it 'initiates a DepositStatusJob' do
+    it 'initiates a deposit' do
       described_class.perform_now(collection_version)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: collection_version, job_id: 1234)
-    end
-  end
-
-  context 'when the collection has already been accessioned' do
-    let(:collection) { build(:collection, druid: 'druid:bk123gh4567') }
-    let(:collection_version) { build_stubbed(:collection_version, collection: collection) }
-
-    before do
-      allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)
-    end
-
-    it 'initiates a DepositStatusJob' do
-      described_class.perform_now(collection_version)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: collection_version, job_id: 1234)
+      expect(SdrClient::Deposit::CreateResource).to have_received(:run)
     end
   end
 
@@ -48,7 +33,6 @@ RSpec.describe DepositCollectionJob do
 
     it 'notifies' do
       described_class.perform_now(collection_version)
-      expect(DepositStatusJob).not_to have_received(:perform_later)
       expect(Honeybadger).to have_received(:notify)
     end
   end

@@ -33,7 +33,9 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
       expect(work_version.work_type).to eq WorkType.purl_reservation_type.id
 
       # fake deposit completion
-      DepositStatusJob.new.complete_deposit(work_version, druid)
+      work_version.work.update(druid: druid)
+      work_version.add_purl_to_citation
+      work_version.deposit_complete!
 
       # this should be updated automatically
       expect(page).to have_content 'PURL Reserved'

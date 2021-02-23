@@ -34,13 +34,10 @@ class AssignPidJob
                Collection.find(unprefixed.delete_prefix('collection-'))
              end
 
-    if object.is_a? Work
-      version = object.head
-      version.druid = druid
-      version.add_purl_to_citation
-      version.save!
-    else
-      object.update(druid: druid)
-    end
+    object.update(druid: druid)
+
+    return unless object.is_a? Work
+
+    object.head.add_purl_to_citation
   end
 end

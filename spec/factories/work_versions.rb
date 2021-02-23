@@ -14,11 +14,23 @@ FactoryBot.define do
     access { 'world' }
     state { 'first_draft' }
     work
+
     factory :valid_work_version do
       with_required_associations
 
       factory :valid_deposited_work_version do
         deposited
+      end
+
+      factory :work_version_with_work do
+        transient do
+          collection { nil }
+        end
+        work { association :work, collection: collection }
+
+        after(:create) do |work_version, _evaluator|
+          work_version.work.update(head: work_version)
+        end
       end
     end
   end
