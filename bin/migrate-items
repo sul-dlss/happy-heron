@@ -334,7 +334,7 @@ File.foreach(ARGV[0]) do |data|
   end
 
   if work_version_attributes.blank?
-    warn "attrs blank for work #{json['druid']} version: #{work_version_attributes}"
+    warn "attrs blank for work version #{json['druid']} version: #{work_version_attributes}"
     next
   end
 
