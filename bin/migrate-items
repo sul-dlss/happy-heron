@@ -253,6 +253,8 @@ def build_work_attributes(json)
   {
     depositor: depositor,
     collection: collection,
+    created_at: Time.parse(json['created_at']),
+    updated_at: Time.parse(json['updated_at'])
   }
 end
 
@@ -287,7 +289,9 @@ def build_work_version_attributes(json)
     created_edtf: created_edtf,
     state: STATES.fetch(json.fetch('object_status')),
     related_links: related_links(json),
-    related_works: related_works(json)
+    related_works: related_works(json),
+    created_at: Time.parse(json['created_at']),
+    updated_at: Time.parse(json['updated_at'])
   }.merge(contributors_and_authors(json))
 end
 
