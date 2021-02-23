@@ -17,7 +17,7 @@
     <tbody>
     <% stats.each do |collection, counts| %>
       <tr>
-        <td><%= link_to collection.name, collection %></td>
+        <td><%= link_to collection.head.name, collection %></td>
         <td><%= counts['total'] %></td>
         <td><%= counts['deposited'] %></td>
         <td><%= counts['first_draft'] %></td>

@@ -23,6 +23,10 @@ module Works
       work_version.authors + work_version.contributors
     end
 
+    def collection_name
+      collection.head.name
+    end
+
     # Displays the created date as edtf
     sig { returns(T.nilable(String)) }
     def created

@@ -7,7 +7,9 @@ RSpec.describe Collections::EditLicenseComponent, type: :component do
   subject(:rendered) { render_inline(described_class.new(form: form)) }
 
   let(:collection) { build(:collection) }
-  let(:collection_form) { CollectionForm.new(collection) }
+  let(:collection_version) { build(:collection_version) }
+
+  let(:collection_form) { CreateCollectionForm.new(collection: collection, collection_version: collection_version) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, controller.view_context, {}) }
 
   context 'with no license selected' do

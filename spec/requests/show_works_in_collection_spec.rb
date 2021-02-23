@@ -4,7 +4,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Show the collection work list page' do
-  let(:collection) { create(:collection) }
+  let(:collection) { collection_version.collection }
+  let(:collection_version) { create(:collection_version_with_collection) }
   let(:work1) { create(:work, collection: collection) }
   let(:work2) { create(:work, collection: collection) }
   let(:work_version1) { create(:work_version, work: work1) }

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dor-services-client/all/dor-services-client.rbi
 #
-# dor-services-client-6.19.1
+# dor-services-client-6.19.2
 
 module Dor
 end

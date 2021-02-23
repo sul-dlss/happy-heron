@@ -4,16 +4,14 @@
 require 'rails_helper'
 
 RSpec.describe Collections::InformationComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection)) }
+  let(:rendered) { render_inline(described_class.new(collection_version: collection_version)) }
 
   context 'when displaying a collection' do
-    let(:version) { collection.version.to_s }
-    let(:creator) { collection.creator.sunetid }
-    let(:collection) { build_stubbed(:collection) }
+    let(:collection_version) { build_stubbed(:collection_version) }
 
     it 'renders the information component' do
-      expect(rendered.css('table').to_html).to include(version)
-      expect(rendered.css('table').to_html).to include(creator)
+      expect(rendered.css('table').to_html).to include collection_version.version.to_s
+      expect(rendered.css('table').to_html).to include collection_version.collection.creator.sunetid
     end
   end
 end

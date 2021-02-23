@@ -5,7 +5,8 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::CollectionComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
-  let(:collection) { create(:collection) }
+  let(:collection) { build_stubbed(:collection, head: collection_version) }
+  let(:collection_version) { build_stubbed(:collection_version) }
   let(:user_with_groups) { UserWithGroups.new(user: user, groups: []) }
   let(:user) { create(:user) }
   let(:work_path) { Rails.application.routes.url_helpers.work_path(user.deposits.first) }
@@ -19,7 +20,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with a new, first draft collection' do
-    let(:collection) { create(:collection, :first_draft) }
+    let(:collection_version) { build_stubbed(:collection_version, :first_draft) }
 
     it 'does not render the deposit button' do
       expect(rendered.to_html).not_to include '+ Deposit to this collection'
@@ -31,7 +32,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with a collection currently in the process of depositing' do
-    let(:collection) { create(:collection, :depositing) }
+    let(:collection_version) { build_stubbed(:collection_version, :depositing) }
 
     it 'does not render the deposit button' do
       expect(rendered.to_html).not_to include '+ Deposit to this collection'
@@ -43,14 +44,15 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with a deposit ready collection' do
-    let(:collection) { create(:collection) }
-
-    it 'renders the turbo-frame that holds the deposit buttons' do
+    it 'renders the turbo-frame that holds the deposit button' do
       expect(rendered.css("turbo-frame#deposit_collection_#{collection.id}").first['src']).to be_present
     end
   end
 
   context 'with 4 works' do
+    let(:collection) { collection_version.collection }
+    let(:collection_version) { create(:collection_version_with_collection) }
+
     before do
       4.times do
         work = create(:work, collection: collection, depositor: user)
@@ -66,6 +68,9 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with 5 works' do
+    let(:collection) { collection_version.collection }
+    let(:collection_version) { create(:collection_version_with_collection) }
+
     before do
       5.times do
         work = create(:work, collection: collection, depositor: user)
@@ -80,6 +85,8 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   end
 
   context 'with a work that has a druid' do
+    let(:collection) { collection_version.collection }
+    let(:collection_version) { create(:collection_version_with_collection) }
     let(:work) { create(:work, collection: collection, depositor: user, druid: 'druid:yq268qt4607') }
 
     before do

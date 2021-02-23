@@ -5,6 +5,7 @@ require 'rails_helper'
 
 RSpec.describe 'Edit a new version of a work in a collection using mediated deposit', js: true do
   let(:collection) { create(:collection, reviewed_by: [user], depositors: [user], review_enabled: true) }
+  let(:collection_version) { create(:collection_version, collection: collection) }
   let(:new_work_title) { 'I Appear To Have Changed' }
   let(:rejection_reason) { 'I do not like the color' }
   let(:newest_work_title) { 'Indigo is preferred' }
@@ -15,6 +16,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
   let(:work) { create(:work, druid: 'druid:bc123df4567', depositor: user, collection: collection) }
 
   before do
+    collection.update(head: collection_version)
     work.update(head: work_version)
     create(:attached_file, :with_file, work_version: work_version)
   end
@@ -63,7 +65,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       find('label', text: 'Approve and deposit').click
       click_button 'Submit'
 
-      within_table(collection.name) do
+      within_table(collection_version.name) do
         expect(page).to have_link(newest_work_title)
         click_link(newest_work_title)
       end

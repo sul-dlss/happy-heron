@@ -140,18 +140,20 @@ RSpec.describe 'Create a collection' do
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           collection = Collection.last
+          collection_version = collection.head
+
           expect(collection.depositors.size).to eq 6
           expect(collection.depositors).to all(be_kind_of(User))
           expect(collection.depositors).to include(User.find_by!(email: 'maya.aguirre@stanford.edu'))
           expect(collection.managed_by).to eq [user]
           expect(collection.email_when_participants_changed).to eq true
           expect(collection.email_depositors_status_changed).to eq true
-          expect(collection.contact_emails.size).to eq 2
-          expect(collection.contact_emails).to all(be_kind_of(ContactEmail))
-          expect(collection.related_links.size).to eq 2
-          expect(collection.related_links).to all(be_kind_of(RelatedLink))
           expect(collection.release_option).to eq 'delay'
           expect(collection.release_date).to eq next_year
+          expect(collection_version.contact_emails.size).to eq 2
+          expect(collection_version.contact_emails).to all(be_kind_of(ContactEmail))
+          expect(collection_version.related_links.size).to eq 2
+          expect(collection_version.related_links).to all(be_kind_of(RelatedLink))
         end
 
         it 'sends emails to depositors when a new collection is created and deposited' do
@@ -216,7 +218,8 @@ RSpec.describe 'Create a collection' do
             post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
             expect(response).to have_http_status(:found)
             collection = Collection.last
-            expect(collection.name).to be_empty
+            collection_version = collection.head
+            expect(collection_version.name).to be_empty
             expect(collection.depositors.size).to eq 0
             expect(response).to redirect_to(collection_path(collection))
           end
@@ -238,7 +241,8 @@ RSpec.describe 'Create a collection' do
             post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
             expect(response).to have_http_status(:found)
             collection = Collection.last
-            expect(collection.name).to be_empty
+            collection_version = collection.head
+            expect(collection_version.name).to be_empty
             expect(collection.depositors.size).to eq 0
             expect(response).to redirect_to(collection_path(collection))
           end

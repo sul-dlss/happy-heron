@@ -4,9 +4,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Show a work detail' do
-  let(:work) { work_version.work }
-  let(:work_version) { create(:work_version) }
-  let(:collection) { create(:collection) }
+  let(:collection) { create(:collection_version_with_collection).collection }
+  let(:work) { create(:work, collection: collection) }
+  let(:work_version) { create(:work_version, work: work) }
 
   before do
     work.update(head: work_version)
@@ -52,7 +52,7 @@ RSpec.describe 'Show a work detail' do
     end
 
     context 'when the work has a blank title' do
-      let(:work_version) { create(:work_version, title: '') }
+      let(:work_version) { create(:work_version, title: '', work: work) }
 
       it 'displays a default title for a work when it is blank' do
         expect(response).to have_http_status(:ok)

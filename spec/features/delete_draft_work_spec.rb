@@ -4,8 +4,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Delete a draft work', js: true do
-  let(:work) { work_version.work }
-  let(:work_version) { create(:work_version, title: 'Delete me') }
+  let(:collection) { create(:collection_version_with_collection).collection }
+  let(:work) { create(:work, collection: collection) }
+  let(:work_version) { create(:work_version, title: 'Delete me', work: work) }
   let(:user) { work.depositor }
 
   before do

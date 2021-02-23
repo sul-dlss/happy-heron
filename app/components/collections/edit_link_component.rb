@@ -4,18 +4,20 @@
 module Collections
   # Renders a link to the collection edit page
   class EditLinkComponent < ApplicationComponent
-    sig { params(collection: Collection, anchor: String, label: String).void }
-    def initialize(collection:, anchor:, label:)
-      @collection = collection
+    sig { params(collection_version: CollectionVersion, anchor: String, label: String).void }
+    def initialize(collection_version:, anchor:, label:)
+      @collection_version = collection_version
       @anchor = anchor
       @label = label
     end
 
     sig { returns(T::Boolean) }
     def render?
-      collection.can_update_metadata?
+      collection_version.updatable?
     end
 
-    attr_reader :collection, :anchor, :label
+    attr_reader :collection_version, :anchor, :label
+
+    delegate :collection, to: :collection_version
   end
 end

@@ -6,8 +6,9 @@ require 'rails_helper'
 RSpec.describe Collections::ButtonsComponent do
   let(:component) { described_class.new(form: form) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:collection) { build(:collection, id: 7) }
-  let(:work_form) { CollectionForm.new(collection) }
+  let(:collection) { build(:collection) }
+  let(:collection_version) { build(:collection_version) }
+  let(:work_form) { CreateCollectionForm.new(collection: collection, collection_version: collection_version) }
   let(:rendered) { render_inline(component) }
 
   before do

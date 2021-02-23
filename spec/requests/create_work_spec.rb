@@ -5,7 +5,8 @@ require 'rails_helper'
 
 RSpec.describe 'Create a new work' do
   let(:work) { create(:work) }
-  let(:collection) { create(:collection, :deposited) }
+  let(:collection) { collection_version.collection }
+  let(:collection_version) { create(:collection_version_with_collection) }
 
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
@@ -31,7 +32,7 @@ RSpec.describe 'Create a new work' do
     end
 
     describe 'new work form' do
-      let(:collection) { create(:collection, :deposited, depositors: [user]) }
+      let(:collection_version) { create(:collection_version_with_collection, depositors: [user]) }
 
       it 'renders the form' do
         get "/collections/#{collection.id}/works/new?work_type=video"
@@ -42,7 +43,7 @@ RSpec.describe 'Create a new work' do
 
     describe 'allowing content changes' do
       let(:alert_text) { 'Creating/Updating SDR content (i.e. collections or works) is not yet available.' }
-      let(:collection) { create(:collection, :deposited, depositors: [user]) }
+      let(:collection_version) { create(:collection_version_with_collection, depositors: [user]) }
 
       context 'when false' do
         before do
@@ -78,7 +79,7 @@ RSpec.describe 'Create a new work' do
 
       context 'when a collection allows embargo and a license but restricts access and with all fields provided' do
         let(:collection) do
-          create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
+          create(:collection, depositors: [user], release_option: 'depositor-selects')
         end
 
         let(:authors) do
@@ -206,6 +207,8 @@ RSpec.describe 'Create a new work' do
                    agree_to_terms: '1')
         end
 
+        before { create(:collection_version_with_collection, collection: collection) }
+
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
@@ -231,7 +234,10 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with a minimal set' do
-        let(:collection) { create(:collection, :deposited, :depositor_selects_access, depositors: [user]) }
+        let(:collection) do
+          create(:collection, :depositor_selects_access, depositors: [user])
+        end
+
         let(:work_params) do
           {
             title: 'Test title',
@@ -284,6 +290,8 @@ RSpec.describe 'Create a new work' do
           }
         end
 
+        before { create(:collection_version_with_collection, collection: collection) }
+
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
           expect(response).to have_http_status(:found)
@@ -302,7 +310,8 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with empty draft' do
-        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+        let(:collection_version) { create(:collection_version_with_collection, depositors: [user]) }
+
         let(:work_params) do
           {
             title: '',
@@ -335,7 +344,8 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with automatic citation' do
-        let(:collection) { create(:collection, :deposited, depositors: [user]) }
+        let(:collection_version) { create(:collection_version_with_collection, depositors: [user]) }
+
         let(:work_params) do
           {
             title: '',
@@ -374,7 +384,7 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with a moderated collection' do
-        let(:collection) { create(:collection, :with_reviewers, :deposited, depositors: [user]) }
+        let(:collection) { create(:collection, :with_reviewers, depositors: [user]) }
         let(:work_params) do
           {
             title: 'Test title',
@@ -426,6 +436,8 @@ RSpec.describe 'Create a new work' do
           }
         end
 
+        before { create(:collection_version_with_collection, collection: collection) }
+
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
@@ -446,7 +458,7 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection with immediate release but a embargo is provided' do
         let(:collection) do
-          create(:collection, :deposited, :with_contact_emails, depositors: [user], release_option: 'immediate')
+          create(:collection, depositors: [user], release_option: 'immediate')
         end
         let(:work_params) do
           {
@@ -502,6 +514,8 @@ RSpec.describe 'Create a new work' do
           }
         end
 
+        before { create(:collection_version_with_collection, :with_contact_emails, collection: collection) }
+
         it 'releases it immediately' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
@@ -514,8 +528,7 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection with delay release but a embargo is provided' do
         let(:collection) do
-          create(:collection, :deposited, :with_contact_emails, depositors: [user], release_option: 'delay',
-                                                                release_duration: '1 year')
+          create(:collection, depositors: [user], release_option: 'delay', release_duration: '1 year')
         end
         let(:release_date) { Time.zone.today + 1.year }
         let(:work_params) do
@@ -569,6 +582,8 @@ RSpec.describe 'Create a new work' do
           }
         end
 
+        before { create(:collection_version_with_collection, :with_contact_emails, collection: collection) }
+
         it 'sets embargo to the date specified in the collection' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
@@ -581,7 +596,7 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection that allows depositor to select embargo but missing embargo month and day' do
         let(:collection) do
-          create(:collection, :deposited, depositors: [user], release_option: 'depositor-selects')
+          create(:collection, depositors: [user], release_option: 'depositor-selects')
         end
         let(:work_params) do
           {
@@ -597,6 +612,8 @@ RSpec.describe 'Create a new work' do
           }
         end
 
+        before { create(:collection_version_with_collection, collection: collection) }
+
         it 'returns an error' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
                                                                 commit: 'Deposit' }
@@ -607,7 +624,7 @@ RSpec.describe 'Create a new work' do
 
       context 'with a collection that dictates a license but a license is provided' do
         let(:collection) do
-          create(:collection, :deposited, :with_required_license, :with_contact_emails, depositors: [user])
+          create(:collection, :with_required_license, depositors: [user])
         end
         let(:work_params) do
           {
@@ -658,6 +675,8 @@ RSpec.describe 'Create a new work' do
             }
           }
         end
+
+        before { create(:collection_version_with_collection, :with_contact_emails, collection: collection) }
 
         it 'sets the license indicated by the collection' do
           post "/collections/#{collection.id}/works", params: { work: work_params,

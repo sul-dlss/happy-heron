@@ -15,7 +15,7 @@ module Dashboard
     delegate :work, to: :work_version
 
     def collection_name
-      Dashboard::CollectionHeaderComponent.new(collection: work.collection).name
+      Dashboard::CollectionHeaderComponent.new(collection_version: work.collection.head).name
     end
 
     def title

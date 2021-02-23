@@ -26,6 +26,8 @@ RSpec.describe 'Works requests' do
 
     before do
       work.update(head: work_version)
+      create(:collection_version_with_collection, collection: collection)
+
       sign_in user
       allow(DepositJob).to receive(:perform_later)
     end

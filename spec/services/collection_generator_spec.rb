@@ -4,16 +4,17 @@
 require 'rails_helper'
 
 RSpec.describe CollectionGenerator do
-  let(:model) { described_class.generate_model(collection: collection) }
+  let(:model) { described_class.generate_model(collection_version: collection_version) }
   let(:project_tag) { Settings.h2.project_tag }
 
   context 'without a druid' do
-    let(:collection) { build(:collection, name: 'Test title', id: 7) }
+    let(:collection) { build(:collection, id: 7) }
+    let(:collection_version) { build(:collection_version, name: 'Test title', collection: collection) }
     let(:expected_model) do
       {
         type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
         label: 'Test title',
-        version: 0,
+        version: 1,
         access: { access: 'stanford' },
         administrative: {
           hasAdminPolicy: 'druid:zx485kb6348',
@@ -38,13 +39,15 @@ RSpec.describe CollectionGenerator do
   end
 
   context 'with a druid' do
-    let(:collection) { build(:collection, id: 7, name: 'Test title', druid: 'druid:bk123gh4567') }
+    let(:collection) { build(:collection, id: 7, druid: 'druid:bk123gh4567') }
+    let(:collection_version) { build(:collection_version, name: 'Test title', collection: collection) }
+
     let(:expected_model) do
       {
         externalIdentifier: 'druid:bk123gh4567',
         type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
         label: 'Test title',
-        version: 0,
+        version: 1,
         access: { access: 'stanford' },
         administrative: {
           hasAdminPolicy: 'druid:zx485kb6348',

@@ -5,7 +5,7 @@
 class DepositStatusJob < BaseDepositJob
   queue_as :default
 
-  sig { params(object: T.any(WorkVersion, Collection), job_id: Integer).void }
+  sig { params(object: T.any(WorkVersion, CollectionVersion), job_id: Integer).void }
   def perform(object:, job_id:)
     result = status(job_id: job_id)
     # This will force a recheck of status (and should be ignored by Honeybadger)
@@ -21,20 +21,20 @@ class DepositStatusJob < BaseDepositJob
   # Assigns druid, adds the purl to the citation (if one exists), updates the state and saves.
   def complete_deposit(object, druid)
     if object.is_a? WorkVersion
-      object.transaction do
-        object.work.druid = druid
-        object.add_purl_to_citation
-        object.work.save!
-        # Force a save because state_machine-activerecord wraps its update in a transaction.
-        # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
-        # It's possible the mailer job is started before the transaction in the main thread is completed,
-        # which means the mailer may not have access to the druid.
-        object.save!
-        object.deposit_complete!
-      end
+      complete_work_version_deposit(object, druid)
     else
-      object.druid = druid
-      object.add_purl_to_citation if object.respond_to?(:add_purl_to_citation)
+      complete_collection_version_deposit(object, druid)
+    end
+  end
+
+  private
+
+  sig { params(object: WorkVersion, druid: String).void }
+  def complete_work_version_deposit(object, druid)
+    object.transaction do
+      object.work.druid = druid
+      object.add_purl_to_citation
+      object.work.save!
       # Force a save because state_machine-activerecord wraps its update in a transaction.
       # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
       # It's possible the mailer job is started before the transaction in the main thread is completed,
@@ -44,7 +44,19 @@ class DepositStatusJob < BaseDepositJob
     end
   end
 
-  private
+  sig { params(object: CollectionVersion, druid: String).void }
+  def complete_collection_version_deposit(object, druid)
+    object.transaction do
+      object.collection.druid = druid
+      object.collection.save!
+      # Force a save because state_machine-activerecord wraps its update in a transaction.
+      # The transaction includes the after_transition callbacks, which may enqueue mailer jobs.
+      # It's possible the mailer job is started before the transaction in the main thread is completed,
+      # which means the mailer may not have access to the druid.
+      object.save!
+      object.deposit_complete!
+    end
+  end
 
   sig { params(job_id: Integer).returns(T.nilable(Dry::Monads::Result)) }
   def status(job_id:)

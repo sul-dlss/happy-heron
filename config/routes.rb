@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :collection_versions, only: :destroy
   resources :work_versions, only: :destroy
 
   direct :contact_form do

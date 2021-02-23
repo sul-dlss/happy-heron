@@ -25,8 +25,9 @@ RSpec.describe RelatedLinkComponent, type: :component do
   end
 
   context 'with a collection' do
-    let(:model_form) { CollectionForm.new(model) }
-    let(:model) { build_stubbed(:collection, related_links: related_links) }
+    let(:model_form) { CreateCollectionForm.new(collection: collection, collection_version: collection_version) }
+    let(:collection) { collection_version.collection }
+    let(:collection_version) { build_stubbed(:collection_version, related_links: related_links) }
 
     it 'renders a delete button for all links but the first' do
       expect(rendered.css('button[@aria-label="Remove Second Link"]')).to be_present

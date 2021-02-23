@@ -13,13 +13,17 @@ RSpec.describe 'Updating an existing collection' do
 
   context 'with an authenticated collection manager' do
     let(:user) { create(:user) }
-    let(:collection) { create(:collection, :with_contact_emails, managed_by: [user]) }
+    let(:collection) { create(:collection, managed_by: [user]) }
 
     before do
       sign_in user
     end
 
     describe 'show the form for an existing object' do
+      before do
+        create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+      end
+
       it 'allows GETs to /collections/{id}/edit' do
         get "/collections/#{collection.id}/edit"
         expect(response).to have_http_status(:ok)
@@ -36,28 +40,46 @@ RSpec.describe 'Updating an existing collection' do
             required_license: 'CC0-1.0',
             manager_sunets: user.sunetid,
             depositor_sunets: 'maya.aguirre,jcairns, cchavez, premad, giancarlo, zhengyi',
-            email_depositors_status_changed: true
-          }
+            email_depositors_status_changed: true,
+            contact_emails_attributes: {}
+          }.tap do |param|
+            collection_version.contact_emails.each_with_object(param[:contact_emails_attributes])
+                              .with_index do |(author, attrs), index|
+              attrs[index.to_s] = { '_destroy' => 'false', 'id' => author.id, 'email' => 'bob@foo.io' }
+            end
+          end
         end
 
-        it 'updates the collection via deposit button' do
-          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
-          expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(dashboard_path)
-          expect(collection.depositors.size).to eq 6
-          collection.reload
-          expect(collection.email_depositors_status_changed).to be true
+        context 'when deposit button is pressed for a previously deposited version' do
+          let(:collection_version) do
+            create(:collection_version_with_collection, :deposited, :with_contact_emails, collection: collection)
+          end
+
+          it 'updates the collection via deposit button' do
+            patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(dashboard_path)
+            expect(collection.depositors.size).to eq 6
+            collection.reload
+            expect(collection.email_depositors_status_changed).to be true
+          end
         end
 
-        it 'updates the collection via draft save' do
-          patch "/collections/#{collection.id}", params: { collection: collection_params, commit: save_draft_button }
-          expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(collection_path(collection))
-          expect(collection.depositors.size).to eq 6
+        context 'when save draft button is pressed' do
+          let(:collection_version) do
+            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+          end
+
+          it 'updates the collection' do
+            patch "/collections/#{collection.id}", params: { collection: collection_params, commit: save_draft_button }
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection_path(collection))
+            expect(collection.depositors.size).to eq 6
+          end
         end
 
         context 'when the review workflow is set to disabled' do
-          let(:collection) { create(:collection, :with_reviewers, :with_contact_emails, managed_by: [user]) }
+          let(:collection) { create(:collection, :with_reviewers, managed_by: [user]) }
 
           let(:collection_params) do
             {
@@ -73,6 +95,10 @@ RSpec.describe 'Updating an existing collection' do
             }
           end
 
+          before do
+            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+          end
+
           it 'removes the reviewers' do
             patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
@@ -83,8 +109,8 @@ RSpec.describe 'Updating an existing collection' do
 
         context 'when the collection was previously deposited' do
           let(:collection) do
-            create(:collection, :deposited, :with_depositors, :email_depositors_status_changed, depositor_count: 2,
-                                                                                                managed_by: [user])
+            create(:collection, :with_depositors, :email_depositors_status_changed, depositor_count: 2,
+                                                                                    managed_by: [user])
           end
           let(:collection_params) do
             {
@@ -100,7 +126,7 @@ RSpec.describe 'Updating an existing collection' do
             }
           end
           let(:method) do
-            Collection.state_machines[:state].callbacks[:after].find do |cb|
+            CollectionVersion.state_machines[:state].callbacks[:after].find do |cb|
               cb.instance_variable_get(:@methods).any? do |method|
                 method.is_a?(Method) && method.original_name == :after_update_published
               end
@@ -108,6 +134,7 @@ RSpec.describe 'Updating an existing collection' do
           end
 
           before do
+            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
             allow(method).to receive(:call)
           end
 
@@ -126,7 +153,7 @@ RSpec.describe 'Updating an existing collection' do
           let(:reviewer2) { create(:user, email: 'w.a.sterner@stanford.edu') }
           let!(:removed_depositor) { collection.depositors.second } # needs to be instantiated before collection edit
           let(:collection) do
-            create(:collection, :deposited, :with_depositors, :email_when_participants_changed,
+            create(:collection, :with_depositors, :email_when_participants_changed,
                    depositor_count: 2, managed_by: [user], reviewed_by: [reviewer, reviewer2])
           end
           let(:collection_params) do
@@ -141,6 +168,10 @@ RSpec.describe 'Updating an existing collection' do
               review_enabled: 'true',
               reviewer_sunets: 'v.stern'
             }
+          end
+
+          before do
+            create(:collection_version_with_collection, :version_draft, collection: collection)
           end
 
           it 'logs the changes in the event description' do
@@ -170,6 +201,10 @@ RSpec.describe 'Updating an existing collection' do
           {
             name: ''
           }
+        end
+
+        before do
+          create(:collection_version_with_collection, :version_draft, collection: collection)
         end
 
         it 'renders the page again' do

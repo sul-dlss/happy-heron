@@ -8,7 +8,8 @@ RSpec.describe WorkVersionPolicy do
   # `record` must be defined - it is the authorization target
   let(:record) { build_stubbed :work_version, work: work }
   let(:work) { build_stubbed :work, collection: collection }
-  let(:collection) { build_stubbed :collection, :deposited }
+  let(:collection) { build_stubbed :collection, head: collection_version }
+  let(:collection_version) { build_stubbed :collection_version, :deposited }
 
   # `context` is the authorization context
   let(:context) do
@@ -30,7 +31,7 @@ RSpec.describe WorkVersionPolicy do
     end
 
     failed 'when user is a depositor but the collection is depositing' do
-      let(:collection) { build_stubbed :collection, :depositing }
+      let(:collection_version) { build_stubbed :collection_version, :depositing }
 
       before { collection.depositors = [user] }
     end

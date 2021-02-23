@@ -19,7 +19,9 @@ RSpec.describe 'Updating an existing work' do
     end
 
     describe 'display the form' do
-      let(:work_version) { create(:work_version, :published, :with_creation_date_range) }
+      let(:collection) { create(:collection_version_with_collection).collection }
+      let(:work) { create(:work, collection: collection) }
+      let(:work_version) { create(:work_version, :published, :with_creation_date_range, work: work) }
 
       it 'shows the form' do
         get "/works/#{work.id}/edit"
@@ -29,7 +31,9 @@ RSpec.describe 'Updating an existing work' do
 
     describe 'submit the form' do
       context 'when the previous version was deposited' do
-        let(:work_version) { create(:work_version, :deposited, :with_required_associations) }
+        let(:collection) { create(:collection_version_with_collection).collection }
+        let(:work) { create(:work, collection: collection) }
+        let(:work_version) { create(:work_version, :deposited, :with_required_associations, work: work) }
         let(:user) { work.depositor }
         let(:work_params) do
           {
@@ -80,8 +84,9 @@ RSpec.describe 'Updating an existing work' do
       end
 
       context 'with a validation problem' do
-        let(:work) { work_version.work }
-        let(:work_version) { create(:work_version) }
+        let(:collection) { create(:collection_version_with_collection).collection }
+        let(:work) { create(:work, collection: collection) }
+        let(:work_version) { create(:work_version, work: work) }
         let(:user) { work.depositor }
         let(:work_params) do
           {

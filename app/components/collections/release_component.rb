@@ -1,4 +1,4 @@
-# typed: strict
+# typed: true
 # frozen_string_literal: true
 
 module Collections
@@ -13,6 +13,10 @@ module Collections
     attr_reader :collection
 
     delegate :access, to: :collection
+
+    def collection_version
+      collection.head
+    end
 
     sig { returns(T.nilable(String)) }
     def release_info

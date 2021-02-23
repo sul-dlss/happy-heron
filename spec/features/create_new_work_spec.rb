@@ -5,10 +5,12 @@ require 'rails_helper'
 
 RSpec.describe 'Create a new work in a deposited collection', js: true do
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, :deposited, :depositor_selects_access, depositors: [user]) }
+  let(:collection_version) { create(:collection_version, :deposited, collection: collection) }
+  let(:collection) { create(:collection, :depositor_selects_access, depositors: [user]) }
   let(:second_email) { 'second@example.com' }
 
   before do
+    collection.update(head: collection_version)
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
@@ -128,7 +130,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         click_button 'Deposit'
 
         expect(page).to have_content('My Title')
-        expect(page).to have_link(Collection.last.name)
+        expect(page).to have_link(collection_version.name)
         expect(page).to have_content(user.email)
         expect(page).to have_content('sound')
         expect(page).to have_content('Oral history, Podcast, Poetry reading')
@@ -195,7 +197,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
   end
 
   context 'when unsuccessful' do
-    let(:collection) { create(:collection, :deposited, depositors: [user]) }
+    let(:collection) { create(:collection, depositors: [user]) }
 
     it 'does not submit' do
       visit "/collections/#{collection.id}/works/new?work_type=text"

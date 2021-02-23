@@ -1,4 +1,4 @@
-# typed: strict
+# typed: true
 # frozen_string_literal: true
 
 module Collections
@@ -11,6 +11,10 @@ module Collections
 
     sig { returns(Collection) }
     attr_reader :collection
+
+    def collection_version
+      collection.head
+    end
 
     sig { returns(String) }
     def review_workflow_status

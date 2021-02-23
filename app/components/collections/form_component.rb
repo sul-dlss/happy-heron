@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -17,8 +17,8 @@ module Collections
       DraftCollectionForm::EMBARGO_RELEASE_DURATION_OPTIONS
     end
 
-    def draft_collections_path(collection)
-      collections_path(collection)
-    end
+    alias draft_collection_path collections_path
+    alias create_collections_path collections_path
+    alias create_collection_path collection_path
   end
 end
