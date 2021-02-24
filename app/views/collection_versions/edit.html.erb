@@ -1,0 +1,13 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(
+    confirm_dashboard: true,
+    breadcrumbs: [ { title: @form.model.name, link: collection_path(@form), confirm: true },
+                   { title: 'Edit' } ]) %>
+<% end %>
+<main class="mb-3 mb-md-5" id="content">
+  <div class="container px-4 px-md-3" id="collection">
+    <%= render Collections::Update::TabsComponent.new(collection: @form.model.collection) %>
+    <h1><%= @form.model.name %></h1>
+    <%= render Collections::Update::DetailsFormComponent.new(collection_form: @form) %>
+  </div>
+</main>

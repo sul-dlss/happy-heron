@@ -16,6 +16,8 @@ class CollectionsController < ObjectsController
     @form.prepopulate!
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def create
     collection = Collection.new(creator: current_user)
 
@@ -23,45 +25,45 @@ class CollectionsController < ObjectsController
 
     collection_version = CollectionVersion.new(collection: collection)
     @form = collection_form(collection_version)
-    if @form.validate(collection_params) && @form.save
-      after_save(collection: collection, collection_version: collection_version)
+    if @form.validate(create_params) && @form.save
+      collection_version.collection.event_context = { user: current_user }
+      collection_version.update_metadata!
+      if deposit_button_pushed?
+        collection_version.begin_deposit!
+        redirect_to dashboard_path
+      else
+        redirect_to collection_path(collection)
+      end
     else
       render :new, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def edit
     collection = Collection.find(params[:id])
-    collection_version = collection.head
-    authorize! collection_version
+    authorize! collection
 
-    @form = collection_form(collection_version)
+    @form = CollectionSettingsForm.new(collection)
+
     @form.prepopulate!
   end
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def update
     collection = Collection.find(params[:id])
-    collection_version = collection.head
-    clean_params = collection_params
-    if collection_version.deposited?
-      collection_version = create_new_version(collection_version)
-      NewCollectionVersionParameterFilter.call(clean_params, collection.head)
-    end
 
-    authorize! collection_version
+    authorize! collection
     point1 = CollectionChangeSet::PointInTime.new(collection)
-    @form = collection_form(collection_version)
-    if @form.validate(clean_params) && @form.save
-      after_save(collection: collection, collection_version: collection_version,
-                 context: { change_set: point1.diff(collection_version.collection) })
+    @form = CollectionSettingsForm.new(collection)
+    if @form.validate(update_params) && @form.save
+      CollectionObserver.after_update_published(collection, change_set: point1.diff(collection), user: current_user)
+
+      redirect_to collection_path(collection)
     else
       render :edit, status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 
   def show
     @collection = Collection.find(params[:id])
@@ -96,14 +98,6 @@ class CollectionsController < ObjectsController
 
   private
 
-  # Create the next CollectionVersion for this Collection
-  def create_new_version(previous_version)
-    previous_version.dup.tap do |work_version|
-      work_version.state = 'version_draft'
-      work_version.version = previous_version.version + 1
-    end
-  end
-
   sig { params(collection_version: CollectionVersion, collection: Collection, context: Hash).void }
   def after_save(collection_version:, collection:, context: {})
     collection_version.collection.event_context = context.merge(user: current_user)
@@ -125,7 +119,7 @@ class CollectionsController < ObjectsController
     DraftCollectionForm.new(collection_version: collection_version, collection: collection_version.collection)
   end
 
-  def collection_params
+  def create_params
     params.require(:collection).permit(:name, :description, :access,
                                        :manager_sunets, :depositor_sunets,
                                        :review_enabled, :reviewer_sunets, :license_option,
@@ -135,5 +129,14 @@ class CollectionsController < ObjectsController
                                        :release_option, :release_duration,
                                        related_links_attributes: %i[_destroy id link_title url],
                                        contact_emails_attributes: %i[_destroy id email])
+  end
+
+  def update_params
+    params.require(:collection).permit(:access, :manager_sunets, :depositor_sunets,
+                                       :review_enabled, :reviewer_sunets, :license_option,
+                                       :required_license, :default_license,
+                                       :email_when_participants_changed,
+                                       :email_depositors_status_changed,
+                                       :release_option, :release_duration)
   end
 end

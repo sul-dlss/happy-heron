@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Collections::TabsComponent, type: :component do
+RSpec.describe Collections::Create::SettingsComponent, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 
   # it "renders something useful" do

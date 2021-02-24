@@ -3,11 +3,17 @@
 
 # Authorization policy for Collection objects
 class CollectionPolicy < ApplicationPolicy
+  alias_rule :edit?, to: :update?
   alias_rule :delete?, to: :destroy?
 
   # Return the relation defining the collections you can deposit into, manage or review.
   relation_scope :deposit do |relation|
     relation.where(id: user.deposits_into_ids + user.manages_collection_ids + user.reviews_collection_ids)
+  end
+
+  sig { returns(T::Boolean) }
+  def update?
+    administrator? || manages_collection?(record)
   end
 
   sig { returns(T::Boolean) }

@@ -1,18 +1,13 @@
 # typed: false
 # frozen_string_literal: true
 
-# The form for collection creation and editing
+# The form for collection creation
 class DraftCollectionForm < Reform::Form
   extend T::Sig
   feature EmbargoDate
   # This form is a composition of 2 models. See: https://github.com/trailblazer/reform#compositions
   include Composition
   model 'collection'
-
-  EMBARGO_RELEASE_DURATION_OPTIONS = { '6 months from date of deposit': '6 months',
-                                       '1 year from date of deposit': '1 year',
-                                       '2 years from date of deposit': '2 years',
-                                       '3 years from date of deposit': '3 years' }.freeze
 
   property :name, on: :collection_version
   property :description, on: :collection_version
@@ -55,7 +50,8 @@ class DraftCollectionForm < Reform::Form
   end
 
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
-  validates :release_duration, inclusion: { in: EMBARGO_RELEASE_DURATION_OPTIONS.values }, allow_blank: true
+  validates :release_duration, inclusion: { in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values },
+                               allow_blank: true
 
   def deserialize!(params)
     case params['license_option']

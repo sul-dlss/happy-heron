@@ -73,3 +73,21 @@ en:
       related_work: Enter the citation for another publication, such as a journal article, that cites or is directly related to this deposit. Please include the related work's unique identifier, such as a Digital Object Identifier (DOI) or ISBN, if it has one. Enter one work per box. Use the "Add another related work" button below to include additional works. These works will display on the persistent URL (PURL) page for the collection and on the Stanford Libraries' catalog record.
       related_link: This section allows you to provide links to other web pages that are related to your deposit. These links will display on the persistent URL (PURL) page for the collection and on the Stanford Libraries' catalog record. Enter the text to be displayed on the page in the "Link title" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are lab, institute, or project pages; GitHub repositories for the current version of software code; or funder websites.
       license: A license helps others who access your content to understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for assistance with the license options presented here.
+  hints:
+    collection:
+      review_enabled: >
+        A reviewer checks a deposit for clarity, accuracy, and completeness before
+        approving the publication. Only one Reviewer is required to review each
+        deposit. A Reviewer can edit a deposit or return it to the Depositor with
+        a request for changes. The Depositor will receive a notification when
+        their deposit is returned or approved.
+  options:
+    collection:
+      access:
+        world: Everyone — anyone in the world will be able to download the files for all deposits in this collection.
+        stanford: Stanford community — only members of the Stanford community will be able to download the files for all deposits in this collection.
+        depositor_selects: Depositor selects — default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.
+      release:
+        immediate: Immediately
+        delay: Delay release
+        depositor_selects: Depositor selects a date

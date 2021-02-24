@@ -4,7 +4,7 @@
 <% end %>
 <main id="content" class="mb-3 mb-md-5">
   <div class="container px-4 px-md-3" id="collection">
-    <%= render Collections::TabsComponent.new(collection: @collection) %>
+    <%= render Collections::Show::TabsComponent.new(collection: @collection) %>
     <%= turbo_stream_from @collection %>
     <%= render @collection %>
   </div>
