@@ -10,15 +10,18 @@ class DepositStatusJob
   # "h2.deposit_complete_development"
   from_queue 'h2.deposit_complete', env: nil
 
-  sig { params(msg: String).void }
+  sig { params(msg: String).returns(Symbol) }
   def work(msg)
     json = JSON.parse(msg)
     druid = json.fetch('druid')
     raise "Unable to find required field 'druid' in payload:\n\t#{json}" if druid.blank?
 
+    Honeybadger.context(druid: druid)
+
     # Without this, the database connection pool gets exhausted
     ActiveRecord::Base.connection_pool.with_connection do
       object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
+      Honeybadger.context(object: object.to_global_id.to_s)
       return ack! unless object # could be an object from a different project
 
       object.head.deposit_complete!

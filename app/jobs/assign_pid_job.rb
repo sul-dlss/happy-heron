@@ -10,16 +10,14 @@ class AssignPidJob
   # "h2.druid_assigned_development"
   from_queue 'h2.druid_assigned', env: nil
 
-  sig { params(msg: String).void }
+  sig { params(msg: String).returns(Symbol) }
   def work(msg)
     json = JSON.parse(msg)
-    Honeybadger.context({
-                          model: json
-                        })
+
 
     model = Cocina::Models.build(json.fetch('model'))
     source_id = model.identification&.sourceId
-
+    Honeybadger.context(source_id: source_id)
     return ack! unless source_id&.start_with?('hydrus:')
 
     assign_druid(source_id, model.externalIdentifier)
