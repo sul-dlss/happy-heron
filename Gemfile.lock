@@ -162,13 +162,6 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.3.5)
-    dor-services-client (6.19.2)
-      activesupport (>= 4.2, < 7)
-      cocina-models (~> 0.47.2)
-      deprecation
-      faraday (>= 0.15, < 2)
-      moab-versioning (~> 4.0)
-      zeitwerk (~> 2.1)
     druid-tools (2.1.0)
       deprecation
     dry-configurable (0.12.1)
@@ -260,11 +253,6 @@ GEM
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     minitest (5.14.3)
-    moab-versioning (4.4.1)
-      druid-tools (>= 1.0.0)
-      json
-      nokogiri
-      nokogiri-happymapper
     msgpack (1.4.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
@@ -276,8 +264,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.11.1-x86_64-linux)
       racc (~> 1.4)
-    nokogiri-happymapper (0.8.1)
-      nokogiri (~> 1.5)
     okcomputer (1.18.4)
     openapi3_parser (0.9.0)
       commonmarker (~> 0.17)
@@ -528,7 +514,6 @@ DEPENDENCIES
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
   dlss-capistrano (~> 3.6)
-  dor-services-client (~> 6.19)
   druid-tools
   dry-types
   edtf
