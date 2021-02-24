@@ -19,6 +19,7 @@
   <% end %>
   <%= f.hidden_field :work_type %>
   <%= render Works::DepositProgressComponent.new %>
+  <%= render Works::VersionDescriptionComponent.new(form: f) %>
   <p class="form-instructions">All fields are required, unless otherwise noted.</p>
   <%= render Works::AddFilesComponent.new(form: f) %>
   <%= render Works::TitleComponent.new(form: f) %>

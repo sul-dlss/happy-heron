@@ -41,6 +41,9 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
         expect(page).to have_content 'Deposit your content'
 
+        # On initial deposit, the version description is not available
+        expect(page).not_to have_content "What's changing?"
+
         # breadcrumbs showing
         find('#breadcrumbs') do |nav|
           expect(nav).to have_content('Dashboard')

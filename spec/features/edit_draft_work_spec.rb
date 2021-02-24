@@ -7,7 +7,8 @@ RSpec.describe 'Edit a draft work', js: true do
   let(:depositor) { create(:user) }
   let!(:work_version) do
     create(:work_version, :with_keywords,
-           work_type: 'other', subtype: ['Graphic novel'], work: work)
+           work_type: 'other', subtype: ['Graphic novel'],
+           state: 'version_draft', work: work)
   end
   let(:collection) { create(:collection_version_with_collection).collection }
   let(:work) { create(:work, depositor: depositor, collection: collection) }
@@ -52,6 +53,8 @@ RSpec.describe 'Edit a draft work', js: true do
 
       expect(page).to have_content('Work types')
       expect(page).not_to have_content('Work types (optional)')
+
+      fill_in "What's changing?", with: 'Fixing title per request'
 
       fill_in 'Other', with: 'Comic book'
       click_button 'Deposit'

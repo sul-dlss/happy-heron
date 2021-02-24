@@ -10,6 +10,7 @@ class DraftWorkForm < Reform::Form
   include Composition
 
   property :work_type, on: :work_version
+  property :description, on: :work_version
   property :subtype, on: :work_version
   property :title, on: :work_version
   property :abstract, on: :work_version
@@ -143,6 +144,12 @@ class DraftWorkForm < Reform::Form
 
   def collection
     model.fetch(:work).collection
+  end
+
+  def description
+    return if model.fetch(:work_version).deposited?
+
+    super
   end
 
   def persisted?

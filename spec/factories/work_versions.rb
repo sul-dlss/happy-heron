@@ -13,6 +13,7 @@ FactoryBot.define do
     license { 'CC0-1.0' }
     access { 'world' }
     state { 'first_draft' }
+    description { 'initial version' }
     work
     factory :valid_work_version do
       with_required_associations

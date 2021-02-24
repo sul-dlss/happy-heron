@@ -575,7 +575,8 @@ CREATE TABLE public.work_versions (
     state character varying NOT NULL,
     published_edtf character varying,
     subtype text[] DEFAULT '{}'::text[],
-    work_id bigint NOT NULL
+    work_id bigint NOT NULL,
+    description character varying
 );
 
 
@@ -1279,6 +1280,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210209204542'),
 ('20210211170008'),
 ('20210216220559'),
-('20210219142356');
+('20210219142356'),
+('20210218234733');
 
 
