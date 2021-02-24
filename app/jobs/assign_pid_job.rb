@@ -18,9 +18,9 @@ class AssignPidJob
                         })
 
     model = Cocina::Models.build(json.fetch('model'))
-    source_id = model.identification.sourceId
+    source_id = model.identification&.sourceId
 
-    return ack! unless source_id.start_with?('hydrus:')
+    return ack! unless source_id&.start_with?('hydrus:')
 
     assign_druid(source_id, model.externalIdentifier)
     ack!
