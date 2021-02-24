@@ -4,15 +4,24 @@
 require 'rails_helper'
 
 RSpec.describe Works::VersionDescriptionComponent do
-  let(:form) do
-    instance_double(ActionView::Helpers::FormBuilder,
-                    label: nil,
-                    text_field: nil,
-                    fields_for: nil)
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:work) { build(:work) }
+  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
+
+  context 'with a first draft' do
+    let(:work_version) { build(:work_version, work: work) }
+
+    it 'does not renders the component' do
+      expect(rendered.to_html).not_to include('Version your work')
+    end
   end
 
-  it 'renders the component' do
-    expect(render_inline(described_class.new(form: form)).to_html)
-      .to include('Version your work')
+  context 'with a deposited work' do
+    let(:work_version) { build(:work_version, work: work, state: 'deposited') }
+
+    it 'does not renders the component' do
+      expect(rendered.to_html).to include('Version your work')
+    end
   end
 end

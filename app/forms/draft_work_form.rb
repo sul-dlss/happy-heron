@@ -146,6 +146,12 @@ class DraftWorkForm < Reform::Form
     model.fetch(:work).collection
   end
 
+  def description
+    return if model.fetch(:work_version).deposited?
+
+    super
+  end
+
   def persisted?
     model.fetch(:work).persisted?
   end

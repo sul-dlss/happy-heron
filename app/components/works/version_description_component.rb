@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module Works
-  # Renders a widget for enetering a version description
+  # Renders a widget for entering a version description
   class VersionDescriptionComponent < ApplicationComponent
     def initialize(form:)
       @form = form
