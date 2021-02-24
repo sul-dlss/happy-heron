@@ -16,10 +16,13 @@ class DepositStatusJob
     druid = json.fetch('druid')
     raise "Unable to find required field 'druid' in payload:\n\t#{json}" if druid.blank?
 
-    object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
-    return ack! unless object # could be an object from a different project
+    # Without this, the database connection pool gets exhausted
+    ActiveRecord::Base.connection_pool.with_connection do
+      object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
+      return ack! unless object # could be an object from a different project
 
-    object.head.deposit_complete!
+      object.head.deposit_complete!
+    end
     ack!
   end
 end

@@ -28,16 +28,19 @@ class AssignPidJob
 
   def assign_druid(source_id, druid)
     unprefixed = source_id.delete_prefix('hydrus:')
-    object = if unprefixed.start_with?('object-')
-               Work.find(unprefixed.delete_prefix('object-'))
-             else
-               Collection.find(unprefixed.delete_prefix('collection-'))
-             end
+    # Without this, the database connection pool gets exhausted
+    ActiveRecord::Base.connection_pool.with_connection do
+      object = if unprefixed.start_with?('object-')
+                 Work.find(unprefixed.delete_prefix('object-'))
+               else
+                 Collection.find(unprefixed.delete_prefix('collection-'))
+               end
 
-    object.update(druid: druid)
+      object.update(druid: druid)
 
-    return unless object.is_a? Work
+      return unless object.is_a? Work
 
-    object.head.add_purl_to_citation
+      object.head.add_purl_to_citation
+    end
   end
 end
