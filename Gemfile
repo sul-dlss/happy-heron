@@ -63,7 +63,7 @@ gem 'pg'
 gem 'rails', '~> 6.1'
 gem 'redis', '~> 4.0'
 gem 'reform-rails', '~> 0.2.0'
-gem 'sdr-client', '~> 0.43'
+gem 'sdr-client', '~> 0.44'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11'
 # pinned because 0.7.2 broke the build with 181 new errors related (apparently?) to the parlour 5.0.0 bump

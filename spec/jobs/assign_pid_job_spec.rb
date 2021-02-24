@@ -31,7 +31,7 @@ RSpec.describe AssignPidJob do
     end
   end
 
-  context 'with a collection', pending: 'TODO: add this spec after cocina-models 0.45.0 is published' do
+  context 'with a collection' do
     let(:model) do
       Cocina::Models::Collection.new(externalIdentifier: druid,
                                      type: Cocina::Models::Vocab.collection,

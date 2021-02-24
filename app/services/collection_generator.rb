@@ -41,11 +41,7 @@ class CollectionGenerator
         partOfProject: Settings.h2.project_tag
       },
       identification: {
-        # TODO: Uncomment when cocina-models 0.45.0 is published
-        # It would be great if we could send a sourceId with a collection, because then we
-        # could receive a message knowing when it was deposited. Currently cocina-models doesn't
-        # support sourceIds on collections
-        # sourceId: "hydrus:collection-#{collection.id}"
+        sourceId: "hydrus:collection-#{collection.id}"
       },
       label: collection_version.name,
       type: Cocina::Models::Vocab.collection,
