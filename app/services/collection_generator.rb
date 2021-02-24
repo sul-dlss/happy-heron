@@ -41,7 +41,7 @@ class CollectionGenerator
         partOfProject: Settings.h2.project_tag
       },
       identification: {
-        sourceId: "hydrus:collection-#{collection.id}"
+        sourceId: "hydrus:collection-#{collection_version.collection_id}"
       },
       label: collection_version.name,
       type: Cocina::Models::Vocab.collection,
