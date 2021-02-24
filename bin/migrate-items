@@ -172,7 +172,7 @@ end
 
 def add_events!(work, json)
   json.fetch('events').each do |event|
-    work.events.create(
+    work.events.build(
       user: User.find_or_create_by!(email: "#{event['who'].downcase}@stanford.edu"),
       created_at: Time.parse(event['when']),
       updated_at: Time.parse(event['when']),
@@ -316,12 +316,13 @@ def attach_files(json, work_version)
   end
 end
 
+puts "STARTING NEW WORK MIGRATION: #{Time.now}"
 OFFSET = ARGV[1].present? ? ARGV[1].to_i : 0
 count = 0
 File.foreach(ARGV[0]) do |data|
-  puts "STARTING NEW COLLECTION MIGRATION: #{Time.now}"
   count += 1
   next if count < OFFSET
+  puts count
   json = JSON.parse(data)
   next unless json.present?
   work = Work.find_or_initialize_by(druid: json['druid'])
