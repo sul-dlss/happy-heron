@@ -51,7 +51,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'config', '~> 2.2'
 gem 'devise', '~> 4.7'
 gem 'devise-remote-user', '~> 1.0'
-gem 'dor-services-client', '~> 6.19'
 gem 'druid-tools'
 gem 'dry-types'
 gem 'edtf'
