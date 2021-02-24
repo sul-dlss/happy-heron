@@ -69,7 +69,7 @@ end
 
 def add_events!(collection, json)
   json.fetch('events').each do |event|
-    collection.events.create(
+    collection.events.build(
         user: User.find_or_create_by!(email: "#{event['who'].downcase}@stanford.edu"),
         created_at: Time.parse(event['when']),
         updated_at: Time.parse(event['when']),
