@@ -6,7 +6,7 @@ class EmbargoDateValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return if value.nil?
 
-    collection = Collection.where(id: record.model[:work][:collection_id]).first
+    collection = record.model.fetch(:work).collection
     return if collection.blank? || collection.release_duration.blank?
 
     valid_embargo_value(record, attribute, value) if valid_embargo_collection(collection, record, attribute, value)
