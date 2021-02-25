@@ -60,11 +60,16 @@ class WorkVersion < ApplicationRecord
     event :begin_deposit do
       transition %i[first_draft version_draft pending_approval] => :depositing
       transition purl_requested: :reserving_purl
+      transition purl_requested_has_type: :reserving_purl_has_type # TODO: is this one overkill?
     end
 
     event :deposit_complete do
       transition depositing: :deposited
       transition reserving_purl: :purl_reserved
+      # If type was chosen already for PURL reservation WorkVersion, completion of deposit
+      # makes it a version draft for which metadata besides type can be edited (type must
+      # be chosen before other edits can be made)
+      transition reserving_purl_has_type: :version_draft
     end
 
     event :submit_for_review do
@@ -80,11 +85,23 @@ class WorkVersion < ApplicationRecord
       transition new: :purl_requested
     end
 
+    # If the user has requested a PURL, or if the app has made the reservation request
+    # to SDR (by way of begin_deposit!) but has not yet heard back, use counterpart state
+    # indicating type has been selected.  If the PURL has ben reserved, type selection
+    # turns it into a regular version_draft that can have its metadata other than type
+    # edited.
+    event :type_selected do
+      transition purl_requested: :purl_requested_has_type
+      transition reserving_purl: :reserving_purl_has_type
+      transition purl_reserved: :version_draft
+    end
+
     event :update_metadata do
       transition new: :first_draft
 
-      transition %i[first_draft version_draft pending_approval rejected] => same
-      transition purl_reserved: :version_draft
+      transition %i[first_draft version_draft pending_approval rejected
+                    purl_requested reserving_purl purl_reserved
+                    purl_requested_has_type reserving_purl_has_type] => same
     end
   end
 
@@ -142,9 +159,11 @@ class WorkVersion < ApplicationRecord
 
     self.work_type = work_type
     self.subtype = subtype
-    work.events.create(user: modifier, event_type: 'type_selected')
+    work.event_context ||= {}
+    work.event_context[:user] = modifier
     transaction do
       save!
+      type_selected!
       update_metadata!
     end
   end
