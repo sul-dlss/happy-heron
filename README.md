@@ -6,7 +6,7 @@
 
 happy-heron, or H2 (from "Hydrus 2.0"), is a Rails web application enabling users to deposit scholarly content into the SDR. It will replace [Hydrus](https://github.com/sul-dlss/hydrus).
 
-## Design
+## UX Design
 
 * Comps: https://projects.invisionapp.com/share/EQXC9CLKCR2
 * Design Documentation: https://docs.google.com/document/d/1fcr2DYo7OrX-qTdeUOTWKSS1rlq_47sehESmbvgUsrk/edit
@@ -139,6 +139,8 @@ RAILS_ENV=production WORKERS=AssignPidJob,DepositStatusJob bin/rake sneakers:run
 ## Architecture
 
 H2 uses the [SDR API](https://github.com/sul-dlss/sdr-api) to deposit collections and works (both files and metadata) into SDR.
+
+H2 relies upon dor-services-app publishing messages to the `sdr.objects.created` topic when a resource is persisted. Then RabbitMQ routes this message to a queue `h2.druid_assigned`.  The `AssignPidJob` running via Sneakers works on messages from this queue.  Similarly workflow-server-rails publishes messages to the `sdr.workflow` topic when accessioning is completed.  RabbitMQ then routes these messages to a queue `h2.deposit_complete` which is processed by the `DepositStatusJob` via Sneakers.
 
 ## Branch aliasing
 
