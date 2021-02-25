@@ -7,7 +7,14 @@ task complete_deposits: :environment do
 
   objects_awaiting_deposit.each do |object|
     druid = random_druid
-    DepositStatusJob.new.complete_deposit(object, druid)
+    parent = case object
+             when CollectionVersion
+               object.collection
+             when WorkVersion
+               object.work
+             end
+    parent.update(druid: druid)
+    object.deposit_complete!
     puts "Marked #{object.class} id=#{object.id} as deposited with #{druid}"
   end
 end
