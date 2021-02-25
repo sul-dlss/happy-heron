@@ -125,6 +125,6 @@ FactoryBot.define do
     abstract { '' }
     citation { nil }
     license { 'none' }
-    state { 'purl_reserved' }
+    state { 'reserving_purl' }
   end
 end

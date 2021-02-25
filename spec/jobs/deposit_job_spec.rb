@@ -51,8 +51,7 @@ RSpec.describe DepositJob do
         build(:work_version, :reserving_purl, work: work)
       end
 
-      # TODO: failing because purl reservation placeholder type is not valid cocina type
-      xit 'calls CreateResource.run with false for the accession param' do
+      it 'calls CreateResource.run with false for the accession param' do
         described_class.perform_now(work_version)
         expect(SdrClient::Deposit::CreateResource).to have_received(:run).with(a_hash_including(accession: false))
       end
