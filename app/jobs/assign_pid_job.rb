@@ -14,7 +14,6 @@ class AssignPidJob
   def work(msg)
     json = JSON.parse(msg)
 
-
     model = Cocina::Models.build(json.fetch('model'))
     source_id = model.identification&.sourceId
     Honeybadger.context(source_id: source_id)

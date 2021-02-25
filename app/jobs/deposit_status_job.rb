@@ -21,9 +21,9 @@ class DepositStatusJob
     # Without this, the database connection pool gets exhausted
     ActiveRecord::Base.connection_pool.with_connection do
       object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
-      Honeybadger.context(object: object.to_global_id.to_s)
       return ack! unless object # could be an object from a different project
 
+      Honeybadger.context(object: object.to_global_id.to_s)
       object.head.deposit_complete!
     end
     ack!

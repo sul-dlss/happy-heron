@@ -41,9 +41,6 @@ RSpec.describe AssignPidJob do
                                      administrative: { hasAdminPolicy: 'druid:xx999xx9999' },
                                      identification: {
                                        sourceId: "hydrus:collection-#{collection.id}"
-                                     },
-                                     structural: {
-                                       contains: []
                                      })
     end
     let(:collection) { create(:collection) }
