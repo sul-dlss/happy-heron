@@ -9,7 +9,9 @@ RSpec.describe CollectionGenerator do
 
   context 'without a druid' do
     let(:collection) { build(:collection, id: 7) }
-    let(:collection_version) { build(:collection_version, name: 'Test title', collection: collection) }
+    let(:collection_version) do
+      build(:collection_version, :with_related_links, name: 'Test title', collection: collection)
+    end
     let(:expected_model) do
       {
         type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
@@ -24,6 +26,18 @@ RSpec.describe CollectionGenerator do
           title: [
             {
               value: 'Test title'
+            }
+          ],
+          relatedResource: [
+            {
+              type: 'related to',
+              title: [{ value: 'My Awesome Research' }],
+              access: { url: [{ value: 'http://my.awesome.research.io' }] }
+            },
+            {
+              type: 'related to',
+              title: [{ value: 'My Awesome Research' }],
+              access: { url: [{ value: 'http://my.awesome.research.io' }] }
             }
           ]
         },
@@ -58,7 +72,8 @@ RSpec.describe CollectionGenerator do
             {
               value: 'Test title'
             }
-          ]
+          ],
+          relatedResource: []
         },
         identification: {
           sourceId: "hydrus:collection-#{collection.id}"

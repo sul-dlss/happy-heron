@@ -23,7 +23,7 @@ class DescriptionGenerator
                                       subject: keywords,
                                       note: [abstract, citation] + contacts,
                                       event: generate_events,
-                                      relatedResource: related_links + related_works,
+                                      relatedResource: related_resources,
                                       form: generate_form
                                     }, false, false)
   end
@@ -48,6 +48,11 @@ class DescriptionGenerator
     return pub_events if pub_events.present? # and no created_date
 
     [created_date, published_date].compact # no pub_events
+  end
+
+  sig { returns(T::Array[Cocina::Models::RelatedResource]) }
+  def related_resources
+    RelatedLinksGenerator.generate(object: work_version) + related_works
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
@@ -126,20 +131,6 @@ class DescriptionGenerator
         type: 'contact',
         displayLabel: 'Contact'
       )
-    end
-  end
-
-  sig { returns(T::Array[Cocina::Models::RelatedResource]) }
-  def related_links
-    work_version.related_links.map do |rel_link|
-      resource_attrs = {
-        type: 'related to',
-        access: Cocina::Models::DescriptiveAccessMetadata.new(
-          url: [Cocina::Models::DescriptiveValue.new(value: rel_link.url)]
-        )
-      }
-      resource_attrs[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
-      Cocina::Models::RelatedResource.new(resource_attrs)
     end
   end
 
