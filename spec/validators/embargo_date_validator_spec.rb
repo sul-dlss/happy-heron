@@ -6,8 +6,10 @@ require 'rails_helper'
 RSpec.describe EmbargoDateValidator do
   let(:options) { { attributes: ['hi'] } }
   let(:validator) { described_class.new(options) }
-  let(:work) { work_version.work }
-  let(:work_version) { build(:work_version) }
+  let(:collection) { create(:collection, release_option: 'depositor-selects', release_duration: '3 years') }
+  let(:work) { create(:work, collection: collection) }
+
+  let(:work_version) { create(:work_version, work: work) }
   let(:record) { WorkForm.new(work_version: work_version, work: work) }
 
   before do
@@ -48,6 +50,16 @@ RSpec.describe EmbargoDateValidator do
 
     it 'has errors' do
       expect(record.errors.full_messages).to eq ['Embargo date must be less than 3 years in the future']
+    end
+  end
+
+  context 'with a date more than the collection release_duration' do
+    let(:collection) { create(:collection, release_option: 'depositor-selects', release_duration: '1 year') }
+    let(:attribute) { :embargo_date }
+    let(:value) { Time.zone.today + 2.years }
+
+    it 'has errors' do
+      expect(record.errors.full_messages).to eq ['Embargo date must be less than 1 year in the future']
     end
   end
 end
