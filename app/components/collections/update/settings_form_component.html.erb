@@ -1,0 +1,27 @@
+<header>All fields are required, unless otherwise noted.</header>
+<%= form_with model: collection_form,
+    data: { controller: 'edit-collection', },
+    html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
+
+  <% if collection_form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(collection_form.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% collection_form.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= render Collections::Create::SettingsComponent.new(form: form) %>
+
+  <div class="row">
+    <div class="col text-end">
+      <%= render Collections::CancelComponent.new(collection: model) %>
+      <%= form.submit 'Save', class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+<% end %>

@@ -156,6 +156,7 @@ class DraftWorkForm < Reform::Form
     model.fetch(:work).persisted?
   end
 
+  # Ensure that this work version is now the head of the work versions for this work
   def save_model
     Work.transaction do
       super

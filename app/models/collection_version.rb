@@ -19,10 +19,7 @@ class CollectionVersion < ApplicationRecord
 
   state_machine initial: :new do
     before_transition do |collection_version, transition|
-      # filters out bits of the context that don't go into the event, e.g.: :change_set
-      event_params = collection_version.collection.event_context.slice(:user)
-      change_set = collection_version.collection.event_context.fetch(:change_set, nil)
-      event_params[:description] = change_set.participant_change_description if change_set&.participants_changed?
+      event_params = collection_version.collection.event_context
       collection_version.collection.events.create(event_params.merge(event_type: transition.event))
     end
 
@@ -41,8 +38,6 @@ class CollectionVersion < ApplicationRecord
       DepositCollectionJob.perform_later(collection_version)
     end
 
-    after_transition to: :version_draft, do: CollectionObserver.method(:after_update_published)
-
     event :begin_deposit do
       transition %i[first_draft version_draft] => :depositing
     end
@@ -59,6 +54,11 @@ class CollectionVersion < ApplicationRecord
 
   sig { returns(T::Boolean) }
   def updatable?
-    can_update_metadata? || deposited?
+    can_update_metadata? || (deposited? && head?)
+  end
+
+  sig { returns(T::Boolean) }
+  def head?
+    collection.head == self
   end
 end

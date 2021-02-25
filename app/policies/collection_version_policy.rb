@@ -10,7 +10,7 @@ class CollectionVersionPolicy < ApplicationPolicy
   def update?
     return false unless record.updatable?
 
-    administrator? || manages_collection?(record.collection)
+    allowed_to?(:update?, record.collection)
   end
 
   sig { returns(T::Boolean) }

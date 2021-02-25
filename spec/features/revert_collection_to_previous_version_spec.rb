@@ -15,7 +15,7 @@ RSpec.describe 'Delete a draft collection', js: true do
   end
 
   it 'reverts to the previous version' do
-    visit edit_collection_path(collection)
+    visit edit_collection_version_path(version2)
     accept_confirm do
       click_link 'Discard draft'
     end

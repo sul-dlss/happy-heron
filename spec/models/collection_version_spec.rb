@@ -15,10 +15,16 @@ RSpec.describe CollectionVersion do
       it { is_expected.to be false }
     end
 
-    context 'when deposited' do
-      let(:collection_version) { build(:collection_version, :deposited) }
+    context 'when deposited and is the head version' do
+      let(:collection_version) { create(:collection_version_with_collection, :deposited) }
 
       it { is_expected.to be true }
+    end
+
+    context 'when deposited and is not the head version' do
+      let(:collection_version) { build(:collection_version, :deposited) }
+
+      it { is_expected.to be false }
     end
 
     context 'when a draft' do
@@ -53,10 +59,9 @@ RSpec.describe CollectionVersion do
 
     describe 'an update_metadata event' do
       let(:collection_version) { create(:collection_version, :new) }
-      let(:change_set) { CollectionChangeSet::PointInTime.new(collection).diff(collection) }
 
       before do
-        collection.event_context = { user: collection.creator, change_set: change_set }
+        collection.event_context = { user: collection.creator }
       end
 
       it 'transitions to version draft' do

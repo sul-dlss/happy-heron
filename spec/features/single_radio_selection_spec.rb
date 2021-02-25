@@ -20,9 +20,8 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
       end
 
       it 'shows only one release option as checked and disables child select elements of other options' do
-        # We need duplicate select lists with the same CSS selector
-        delayed_release = all('#collection_release_duration').first
-        depositor_selects = all('#collection_release_duration').last
+        delayed_release = find('#collection_delay_release_duration')
+        depositor_selects = find('#collection_depositor_selects_release_duration')
 
         expect(find('#collection_release_option_immediate')).not_to be_checked
         expect(find('#collection_release_option_delay')).not_to be_checked
@@ -31,7 +30,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
         expect(depositor_selects).not_to be_disabled
 
         # Disable "depositor-selects" select when "delay" selected
-        choose('Delay release until')
+        choose('Delay release')
         expect(find('#collection_release_option_immediate')).not_to be_checked
         expect(find('#collection_release_option_delay')).to be_checked
         expect(find('#collection_release_option_depositor-selects')).not_to be_checked

@@ -14,24 +14,28 @@ RSpec.describe 'Delete a draft collection', js: true do
   end
 
   context 'when saved as draft' do
-    it 'allow users to delete the collection and destroys the model from the dashboard' do
-      visit dashboard_path
+    context 'when using the link on the dashboard' do
+      it 'allow users to delete the collection and destroys the model' do
+        visit dashboard_path
 
-      accept_confirm do
-        within '#your-collections' do
-          click_link "Delete #{collection_version.name}"
+        accept_confirm do
+          within '#your-collections' do
+            click_link "Delete #{collection_version.name}"
+          end
         end
+        expect(Collection.find_by(id: collection.id)).to be(nil)
       end
-      expect(Collection.find_by(id: collection.id)).to be(nil)
     end
 
-    it 'allow users to delete the collection and destroys the model from the collection edit page' do
-      visit edit_collection_path(collection)
+    context 'when using the link on the collection edit page' do
+      it 'allow users to delete the collection and destroys the model' do
+        visit edit_collection_version_path(collection_version)
 
-      accept_confirm do
-        click_link 'Discard draft'
+        accept_confirm do
+          click_link 'Discard draft'
+        end
+        expect(Collection.find_by(id: collection.id)).to be(nil)
       end
-      expect(Collection.find_by(id: collection.id)).to be(nil)
     end
   end
 end

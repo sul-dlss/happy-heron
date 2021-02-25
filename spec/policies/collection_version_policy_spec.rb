@@ -34,6 +34,11 @@ RSpec.describe CollectionVersionPolicy do
       let(:record) { build_stubbed :collection_version, :depositing, collection: collection }
     end
 
+    failed 'when the collection version is not the head version' do
+      let(:collection) { build_stubbed :collection, managed_by: [user], head: build_stubbed(:collection_version) }
+      let(:record) { build_stubbed :collection_version, :deposited, collection: collection }
+    end
+
     succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end

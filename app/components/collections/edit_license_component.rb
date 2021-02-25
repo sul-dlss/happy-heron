@@ -14,7 +14,7 @@ module Collections
 
     delegate :default_license, :required_license, to: :collection_form
 
-    sig { returns(DraftCollectionForm) }
+    sig { returns(T.any(DraftCollectionForm, CollectionSettingsForm)) }
     def collection_form
       form.object
     end

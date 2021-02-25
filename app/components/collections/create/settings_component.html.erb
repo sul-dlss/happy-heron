@@ -1,49 +1,3 @@
-<header>All fields are required, unless otherwise noted.</header>
-<%= form_with model: collection_form,
-    data: { controller: 'edit-collection', },
-    html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
-
-  <% if collection_form.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(collection_form.errors.count, "error") %> prohibited this item from being saved:</h2>
-
-      <ul>
-        <% collection_form.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <section id="details">
-    <header>Details</header>
-    <div class="mb-3 row">
-      <div class="col-sm-2">
-        <%= form.label :name, 'Collection name', class: 'col-form-label' %>
-        <%= render PopoverComponent.new key: 'collection.name' %>
-      </div>
-      <div class="col-sm-10 col-xl-8">
-        <%= form.text_field :name, class: "form-control", required: true %>
-        <div class="invalid-feedback">You must provide a name</div>
-      </div>
-    </div>
-    <div class="mb-3 row">
-      <div class="col-sm-2">
-        <%= form.label :description, 'Description', class: 'col-form-label' %>
-        <%= render PopoverComponent.new key: 'collection.description' %>
-      </div>
-      <div class="col-sm-10 col-xl-8">
-        <%= form.text_field :description, class: "form-control", required: true %>
-        <div class="invalid-feedback">You must provide a description</div>
-      </div>
-    </div>
-
-    <%= render Works::ContactEmailComponent.new(form: form, key: 'collection.contact_email') %>
-  </section>
-
-  <section id="links">
-    <%= render RelatedLinkComponent.new(form: form, key: 'collection.related_link') %>
-  </section>
 
   <section id="release_details">
     <header>Manage release of deposits for discovery and download</header>
@@ -52,33 +6,28 @@
       <legend class="h5">When will files on deposits to this collection be downloadable? <%= render PopoverComponent.new key: 'collection.release' %></legend>
       <div class="form-check" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'immediate', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
-        <%= form.label 'release_option_immediate', class: "form-check-label" do %>
-          Immediately
-        <% end %>
+        <%= form.label 'release_option_immediate', t('options.collection.release.immediate'), class: "form-check-label" %>
       </div>
 
       <div class="form-check" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'delay', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
-        <%= form.label 'release_option_delay', class: "form-check-label" do %>
-          Delay release until
-        <% end %>
+        <%= form.label 'release_option_delay', t('options.collection.release.delay'), class: "form-check-label" %>
+        <%= form.label :delay_release_duration, 'until', class: "form-check-label" %>
         <%= form.select :release_duration,
           options_for_select(embargo_release_duration_options, selected: release_duration),
                               {},
+                              id: 'collection_delay_release_duration',
                               class: 'form-select' %>
       </div>
 
       <div class="form-check" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'depositor-selects', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
-        <%= form.label 'release_option_depositor-selects', class: "form-check-label" do %>
-          Depositor selects a date
-        <% end %>
-        <%= form.label :release_duration, class: "form-check-label" do %>
-          between date of deposit and
-        <% end %>
+        <%= form.label 'release_option_depositor-selects', t('options.collection.release.depositor_selects'), class: "form-check-label" %>
+        <%= form.label :depositor_selects_release_duration, 'between date of deposit and', class: "form-check-label" %>
         <%= form.select :release_duration,
           options_for_select(embargo_release_duration_options, selected: release_duration),
                               {},
+                              id: 'collection_depositor_selects_release_duration',
                               class: 'form-select' %>
       </div>
     </fieldset>
@@ -87,21 +36,15 @@
       <legend class="h5">Who will have permission to download files for deposits to this collection? <%= render PopoverComponent.new key: 'collection.access' %></legend>
       <div class="form-check">
         <%= form.radio_button :access, 'world', class: "form-check-input" %>
-        <%= form.label 'access_world', class: "form-check-label" do %>
-          Everyone &mdash; anyone in the world will be able to download the files for all deposits in this collection.
-        <% end %>
+        <%= form.label 'access_world', t('options.collection.access.world'), class: "form-check-label" %>
       </div>
       <div class="form-check">
         <%= form.radio_button :access, 'stanford', class: "form-check-input" %>
-        <%= form.label 'access_stanford', class: "form-check-label" do %>
-          Stanford community &mdash; only members of the Stanford community will be able to download the files for all deposits in this collection.
-        <% end %>
+        <%= form.label 'access_stanford', t('options.collection.access.stanford'), class: "form-check-label" %>
       </div>
       <div class="form-check">
         <%= form.radio_button :access, 'depositor-selects', class: "form-check-input" %>
-        <%= form.label 'access_depositor-selects', class: "form-check-label" do %>
-          Depositor selects &mdash; default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.
-        <% end %>
+        <%= form.label 'access_depositor-selects', t('options.collection.access.depositor_selects'), class: "form-check-label" %>
       </div>
     </fieldset>
   </section>
@@ -158,11 +101,7 @@
     <header>Review Workflow</header>
 
     <div class="mb-3 row">
-      <%= form.label :review_enabled, class: 'col-sm-10 col-xl-8 col-form-label' do %>
-        A reviewer checks a deposit for clarity, accuracy, and completeness before approving the publication. Only one Reviewer
-        is required to review each deposit. A Reviewer can edit a deposit or return it to the Depositor with a request for changes.
-        The Depositor will receive a notification when their deposit is returned or approved.
-      <% end %>
+      <%= tag.span t('hints.collection.review_enabled'), class: 'col-sm-10 col-xl-8 col-form-label' %>
       <div class="col-sm-3">
         <div class="form-check form-switch">
           <%= form.check_box :review_enabled, { class: 'form-check-input' }, 'true', 'false' %>
@@ -184,6 +123,3 @@
       </div>
     </div>
   </section>
-
-  <%= render Collections::ButtonsComponent.new(form: form) %>
-<% end %>

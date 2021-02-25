@@ -13,75 +13,72 @@ class CollectionObserver
   end
 
   # When an already published collection is updated
-  def self.after_update_published(collection_version, _transition)
-    collection = collection_version.collection
-    managers_added(collection)
-    managers_removed(collection)
-    depositors_added(collection)
-    depositors_removed(collection)
-    reviewers_added(collection)
-    reviewers_removed(collection)
-    send_participant_change_emails(collection)
+  def self.after_update_published(collection, change_set:, user:)
+    event_params = { user: user, event_type: 'settings updated' }
+    event_params[:description] = change_set.participant_change_description if change_set.participants_changed?
+    collection.events.create(event_params)
+
+    managers_added(collection, change_set)
+    managers_removed(collection, change_set)
+    depositors_added(collection, change_set)
+    depositors_removed(collection, change_set)
+    reviewers_added(collection, change_set)
+    reviewers_removed(collection, change_set)
+    send_participant_change_emails(collection, change_set)
   end
 
-  def self.depositors_added(collection)
-    change_set(collection).added_depositors.each do |depositor|
+  def self.depositors_added(collection, change_set)
+    change_set.added_depositors.each do |depositor|
       CollectionsMailer.with(collection: collection, user: depositor)
                        .invitation_to_deposit_email.deliver_later
     end
   end
   private_class_method :depositors_added
 
-  def self.managers_added(collection)
-    change_set(collection).added_managers.each do |manager|
+  def self.managers_added(collection, change_set)
+    change_set.added_managers.each do |manager|
       CollectionsMailer.with(collection: collection, user: manager)
                        .manage_access_granted_email.deliver_later
     end
   end
   private_class_method :managers_added
 
-  def self.managers_removed(collection)
-    change_set(collection).removed_managers.each do |manager|
+  def self.managers_removed(collection, change_set)
+    change_set.removed_managers.each do |manager|
       CollectionsMailer.with(collection: collection, user: manager)
                        .manage_access_removed_email.deliver_later
     end
   end
   private_class_method :managers_removed
 
-  def self.depositors_removed(collection)
+  def self.depositors_removed(collection, change_set)
     return unless collection.email_depositors_status_changed?
 
-    change_set(collection).removed_depositors.each do |depositor|
+    change_set.removed_depositors.each do |depositor|
       CollectionsMailer.with(collection: collection, user: depositor)
                        .deposit_access_removed_email.deliver_later
     end
   end
   private_class_method :depositors_removed
 
-  def self.reviewers_added(collection)
-    change_set(collection).added_reviewers.each do |reviewer|
+  def self.reviewers_added(collection, change_set)
+    change_set.added_reviewers.each do |reviewer|
       CollectionsMailer.with(collection: collection, user: reviewer)
                        .review_access_granted_email.deliver_later
     end
   end
   private_class_method :reviewers_added
 
-  def self.reviewers_removed(collection)
-    change_set(collection).removed_reviewers.each do |reviewer|
+  def self.reviewers_removed(collection, change_set)
+    change_set.removed_reviewers.each do |reviewer|
       CollectionsMailer.with(collection: collection, user: reviewer)
                        .review_access_removed_email.deliver_later
     end
   end
   private_class_method :reviewers_removed
 
-  def self.change_set(collection)
-    collection.event_context.fetch(:change_set)
-  end
-  private_class_method :change_set
-
-  def self.send_participant_change_emails(collection)
-    change_set = collection.event_context.fetch(:change_set, nil) # there isn't always a change set at this point
-    return unless collection.email_when_participants_changed? && change_set&.participants_changed?
+  def self.send_participant_change_emails(collection, change_set)
+    return unless collection.email_when_participants_changed? && change_set.participants_changed?
 
     (collection.managed_by + collection.reviewed_by).each do |user|
       CollectionsMailer.with(collection: collection, user: user)
