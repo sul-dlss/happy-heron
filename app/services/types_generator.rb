@@ -70,12 +70,8 @@ class TypesGenerator
 
   sig { returns(T::Array[String]) }
   def subtype_genres
-    subtypes.flat_map do |subtype|
-      genres = types_to_genres.dig(work_type, 'subtypes', subtype)
-      raise "Genre not found for #{work_type}, #{subtype} in types_to_genre.yml" unless genres
-
-      genres
-    end
+    # it's possible there is no genre found
+    subtypes.flat_map { |subtype| types_to_genres.dig(work_type, 'subtypes', subtype) }.compact
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
@@ -94,7 +90,7 @@ class TypesGenerator
   sig { returns(T::Array[String]) }
   def subtype_resource_types
     subtypes.flat_map do |subtype|
-      types_to_resource_types.dig(work_type, 'subtypes', subtype).map do |resource_type|
+      Array(types_to_resource_types.dig(work_type, 'subtypes', subtype)).map do |resource_type|
         resource_type
       end
     end

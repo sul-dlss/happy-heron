@@ -66,6 +66,42 @@ RSpec.describe TypesGenerator do
       end
     end
 
+    context 'with a work of type Image with Image subtype (no subtype derived genre)' do
+      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['image']) }
+
+      it 'generates a single structured value, a single resource type and single genre' do
+        expect(generated).to eq(
+          [
+            Cocina::Models::DescriptiveValue.new(
+              structuredValue: [
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'type',
+                  value: 'Image'
+                ),
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'subtype',
+                  value: 'image'
+                )
+              ],
+              source: { value: 'Stanford self-deposit resource types' },
+              type: 'resource type'
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'genre',
+              value: 'Pictures',
+              uri: 'http://id.loc.gov/authorities/genreForms/gf2017027251',
+              source: { code: 'lcgft' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'still image',
+              source: { value: 'MODS resource types' }
+            )
+          ]
+        )
+      end
+    end
+
     context 'with a work of type Text lacking subtypes' do
       let(:work_version) { build(:work_version, work_type: 'text', subtype: []) }
 
