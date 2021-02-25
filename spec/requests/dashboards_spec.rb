@@ -19,12 +19,14 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user has deposits' do
-    let(:collection) { create(:collection_version_with_collection).collection }
+    let(:user) { collection.depositors.first }
+    let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
     let(:work1) { create(:work, depositor: user, collection: collection) }
     let(:work_version1) { create(:work_version, title: 'Happy little title', work: work1) }
     let(:work_version2) { create(:work_version, title: 'Secret') }
 
     before do
+      create(:collection_version_with_collection, collection: collection)
       work1.update(head: work_version1)
       work_version2.work.update(head: work_version2)
       sign_in user
@@ -39,12 +41,14 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user has a draft deposit with no title' do
-    let(:collection) { create(:collection_version_with_collection).collection }
+    let(:user) { collection.depositors.first }
+    let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
     let(:work1) { create(:work, depositor: user, collection: collection) }
     let(:work_version1) { create(:work_version, title: '', work: work1) }
     let(:work_version2) { create(:work_version, title: 'Secret') }
 
     before do
+      create(:collection_version_with_collection, collection: collection)
       work1.update(head: work_version1)
       work_version2.work.update(head: work_version2)
       sign_in user
@@ -60,7 +64,7 @@ RSpec.describe 'Dashboard requests' do
 
   context 'when user is a collection manager and there is a collection in progress' do
     let(:collection) { create(:collection, managed_by: [user]) }
-    let(:work) { create(:work, collection: collection, depositor: user) }
+    let(:work) { create(:work, collection: collection) }
     let(:work_version) { create(:work_version, work: work) }
     let!(:collection_version) do
       create(:collection_version_with_collection, :first_draft, name: 'Happy collection', collection: collection)
@@ -80,7 +84,8 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user has in progress deposits in different states' do
-    let(:collection) { create(:collection_version_with_collection).collection }
+    let(:user) { collection.depositors.first }
+    let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
     let(:work1) { create(:work, depositor: user, collection: collection) }
     let(:work_version1) { create(:work_version, state: 'first_draft', title: 'I am a first draft', work: work1) }
     let(:work2) { create(:work, depositor: user, collection: collection) }
@@ -97,6 +102,8 @@ RSpec.describe 'Dashboard requests' do
     end
 
     before do
+      create(:collection_version_with_collection, collection: collection)
+
       work1.update(head: work_version1)
       work2.update(head: work_version2)
       work3.update(head: work_version3)
@@ -113,8 +120,9 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include('I am a first draft')
       expect(response.body).to include('I am a version draft')
       expect(response.body).to include('I am rejected')
-      expect(response.body).not_to include('I am deposited')
-      expect(response.body).not_to include('I am depositing')
+      expect(response.body).to include('I am deposited')
+      expect(response.body).to include('I am depositing')
+      expect(response.body).to include('See all deposits')
       expect(response.body).not_to include('I am pending approval')
     end
   end
