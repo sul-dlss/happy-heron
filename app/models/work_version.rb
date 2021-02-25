@@ -96,7 +96,7 @@ class WorkVersion < ApplicationRecord
   def add_purl_to_citation
     return unless citation
 
-    self.citation = T.must(citation).gsub(LINK_TEXT, T.must(work.purl))
+    update!(citation: T.must(citation).gsub(LINK_TEXT, T.must(work.purl)))
   end
 
   sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }

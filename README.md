@@ -125,6 +125,17 @@ Occasionally, particularly if `srb tc` results in an error such as [7003](https:
 
 H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module). Passenger configuration lives in `config/Passengerfile.json` which is managed by Puppet and does not live in the application repository.
 
+### Setup RabbitMQ
+You must set up the durable rabbitmq queues that bind to the exchange where workflow messages are published.
+
+```
+RAILS_ENV=production bin/rake rabbitmq:setup
+```
+This is going to create queues for this application that bind to some topics.
+
+### RabbitMQ queue workers
+RAILS_ENV=production WORKERS=AssignPidJob,DepositStatusJob bin/rake sneakers:run
+
 ## Architecture
 
 H2 uses the [SDR API](https://github.com/sul-dlss/sdr-api) to deposit collections and works (both files and metadata) into SDR.

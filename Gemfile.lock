@@ -66,6 +66,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
+    amq-protocol (2.3.2)
     apparition (0.6.0)
       capybara (~> 3.13, < 4)
       websocket-driver (>= 0.6.5)
@@ -79,6 +80,8 @@ GEM
     bundler-audit (0.7.0.1)
       bundler (>= 1.2.0, < 3)
       thor (>= 0.18, < 2)
+    bunny (2.17.0)
+      amq-protocol (~> 2.3, >= 2.3.1)
     byebug (11.1.3)
     capistrano (3.15.0)
       airbrussh (>= 1.0.0)
@@ -116,7 +119,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     chronic (0.10.2)
-    cocina-models (0.47.2)
+    cocina-models (0.48.0)
       activesupport
       dry-struct (~> 1.0)
       dry-types (~> 1.1)
@@ -252,7 +255,7 @@ GEM
     method_source (1.0.0)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
-    minitest (5.14.3)
+    minitest (5.14.4)
     msgpack (1.4.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
@@ -282,7 +285,7 @@ GEM
       trollop (~> 1.16)
     pg (1.2.3)
     polyfill (1.9.0)
-    psych (3.3.0)
+    psych (3.3.1)
     public_suffix (4.0.6)
     puma (4.3.7)
       nio4r (~> 2.0)
@@ -399,21 +402,30 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     safe_type (1.1.1)
-    sdr-client (0.43.1)
+    sdr-client (0.44.0)
       activesupport
-      cocina-models (~> 0.47.2)
+      cocina-models (~> 0.48.0)
       dry-monads
       faraday (>= 0.16)
     semantic_range (2.3.1)
+    serverengine (2.0.7)
+      sigdump (~> 0.2.2)
     sidekiq (6.1.3)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sigdump (0.2.4)
     simplecov (0.17.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
+    sneakers (2.11.0)
+      bunny (~> 2.12)
+      concurrent-ruby (~> 1.0)
+      rake
+      serverengine (~> 2.0.5)
+      thor
     sorbet (0.5.5981)
       sorbet-static (= 0.5.5981)
     sorbet-coerce (0.3.0)
@@ -503,6 +515,7 @@ DEPENDENCIES
   action_policy (~> 0.5.3)
   apparition
   bootsnap (>= 1.4.2)
+  bunny (~> 2.17)
   byebug
   capistrano-maintenance (~> 1.2)
   capistrano-passenger
@@ -539,9 +552,10 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-sorbet
-  sdr-client (~> 0.43)
+  sdr-client (~> 0.44)
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
+  sneakers (~> 2.11)
   sorbet (= 0.5.5981)
   sorbet-rails (= 0.7.1)
   sorbet-runtime

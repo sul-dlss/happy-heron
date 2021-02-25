@@ -24,7 +24,6 @@ RSpec.describe DepositJob do
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
     allow(SdrClient::Connection).to receive(:new).and_return(conn)
-    allow(DepositStatusJob).to receive(:perform_later)
     allow(Honeybadger).to receive(:notify)
     # rubocop:disable RSpec/MessageChain
     allow(attached_file).to receive_message_chain(:file, :attachment, :blob).and_return(blob)
@@ -45,7 +44,6 @@ RSpec.describe DepositJob do
     it 'initiates a DepositStatusJob' do
       described_class.perform_now(work_version)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).to have_received(:perform_later).with(object: work_version, job_id: 1234)
     end
 
     context 'when the deposit is for a PURL reservation' do
@@ -70,7 +68,6 @@ RSpec.describe DepositJob do
     it 'notifies' do
       described_class.perform_now(work_version)
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(DepositStatusJob).not_to have_received(:perform_later)
       expect(Honeybadger).to have_received(:notify)
     end
   end
