@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/jondot/sneakers.git
+  revision: 31d0cb25dc5bbcfb0749567e9e0f80e6353fb66b
+  ref: 31d0cb25dc5bbcfb0749567e9e0f80e6353fb66b
+  specs:
+    sneakers (2.13.0.pre)
+      bunny (~> 2.14)
+      concurrent-ruby (~> 1.0)
+      rake (>= 12.3, < 14.0)
+      serverengine (~> 2.1.0)
+      thor
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -408,7 +420,7 @@ GEM
       dry-monads
       faraday (>= 0.16)
     semantic_range (2.3.1)
-    serverengine (2.0.7)
+    serverengine (2.1.1)
       sigdump (~> 0.2.2)
     sidekiq (6.1.3)
       connection_pool (>= 2.2.2)
@@ -420,12 +432,6 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    sneakers (2.11.0)
-      bunny (~> 2.12)
-      concurrent-ruby (~> 1.0)
-      rake
-      serverengine (~> 2.0.5)
-      thor
     sorbet (0.5.5981)
       sorbet-static (= 0.5.5981)
     sorbet-coerce (0.3.0)
@@ -555,7 +561,7 @@ DEPENDENCIES
   sdr-client (~> 0.44)
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
-  sneakers (~> 2.11)
+  sneakers!
   sorbet (= 0.5.5981)
   sorbet-rails (= 0.7.1)
   sorbet-runtime
