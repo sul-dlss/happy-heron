@@ -20,7 +20,9 @@ class Collection < ApplicationRecord
                                        '2 years from date of deposit': '2 years',
                                        '3 years from date of deposit': '3 years' }.freeze
   def broadcast_update
-    broadcast_replace_to self
+    broadcast_replace_to self, :settings
+    broadcast_replace_to self, :details, partial: 'collection_versions/collection_version',
+                                         locals: { collection_version: head }
   end
 
   def broadcast_update_collection_summary

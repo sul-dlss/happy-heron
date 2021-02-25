@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Show the collection detail page' do
+RSpec.describe 'Show the collection settings page' do
   context 'with an admin user' do
     let(:user) { create(:user) }
     let(:depositors) { collection.depositors.map(&:sunetid).join(', ') }

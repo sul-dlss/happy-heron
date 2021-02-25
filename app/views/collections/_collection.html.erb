@@ -1,8 +1,5 @@
-<section data-controller="work-type" id="<%= dom_id(collection) %>">
+<section id="<%= dom_id(collection) %>">
   <%= render Collections::HeaderComponent.new(collection_version: collection.head) %>
-  <%= render Collections::InformationComponent.new(collection_version: collection.head) %>
-  <%= render Collections::DetailComponent.new(collection_version: collection.head) %>
-  <%= render Collections::LinksComponent.new(collection_version: collection.head) %>
   <%= render Collections::ReleaseComponent.new(collection: collection) %>
   <%= render Collections::TermsOfUseComponent.new(collection: collection) %>
   <%= render Collections::ParticipantsComponent.new(collection: collection) %>

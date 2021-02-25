@@ -17,6 +17,13 @@ class CollectionPolicy < ApplicationPolicy
   end
 
   sig { returns(T::Boolean) }
+  def show?
+    administrator? || manages_collection?(record) ||
+      record.reviewed_by.include?(user) ||
+      record.depositor_ids.include?(user.id)
+  end
+
+  sig { returns(T::Boolean) }
   def destroy?
     (administrator? || manages_collection?(record)) && record.persisted? && record.head.first_draft?
   end

@@ -1,0 +1,11 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(
+    breadcrumbs: [ { title: @collection_version.name }]) %>
+<% end %>
+<main id="content" class="mb-3 mb-md-5">
+  <div class="container px-4 px-md-3" id="collection">
+    <%= render Collections::Show::TabsComponent.new(collection: @collection_version.collection) %>
+    <%= turbo_stream_from @collection_version.collection, :details %>
+    <%= render @collection_version %>
+  </div>
+</main>

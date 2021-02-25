@@ -67,7 +67,7 @@ class CollectionsController < ObjectsController
 
   def show
     @collection = Collection.find(params[:id])
-    authorize! @collection.head
+    authorize! @collection
   end
 
   def destroy

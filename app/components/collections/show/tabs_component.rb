@@ -16,8 +16,15 @@ module Collections
       sig { returns(String) }
       def collection_details_link
         classes = 'nav-link'
+        classes += ' active' if current_page?(collection_version_path(collection.head))
+        link_to 'Collection details', collection_version_path(collection.head), class: classes, role: 'tab'
+      end
+
+      sig { returns(String) }
+      def collection_settings_link
+        classes = 'nav-link'
         classes += ' active' if current_page?(collection_path(collection))
-        link_to 'Collection details', collection_path(collection), class: classes, role: 'tab'
+        link_to 'Collection settings', collection_path(collection), class: classes, role: 'tab'
       end
 
       sig { returns(String) }
