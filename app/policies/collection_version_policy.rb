@@ -15,10 +15,7 @@ class CollectionVersionPolicy < ApplicationPolicy
 
   sig { returns(T::Boolean) }
   def show?
-    administrator? ||
-      collection.managed_by.include?(user) ||
-      collection.reviewed_by.include?(user) ||
-      collection.depositor_ids.include?(user.id)
+    allowed_to?(:show?, record.collection)
   end
 
   sig { returns(T::Boolean) }

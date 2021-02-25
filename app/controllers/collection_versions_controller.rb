@@ -7,6 +7,11 @@ class CollectionVersionsController < ObjectsController
   before_action :ensure_sdr_updatable, except: [:destroy]
   verify_authorized
 
+  def show
+    @collection_version = CollectionVersion.find(params[:id])
+    authorize! @collection_version
+  end
+
   # Revert the work to the previously deposited version.
   def destroy
     version = CollectionVersion.find(params[:id])

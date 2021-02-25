@@ -14,4 +14,4 @@ Capybara.javascript_driver = :apparition
 Capybara.disable_animation = true
 Capybara.enable_aria_label = true
 Capybara.server = :puma, { Silent: true }
-Capybara.default_max_wait_time = 5 # default is 2
+Capybara.default_max_wait_time = 10 # default is 2
