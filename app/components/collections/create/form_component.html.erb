@@ -2,7 +2,7 @@
 <%= form_with model: collection_form,
     html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
 
-  <% if collection_form.errors.any? %>
+  <% if collection_form.errors.present? %>
     <div id="error_explanation">
       <h2><%= pluralize(collection_form.errors.count, "error") %> prohibited this item from being saved:</h2>
 

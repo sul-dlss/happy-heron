@@ -79,7 +79,7 @@ RSpec.describe 'Updating an existing collection version' do
       context 'when collection fails to save' do
         let(:collection_params) do
           {
-            name: ''
+            contact_emails_attributes: { '0' => { 'email' => '', 'id' => '' } }
           }
         end
 
@@ -91,7 +91,7 @@ RSpec.describe 'Updating an existing collection version' do
           patch "/collection_versions/#{collection_version.id}",
                 params: { collection_version: collection_params, commit: deposit_button }
           expect(response).to have_http_status :unprocessable_entity
-          expect(response.body).to include 'Name can&#39;t be blank'
+          expect(response.body).to include 'input class="form-control is-invalid"'
         end
       end
     end

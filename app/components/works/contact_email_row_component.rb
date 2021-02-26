@@ -27,5 +27,15 @@ module Works
       # Should be a work
       'col-sm-9'
     end
+
+    sig { returns(T::Array[String]) }
+    def errors
+      form.object.errors.where(:email)
+    end
+
+    sig { returns(T::Boolean) }
+    def error?
+      errors.present?
+    end
   end
 end
