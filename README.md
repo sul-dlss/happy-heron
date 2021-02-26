@@ -128,13 +128,25 @@ H2 is deployed via Capistrano to servers running the Passenger server in standal
 ### Setup RabbitMQ
 You must set up the durable rabbitmq queues that bind to the exchange where workflow messages are published.
 
-```
+```sh
 RAILS_ENV=production bin/rake rabbitmq:setup
 ```
 This is going to create queues for this application that bind to some topics.
 
 ### RabbitMQ queue workers
-RAILS_ENV=production WORKERS=AssignPidJob,DepositStatusJob bin/rake sneakers:run
+In a development environment you can start sneakers this way:
+```sh
+WORKERS=AssignPidJob,DepositStatusJob bin/rake sneakers:run
+```
+
+but on the production machines we use systemd to do the same:
+```sh
+sudo /usr/bin/systemctl start sneakers
+sudo /usr/bin/systemctl stop sneakers
+sudo /usr/bin/systemctl status sneakers
+```
+
+This is started automatically during a deploy via capistrano
 
 ## Architecture
 

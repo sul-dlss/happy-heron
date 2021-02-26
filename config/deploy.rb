@@ -51,6 +51,9 @@ set :honeybadger_env, fetch(:stage)
 # Manage sidekiq via systemd (from dlss-capistrano gem)
 set :sidekiq_systemd_use_hooks, true
 
+# Manage sneakers via systemd (from dlss-capistrano gem)
+set :sneakers_systemd_use_hooks, true
+
 # Use bundler 2-style configuration (from dlss-capistrano gem)
 set :bundler2_config_use_hook, true
 

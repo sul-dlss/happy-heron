@@ -159,7 +159,7 @@ GEM
       declarative-option (< 0.2.0)
       representable (>= 2.4.0, <= 3.1.0)
       uber (< 0.2.0)
-    dlss-capistrano (3.10.1)
+    dlss-capistrano (3.11.1)
       capistrano (~> 3.0)
       capistrano-bundle_audit (>= 0.3.0)
       capistrano-one_time_key
@@ -526,7 +526,7 @@ DEPENDENCIES
   config (~> 2.2)
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
-  dlss-capistrano (~> 3.6)
+  dlss-capistrano (~> 3.11)
   druid-tools
   dry-types
   edtf
