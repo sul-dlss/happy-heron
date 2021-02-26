@@ -309,7 +309,7 @@ def attach_files(json, work_version)
     next if attached_file
 
     File.open(pathname) do |file|
-      attached_file = work_version.attached_files.build(label: file_data['label'])
+      attached_file = work_version.attached_files.build(label: file_data['label'], hide: file_data['hide'])
       attached_file.file.attach(io: file, filename: filename)
       attached_file.save!
     end
