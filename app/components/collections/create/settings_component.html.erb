@@ -112,7 +112,7 @@
 
     <!-- TODO: only display sunet entry field if reviewer workflow is enabled -->
     <p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
-    <div class="mb-3 row" data-edit-collection-target="reviewerSunetsField">
+    <div class="mb-3 row">
       <div class="col-sm-2">
         <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-form-label' %>
         <%= render PopoverComponent.new key: 'collection.reviewers' %>
