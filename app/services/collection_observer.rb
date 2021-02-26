@@ -17,61 +17,59 @@ class CollectionObserver
     event_params = { user: user, event_type: 'settings updated' }
     event_params[:description] = change_set.participant_change_description if change_set.participants_changed?
     collection.events.create(event_params)
-
-    managers_added(collection, change_set)
-    managers_removed(collection, change_set)
-    depositors_added(collection, change_set)
-    depositors_removed(collection, change_set)
-    reviewers_added(collection, change_set)
-    reviewers_removed(collection, change_set)
+    collection_version = collection.head
+    managers_added(collection_version, change_set)
+    managers_removed(collection_version, change_set)
+    depositors_added(collection_version, change_set)
+    depositors_removed(collection_version, change_set) if collection.email_depositors_status_changed?
+    reviewers_added(collection_version, change_set)
+    reviewers_removed(collection_version, change_set)
     send_participant_change_emails(collection, change_set)
   end
 
-  def self.depositors_added(collection, change_set)
+  def self.depositors_added(collection_version, change_set)
     change_set.added_depositors.each do |depositor|
-      CollectionsMailer.with(collection: collection, user: depositor)
+      CollectionsMailer.with(collection_version: collection_version, user: depositor)
                        .invitation_to_deposit_email.deliver_later
     end
   end
   private_class_method :depositors_added
 
-  def self.managers_added(collection, change_set)
+  def self.managers_added(collection_version, change_set)
     change_set.added_managers.each do |manager|
-      CollectionsMailer.with(collection: collection, user: manager)
+      CollectionsMailer.with(collection_version: collection_version, user: manager)
                        .manage_access_granted_email.deliver_later
     end
   end
   private_class_method :managers_added
 
-  def self.managers_removed(collection, change_set)
+  def self.managers_removed(collection_version, change_set)
     change_set.removed_managers.each do |manager|
-      CollectionsMailer.with(collection: collection, user: manager)
+      CollectionsMailer.with(collection_version: collection_version, user: manager)
                        .manage_access_removed_email.deliver_later
     end
   end
   private_class_method :managers_removed
 
-  def self.depositors_removed(collection, change_set)
-    return unless collection.email_depositors_status_changed?
-
+  def self.depositors_removed(collection_version, change_set)
     change_set.removed_depositors.each do |depositor|
-      CollectionsMailer.with(collection: collection, user: depositor)
+      CollectionsMailer.with(collection_version: collection_version, user: depositor)
                        .deposit_access_removed_email.deliver_later
     end
   end
   private_class_method :depositors_removed
 
-  def self.reviewers_added(collection, change_set)
+  def self.reviewers_added(collection_version, change_set)
     change_set.added_reviewers.each do |reviewer|
-      CollectionsMailer.with(collection: collection, user: reviewer)
+      CollectionsMailer.with(collection_version: collection_version, user: reviewer)
                        .review_access_granted_email.deliver_later
     end
   end
   private_class_method :reviewers_added
 
-  def self.reviewers_removed(collection, change_set)
+  def self.reviewers_removed(collection_version, change_set)
     change_set.removed_reviewers.each do |reviewer|
-      CollectionsMailer.with(collection: collection, user: reviewer)
+      CollectionsMailer.with(collection_version: collection_version, user: reviewer)
                        .review_access_removed_email.deliver_later
     end
   end
@@ -81,7 +79,7 @@ class CollectionObserver
     return unless collection.email_when_participants_changed? && change_set.participants_changed?
 
     (collection.managed_by + collection.reviewed_by).each do |user|
-      CollectionsMailer.with(collection: collection, user: user)
+      CollectionsMailer.with(collection_version: collection.head, user: user)
                        .participants_changed_email.deliver_later
     end
   end

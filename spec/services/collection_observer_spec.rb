@@ -4,7 +4,8 @@
 require 'rails_helper'
 
 RSpec.describe CollectionObserver do
-  let(:collection) { build(:collection) }
+  let(:collection) { create(:collection) }
+  let!(:collection_version) { create(:collection_version_with_collection, collection: collection) }
 
   describe '.after_update_published' do
     subject(:action) do
@@ -24,7 +25,7 @@ RSpec.describe CollectionObserver do
         it 'sends emails to those removed' do
           expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'deposit_access_removed_email', 'deliver_now',
-            { params: { user: collection.depositors.last, collection: collection }, args: [] }
+            { params: { user: collection.depositors.last, collection_version: collection_version }, args: [] }
           )
         end
       end
@@ -41,17 +42,17 @@ RSpec.describe CollectionObserver do
         it 'sends emails to the managers about the participants change' do
           expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-            { params: { user: manager, collection: collection }, args: [] }
+            { params: { user: manager, collection_version: collection_version }, args: [] }
           )
         end
 
         it 'sends emails to the reviewers about the participants change' do
           expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-            { params: { user: reviewer, collection: collection }, args: [] }
+            { params: { user: reviewer, collection_version: collection_version }, args: [] }
           ).and have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-            { params: { user: reviewer2, collection: collection }, args: [] }
+            { params: { user: reviewer2, collection_version: collection_version }, args: [] }
           )
         end
       end
@@ -89,7 +90,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'manage_access_granted_email', 'deliver_now',
-          { params: { user: manager, collection: collection }, args: [] }
+          { params: { user: manager, collection_version: collection_version }, args: [] }
         )
       end
     end
@@ -103,7 +104,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'manage_access_removed_email', 'deliver_now',
-          { params: { user: collection.managed_by.last, collection: collection }, args: [] }
+          { params: { user: collection.managed_by.last, collection_version: collection_version }, args: [] }
         )
       end
     end
@@ -116,7 +117,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
-          { params: { user: reviewer, collection: collection }, args: [] }
+          { params: { user: reviewer, collection_version: collection_version }, args: [] }
         )
       end
     end
@@ -130,7 +131,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_removed_email', 'deliver_now',
-          { params: { user: collection.reviewed_by.last, collection: collection }, args: [] }
+          { params: { user: collection.reviewed_by.last, collection_version: collection_version }, args: [] }
         )
       end
     end
