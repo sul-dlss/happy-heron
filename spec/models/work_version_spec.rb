@@ -308,6 +308,7 @@ RSpec.describe WorkVersion do
 
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :with_managers) }
+      let(:collection_version) { create(:collection_version_with_collection, collection: collection) }
       let(:work_version) { create(:work_version, state: state, work: work) }
       let(:work) { create(:work, collection: collection, depositor: collection.managed_by.first) }
 
@@ -324,7 +325,7 @@ RSpec.describe WorkVersion do
                                              { params: {
                                                user: collection.managed_by.last,
                                                depositor: work.depositor,
-                                               collection: collection
+                                               collection_version: collection_version
                                              }, args: [] }
                                            ))
         end

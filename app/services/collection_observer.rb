@@ -7,7 +7,7 @@ class CollectionObserver
     depositor = work_version.work.depositor
     collection = work_version.work.collection
     collection.managed_by.reject { |manager| manager == depositor }.each do |user|
-      mailer = CollectionsMailer.with(user: user, collection: collection, depositor: depositor)
+      mailer = CollectionsMailer.with(user: user, collection_version: collection.head, depositor: depositor)
       mailer.collection_activity.deliver_later
     end
   end
