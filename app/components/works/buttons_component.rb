@@ -15,15 +15,11 @@ module Works
       work_in_reviewed_coll? ? 'Submit for approval' : 'Deposit'
     end
 
-    sig { returns(T.nilable(String)) }
-    def cancel_button
-      render Works::CancelComponent.new(work: model)
-    end
-
     private
 
     delegate :object, to: :form
     delegate :first_draft?, :version_draft?, :title, to: :work_version
+    delegate :collection, to: :model
 
     def work_version
       object.model.fetch(:work_version)
@@ -35,7 +31,7 @@ module Works
 
     sig { returns(T.nilable(T::Boolean)) }
     def work_in_reviewed_coll?
-      model.collection.review_enabled?
+      collection.review_enabled?
     end
   end
 end

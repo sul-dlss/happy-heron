@@ -11,9 +11,9 @@ module Collections
 
       attr_reader :form
 
-      sig { returns(T.nilable(String)) }
+      sig { returns(String) }
       def cancel_button
-        render Collections::CancelComponent.new(collection: model)
+        link_to 'Cancel', dashboard_path
       end
 
       delegate :object, to: :form

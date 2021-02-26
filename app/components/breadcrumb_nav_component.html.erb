@@ -4,11 +4,10 @@
       <% breadcrumbs.each do |breadcrumb| %>
         <li class="breadcrumb-item">
           <% if breadcrumb[:link].blank? %>
-            <span title="<%=full_title(breadcrumb[:title])%>" class="breadcrumb-link"><%= truncated_title(breadcrumb[:title]) %></span>
+            <span title="<%= full_title(breadcrumb[:title]) %>" class="breadcrumb-link"><%= truncated_title(breadcrumb[:title]) %></span>
           <% else %>
-            <%= link_to truncated_title(breadcrumb[:title]),
-                          breadcrumb[:link], class: 'breadcrumb-link', title: full_title(breadcrumb[:title]),
-                          data: (breadcrumb[:confirm] ? { confirm: 'Are you sure you want to leave this page? Your changes will not be saved.' } : nil) %>
+            <%= link_to truncated_title(breadcrumb[:title]), breadcrumb[:link],
+                  class: 'breadcrumb-link', title: full_title(breadcrumb[:title]) %>
           <% end %>
         </li>
       <% end %>

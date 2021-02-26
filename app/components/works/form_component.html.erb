@@ -1,7 +1,8 @@
 <h1><%= page_title %></h1>
 <%= form_with model: work_form, url: url,
     data: {
-      controller: 'edit-deposit auto-citation',
+      controller: 'edit-deposit auto-citation unsaved-changes',
+      action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage',
       edit_deposit_endpoint_value: work_form.persisted? ? work_validate_path(work.id) : collection_validate_path(work_form.collection_id),
       auto_citation_purl: purl
     },

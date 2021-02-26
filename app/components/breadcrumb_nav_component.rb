@@ -3,9 +3,9 @@
 
 # Displays the top bread crumb navigation
 class BreadcrumbNavComponent < ApplicationComponent
-  def initialize(breadcrumbs: [], show_dashboard: true, confirm_dashboard: false)
+  def initialize(breadcrumbs: [], show_dashboard: true)
     @breadcrumbs = breadcrumbs
-    @breadcrumbs.unshift({ title: 'Dashboard', link: '/dashboard', confirm: confirm_dashboard }) if show_dashboard
+    @breadcrumbs.unshift({ title: 'Dashboard', link: '/dashboard' }) if show_dashboard
   end
 
   sig { params(breadcrumb: T.nilable(String)).returns(T.nilable(String)) }
