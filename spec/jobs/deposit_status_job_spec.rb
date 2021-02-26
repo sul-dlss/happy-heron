@@ -27,7 +27,7 @@ RSpec.describe DepositStatusJob do
         { params: {
           user: collection.managed_by.last,
           depositor: work.depositor,
-          collection: collection
+          collection_version: collection_version
         }, args: [] }
       )
 
