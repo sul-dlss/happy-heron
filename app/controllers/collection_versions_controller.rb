@@ -31,7 +31,7 @@ class CollectionVersionsController < ObjectsController
     collection_version = CollectionVersion.find(params[:id])
     authorize! collection_version
 
-    @form = collection_form(collection_version)
+    @form = DraftCollectionVersionForm.new(collection_version)
     @form.prepopulate!
   end
 
@@ -45,6 +45,7 @@ class CollectionVersionsController < ObjectsController
 
     authorize! collection_version
     @form = collection_form(collection_version)
+
     if @form.validate(clean_params) && @form.save
       after_save(collection: collection_version.collection, collection_version: collection_version)
     else

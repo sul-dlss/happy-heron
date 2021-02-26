@@ -4,7 +4,7 @@
 # The form for collection creation and editing
 class DraftCollectionVersionForm < Reform::Form
   extend T::Sig
-  model 'collection_version'
+  model 'collection_version' # Required so that rails knows where to route this form to.
 
   property :name, on: :collection_version
   property :description, on: :collection_version
@@ -32,4 +32,7 @@ class DraftCollectionVersionForm < Reform::Form
       model.collection.update(head: model)
     end
   end
+
+  # Required so that rails knows this is an update and uses the PATCH method for the form.
+  delegate :persisted?, to: :model
 end
