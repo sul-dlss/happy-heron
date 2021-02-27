@@ -63,6 +63,24 @@ RSpec.describe WorkVersionPolicy do
       let(:record) { build_stubbed :work_version, :depositing, work: work }
     end
 
+    failed 'when user is an admin and status is depositing' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      let(:work) { build_stubbed :work, collection: collection }
+      let(:record) { build_stubbed :work_version, :depositing, work: work }
+    end
+
+    failed 'when user is an admin and status is purl_requested' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      let(:work) { build_stubbed :work, collection: collection }
+      let(:record) { build_stubbed :work_version, :purl_requested, work: work }
+    end
+
+    failed 'when user is an admin and status is reserving_purl' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      let(:work) { build_stubbed :work, collection: collection }
+      let(:record) { build_stubbed :work_version, :reserving_purl, work: work }
+    end
+
     succeed 'when user is an admin and status is not pending_approval' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end

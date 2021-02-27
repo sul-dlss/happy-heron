@@ -28,7 +28,7 @@ class WorkVersionPolicy < ApplicationPolicy
   end
 
   # Can edit a work iff:
-  #   The work is in a state where it can be updated (e.g. not depositing)
+  #   The work is in a state where it can be updated (e.g. not depositing, not an in-progress purl reservation)
   #   AND if any one of the following is true:
   #     1. The user is an administrator
   #     2. The user is the depositor of the work and it is not currently pending approval (review workflow)
@@ -36,11 +36,13 @@ class WorkVersionPolicy < ApplicationPolicy
   #     4. The user is a reviewer of the collection the work is in
   sig { returns(T::Boolean) }
   def update?
+    return false unless record.updatable?
+
     return true if administrator? ||
                    collection.managed_by.include?(user) ||
                    collection.reviewed_by.include?(user)
 
-    depositor? && record.updatable? && !record.pending_approval?
+    depositor? && !record.pending_approval?
   end
   # Can show a work iff any one of the following is true:
   #   1. The user is an administrator
