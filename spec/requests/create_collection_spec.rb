@@ -277,7 +277,7 @@ RSpec.describe 'Create a collection' do
         it 'renders the page again' do
           post '/collections', params: { collection: collection_params, commit: deposit_button }
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.body).to include 'Description can&#39;t be blank'
+          expect(response.body).to include 'is-invalid'
         end
       end
     end
