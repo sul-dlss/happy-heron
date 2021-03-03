@@ -8,7 +8,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
   let(:collection_name) { collection_version.name }
   let(:collection) { build_stubbed(:collection) }
 
-  describe '#invitation_to_deposit_email' do
+  describe '#invitation_to_deposit_email for new user with no name' do
     let(:user) { collection.depositors.first }
     let(:mail) { described_class.with(user: user, collection_version: collection_version).invitation_to_deposit_email }
     let(:collection) { build_stubbed(:collection, :with_depositors) }
@@ -20,6 +20,26 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
 
     it 'renders the body' do
+      expect(mail.body.encoded).to match('Dear New SDR User,')
+      expect(mail.body.encoded).to match("You have been invited to deposit to the #{collection_name} collection")
+    end
+  end
+
+  describe '#invitation_to_deposit_email for user with a name' do
+    let(:user) { collection.depositors.first }
+    let(:mail) { described_class.with(user: user, collection_version: collection_version).invitation_to_deposit_email }
+    let(:collection) { build_stubbed(:collection, :with_depositors) }
+
+    before { user.update(name: 'Smart Person') }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq "Invitation to deposit to the #{collection_name} collection in the SDR"
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match('Dear Smart Person,')
       expect(mail.body.encoded).to match("You have been invited to deposit to the #{collection_name} collection")
     end
   end

@@ -4,7 +4,7 @@
 # Sends emails to people who review deposits
 class ReviewersMailer < ApplicationMailer
   def submitted_email
-    @user = params[:user]
+    @user = UserPresenter.new(user: params[:user])
     @work_version = params[:work_version]
     @work = @work_version.work
     mail(to: @user.email, subject: "New deposit activity in the #{@work.collection_name} collection")
