@@ -63,31 +63,29 @@ RSpec.describe WorkVersionPolicy do
       let(:record) { build_stubbed :work_version, :depositing, work: work }
     end
 
-    failed 'when user is an admin and status is depositing' do
+    context 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:work) { build_stubbed :work, collection: collection }
-      let(:record) { build_stubbed :work_version, :depositing, work: work }
-    end
 
-    failed 'when user is an admin and status is purl_requested' do
-      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:work) { build_stubbed :work, collection: collection }
-      let(:record) { build_stubbed :work_version, :purl_requested, work: work }
-    end
+      failed 'when status is depositing' do
+        let(:work) { build_stubbed :work, collection: collection }
+        let(:record) { build_stubbed :work_version, :depositing, work: work }
+      end
 
-    failed 'when user is an admin and status is reserving_purl' do
-      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:work) { build_stubbed :work, collection: collection }
-      let(:record) { build_stubbed :work_version, :reserving_purl, work: work }
-    end
+      failed 'when status is purl_requested' do
+        let(:work) { build_stubbed :work, collection: collection }
+        let(:record) { build_stubbed :work_version, :purl_requested, work: work }
+      end
 
-    succeed 'when user is an admin and status is not pending_approval' do
-      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-    end
+      failed 'when status is reserving_purl' do
+        let(:work) { build_stubbed :work, collection: collection }
+        let(:record) { build_stubbed :work_version, :reserving_purl, work: work }
+      end
 
-    succeed 'when user is an admin and status is pending_approval' do
-      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      succeed 'when status is not pending_approval'
+
+      succeed 'when status is pending_approval' do
+        let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      end
     end
 
     succeed 'when user is a collection manager and status is not pending_approval' do
