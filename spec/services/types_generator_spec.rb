@@ -272,7 +272,12 @@ RSpec.describe TypesGenerator do
           .sort
           .uniq
       end
-      let(:known_genreless) { ['Policy brief', 'Speaker notes'] }
+      # these represent subtypes that will get the genre from the parent type
+      let(:known_genreless) do
+        ['Policy brief', 'Speaker notes', '3D model', 'Book chapter', 'Broadcast',
+         'Conference session', 'Other spoken word', 'Presentation recording',
+         'Presentation slides', 'Text']
+      end
 
       it 'has one genre for each' do
         expect(all_type_genres).to include(*(WorkType.more_types - known_genreless))
