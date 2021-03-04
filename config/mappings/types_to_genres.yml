@@ -938,113 +938,49 @@ Image:
       source:
         code: lcgft
   subtypes:
-    3D model:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Animation:
       - type: genre
         value: animations (visual works)
         uri: http://vocab.getty.edu/aat/300411663
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Article:
       - type: genre
         value: articles
         uri: http://vocab.getty.edu/aat/300048715
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Book:
       - type: genre
         value: books
         uri: http://vocab.getty.edu/aat/300028051
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Book chapter:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Broadcast:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
         uri: http://vocab.getty.edu/aat/300418056
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Code:
       - type: genre
         value: programs (computer)
         uri: http://vocab.getty.edu/aat/300312188
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Conference session:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Correspondence:
       - type: genre
         value: correspondence
         uri: http://vocab.getty.edu/aat/300026877
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Course/instructional materials:
       - type: genre
         value: Instructional and educational works
         uri: http://id.loc.gov/authorities/genreForms/gf2014026114
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Data:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
       - type: genre
         value: Data sets
         uri: https://id.loc.gov/authorities/genreForms/gf2018026119
@@ -1061,11 +997,6 @@ Image:
         source:
           code: lcgft
       - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-      - type: genre
         value: dataset
         source:
           code: local
@@ -1075,31 +1006,16 @@ Image:
         uri: http://vocab.getty.edu/aat/300249172
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Documentation:
       - type: genre
         value: technical manuals
         uri: http://vocab.getty.edu/aat/300026413
         source:
            code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Dramatic performance:
       - type: genre
         value: Drama
         uri: http://id.loc.gov/authorities/genreForms/gf2014026297
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Essay:
@@ -1108,20 +1024,10 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026094
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Ethnography:
       - type: genre
         value: Ethnographies
         uri: http://id.loc.gov/authorities/genreForms/gf2018026013
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Event:
@@ -1130,26 +1036,10 @@ Image:
         uri: http://vocab.getty.edu/aat/300069084
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Experimental audio/video:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Field recording:
       - type: genre
         value: Field recordings
         uri: http://id.loc.gov/authorities/genreForms/gf2011026253
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Game:
@@ -1158,20 +1048,10 @@ Image:
         uri: http://vocab.getty.edu/aat/300422211
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Geospatial data:
       - type: genre
         value: Geographic information systems
         uri: http://id.loc.gov/authorities/genreForms/gf2011026294
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
       - type: genre
@@ -1184,11 +1064,6 @@ Image:
         uri: http://vocab.getty.edu/aat/300027777
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Image:
       - type: genre
         value: Pictures
@@ -1201,20 +1076,10 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026115
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Journal/periodical issue:
       - type: genre
         value: Periodicals
         uri: http://id.loc.gov/authorities/genreForms/gf2014026139
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Manuscript:
@@ -1223,20 +1088,10 @@ Image:
         uri: http://vocab.getty.edu/aat/300028569
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Map:
       - type: genre
         value: Maps
         uri: http://id.loc.gov/authorities/genreForms/gf2011026387
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     MIDI:
@@ -1245,31 +1100,16 @@ Image:
         uri: http://vocab.getty.edu/aat/300266746
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
         uri: http://vocab.getty.edu/aat/300404333
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Notated music:
       - type: genre
         value: Notated music
         uri: http://id.loc.gov/authorities/genreForms/gf2014027184
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Narrative film:
@@ -1278,32 +1118,10 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2011026250
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Oral history:
       - type: genre
         value: Oral histories
         uri: http://id.loc.gov/authorities/genreForms/gf2011026431
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Other spoken word:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Performance:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Photograph:
@@ -1312,31 +1130,16 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2017027249
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Piano roll:
       - type: genre
         value: music rolls
         uri: http://vocab.getty.edu/aat/300429369
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Podcast:
       - type: genre
         value: Podcasts
         uri: http://id.loc.gov/authorities/genreForms/gf2011026450
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Poetry reading:
@@ -1345,26 +1148,10 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Policy brief:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Poster:
       - type: genre
         value: Posters
         uri: http://id.loc.gov/authorities/genreForms/gf2014026152
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Preprint:
@@ -1373,43 +1160,16 @@ Image:
         uri: http://vocab.getty.edu/aat/300256200
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Presentation recording:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Presentation slides:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Questionnaire:
       - type: genre
         value: Questionnaires
         uri: http://id.loc.gov/authorities/genreForms/gf2018026144
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Remote sensing imagery:
       - type: genre
         value: Remote-sensing images
         uri: http://id.loc.gov/authorities/genreForms/gf2011026530
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
       - type: genre
@@ -1422,37 +1182,16 @@ Image:
         uri: http://vocab.getty.edu/aat/300027267
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Software:
       - type: genre
         value: software
         uri: http://vocab.getty.edu/aat/300028566
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Sound recording:
       - type: genre
         value: Sound recordings
         uri: http://id.loc.gov/authorities/genreForms/gf2011026594
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Speaker notes:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Speech:
@@ -1461,31 +1200,16 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2011026363
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Statistical model:
       - type: genre
         value: mathematical models
         uri: http://vocab.getty.edu/aat/300065075
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Story:
       - type: genre
         value: Fiction
         uri: http://id.loc.gov/authorities/genreForms/gf2014026339
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Syllabus:
@@ -1494,20 +1218,10 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026136
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Tabular data:
       - type: genre
         value: Tables (data)
         uri: http://id.loc.gov/authorities/genreForms/gf2014026186
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
       - type: genre
@@ -1520,11 +1234,6 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2015026093
         source:
           code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Text corpus:
       - type: genre
         value: Text corpora
@@ -1532,29 +1241,13 @@ Image:
         source:
           code: lcgft
       - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-      - type: genre
         value: dataset
         source:
           code: local
-    Text:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Thesis:
       - type: genre
         value: Academic theses
         uri: http://id.loc.gov/authorities/genreForms/gf2014026039
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Transcript:
@@ -1563,26 +1256,10 @@ Image:
         uri: http://vocab.getty.edu/aat/300027388
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Unedited recording:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Video art:
       - type: genre
         value: Video art
         uri: http://id.loc.gov/authorities/genreForms/gf2017027265
-        source:
-          code: lcgft
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
         source:
           code: lcgft
     Video recording:
@@ -1591,33 +1268,18 @@ Image:
         uri: http://vocab.getty.edu/aat/300263857
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     White paper:
       - type: genre
         value: grey literature
         uri: http://vocab.getty.edu/aat/300256200
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
     Working paper:
       - type: genre
         value: grey literature
         uri: http://vocab.getty.edu/aat/300256200
         source:
           code: aat
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
 Mixed Materials:
   subtypes:
     Animation:

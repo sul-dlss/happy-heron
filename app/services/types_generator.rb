@@ -64,7 +64,7 @@ class TypesGenerator
     # add the top level genre mapping (i.e. top level work type with no subtype)
     type_genres = types_to_genres.dig(work_type, 'type') || []
 
-    all_genres = type_genres + subtype_genres
+    all_genres = (type_genres + subtype_genres).uniq
     all_genres.map { |genre| Cocina::Models::DescriptiveValue.new(genre) }
   end
 

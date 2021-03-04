@@ -3050,6 +3050,11 @@ Sound:
         source:
           value: MODS resource types
 Text:
+  type:
+    - type: resource type
+      value: text
+      source:
+        value: MODS resource types
   subtypes:
     3D model:
       - type: resource type
@@ -3474,6 +3479,11 @@ Text:
         source:
           value: MODS resource types
 Video:
+  type:
+    - type: resource type
+      value: moving image
+      source:
+        value: MODS resource types
   subtypes:
     3D model:
       - type: resource type

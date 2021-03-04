@@ -80,7 +80,7 @@ RSpec.describe TypesGenerator do
                 ),
                 Cocina::Models::DescriptiveValue.new(
                   type: 'subtype',
-                  value: 'image'
+                  value: 'Image'
                 )
               ],
               source: { value: 'Stanford self-deposit resource types' },
@@ -95,6 +95,53 @@ RSpec.describe TypesGenerator do
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
               value: 'still image',
+              source: { value: 'MODS resource types' }
+            )
+          ]
+        )
+      end
+    end
+
+    context 'with a work of type Image with Animation subtype (top level genre plus subtype derived genre)' do
+      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Animation']) }
+
+      it 'generates a single structured value, two resource types and two genres' do
+        expect(generated).to eq(
+          [
+            Cocina::Models::DescriptiveValue.new(
+              structuredValue: [
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'type',
+                  value: 'Image'
+                ),
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'subtype',
+                  value: 'Animation'
+                )
+              ],
+              source: { value: 'Stanford self-deposit resource types' },
+              type: 'resource type'
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'genre',
+              value: 'Pictures',
+              uri: 'http://id.loc.gov/authorities/genreForms/gf2017027251',
+              source: { code: 'lcgft' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'genre',
+              value: 'animations (visual works)',
+              uri: 'http://vocab.getty.edu/aat/300411663',
+              source: { code: 'aat' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'still image',
+              source: { value: 'MODS resource types' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'moving image',
               source: { value: 'MODS resource types' }
             )
           ]
