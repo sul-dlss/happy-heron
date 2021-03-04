@@ -22,7 +22,7 @@
 
   <div class="row">
     <div class="col text-end">
-      <%= link_to 'Cancel', dashboard_path %>
+      <%= link_to 'Cancel', dashboard_path, class: 'btn btn-link' %>
       <%= form.submit 'Save', class: 'btn btn-primary', data: { action: 'unsaved-changes#allowFormSubmission' } %>
     </div>
   </div>

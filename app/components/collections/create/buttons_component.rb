@@ -13,7 +13,7 @@ module Collections
 
       sig { returns(String) }
       def cancel_button
-        link_to 'Cancel', dashboard_path
+        link_to 'Cancel', dashboard_path, class: 'btn btn-link'
       end
 
       delegate :object, to: :form

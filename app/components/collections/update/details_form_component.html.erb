@@ -22,7 +22,7 @@
     <div class="col-auto">
     </div>
     <div class="col-auto">
-      <%= link_to 'Cancel', dashboard_path %>
+      <%= link_to 'Cancel', dashboard_path, class: 'btn btn-link' %>
       <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button', data: { action: 'unsaved-changes#allowFormSubmission' } %>
       <%= form.submit 'Deposit', class: 'btn btn-primary', data: { action: 'unsaved-changes#allowFormSubmission' } %>
     </div>
