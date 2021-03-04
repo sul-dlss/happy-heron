@@ -251,6 +251,7 @@ RSpec.describe TypesGenerator do
 
       it 'has one resource type for each' do
         # NOTE: General mappings do not correspond to a particular type
+        expect(work_type_labels).to match_array(types_to_resource_types.keys - ['General'])
       end
     end
 
