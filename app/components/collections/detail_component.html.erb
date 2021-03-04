@@ -1,6 +1,8 @@
 <table class="table table-sm mb-5 caption-header">
   <caption>Details
-    <%= render Collections::EditLinkComponent.new(collection_version: collection_version, anchor: '', label: 'Edit details') %>
+    <%= link_to edit_collection_version_path(collection_version), aria: { label: 'Edit details' } do %>
+      <span class="fas fa-pencil-alt edit"></span>
+    <% end %>
   </caption>
 
   <tbody>
