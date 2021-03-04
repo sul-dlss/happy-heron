@@ -79,7 +79,7 @@ class TypesGenerator
     return [] if work_type == 'Other'
 
     # add the top level resource type mapping (i.e. top level work type with no subtype)
-    resource_types = [types_to_resource_types.dig(work_type, 'type')]
+    resource_types = Array(types_to_resource_types.dig(work_type, 'type'))
 
     # uniq and compact the list of resource types, since multiple subtypes can map
     # to the same resource type but we only need them mapped once

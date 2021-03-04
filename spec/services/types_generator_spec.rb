@@ -67,7 +67,7 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type Image with Image subtype (no subtype derived genre)' do
-      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['image']) }
+      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Image']) }
 
       it 'generates a single structured value, a single resource type and single genre' do
         expect(generated).to eq(
@@ -187,7 +187,7 @@ RSpec.describe TypesGenerator do
   end
 
   describe 'cocina mapping' do
-    non_other_work_types = WorkType.all.reject { |work_type| work_type.id == 'other' }
+    work_types = WorkType.all
 
     let(:generator) { described_class.new(work_version: work_version) }
     let(:types_to_genres) { generator.send(:types_to_genres) }
@@ -195,7 +195,7 @@ RSpec.describe TypesGenerator do
 
     describe 'for work types' do
       # NOTE: the Other type has no mappings
-      let(:work_type_labels) { non_other_work_types.map(&:label) }
+      let(:work_type_labels) { work_types.map(&:label) }
 
       it 'has one genre for each' do
         # NOTE: General mappings do not correspond to a particular type
@@ -204,32 +204,6 @@ RSpec.describe TypesGenerator do
 
       it 'has one resource type for each' do
         # NOTE: General mappings do not correspond to a particular type
-        expect(work_type_labels).to match_array(types_to_resource_types.keys - ['General'])
-      end
-    end
-
-    describe 'for subtypes' do
-      non_other_work_types.each do |work_type|
-        context "with type #{work_type.label}" do
-          let(:known_genreless) do
-            case work_type.label
-            when 'Data'
-              ['Documentation']
-            when 'Text'
-              ['Policy brief']
-            else
-              []
-            end
-          end
-
-          it 'has a one-to-one genre mapping to subtypes' do
-            expect(work_type.subtypes - known_genreless).to eq(types_to_genres[work_type.label]['subtypes'].keys)
-          end
-
-          it 'has a one-to-one resource type mapping to subtypes' do
-            expect(work_type.subtypes).to eq(types_to_resource_types[work_type.label]['subtypes'].keys)
-          end
-        end
       end
     end
 
