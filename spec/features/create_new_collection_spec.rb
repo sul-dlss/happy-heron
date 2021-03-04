@@ -48,6 +48,7 @@ RSpec.describe 'Create a new collection', js: true do
       visit dashboard_path
 
       click_link '+ Create a new collection'
+      fill_in 'Collection name', with: collection_version_attrs.fetch(:name)
 
       accept_confirm do
         click_link 'Cancel'
@@ -60,6 +61,7 @@ RSpec.describe 'Create a new collection', js: true do
       visit dashboard_path
 
       click_link '+ Create a new collection'
+      fill_in 'Collection name', with: collection_version_attrs.fetch(:name)
 
       dismiss_confirm do
         click_link 'Cancel'

@@ -1,5 +1,9 @@
 <header>All fields are required, unless otherwise noted.</header>
 <%= form_with model: collection_form,
+    data: {
+      controller: 'unsaved-changes',
+      action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage'
+    },
     html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
 
   <% if collection_form.errors.present? %>
@@ -18,8 +22,8 @@
 
   <div class="row">
     <div class="col text-end">
-      <%= render Collections::CancelComponent.new(collection: model) %>
-      <%= form.submit 'Save', class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', dashboard_path %>
+      <%= form.submit 'Save', class: 'btn btn-primary', data: { action: 'unsaved-changes#allowFormSubmission' } %>
     </div>
   </div>
 

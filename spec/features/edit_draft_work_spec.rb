@@ -69,6 +69,7 @@ RSpec.describe 'Edit a draft work', js: true do
     visit dashboard_path
 
     click_link 'Yes!'
+    fill_in 'Abstract', with: 'Change made'
 
     accept_confirm do
       click_link 'Cancel'
@@ -81,6 +82,7 @@ RSpec.describe 'Edit a draft work', js: true do
     visit dashboard_path
 
     click_link 'Yes!'
+    fill_in 'Abstract', with: 'Change made'
 
     dismiss_confirm do
       click_link 'Cancel'
