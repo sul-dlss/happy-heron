@@ -32,10 +32,14 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
       expect(work_version.work.depositor).to eq user
       expect(work_version.work_type).to eq WorkType.purl_reservation_type.id
 
-      # fake deposit completion
-      work_version.work.update(druid: druid)
-      work_version.add_purl_to_citation
-      work_version.deposit_complete!
+      # IRL, dor-services-app would send a message that RabbitMQ would route to h2.druid_assigned,
+      # for processing by AssignPidJob, so we'll just fake that by running the job manually
+      source_id = "hydrus:object-#{work_version.work.id}"
+      identification = instance_double(Cocina::Models::Identification, sourceId: source_id)
+      model = instance_double(Cocina::Models::DRO, identification: identification, externalIdentifier: druid)
+      assign_pid_job = AssignPidJob.new
+      allow(assign_pid_job).to receive(:build_cocina_model_from_json_str).and_return(model)
+      assign_pid_job.work('{}') # don't need to fake JSON for fully valid Cocina model, just mock resulting DRO
 
       # this should be updated automatically
       expect(page).to have_content 'PURL Reserved'

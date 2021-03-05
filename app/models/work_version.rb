@@ -64,7 +64,11 @@ class WorkVersion < ApplicationRecord
 
     event :deposit_complete do
       transition depositing: :deposited
+    end
+
+    event :pid_assigned do
       transition reserving_purl: :purl_reserved
+      transition depositing: same
     end
 
     event :submit_for_review do

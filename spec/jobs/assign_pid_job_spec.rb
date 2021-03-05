@@ -22,7 +22,7 @@ RSpec.describe AssignPidJob do
                                 contains: []
                               })
     end
-    let(:work) { create(:work_version_with_work, collection: collection).work }
+    let(:work) { create(:work_version_with_work, collection: collection, state: 'depositing').work }
     let(:collection) { create(:collection_version_with_collection).collection }
 
     it 'updates the druid' do
