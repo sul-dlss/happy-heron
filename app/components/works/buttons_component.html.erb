@@ -20,7 +20,9 @@
   </div>
   <div class="col-auto">
     <%= link_to 'Cancel', collection_works_path(collection), class: 'btn btn-link' %>
-    <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button', action: 'unsaved-changes#allowFormSubmission' %>
-    <%= form.submit submit_button_label, class: 'btn btn-primary', action: 'unsaved-changes#allowFormSubmission' %>
+    <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button',
+                                     data: { action: 'unsaved-changes#allowFormSubmission' } %>
+    <%= form.submit submit_button_label, class: 'btn btn-primary',
+                                         data: { action: 'unsaved-changes#allowFormSubmission' } %>
   </div>
 </div>
