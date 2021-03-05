@@ -20,7 +20,6 @@ class CollectionsController < ObjectsController
   # rubocop:disable Metrics/MethodLength
   def create
     collection = Collection.new(creator: current_user)
-
     authorize! collection
 
     collection_version = CollectionVersion.new(collection: collection)
@@ -45,6 +44,9 @@ class CollectionsController < ObjectsController
     collection = Collection.find(params[:id])
     authorize! collection
 
+    # if we end up on the edit page for a first draft (non-deposited collection), redirect to first draft edit page
+    redirect_to edit_first_draft_collection_path(collection) if collection.head.first_draft?
+
     @form = CollectionSettingsForm.new(collection)
 
     @form.prepopulate!
@@ -52,8 +54,8 @@ class CollectionsController < ObjectsController
 
   def update
     collection = Collection.find(params[:id])
-
     authorize! collection
+
     point1 = CollectionChangeSet::PointInTime.new(collection)
     @form = CollectionSettingsForm.new(collection)
     if @form.validate(update_params) && @form.save
