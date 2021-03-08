@@ -28,9 +28,9 @@ RSpec.describe Dashboard::InProgressCollectionComponent, type: :component do
 
   context 'when presenter has one or more in progress collections' do
     before do
-      create(:collection_version)
-      create(:collection_version)
-      create(:collection_version)
+      create(:collection_version_with_collection)
+      create(:collection_version_with_collection)
+      create(:collection_version_with_collection)
     end
 
     let(:collection_versions) { CollectionVersion.all }
