@@ -26,12 +26,12 @@ class CollectionVersion < ApplicationRecord
     after_transition on: :begin_deposit do |collection_version, transition|
       if transition.from == 'first_draft'
         collection_version.collection.depositors.each do |depositor|
-          CollectionsMailer.with(collection: collection_version.collection, user: depositor)
+          CollectionsMailer.with(collection_version: collection_version, user: depositor)
                            .invitation_to_deposit_email.deliver_later
         end
 
         collection_version.collection.reviewed_by.each do |reviewer|
-          CollectionsMailer.with(collection: collection_version.collection, user: reviewer)
+          CollectionsMailer.with(collection_version: collection_version, user: reviewer)
                            .review_access_granted_email.deliver_later
         end
       end
