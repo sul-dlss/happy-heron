@@ -123,7 +123,7 @@ Occasionally, particularly if `srb tc` results in an error such as [7003](https:
 
 ## Deployment
 
-H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module). Passenger configuration lives in `config/Passengerfile.json` which is managed by Puppet and does not live in the application repository.
+H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module).
 
 ### Setup RabbitMQ
 You must set up the durable rabbitmq queues that bind to the exchange where workflow messages are published.
