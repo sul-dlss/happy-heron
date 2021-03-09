@@ -27,4 +27,12 @@ RSpec.describe Contributor do
       expect(contributor.role_term).to eq 'person|Contributing author'
     end
   end
+
+  describe '#valid?' do
+    context 'when the role is Department' do
+      subject { build(:org_contributor, role: 'Department') }
+
+      it { is_expected.to be_valid }
+    end
+  end
 end
