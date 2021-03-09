@@ -68,15 +68,18 @@ class WorksController < ObjectsController
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def update
     work = Work.find(params[:id])
     work_version = work.head
     clean_params = work_params
 
+    Rails.logger.debug("**JM_LOG: WorksController#update: #{work_version.inspect} (before new version check)")
     if work_version.deposited?
       work_version = create_new_version(work_version)
       NewVersionParameterFilter.call(clean_params, work.head)
     end
+    Rails.logger.debug("**JM_LOG: WorksController#update: #{work_version.inspect} (after new version check)")
 
     authorize! work_version
     @form = work_form(work_version)
@@ -87,6 +90,7 @@ class WorksController < ObjectsController
       render :edit, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def index
     @collection = Collection.find(params[:collection_id])
@@ -154,20 +158,26 @@ class WorksController < ObjectsController
   end
 
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/LineLength
   sig { params(work_version: WorkVersion, work: Work).void }
   def after_save(work_version:, work:)
+    Rails.logger.debug("**JM_LOG: WorksController#after_save (#{work_version.id} / #{work_version.title})")
     work.event_context = { user: current_user }
 
     if purl_reservation?
       work_version.reserve_purl!
+      Rails.logger.debug("**JM_LOG: WorksController#after_save called reserve_purl! (#{work_version.id} / #{work_version.title})")
     else
       work_version.update_metadata!
+      Rails.logger.debug("**JM_LOG: WorksController#after_save called update_metadata! (#{work_version.id} / #{work_version.title})")
 
       if deposit_button_pushed?
         if work.collection.review_enabled?
           work_version.submit_for_review!
+          Rails.logger.debug("**JM_LOG: WorksController#after_save called submit_for_review! (#{work_version.id} / #{work_version.title})")
         else
           work_version.begin_deposit!
+          Rails.logger.debug("**JM_LOG: WorksController#after_save called begin_deposit! (#{work_version.id} / #{work_version.title})")
         end
       end
     end
@@ -178,6 +188,7 @@ class WorksController < ObjectsController
       redirect_to work
     end
   end
+  # rubocop:enable Metrics/LineLength
   # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Metrics/MethodLength

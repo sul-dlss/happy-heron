@@ -7,6 +7,7 @@ class DepositJob < BaseDepositJob
 
   sig { params(work_version: WorkVersion).void }
   def perform(work_version)
+    Rails.logger.info("**JM_LOG: DepositJob#perform: work_version=#{work_version.inspect}")
     deposit(request_dro: RequestGenerator.generate_model(work_version: work_version),
             blobs: work_version.attached_files.map { |af| af.file.attachment.blob })
   rescue StandardError => e
@@ -30,7 +31,11 @@ class DepositJob < BaseDepositJob
   end
 
   sig { params(new_request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO)).returns(Integer) }
+  # rubocop:disable Metrics/AbcSize
   def create_or_update(new_request_dro)
+    debug_str = '**JM_LOG: DepositJob#create_or_update: '\
+                "new_request_dro=#{new_request_dro.inspect} (#{arguments.first.id} / #{arguments.first.title})"
+    Rails.logger.info(debug_str)
     case new_request_dro
     when Cocina::Models::RequestDRO
       SdrClient::Deposit::CreateResource.run(accession: !arguments.first.reserving_purl?,
@@ -43,6 +48,7 @@ class DepositJob < BaseDepositJob
                                              connection: connection)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   sig { params(blobs: T::Array[ActiveStorage::Blob]).returns(T::Array[SdrClient::Deposit::Files::DirectUploadRequest]) }
   def upload_responses(blobs)

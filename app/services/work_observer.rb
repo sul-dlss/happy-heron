@@ -12,6 +12,7 @@ class WorkObserver
   end
 
   def self.after_begin_deposit(work_version, _transition)
+    Rails.logger.debug("**JM_LOG: WorkObserver#after_begin_deposit (#{work_version.id} / #{work_version.title})")
     DepositJob.perform_later(work_version)
   end
 
