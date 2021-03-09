@@ -72,7 +72,7 @@ class AbstractContributor < ApplicationRecord
     }
   end
 
-  validates :role, presence: true, inclusion: { in: grouped_roles(citable: true).values.flatten }
+  validates :role, presence: true, inclusion: { in: grouped_roles(citable: false).values.flatten }
 
   sig { returns(T::Boolean) }
   def person?
