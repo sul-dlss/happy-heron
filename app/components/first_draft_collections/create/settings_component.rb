@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-module Collections
+module FirstDraftCollections
   module Create
     # The settings (Collection) portion of the form for collections
     class SettingsComponent < ApplicationComponent

@@ -67,7 +67,7 @@ RSpec.describe 'Create a new collection', js: true do
         click_link 'Cancel'
       end
 
-      expect(page).to have_current_path(new_collection_path)
+      expect(page).to have_current_path(new_first_draft_collection_path)
     end
   end
 end

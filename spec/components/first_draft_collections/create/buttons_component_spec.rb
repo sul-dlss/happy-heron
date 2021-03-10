@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Collections::Create::ButtonsComponent do
+RSpec.describe FirstDraftCollections::Create::ButtonsComponent do
   let(:component) { described_class.new(form: form) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:collection) { build(:collection) }

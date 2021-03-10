@@ -18,7 +18,7 @@ RSpec.describe 'Create a collection' do
     end
 
     it 'redirects from /collections/new to login URL' do
-      get '/collections/new'
+      get new_first_draft_collection_path
       expect(response).to have_http_status(:found)
       expect(response).to redirect_to(new_user_session_path)
     end
@@ -33,8 +33,8 @@ RSpec.describe 'Create a collection' do
     end
 
     describe 'show the form' do
-      it 'does not authorize GETs to /collections/new' do
-        get '/collections/new'
+      it 'does not authorize GETs to /first_draft_collections/new' do
+        get new_first_draft_collection_path
         expect(response).to redirect_to(:root)
         follow_redirect!
         expect(response).to be_successful
@@ -44,7 +44,7 @@ RSpec.describe 'Create a collection' do
 
     describe 'save the form' do
       it 'does not allow the user to save a collection' do
-        post '/collections', params: { collection: { should_not: 'even read these params' } }
+        post first_draft_collections_path, params: { collection: { should_not: 'even read these params' } }
         expect(response).to redirect_to(:root)
         follow_redirect!
         expect(response).to be_successful
@@ -69,7 +69,7 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'redirects and displays alert' do
-          get '/collections/new'
+          get new_first_draft_collection_path
           expect(response).to redirect_to(:root)
           follow_redirect!
           expect(response).to have_http_status(:ok)
@@ -83,7 +83,7 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'does NOT display alert' do
-          get '/collections/new'
+          get new_first_draft_collection_path
           expect(response).to have_http_status(:ok)
           expect(response.body).not_to include alert_text
         end
@@ -136,7 +136,7 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'creates a new collection' do
-          post '/collections', params: { collection: collection_params, commit: deposit_button }
+          post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(dashboard_path)
           collection = Collection.last
@@ -157,8 +157,9 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'sends emails to depositors when a new collection is created and deposited' do
-          expect { post '/collections', params: { collection: collection_params, commit: deposit_button } }
-            .to change { ActionMailer::Base.deliveries.count }.by(collection.depositors.size) # depositor emails sent
+          expect do
+            post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
+          end.to change { ActionMailer::Base.deliveries.count }.by(collection.depositors.size) # depositor emails sent
         end
 
         context 'when overriding manager list and review workflow defaults' do
@@ -173,7 +174,7 @@ RSpec.describe 'Create a collection' do
           before { collection_params.merge!(review_workflow_params) }
 
           it 'sets the managers and reviewers fields' do
-            post '/collections', params: { collection: collection_params, commit: deposit_button }
+            post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
@@ -194,7 +195,7 @@ RSpec.describe 'Create a collection' do
           before { collection_params.merge!(review_workflow_params) }
 
           it 'nils out the reviewers field' do
-            post '/collections', params: { collection: collection_params, commit: deposit_button }
+            post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
@@ -215,7 +216,8 @@ RSpec.describe 'Create a collection' do
           end
 
           it 'saves the draft collection' do
-            post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
+            post first_draft_collections_path,
+                 params: { collection: draft_collection_params, commit: save_draft_button }
             expect(response).to have_http_status(:found)
             collection = Collection.last
             collection_version = collection.head
@@ -238,7 +240,8 @@ RSpec.describe 'Create a collection' do
           end
 
           it 'saves the draft collection' do
-            post '/collections', params: { collection: draft_collection_params, commit: save_draft_button }
+            post first_draft_collections_path,
+                 params: { collection: draft_collection_params, commit: save_draft_button }
             expect(response).to have_http_status(:found)
             collection = Collection.last
             collection_version = collection.head
@@ -261,8 +264,10 @@ RSpec.describe 'Create a collection' do
           end
 
           it 'does not send depositor emails when a new collection is created and saved as draft' do
-            expect { post '/collections', params: { collection: draft_collection_params, commit: save_draft_button } }
-              .to change { ActionMailer::Base.deliveries.count }.by(0) # NO depositor emails sent
+            expect do
+              post first_draft_collections_path,
+                   params: { collection: draft_collection_params, commit: save_draft_button }
+            end.to change { ActionMailer::Base.deliveries.count }.by(0) # NO depositor emails sent
           end
         end
       end
@@ -275,7 +280,7 @@ RSpec.describe 'Create a collection' do
         end
 
         it 'renders the page again' do
-          post '/collections', params: { collection: collection_params, commit: deposit_button }
+          post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.body).to include 'is-invalid'
         end

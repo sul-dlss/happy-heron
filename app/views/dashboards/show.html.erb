@@ -11,7 +11,7 @@
     <section id="your-collections" data-controller="work-type purl-reservation">
       <header>Your collections
         <% if allowed_to?(:create?, Collection) %>
-          <%= link_to '+ Create a new collection', new_collection_path, class: "btn btn-outline-primary float-end" %>
+          <%= link_to '+ Create a new collection', new_first_draft_collection_path, class: "btn btn-outline-primary float-end" %>
         <% end %>
       </header>
 

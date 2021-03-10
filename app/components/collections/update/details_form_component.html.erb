@@ -5,7 +5,7 @@
       action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage'
     },
     html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
-  <%= render Collections::Create::DetailsComponent.new(form: form) %>
+  <%= render FirstDraftCollections::Create::DetailsComponent.new(form: form) %>
 
   <div class="row justify-content-between">
     <div class="col-auto">
