@@ -119,15 +119,6 @@ FactoryBot.define do
     state { 'purl_reserved' }
   end
 
-  trait :purl_requested do
-    work_type { WorkType.purl_reservation_type.id }
-    subtype { [] }
-    abstract { '' }
-    citation { nil }
-    license { 'none' }
-    state { 'purl_requested' }
-  end
-
   trait :reserving_purl do
     work_type { WorkType.purl_reservation_type.id }
     subtype { [] }

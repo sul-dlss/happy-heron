@@ -59,12 +59,15 @@ class WorkVersion < ApplicationRecord
     # directly to begin_deposit event, which will transition it to depositing
     event :begin_deposit do
       transition %i[first_draft version_draft pending_approval] => :depositing
-      transition purl_requested: :reserving_purl
     end
 
     event :deposit_complete do
       transition depositing: :deposited
+    end
+
+    event :pid_assigned do
       transition reserving_purl: :purl_reserved
+      transition depositing: same
     end
 
     event :submit_for_review do
@@ -77,7 +80,7 @@ class WorkVersion < ApplicationRecord
     end
 
     event :reserve_purl do
-      transition new: :purl_requested
+      transition new: :reserving_purl
     end
 
     event :update_metadata do

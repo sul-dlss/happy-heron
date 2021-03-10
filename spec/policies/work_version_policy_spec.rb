@@ -71,11 +71,6 @@ RSpec.describe WorkVersionPolicy do
         let(:record) { build_stubbed :work_version, :depositing, work: work }
       end
 
-      failed 'when status is purl_requested' do
-        let(:work) { build_stubbed :work, collection: collection }
-        let(:record) { build_stubbed :work_version, :purl_requested, work: work }
-      end
-
       failed 'when status is reserving_purl' do
         let(:work) { build_stubbed :work, collection: collection }
         let(:record) { build_stubbed :work_version, :reserving_purl, work: work }

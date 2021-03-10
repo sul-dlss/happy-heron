@@ -12,9 +12,8 @@ class AssignPidJob
 
   sig { params(msg: String).returns(Symbol) }
   def work(msg)
-    json = JSON.parse(msg)
+    model = build_cocina_model_from_json_str(msg)
 
-    model = Cocina::Models.build(json.fetch('model'))
     source_id = model.identification&.sourceId
     Honeybadger.context(source_id: source_id)
     return ack! unless source_id&.start_with?('hydrus:')
@@ -38,6 +37,16 @@ class AssignPidJob
       return unless object.is_a? Work
 
       object.head.add_purl_to_citation
+      object.head.pid_assigned!
     end
+  end
+
+  sig do
+    params(str: String)
+      .returns(T.any(Cocina::Models::DRO, Cocina::Models::Collection, Cocina::Models::AdminPolicy))
+  end
+  def build_cocina_model_from_json_str(str)
+    json = JSON.parse(str)
+    Cocina::Models.build(json.fetch('model'))
   end
 end
