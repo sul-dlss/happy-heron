@@ -1,47 +1,3 @@
-Text:
-  subtypes:
-    Article:
-      - type: genre
-        value: articles
-        uri: http://vocab.getty.edu/aat/300048715
-        source:
-          code: aat
-    Government document:
-      - type: genre
-        value: government records
-        uri: http://vocab.getty.edu/aat/300027777
-        source:
-          code: aat
-    Preprint:
-      - type: genre
-        value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
-        source:
-          code: aat
-    Report:
-      - type: genre
-        value: reports
-        uri: http://vocab.getty.edu/aat/300027267
-        source:
-          code: aat
-    Technical report:
-      - type: genre
-        value: Technical reports
-        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
-        source:
-          code: lcgft
-    Thesis:
-      - type: genre
-        value: Academic theses
-        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
-        source:
-          code: lcgft
-    Working paper:
-      - type: genre
-        value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
-        source:
-          code: aat
 Data:
   type:
     - type: genre
@@ -49,152 +5,87 @@ Data:
       uri: https://id.loc.gov/authorities/genreForms/gf2018026119
       source:
         code: lcgft
-  subtypes:
-    3D model:
-      - type: genre
-        value: Three dimensional scan
-    Database:
-      - type: genre
-        value: dataset
-      - type: genre
-        value: Databases
-        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
-        source:
-          code: lcgft
-    Geospatial data:
-      - type: genre
-        value: dataset
-      - type: genre
-        value: Geographic information systems
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
-        source:
-          code: lcgft
-    Image:
-      - type: genre
-        value: dataset
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Tabular data:
-      - type: genre
-        value: dataset
-      - type: genre
-        value: Tables (Data)
-        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
-        source:
-          code: lcgft
-    Text corpus:
-      - type: genre
-        value: dataset
-      - type: genre
-        value: Text corpora
-        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
-        source:
-          code: lcgft
-Software/Code:
-  subtypes:
-    Code:
-      - type: genre
-        value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
-        source:
-          code: aat
-    Documentation:
-      - type: genre
-        value: technical manuals
-        uri: http://vocab.getty.edu/aat/300026413
-        source:
-          code: aat
-    Game:
-      - type: genre
-        value: video games
-        uri: http://vocab.getty.edu/aat/300256888
-        source:
-          code: aat
-Image:
-  type:
     - type: genre
-      value: Pictures
-      uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+      value: dataset
       source:
-        code: lcgft
+        code: local
   subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
         uri: http://vocab.getty.edu/aat/300418056
         source:
           code: aat
-    Map:
+    Code:
       - type: genre
-        value: Maps
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
         source:
           code: lcgft
-    Photograph:
+    Database:
       - type: genre
-        value: Photographs
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
         source:
           code: lcgft
-    Poster:
-      - type: genre
-        value: Posters
-        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
-        source:
-          code: lcgft
-    Presentation slides:
-      - type: genre
-        value: Presentation slides
-Sound:
-  type:
-    - type: genre
-      value: Sound recordings
-      uri: http://id.loc.gov/authorities/genreForms/gf2011026594
-      source:
-        code: lcgft
-  subtypes:
-    Interview:
-      - type: genre
-        value: Interviews
-        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
-        source:
-          code: lcgft
-    Oral history:
-      - type: genre
-        value: Oral histories
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
-        source:
-          code: lcgft
-    Podcast:
-      - type: genre
-        value: Podcasts
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
-        source:
-          code: lcgft
-    Speech:
-      - type: genre
-        value: Speeches
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
-        source:
-          code: lcgft
-Video:
-  type:
-    - type: genre
-      value: moving images
-      uri: http://vocab.getty.edu/aat/300263857
-      source:
-        code: aat
-  subtypes:
-    Conference session:
-      - type: genre
-        value: Conference sessions
     Documentary:
       - type: genre
-        value: Documentary films
-        uri: http://id.loc.gov/authorities/genreForms/gf201102620
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+    Documentation:
+      - type: genre
+        value: Data dictionaries
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026080
+        source:
+           code: lcgft
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
         source:
           code: lcgft
     Event:
@@ -203,38 +94,58 @@ Video:
         uri: http://vocab.getty.edu/aat/300069084
         source:
           code: aat
-    Oral history:
+    Field recording:
       - type: genre
-        value: Oral histories
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
         source:
           code: lcgft
-    Performance:
+    Game:
       - type: genre
-        value: Filmed performances
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026276
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
         source:
           code: lcgft
-Music:
-  type:
-    - type: genre
-      value: Music
-      uri: https://id.loc.gov/authorities/genreForms/gf2014026952
-      source:
-        code: lcgft
-  subtypes:
-    Data:
+    Government document:
       - type: genre
-        value: dataset
-      - type: genre
-        value: Data sets
-        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
         source:
-          code: lcgft
+          code: aat
     Image:
       - type: genre
         value: Pictures
         uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
         source:
           code: lcgft
     MIDI:
@@ -255,82 +166,180 @@ Music:
         uri: http://id.loc.gov/authorities/genreForms/gf2014027184
         source:
           code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
     Piano roll:
       - type: genre
         value: music rolls
         uri: http://vocab.getty.edu/aat/300429369
         source:
           code: aat
-    Software/Code:
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
       - type: genre
         value: software
         uri: http://vocab.getty.edu/aat/300028566
         source:
           code: aat
-    Sound:
+    Sound recording:
       - type: genre
         value: Sound recordings
         uri: http://id.loc.gov/authorities/genreForms/gf2011026594
         source:
           code: lcgft
-    Text:
+    Speech:
       - type: genre
-        value: texts (documents)
-        uri: http://vocab.getty.edu/aat/300263751
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
         source:
           code: aat
-    Video:
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    Video recording:
       - type: genre
         value: moving images
         uri: http://vocab.getty.edu/aat/300263857
         source:
           code: aat
-Mixed Materials:
-  subtypes:
-    Data:
+    White paper:
       - type: genre
-        value: dataset
-      - type: genre
-        value: Data sets
-        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
-        source:
-          code: lcgft
-    Image:
-      - type: genre
-        value: Pictures
-        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
-        source:
-          code: lcgft
-    Software/Code:
-      - type: genre
-        value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
         source:
           code: aat
-    Sound:
+    Working paper:
       - type: genre
-        value: Sound recordings
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
-        source:
-          code: lcgft
-    Text:
-      - type: genre
-        value: texts (documents)
-        uri: http://vocab.getty.edu/aat/300263751
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
         source:
           code: aat
-    Video:
-      - type: genre
-        value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
-        source:
-          code: aat
-General:
+Image:
+  type:
+    - type: genre
+      value: Pictures
+      uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+      source:
+        code: lcgft
   subtypes:
     Animation:
       - type: genre
         value: animations (visual works)
         uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
         source:
           code: aat
     Book:
@@ -339,15 +348,18 @@ General:
         uri: http://vocab.getty.edu/aat/300028051
         source:
           code: aat
-    Book chapter:
+    CAD:
       - type: genre
-        value: Book chapters
-    Broadcast:
-      - type: genre
-        value: Television programs
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026673
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
         source:
-          code: lcgft
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
     Correspondence:
       - type: genre
         value: correspondence
@@ -360,6 +372,364 @@ General:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026114
         source:
           code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Documentary:
+      - type: genre
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+    Documentation:
+      - type: genre
+        value: technical manuals
+        uri: http://vocab.getty.edu/aat/300026413
+        source:
+           code: aat
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
+        source:
+          code: lcgft
+    Event:
+      - type: genre
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
+        source:
+          code: aat
+    Field recording:
+      - type: genre
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
+        source:
+          code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Sound recording:
+      - type: genre
+        value: Sound recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+        source:
+          code: lcgft
+    Speech:
+      - type: genre
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    Video recording:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
+    White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+Mixed Materials:
+  subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
+    CAD:
+      - type: genre
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
+        source:
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
+        source:
+          code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
     Documentary:
       - type: genre
         value: documentaries (documents)
@@ -384,28 +754,70 @@ General:
         uri: http://id.loc.gov/authorities/genreForms/gf2018026013
         source:
           code: lcgft
-    Experimental audio/video:
+    Event:
       - type: genre
-        value: Experimental films
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026235
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
         source:
-          code: lcgft
+          code: aat
     Field recording:
       - type: genre
         value: Field recordings
         uri: http://id.loc.gov/authorities/genreForms/gf2011026253
         source:
           code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
     Journal/periodical issue:
       - type: genre
         value: Periodicals
         uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
     Manuscript:
       - type: genre
         value: manuscripts (documents)
         uri: http://vocab.getty.edu/aat/300028569
         source:
           code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
     MIDI:
       - type: genre
         value: MIDI (information technology)
@@ -418,27 +830,42 @@ General:
         uri: http://vocab.getty.edu/aat/300404333
         source:
           code: aat
-    Narrative film:
-      - type: genre
-        value: Fiction films
-        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
-        source:
-          code: lcgft
     Notated music:
       - type: genre
         value: Notated music
         uri: http://id.loc.gov/authorities/genreForms/gf2014027184
         source:
           code: lcgft
-    Other spoken word:
+    Narrative film:
       - type: genre
-        value: Spoken word
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
     Piano roll:
       - type: genre
         value: music rolls
         uri: http://vocab.getty.edu/aat/300429369
         source:
           code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
     Poetry reading:
       - type: genre
         value: Poetry
@@ -457,18 +884,7 @@ General:
         uri: http://vocab.getty.edu/aat/300256200
         source:
           code: aat
-    Presentation recording:
-      - type: genre
-        value: presentations (communicative events)
-        uri: http://vocab.getty.edu/aat/300258677
-        source:
-          code: aat
-    Presentation slides:
-      - type: genre
-        value: Presentation slides
     Questionnaire:
-      - type: genre
-        value: dataset
       - type: genre
         value: Questionnaires
         uri: http://id.loc.gov/authorities/genreForms/gf2018026144
@@ -476,23 +892,27 @@ General:
           code: lcgft
     Remote sensing imagery:
       - type: genre
-        value: dataset
-      - type: genre
         value: Remote-sensing images
         uri: http://id.loc.gov/authorities/genreForms/gf2011026530
         source:
           code: lcgft
-    Software:
       - type: genre
         value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
       - type: genre
         value: software
         uri: http://vocab.getty.edu/aat/300028566
         source:
           code: aat
     Sound recording:
-      - type: genre
-        value: dataset
       - type: genre
         value: Sound recordings
         uri: http://id.loc.gov/authorities/genreForms/gf2011026594
@@ -504,6 +924,12 @@ General:
         uri: http://id.loc.gov/authorities/genreForms/gf2011026363
         source:
           code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
     Story:
       - type: genre
         value: Fiction
@@ -516,21 +942,42 @@ General:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026136
         source:
           code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
     Transcript:
       - type: genre
         value: transcripts
         uri: http://vocab.getty.edu/aat/300027388
-        source:
-          code: aat
-    Unedited recording:
-      - type: genre
-        value: Unedited sound recordings
-    Video recording:
-      - type: genre
-        value: dataset
-      - type: genre
-        value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
         source:
           code: aat
     Video art:
@@ -539,7 +986,2087 @@ General:
         uri: http://id.loc.gov/authorities/genreForms/gf2017027265
         source:
           code: lcgft
+    Video recording:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
     White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+Music:
+  type:
+    - type: genre
+      value: Music
+      uri: https://id.loc.gov/authorities/genreForms/gf2014026952
+      source:
+        code: lcgft
+  subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
+    CAD:
+      - type: genre
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
+        source:
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
+        source:
+          code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Documentary:
+      - type: genre
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
+        source:
+          code: lcgft
+    Event:
+      - type: genre
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
+        source:
+          code: aat
+    Field recording:
+      - type: genre
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
+        source:
+          code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Sound recording:
+      - type: genre
+        value: Sound recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+        source:
+          code: lcgft
+    Speech:
+      - type: genre
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    Video recording:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
+    White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+Other:
+  subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
+    CAD:
+      - type: genre
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
+        source:
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
+        source:
+          code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Documentary:
+      - type: genre
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
+        source:
+          code: lcgft
+    Event:
+      - type: genre
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
+        source:
+          code: aat
+    Field recording:
+      - type: genre
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
+        source:
+          code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Sound recording:
+      - type: genre
+        value: Sound recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+        source:
+          code: lcgft
+    Speech:
+      - type: genre
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    Video recording:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
+    White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+Software/Code:
+  subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
+    CAD:
+      - type: genre
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
+        source:
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
+        source:
+          code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Documentary:
+      - type: genre
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
+        source:
+          code: lcgft
+    Event:
+      - type: genre
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
+        source:
+          code: aat
+    Field recording:
+      - type: genre
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
+        source:
+          code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Sound recording:
+      - type: genre
+        value: Sound recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+        source:
+          code: lcgft
+    Speech:
+      - type: genre
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    Video recording:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
+    White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+Sound:
+  type:
+    - type: genre
+      value: Sound recordings
+      uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+      source:
+        code: lcgft
+  subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
+    CAD:
+      - type: genre
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
+        source:
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
+        source:
+          code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Documentary:
+      - type: genre
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
+        source:
+          code: lcgft
+    Event:
+      - type: genre
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
+        source:
+          code: aat
+    Field recording:
+      - type: genre
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
+        source:
+          code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Speech:
+      - type: genre
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    Video recording:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
+    White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+Text:
+  subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
+    CAD:
+      - type: genre
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
+        source:
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
+        source:
+          code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Documentary:
+      - type: genre
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+    Documentation:
+      - type: genre
+        value: technical manuals
+        uri: http://vocab.getty.edu/aat/300026413
+        source:
+          code: aat
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
+        source:
+          code: lcgft
+    Event:
+      - type: genre
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
+        source:
+          code: aat
+    Field recording:
+      - type: genre
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
+        source:
+          code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: lcgft
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Sound recording:
+      - type: genre
+        value: Sound recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+        source:
+          code: lcgft
+    Speech:
+      - type: genre
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    Video recording:
+      - type: genre
+        value: moving images
+        uri: http://vocab.getty.edu/aat/300263857
+        source:
+          code: aat
+    White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+Video:
+  type:
+    - type: genre
+      value: moving images
+      uri: http://vocab.getty.edu/aat/300263857
+      source:
+        code: aat
+  subtypes:
+    Animation:
+      - type: genre
+        value: animations (visual works)
+        uri: http://vocab.getty.edu/aat/300411663
+        source:
+          code: aat
+    Article:
+      - type: genre
+        value: articles
+        uri: http://vocab.getty.edu/aat/300048715
+        source:
+          code: aat
+    Book:
+      - type: genre
+        value: books
+        uri: http://vocab.getty.edu/aat/300028051
+        source:
+          code: aat
+    CAD:
+      - type: genre
+        value: computer-aided designs (visual works)
+        uri: http://vocab.getty.edu/aat/300418056
+        source:
+          code: aat
+    Code:
+      - type: genre
+        value: programs (computer)
+        uri: http://vocab.getty.edu/aat/300312188
+        source:
+          code: aat
+    Correspondence:
+      - type: genre
+        value: correspondence
+        uri: http://vocab.getty.edu/aat/300026877
+        source:
+          code: aat
+    Course/instructional materials:
+      - type: genre
+        value: Instructional and educational works
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026114
+        source:
+          code: lcgft
+    Data:
+      - type: genre
+        value: Data sets
+        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Database:
+      - type: genre
+        value: Databases
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026081
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Documentary:
+      - type: genre
+        value: documentaries (documents)
+        uri: http://vocab.getty.edu/aat/300249172
+        source:
+          code: aat
+      - type: genre
+        value: Documentary films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026205
+        source:
+          code: lcgft
+    Dramatic performance:
+      - type: genre
+        value: Drama
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026297
+        source:
+          code: lcgft
+    Essay:
+      - type: genre
+        value: Essays
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026094
+        source:
+          code: lcgft
+    Ethnography:
+      - type: genre
+        value: Ethnographies
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026013
+        source:
+          code: lcgft
+      - type: genre
+        value: Ethnographic films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026232
+        source:
+          code: lcgft
+    Event:
+      - type: genre
+        value: events (activities)
+        uri: http://vocab.getty.edu/aat/300069084
+        source:
+          code: aat
+    Experimental audio/video:
+      - type: genre
+        value: Experimental films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026235
+        source:
+          code: lcgft
+    Field recording:
+      - type: genre
+        value: Field recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026253
+        source:
+          code: lcgft
+    Game:
+      - type: genre
+        value: computer game
+        uri: http://vocab.getty.edu/aat/300422211
+        source:
+          code: aat
+    Geospatial data:
+      - type: genre
+        value: Geographic information systems
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026294
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Government document:
+      - type: genre
+        value: government records
+        uri: http://vocab.getty.edu/aat/300027777
+        source:
+          code: aat
+    Image:
+      - type: genre
+        value: Pictures
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027251
+        source:
+          code: aat
+    Interview:
+      - type: genre
+        value: Interviews
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026115
+        source:
+          code: lcgft
+    Journal/periodical issue:
+      - type: genre
+        value: Periodicals
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026139
+        source:
+          code: lcgft
+    Manuscript:
+      - type: genre
+        value: manuscripts (documents)
+        uri: http://vocab.getty.edu/aat/300028569
+        source:
+          code: aat
+    Map:
+      - type: genre
+        value: Maps
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026387
+        source:
+          code: lcgft
+    MIDI:
+      - type: genre
+        value: MIDI (information technology)
+        uri: http://vocab.getty.edu/aat/300266746
+        source:
+          code: aat
+    Musical transcription:
+      - type: genre
+        value: transcriptions (documents)
+        uri: http://vocab.getty.edu/aat/300404333
+        source:
+          code: aat
+    Notated music:
+      - type: genre
+        value: Notated music
+        uri: http://id.loc.gov/authorities/genreForms/gf2014027184
+        source:
+          code: lcgft
+    Narrative film:
+      - type: genre
+        value: Fiction films
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026250
+        source:
+          code: lcgft
+    Oral history:
+      - type: genre
+        value: Oral histories
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026431
+        source:
+          code: lcgft
+    Performance:
+      - type: genre
+        value: Filmed performances
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026276
+        source:
+          code: lcgft
+    Photograph:
+      - type: genre
+        value: Photographs
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027249
+        source:
+          code: lcgft
+    Piano roll:
+      - type: genre
+        value: music rolls
+        uri: http://vocab.getty.edu/aat/300429369
+        source:
+          code: aat
+    Podcast:
+      - type: genre
+        value: Podcasts
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026450
+        source:
+          code: lcgft
+    Poetry reading:
+      - type: genre
+        value: Poetry
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026481
+        source:
+          code: lcgft
+    Poster:
+      - type: genre
+        value: Posters
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026152
+        source:
+          code: lcgft
+    Preprint:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Questionnaire:
+      - type: genre
+        value: Questionnaires
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026144
+        source:
+          code: lcgft
+    Remote sensing imagery:
+      - type: genre
+        value: Remote-sensing images
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026530
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Report:
+      - type: genre
+        value: reports
+        uri: http://vocab.getty.edu/aat/300027267
+        source:
+          code: aat
+    Software:
+      - type: genre
+        value: software
+        uri: http://vocab.getty.edu/aat/300028566
+        source:
+          code: aat
+    Sound recording:
+      - type: genre
+        value: Sound recordings
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026594
+        source:
+          code: aat
+    Speech:
+      - type: genre
+        value: Speeches
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026363
+        source:
+          code: lcgft
+    Statistical model:
+      - type: genre
+        value: mathematical models
+        uri: http://vocab.getty.edu/aat/300065075
+        source:
+          code: aat
+    Story:
+      - type: genre
+        value: Fiction
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026339
+        source:
+          code: lcgft
+    Syllabus:
+      - type: genre
+        value: Outlines and syllabi
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026136
+        source:
+          code: lcgft
+    Tabular data:
+      - type: genre
+        value: Tables (data)
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026186
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Technical report:
+      - type: genre
+        value: Technical reports
+        uri: http://id.loc.gov/authorities/genreForms/gf2015026093
+        source:
+          code: lcgft
+    Text corpus:
+      - type: genre
+        value: Text corpora
+        uri: http://id.loc.gov/authorities/genreForms/gf2019026083
+        source:
+          code: lcgft
+      - type: genre
+        value: dataset
+        source:
+          code: local
+    Thesis:
+      - type: genre
+        value: Academic theses
+        uri: http://id.loc.gov/authorities/genreForms/gf2014026039
+        source:
+          code: lcgft
+    Transcript:
+      - type: genre
+        value: transcripts
+        uri: http://vocab.getty.edu/aat/300027388
+        source:
+          code: aat
+    Unedited recording:
+      - type: genre
+        value: Unedited footage
+        uri: http://id.loc.gov/authorities/genreForms/gf2011026712
+        source:
+          code: lcgft
+    Video art:
+      - type: genre
+        value: Video art
+        uri: http://id.loc.gov/authorities/genreForms/gf2017027265
+        source:
+          code: lcgft
+    White paper:
+      - type: genre
+        value: grey literature
+        uri: http://vocab.getty.edu/aat/300256200
+        source:
+          code: aat
+    Working paper:
       - type: genre
         value: grey literature
         uri: http://vocab.getty.edu/aat/300256200

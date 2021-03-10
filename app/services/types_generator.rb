@@ -64,7 +64,10 @@ class TypesGenerator
     # add the top level genre mapping (i.e. top level work type with no subtype)
     type_genres = types_to_genres.dig(work_type, 'type') || []
 
-    all_genres = type_genres + subtype_genres
+    # NOTE: we should not add duplicate genres if the same one is coming from both the top level mapping and then the
+    # sub-type. We will try and avoid duplicating in the `types_to_genres.yml` mappings, but this `.uniq` ensures it.
+    # see https://github.com/sul-dlss/happy-heron/issues/1254#issuecomment-790935330
+    all_genres = (type_genres + subtype_genres).uniq
     all_genres.map { |genre| Cocina::Models::DescriptiveValue.new(genre) }
   end
 
@@ -79,7 +82,7 @@ class TypesGenerator
     return [] if work_type == 'Other'
 
     # add the top level resource type mapping (i.e. top level work type with no subtype)
-    resource_types = [types_to_resource_types.dig(work_type, 'type')]
+    resource_types = Array(types_to_resource_types.dig(work_type, 'type'))
 
     # uniq and compact the list of resource types, since multiple subtypes can map
     # to the same resource type but we only need them mapped once

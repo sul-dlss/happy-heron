@@ -67,7 +67,7 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type Image with Image subtype (no subtype derived genre)' do
-      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['image']) }
+      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Image']) }
 
       it 'generates a single structured value, a single resource type and single genre' do
         expect(generated).to eq(
@@ -80,7 +80,7 @@ RSpec.describe TypesGenerator do
                 ),
                 Cocina::Models::DescriptiveValue.new(
                   type: 'subtype',
-                  value: 'image'
+                  value: 'Image'
                 )
               ],
               source: { value: 'Stanford self-deposit resource types' },
@@ -95,6 +95,53 @@ RSpec.describe TypesGenerator do
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
               value: 'still image',
+              source: { value: 'MODS resource types' }
+            )
+          ]
+        )
+      end
+    end
+
+    context 'with a work of type Image with Animation subtype (top level genre plus subtype derived genre)' do
+      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Animation']) }
+
+      it 'generates a single structured value, two resource types and two genres' do
+        expect(generated).to eq(
+          [
+            Cocina::Models::DescriptiveValue.new(
+              structuredValue: [
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'type',
+                  value: 'Image'
+                ),
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'subtype',
+                  value: 'Animation'
+                )
+              ],
+              source: { value: 'Stanford self-deposit resource types' },
+              type: 'resource type'
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'genre',
+              value: 'Pictures',
+              uri: 'http://id.loc.gov/authorities/genreForms/gf2017027251',
+              source: { code: 'lcgft' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'genre',
+              value: 'animations (visual works)',
+              uri: 'http://vocab.getty.edu/aat/300411663',
+              source: { code: 'aat' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'still image',
+              source: { value: 'MODS resource types' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'moving image',
               source: { value: 'MODS resource types' }
             )
           ]
@@ -187,7 +234,7 @@ RSpec.describe TypesGenerator do
   end
 
   describe 'cocina mapping' do
-    non_other_work_types = WorkType.all.reject { |work_type| work_type.id == 'other' }
+    work_types = WorkType.all
 
     let(:generator) { described_class.new(work_version: work_version) }
     let(:types_to_genres) { generator.send(:types_to_genres) }
@@ -195,7 +242,7 @@ RSpec.describe TypesGenerator do
 
     describe 'for work types' do
       # NOTE: the Other type has no mappings
-      let(:work_type_labels) { non_other_work_types.map(&:label) }
+      let(:work_type_labels) { work_types.map(&:label) }
 
       it 'has one genre for each' do
         # NOTE: General mappings do not correspond to a particular type
@@ -205,31 +252,6 @@ RSpec.describe TypesGenerator do
       it 'has one resource type for each' do
         # NOTE: General mappings do not correspond to a particular type
         expect(work_type_labels).to match_array(types_to_resource_types.keys - ['General'])
-      end
-    end
-
-    describe 'for subtypes' do
-      non_other_work_types.each do |work_type|
-        context "with type #{work_type.label}" do
-          let(:known_genreless) do
-            case work_type.label
-            when 'Data'
-              ['Documentation']
-            when 'Text'
-              ['Policy brief']
-            else
-              []
-            end
-          end
-
-          it 'has a one-to-one genre mapping to subtypes' do
-            expect(work_type.subtypes - known_genreless).to eq(types_to_genres[work_type.label]['subtypes'].keys)
-          end
-
-          it 'has a one-to-one resource type mapping to subtypes' do
-            expect(work_type.subtypes).to eq(types_to_resource_types[work_type.label]['subtypes'].keys)
-          end
-        end
       end
     end
 
@@ -250,7 +272,12 @@ RSpec.describe TypesGenerator do
           .sort
           .uniq
       end
-      let(:known_genreless) { ['Policy brief', 'Speaker notes'] }
+      # these represent subtypes that will get the genre from the parent type
+      let(:known_genreless) do
+        ['Policy brief', 'Speaker notes', '3D model', 'Book chapter', 'Broadcast',
+         'Conference session', 'Other spoken word', 'Presentation recording',
+         'Presentation slides', 'Text']
+      end
 
       it 'has one genre for each' do
         expect(all_type_genres).to include(*(WorkType.more_types - known_genreless))
