@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-module Collections
+module FirstDraftCollections
   module Create
     # The component that renders the form for creating a collection.
     class FormComponent < ApplicationComponent
@@ -12,9 +12,8 @@ module Collections
         @collection_form = collection_form
       end
 
-      alias draft_collection_path collections_path
-      alias create_collections_path collections_path
-      alias create_collection_path collection_path
+      alias collections_path first_draft_collections_path
+      alias collection_path first_draft_collection_path
     end
   end
 end

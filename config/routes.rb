@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   root to: 'welcome#show'
   resource :dashboard, only: :show
 
-  resources :collections, only: %i[new create show edit update destroy] do
+  resources :collections, only: %i[show edit update destroy] do
     member do
       get :deposit_button
       get :delete_button
@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :first_draft_collections, only: %i[new create edit update]
   resources :collection_versions, only: %i[show destroy edit update]
   resources :work_versions, only: :destroy
 

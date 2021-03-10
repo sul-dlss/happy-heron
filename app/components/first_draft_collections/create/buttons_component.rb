@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-module Collections
+module FirstDraftCollections
   module Create
     # Displays the buttons for saving a draft or depositing for a collection
     class ButtonsComponent < ApplicationComponent
@@ -27,6 +27,8 @@ module Collections
       def collection_version
         object.model.fetch(:collection_version)
       end
+
+      alias collections_path first_draft_collections_path
     end
   end
 end

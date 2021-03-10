@@ -31,6 +31,9 @@ class CollectionVersionsController < ObjectsController
     collection_version = CollectionVersion.find(params[:id])
     authorize! collection_version
 
+    # if we end up on the edit page for a first draft (non-deposited collection), redirect to first draft edit page
+    redirect_to edit_first_draft_collection_path(collection_version.collection) if collection_version.first_draft?
+
     @form = DraftCollectionVersionForm.new(collection_version)
     @form.prepopulate!
   end

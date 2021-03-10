@@ -7,43 +7,12 @@ class CollectionsController < ObjectsController
   before_action :ensure_sdr_updatable
   verify_authorized except: %i[deposit_button delete_button]
 
-  def new
-    collection = Collection.new(creator: current_user)
-    authorize! collection
-
-    collection_version = CollectionVersion.new(collection: collection)
-    @form = CreateCollectionForm.new(collection_version: collection_version, collection: collection)
-    @form.prepopulate!
-  end
-
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-  def create
-    collection = Collection.new(creator: current_user)
-
-    authorize! collection
-
-    collection_version = CollectionVersion.new(collection: collection)
-    @form = collection_form(collection_version)
-    if @form.validate(create_params) && @form.save
-      collection_version.collection.event_context = { user: current_user }
-      collection_version.update_metadata!
-      if deposit_button_pushed?
-        collection_version.begin_deposit!
-        redirect_to dashboard_path
-      else
-        redirect_to collection_path(collection)
-      end
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
-
   def edit
     collection = Collection.find(params[:id])
     authorize! collection
+
+    # if we end up on the edit page for a first draft (non-deposited collection), redirect to first draft edit page
+    redirect_to edit_first_draft_collection_path(collection) if collection.head.first_draft?
 
     @form = CollectionSettingsForm.new(collection)
 
@@ -52,8 +21,8 @@ class CollectionsController < ObjectsController
 
   def update
     collection = Collection.find(params[:id])
-
     authorize! collection
+
     point1 = CollectionChangeSet::PointInTime.new(collection)
     @form = CollectionSettingsForm.new(collection)
     if @form.validate(update_params) && @form.save
