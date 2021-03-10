@@ -7,6 +7,7 @@ en:
       abbr_month: '%b %d, %Y %-I:%M %p'
   event:
     type:
+      pid_assigned: PURL assigned
       reserve_purl: PURL requested
       begin_deposit: Submitted for deposit
       deposit_complete: Deposit completed
