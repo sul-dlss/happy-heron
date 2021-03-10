@@ -3,7 +3,7 @@
     <%= show_collection_link %>
   </div>
   <div class="col-3">
-    <%= link_to 'Complete draft', edit_collection_path(collection), class: "mb-2 btn btn-primary" %>
+    <%= link_to 'Complete draft', edit_collection_version_path(collection.head), class: "mb-2 btn btn-primary" %>
   </div>
   <div class="col-5">
     <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if collection_version.first_draft?%>
