@@ -162,13 +162,13 @@ class WorksController < ObjectsController
       work_version.reserve_purl!
     else
       work_version.update_metadata!
-    end
 
-    if deposit_button_pushed?
-      if work.collection.review_enabled?
-        work_version.submit_for_review!
-      else
-        work_version.begin_deposit!
+      if deposit_button_pushed?
+        if work.collection.review_enabled?
+          work_version.submit_for_review!
+        else
+          work_version.begin_deposit!
+        end
       end
     end
 
