@@ -62,8 +62,9 @@ class FileGenerator
 
   def administrative
     {
+      publish: !hidden_file?,
       sdrPreserve: true,
-      shelve: !attached_file.hide?
+      shelve: !hidden_file?
     }
   end
 
@@ -78,9 +79,13 @@ class FileGenerator
     @blob ||= attached_file.file&.attachment&.blob
   end
 
+  def hidden_file?
+    attached_file.hide?
+  end
+
   sig { returns(Hash) }
   def access
-    if attached_file.hide?
+    if hidden_file?
       { access: 'dark', download: 'none' }
     else
       { access: 'world', download: 'world' }
