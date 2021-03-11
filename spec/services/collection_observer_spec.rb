@@ -7,9 +7,9 @@ RSpec.describe CollectionObserver do
   let(:collection) { create(:collection) }
   let!(:collection_version) { create(:collection_version_with_collection, collection: collection) }
 
-  describe '.after_update_published' do
+  describe '.settings_updated' do
     subject(:action) do
-      described_class.after_update_published(collection, user: collection.creator, change_set: change_set)
+      described_class.settings_updated(collection, user: collection.creator, change_set: change_set)
     end
 
     let(:change_set) { CollectionChangeSet::PointInTime.new(collection).diff(collection_after) }

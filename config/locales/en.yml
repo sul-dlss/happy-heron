@@ -15,6 +15,7 @@ en:
       submit_for_review: Submitted for review
       reject: Returned by reviewer
       type_selected: Type selected for reserved PURL
+      settings_updated: Collection settings updated
   contributor:
     roles:
       person: Individual
