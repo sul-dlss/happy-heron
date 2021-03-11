@@ -236,7 +236,7 @@ RSpec.describe RequestGenerator do
                 structural: { contains: [
                   {
                     access: { access: 'world', download: 'world' },
-                    administrative: { sdrPreserve: true, shelve: true },
+                    administrative: { publish: true, sdrPreserve: true, shelve: true },
                     filename: 'sul.svg',
                     hasMessageDigests: [
                       { digest: 'f5eff9e28f154f79f7a11261bc0d4b30', type: 'md5' },
@@ -313,7 +313,7 @@ RSpec.describe RequestGenerator do
                   contains: [
                     {
                       access: { access: 'world', download: 'world' },
-                      administrative: { sdrPreserve: true, shelve: true },
+                      administrative: { publish: true, sdrPreserve: true, shelve: true },
                       filename: 'sul.svg',
                       hasMessageDigests: [
                         { digest: 'f5eff9e28f154f79f7a11261bc0d4b30', type: 'md5' },
