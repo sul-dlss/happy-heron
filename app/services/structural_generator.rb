@@ -36,7 +36,7 @@ class StructuralGenerator
   sig { params(attached_file: AttachedFile, offset: Integer).returns(Hash) }
   def build_fileset(attached_file, offset)
     {
-      type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
+      type: 'http://cocina.sul.stanford.edu/models/resources/file.jsonld',
       version: work_version.version,
       label: attached_file.label,
       structural: {

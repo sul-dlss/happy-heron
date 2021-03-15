@@ -249,7 +249,7 @@ RSpec.describe RequestGenerator do
                     version: 1
                   }
                 ] },
-                type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
+                type: 'http://cocina.sul.stanford.edu/models/resources/file.jsonld',
                 version: 1
               }
             ],
@@ -328,7 +328,7 @@ RSpec.describe RequestGenerator do
                     }
                   ]
                 },
-                type: 'http://cocina.sul.stanford.edu/models/fileset.jsonld',
+                type: 'http://cocina.sul.stanford.edu/models/resources/file.jsonld',
                 externalIdentifier: 'bk123gh4567_1',
                 version: 1
               }
