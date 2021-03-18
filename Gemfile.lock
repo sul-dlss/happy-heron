@@ -119,7 +119,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     chronic (0.10.2)
-    cocina-models (0.55.0)
+    cocina-models (0.56.0)
       activesupport
       dry-struct (~> 1.0)
       dry-types (~> 1.1)
@@ -402,9 +402,9 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     safe_type (1.1.1)
-    sdr-client (0.52.0)
+    sdr-client (0.53.0)
       activesupport
-      cocina-models (~> 0.55.0)
+      cocina-models (~> 0.56.0)
       dry-monads
       faraday (>= 0.16)
     semantic_range (2.3.1)
@@ -552,7 +552,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-sorbet
-  sdr-client (~> 0.52)
+  sdr-client (~> 0.53)
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
   sneakers (~> 2.11)
