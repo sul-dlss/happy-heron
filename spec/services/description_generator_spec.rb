@@ -136,8 +136,7 @@ RSpec.describe DescriptionGenerator do
       ],
       note: [
         { type: 'summary', value: 'test abstract' },
-        { type: 'preferred citation', value: 'Test citation :link:' },
-        { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+        { type: 'preferred citation', value: 'Test citation :link:' }
       ],
       title: [{ value: 'Test title' }],
       contributor: [
@@ -187,7 +186,16 @@ RSpec.describe DescriptionGenerator do
           note: [{ value: citation_value, type: 'preferred citation' }]
         }
       ],
-      form: types_form
+      form: types_form,
+      access: {
+        accessContact: [
+          {
+            value: 'io@io.io',
+            type: 'email',
+            displayLabel: 'Contact'
+          }
+        ]
+      }
     )
   end
 
@@ -207,8 +215,7 @@ RSpec.describe DescriptionGenerator do
       expect(model).to eq(
         note: [
           { type: 'summary', value: 'test abstract' },
-          { type: 'preferred citation', value: 'test citation' },
-          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+          { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
         contributor: [
@@ -251,7 +258,16 @@ RSpec.describe DescriptionGenerator do
             ]
           }
         ],
-        form: types_form
+        form: types_form,
+        access: {
+          accessContact: [
+            {
+              value: 'io@io.io',
+              type: 'email',
+              displayLabel: 'Contact'
+            }
+          ]
+        }
       )
     end
   end
@@ -270,8 +286,7 @@ RSpec.describe DescriptionGenerator do
       expect(model).to eq(
         note: [
           { type: 'summary', value: 'test abstract' },
-          { type: 'preferred citation', value: 'test citation' },
-          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+          { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
         event: [
@@ -292,7 +307,16 @@ RSpec.describe DescriptionGenerator do
             ]
           }
         ],
-        form: types_form
+        form: types_form,
+        access: {
+          accessContact: [
+            {
+              value: 'io@io.io',
+              type: 'email',
+              displayLabel: 'Contact'
+            }
+          ]
+        }
       )
     end
   end
@@ -311,8 +335,7 @@ RSpec.describe DescriptionGenerator do
       expect(model).to eq(
         note: [
           { type: 'summary', value: 'test abstract' },
-          { type: 'preferred citation', value: 'test citation' },
-          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+          { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
         event: [
@@ -326,7 +349,16 @@ RSpec.describe DescriptionGenerator do
             ]
           }
         ],
-        form: types_form
+        form: types_form,
+        access: {
+          accessContact: [
+            {
+              value: 'io@io.io',
+              type: 'email',
+              displayLabel: 'Contact'
+            }
+          ]
+        }
       )
     end
   end
@@ -344,8 +376,7 @@ RSpec.describe DescriptionGenerator do
       expect(model).to eq(
         note: [
           { type: 'summary', value: 'test abstract' },
-          { type: 'preferred citation', value: 'test citation' },
-          { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
+          { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
         contributor: [
@@ -387,7 +418,16 @@ RSpec.describe DescriptionGenerator do
             ]
           }
         ],
-        form: types_form
+        form: types_form,
+        access: {
+          accessContact: [
+            {
+              value: 'io@io.io',
+              type: 'email',
+              displayLabel: 'Contact'
+            }
+          ]
+        }
       )
     end
   end

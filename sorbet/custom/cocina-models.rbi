@@ -40,8 +40,12 @@ module Cocina::Models
   end
 
   class DescriptiveAccessMetadata
-  sig { params(url: T::Array[DescriptiveValue]).void }
-  def initialize(url:); end
+    sig do
+        params(url: T.nilable(T::Array[DescriptiveValue]),
+               accessContact: T.nilable(T::Array[T::Hash[T.untyped, T.untyped]]),
+        ).void
+    end
+  def initialize(url: nil, accessContact: nil); end
   end
 
   class RelatedResource
