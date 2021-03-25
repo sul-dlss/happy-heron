@@ -22,10 +22,11 @@ class DescriptionGenerator
       title: title,
       contributor: ContributorsGenerator.generate(work_version: work_version).presence,
       subject: keywords.presence,
-      note: ([abstract, citation] + contacts).compact.presence,
+      note: [abstract, citation].compact.presence,
       event: generate_events.presence,
       relatedResource: related_resources.presence,
-      form: TypesGenerator.generate(work_version: work_version).presence
+      form: TypesGenerator.generate(work_version: work_version).presence,
+      access: contacts
     }.compact)
   end
   # rubocop:enable Metrics/AbcSize
@@ -119,15 +120,21 @@ class DescriptionGenerator
     )
   end
 
-  sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
+  sig { returns(T.nilable(Cocina::Models::DescriptiveAccessMetadata)) }
   def contacts
-    work_version.contact_emails.map do |email|
-      Cocina::Models::DescriptiveValue.new(
+    return if work_version.contact_emails.empty?
+
+    access_contacts = work_version.contact_emails.map do |email|
+      {
         value: email.email,
-        type: 'contact',
+        type: 'email',
         displayLabel: 'Contact'
-      )
+      }
     end
+
+    Cocina::Models::DescriptiveAccessMetadata.new(
+      accessContact: access_contacts
+    )
   end
 
   sig { returns(T::Array[Cocina::Models::RelatedResource]) }
