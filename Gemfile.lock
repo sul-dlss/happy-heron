@@ -440,7 +440,7 @@ GEM
       parser (>= 2.7)
       sorbet-coerce (>= 0.2.6)
       sorbet-runtime (>= 0.5)
-    sorbet-runtime (0.5.6353)
+    sorbet-runtime (0.5.6357)
     sorbet-static (0.5.5981-universal-darwin-18)
     sorbet-static (0.5.5981-universal-darwin-19)
     sorbet-static (0.5.5981-x86_64-linux)
