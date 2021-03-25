@@ -77,9 +77,6 @@ RSpec.describe RequestGenerator do
                 value: 'Test title'
               }
             ],
-            contributor: [],
-            event: [],
-            subject: [],
             note: [
               {
                 value: 'test abstract',
@@ -90,7 +87,6 @@ RSpec.describe RequestGenerator do
                 type: 'preferred citation'
               }
             ],
-            relatedResource: [],
             form: types_form
           },
           identification: {
@@ -131,9 +127,6 @@ RSpec.describe RequestGenerator do
                 value: 'Test title'
               }
             ],
-            contributor: [],
-            event: [],
-            subject: [],
             note: [
               {
                 value: 'test abstract',
@@ -144,7 +137,6 @@ RSpec.describe RequestGenerator do
                 type: 'preferred citation'
               }
             ],
-            relatedResource: [],
             form: types_form
           },
           identification: {
@@ -205,9 +197,6 @@ RSpec.describe RequestGenerator do
                 value: 'Test title'
               }
             ],
-            event: [],
-            contributor: [],
-            subject: [],
             note: [
               {
                 value: 'test abstract',
@@ -217,13 +206,7 @@ RSpec.describe RequestGenerator do
                 value: 'test citation',
                 type: 'preferred citation'
               }
-              # {
-              #   value: 'io@io.io',
-              #   type: 'contact',
-              #   displayLabel: 'Contact'
-              # }
             ],
-            relatedResource: [],
             form: types_form
           },
           identification: {
@@ -286,9 +269,6 @@ RSpec.describe RequestGenerator do
                 value: 'Test title'
               }
             ],
-            event: [],
-            contributor: [],
-            subject: [],
             note: [
               {
                 value: 'test abstract',
@@ -299,7 +279,6 @@ RSpec.describe RequestGenerator do
                 type: 'preferred citation'
               }
             ],
-            relatedResource: [],
             form: types_form
           },
           identification: {

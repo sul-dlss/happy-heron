@@ -15,18 +15,20 @@ class DescriptionGenerator
     @work_version = work_version
   end
 
+  # rubocop:disable Metrics/AbcSize
   sig { returns(Cocina::Models::Description) }
   def generate
     Cocina::Models::Description.new({
-                                      title: title,
-                                      contributor: ContributorsGenerator.generate(work_version: work_version),
-                                      subject: keywords,
-                                      note: [abstract, citation] + contacts,
-                                      event: generate_events,
-                                      relatedResource: related_resources,
-                                      form: generate_form
-                                    }, false, false)
+      title: title,
+      contributor: ContributorsGenerator.generate(work_version: work_version).presence,
+      subject: keywords.presence,
+      note: ([abstract, citation] + contacts).compact.presence,
+      event: generate_events.presence,
+      relatedResource: related_resources.presence,
+      form: TypesGenerator.generate(work_version: work_version).presence
+    }.compact)
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -53,12 +55,6 @@ class DescriptionGenerator
   sig { returns(T::Array[Cocina::Models::RelatedResource]) }
   def related_resources
     RelatedLinksGenerator.generate(object: work_version) + related_works
-  end
-
-  sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def generate_form
-    TypesGenerator.generate(work_version: work_version) +
-      ContributorsGenerator.form_array_from_contributor_event(work_version: work_version)
   end
 
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }

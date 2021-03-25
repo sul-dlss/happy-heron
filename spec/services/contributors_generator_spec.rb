@@ -6,77 +6,24 @@ require 'rails_helper'
 RSpec.describe ContributorsGenerator do
   subject(:cocina_model) { described_class.generate(work_version: work_version) }
 
-  let(:stanford_self_deposit_source) do
-    {
-      value: 'Stanford self-deposit contributor types'
-    }
-  end
   let(:marc_relator_source) do
     {
       code: 'marcrelator',
       uri: 'http://id.loc.gov/vocabulary/relators/'
     }
   end
-  let(:datacite_creator_role) do
+
+  let(:contributing_author_role) do
     Cocina::Models::DescriptiveValue.new(
-      value: 'Creator',
-      source: { value: 'DataCite properties' }
+      value: 'contributor',
+      code: 'ctb',
+      uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+      source: marc_relator_source
     )
   end
-  let(:contributing_author_roles) do
-    [
-      {
-        value: 'Contributing author',
-        source: stanford_self_deposit_source
-      },
-      Cocina::Models::DescriptiveValue.new(
-        value: 'contributor',
-        code: 'ctb',
-        uri: 'http://id.loc.gov/vocabulary/relators/ctb',
-        source: marc_relator_source
-      ),
-      datacite_creator_role
-    ]
-  end
-  let(:author_roles) do
-    [
-      {
-        value: 'Author',
-        source: stanford_self_deposit_source
-      },
-      {
-        value: 'author',
-        code: 'aut',
-        uri: 'http://id.loc.gov/vocabulary/relators/aut',
-        source: marc_relator_source
-      },
-      datacite_creator_role
-    ]
-  end
-  let(:sponsor_roles) do
-    [
-      {
-        value: 'Sponsor',
-        source: stanford_self_deposit_source
-      },
-      Cocina::Models::DescriptiveValue.new(
-        value: 'sponsor',
-        code: 'spn',
-        uri: 'http://id.loc.gov/vocabulary/relators/spn',
-        source: marc_relator_source
-      ),
-      Cocina::Models::DescriptiveValue.new(
-        value: 'Sponsor',
-        source: { value: 'DataCite contributor types' }
-      )
-    ]
-  end
+
   let(:publisher_roles) do
     [
-      {
-        value: 'Publisher',
-        source: stanford_self_deposit_source
-      },
       Cocina::Models::DescriptiveValue.new(
         value: 'publisher',
         code: 'pbl',
@@ -84,13 +31,6 @@ RSpec.describe ContributorsGenerator do
         source: marc_relator_source
       )
     ]
-  end
-  let(:event_form) do
-    Cocina::Models::DescriptiveValue.new(
-      value: 'Event',
-      type: 'resource types',
-      source: { value: 'DataCite resource types' }
-    )
   end
 
   describe '.events_from_publisher_contributors' do
@@ -119,7 +59,6 @@ RSpec.describe ContributorsGenerator do
                 contributor: [
                   {
                     name: [{ value: org_contrib1.full_name }],
-                    type: 'organization',
                     role: publisher_roles
                   }
                 ]
@@ -129,7 +68,6 @@ RSpec.describe ContributorsGenerator do
                 contributor: [
                   {
                     name: [{ value: org_contrib2.full_name }],
-                    type: 'organization',
                     role: publisher_roles
                   }
                 ]
@@ -145,7 +83,8 @@ RSpec.describe ContributorsGenerator do
         [
           {
             value: work_version.published_edtf,
-            encoding: { code: 'edtf' }
+            encoding: { code: 'edtf' },
+            type: 'publication'
           }
         ]
       end
@@ -185,7 +124,6 @@ RSpec.describe ContributorsGenerator do
                 contributor: [
                   {
                     name: [{ value: org_contrib1.full_name }],
-                    type: 'organization',
                     role: publisher_roles
                   }
                 ]
@@ -196,7 +134,6 @@ RSpec.describe ContributorsGenerator do
                 contributor: [
                   {
                     name: [{ value: org_contrib2.full_name }],
-                    type: 'organization',
                     role: publisher_roles
                   }
                 ]
@@ -221,9 +158,9 @@ RSpec.describe ContributorsGenerator do
             status: 'primary',
             role: [
               {
-                value: 'Conference',
-                source: stanford_self_deposit_source
-              }
+                value: 'conference'
+              },
+              contributing_author_role
             ]
           )
         ]
@@ -241,362 +178,1025 @@ RSpec.describe ContributorsGenerator do
           Cocina::Models::Contributor.new(
             name: [
               {
-                value: "#{contributor.last_name}, #{contributor.first_name}",
-                type: 'inverted full name'
+                structuredValue: [
+                  {
+                    value: contributor.first_name,
+                    type: 'forename'
+                  },
+                  {
+                    value: contributor.last_name,
+                    type: 'surname'
+                  }
+                ]
               }
             ],
             type: 'person',
             status: 'primary',
-            role: contributing_author_roles
+            role: [contributing_author_role]
           )
         ]
       )
     end
   end
 
-  # from https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
+  # from https://github.com/sul-dlss/dor-services-app/blob/main/spec/services/cocina/mapping/descriptive/h2/contributor_h2_spec.rb
+  # The contexts below match the spec names from above. The expected cocina props are copied directly.
   describe 'h2 mapping specification examples' do
-    context 'with person with single role' do
-      let(:contributor) { build(:person_contributor, role: 'Data collector') }
-      let(:work_version) { build(:work_version, contributors: [contributor]) }
+    let(:cocina_props) do
+      {
+        contributor: cocina_model.map(&:to_h),
+        event: described_class.events_from_publisher_contributors(work_version: work_version,
+                                                                  pub_date: pub_date).map(&:to_h)
+      }.compact_blank
+    end
 
-      it 'creates Cocina::Models::Contributor with DataCite role' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor.last_name}, #{contributor.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
+    let(:pub_date) do
+      if work_version.published_edtf
+        Cocina::Models::Event.new(
+          type: 'publication',
+          date: [
+            {
+              value: work_version.published_edtf.strftime('%Y-%m-%d'),
+              encoding: { code: 'w3cdtf' },
               status: 'primary',
-              role: [
-                {
-                  value: 'Data collector',
-                  source: stanford_self_deposit_source
-                },
-                Cocina::Models::DescriptiveValue.new(
-                  value: 'compiler',
-                  code: 'com',
-                  uri: 'http://id.loc.gov/vocabulary/relators/com',
-                  source: marc_relator_source
-                ),
-                Cocina::Models::DescriptiveValue.new(
-                  value: 'DataCollector',
-                  source: {
-                    value: 'DataCite contributor types'
+              type: 'publication'
+            }
+          ]
+        )
+      end
+    end
+
+    context 'with cited contributor with author role' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Author') }
+      let(:work_version) { build(:work_version, authors: [author]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
                   }
-                )
-              ]
-            )
-          ]
-        )
-      end
-
-      it 'ContributorsGenerator.form_array_from_contributor_event returns []' do
-        expect(described_class.form_array_from_contributor_event(work_version: work_version)).to eq []
-      end
-    end
-
-    context 'with person with multiple roles, one maps to DataCite creator property' do
-      # NOTE: deduping of names to get multiple roles has been officially postponed by Amy and Arcadia
-      xit 'TODO: https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt#L50'
-    end
-
-    context 'with organization with single role' do
-      let(:contributor) { build(:org_contributor, role: 'Host institution') }
-      let(:work_version) { build(:work_version, contributors: [contributor]) }
-
-      it 'creates Cocina::Models::Contributor without marc relator role' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor.full_name }],
-              type: 'organization',
-              status: 'primary',
-              role: [
-                {
-                  value: 'Host institution',
-                  source: stanford_self_deposit_source
-                },
-                Cocina::Models::DescriptiveValue.new(
-                  value: 'host institution',
-                  code: 'his',
-                  uri: 'http://id.loc.gov/vocabulary/relators/his',
-                  source: marc_relator_source
-                ),
-                Cocina::Models::DescriptiveValue.new(
-                  value: 'HostingInstitution',
-                  source: {
-                    value: 'DataCite contributor types'
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'author',
+                    code: 'aut',
+                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
                   }
-                )
-              ]
-            )
-          ]
+                ]
+              }
+            ]
+          }
         )
       end
     end
 
-    context 'with organization with multiple roles' do
-      # NOTE: deduping of names to get multiple roles has been officially postponed by Amy and Arcadia
-      xit 'TODO: https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt#L150'
-    end
+    context 'with multiple cited contributors' do
+      let(:author1) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Author') }
+      let(:author2) { build(:person_author, first_name: 'Leland', last_name: 'Stanford', role: 'Author') }
+      let(:work_version) { build(:work_version, authors: [author1, author2]) }
 
-    context 'with conference as contributor' do
-      let(:contributor) { build(:org_contributor, role: 'Conference') }
-      let(:work_version) { build(:work_version, contributors: [contributor]) }
-
-      it 'creates Cocina::Models::Contributor' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor.full_name }],
-              type: 'conference',
-              status: 'primary',
-              role: [
-                {
-                  value: 'Conference',
-                  source: stanford_self_deposit_source
-                }
-              ]
-            )
-          ]
-        )
-      end
-
-      it 'ContributorsGenerator.form_array_from_contributor_event returns populated form attribute' do
-        form = described_class.form_array_from_contributor_event(work_version: work_version)
-        expect(form).to eq [event_form]
-      end
-    end
-
-    context 'with event as contributor' do
-      let(:contributor) { build(:org_contributor, role: 'Event') }
-      let(:work_version) { build(:work_version, contributors: [contributor]) }
-
-      it 'creates Cocina::Models::Contributor with DataCite role' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor.full_name }],
-              type: 'event',
-              status: 'primary',
-              role: [
-                {
-                  value: 'Event',
-                  source: stanford_self_deposit_source
-                }
-              ]
-            )
-          ]
-        )
-      end
-
-      it 'ContributorsGenerator.form_array_from_contributor_event returns populated form attribute' do
-        form = described_class.form_array_from_contributor_event(work_version: work_version)
-        expect(form).to eq [event_form]
-      end
-    end
-
-    context 'with multiple person contributors' do
-      let(:contributor1) { build(:person_contributor, role: 'Author') }
-      let(:contributor2) { build(:person_contributor, role: 'Author') }
-      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2]) }
-
-      # TODO: implement order
-
-      it 'creates array of Cocina::Models::Contributor, one for each person contributor' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor1.last_name}, #{contributor1.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
-              status: 'primary',
-              # order: 1,
-              role: author_roles
-            ),
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor2.last_name}, #{contributor2.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
-              # order: 2,
-              role: author_roles
-            )
-          ]
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'author',
+                    code: 'aut',
+                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Leland',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                role: [
+                  {
+                    value: 'author',
+                    code: 'aut',
+                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         )
       end
     end
 
-    context 'with multiple contributors - person and organization' do
-      let(:contributor1) { build(:person_contributor, role: 'Author') }
-      let(:contributor2) { build(:org_contributor, role: 'Sponsor') }
-      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2]) }
+    context 'with cited contributor with cited organization' do
+      let(:author1) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Data collector') }
+      let(:author2) { build(:org_author, full_name: 'Stanford University', role: 'Sponsor') }
+      let(:work_version) { build(:work_version, authors: [author1, author2]) }
 
-      it 'creates array of Cocina::Models::Contributors' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor1.last_name}, #{contributor1.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
-              status: 'primary',
-              role: author_roles
-            ),
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor2.full_name }],
-              type: 'organization',
-              role: sponsor_roles
-            )
-          ]
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'compiler',
+                    code: 'com',
+                    uri: 'http://id.loc.gov/vocabulary/relators/com',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    value: 'Stanford University'
+                  }
+                ],
+                type: 'organization',
+                role: [
+                  {
+                    value: 'sponsor',
+                    code: 'spn',
+                    uri: 'http://id.loc.gov/vocabulary/relators/spn',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         )
       end
     end
 
-    context 'with multipe person contributors and organization as author' do
-      let(:contributor1) { build(:person_contributor, role: 'Author') }
-      let(:contributor2) { build(:org_contributor, role: 'Author') }
-      let(:contributor3) { build(:person_contributor, role: 'Author') }
-      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2, contributor3]) }
+    context 'with cited organization' do
+      let(:author) { build(:org_author, full_name: 'Stanford University', role: 'Host institution') }
+      let(:work_version) { build(:work_version, authors: [author]) }
 
-      # TODO: implement order
-
-      it 'creates array of Cocina::Models::Contributors' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor1.last_name}, #{contributor1.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
-              status: 'primary',
-              # order: 1,
-              role: author_roles
-            ),
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor2.full_name }],
-              type: 'organization',
-              # order: 2,
-              role: author_roles
-            ),
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor3.last_name}, #{contributor3.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
-              # order: 3,
-              role: author_roles
-            )
-          ]
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'Stanford University'
+                  }
+                ],
+                type: 'organization',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'host institution',
+                    code: 'his',
+                    uri: 'http://id.loc.gov/vocabulary/relators/his',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         )
       end
     end
 
-    context 'with multipe person contributors and organization as non-author' do
-      let(:contributor1) { build(:person_contributor, role: 'Author') }
-      let(:contributor2) { build(:org_contributor, role: 'Sponsor') }
-      let(:contributor3) { build(:person_contributor, role: 'Author') }
-      let(:work_version) { build(:work_version, contributors: [contributor1, contributor2, contributor3]) }
+    context 'with multiple cited organizations' do
+      let(:author1) { build(:org_author, full_name: 'Stanford University', role: 'Host institution') }
+      let(:author2) { build(:org_author, full_name: 'Department of English', role: 'Department') }
+      let(:work_version) { build(:work_version, authors: [author1, author2]) }
 
-      # TODO: implement order
-
-      it 'creates array of Cocina::Models::Contributors' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor1.last_name}, #{contributor1.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
-              status: 'primary',
-              # order: 1,
-              role: author_roles
-            ),
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor2.full_name }],
-              type: 'organization',
-              role: sponsor_roles
-            ),
-            Cocina::Models::Contributor.new(
-              name: [
-                {
-                  value: "#{contributor3.last_name}, #{contributor3.first_name}",
-                  type: 'inverted full name'
-                }
-              ],
-              type: 'person',
-              # order: 2,
-              role: author_roles
-            )
-          ]
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'Stanford University'
+                  }
+                ],
+                type: 'organization',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'host institution',
+                    code: 'his',
+                    uri: 'http://id.loc.gov/vocabulary/relators/his',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    value: 'Department of English'
+                  }
+                ],
+                type: 'organization',
+                role: [
+                  {
+                    value: 'department'
+                  }
+                ]
+              }
+            ]
+          }
         )
       end
     end
 
-    context 'with organization as funder' do
+    context 'with cited and uncited contributors' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Author') }
+      let(:contributor) { build(:person_contributor, first_name: 'Leland', last_name: 'Stanford') }
+      let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'author',
+                    code: 'aut',
+                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Leland',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                role: [
+                  {
+                    value: 'contributor',
+                    code: 'ctb',
+                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor with uncited organization' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Data collector') }
+      let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Sponsor') }
+      let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'compiler',
+                    code: 'com',
+                    uri: 'http://id.loc.gov/vocabulary/relators/com',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    value: 'Stanford University'
+                  }
+                ],
+                type: 'organization',
+                role: [
+                  {
+                    value: 'sponsor',
+                    code: 'spn',
+                    uri: 'http://id.loc.gov/vocabulary/relators/spn',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  },
+                  {
+                    value: 'contributor',
+                    code: 'ctb',
+                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor with Event role' do
+      let(:author) { build(:org_author, full_name: 'San Francisco Symphony Concert', role: 'Event') }
+      let(:work_version) { build(:work_version, authors: [author]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'San Francisco Symphony Concert'
+                  }
+                ],
+                status: 'primary',
+                role: [
+                  {
+                    value: 'event'
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor and uncited contributor with Event role' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Event organizer') }
+      let(:contributor) { build(:org_contributor, full_name: 'San Francisco Symphony Concert', role: 'Event') }
+      let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'organizer',
+                    code: 'orm',
+                    uri: 'http://id.loc.gov/vocabulary/relators/orm',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    value: 'San Francisco Symphony Concert'
+                  }
+                ],
+                role: [
+                  {
+                    value: 'event'
+                  },
+                  {
+                    value: 'contributor',
+                    code: 'ctb',
+                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor with Conference role' do
+      let(:author) { build(:org_author, full_name: 'LDCX', role: 'Conference') }
+      let(:work_version) { build(:work_version, authors: [author]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'LDCX'
+                  }
+                ],
+                type: 'conference',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'conference'
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor and uncited contributor with Conference role' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Speaker') }
+      let(:contributor) { build(:org_contributor, full_name: 'LDCX', role: 'Conference') }
+      let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'speaker',
+                    code: 'spk',
+                    uri: 'http://id.loc.gov/vocabulary/relators/spk',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    value: 'LDCX'
+                  }
+                ],
+                type: 'conference',
+                role: [
+                  {
+                    value: 'conference'
+                  },
+                  {
+                    value: 'contributor',
+                    code: 'ctb',
+                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor with Funder role' do
+      let(:author) { build(:org_author, full_name: 'Stanford University', role: 'Funder') }
+      let(:work_version) { build(:work_version, authors: [author]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'Stanford University'
+                  }
+                ],
+                type: 'organization',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'funder',
+                    code: 'fnd',
+                    uri: 'http://id.loc.gov/vocabulary/relators/fnd',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor and uncited contributor with Funder role' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Data collector') }
       let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Funder') }
-      let(:work_version) { build(:work_version, contributors: [contributor]) }
+      let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor per spec' do
-        expect(cocina_model).to eq(
-          [
-            Cocina::Models::Contributor.new(
-              name: [{ value: contributor.full_name }],
-              type: 'organization',
-              status: 'primary',
-              role: [
-                {
-                  value: 'Funder',
-                  source: stanford_self_deposit_source
-                },
-                {
-                  value: 'funder',
-                  code: 'fnd',
-                  uri: 'http://id.loc.gov/vocabulary/relators/fnd',
-                  source: marc_relator_source
-                }
-              ]
-            )
-          ]
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'compiler',
+                    code: 'com',
+                    uri: 'http://id.loc.gov/vocabulary/relators/com',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              },
+              {
+                name: [
+                  {
+                    value: 'Stanford University'
+                  }
+                ],
+                type: 'organization',
+                role: [
+                  {
+                    value: 'funder',
+                    code: 'fnd',
+                    uri: 'http://id.loc.gov/vocabulary/relators/fnd',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  },
+                  {
+                    value: 'contributor',
+                    code: 'ctb',
+                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         )
       end
     end
 
-    # see description_generator_spec for example 12 - "Publisher and publication date entered by user"
+    context 'with cited contributor with Publisher role' do
+      let(:author) { build(:org_author, full_name: 'Stanford University Press', role: 'Publisher') }
+      let(:work_version) { build(:work_version, authors: [author]) }
 
-    # see also description_generator_spec for example 13 - "Publisher entered by user, no publication date"
-    context 'with publisher entered by user' do
-      let(:contributor) do
-        build(:org_contributor, full_name: 'Stanford University Press', role: 'Publisher')
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'Stanford University Press'
+                  }
+                ],
+                type: 'organization',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'publisher',
+                    code: 'pbl',
+                    uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ],
+            event: [
+              {
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [
+                      {
+                        value: 'Stanford University Press'
+                      }
+                    ],
+                    role: [
+                      {
+                        value: 'publisher',
+                        code: 'pbl',
+                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                        source: {
+                          code: 'marcrelator',
+                          uri: 'http://id.loc.gov/vocabulary/relators/'
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        )
       end
-      let(:work_version) { build(:work_version, contributors: [contributor]) }
+    end
 
-      it 'does not create Cocina::Models::Contributor' do
-        expect(cocina_model).to eq []
+    context 'with cited contributor and uncited contributor with Publisher role' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Author') }
+      let(:contributor) { build(:org_contributor, full_name: 'Stanford University Press', role: 'Publisher') }
+      let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'author',
+                    code: 'aut',
+                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ],
+            event: [
+              {
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [
+                      {
+                        value: 'Stanford University Press'
+                      }
+                    ],
+                    role: [
+                      {
+                        value: 'publisher',
+                        code: 'pbl',
+                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                        source: {
+                          code: 'marcrelator',
+                          uri: 'http://id.loc.gov/vocabulary/relators/'
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor with Publisher role and publication date' do
+      let(:author) { build(:org_author, full_name: 'Stanford University Press', role: 'Publisher') }
+      let(:work_version) { build(:work_version, authors: [author], published_edtf: Date.parse('2020-02-02')) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'Stanford University Press'
+                  }
+                ],
+                type: 'organization',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'publisher',
+                    code: 'pbl',
+                    uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ],
+            event: [
+              {
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [
+                      {
+                        value: 'Stanford University Press'
+                      }
+                    ],
+                    role: [
+                      {
+                        value: 'publisher',
+                        code: 'pbl',
+                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                        source: {
+                          code: 'marcrelator',
+                          uri: 'http://id.loc.gov/vocabulary/relators/'
+                        }
+                      }
+                    ]
+                  }
+                ],
+                date: [
+                  {
+                    encoding: {
+                      code: 'w3cdtf'
+                    },
+                    value: '2020-02-02',
+                    status: 'primary',
+                    type: 'publication'
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor and uncited contributor with Publisher role and publication date' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Author') }
+      let(:contributor) { build(:org_contributor, full_name: 'Stanford University Press', role: 'Publisher') }
+      let(:work_version) do
+        build(:work_version, authors: [author], contributors: [contributor], published_edtf: Date.parse('2020-02-02'))
+      end
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'author',
+                    code: 'aut',
+                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ],
+            event: [
+              {
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [
+                      {
+                        value: 'Stanford University Press'
+                      }
+                    ],
+                    role: [
+                      {
+                        value: 'publisher',
+                        code: 'pbl',
+                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                        source: {
+                          code: 'marcrelator',
+                          uri: 'http://id.loc.gov/vocabulary/relators/'
+                        }
+                      }
+                    ]
+                  }
+                ],
+                date: [
+                  {
+                    encoding: {
+                      code: 'w3cdtf'
+                    },
+                    value: '2020-02-02',
+                    status: 'primary',
+                    type: 'publication'
+                  }
+                ]
+              }
+            ]
+          }
+        )
       end
     end
   end
