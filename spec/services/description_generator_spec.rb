@@ -113,7 +113,11 @@ RSpec.describe DescriptionGenerator do
           date: [
             {
               encoding: { code: 'edtf' },
-              value: '2020-03-04/2020-10-31'
+              structuredValue: [
+                { value: '2020-03-04', type: 'start' },
+                { value: '2020-10-31', type: 'end' }
+              ],
+              type: 'creation'
             }
           ],
           type: 'creation'
@@ -123,7 +127,7 @@ RSpec.describe DescriptionGenerator do
             {
               encoding: { code: 'edtf' },
               value: '2020-02-14',
-              status: 'primary'
+              type: 'publication'
             }
           ],
           type: 'publication'
@@ -302,7 +306,7 @@ RSpec.describe DescriptionGenerator do
               {
                 encoding: { code: 'edtf' },
                 value: '2020-02-14',
-                status: 'primary'
+                type: 'publication'
               }
             ]
           }
@@ -413,7 +417,7 @@ RSpec.describe DescriptionGenerator do
               {
                 encoding: { code: 'edtf' },
                 value: '2020-02-14',
-                status: 'primary'
+                type: 'publication'
               }
             ]
           }
@@ -429,6 +433,56 @@ RSpec.describe DescriptionGenerator do
           ]
         }
       )
+    end
+
+    context 'when approximate creation date' do
+      let(:work_version) do
+        build(:work_version, :with_approximate_creation_date)
+      end
+
+      it 'creates event of type creation with approximate date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'creation',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2020-03-08',
+                  type: 'creation',
+                  qualifier: 'approximate'
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when approximate creation date range' do
+      let(:work_version) do
+        build(:work_version, :with_approximate_creation_date_range)
+      end
+
+      it 'creates event of type creation with approximate date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'creation',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  structuredValue: [
+                    { value: '2020-03-04', type: 'start', qualifier: 'approximate' },
+                    { value: '2020-10-31', type: 'end', qualifier: 'approximate' }
+                  ],
+                  type: 'creation'
+                }
+              ]
+            }
+          ]
+        )
+      end
     end
   end
 end
