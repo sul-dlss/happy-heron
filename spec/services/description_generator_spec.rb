@@ -67,11 +67,6 @@ RSpec.describe DescriptionGenerator do
       }
     ]
   end
-  let(:stanford_self_deposit_source) do
-    {
-      value: 'Stanford self-deposit contributor types'
-    }
-  end
   let(:marc_relator_source) do
     {
       code: 'marcrelator',
@@ -81,15 +76,33 @@ RSpec.describe DescriptionGenerator do
   let(:publisher_roles) do
     [
       {
-        value: 'Publisher',
-        source: stanford_self_deposit_source
-      },
-      {
         value: 'publisher',
         code: 'pbl',
         uri: 'http://id.loc.gov/vocabulary/relators/pbl',
         source: marc_relator_source
       }
+    ]
+  end
+  let(:contributor_role) do
+    {
+      value: 'contributor',
+      code: 'ctb',
+      uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+      source: {
+        code: 'marcrelator',
+        uri: 'http://id.loc.gov/vocabulary/relators/'
+      }
+    }
+  end
+  let(:author_roles) do
+    [
+      {
+        value: 'author',
+        code: 'aut',
+        uri: 'http://id.loc.gov/vocabulary/relators/aut',
+        source: marc_relator_source
+      },
+      contributor_role
     ]
   end
 
@@ -134,12 +147,6 @@ RSpec.describe DescriptionGenerator do
           status: 'primary',
           role: [
             {
-              value: contributor.role,
-              source: {
-                value: 'Stanford self-deposit contributor types'
-              }
-            },
-            {
               value: 'sponsor',
               code: 'spn',
               uri: 'http://id.loc.gov/vocabulary/relators/spn',
@@ -148,12 +155,7 @@ RSpec.describe DescriptionGenerator do
                 uri: 'http://id.loc.gov/vocabulary/relators/'
               }
             },
-            {
-              value: 'Sponsor',
-              source: {
-                value: 'DataCite contributor types'
-              }
-            }
+            contributor_role
           ]
         }
       ],
@@ -200,40 +202,6 @@ RSpec.describe DescriptionGenerator do
             contributors: [contributor1, contributor2, contributor3],
             title: 'Test title')
     end
-    let(:datacite_creator_role) do
-      {
-        value: 'Creator',
-        source: {
-          value: 'DataCite properties'
-        }
-      }
-    end
-    let(:author_roles) do
-      [
-        {
-          value: 'Author',
-          source: stanford_self_deposit_source
-        },
-        {
-          value: 'author',
-          code: 'aut',
-          uri: 'http://id.loc.gov/vocabulary/relators/aut',
-          source: marc_relator_source
-        },
-        datacite_creator_role
-      ]
-    end
-    let(:event_form) do
-      [
-        {
-          value: 'Event',
-          type: 'resource types',
-          source: {
-            value: 'DataCite resource types'
-          }
-        }
-      ]
-    end
 
     it 'creates forms as well as contributors in description cocina model' do
       expect(model).to eq(
@@ -246,20 +214,27 @@ RSpec.describe DescriptionGenerator do
         contributor: [
           {
             name: [{ value: contributor1.full_name }],
-            type: 'event',
             status: 'primary',
             role: [
               {
-                value: 'Event',
-                source: stanford_self_deposit_source
-              }
+                value: 'event'
+              },
+              contributor_role
             ]
           },
           {
             name: [
               {
-                value: "#{contributor2.last_name}, #{contributor2.first_name}",
-                type: 'inverted full name'
+                structuredValue: [
+                  {
+                    value: contributor2.first_name,
+                    type: 'forename'
+                  },
+                  {
+                    value: contributor2.last_name,
+                    type: 'surname'
+                  }
+                ]
               }
             ],
             type: 'person',
@@ -270,16 +245,13 @@ RSpec.describe DescriptionGenerator do
             type: 'conference',
             role: [
               {
-                value: 'Conference',
-                source: stanford_self_deposit_source
-              }
+                value: 'conference'
+              },
+              contributor_role
             ]
           }
         ],
-        form: types_form + event_form,
-        event: [],
-        subject: [],
-        relatedResource: []
+        form: types_form
       )
     end
   end
@@ -302,14 +274,12 @@ RSpec.describe DescriptionGenerator do
           { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
         ],
         title: [{ value: 'Test title' }],
-        contributor: [],
         event: [
           {
             type: 'publication',
             contributor: [
               {
                 name: [{ value: contributor.full_name }],
-                type: 'organization',
                 role: publisher_roles
               }
             ],
@@ -322,9 +292,7 @@ RSpec.describe DescriptionGenerator do
             ]
           }
         ],
-        form: types_form,
-        subject: [],
-        relatedResource: []
+        form: types_form
       )
     end
   end
@@ -347,22 +315,18 @@ RSpec.describe DescriptionGenerator do
           { displayLabel: 'Contact', type: 'contact', value: 'io@io.io' }
         ],
         title: [{ value: 'Test title' }],
-        contributor: [],
         event: [
           {
             type: 'publication',
             contributor: [
               {
                 name: [{ value: contributor.full_name }],
-                type: 'organization',
                 role: publisher_roles
               }
             ]
           }
         ],
-        form: types_form,
-        subject: [],
-        relatedResource: []
+        form: types_form
       )
     end
   end
@@ -388,33 +352,21 @@ RSpec.describe DescriptionGenerator do
           {
             name: [
               {
-                value: "#{person_contrib.last_name}, #{person_contrib.first_name}",
-                type: 'inverted full name'
+                structuredValue: [
+                  {
+                    value: person_contrib.first_name,
+                    type: 'forename'
+                  },
+                  {
+                    value: person_contrib.last_name,
+                    type: 'surname'
+                  }
+                ]
               }
             ],
             type: person_contrib.contributor_type,
             status: 'primary',
-            role: [
-              {
-                value: person_contrib.role,
-                source: {
-                  value: 'Stanford self-deposit contributor types'
-                }
-              },
-              {
-                value: 'author',
-                code: 'aut',
-                uri: 'http://id.loc.gov/vocabulary/relators/aut',
-                source: {
-                  code: 'marcrelator',
-                  uri: 'http://id.loc.gov/vocabulary/relators/'
-                }
-              },
-              {
-                value: 'Creator',
-                source: { value: 'DataCite properties' }
-              }
-            ]
+            role: author_roles
           }
         ],
         event: [
@@ -423,7 +375,6 @@ RSpec.describe DescriptionGenerator do
             contributor: [
               {
                 name: [{ value: pub_contrib.full_name }],
-                type: 'organization',
                 role: publisher_roles
               }
             ],
@@ -436,9 +387,7 @@ RSpec.describe DescriptionGenerator do
             ]
           }
         ],
-        form: types_form,
-        subject: [],
-        relatedResource: []
+        form: types_form
       )
     end
   end

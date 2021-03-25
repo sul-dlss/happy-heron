@@ -11,11 +11,6 @@ class ContributorsGenerator
     new(work_version: work_version).generate
   end
 
-  sig { params(work_version: WorkVersion).returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def self.form_array_from_contributor_event(work_version:)
-    new(work_version: work_version).form_array_from_contributor_event
-  end
-
   sig do
     params(work_version: WorkVersion, pub_date: T.nilable(Cocina::Models::Event))
       .returns(T::Array[Cocina::Models::Event])
@@ -33,8 +28,8 @@ class ContributorsGenerator
   sig { returns(T::Array[T.nilable(Cocina::Models::Contributor)]) }
   def generate
     count = 0
-    work_version.contributors.reject { |c| c.role == 'Publisher' }
-                .map do |work_form_contributor|
+    (work_version.authors + work_version.contributors.reject { |c| c.role == 'Publisher' })
+      .map do |work_form_contributor|
       count += 1
       # First entered contributor is always status: "primary" (except for Publisher)
       primary = count == 1
@@ -42,28 +37,12 @@ class ContributorsGenerator
     end
   end
 
-  ROLES_FOR_FORM = %w[Event Conference].freeze
-
-  # when there is an organization role of 'Event' or 'Conference', a form value must be added to descriptive metadata
-  sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def form_array_from_contributor_event
-    return [] if work_version.contributors.select { |c| ROLES_FOR_FORM.include?(c.role) }.empty?
-
-    [
-      Cocina::Models::DescriptiveValue.new(
-        value: 'Event',
-        type: 'resource types',
-        source: { value: 'DataCite resource types' }
-      )
-    ]
-  end
-
   sig { params(pub_date: T.nilable(Cocina::Models::Event)).returns(T::Array[Cocina::Models::Event]) }
   def publication_event_values(pub_date)
-    work_version.contributors.select { |c| c.role == 'Publisher' }.map do |publisher|
+    (work_version.authors + work_version.contributors).select { |c| c.role == 'Publisher' }.map do |publisher|
       event = {
         type: 'publication',
-        contributor: [contributor(publisher, false)]
+        contributor: [publication_contributor(publisher)]
       }
       event[:date] = pub_date.date if pub_date
 
@@ -76,55 +55,73 @@ class ContributorsGenerator
   sig { returns(WorkVersion) }
   attr_reader :work_version
 
-  sig { params(contributor: Contributor, primary: T::Boolean).returns(Cocina::Models::Contributor) }
+  sig { params(contributor: T.any(Contributor, Author), primary: T::Boolean).returns(Cocina::Models::Contributor) }
   def contributor(contributor, primary)
     contrib_hash = {
       name: name_descriptive_value(contributor),
       type: contributor_type(contributor),
-      role: cocina_roles(contributor.role)
-    }
+      role: cocina_roles(contributor)
+    }.compact
+
     contrib_hash[:status] = 'primary' if primary
     Cocina::Models::Contributor.new(contrib_hash)
   end
 
-  sig { params(contributor: Contributor).returns(T::Array[Cocina::Models::DescriptiveValue]) }
+  sig { params(contributor: T.any(Contributor, Author)).returns(Cocina::Models::Contributor) }
+  def publication_contributor(contributor)
+    contrib_hash = {
+      name: name_descriptive_value(contributor),
+      role: [T.must(marcrelator_role(contributor.role))]
+    }
+    Cocina::Models::Contributor.new(contrib_hash)
+  end
+
+  sig { params(contributor: T.any(Contributor, Author)).returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def name_descriptive_value(contributor)
     return [Cocina::Models::DescriptiveValue.new(value: full_name(contributor))] unless contributor.person?
 
-    [Cocina::Models::DescriptiveValue.new(value: full_name(contributor), type: 'inverted full name')]
+    [Cocina::Models::DescriptiveValue.new(structuredValue: structured_name(contributor))]
   end
 
-  sig { params(contributor: Contributor).returns(T.nilable(String)) }
+  sig { params(contributor: T.any(Contributor, Author)).returns(T::Array[Cocina::Models::DescriptiveValue]) }
+  def structured_name(contributor)
+    [
+      Cocina::Models::DescriptiveValue.new(value: contributor.first_name, type: 'forename'),
+      Cocina::Models::DescriptiveValue.new(value: contributor.last_name, type: 'surname')
+    ]
+  end
+
+  sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(String)) }
   def full_name(contributor)
     return "#{contributor.last_name}, #{contributor.first_name}" if contributor.person?
 
     contributor.full_name
   end
 
-  sig { params(contributor: Contributor).returns(String) }
+  sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(String)) }
   def contributor_type(contributor)
     return 'conference' if contributor.role == 'Conference'
-    return 'event' if contributor.role == 'Event'
+    return nil if contributor.role == 'Event'
 
     contributor.contributor_type
   end
 
-  sig { params(role: String).returns(T::Array[Cocina::Models::DescriptiveValue]) }
-  def cocina_roles(role)
-    result = [h2_role_descriptive_value(role)]
-    result << T.must(marcrelator_role(role)) if marcrelator_role(role)
-    result << T.must(datacite_role(role)) if datacite_role(role)
-    result
+  sig { params(contributor: T.any(Contributor, Author)).returns(T::Array[Cocina::Models::DescriptiveValue]) }
+  def cocina_roles(contributor)
+    roles = []
+    roles << (marcrelator_role(contributor.role) ||
+      Cocina::Models::DescriptiveValue.new(value: contributor.role.downcase))
+    if contributor.type == 'Contributor' && has_contributor_role?(roles)
+      roles << marcrelator_role('Contributing author')
+    end
+    roles
   end
 
-  sig { params(role: String).returns(Cocina::Models::DescriptiveValue) }
-  def h2_role_descriptive_value(role)
-    Cocina::Models::DescriptiveValue.new(
-      value: role,
-      source: {
-        value: 'Stanford self-deposit contributor types'
-      }
-    )
+  sig { params(roles: T::Array[Cocina::Models::DescriptiveValue]).returns(T::Boolean) }
+  def has_contributor_role?(roles)
+    roles.none? do |role|
+      role.value == 'contributor'
+    end
   end
 
   sig { params(role: String).returns(T.nilable(Cocina::Models::DescriptiveValue)) }
@@ -140,27 +137,6 @@ class ContributorsGenerator
       source: {
         code: 'marcrelator',
         uri: 'http://id.loc.gov/vocabulary/relators/'
-      }
-    )
-  end
-
-  sig { params(role: String).returns(T.nilable(Cocina::Models::DescriptiveValue)) }
-  def datacite_role(role)
-    datacite_role = ROLE_TO_DATA_CITE_VALUE[role]
-    return if datacite_role.blank?
-
-    case datacite_role
-    when String
-      datacite_source = 'DataCite contributor types'
-    when :creator
-      datacite_role = datacite_role.to_s.capitalize
-      datacite_source = 'DataCite properties'
-    end
-
-    Cocina::Models::DescriptiveValue.new(
-      value: datacite_role,
-      source: {
-        value: datacite_source
       }
     )
   end
@@ -225,40 +201,6 @@ class ContributorsGenerator
     'spk' => 'speaker',
     'spn' => 'sponsor',
     'ths' => 'thesis advisor'
-  }.freeze
-
-  ROLE_TO_DATA_CITE_VALUE = {
-    # person
-    'Author' => :creator,
-    'Composer' => :creator,
-    'Contributing author' => :creator,
-    'Copyright holder' => 'RightsHolder',
-    'Creator' => :creator,
-    'Data collector' => 'DataCollector',
-    'Data contributor' => 'Other',
-    'Editor' => 'Editor',
-    'Event organizer' => 'Supervisor',
-    'Interviewee' => 'Other',
-    'Interviewer' => 'Other',
-    'Performer' => 'Other',
-    'Photographer' => :creator,
-    'Primary thesis advisor' => 'Other',
-    'Principal investigator' => 'ProjectLeader',
-    'Producer' => 'Other',
-    'Researcher' => 'Researcher',
-    'Software developer' => :creator,
-    'Speaker' => 'Other',
-    'Thesis advisor' => 'Other',
-    # organization (when not already listed above)
-    'Conference' => nil, # see form_array_from_contributor_event
-    'Degree granting institution' => 'Other',
-    'Event' => nil, # see form_array_from_contributor_event
-    'Funder' => nil,
-    'Host institution' => 'HostingInstitution',
-    'Issuing body' => 'Distributor',
-    'Publisher' => nil, # see events_from_publisher_contributors
-    'Research group' => 'ResearchGroup',
-    'Sponsor' => 'Sponsor'
   }.freeze
 end
 # rubocop:enable Metrics/ClassLength

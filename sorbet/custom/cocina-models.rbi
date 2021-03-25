@@ -9,10 +9,12 @@ module Cocina::Models
   end
 
   class Contributor
-    sig { params(name: T::Array[T.any(DescriptiveValue, T::Hash[T.untyped, T.untyped])],
-                 type: String,
-                 role: T::Array[T.any(DescriptiveValue, T::Hash[T.untyped, T.untyped])]).void }
-    def initialize(name:, type:, role:); end
+    sig do
+        params(name: T::Array[T.any(DescriptiveValue, T::Hash[T.untyped, T.untyped])],
+               role: T::Array[T.any(DescriptiveValue, T::Hash[T.untyped, T.untyped])],
+               type: T.nilable(String)).void
+    end
+    def initialize(name:, role:, type: nil); end
   end
 
   class DescriptiveValue
