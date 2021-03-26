@@ -34,7 +34,7 @@ RSpec.describe RequestGenerator do
           code: 'aat'
         },
         type: 'genre',
-        uri: 'http://vocab.getty.edu/aat/300048715',
+        uri: 'http://vocab.getty.edu/page/aat/300048715',
         value: 'articles'
       },
       {

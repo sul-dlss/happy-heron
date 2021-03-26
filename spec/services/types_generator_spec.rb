@@ -38,7 +38,7 @@ RSpec.describe TypesGenerator do
           Cocina::Models::DescriptiveValue.new(
             type: 'genre',
             value: 'articles',
-            uri: 'http://vocab.getty.edu/aat/300048715',
+            uri: 'http://vocab.getty.edu/page/aat/300048715',
             source: { code: 'aat' }
           ),
           Cocina::Models::DescriptiveValue.new(
@@ -131,7 +131,7 @@ RSpec.describe TypesGenerator do
             Cocina::Models::DescriptiveValue.new(
               type: 'genre',
               value: 'animations (visual works)',
-              uri: 'http://vocab.getty.edu/aat/300411663',
+              uri: 'http://vocab.getty.edu/page/aat/300411663',
               source: { code: 'aat' }
             ),
             Cocina::Models::DescriptiveValue.new(
@@ -285,6 +285,316 @@ RSpec.describe TypesGenerator do
 
       it 'has one resource type for each' do
         expect(all_type_resource_types).to include(*WorkType.more_types)
+      end
+    end
+  end
+
+  # from https://github.com/sul-dlss/dor-services-app/blob/main/spec/services/cocina/mapping/descriptive/h2/form_h2_spec.rb
+  # The contexts below match the spec names from above. The expected cocina props are copied directly.
+  describe 'h2 mapping specification examples' do
+    subject(:cocina_props) { { form: described_class.generate(work_version: work_version).map(&:to_h) } }
+
+    let(:work_version) { build(:work_version, work_type: work_type, subtype: work_subtypes) }
+
+    context 'with Text - Article (AAT genre)' do
+      let(:work_type) { 'text' }
+      let(:work_subtypes) { ['Article'] }
+
+      it 'generates cocina props' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Text',
+                    type: 'type'
+                  },
+                  {
+                    value: 'Article',
+                    type: 'subtype'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              },
+              {
+                value: 'articles',
+                type: 'genre',
+                uri: 'http://vocab.getty.edu/page/aat/300048715',
+                source: {
+                  code: 'aat'
+                }
+              },
+              {
+                value: 'text',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with Text - Essay (LC genre)' do
+      let(:work_type) { 'text' }
+      let(:work_subtypes) { ['Essay'] }
+
+      it 'generates cocina props' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Text',
+                    type: 'type'
+                  },
+                  {
+                    value: 'Essay',
+                    type: 'subtype'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              },
+              {
+                value: 'Essays',
+                type: 'genre',
+                uri: 'http://id.loc.gov/authorities/genreForms/gf2014026094',
+                source: {
+                  code: 'lcgft'
+                }
+              },
+              {
+                value: 'text',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with Data - 3D model (unauthorized genre)' do
+      let(:work_type) { 'data' }
+      let(:work_subtypes) { ['3D model'] }
+
+      it 'generates cocina props' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Data',
+                    type: 'type'
+                  },
+                  {
+                    value: '3D model',
+                    type: 'subtype'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              },
+              {
+                value: 'Data sets',
+                type: 'genre',
+                uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
+                source: {
+                  code: 'lcgft'
+                }
+              },
+              {
+                value: 'dataset',
+                type: 'genre',
+                source: {
+                  code: 'local'
+                }
+              },
+              {
+                value: 'software, multimedia',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'three-dimensional object',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with Data - GIS (multiple genres, multiple types of resource)' do
+      let(:work_type) { 'data' }
+      let(:work_subtypes) { ['Geospatial data'] }
+
+      it 'generates cocina props' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Data',
+                    type: 'type'
+                  },
+                  {
+                    value: 'Geospatial data',
+                    type: 'subtype'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              },
+              {
+                value: 'Data sets',
+                type: 'genre',
+                uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
+                source: {
+                  code: 'lcgft'
+                }
+              },
+              {
+                value: 'dataset',
+                type: 'genre',
+                source: {
+                  code: 'local'
+                }
+              },
+              {
+                value: 'Geographic information systems',
+                type: 'genre',
+                uri: 'http://id.loc.gov/authorities/genreForms/gf2011026294',
+                source: {
+                  code: 'lcgft'
+                }
+              },
+              {
+                value: 'software, multimedia',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'cartographic',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with Software - Code, Documentation (multiple subtypes)' do
+      let(:work_type) { 'software, multimedia' }
+      let(:work_subtypes) { %w[Code Documentation] }
+
+      it 'generates cocina props' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Software/Code',
+                    type: 'type'
+                  },
+                  {
+                    value: 'Code',
+                    type: 'subtype'
+                  },
+                  {
+                    value: 'Documentation',
+                    type: 'subtype'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              },
+              {
+                value: 'programs (computer)',
+                type: 'genre',
+                uri: 'http://vocab.getty.edu/page/aat/300312188',
+                source: {
+                  code: 'aat'
+                }
+              },
+              {
+                value: 'software, multimedia',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'text',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with Other - Dance notation (Other type with user-entered subtype)' do
+      let(:work_type) { 'other' }
+      let(:work_subtypes) { ['Dance notation'] }
+
+      it 'generates cocina props' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Other',
+                    type: 'type'
+                  },
+                  {
+                    value: 'Dance notation',
+                    type: 'subtype'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              }
+            ]
+          }
+        )
       end
     end
   end
