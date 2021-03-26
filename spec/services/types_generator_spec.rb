@@ -549,6 +549,14 @@ RSpec.describe TypesGenerator do
                 }
               },
               {
+                value: 'technical manuals',
+                type: 'genre',
+                uri: 'http://vocab.getty.edu/page/aat/300026413',
+                source: {
+                  code: 'aat'
+                }
+              },
+              {
                 value: 'software, multimedia',
                 type: 'resource type',
                 source: {
