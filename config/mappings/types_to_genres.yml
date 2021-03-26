@@ -1756,6 +1756,12 @@ Software/Code:
         uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
+    Documentation:
+      - type: genre
+        value: technical manuals
+        uri: http://vocab.getty.edu/page/aat/300026413
+        source:
+          code: aat
     Dramatic performance:
       - type: genre
         value: Drama
