@@ -30,12 +30,10 @@ RSpec.describe CollectionGenerator do
           ],
           relatedResource: [
             {
-              type: 'related to',
               title: [{ value: 'My Awesome Research' }],
               access: { url: [{ value: 'http://my.awesome.research.io' }] }
             },
             {
-              type: 'related to',
               title: [{ value: 'My Awesome Research' }],
               access: { url: [{ value: 'http://my.awesome.research.io' }] }
             }

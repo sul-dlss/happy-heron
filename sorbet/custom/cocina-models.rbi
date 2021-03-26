@@ -50,12 +50,12 @@ module Cocina::Models
 
   class RelatedResource
     sig do
-      params(type: String,
+      params(type: T.nilable(String),
              access: DescriptiveAccessMetadata,
              title: T::Array[DescriptiveValue],
              note: T::Array[DescriptiveValue]).void
     end
-    def initialize(type:, access: nil, title: nil, note: nil); end
+    def initialize(type: nil, access: nil, title: nil, note: nil); end
   end
 
   class DROStructural
