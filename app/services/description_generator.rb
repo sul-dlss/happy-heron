@@ -89,35 +89,47 @@ class DescriptionGenerator
 
   sig { returns(T.nilable(Cocina::Models::Event)) }
   def created_date
-    date = work_version.created_edtf
-    return unless date
-
-    Cocina::Models::Event.new(
-      type: 'creation',
-      date: [
-        {
-          value: date.respond_to?(:edtf) ? date.edtf : date.to_s,
-          encoding: { code: 'edtf' }
-        }
-      ]
-    )
+    event_for(work_version.created_edtf, 'creation')
   end
 
   sig { returns(T.nilable(Cocina::Models::Event)) }
   def published_date
-    date = work_version.published_edtf
+    event_for(work_version.published_edtf, 'publication')
+  end
+
+  # rubocop:disable Metrics/MethodLength
+  sig { params(date: T.nilable(T.any(Date, EDTF::Interval)), type: String).returns(T.nilable(Cocina::Models::Event)) }
+  def event_for(date, type)
     return unless date
 
+    date_props = {
+      encoding: { code: 'edtf' },
+      type: type
+    }
+
+    if date.is_a?(EDTF::Interval)
+      structured_values = []
+      structured_values << date_props_for(date.from, type: 'start') if date.from
+      structured_values << date_props_for(date.to, type: 'end') if date.to
+      date_props[:structuredValue] = structured_values
+    else
+      date_props.merge!(date_props_for(date))
+    end
+
     Cocina::Models::Event.new(
-      type: 'publication',
-      date: [
-        {
-          value: date.respond_to?(:edtf) ? date.edtf : date.to_s,
-          encoding: { code: 'edtf' },
-          status: 'primary'
-        }
-      ]
+      type: type,
+      date: [date_props]
     )
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  sig { params(date: Date, type: T.nilable(String)).returns(T::Hash[T.untyped, T.untyped]) }
+  def date_props_for(date, type: nil)
+    {
+      type: type,
+      qualifier: date.uncertain? ? 'approximate' : nil,
+      value: date.to_s
+    }.compact
   end
 
   sig { returns(T.nilable(Cocina::Models::DescriptiveAccessMetadata)) }

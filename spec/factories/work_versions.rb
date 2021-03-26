@@ -54,8 +54,16 @@ FactoryBot.define do
     created_edtf { EDTF.parse('2020-03-04/2020-10-31') }
   end
 
+  trait :with_approximate_creation_date_range do
+    created_edtf { EDTF.parse('2020-03-04?/2020-10-31?') }
+  end
+
   trait :with_creation_date do
     created_edtf { EDTF.parse('2020-03-08') }
+  end
+
+  trait :with_approximate_creation_date do
+    created_edtf { EDTF.parse('2020-03-08?') }
   end
 
   trait :with_keywords do
