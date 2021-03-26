@@ -3,7 +3,7 @@ Data:
     - type: resource type
       value: software, multimedia
       source:
-      value: MODS resource types
+        value: MODS resource types
   subtypes:
     3D model:
       - type: resource type
@@ -77,7 +77,10 @@ Data:
     Game:
       # no value
     Geospatial data:
-      # no value
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
     Government document:
       # no value
     Image:
@@ -343,6 +346,10 @@ Image:
         value: software, multimedia
         source:
           value: MODS resource types
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
     Government document:
       # no value
     Image:
@@ -603,6 +610,10 @@ Mixed Materials:
     Geospatial data:
       - type: resource type
         value: software, multimedia
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: cartographic
         source:
           value: MODS resource types
     Government document:
@@ -874,6 +885,10 @@ Music:
         value: software, multimedia
         source:
           value: MODS resource types
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
     Government document:
       # no value
     Image:
@@ -1143,6 +1158,10 @@ Other:
         value: software, multimedia
         source:
           value: MODS resource types
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
     Government document:
       # no value
     Image:
@@ -1404,7 +1423,10 @@ Software/Code:
     Game:
       # no value
     Geospatial data:
-      # no value
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
     Government document:
       # no value
     Image:
@@ -1673,6 +1695,10 @@ Sound:
         value: software, multimedia
         source:
           value: MODS resource types
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
     Government document:
       # no value
     Image:
@@ -1920,6 +1946,10 @@ Text:
         value: software, multimedia
         source:
           value: MODS resource types
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
     Government document:
       # no value
     Image:
@@ -2141,6 +2171,10 @@ Video:
     Geospatial data:
       - type: resource type
         value: software, multimedia
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: cartographic
         source:
           value: MODS resource types
     Government document:

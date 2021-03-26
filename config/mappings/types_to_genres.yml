@@ -2,7 +2,7 @@ Data:
   type:
     - type: genre
       value: Data sets
-      uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+      uri: http://id.loc.gov/authorities/genreForms/gf2018026119
       source:
         code: lcgft
     - type: genre
@@ -13,37 +13,37 @@ Data:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -61,7 +61,7 @@ Data:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Documentation:
@@ -91,7 +91,7 @@ Data:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -103,7 +103,7 @@ Data:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -115,7 +115,7 @@ Data:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -139,7 +139,7 @@ Data:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -151,13 +151,13 @@ Data:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -187,7 +187,7 @@ Data:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -211,7 +211,7 @@ Data:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -229,13 +229,13 @@ Data:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -253,7 +253,7 @@ Data:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -295,7 +295,7 @@ Data:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -307,19 +307,19 @@ Data:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Image:
@@ -333,37 +333,37 @@ Image:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -375,7 +375,7 @@ Image:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -395,13 +395,13 @@ Image:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Documentation:
       - type: genre
         value: technical manuals
-        uri: http://vocab.getty.edu/aat/300026413
+        uri: http://vocab.getty.edu/page/aat/300026413
         source:
            code: aat
     Dramatic performance:
@@ -425,7 +425,7 @@ Image:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -437,7 +437,7 @@ Image:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -453,7 +453,7 @@ Image:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Interview:
@@ -471,7 +471,7 @@ Image:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -483,13 +483,13 @@ Image:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -519,7 +519,7 @@ Image:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -543,7 +543,7 @@ Image:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -565,13 +565,13 @@ Image:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -589,7 +589,7 @@ Image:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -639,7 +639,7 @@ Image:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -651,19 +651,19 @@ Image:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Mixed Materials:
@@ -671,37 +671,37 @@ Mixed Materials:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -713,7 +713,7 @@ Mixed Materials:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -733,7 +733,7 @@ Mixed Materials:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Dramatic performance:
@@ -757,7 +757,7 @@ Mixed Materials:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -769,7 +769,7 @@ Mixed Materials:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -785,7 +785,7 @@ Mixed Materials:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -809,7 +809,7 @@ Mixed Materials:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -821,13 +821,13 @@ Mixed Materials:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -857,7 +857,7 @@ Mixed Materials:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -881,7 +881,7 @@ Mixed Materials:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -903,13 +903,13 @@ Mixed Materials:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -927,7 +927,7 @@ Mixed Materials:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -977,7 +977,7 @@ Mixed Materials:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -989,63 +989,63 @@ Mixed Materials:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Music:
   type:
     - type: genre
       value: Music
-      uri: https://id.loc.gov/authorities/genreForms/gf2014026952
+      uri: http://id.loc.gov/authorities/genreForms/gf2014026952
       source:
         code: lcgft
   subtypes:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -1057,7 +1057,7 @@ Music:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -1077,7 +1077,7 @@ Music:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Dramatic performance:
@@ -1101,7 +1101,7 @@ Music:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -1113,7 +1113,7 @@ Music:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -1129,7 +1129,7 @@ Music:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -1153,7 +1153,7 @@ Music:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -1165,13 +1165,13 @@ Music:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -1201,7 +1201,7 @@ Music:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -1225,7 +1225,7 @@ Music:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -1247,13 +1247,13 @@ Music:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -1271,7 +1271,7 @@ Music:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -1321,7 +1321,7 @@ Music:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -1333,19 +1333,19 @@ Music:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Other:
@@ -1353,37 +1353,37 @@ Other:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -1395,7 +1395,7 @@ Other:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -1415,7 +1415,7 @@ Other:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Dramatic performance:
@@ -1439,7 +1439,7 @@ Other:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -1451,7 +1451,7 @@ Other:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -1467,7 +1467,7 @@ Other:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -1491,7 +1491,7 @@ Other:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -1503,13 +1503,13 @@ Other:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -1539,7 +1539,7 @@ Other:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -1563,7 +1563,7 @@ Other:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -1585,13 +1585,13 @@ Other:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -1609,7 +1609,7 @@ Other:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -1659,7 +1659,7 @@ Other:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -1671,19 +1671,19 @@ Other:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Software/Code:
@@ -1691,37 +1691,37 @@ Software/Code:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -1733,7 +1733,7 @@ Software/Code:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -1753,7 +1753,7 @@ Software/Code:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Dramatic performance:
@@ -1777,7 +1777,7 @@ Software/Code:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -1789,7 +1789,7 @@ Software/Code:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -1805,7 +1805,7 @@ Software/Code:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -1829,7 +1829,7 @@ Software/Code:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -1841,13 +1841,13 @@ Software/Code:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -1877,7 +1877,7 @@ Software/Code:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -1901,7 +1901,7 @@ Software/Code:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -1923,13 +1923,13 @@ Software/Code:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -1947,7 +1947,7 @@ Software/Code:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -1997,7 +1997,7 @@ Software/Code:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -2009,19 +2009,19 @@ Software/Code:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Sound:
@@ -2035,37 +2035,37 @@ Sound:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -2077,7 +2077,7 @@ Sound:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -2097,7 +2097,7 @@ Sound:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Dramatic performance:
@@ -2121,7 +2121,7 @@ Sound:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -2133,7 +2133,7 @@ Sound:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -2149,7 +2149,7 @@ Sound:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -2173,7 +2173,7 @@ Sound:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -2185,13 +2185,13 @@ Sound:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -2221,7 +2221,7 @@ Sound:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -2245,7 +2245,7 @@ Sound:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -2267,13 +2267,13 @@ Sound:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Speech:
@@ -2285,7 +2285,7 @@ Sound:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -2335,7 +2335,7 @@ Sound:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -2347,19 +2347,19 @@ Sound:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Text:
@@ -2367,37 +2367,37 @@ Text:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -2409,7 +2409,7 @@ Text:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -2429,13 +2429,13 @@ Text:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
     Documentation:
       - type: genre
         value: technical manuals
-        uri: http://vocab.getty.edu/aat/300026413
+        uri: http://vocab.getty.edu/page/aat/300026413
         source:
           code: aat
     Dramatic performance:
@@ -2459,7 +2459,7 @@ Text:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Field recording:
@@ -2471,7 +2471,7 @@ Text:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -2487,7 +2487,7 @@ Text:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -2511,7 +2511,7 @@ Text:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -2523,13 +2523,13 @@ Text:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -2559,7 +2559,7 @@ Text:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -2583,7 +2583,7 @@ Text:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -2605,13 +2605,13 @@ Text:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -2629,7 +2629,7 @@ Text:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -2679,7 +2679,7 @@ Text:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Video art:
@@ -2691,63 +2691,63 @@ Text:
     Video recording:
       - type: genre
         value: moving images
-        uri: http://vocab.getty.edu/aat/300263857
+        uri: http://vocab.getty.edu/page/aat/300263857
         source:
           code: aat
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
 Video:
   type:
     - type: genre
       value: moving images
-      uri: http://vocab.getty.edu/aat/300263857
+      uri: http://vocab.getty.edu/page/aat/300263857
       source:
         code: aat
   subtypes:
     Animation:
       - type: genre
         value: animations (visual works)
-        uri: http://vocab.getty.edu/aat/300411663
+        uri: http://vocab.getty.edu/page/aat/300411663
         source:
           code: aat
     Article:
       - type: genre
         value: articles
-        uri: http://vocab.getty.edu/aat/300048715
+        uri: http://vocab.getty.edu/page/aat/300048715
         source:
           code: aat
     Book:
       - type: genre
         value: books
-        uri: http://vocab.getty.edu/aat/300028051
+        uri: http://vocab.getty.edu/page/aat/300028051
         source:
           code: aat
     CAD:
       - type: genre
         value: computer-aided designs (visual works)
-        uri: http://vocab.getty.edu/aat/300418056
+        uri: http://vocab.getty.edu/page/aat/300418056
         source:
           code: aat
     Code:
       - type: genre
         value: programs (computer)
-        uri: http://vocab.getty.edu/aat/300312188
+        uri: http://vocab.getty.edu/page/aat/300312188
         source:
           code: aat
     Correspondence:
       - type: genre
         value: correspondence
-        uri: http://vocab.getty.edu/aat/300026877
+        uri: http://vocab.getty.edu/page/aat/300026877
         source:
           code: aat
     Course/instructional materials:
@@ -2759,7 +2759,7 @@ Video:
     Data:
       - type: genre
         value: Data sets
-        uri: https://id.loc.gov/authorities/genreForms/gf2018026119
+        uri: http://id.loc.gov/authorities/genreForms/gf2018026119
         source:
           code: lcgft
       - type: genre
@@ -2779,7 +2779,7 @@ Video:
     Documentary:
       - type: genre
         value: documentaries (documents)
-        uri: http://vocab.getty.edu/aat/300249172
+        uri: http://vocab.getty.edu/page/aat/300249172
         source:
           code: aat
       - type: genre
@@ -2813,7 +2813,7 @@ Video:
     Event:
       - type: genre
         value: events (activities)
-        uri: http://vocab.getty.edu/aat/300069084
+        uri: http://vocab.getty.edu/page/aat/300069084
         source:
           code: aat
     Experimental audio/video:
@@ -2831,7 +2831,7 @@ Video:
     Game:
       - type: genre
         value: computer game
-        uri: http://vocab.getty.edu/aat/300422211
+        uri: http://vocab.getty.edu/page/aat/300422211
         source:
           code: aat
     Geospatial data:
@@ -2847,7 +2847,7 @@ Video:
     Government document:
       - type: genre
         value: government records
-        uri: http://vocab.getty.edu/aat/300027777
+        uri: http://vocab.getty.edu/page/aat/300027777
         source:
           code: aat
     Image:
@@ -2871,7 +2871,7 @@ Video:
     Manuscript:
       - type: genre
         value: manuscripts (documents)
-        uri: http://vocab.getty.edu/aat/300028569
+        uri: http://vocab.getty.edu/page/aat/300028569
         source:
           code: aat
     Map:
@@ -2883,13 +2883,13 @@ Video:
     MIDI:
       - type: genre
         value: MIDI (information technology)
-        uri: http://vocab.getty.edu/aat/300266746
+        uri: http://vocab.getty.edu/page/aat/300266746
         source:
           code: aat
     Musical transcription:
       - type: genre
         value: transcriptions (documents)
-        uri: http://vocab.getty.edu/aat/300404333
+        uri: http://vocab.getty.edu/page/aat/300404333
         source:
           code: aat
     Notated music:
@@ -2925,7 +2925,7 @@ Video:
     Piano roll:
       - type: genre
         value: music rolls
-        uri: http://vocab.getty.edu/aat/300429369
+        uri: http://vocab.getty.edu/page/aat/300429369
         source:
           code: aat
     Podcast:
@@ -2949,7 +2949,7 @@ Video:
     Preprint:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Questionnaire:
@@ -2971,13 +2971,13 @@ Video:
     Report:
       - type: genre
         value: reports
-        uri: http://vocab.getty.edu/aat/300027267
+        uri: http://vocab.getty.edu/page/aat/300027267
         source:
           code: aat
     Software:
       - type: genre
         value: software
-        uri: http://vocab.getty.edu/aat/300028566
+        uri: http://vocab.getty.edu/page/aat/300028566
         source:
           code: aat
     Sound recording:
@@ -2995,7 +2995,7 @@ Video:
     Statistical model:
       - type: genre
         value: mathematical models
-        uri: http://vocab.getty.edu/aat/300065075
+        uri: http://vocab.getty.edu/page/aat/300065075
         source:
           code: aat
     Story:
@@ -3045,7 +3045,7 @@ Video:
     Transcript:
       - type: genre
         value: transcripts
-        uri: http://vocab.getty.edu/aat/300027388
+        uri: http://vocab.getty.edu/page/aat/300027388
         source:
           code: aat
     Unedited recording:
@@ -3063,12 +3063,12 @@ Video:
     White paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
     Working paper:
       - type: genre
         value: grey literature
-        uri: http://vocab.getty.edu/aat/300256200
+        uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
