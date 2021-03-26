@@ -19,7 +19,6 @@ class RelatedLinksGenerator
   def generate
     object.related_links.map do |rel_link|
       resource_attrs = {
-        type: 'related to',
         access: Cocina::Models::DescriptiveAccessMetadata.new(
           url: [Cocina::Models::DescriptiveValue.new(value: rel_link.url)]
         )

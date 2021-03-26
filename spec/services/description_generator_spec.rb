@@ -160,29 +160,23 @@ RSpec.describe DescriptionGenerator do
       ],
       relatedResource: [
         {
-          type: 'related to',
           title: [{ value: 'My Awesome Research' }],
           access: { url: [{ value: 'http://my.awesome.research.io' }] }
         },
         {
-          type: 'related to',
           title: [{ value: 'My Awesome Research' }],
           access: { url: [{ value: 'http://my.awesome.research.io' }] }
         },
         {
-          type: 'related to',
           access: { url: [{ value: 'https://your.awesome.research.ai' }] }
         },
         {
-          type: 'related to',
           access: { url: [{ value: 'https://your.awesome.research.ai' }] }
         },
         {
-          type: 'related to',
           note: [{ value: citation_value, type: 'preferred citation' }]
         },
         {
-          type: 'related to',
           note: [{ value: citation_value, type: 'preferred citation' }]
         }
       ],

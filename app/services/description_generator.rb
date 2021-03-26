@@ -141,7 +141,6 @@ class DescriptionGenerator
   def related_works
     work_version.related_works.map do |rel_work|
       Cocina::Models::RelatedResource.new(
-        type: 'related to',
         note: [
           Cocina::Models::DescriptiveValue.new(type: 'preferred citation', value: rel_work.citation)
         ]
