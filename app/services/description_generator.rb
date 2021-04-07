@@ -65,8 +65,10 @@ class DescriptionGenerator
     end
   end
 
-  sig { returns(Cocina::Models::DescriptiveValue) }
+  sig { returns(T.nilable(Cocina::Models::DescriptiveValue)) }
   def abstract
+    return if work_version.abstract.blank?
+
     Cocina::Models::DescriptiveValue.new(
       value: work_version.abstract,
       type: 'summary'
@@ -75,7 +77,7 @@ class DescriptionGenerator
 
   sig { returns(T.nilable(Cocina::Models::DescriptiveValue)) }
   def citation
-    return unless work_version.citation
+    return if work_version.citation.blank?
 
     # :link: is a special placeholder in dor-services-app.
     # See https://github.com/sul-dlss/dor-services-app/pull/1566/files#diff-30396654f0ad00ad1daa7292fd8327759d7ff7f3b92f98f40a2e25b6839807e2R13

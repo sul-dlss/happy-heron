@@ -479,4 +479,14 @@ RSpec.describe DescriptionGenerator do
       end
     end
   end
+
+  context 'with blank abstract and citation' do
+    let(:work_version) do
+      build(:work_version, abstract: '', citation: '')
+    end
+
+    it 'does not add to model' do
+      expect(model[:note]).to be nil
+    end
+  end
 end
