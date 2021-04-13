@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/reform-rails/all/reform-rails.rbi
 #
-# reform-rails-0.2.1
+# reform-rails-0.2.2
 
 module Reform
 end
@@ -82,9 +82,9 @@ class Reform::Form::ActiveModel::Validations::Group
   def call(form); end
   def initialize(*arg0); end
   extend Uber::Delegates
-  include Anonymous_Module_82
+  include Anonymous_Module_68
 end
-module Anonymous_Module_82
+module Anonymous_Module_68
   def validate(*args, &block); end
   def validate_with(*args, &block); end
   def validates(*args, &block); end
@@ -177,4 +177,6 @@ end
 module Reform::Form::ActiveModel::ModelReflections::ClassMethods
   def reflect_on_association(*args); end
   def validators_on(*args); end
+end
+class Reform::Contract::Result
 end

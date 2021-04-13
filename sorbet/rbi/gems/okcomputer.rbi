@@ -342,5 +342,5 @@ class OkComputer::OkComputerController < ActionController::Base
   def show; end
   def status_code(check); end
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_81
+  include Anonymous_Module_67
 end

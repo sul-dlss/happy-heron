@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sorbet-coerce/all/sorbet-coerce.rbi
 #
-# sorbet-coerce-0.3.0
+# sorbet-coerce-0.4.0
 
 module TypeCoerce
   def self.[](type); end

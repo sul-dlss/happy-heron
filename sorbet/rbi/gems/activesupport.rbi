@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.1.3
+# activesupport-6.1.3.1
 
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end
@@ -39,7 +39,7 @@ class Hash
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
   def self.[](*arg0); end
-  def self.try_convert(arg0); end
+  def self.from_xml(xml, disallowed_types = nil); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -1915,33 +1915,6 @@ class ActiveSupport::EnvironmentInquirer < ActiveSupport::StringInquirer
   def production?; end
   def test?; end
 end
-module ActiveSupport::JSON
-  def self.convert_dates_from(data); end
-  def self.decode(json); end
-  def self.encode(value, options = nil); end
-  def self.parse_error; end
-end
-module ActiveSupport::JSON::Encoding
-  def self.escape_html_entities_in_json; end
-  def self.escape_html_entities_in_json=(arg0); end
-  def self.json_encoder; end
-  def self.json_encoder=(arg0); end
-  def self.time_precision; end
-  def self.time_precision=(arg0); end
-  def self.use_standard_json_time_format; end
-  def self.use_standard_json_time_format=(arg0); end
-end
-class ActiveSupport::JSON::Encoding::JSONGemEncoder
-  def encode(value); end
-  def initialize(options = nil); end
-  def jsonify(value); end
-  def options; end
-  def stringify(jsonified); end
-end
-class ActiveSupport::JSON::Encoding::JSONGemEncoder::EscapedString < String
-  def to_json(*arg0); end
-  def to_s; end
-end
 class ActiveSupport::ProxyObject < BasicObject
   def raise(*args); end
 end
@@ -2300,6 +2273,33 @@ class ActiveSupport::Cache::Strategy::LocalCache::Middleware
   def local_cache_key; end
   def name; end
   def new(app); end
+end
+module ActiveSupport::JSON
+  def self.convert_dates_from(data); end
+  def self.decode(json); end
+  def self.encode(value, options = nil); end
+  def self.parse_error; end
+end
+module ActiveSupport::JSON::Encoding
+  def self.escape_html_entities_in_json; end
+  def self.escape_html_entities_in_json=(arg0); end
+  def self.json_encoder; end
+  def self.json_encoder=(arg0); end
+  def self.time_precision; end
+  def self.time_precision=(arg0); end
+  def self.use_standard_json_time_format; end
+  def self.use_standard_json_time_format=(arg0); end
+end
+class ActiveSupport::JSON::Encoding::JSONGemEncoder
+  def encode(value); end
+  def initialize(options = nil); end
+  def jsonify(value); end
+  def options; end
+  def stringify(jsonified); end
+end
+class ActiveSupport::JSON::Encoding::JSONGemEncoder::EscapedString < String
+  def to_json(*arg0); end
+  def to_s; end
 end
 module ActiveSupport::ActionableError
   def self.actions(error); end

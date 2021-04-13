@@ -7,44 +7,44 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/semantic_range/all/semantic_range.rbi
 #
-# semantic_range-2.3.1
+# semantic_range-3.0.0
 
 module SemanticRange
-  def self.clean(version, loose = nil); end
-  def self.cmp(a, op, b, loose = nil); end
-  def self.compare(a, b, loose = nil); end
+  def self.clean(version, loose: nil); end
+  def self.cmp(a, op, b, loose: nil); end
+  def self.compare(a, b, loose: nil); end
   def self.compare_loose(a, b); end
   def self.diff(a, b); end
-  def self.eq(a, b, loose = nil); end
-  def self.eq?(a, b, loose = nil); end
-  def self.filter(versions, range, loose = nil, platform = nil); end
-  def self.gt(a, b, loose = nil); end
-  def self.gt?(a, b, loose = nil); end
-  def self.gte(a, b, loose = nil); end
-  def self.gte?(a, b, loose = nil); end
-  def self.gtr(version, range, loose = nil, platform = nil); end
-  def self.gtr?(version, range, loose = nil, platform = nil); end
-  def self.increment!(version, release, loose, identifier); end
-  def self.lt(a, b, loose = nil); end
-  def self.lt?(a, b, loose = nil); end
-  def self.lte(a, b, loose = nil); end
-  def self.lte?(a, b, loose = nil); end
-  def self.ltr(version, range, loose = nil, platform = nil); end
-  def self.ltr?(version, range, loose = nil, platform = nil); end
-  def self.max_satisfying(versions, range, loose = nil, platform = nil); end
-  def self.neq(a, b, loose = nil); end
-  def self.neq?(a, b, loose = nil); end
-  def self.outside(version, range, hilo, loose = nil, platform = nil); end
-  def self.outside?(version, range, hilo, loose = nil, platform = nil); end
-  def self.parse(version, loose = nil); end
-  def self.rcompare(a, b, loose = nil); end
-  def self.rsort(list, loose = nil); end
-  def self.satisfies(version, range, loose = nil, platform = nil); end
-  def self.satisfies?(version, range, loose = nil, platform = nil); end
-  def self.sort(list, loose = nil); end
-  def self.to_comparators(range, loose = nil, platform = nil); end
-  def self.valid(version, loose = nil); end
-  def self.valid_range(range, loose = nil, platform = nil); end
+  def self.eq(a, b, loose: nil); end
+  def self.eq?(a, b, loose: nil); end
+  def self.filter(versions, range, loose: nil, platform: nil); end
+  def self.gt(a, b, loose: nil); end
+  def self.gt?(a, b, loose: nil); end
+  def self.gte(a, b, loose: nil); end
+  def self.gte?(a, b, loose: nil); end
+  def self.gtr(version, range, loose: nil, platform: nil); end
+  def self.gtr?(version, range, loose: nil, platform: nil); end
+  def self.increment!(version, release, identifier, loose: nil); end
+  def self.lt(a, b, loose: nil); end
+  def self.lt?(a, b, loose: nil); end
+  def self.lte(a, b, loose: nil); end
+  def self.lte?(a, b, loose: nil); end
+  def self.ltr(version, range, loose: nil, platform: nil); end
+  def self.ltr?(version, range, loose: nil, platform: nil); end
+  def self.max_satisfying(versions, range, loose: nil, platform: nil); end
+  def self.neq(a, b, loose: nil); end
+  def self.neq?(a, b, loose: nil); end
+  def self.outside(version, range, hilo, loose: nil, platform: nil); end
+  def self.outside?(version, range, hilo, loose: nil, platform: nil); end
+  def self.parse(version, loose: nil); end
+  def self.rcompare(a, b, loose: nil); end
+  def self.rsort(list, loose: nil); end
+  def self.satisfies(version, range, loose: nil, platform: nil); end
+  def self.satisfies?(version, range, loose: nil, platform: nil); end
+  def self.sort(list, loose: nil); end
+  def self.to_comparators(range, loose: nil, platform: nil); end
+  def self.valid(version, loose: nil); end
+  def self.valid_range(range, loose: nil, platform: nil); end
 end
 class SemanticRange::Version
   def compare(other); end
@@ -52,7 +52,7 @@ class SemanticRange::Version
   def compare_pre(other); end
   def format; end
   def increment!(release, identifier); end
-  def initialize(version, loose = nil); end
+  def initialize(version, loose: nil); end
   def major; end
   def minor; end
   def patch; end
@@ -80,8 +80,8 @@ end
 class SemanticRange::Range
   def format; end
   def hyphen_replace(match); end
-  def initialize(range, loose = nil, platform = nil); end
-  def intersects(range, loose = nil, platform = nil); end
+  def initialize(range, loose: nil, platform: nil); end
+  def intersects(range, loose: nil, platform: nil); end
   def isX(id); end
   def loose; end
   def parse_comparator(comp, loose); end
@@ -102,12 +102,12 @@ class SemanticRange::Range
 end
 class SemanticRange::Comparator
   def initialize(comp, loose); end
-  def intersects(comp, loose = nil, platform = nil); end
-  def intersects?(comp, loose = nil, platform = nil); end
+  def intersects(comp, loose: nil, platform: nil); end
+  def intersects?(comp, loose: nil, platform: nil); end
   def operator; end
   def parse(comp); end
-  def satisfies_range(range, loose = nil, platform = nil); end
-  def satisfies_range?(range, loose = nil, platform = nil); end
+  def satisfies_range(range, loose: nil, platform: nil); end
+  def satisfies_range?(range, loose: nil, platform: nil); end
   def semver; end
   def test(version); end
   def to_s; end

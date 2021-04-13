@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-0.43.1
+# sdr-client-0.55.1
 
 module SdrClient
 end
@@ -82,7 +82,7 @@ end
 class SdrClient::Deposit::File
   def as_json; end
   def create_message_digest(algorithm, digest); end
-  def initialize(external_identifier:, label:, filename:, access: nil, preserve: nil, shelve: nil, mime_type: nil, md5: nil, sha1: nil, use: nil); end
+  def initialize(external_identifier:, label:, filename:, access: nil, preserve: nil, shelve: nil, publish: nil, mime_type: nil, md5: nil, sha1: nil, use: nil); end
   def message_digests; end
 end
 module SdrClient::Deposit::FileMetadataBuilderOperations

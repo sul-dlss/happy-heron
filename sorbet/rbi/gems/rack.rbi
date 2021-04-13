@@ -238,16 +238,16 @@ module Rack::Request::Helpers
   def wrap_ipv6(host); end
   def xhr?; end
 end
-class Rack::Runtime
-  def call(env); end
-  def initialize(app, name = nil); end
-end
 class Rack::BodyProxy
   def close; end
   def closed?; end
   def initialize(body, &block); end
   def method_missing(method_name, *args, &block); end
   def respond_to_missing?(method_name, include_all = nil); end
+end
+class Rack::Runtime
+  def call(env); end
+  def initialize(app, name = nil); end
 end
 class Rack::Sendfile
   def call(env); end
@@ -459,6 +459,15 @@ class Rack::Builder
   def to_app; end
   def use(middleware, *args, &block); end
   def warmup(prc = nil, &block); end
+end
+class Rack::Static
+  def add_index_root?(path); end
+  def applicable_rules(path); end
+  def call(env); end
+  def can_serve(path); end
+  def initialize(app, options = nil); end
+  def overwrite_file_path(path); end
+  def route_file(path); end
 end
 class Rack::Response
   def [](key); end
@@ -867,15 +876,6 @@ class Rack::ShowStatus
   def call(env); end
   def h(obj); end
   def initialize(app); end
-end
-class Rack::Static
-  def add_index_root?(path); end
-  def applicable_rules(path); end
-  def call(env); end
-  def can_serve(path); end
-  def initialize(app, options = nil); end
-  def overwrite_file_path(path); end
-  def route_file(path); end
 end
 class Rack::URLMap
   def call(env); end

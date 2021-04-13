@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/rake/all/rake.rbi
 #
-# typed: strict
+# typed: false
 
 module Rake
   def self.add_rakelib(*files); end

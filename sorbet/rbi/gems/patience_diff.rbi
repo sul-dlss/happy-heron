@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/patience_diff/all/patience_diff.rbi
 #
-# patience_diff-1.1.0
+# patience_diff-1.2.0
 
 module PatienceDiff
 end

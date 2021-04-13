@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.25.1
+# view_component-2.30.0
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -77,6 +77,7 @@ class ViewComponent::Base < ActionView::Base
   def content_areas; end
   def content_areas=(arg0); end
   def content_areas?; end
+  def content_evaluated?; end
   def controller; end
   def default_preview_layout; end
   def form_authenticity_token(**, &&); end
@@ -88,17 +89,24 @@ class ViewComponent::Base < ActionView::Base
   def preview_paths; end
   def preview_route; end
   def protect_against_forgery?(**, &&); end
+  def registered_slots; end
+  def registered_slots=(arg0); end
+  def registered_slots?; end
   def render(options = nil, args = nil, &block); end
   def render?; end
   def render_in(view_context, &block); end
   def render_monkey_patch_enabled; end
   def request; end
   def self._after_compile; end
+  def self._sidecar_files(extensions); end
+  def self.collection_counter_parameter; end
+  def self.collection_parameter; end
   def self.compile(raise_errors: nil); end
   def self.compiled?; end
   def self.content_areas; end
   def self.content_areas=(value); end
   def self.content_areas?; end
+  def self.counter_argument_present?; end
   def self.default_preview_layout; end
   def self.default_preview_layout=(val); end
   def self.format; end
@@ -115,6 +123,9 @@ class ViewComponent::Base < ActionView::Base
   def self.preview_route; end
   def self.preview_route=(val); end
   def self.provided_collection_parameter; end
+  def self.registered_slots; end
+  def self.registered_slots=(value); end
+  def self.registered_slots?; end
   def self.render_monkey_patch_enabled; end
   def self.render_monkey_patch_enabled=(val); end
   def self.short_identifier; end
@@ -142,8 +153,10 @@ class ViewComponent::Base < ActionView::Base
   def with(area, content = nil, &block); end
   def with_variant(variant); end
   extend ActiveSupport::Configurable::ClassMethods
+  extend ViewComponent::SlotableV2::ClassMethods
   include ActiveSupport::Configurable
   include ViewComponent::Previewable
+  include ViewComponent::SlotableV2
 end
 class ViewComponent::Base::ViewContextCalledBeforeRenderError < StandardError
 end
@@ -157,7 +170,6 @@ class ViewComponent::Compiler
   def initialize(component_class); end
   def inline_calls; end
   def inline_calls_defined_on_self; end
-  def matching_views_in_source_location; end
   def template_errors; end
   def templates; end
   def variants; end
@@ -181,12 +193,14 @@ class ViewComponentsController < Rails::ApplicationController
   include GeneratedUrlHelpers
 end
 module ViewComponent::TestHelpers
+  def build_controller(klass); end
   def controller; end
   def page; end
   def refute_component_rendered; end
   def render_inline(component, **args, &block); end
   def rendered_component; end
   def request; end
+  def with_controller_class(klass); end
   def with_variant(variant); end
   include Capybara::Minitest::Assertions
 end

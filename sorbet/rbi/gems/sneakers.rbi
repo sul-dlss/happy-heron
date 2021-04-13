@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sneakers/all/sneakers.rbi
 #
-# sneakers-2.11.0
+# sneakers-2.12.0
 
 module Sneakers
   def clear!; end
@@ -18,6 +18,7 @@ module Sneakers
   def error_reporters; end
   def logger; end
   def logger=(logger); end
+  def middleware; end
   def publish(msg, routing); end
   def server=(server); end
   def server?; end
@@ -99,6 +100,14 @@ class Sneakers::ContentType
   def self.reset!; end
   def self.serialize(payload, content_type); end
   def serializer; end
+end
+module Sneakers::Middleware
+end
+class Sneakers::Middleware::Config
+  def self.delete(klass); end
+  def self.middlewares; end
+  def self.to_a; end
+  def self.use(klass, args); end
 end
 class Sneakers::Queue
   def channel; end
