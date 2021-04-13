@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionview/all/actionview.rbi
 #
-# actionview-6.1.3
+# actionview-6.1.3.1
 
 module ActionView
   def self.eager_load!; end
@@ -18,6 +18,8 @@ end
 module ActionView::VERSION
 end
 class ActionView::Railtie < Rails::Engine
+end
+class ActionView::LogSubscriber < ActiveSupport::LogSubscriber
 end
 module ActionView::Helpers
   def self.eager_load!; end
@@ -639,8 +641,6 @@ module ActionView::Rendering::ClassMethods
   def _routes; end
   def build_view_context_class(klass, supports_path, routes, helpers); end
   def view_context_class; end
-end
-class ActionView::LogSubscriber < ActiveSupport::LogSubscriber
 end
 module ActionView::Context
   def _layout_for(name = nil); end

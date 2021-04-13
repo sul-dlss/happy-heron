@@ -7,11 +7,13 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/action_policy/all/action_policy.rbi
 #
-# action_policy-0.5.5
+# action_policy-0.5.7
 
 module ActionPolicy
   def self.cache_store; end
   def self.cache_store=(arg0); end
+  def self.enforce_predicate_rules_naming; end
+  def self.enforce_predicate_rules_naming=(arg0); end
   def self.lookup(target, allow_nil: nil, default: nil, **options); end
 end
 module ActionPolicy::Ext
@@ -79,6 +81,9 @@ class ActionPolicy::UnknownRule < ActionPolicy::Error
   def policy; end
   def rule; end
   include ActionPolicy::SuggestMessage
+end
+class ActionPolicy::NonPredicateRule < ActionPolicy::UnknownRule
+  def initialize(policy, rule); end
 end
 module ActionPolicy::Policy::Core
   def __apply__(rule); end
@@ -170,6 +175,7 @@ module ActionPolicy::Policy::PreCheck::ClassMethods
   def skip_pre_check(*names, **options); end
 end
 module ActionPolicy::Policy::Aliases
+  def check_rule_naming(activity); end
   def resolve_rule(activity); end
   def self.included(base); end
 end

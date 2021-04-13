@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sidekiq/all/sidekiq.rbi
 #
-# sidekiq-6.1.3
+# sidekiq-6.2.1
 
 module Sidekiq
   def self.average_scheduled_poll_interval=(interval); end
@@ -283,6 +283,8 @@ class Sidekiq::ProcessSet
   def initialize(clean_plz = nil); end
   def leader; end
   def size; end
+  def total_concurrency; end
+  def total_rss; end
   include Enumerable
 end
 class Sidekiq::Process
@@ -342,6 +344,7 @@ module Sidekiq::WebHelpers
   def root_path; end
   def rtl?; end
   def server_utc_time; end
+  def singularize(str, count); end
   def sort_direction_label; end
   def stats; end
   def strings(lang); end
@@ -357,6 +360,7 @@ end
 module Sidekiq::WebRouter
   def delete(path, &block); end
   def get(path, &block); end
+  def head(path, &block); end
   def match(env); end
   def patch(path, &block); end
   def post(path, &block); end
@@ -420,7 +424,6 @@ end
 class Sidekiq::Web
   def app; end
   def build; end
-  def build_sessions; end
   def call(env); end
   def disable(*opts); end
   def enable(*opts); end
@@ -439,22 +442,18 @@ class Sidekiq::Web
   def self.redis_pool; end
   def self.redis_pool=(arg0); end
   def self.register(extension); end
-  def self.session_secret; end
-  def self.session_secret=(arg0); end
-  def self.sessions; end
-  def self.sessions=(arg0); end
+  def self.session_secret=(val); end
+  def self.sessions=(val); end
   def self.set(attribute, value); end
   def self.settings; end
   def self.tabs; end
-  def self.use(*middleware_args, &block); end
+  def self.use(*args, &block); end
   def self.views; end
   def self.views=(arg0); end
-  def sessions; end
-  def sessions=(arg0); end
+  def sessions=(val); end
   def set(attribute, value); end
   def settings; end
-  def use(*middleware_args, &block); end
-  def using?(middleware); end
+  def use(*args, &block); end
 end
 class Sidekiq::Web::CsrfProtection
   def accept?(env); end

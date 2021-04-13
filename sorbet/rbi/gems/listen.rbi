@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/listen/all/listen.rbi
 #
-# listen-3.4.1
+# listen-3.5.1
 
 module Listen
   def self.default_logger; end

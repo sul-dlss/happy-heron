@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/psych/all/psych.rbi
 #
-# psych-3.3.0
+# psych-3.3.1
 
 module Psych
   def self.add_builtin_type(type_tag, &block); end
@@ -92,7 +92,7 @@ class Psych::Visitors::ToRuby < Psych::Visitors::Visitor
   def register_empty(object); end
   def resolve_class(klassname); end
   def revive(klass, node); end
-  def revive_hash(hash, o); end
+  def revive_hash(hash, o, tagged = nil); end
   def self.create(symbolize_names: nil, freeze: nil); end
   def visit_Psych_Nodes_Alias(o); end
   def visit_Psych_Nodes_Document(o); end

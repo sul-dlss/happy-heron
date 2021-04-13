@@ -425,8 +425,8 @@ GEM
       rake (~> 12.3)
       serverengine (~> 2.1.0)
       thor
-    sorbet (0.5.5981)
-      sorbet-static (= 0.5.5981)
+    sorbet (0.5.6371)
+      sorbet-static (= 0.5.6371)
     sorbet-coerce (0.4.0)
       polyfill (~> 1.8)
       safe_type (~> 1.1, >= 1.1.1)
@@ -438,9 +438,9 @@ GEM
       sorbet-coerce (>= 0.2.6)
       sorbet-runtime (>= 0.5)
     sorbet-runtime (0.5.6371)
-    sorbet-static (0.5.5981-universal-darwin-18)
-    sorbet-static (0.5.5981-universal-darwin-19)
-    sorbet-static (0.5.5981-x86_64-linux)
+    sorbet-static (0.5.6371-universal-darwin-18)
+    sorbet-static (0.5.6371-universal-darwin-19)
+    sorbet-static (0.5.6371-x86_64-linux)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -553,7 +553,7 @@ DEPENDENCIES
   sidekiq (~> 6.1)
   simplecov (~> 0.17.1)
   sneakers (~> 2.11)
-  sorbet (= 0.5.5981)
+  sorbet
   sorbet-rails (= 0.7.1)
   sorbet-runtime
   spring

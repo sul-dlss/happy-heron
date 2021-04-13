@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faker/all/faker.rbi
 #
-# faker-2.16.0
+# faker-2.17.0
 
 module Faker
 end
@@ -180,6 +180,7 @@ class Faker::Bank < Faker::Base
   def self.compile_routing_number; end
   def self.iban(legacy_country_code = nil, country_code: nil); end
   def self.iban_checksum(country_code, account); end
+  def self.iban_country_code; end
   def self.name; end
   def self.rand_numstring; end
   def self.routing_number; end
@@ -486,6 +487,7 @@ class Faker::Educator < Faker::Base
   def self.course; end
   def self.course_name; end
   def self.degree; end
+  def self.primary_school; end
   def self.secondary_school; end
   def self.subject; end
   def self.university; end
@@ -769,6 +771,7 @@ class Faker::NationalHealthService < Faker::Base
 end
 class Faker::Number < Faker::Base
   def self.between(legacy_from = nil, legacy_to = nil, from: nil, to: nil); end
+  def self.binary(digits: nil); end
   def self.decimal(legacy_l_digits = nil, legacy_r_digits = nil, l_digits: nil, r_digits: nil); end
   def self.decimal_part(legacy_digits = nil, digits: nil); end
   def self.digit; end

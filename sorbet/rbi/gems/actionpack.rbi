@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionpack/all/actionpack.rbi
 #
-# actionpack-6.1.3
+# actionpack-6.1.3.1
 
 module ActionPack
   def self.gem_version; end
@@ -1556,6 +1556,8 @@ class ActionDispatch::Routing::Mapper::Scope
   def scope_level; end
   include Enumerable
 end
+class ActionController::LogSubscriber < ActiveSupport::LogSubscriber
+end
 class ActionDispatch::Request::Utils
   def perform_deep_munge; end
   def perform_deep_munge=(val); end
@@ -1847,6 +1849,12 @@ module ActionController::ApiRendering
   def render_to_body(options = nil); end
   extend ActiveSupport::Concern
 end
+class ActionDispatch::RequestId
+  def call(env); end
+  def initialize(app, header:); end
+  def internal_request_id; end
+  def make_request_id(request_id); end
+end
 class ActionDispatch::MiddlewareStack
   def [](i); end
   def assert_index(index, where); end
@@ -1922,12 +1930,6 @@ end
 class ActionDispatch::Executor
   def call(env); end
   def initialize(app, executor); end
-end
-class ActionDispatch::RequestId
-  def call(env); end
-  def initialize(app, header:); end
-  def internal_request_id; end
-  def make_request_id(request_id); end
 end
 class ActionDispatch::ShowExceptions
   def call(env); end
@@ -2337,8 +2339,6 @@ module ActionController::Redirecting
   extend ActiveSupport::Concern
   include AbstractController::Logger
   include ActionController::UrlFor
-end
-class ActionController::LogSubscriber < ActiveSupport::LogSubscriber
 end
 module ActionController::ParamsWrapper
   def _extract_parameters(parameters); end

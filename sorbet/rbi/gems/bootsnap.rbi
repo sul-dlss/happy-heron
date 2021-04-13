@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/bootsnap/all/bootsnap.rbi
 #
-# bootsnap-1.7.2
+# bootsnap-1.7.3
 
 module Bootsnap
   def bundler?; end
@@ -199,6 +199,8 @@ module Bootsnap::CompileCache::YAML
   def self.msgpack_factory=(arg0); end
   def self.precompile(path, cache_dir: nil); end
   def self.storage_to_output(data, kwargs); end
+  def self.strict_load(payload, *args); end
+  def self.strict_visitor; end
   def self.supported_options; end
   def self.supported_options=(arg0); end
 end

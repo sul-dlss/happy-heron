@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-performance/all/rubocop-performance.rbi
 #
-# rubocop-performance-1.9.2
+# rubocop-performance-1.10.2
 
 module RuboCop
 end
@@ -142,7 +142,7 @@ class RuboCop::Cop::Performance::ConstantRegexp < RuboCop::Cop::Base
   def include_interpolated_const?(node); end
   def on_regexp(node); end
   def regexp_escape?(param0 = nil); end
-  def within_const_assignment?(node); end
+  def within_allowed_assignment?(node); end
   extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Performance::Count < RuboCop::Cop::Base
@@ -263,7 +263,18 @@ class RuboCop::Cop::Performance::RedundantBlockCall < RuboCop::Cop::Base
   def blockarg_def(param0 = nil); end
   def calls_to_report(argname, body); end
   def on_def(node); end
+  def shadowed_block_argument?(body, block_argument_of_method_signature); end
   extend RuboCop::Cop::AutoCorrector
+end
+class RuboCop::Cop::Performance::RedundantEqualityComparisonBlock < RuboCop::Cop::Base
+  def new_argument(block_argument, block_body); end
+  def offense_range(node); end
+  def on_block(node); end
+  def one_block_argument?(block_arguments); end
+  def same_block_argument_and_is_a_argument?(block_body, block_argument); end
+  def use_equality_comparison_block?(block_body); end
+  extend RuboCop::Cop::AutoCorrector
+  extend RuboCop::Cop::TargetRubyVersion
 end
 class RuboCop::Cop::Performance::RedundantMatch < RuboCop::Cop::Base
   def autocorrect(corrector, node); end
@@ -307,6 +318,13 @@ class RuboCop::Cop::Performance::RedundantSortBlock < RuboCop::Cop::Base
   def on_block(node); end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::SortBlock
+end
+class RuboCop::Cop::Performance::RedundantSplitRegexpArgument < RuboCop::Cop::Base
+  def determinist_regexp?(regexp_node); end
+  def on_send(node); end
+  def replacement(regexp_node); end
+  def split_call_with_regexp?(param0 = nil); end
+  extend RuboCop::Cop::AutoCorrector
 end
 class RuboCop::Cop::Performance::RedundantStringChars < RuboCop::Cop::Base
   def build_bad_method(method, args); end
@@ -352,6 +370,7 @@ class RuboCop::Cop::Performance::ReverseEach < RuboCop::Cop::Base
   def offense_range(node); end
   def on_send(node); end
   def reverse_each?(param0 = nil); end
+  def use_return_value?(node); end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::RangeHelp
 end

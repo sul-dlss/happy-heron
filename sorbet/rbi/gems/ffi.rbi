@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/ffi/all/ffi.rbi
 #
-# ffi-1.14.2
+# ffi-1.15.0
 
 class FFI::Type
   def alignment; end
@@ -399,7 +399,6 @@ end
 class FFI::VariadicInvoker
   def attach(mod, mname); end
   def call(*args, &block); end
-  def init(arg_types, type_map); end
   def initialize(arg0, arg1, arg2, arg3); end
   def invoke(arg0, arg1); end
 end

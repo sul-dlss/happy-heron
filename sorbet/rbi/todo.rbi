@@ -5,10 +5,15 @@
 module ::Anonymous_Delegator_10; end
 module ::Anonymous_Delegator_97; end
 module ::Capistrano::OneTimeKey; end
+module ActionDispatch::Response::ContentTypeHeader; end
+module ActionView::Helpers::FormBuilder; end
+module ActionView::Helpers::Tags::Base; end
+module ActiveRecord::Batches::BatchEnumerator; end
+module ActiveRecord::Delegation::DelegateCache; end
 module ActiveRecord::Reflection::HasManyReflection; end
-module OkComputer::OkComputerController::Anonymous_Module_81; end
+module OkComputer::OkComputerController::Anonymous_Module_67; end
+module Rails::Application::Configuration; end
 module T::InterfaceWrapper::Helpers; end
 module T::Private::Abstract::Hooks; end
 module T::Private::Methods::MethodHooks; end
 module T::Private::Methods::SingletonMethodHooks; end
-module T::Props::Plugin::ClassMethods; end

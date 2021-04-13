@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/reform/all/reform.rbi
 #
-# reform-2.3.3
+# reform-2.5.0
 
 module Reform
 end

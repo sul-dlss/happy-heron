@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/serverengine/all/serverengine.rbi
 #
-# serverengine-2.0.7
+# serverengine-2.1.1
 
 module ServerEngine
   def self.create(server_module, worker_module, load_config_proc = nil, &block); end
@@ -79,6 +79,46 @@ class ServerEngine::BlockingFlag
   def wait(timeout = nil); end
   def wait_for_reset(timeout = nil); end
   def wait_for_set(timeout = nil); end
+end
+module ServerEngine::SocketManagerUnix
+end
+module ServerEngine::SocketManagerUnix::ClientModule
+  def connect_peer(path); end
+  def recv(family, proto, peer, sent); end
+  def recv_tcp(family, peer, sent); end
+  def recv_udp(family, peer, sent); end
+end
+module ServerEngine::SocketManagerUnix::ServerModule
+  def listen_tcp_new(bind_ip, port); end
+  def listen_udp_new(bind_ip, port); end
+  def send_socket(peer, pid, method, bind, port); end
+  def start_server(path); end
+  def stop_server; end
+end
+module ServerEngine::SocketManager
+  def self.recv_peer(peer); end
+  def self.send_peer(peer, obj); end
+end
+class ServerEngine::SocketManager::Client
+  def initialize(path); end
+  def listen(proto, bind, port); end
+  def listen_tcp(bind, port); end
+  def listen_udp(bind, port); end
+  include ServerEngine::SocketManagerUnix::ClientModule
+end
+class ServerEngine::SocketManager::Server
+  def close; end
+  def initialize(path); end
+  def listen(proto, bind, port); end
+  def listen_tcp(bind, port); end
+  def listen_udp(bind, port); end
+  def new_client; end
+  def path; end
+  def process_peer(peer); end
+  def resolve_bind_key(bind, port); end
+  def self.generate_path; end
+  def self.open(path); end
+  include ServerEngine::SocketManagerUnix::ServerModule
 end
 class ServerEngine::ProcessManager
   def auto_heartbeat; end
@@ -289,44 +329,4 @@ class ServerEngine::Daemon
   def stop(graceful); end
   def write_pid_file; end
   include ServerEngine::ConfigLoader
-end
-module ServerEngine::SocketManagerUnix
-end
-module ServerEngine::SocketManagerUnix::ClientModule
-  def connect_peer(path); end
-  def recv(family, proto, peer, sent); end
-  def recv_tcp(family, peer, sent); end
-  def recv_udp(family, peer, sent); end
-end
-module ServerEngine::SocketManagerUnix::ServerModule
-  def listen_tcp_new(bind_ip, port); end
-  def listen_udp_new(bind_ip, port); end
-  def send_socket(peer, pid, method, bind, port); end
-  def start_server(path); end
-  def stop_server; end
-end
-module ServerEngine::SocketManager
-  def self.recv_peer(peer); end
-  def self.send_peer(peer, obj); end
-end
-class ServerEngine::SocketManager::Client
-  def initialize(path); end
-  def listen(proto, bind, port); end
-  def listen_tcp(bind, port); end
-  def listen_udp(bind, port); end
-  include ServerEngine::SocketManagerUnix::ClientModule
-end
-class ServerEngine::SocketManager::Server
-  def close; end
-  def initialize(path); end
-  def listen(proto, bind, port); end
-  def listen_tcp(bind, port); end
-  def listen_udp(bind, port); end
-  def new_client; end
-  def path; end
-  def process_peer(peer); end
-  def resolve_bind_key(bind, port); end
-  def self.generate_path; end
-  def self.open(path); end
-  include ServerEngine::SocketManagerUnix::ServerModule
 end

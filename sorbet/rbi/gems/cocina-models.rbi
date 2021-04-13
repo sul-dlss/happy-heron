@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/cocina-models/all/cocina-models.rbi
 #
-# cocina-models-0.47.2
+# cocina-models-0.58.2
 
 module Cocina
 end
@@ -28,20 +28,20 @@ class Cocina::Models::Struct < Dry::Struct
   extend Dry::Core::DescendantsTracker
 end
 module Cocina::Models::Types
-  extend Anonymous_Dry_Core_Deprecations_Tagged_34
-  extend Anonymous_Module_35
+  extend Anonymous_Dry_Core_Deprecations_Tagged_81
+  extend Anonymous_Module_82
   extend Dry::Core::Deprecations::Interface
   extend Dry::Types::BuilderMethods
-  include Anonymous_Dry_Types_Module_36
+  include Anonymous_Dry_Types_Module_83
 end
 module Cocina::Models::Types::Definition
 end
-module Anonymous_Dry_Types_Module_36
+module Anonymous_Dry_Types_Module_83
   def self.included(base); end
   extend Dry::Types::BuilderMethods
 end
-module Anonymous_Dry_Core_Deprecations_Tagged_34
+module Anonymous_Dry_Core_Deprecations_Tagged_81
 end
-module Anonymous_Module_35
+module Anonymous_Module_82
   def const_missing(missing); end
 end

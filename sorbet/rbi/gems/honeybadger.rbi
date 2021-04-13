@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/honeybadger/all/honeybadger.rbi
 #
-# honeybadger-4.7.3
+# honeybadger-4.8.0
 
 module Honeybadger
   def add_breadcrumb(*args, &block); end
@@ -29,6 +29,7 @@ module Honeybadger
   def notify(exception_or_opts, opts = nil); end
   def start(config = nil); end
   def stop(*args, &block); end
+  def track_deployment(*args, &block); end
   def with_rack_env(*args, &block); end
   extend Forwardable
   extend Honeybadger
@@ -116,6 +117,7 @@ class Honeybadger::Backend::Base
   def config; end
   def initialize(config); end
   def notify(feature, payload); end
+  def track_deployment(payload); end
   extend Forwardable
   include Honeybadger::Logging::Helper
 end
@@ -557,6 +559,7 @@ class Honeybadger::Agent
   def self.instance=(instance); end
   def send_now(object); end
   def stop(force = nil); end
+  def track_deployment(env: nil, revision: nil, local_username: nil, repository: nil); end
   def validate_notify_opts!(opts); end
   def with_error_handling; end
   def with_rack_env(rack_env, &block); end
