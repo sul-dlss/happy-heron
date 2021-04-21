@@ -20,7 +20,7 @@ class AccessGenerator
     return { access: work_version.access, download: work_version.access } unless work_version.embargo_date
 
     { access: 'citation-only', download: 'none',
-      embargo: { access: 'world', releaseDate: work_version.embargo_date.iso8601 } }
+      embargo: { access: 'world', download: 'world', releaseDate: work_version.embargo_date.iso8601 } }
   end
 
   private
