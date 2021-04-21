@@ -54,7 +54,7 @@ class CollectionGenerator
   # TODO: This varies based on what the user selected
   def access
     {
-      access: 'stanford'
+      access: 'world'
     }
   end
 

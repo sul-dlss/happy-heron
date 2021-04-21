@@ -17,7 +17,7 @@ RSpec.describe CollectionGenerator do
         type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
         label: 'Test title',
         version: 1,
-        access: { access: 'stanford' },
+        access: { access: 'world' },
         administrative: {
           hasAdminPolicy: 'druid:zx485kb6348',
           partOfProject: project_tag
@@ -60,7 +60,7 @@ RSpec.describe CollectionGenerator do
         type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
         label: 'Test title',
         version: 1,
-        access: { access: 'stanford' },
+        access: { access: 'world' },
         administrative: {
           hasAdminPolicy: 'druid:zx485kb6348',
           partOfProject: project_tag
