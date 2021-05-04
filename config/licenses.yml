@@ -1,0 +1,113 @@
+---
+AGPL-3.0-only:
+  selectable: true
+  label: "AGPL-3.0-only GNU Affero General Public License"
+  uri: "https://www.gnu.org/licenses/agpl.txt"
+Apache-2.0:
+  selectable: true
+  label: Apache-2.0
+  uri: "http://www.apache.org/licenses/LICENSE-2.0"
+BSD-2-Clause:
+  selectable: true
+  label: "BSD-2-Clause \"Simplified\" License"
+  uri: "https://opensource.org/licenses/BSD-2-Clause"
+BSD-3-Clause:
+  selectable: true
+  label: "BSD-3-Clause \"New\" or \"Revised\" License"
+  uri: "https://opensource.org/licenses/BSD-3-Clause"
+CC-BY-4.0:
+  selectable: true
+  label: "CC-BY-4.0 Attribution International"
+  uri: "https://creativecommons.org/licenses/by/4.0/legalcode"
+CC-BY-NC-4.0:
+  selectable: true
+  label: "CC-BY-NC-4.0 Attribution-NonCommercial International"
+  uri: "https://creativecommons.org/licenses/by-nc/4.0/legalcode"
+CC-BY-NC-ND-4.0:
+  selectable: true
+  label: "CC-BY-NC-ND-4.0 Attribution-NonCommercial-No Derivatives"
+  uri: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"
+CC-BY-NC-SA-4.0:
+  selectable: true
+  label: "CC-BY-NC-SA-4.0 Attribution-NonCommercial-Share Alike International"
+  uri: "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
+CC-BY-ND-4.0:
+  selectable: true
+  label: "CC-BY-ND-4.0 Attribution-No Derivatives International"
+  uri: "https://creativecommons.org/licenses/by-nd/4.0/legalcode"
+CC-BY-SA-4.0:
+  selectable: true
+  label: "CC-BY-SA-4.0 Attribution-Share Alike International"
+  uri: "https://creativecommons.org/licenses/by-sa/4.0/legalcode"
+CC0-1.0:
+  selectable: true
+  label: CC0-1.0
+  uri: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+CDDL-1.1:
+  selectable: true
+  label: "CDDL-1.1 Common Development and Distribution License"
+  uri: "https://opensource.org/licenses/cddl1"
+EPL-2.0:
+  selectable: true
+  label: "EPL-2.0 Eclipse Public License"
+  uri: "https://www.eclipse.org/legal/epl-2.0"
+GPL-3.0-only:
+  selectable: true
+  label: "GPL-3.0-only GNU General Public License"
+  uri: "https://www.gnu.org/licenses/gpl-3.0-standalone.html"
+ISC:
+  selectable: true
+  label: "ISC License"
+  uri: "https://www.isc.org/downloads/software-support-policy/isc-license/"
+LGPL-3.0-only:
+  selectable: true
+  label: "LGPL-3.0-only Lesser GNU Public License"
+  uri: "https://www.gnu.org/licenses/lgpl-3.0-standalone.html"
+MIT:
+  selectable: true
+  label: "MIT License"
+  uri: "https://opensource.org/licenses/MIT"
+MPL-2.0:
+  selectable: true
+  label: "MPL-2.0 Mozilla Public License"
+  uri: "http://www.mozilla.org/MPL/2.0/"
+ODC-By-1.0:
+  selectable: true
+  label: "ODC-By-1.0 Attribution License"
+  uri: "https://opendatacommons.org/licenses/by/1.0/"
+ODbL-1.0:
+  selectable: true
+  label: "ODbL-1.0 Open Database License"
+  uri: "http://www.opendatacommons.org/licenses/odbl/1.0/"
+PDDL-1.0:
+  selectable: true
+  label: "PDDL-1.0 Public Domain Dedication and License"
+  uri: "http://opendatacommons.org/licenses/pddl/1.0/"
+none:
+  selectable: true
+  label: "No License"
+  uri: ''
+CC-BY-3.0:
+  selectable: false
+  label: 'CC Attribution 3.0 (Unsupported)'
+  uri: "https://creativecommons.org/licenses/by/3.0/legalcode"
+CC-BY-SA-3.0:
+  selectable: false
+  label: 'CC Attribution Share Alike 3.0 (Unsupported)'
+  uri: "https://creativecommons.org/licenses/by-sa/3.0/legalcode"
+CC-BY-ND-3.0:
+  selectable: false
+  label: 'CC Attribution No Derivatives 3.0 (Unsupported)'
+  uri: "https://creativecommons.org/licenses/by-nd/3.0/legalcode"
+CC-BY-NC-3.0:
+  selectable: false
+  label: 'CC Attribution Non Commercial 3.0 (Unsupported)'
+  uri: "https://creativecommons.org/licenses/by-nc/3.0/legalcode"
+CC-BY-NC-SA-3.0:
+  selectable: false
+  label: 'CC Attribution Non Commercial Share Alike 3.0 (Unsupported)'
+  uri: "https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"
+CC-BY-NC-ND-3.0:
+  selectable: false
+  label: 'CC Attribution Non Commercial No Derivatives 3.0 (Unsupported)'
+  uri: "https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"
