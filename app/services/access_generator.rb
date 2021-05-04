@@ -17,13 +17,31 @@ class AccessGenerator
 
   sig { returns(Hash) }
   def generate
-    return { access: work_version.access, download: work_version.access } unless work_version.embargo_date
+    access = work_version.embargo_date ? embargoed_access : regular_access
 
-    { access: 'citation-only', download: 'none',
-      embargo: { access: 'world', download: 'world', releaseDate: work_version.embargo_date.iso8601 } }
+    base_access.merge(access)
   end
 
   private
 
   attr_reader :work_version
+
+  def regular_access
+    {
+      access: work_version.access,
+      download: work_version.access
+    }
+  end
+
+  def embargoed_access
+    {
+      access: 'citation-only',
+      download: 'none',
+      embargo: { access: 'world', download: 'world', releaseDate: work_version.embargo_date.iso8601 }
+    }
+  end
+
+  def base_access
+    { license: License.find(work_version.license).uri.presence }.compact
+  end
 end

@@ -55,6 +55,8 @@ RSpec.describe RequestGenerator do
     ]
   end
 
+  let(:license_uri) { License.find('CC0-1.0').uri }
+
   context 'when files are not present' do
     context 'without a druid' do
       let(:work_version) do
@@ -66,7 +68,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
-          access: { access: 'world', download: 'world' },
+          access: { access: 'world', download: 'world', license: license_uri },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
@@ -116,7 +118,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
-          access: { access: 'world', download: 'world' },
+          access: { access: 'world', download: 'world', license: license_uri },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
@@ -186,7 +188,7 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
-          access: { access: 'world', download: 'world' },
+          access: { access: 'world', download: 'world', license: license_uri },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
@@ -258,7 +260,7 @@ RSpec.describe RequestGenerator do
           label: 'Test title',
           version: 1,
           externalIdentifier: 'druid:bk123gh4567',
-          access: { access: 'world', download: 'world' },
+          access: { access: 'world', download: 'world', license: license_uri },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
