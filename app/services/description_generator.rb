@@ -26,7 +26,8 @@ class DescriptionGenerator
       event: generate_events.presence,
       relatedResource: related_resources.presence,
       form: TypesGenerator.generate(work_version: work_version).presence,
-      access: contacts
+      access: access,
+      purl: work_version.work.purl
     }.compact)
   end
   # rubocop:enable Metrics/AbcSize
@@ -135,20 +136,34 @@ class DescriptionGenerator
   end
 
   sig { returns(T.nilable(Cocina::Models::DescriptiveAccessMetadata)) }
-  def contacts
+  def access
+    args = {
+      accessContact: access_contacts,
+      digitalRepository: repository
+    }.compact
+    return if args.empty?
+
+    Cocina::Models::DescriptiveAccessMetadata.new(args)
+  end
+
+  sig { returns(T.nilable(T::Array[T::Hash[Symbol, String]])) }
+  def repository
+    return unless work_version.work.purl
+
+    [{ value: 'Stanford Digital Repository' }]
+  end
+
+  sig { returns(T.nilable(T::Array[T::Hash[Symbol, String]])) }
+  def access_contacts
     return if work_version.contact_emails.empty?
 
-    access_contacts = work_version.contact_emails.map do |email|
+    work_version.contact_emails.map do |email|
       {
         value: email.email,
         type: 'email',
         displayLabel: 'Contact'
       }
     end
-
-    Cocina::Models::DescriptiveAccessMetadata.new(
-      accessContact: access_contacts
-    )
   end
 
   sig { returns(T::Array[Cocina::Models::RelatedResource]) }
