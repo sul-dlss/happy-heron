@@ -43,9 +43,10 @@ module Cocina::Models
     sig do
         params(url: T.nilable(T::Array[DescriptiveValue]),
                accessContact: T.nilable(T::Array[T::Hash[T.untyped, T.untyped]]),
+               digitalRepository: T.nilable(T::Array[T::Hash[T.untyped, T.untyped]]),
         ).void
     end
-  def initialize(url: nil, accessContact: nil); end
+  def initialize(url: nil, accessContact: nil, digitalRepository: nil); end
   end
 
   class RelatedResource
