@@ -78,7 +78,7 @@ ODC-By-1.0:
 ODbL-1.0:
   selectable: true
   label: "ODbL-1.0 Open Database License"
-  uri: "http://www.opendatacommons.org/licenses/odbl/1.0/"
+  uri: "https://opendatacommons.org/licenses/odbl/1.0/"
 PDDL-1.0:
   selectable: true
   label: "PDDL-1.0 Public Domain Dedication and License"
