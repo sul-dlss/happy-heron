@@ -134,9 +134,9 @@ RSpec.describe DescriptionGenerator do
         }
       ],
       subject: [
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' }
+        { type: 'topic', value: 'MyString', uri: 'http://example.org/uri' },
+        { type: 'topic', value: 'MyString', uri: 'http://example.org/uri' },
+        { type: 'topic', value: 'MyString', uri: 'http://example.org/uri' }
       ],
       note: [
         { type: 'summary', value: 'test abstract' },
@@ -273,49 +273,51 @@ RSpec.describe DescriptionGenerator do
   # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   #   example 12
   context 'when publisher and publication date are entered by user' do
-    let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work_version) do
-      build(:work_version, :published, :with_contact_emails,
-            contributors: [contributor],
-            title: 'Test title')
-    end
+    xit 'to be implemented for new type mapping' do
+      let(:contributor) { build(:org_contributor, role: 'Publisher') }
+      let(:work_version) do
+        build(:work_version, :published, :with_contact_emails,
+              contributors: [contributor],
+              title: 'Test title')
+      end
 
-    it 'creates event of type publication with date' do
-      expect(model).to eq(
-        note: [
-          { type: 'summary', value: 'test abstract' },
-          { type: 'preferred citation', value: 'test citation' }
-        ],
-        title: [{ value: 'Test title' }],
-        event: [
-          {
-            type: 'publication',
-            contributor: [
+      it 'creates event of type publication with date' do
+        expect(model).to eq(
+          note: [
+            { type: 'summary', value: 'test abstract' },
+            { type: 'preferred citation', value: 'test citation' }
+          ],
+          title: [{ value: 'Test title' }],
+          event: [
+            {
+              type: 'publication',
+              contributor: [
+                {
+                  name: [{ value: contributor.full_name }],
+                  role: publisher_roles
+                }
+              ],
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2020-02-14',
+                  type: 'publication'
+                }
+              ]
+            }
+          ],
+          form: types_form,
+          access: {
+            accessContact: [
               {
-                name: [{ value: contributor.full_name }],
-                role: publisher_roles
-              }
-            ],
-            date: [
-              {
-                encoding: { code: 'edtf' },
-                value: '2020-02-14',
-                type: 'publication'
+                value: 'io@io.io',
+                type: 'email',
+                displayLabel: 'Contact'
               }
             ]
           }
-        ],
-        form: types_form,
-        access: {
-          accessContact: [
-            {
-              value: 'io@io.io',
-              type: 'email',
-              displayLabel: 'Contact'
-            }
-          ]
-        }
-      )
+        )
+      end
     end
   end
 

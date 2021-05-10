@@ -107,7 +107,7 @@ RSpec.describe RequestGenerator do
       end
 
       it 'generates the model' do
-        expect(model).to eq Cocina::Models::RequestDRO.new(expected_model)
+        expect(model.to_h).to eq(expected_model)
       end
     end
 
@@ -164,7 +164,7 @@ RSpec.describe RequestGenerator do
       end
 
       it 'generates the model' do
-        expect(model).to eq Cocina::Models::DRO.new(expected_model)
+        expect(model.to_h).to eq expected_model
       end
     end
   end
@@ -261,7 +261,7 @@ RSpec.describe RequestGenerator do
       end
 
       it 'generates the model' do
-        expect(model).to eq Cocina::Models::RequestDRO.new(expected_model)
+        expect(model.to_h).to eq expected_model
       end
     end
 
@@ -344,7 +344,6 @@ RSpec.describe RequestGenerator do
       end
 
       it 'generates the model' do
-        # expect(model).to eq Cocina::Models::DRO.new(expected_model)
         expect(model.to_h).to eq expected_model
       end
     end
