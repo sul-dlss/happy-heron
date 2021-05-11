@@ -3,7 +3,7 @@
 
 module Works
   # Allows the user to search for keywords or provide freetext keywords
-  class KeywordsComponent < ApplicationComponent
+  class KeywordsRowComponent < ApplicationComponent
     def initialize(form:, key:)
       @form = form
       @key = key
@@ -21,10 +21,6 @@ module Works
 
     def errors
       form.object.errors.where(:keywords)
-    end
-
-    def row(keyword_form)
-      render Works::KeywordsRowComponent.new(form: keyword_form, key: key)
     end
   end
 end
