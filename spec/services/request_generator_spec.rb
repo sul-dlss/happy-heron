@@ -68,7 +68,12 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
-          access: { access: 'world', download: 'world', license: license_uri },
+          access: {
+            access: 'world',
+            download: 'world',
+            license: license_uri,
+            useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+          },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
@@ -118,7 +123,12 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
-          access: { access: 'world', download: 'world', license: license_uri },
+          access: {
+            access: 'world',
+            download: 'world',
+            license: license_uri,
+            useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+          },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
@@ -190,7 +200,12 @@ RSpec.describe RequestGenerator do
           type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
           label: 'Test title',
           version: 1,
-          access: { access: 'world', download: 'world', license: license_uri },
+          access: {
+            access: 'world',
+            download: 'world',
+            license: license_uri,
+            useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+          },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
@@ -262,7 +277,12 @@ RSpec.describe RequestGenerator do
           label: 'Test title',
           version: 1,
           externalIdentifier: 'druid:bk123gh4567',
-          access: { access: 'world', download: 'world', license: license_uri },
+          access: {
+            access: 'world',
+            download: 'world',
+            license: license_uri,
+            useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+          },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag

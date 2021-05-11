@@ -11,7 +11,9 @@ RSpec.describe AccessGenerator do
     let(:work_version) { build(:work_version, license: 'none') }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'world', download: 'world')
+      expect(model).to eq(access: 'world',
+                          download: 'world',
+                          useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
     end
   end
 
@@ -19,7 +21,10 @@ RSpec.describe AccessGenerator do
     let(:work_version) { build(:work_version) }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'world', download: 'world', license: license_uri)
+      expect(model).to eq(access: 'world',
+                          download: 'world',
+                          license: license_uri,
+                          useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
     end
   end
 
@@ -27,7 +32,10 @@ RSpec.describe AccessGenerator do
     let(:work_version) { build(:work_version, access: 'stanford') }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'stanford', download: 'stanford', license: license_uri)
+      expect(model).to eq(access: 'stanford',
+                          download: 'stanford',
+                          license: license_uri,
+                          useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
     end
   end
 
@@ -35,9 +43,11 @@ RSpec.describe AccessGenerator do
     let(:work_version) { build(:work_version, :embargoed, access: 'stanford') }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'citation-only', download: 'none',
+      expect(model).to eq(access: 'citation-only',
+                          download: 'none',
                           embargo: { releaseDate: work_version.embargo_date.to_s, access: 'world', download: 'world' },
-                          license: license_uri)
+                          license: license_uri,
+                          useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
     end
   end
 end

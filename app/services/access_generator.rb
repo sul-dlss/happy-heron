@@ -42,6 +42,9 @@ class AccessGenerator
   end
 
   def base_access
-    { license: License.find(work_version.license).uri.presence }.compact
+    {
+      license: License.find(work_version.license).uri.presence,
+      useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+    }.compact
   end
 end
