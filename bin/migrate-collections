@@ -34,7 +34,7 @@ end
 
 def release_attributes(json)
   data = {
-    access: ACCESS.fetch(json.fetch('visibility_option_value'))
+    access: ACCESS.fetch(json.fetch('visibility_option'))
   }
   if json['embargo_option'] == 'fixed'
     puts "#{json['druid']} has embargo option of 'fixed', which cannot be mapped to h2"
