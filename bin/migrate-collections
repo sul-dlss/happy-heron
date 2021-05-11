@@ -23,9 +23,9 @@ RELEASE_OPTION = {
 }
 
 
-def contact_email(json)
+def contact_emails(json)
   if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
-    json['contact_email']
+    [ContactEmail.new(email: json['contact_email'])]
   elsif json['contact_email'].present?
     warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}"
     nil
@@ -69,9 +69,9 @@ def participants_attributes(json)
     User.find_or_create_by!(email: "#{sunetid.downcase}@stanford.edu")
   end
   {
-    managers: managers,
+    managed_by: managers,
     depositors: depositors,
-    reviewers: reviewers
+    reviewed_by: reviewers
   }
 end
 
@@ -79,24 +79,46 @@ def build_collection_attributes(json)
   creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
 
   {
-    version: json.fetch('version'),
-    description: json.fetch('description'),
-    contact_email: contact_email(json),
     review_enabled: json.fetch('requires_human_approval') == 'yes',
     creator: creator,
-    name: json.fetch('name'),
-    state: STATES.fetch(json.fetch('object_status')),
-    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
   }.merge(release_attributes(json)).
     merge(license_attributes(json)).
     merge(participants_attributes(json))
 end
 
+def build_collection_version_attributes(json)
+  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
+
+  {
+    version: json.fetch('version'),
+    description: json.fetch('description'),
+    contact_emails: contact_emails(json),
+    name: json.fetch('name'),
+    state: STATES.fetch(json.fetch('object_status')),
+    related_links: json.fetch('related_items').reject { |item| item['url'].blank? }.map { |item| RelatedLink.new(item) }
+  }
+end
+
 File.foreach(ARGV[0]) do |data|
   json = JSON.parse(data)
   next unless json.present?
-  collection = Collection.find_or_initialize_by(druid: json['druid'])
-  collection_attributes = build_collection_attributes(json)
-  collection.update!(collection_attributes)
+  collection = Collection.find_by(druid: json['druid'])
+  if collection
+    collection.update!(build_collection_attributes(json))
+  else
+    collection = Collection.new(build_collection_attributes(json).merge(druid: json['druid']))
+    collection.save!
+  end
+
+  collection_version = collection.head
+  if collection_version
+    collection_version.update!(build_collection_version_attributes(json))
+  else
+    collection_version = collection.build_head(build_collection_version_attributes(json).
+      merge(collection_id: collection.id, version: json.fetch('version')))
+    collection_version.save!
+    collection.update!(head: collection_version)
+  end
+
   puts "collection #{collection.id}"
 end
