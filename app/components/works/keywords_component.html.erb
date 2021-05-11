@@ -14,8 +14,9 @@
         <% end %>
       </template>
 
+      <!-- THIS IS THE BLOCK FOR THE ACTUAL ENTRY -->
       <span class="search">
-        <input class="search-field" type="search" tabindex="0" autocorrect="off"
+        <input class="search-field" type="text" tabindex="0" autocorrect="off"
                data-keywords-target="search" autocapitalize="none" spellcheck="false"
                role="searchbox" aria-autocomplete="list" autocomplete="off"
                id="work_keywords"
@@ -23,9 +24,13 @@
                data-action="change->keywords#add keypress->keywords#checkForEnter"
                aria-controls="keyword-results">
       </span>
+      <!-- THIS IS THE BLOCK FOR THE ACTUAL ENTRY -->
     </span>
-  </div>
-  <div data-keywords-target="error" class="invalid-feedback"><%= error_message %></div>
+      </div>
+      <div data-nested-form-target="add_item">
+      <%= button_tag '+ Add another keyword', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+      </div>
+    <div data-keywords-target="error" class="invalid-feedback"><%= error_message %></div>
 <%# -- TODO for autocomplete
   <div class="keywords-container keywords-container-open" data-keywords-target="container">
     <span class="keywords-dropdown select2-dropdown--above">
