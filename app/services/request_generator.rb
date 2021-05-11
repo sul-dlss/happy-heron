@@ -52,15 +52,6 @@ class RequestGenerator
     WorkType.find(work_version.work_type).cocina_type
   end
 
-  sig { returns(Hash) }
-  # TODO: This varies based on what the user selected
-  def access
-    {
-      access: 'stanford',
-      download: 'stanford'
-    }
-  end
-
   sig { returns(T.any(Cocina::Models::DROStructural, Cocina::Models::RequestDROStructural)) }
   def structural
     StructuralGenerator.generate(work_version: work_version)
