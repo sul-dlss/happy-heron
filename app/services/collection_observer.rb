@@ -14,7 +14,7 @@ class CollectionObserver
 
   # When an already published collection is updated
   def self.after_update_published(collection, change_set:, user:)
-    event_params = { user: user, event_type: 'settings updated' }
+    event_params = { user: user, event_type: 'settings_updated' }
     event_params[:description] = change_set.participant_change_description if change_set.participants_changed?
     collection.events.create(event_params)
     collection_version = collection.head
