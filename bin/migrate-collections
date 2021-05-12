@@ -67,13 +67,15 @@ def license_attributes(json)
 end
 
 def h2_license_code(hydrus_license)
-  if hydrus_license.start_with?('cc-')
-    "#{hydrus_license.upcase}-3.0"
-  elsif hydrus_license == 'odc-odbl'
+  return "#{hydrus_license.upcase}-3.0" if hydrus_license.start_with?('cc-')
+  case hydrus_license
+  when 'odc-odbl'
     'ODbL-1.0'
-  elsif hydrus_license == 'odc-by'
+  when 'odc-by'
     'ODC-By-1.0'
-  elsif hydrus_license == 'none'
+  when 'pddl'
+    'PDDL-1.0'
+  when 'none'
     'none'
   else
     raise "Unrecognized license #{hydrus_license}"
