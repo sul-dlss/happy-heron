@@ -15,6 +15,7 @@ require 'capistrano/rails'
 require 'capistrano/honeybadger'
 require 'capistrano/passenger'
 require 'capistrano/maintenance'
+require 'whenever/capistrano'
 require 'dlss/capistrano'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
