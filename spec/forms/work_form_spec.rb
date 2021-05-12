@@ -54,6 +54,17 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'populator on embargo_date' do
+    before do
+      work_version.embargo_date = Time.zone.today - 1
+    end
+
+    it 'removes old embargo date' do
+      form.prepopulate!
+      expect(form.embargo_date).to be_nil
+    end
+  end
+
   describe 'authors validation' do
     let(:author_error) { 'Please add at least one author.' }
 
