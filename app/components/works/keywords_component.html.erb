@@ -1,15 +1,18 @@
-<div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".plain-container">
-  <template data-nested-form-target='template'>
-    <%= form.fields_for :keywords, Keyword.new, child_index: 'TEMPLATE_RECORD' do |keyword_form| %>
+
+<div class="mb-3" data-controller="keywords" data-action="focusout->keywords#close" data-edit-deposit-target="keywordsField" data-nested-form-selector-value=".plain-container">
+  <div class="keywords-container<%= ' is-invalid' if error? %>" data-keywords-target="container" data-action="click->keywords#open">
+    <template data-nested-form-target='template'>
+      <%= form.fields_for :keywords, Keyword.new, child_index: 'TEMPLATE_RECORD' do |keyword_form| %>
+        <%= row(keyword_form) %>
+      <% end %>
+    </template>
+
+    <%= form.fields_for :keywords do |keyword_form| %>
       <%= row(keyword_form) %>
     <% end %>
-  </template>
 
-  <%= form.fields_for :keywords do |keyword_form| %>
-    <%= row(keyword_form) %>
-  <% end %>
-
-  <div data-nested-form-target="add_item">
-    <%= button_tag '+ Add another keyword', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+    <div data-nested-form-target="add_item">
+      <%= button_tag '+ Add another keyword', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+    </div>
   </div>
 </div>
