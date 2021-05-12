@@ -9,13 +9,12 @@ STATES = {
   'published_open' => 'deposited',
   'published_closed' => 'deposited',
   'draft' => 'first_draft'
-}
+}.freeze
 
 RELEASE_OPTION = {
   'varies' => 'depositor-selects',
-  'none' => 'immediate',
-}
-
+  'none' => 'immediate'
+}.freeze
 
 def contact_emails(json)
   if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
@@ -103,15 +102,13 @@ def build_collection_attributes(json)
 
   {
     review_enabled: json.fetch('requires_human_approval') == 'yes',
-    creator: creator,
-  }.merge(release_attributes(json)).
-    merge(license_attributes(json)).
-    merge(participants_attributes(json))
+    creator: creator
+  }.merge(release_attributes(json))
+    .merge(license_attributes(json))
+    .merge(participants_attributes(json))
 end
 
 def build_collection_version_attributes(json)
-  creator = User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu")
-
   {
     version: json.fetch('version'),
     description: json.fetch('description'),
@@ -124,7 +121,8 @@ end
 
 File.foreach(ARGV[0]) do |data|
   json = JSON.parse(data)
-  next unless json.present?
+  next if json.blank?
+
   collection = Collection.find_by(druid: json['druid'])
   if collection
     collection.update!(build_collection_attributes(json))
@@ -137,8 +135,8 @@ File.foreach(ARGV[0]) do |data|
   if collection_version
     collection_version.update!(build_collection_version_attributes(json))
   else
-    collection_version = collection.build_head(build_collection_version_attributes(json).
-      merge(collection_id: collection.id, version: json.fetch('version')))
+    collection_version = collection.build_head(build_collection_version_attributes(json)
+      .merge(collection_id: collection.id, version: json.fetch('version')))
     collection_version.save!
     collection.update!(head: collection_version)
   end
