@@ -5,6 +5,9 @@
 #   bin/migrate-collections collections.jsonl
 
 require_relative '../config/environment'
+
+Rails.logger.level = :warn
+
 STATES = {
   'published_open' => 'deposited',
   'published_closed' => 'deposited',
