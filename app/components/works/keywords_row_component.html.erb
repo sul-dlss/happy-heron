@@ -1,5 +1,5 @@
 <div class="mb-3 row plain-container">
-  <div class="col-sm-9">
+  <div class="col-sm-6">
     <input class="search-field form-control" type="search" tabindex="0" autocorrect="off"
       data-keywords-target="search" autocapitalize="none" spellcheck="false"
       role="searchbox" aria-autocomplete="list" autocomplete="off"
@@ -7,14 +7,15 @@
       aria-describedby="keyword-container"
       data-action="change->keywords#add keypress->keywords#checkForEnter"
       aria-controls="keyword-results">
-
-      <div class="col-sm-1">
+  </div>
+  <% if not_first_keyword? %>
+    <div class="col-sm-1">
       <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: 'Remove' },
-       data: { action: "click->nested-form#removeAssociation",
-               plain: true } do %>
+      data: { action: "click->nested-form#removeAssociation",
+              plain: true } do %>
         <span class="far fa-trash-alt"></span>
       <% end %>
       <%= form.hidden_field :_destroy %>
-    </div>  
-  <div>
+    </div>
+  <% end %>
 </div>

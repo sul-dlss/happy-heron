@@ -11,6 +11,11 @@ module Works
 
     attr_reader :form, :key
 
+    sig { returns(T::Boolean) }
+    def not_first_keyword?
+      form.index != 0
+    end
+
     def error?
       errors.present?
     end
