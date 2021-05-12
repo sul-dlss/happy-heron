@@ -11,12 +11,6 @@ STATES = {
   'draft' => 'first_draft'
 }
 
-ACCESS = {
-  'everyone' => 'world',
-  'stanford' => 'stanford',
-  'varies' => 'depositor-selects'
-}
-
 RELEASE_OPTION = {
   'varies' => 'depositor-selects',
   'none' => 'immediate',
@@ -33,9 +27,12 @@ def contact_emails(json)
 end
 
 def release_attributes(json)
-  data = {
-    access: ACCESS.fetch(json.fetch('visibility_option'))
-  }
+  access = if json.fetch('visibility_option') == 'fixed'
+             json.fetch('visibility').first
+           else
+             'depositor-selects'
+           end
+  data = { access: access }
   if json['embargo_option'] == 'fixed'
     puts "#{json['druid']} has embargo option of 'fixed', which cannot be mapped to h2"
     # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
