@@ -51,11 +51,33 @@ def release_attributes(json)
 end
 
 def license_attributes(json)
-  # TODO: h2 doesn't set these fields yet, so it's unclear how to migrate to them:
-  {
-    # attr_reader :attr_namesequired_license - license_option_fixed
-    # default_license - license_option_varies
-  }
+  case json.fetch('license_option')
+  when 'none'
+    {
+      license_option: 'required',
+      required_license: 'none'
+    }
+  when 'fixed'
+    {
+      license_option: 'required',
+      required_license: h2_license_code(json.fetch('license'))
+    }
+  else
+    {
+      license_option: 'depositor-selects',
+      default_license: h2_license_code(json.fetch('license'))
+    }
+  end
+end
+
+def h2_license_code(hydrus_license)
+  if hydrus_license.start_with?('cc-')
+    "#{hydrus_license.upcase}-3.0"
+  elsif hydrus_license == 'odc-odbl'
+    'ODbL-1.0'
+  else
+    raise "Unrecognized license #{hydrus_license}"
+  end
 end
 
 def participants_attributes(json)
