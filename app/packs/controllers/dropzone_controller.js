@@ -10,19 +10,52 @@ import {
 } from "helpers";
 
 export default class extends Controller {
-  static targets = ["input", "previews", "template"];
+  static targets = ["input", "previewsContainer", "preview", "template", "feedback", "container"];
 
   connect() {
-    this.dropZone = createDropZone(this, this.templateTarget.innerHTML);
-    this.hideFileInput();
-    this.bindEvents();
-    Dropzone.autoDiscover = false; // necessary quirk for Dropzone error in console
+    this.dropZone = createDropZone(this, this.templateTarget.innerHTML)
+    this.hideFileInput()
+    this.fileCount = this.previewTargets.length
+    this.validate()
+    this.bindEvents()
+    this.inputTarget.form.onsubmit = (form) => {
+      this.displayValidateMessage()
+    }
+    Dropzone.autoDiscover = false // necessary quirk for Dropzone error in console
   }
 
   // Private
   hideFileInput() {
-    this.inputTarget.disabled = true;
-    this.inputTarget.style.display = "none";
+    this.inputTarget.style.display = "none"
+  }
+
+  validate() {
+    if (this.fileCount == 0) {
+      this.disableSubmission()
+    }
+  }
+
+  displayValidateMessage() {
+    // Because the feedback isn't a sibling of the input field, we can't simply
+    // rely on the bootstrap selector to display the message
+    if (this.inputTarget.checkValidity()) {
+      this.containerTarget.classList.remove("is-invalid")
+      this.feedbackTarget.style.display = 'none'
+    } else {
+      this.containerTarget.classList.add("is-invalid")
+      this.feedbackTarget.style.display = 'block'
+    }
+  }
+
+  disableSubmission() {
+    this.inputTarget.disabled = false // block the form from submitting
+    this.inputTarget.setCustomValidity("you must upload a file")
+  }
+
+  enableSubmission() {
+    this.inputTarget.disabled = true // don't send the value with the form.
+    this.inputTarget.setCustomValidity("")
+    this.displayValidateMessage()
   }
 
   removeAssociation(event) {
@@ -30,6 +63,9 @@ export default class extends Controller {
     const item = event.target.closest('.dz-complete')
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
+    this.fileCount--
+    this.validate()
+    this.displayValidateMessage()
   }
 
   // Tell the ProgressController to update
@@ -41,11 +77,13 @@ export default class extends Controller {
     this.dropZone.on("addedfile", file => {
       setTimeout(() => {
         file.accepted && createDirectUploadController(this, file).start();
+        this.fileCount++
+        this.enableSubmission()
       }, 500);
     });
 
     this.dropZone.on("removedfile", file => {
-      file.controller && removeElement(file.controller.hiddenInput);
+      file.controller && removeElement(file.controller.hiddenInput)
       this.informProgress()
     });
 
@@ -123,7 +161,7 @@ class DirectUploadController {
     const input = document.createElement("input");
     input.type = "hidden";
     input.name = `work[attached_files_attributes][${this.count}][file]`
-    insertAfter(input, this.source.previewsTarget);
+    insertAfter(input, this.source.previewsContainerTarget);
     return input;
   }
 
