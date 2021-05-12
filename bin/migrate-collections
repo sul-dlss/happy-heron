@@ -17,11 +17,15 @@ RELEASE_OPTION = {
 }.freeze
 
 def contact_emails(json)
-  if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
-    [ContactEmail.new(email: json['contact_email'])]
-  elsif json['contact_email'].present?
-    warn "Invalid contact email found in #{json['druid']}: #{json['contact_email']}"
-    []
+  json['contact_email'].split(/,\s*/).map { |email| contact_email(email, json['druid']) }.compact
+end
+
+def contact_email(email, druid)
+  if URI::MailTo::EMAIL_REGEXP.match(email)
+    ContactEmail.new(email: email)
+  elsif email.present?
+    warn "Invalid contact email found in #{druid}: #{email}"
+    nil
   end
 end
 
