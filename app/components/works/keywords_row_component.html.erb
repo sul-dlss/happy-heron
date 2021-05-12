@@ -1,14 +1,8 @@
 <div class="mb-3 row plain-container">
   <div class="col-sm-6">
-    <span class="search">
-    <input class="search-field form-control" type="search" tabindex="0" autocorrect="off"
-      data-keywords-target="search" autocapitalize="none" spellcheck="false"
-      role="searchbox" aria-autocomplete="list" autocomplete="off"
-      id="work_keywords"
-      aria-describedby="keyword-container"
-      data-action="change->keywords#add keypress->keywords#checkForEnter"
-      aria-controls="keyword-results">
-      </span>
+    <%= form.label :label, 'Keyword', class: 'col-form-label sr-only' %>
+    <%= form.text_field :label, class: "form-control", required: true %>
+    <div class="invalid-feedback">You must provide a valid keyword</div>
   </div>
   <% if not_first_keyword? %>
     <div class="col-sm-1">
