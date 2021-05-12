@@ -72,6 +72,8 @@ def h2_license_code(hydrus_license)
     "#{hydrus_license.upcase}-3.0"
   elsif hydrus_license == 'odc-odbl'
     'ODbL-1.0'
+  elsif hydrus_license == 'none'
+    'none'
   else
     raise "Unrecognized license #{hydrus_license}"
   end
