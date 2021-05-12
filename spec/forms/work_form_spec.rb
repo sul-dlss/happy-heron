@@ -187,4 +187,44 @@ RSpec.describe WorkForm do
       expect(messages).to be_empty
     end
   end
+
+  describe 'embargo validation' do
+    context 'with a collection that allows depositor to select embargo' do
+      let(:errors) { form.errors.where(:'embargo-date') }
+      let(:messages) { errors.map(&:message) }
+
+      before do
+        work.collection = build(:collection, release_option: 'depositor-selects')
+      end
+
+      context 'when release is nil' do
+        it 'validates' do
+          form.validate(release: nil)
+          expect(messages).to be_empty
+        end
+      end
+
+      context 'when release is immediate' do
+        it 'validates' do
+          form.validate(release: 'immediate')
+          expect(messages).to be_empty
+        end
+      end
+
+      context 'when release is embargo and a date is provided' do
+        it 'validates' do
+          form.validate(release: 'embargo', 'embargo_date(1i)' => '2040', 'embargo_date(2i)' => '2',
+                        'embargo_date(3i)' => '19')
+          expect(messages).to be_empty
+        end
+      end
+
+      context 'when release is embargo and a date is not provided' do
+        it 'has an error' do
+          form.validate(release: 'embargo', 'embargo_date(1i)' => '2040', 'embargo_date(2i)' => '2')
+          expect(messages).to eq ['Must provide all parts']
+        end
+      end
+    end
+  end
 end
