@@ -29,7 +29,12 @@ class DraftWorkForm < Reform::Form
   property :release, virtual: true, prepopulator: (proc do |*|
     self.release = embargo_date.present? ? 'embargo' : 'immediate'
   end)
-  property :embargo_date, embargo_date: true, on: :work_version
+  property :embargo_date, embargo_date: true, on: :work_version, prepopulator: (proc do |*|
+    if embargo_date.present? && embargo_date <= Time.zone.today
+      self.embargo_date = nil
+      self.release = 'immediate'
+    end
+  end)
 
   validates_with EmbargoDateParts,
                  if: proc { |form| form.user_can_set_availability? && form.release != 'immediate' }
