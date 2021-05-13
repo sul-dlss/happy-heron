@@ -11,7 +11,7 @@ RSpec.describe Works::ContributorsComponent do
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   it 'renders the component' do
-    expect(rendered.to_html).to include 'Additional contributors (optional)'
+    expect(rendered.to_html).to include 'Additional contributors'
   end
 
   context 'with an existing organizational contributor' do

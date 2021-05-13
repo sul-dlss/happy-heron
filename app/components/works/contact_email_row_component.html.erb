@@ -1,6 +1,6 @@
 <div class="mb-3 row plain-container">
   <div class="col-sm-2">
-    <%= form.label :email, 'Contact email', class: 'col-form-label' %> <%= tooltip %>
+    <%= form.label :email, 'Contact email *', class: 'col-form-label' %> <%= tooltip %>
   </div>
   <div class="<%= bootstrap_classes %>">
     <%= form.email_field :email, class: "form-control#{' is-invalid' if error?}", pattern: Devise.email_regexp.source %>

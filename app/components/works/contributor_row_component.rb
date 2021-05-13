@@ -4,11 +4,17 @@
 module Works
   # Renders a widget corresponding to a single contributor to the work.
   class ContributorRowComponent < ApplicationComponent
-    sig { params(form: ActionView::Helpers::FormBuilder, required: T::Boolean, citation: T::Boolean).void }
-    def initialize(form:, required: false, citation: false)
+    sig do
+      params(form: ActionView::Helpers::FormBuilder,
+             required: T::Boolean,
+             citation: T::Boolean,
+             optional: T::Boolean).void
+    end
+    def initialize(form:, required: false, citation: false, optional: false)
       @form = form
       @required = required
       @citation = citation
+      @optional = optional
     end
 
     sig { returns(ActionView::Helpers::FormBuilder) }
@@ -66,6 +72,30 @@ module Works
       end
 
       options
+    end
+
+    # First name label
+    sig { returns(String) }
+    def first_name_label
+      return 'First name' if @optional
+
+      'First name *'
+    end
+
+    # Last name label
+    sig { returns(String) }
+    def last_name_label
+      return 'Last name' if @optional
+
+      'Last name *'
+    end
+
+    # Role term label
+    sig { returns(String) }
+    def role_term_label
+      return 'Role term' if @optional
+
+      'Role term *'
     end
 
     # Represents the type of contributor top level option for the role select
