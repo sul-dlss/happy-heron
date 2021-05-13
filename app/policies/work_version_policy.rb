@@ -37,10 +37,7 @@ class WorkVersionPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def update?
     return false unless record.updatable?
-
-    return true if administrator? ||
-                   collection.managed_by.include?(user) ||
-                   collection.reviewed_by.include?(user)
+    return true if reviews_collection?
 
     depositor? && !record.pending_approval?
   end
@@ -51,21 +48,21 @@ class WorkVersionPolicy < ApplicationPolicy
   #   4. The user is a reviewer of the collection the work is in
   sig { returns(T::Boolean) }
   def show?
-    administrator? || depositor? ||
-      collection.managed_by.include?(user) ||
-      collection.reviewed_by.include?(user)
+    depositor? || reviews_collection?
   end
 
   # The collection reviewers can review a work
   sig { returns(T::Boolean) }
   def review?
-    record.pending_approval? && (administrator? || collection.reviewed_by.include?(user))
+    record.pending_approval? && reviews_collection?
   end
 
   sig { returns(T::Boolean) }
   def destroy?
     (administrator? || depositor?) && record.persisted? && record.version_draft?
   end
+
+  private
 
   delegate :administrator?, to: :user_with_groups
 
@@ -75,5 +72,11 @@ class WorkVersionPolicy < ApplicationPolicy
 
   def depositor?
     record.work.depositor == user
+  end
+
+  def reviews_collection?
+    administrator? ||
+      manages_collection?(collection) ||
+      collection.reviewed_by.include?(user)
   end
 end

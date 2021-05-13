@@ -145,6 +145,11 @@ RSpec.describe WorkVersionPolicy do
     failed 'when user is an admin and status is not pending_approval' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
+
+    succeed 'when user is a collection manager' do
+      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      let(:collection) { build_stubbed :collection, managed_by: [user] }
+    end
   end
 
   describe 'scope' do
