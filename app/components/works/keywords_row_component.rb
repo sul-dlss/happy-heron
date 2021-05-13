@@ -20,10 +20,6 @@ module Works
       errors.present?
     end
 
-    def error_message
-      safe_join(errors.map(&:message), tag.br)
-    end
-
     def errors
       form.object.errors.where(:keywords)
     end
