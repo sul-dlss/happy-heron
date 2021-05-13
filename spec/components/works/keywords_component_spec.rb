@@ -12,5 +12,6 @@ RSpec.describe Works::KeywordsComponent do
 
   it 'renders the component' do
     expect(rendered.to_html).to include('Keyword')
+    expect(rendered.to_html).to include('+ Add another keyword')
   end
 end

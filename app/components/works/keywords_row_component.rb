@@ -8,7 +8,7 @@ module Works
       @form = form
     end
 
-    attr_reader :form, :key
+    attr_reader :form
 
     sig { returns(T::Boolean) }
     def not_first_keyword?
