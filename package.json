@@ -9,7 +9,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "^6.0.0-beta.7",
-    "bootstrap": "5.0.0-beta2",
+    "bootstrap": "^5.0.1",
     "css-loader": "^5.2.4",
     "css-minimizer-webpack-plugin": "^2.0.0",
     "dropzone": "^5.7.2",
