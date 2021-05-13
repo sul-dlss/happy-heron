@@ -132,6 +132,13 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         check 'I agree to the SDR Terms of Deposit'
         click_button 'Deposit'
 
+        expect(page).to have_content 'You have successfully deposited your work'
+        click_link 'Return to dashboard'
+
+        # We should not see the delete button for this work since it is not a draft
+        expect(page).not_to have_selector("[aria-label='Delete #{WorkVersion.last.title}']")
+
+        click_link 'My Title'
         expect(page).to have_content('My Title')
         expect(page).to have_link(collection_version.name)
         expect(page).to have_content(user.email)
@@ -143,11 +150,6 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_content 'Citation from user input'
         expect(page).to have_content 'Everyone'
         expect(page).to have_content 'CC0-1.0'
-
-        visit dashboard_path
-
-        # We should not see the delete button for this work since it is not a draft
-        expect(page).not_to have_selector("[aria-label='Delete #{WorkVersion.last.title}']")
       end
     end
 
@@ -192,6 +194,10 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
         check 'I agree to the SDR Terms of Deposit'
         click_button 'Deposit'
+
+        expect(page).to have_content 'You have successfully deposited your work'
+        click_link 'Return to dashboard'
+        click_link 'My Title'
 
         expect(page).to have_content 'Keller, M. (2020). My Title. ' \
           "Stanford Digital Repository. Available at #{WorkVersion::LINK_TEXT}"

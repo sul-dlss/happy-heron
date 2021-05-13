@@ -34,10 +34,9 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
 
       click_button 'Submit for approval'
 
-      expect(page).to have_content(new_work_title)
-      expect(page).to have_content('Pending approval')
+      expect(page).to have_content 'You have successfully submitted your deposit'
+      click_link 'Return to dashboard'
 
-      visit dashboard_path
       within_table('Approvals') do
         click_link(new_work_title)
       end
@@ -57,10 +56,9 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       check 'I agree to the SDR Terms of Deposit'
       click_button 'Submit for approval'
 
-      expect(page).to have_content(:visible, newest_work_title)
-      expect(page).to have_content('Pending approval')
+      expect(page).to have_content 'You have successfully submitted your deposit'
+      click_link 'Return to dashboard'
 
-      visit dashboard_path
       within_table('Approvals') do
         click_link(newest_work_title)
       end

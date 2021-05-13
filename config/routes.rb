@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       member do
         get :delete_button
         get :edit_button
+        get :next_step
+        get :next_step_review
         patch 'update_type'
       end
 

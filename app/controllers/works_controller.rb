@@ -111,6 +111,18 @@ class WorksController < ObjectsController
     redirect_to dashboard_path
   end
 
+  def next_step
+    @work = Work.find(params[:id])
+
+    authorize! @work.head, to: :show?
+  end
+
+  def next_step_review
+    @work = Work.find(params[:id])
+
+    authorize! @work.head, to: :show?
+  end
+
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the work.
   def delete_button
@@ -153,32 +165,27 @@ class WorksController < ObjectsController
     DraftWorkForm.new(work_version: work_version, work: work_version.work)
   end
 
-  # rubocop:disable Metrics/MethodLength
   sig { params(work_version: WorkVersion, work: Work).void }
   def after_save(work_version:, work:)
     work.event_context = { user: current_user }
 
     if purl_reservation?
       work_version.reserve_purl!
-    else
-      work_version.update_metadata!
-
-      if deposit_button_pushed?
-        if work.collection.review_enabled?
-          work_version.submit_for_review!
-        else
-          work_version.begin_deposit!
-        end
-      end
+      return redirect_to dashboard_path
     end
 
-    if purl_reservation?
-      redirect_to dashboard_path
+    work_version.update_metadata!
+
+    return redirect_to work unless  deposit_button_pushed?
+
+    if work.collection.review_enabled?
+      work_version.submit_for_review!
+      redirect_to next_step_review_work_path(work)
     else
-      redirect_to work
+      work_version.begin_deposit!
+      redirect_to next_step_work_path(work)
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Metrics/MethodLength
   def work_params

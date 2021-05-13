@@ -124,8 +124,7 @@ RSpec.describe 'Edit a draft work', js: true do
 
       click_button 'Deposit'
 
-      expect(page).to have_content('My Preprint/Data')
-      expect(page).to have_content('Data, Technical report')
+      expect(page).to have_content 'You have successfully deposited your work'
     end
   end
 end
