@@ -8,11 +8,9 @@ RSpec.describe Works::KeywordsComponent do
   let(:work) { work_version.work }
   let(:work_version) { build_stubbed(:work_version) }
   let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:rendered) { render_inline(described_class.new(form: form, key: 'work.keywords')) }
 
   it 'renders the component' do
-    expect(rendered.css('.keywords').to_html)
-      .to be_present
-    expect(rendered.css('.keywords-container.is-invalid')).not_to be_present
+    expect(rendered.to_html).to include('Keyword')
   end
 end

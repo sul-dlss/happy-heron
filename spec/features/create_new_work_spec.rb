@@ -106,19 +106,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
         check 'I agree to the SDR Terms of Deposit'
 
-        # Test remote form validation which only happens once client-side validation passes
-        expect(page).not_to have_content('Please add at least one keyword')
-        expect(page).not_to have_css('.keywords-container.is-invalid')
-        expect(page).not_to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
-
         click_button 'Deposit'
 
         expect(page).to have_content('Please add at least one keyword')
-        expect(page).to have_css('.keywords-container.is-invalid')
-        expect(page).to have_css('.keywords-container.is-invalid ~ .invalid-feedback')
 
-        fill_in 'Keywords', with: 'Springs'
-        blur_from 'work_keywords'
+        fill_in 'Keyword', with: 'Springs'
 
         uncheck 'Use default citation'
         fill_in 'Provided citation', with: 'Citation from user input'
@@ -187,8 +179,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
         fill_in 'Abstract', with: 'User provided abstract'
 
-        fill_in 'Keywords', with: 'Springs'
-        blur_from 'work_keywords'
+        fill_in 'Keyword', with: 'Springs'
 
         check 'I agree to the SDR Terms of Deposit'
         click_button 'Deposit'
