@@ -1,0 +1,23 @@
+// Styles for the page after you submit a work that explains the next steps
+#next-step {
+  h1 {
+    color: $stanford-digital-green;
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  li {
+    @extend .mb-3;
+  }
+
+  .btn {
+    float: right;
+  }
+
+  max-width: 800px;
+}

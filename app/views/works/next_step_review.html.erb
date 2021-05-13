@@ -1,0 +1,19 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(
+    breadcrumbs: [ { title: @work.collection.head.name, link: collection_path(@work.collection) },
+                   { title: @work.head.title } ]) %>
+<% end %>
+
+<div class="container" id="next-step">
+  <h1 class="mb-3"><span class="fas fa-check-circle me-3"></span>You have successfully submitted your deposit</h1>
+  <h2>Here's what to expect next:</h2>
+  <ul>
+    <li>Your deposit is currently making its way through our systems.</li>
+    <li>You will receive an email notification when your deposit is complete.</li>
+    <li>You will be able to edit this work when the deposit is complete.</li>
+    <li>You may continue to use this application and create or edit other works
+        while this deposit is in progress.</li>
+  </ul>
+
+  <%= link_to 'Return to dashboard', dashboard_path, class: 'btn btn-primary' %>
+</div>
