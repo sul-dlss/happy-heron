@@ -64,5 +64,8 @@ set :rails_env, 'production'
 set :passenger_restart_command, 'sudo systemctl restart passenger'
 set :passenger_restart_options, -> { '' }
 
+set :whenever_environment, fetch(:rails_env)
+set :whenever_roles, [:cron]
+
 # update shared_configs before restarting app (from dlss-capistrano gem)
 before 'deploy:restart', 'shared_configs:update'
