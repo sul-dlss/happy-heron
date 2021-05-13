@@ -30,6 +30,7 @@ class WorksController < ObjectsController
       work.event_context = { user: current_user }
       after_save(work_version: work_version, work: work)
     else
+      @form.prepopulate!
       render :new, status: :unprocessable_entity
     end
   end
@@ -78,6 +79,7 @@ class WorksController < ObjectsController
     if @form.validate(clean_params) && @form.save
       after_save(work_version: work_version, work: work)
     else
+      @form.prepopulate!
       render :edit, status: :unprocessable_entity
     end
   end

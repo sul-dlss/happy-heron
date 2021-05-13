@@ -48,10 +48,10 @@ class CollectionVersionsController < ObjectsController
 
     authorize! collection_version
     @form = collection_form(collection_version)
-
     if @form.validate(clean_params) && @form.save
       after_save(collection: collection_version.collection, collection_version: collection_version)
     else
+      @form.prepopulate!
       render :edit, status: :unprocessable_entity
     end
   end
