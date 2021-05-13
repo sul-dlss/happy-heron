@@ -37,7 +37,7 @@ class DraftWorkForm < Reform::Form
   end)
 
   validates_with EmbargoDateParts,
-                 if: proc { |form| form.user_can_set_availability? && form.release != 'immediate' }
+                 if: proc { |form| form.user_can_set_availability? && form.release == 'embargo' }
 
   delegate :user_can_set_availability?, to: :collection
 

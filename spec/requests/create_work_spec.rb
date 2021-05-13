@@ -594,34 +594,6 @@ RSpec.describe 'Create a new work' do
         end
       end
 
-      context 'with a collection that allows depositor to select embargo but missing embargo month and day' do
-        let(:collection) do
-          create(:collection, depositors: [user], release_option: 'depositor-selects')
-        end
-        let(:work_params) do
-          {
-            title: 'A title of great import',
-            contact_email: '',
-            abstract: 'A work',
-            license: License.license_list.first,
-            work_type: 'text',
-            release: 'embargo',
-            'embargo(1i)': 2020,
-            'embargo(2i)': '',
-            'embargo(3i)': ''
-          }
-        end
-
-        before { create(:collection_version_with_collection, collection: collection) }
-
-        it 'returns an error' do
-          post "/collections/#{collection.id}/works", params: { work: work_params,
-                                                                commit: 'Deposit' }
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.body).to include 'Must provide all parts'
-        end
-      end
-
       context 'with a collection that dictates a license but a license is provided' do
         let(:collection) do
           create(:collection, :with_required_license, depositors: [user])
