@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   include DeviseRemoteUser::ControllerBehavior
 
+  before_action :add_honeybadger_context
   # Smartly redirect user back to URL they requested before authenticating
   # From: https://github.com/heartcombo/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   before_action :store_user_location!, if: :storable_location?
@@ -23,6 +24,10 @@ class ApplicationController < ActionController::Base
   helper_method :user_with_groups
 
   private
+
+  def add_honeybadger_context
+    Honeybadger.context(current_user)
+  end
 
   # If User#just_signed_in is set, copy that into the session
   def copy_just_signed_in_to_session

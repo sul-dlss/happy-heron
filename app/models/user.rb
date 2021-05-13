@@ -37,4 +37,9 @@ class User < ApplicationRecord
   def sunetid
     email.delete_suffix('@stanford.edu')
   end
+
+  sig { returns(T::Hash[Symbol, T.any(String, Integer)]) }
+  def to_honeybadger_context
+    { user_id: id, user_email: email }
+  end
 end
