@@ -50,12 +50,12 @@ class CollectionChangeSet
   sig { returns(String) }
   def participant_change_description
     %i[added_managers added_depositors added_reviewers
-       removed_managers removed_depositors removed_reviewers].map do |field_name|
+       removed_managers removed_depositors removed_reviewers].filter_map do |field_name|
       field_changes = send(field_name)
       next if field_changes.blank?
 
       "#{field_name.to_s.humanize}: #{field_changes.map(&:sunetid).join(', ')}"
-    end.compact.join("\n")
+    end.join("\n")
   end
 
   sig { returns(PointInTime) }
