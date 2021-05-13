@@ -1,9 +1,9 @@
 
   <section id="release_details">
-    <header>Manage release of deposits for discovery and download</header>
+    <header>Manage release of deposits for discovery and download *</header>
 
     <fieldset class="mb-5 release-option" data-controller="complex-radio">
-      <legend class="h5">When will files on deposits to this collection be downloadable? <%= render PopoverComponent.new key: 'collection.release' %></legend>
+      <legend class="h5">When will files on deposits to this collection be downloadable? * <%= render PopoverComponent.new key: 'collection.release' %></legend>
       <div class="form-check" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'immediate', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_immediate', t('options.collection.release.immediate'), class: "form-check-label" %>
@@ -33,7 +33,7 @@
     </fieldset>
 
     <fieldset>
-      <legend class="h5">Who will have permission to download files for deposits to this collection? <%= render PopoverComponent.new key: 'collection.access' %></legend>
+      <legend class="h5">Who will have permission to download files for deposits to this collection? * <%= render PopoverComponent.new key: 'collection.access' %></legend>
       <div class="form-check">
         <%= form.radio_button :access, 'world', class: "form-check-input" %>
         <%= form.label 'access_world', t('options.collection.access.world'), class: "form-check-label" %>
@@ -52,14 +52,14 @@
   <%= render Collections::EditLicenseComponent.new(form: form) %>
 
   <section id="participants">
-    <header>Collection participants</header>
+    <header>Collection participants *</header>
     <div class="mb-3 row">
       <p class="col-sm-12">Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
     </div>
 
     <div class="mb-3 row">
       <div class="col-sm-2">
-        <%= form.label :manager_sunets, 'Managers', class: 'col-form-label' %>
+        <%= form.label :manager_sunets, 'Managers *', class: 'col-form-label' %>
         <%= render PopoverComponent.new key: 'collection.managers' %>
       </div>
       <div class="col-sm-10 col-xl-8">
