@@ -25,12 +25,6 @@ class WorksController < ObjectsController
 
     authorize! work_version
 
-    if purl_reservation?
-      work_version.abstract = ''
-      work_version.license = 'none'
-      work_version.work_type = WorkType.purl_reservation_type.id
-    end
-
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
       work.event_context = { user: current_user }
@@ -146,11 +140,13 @@ class WorksController < ObjectsController
 
   sig { params(work_version: WorkVersion).returns(Reform::Form) }
   def work_form(work_version)
-    if deposit_button_pushed? && !purl_reservation?
-      return WorkForm.new(work_version: work_version, work: work_version.work)
+    if purl_reservation?
+      ReservationForm.new(work_version: work_version, work: work_version.work)
+    elsif deposit_button_pushed?
+      WorkForm.new(work_version: work_version, work: work_version.work)
+    else
+      DraftWorkForm.new(work_version: work_version, work: work_version.work)
     end
-
-    DraftWorkForm.new(work_version: work_version, work: work_version.work)
   end
 
   # rubocop:disable Metrics/MethodLength
