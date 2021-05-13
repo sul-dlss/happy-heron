@@ -4,9 +4,8 @@
 module Works
   # Allows the user to search for keywords or provide freetext keywords
   class KeywordsRowComponent < ApplicationComponent
-    def initialize(form:, key:)
+    def initialize(form:)
       @form = form
-      @key = key
     end
 
     attr_reader :form, :key

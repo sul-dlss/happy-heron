@@ -8,7 +8,7 @@ RSpec.describe Works::KeywordsComponent do
   let(:work) { work_version.work }
   let(:work_version) { build_stubbed(:work_version) }
   let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
-  let(:rendered) { render_inline(described_class.new(form: form, key: 'work.keywords')) }
+  let(:rendered) { render_inline(described_class.new(form: form)) }
 
   it 'renders the component' do
     expect(rendered.to_html).to include('Keyword')

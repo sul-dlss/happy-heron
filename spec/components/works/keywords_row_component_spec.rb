@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::KeywordsRowComponent do
-  subject(:rendered) { render_inline(described_class.new(form: form_builder, key: 'collection.contact_email')) }
+  subject(:rendered) { render_inline(described_class.new(form: form_builder)) }
 
   let(:work) { work_version.work }
   let(:work_version) { build_stubbed(:work_version) }
