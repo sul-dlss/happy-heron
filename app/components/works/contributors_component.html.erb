@@ -6,12 +6,12 @@
 
   <template data-nested-form-target='template'>
     <%= form.fields_for :contributors, Contributor.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
-      <%= render Works::ContributorRowComponent.new(form: contributor_form, optional: true) %>
+      <%= render Works::ContributorRowComponent.new(form: contributor_form) %>
     <% end %>
   </template>
 
   <%= form.fields_for :contributors do |contributor_form| %>
-    <%= render Works::ContributorRowComponent.new(form: contributor_form, optional: true) %>
+    <%= render Works::ContributorRowComponent.new(form: contributor_form) %>
   <% end %>
 
   <div data-nested-form-target="add_item">
