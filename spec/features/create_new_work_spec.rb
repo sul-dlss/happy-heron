@@ -108,7 +108,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
         click_button 'Deposit'
 
-        expect(page).to have_content('Please add at least one keyword')
+        expect(page).to have_content('Keyword must be filled in')
 
         fill_in 'Keyword', with: 'Springs'
 
