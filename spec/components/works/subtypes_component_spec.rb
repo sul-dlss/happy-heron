@@ -13,8 +13,7 @@ RSpec.describe Works::SubtypesComponent do
     let(:work_version) { build_stubbed(:work_version, work_type: 'other', subtype: ['femur']) }
 
     it 'does not label subtypes as optional' do
-      expect(rendered.to_html).to include('Work types')
-      expect(rendered.to_html).not_to include('optional')
+      expect(rendered.to_html).to include('Work types *')
     end
   end
 
@@ -22,8 +21,7 @@ RSpec.describe Works::SubtypesComponent do
     let(:work_version) { build_stubbed(:work_version, work_type: 'music', subtype: ['Data']) }
 
     it 'does not label subtypes as optional' do
-      expect(rendered.to_html).to include('Work types')
-      expect(rendered.to_html).not_to include('optional')
+      expect(rendered.to_html).to include('Work types *')
     end
 
     it 'renders a header about selecting one or more terms' do
@@ -35,8 +33,7 @@ RSpec.describe Works::SubtypesComponent do
     let(:work_version) { build_stubbed(:work_version, work_type: 'mixed material', subtype: %w[Data Sound]) }
 
     it 'does not label subtypes as optional' do
-      expect(rendered.to_html).to include('Work types')
-      expect(rendered.to_html).not_to include('optional')
+      expect(rendered.to_html).to include('Work types *')
     end
 
     it 'renders a header about selecting two or more terms' do
@@ -45,8 +42,8 @@ RSpec.describe Works::SubtypesComponent do
   end
 
   context 'when work type is anything else' do
-    it 'labels subtypes as optional' do
-      expect(rendered.to_html).to include('Work types (optional)')
+    it 'does not label subtypes as required' do
+      expect(rendered.to_html).to include('Work types')
     end
   end
 end
