@@ -5,7 +5,7 @@
     <span class="state">Depositing <%= spinner %></span>
   <% end %>
   <% if can_create_work? %>
-    <span class="deposit-button" data-controller="work-type">
+    <span class="deposit-button float-end" data-controller="work-type">
       <%= button_tag '+ Deposit to this collection',
             data: {
               destination: new_collection_work_path(collection),
@@ -19,4 +19,5 @@
       <%= render CitationModalComponent.new %>
     </span>
   <% end %>
+  <%= edit_button %>
 </header>
