@@ -3,27 +3,24 @@
 
 module Works
   # Allows the user to search for keywords or provide freetext keywords
-  class KeywordsComponent < ApplicationComponent
+  class KeywordsRowComponent < ApplicationComponent
     def initialize(form:)
       @form = form
     end
 
     attr_reader :form
 
+    sig { returns(T::Boolean) }
+    def not_first_keyword?
+      form.index != 0
+    end
+
     def error?
       errors.present?
     end
 
-    def error_message
-      safe_join(errors.map(&:message), tag.br)
-    end
-
     def errors
       form.object.errors.where(:keywords)
-    end
-
-    def row(keyword_form)
-      render Works::KeywordsRowComponent.new(form: keyword_form)
     end
   end
 end

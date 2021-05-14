@@ -122,7 +122,10 @@ class DraftWorkForm < Reform::Form
     property :_destroy, virtual: true
   end
 
-  collection :keywords, populator: KeywordsPopulator.new(:keywords, Keyword), on: :work_version do
+  collection :keywords,
+             populator: KeywordsPopulator.new(:keywords, Keyword),
+             prepopulator: ->(*) { keywords << Keyword.new if keywords.blank? },
+             on: :work_version do
     property :id
     property :label
     property :uri

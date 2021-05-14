@@ -11,8 +11,7 @@ RSpec.describe Works::KeywordsComponent do
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   it 'renders the component' do
-    expect(rendered.css('.keywords').to_html)
-      .to be_present
-    expect(rendered.css('.keywords-container.is-invalid')).not_to be_present
+    expect(rendered.to_html).to include('Keyword')
+    expect(rendered.to_html).to include('+ Add another keyword')
   end
 end

@@ -12,5 +12,6 @@ RSpec.describe Works::ContactEmailComponent, type: :component do
 
   it 'renders the component' do
     expect(rendered.to_html).to include('Contact email')
+    expect(rendered.to_html).to include('+ Add another email')
   end
 end

@@ -1,41 +1,17 @@
-<div class="keywords" data-controller="keywords" data-action="focusout->keywords#close" data-edit-deposit-target="keywordsField">
-  <div class="keywords-container<%= ' is-invalid' if error? %>" data-keywords-target="container" data-action="click->keywords#open">
-    <span class="selection" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1"
-      aria-disabled="false" aria-owns="keyword-results">
-      <ul class="rendered" id="keyword-container" data-keywords-target="addItem">
-        <%= form.fields_for :keywords do |keyword_form| %>
-          <%= render Works::SelectedKeywordComponent.new(form: keyword_form) %>
-        <% end %>
-      </ul>
+<div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".plain-container">
+  <div class="keywords-container<%= ' is-invalid' if error? %>" data-keywords-target="container" data-action="click->keywords#open" data-keywords-target="addItem">
+    <template data-nested-form-target='template' data-keywords-target="selectedTemplate">
+      <%= form.fields_for :keywords, Keyword.new, child_index: 'TEMPLATE_RECORD' do |keyword_form| %>
+        <%= row(keyword_form) %>
+      <% end %>
+    </template>
 
-      <template data-keywords-target='selectedTemplate'>
-        <%= form.fields_for :keywords, Keyword.new(label: 'TEMPLATE_LABEL'), child_index: 'TEMPLATE_RECORD' do |file_form| %>
-          <%= render Works::SelectedKeywordComponent.new(form: file_form) %>
-        <% end %>
-      </template>
+    <%= form.fields_for :keywords do |keyword_form| %>
+      <%= row(keyword_form) %>
+    <% end %>
+  </div>
 
-      <span class="search">
-        <input class="search-field" type="search" tabindex="0" autocorrect="off"
-               data-keywords-target="search" autocapitalize="none" spellcheck="false"
-               role="searchbox" aria-autocomplete="list" autocomplete="off"
-               id="work_keywords"
-               aria-describedby="keyword-container"
-               data-action="change->keywords#add keypress->keywords#checkForEnter"
-               aria-controls="keyword-results">
-      </span>
-    </span>
+  <div data-nested-form-target="add_item">
+    <%= button_tag '+ Add another keyword', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
   </div>
-  <div data-keywords-target="error" class="invalid-feedback"><%= error_message %></div>
-<%# -- TODO for autocomplete
-  <div class="keywords-container keywords-container-open" data-keywords-target="container">
-    <span class="keywords-dropdown select2-dropdown--above">
-      <span class="keywords-results">
-        <ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="keyword-results" aria-expanded="true" aria-hidden="false">
-          <li class="select2-results__option select2-results__option--selectable select2-results__option--highlighted select2-results__option--selected" id="select2-1ndb-result-wggo-AK" role="option" data-select2-id="select2-data-select2-1ndb-result-wggo-AK" aria-selected="true">Alaska</li>
-          <li class="select2-results__option select2-results__option--selectable" id="select2-1ndb-result-ltnw-HI" role="option" data-select2-id="select2-data-select2-1ndb-result-ltnw-HI" aria-selected="false">Hawaii</li>
-        </ul>
-      </span>
-    </span>
-  </div>
-   %>
 </div>
