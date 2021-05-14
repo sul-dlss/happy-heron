@@ -79,7 +79,7 @@ RSpec.describe 'Updating an existing collection version' do
       context 'when collection fails to save' do
         let(:collection_params) do
           {
-            contact_emails_attributes: { '0' => { 'email' => '', 'id' => '' } }
+            contact_emails_attributes: { '0' => { 'email' => 'notvalid', 'id' => '' } }
           }
         end
 

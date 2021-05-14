@@ -39,7 +39,6 @@ RSpec.describe 'Updating an existing work' do
           {
             title: 'New title',
             work_type: 'text',
-            contact_email: 'io@io.io',
             abstract: 'test abstract',
             attached_files_attributes: {
               '0' => { 'label' => 'two', '_destroy' => '', 'hide' => '0', 'id' => work_version.attached_files.first.id }
@@ -92,7 +91,6 @@ RSpec.describe 'Updating an existing work' do
           {
             title: '',
             work_type: 'text',
-            contact_email: 'io@io.io',
             abstract: 'test abstract',
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }

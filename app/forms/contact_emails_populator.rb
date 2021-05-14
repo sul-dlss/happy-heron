@@ -10,6 +10,8 @@ class ContactEmailsPopulator < ApplicationPopulator
     if fragment['_destroy'] == '1'
       form.contact_emails.delete(item)
       return skip!
+    elsif fragment['email'].blank?
+      return skip!
     end
     item || form.contact_emails.append(ContactEmail.new)
   end

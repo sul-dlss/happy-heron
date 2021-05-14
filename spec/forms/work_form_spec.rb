@@ -101,23 +101,24 @@ RSpec.describe WorkForm do
   describe 'populator on contact email' do
     let(:emails) do
       [
-        { _destroy: 'false', email: 'avalidemail@test.com' },
-        { _destroy: 'false', email: 'anothervalid@test.com' },
-        { _destroy: 'false', email: 'third@example.com' }
+        { '_destroy' => 'false', 'email' => 'avalidemail@test.com' },
+        { '_destroy' => 'false', 'email' => 'anothervalid@test.com' },
+        { '_destroy' => '1', 'email' => 'remove@test.com' },
+        { '_destroy' => 'false', 'email' => '' }
       ]
     end
 
     it 'populates contact emails' do
       form.validate(contact_emails: emails)
-      expect(form.contact_emails.size).to be 3
+      expect(form.contact_emails.map(&:email)).to eq ['avalidemail@test.com', 'anothervalid@test.com']
     end
   end
 
   describe 'email validation' do
     let(:valid_email) do
       [
-        { _destroy: 'false', email: 'avalidemail@test.com' },
-        { _destroy: 'false', email: 'anothervalid@test.com' }
+        { '_destroy' => 'false', 'email' => 'avalidemail@test.com' },
+        { '_destroy' => 'false', 'email' => 'anothervalid@test.com' }
       ]
     end
 
