@@ -19,5 +19,6 @@ RSpec.describe Works::KeywordsRowComponent do
 
   it 'renders the component' do
     expect(rendered.to_html).to include('Keyword')
+    expect(rendered.css('.plain-container')).to be_present
   end
 end
