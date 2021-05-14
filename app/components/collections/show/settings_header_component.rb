@@ -13,7 +13,7 @@ module Collections
       sig { returns(CollectionVersion) }
       attr_reader :collection_version
 
-      delegate :depositing?, :collection, to: :collection_version
+      delegate :depositing?, :updatable?, :collection, to: :collection_version
 
       sig { returns(String) }
       def name
@@ -27,6 +27,13 @@ module Collections
 
       def can_create_work?
         collection_version.accessioned?
+      end
+
+      def edit_button
+        return unless updatable?
+
+        link_to 'Edit or Deposit', edit_collection_path(collection),
+                class: 'btn btn-outline-primary float-end me-2'
       end
 
       def edit_link
