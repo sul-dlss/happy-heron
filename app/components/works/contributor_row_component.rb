@@ -68,6 +68,24 @@ module Works
       options
     end
 
+    # First name label
+    sig { returns(String) }
+    def first_name_label
+      @required ? 'First name *' : 'First name'
+    end
+
+    # Last name label
+    sig { returns(String) }
+    def last_name_label
+      @required ? 'Last name *' : 'Last name'
+    end
+
+    # Role term label
+    sig { returns(String) }
+    def role_term_label
+      @required ? 'Role term *' : 'Role term'
+    end
+
     # Represents the type of contributor top level option for the role select
     class ContributorType
       def initialize(key:, citable:)

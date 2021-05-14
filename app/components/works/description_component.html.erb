@@ -1,12 +1,12 @@
 <section id="description">
-  <header>Describe your deposit</header>
+  <header>Describe your deposit *</header>
   <p>Enter a summary statement about the deposit (600 words max) to help others
     discover your deposits in SearchWorks and on the internet. Add at least one
     keyword that relates to the content of the deposit.</p>
 
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <%= form.label :abstract, 'Abstract', class: 'col-form-label' %>
+      <%= form.label :abstract, 'Abstract *', class: 'col-form-label' %>
       <%= render PopoverComponent.new key: 'work.abstract' %>
     </div>
     <div class="col-sm-10">
@@ -17,7 +17,7 @@
 
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <%= form.label :keywords, 'Keywords', class: 'col-form-label' %>
+      <%= form.label :keywords, 'Keywords *', class: 'col-form-label' %>
       <%= render PopoverComponent.new key: 'work.keywords' %>
     </div>
     <div class="col-sm-10">

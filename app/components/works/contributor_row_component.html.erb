@@ -9,7 +9,7 @@
     <% end %>
   </div>
   <div class="col-md-3">
-    <%= form.label :role_term, class: 'form-label' %>
+    <%= form.label :role_term, role_term_label, class: 'form-label' %>
     <%= render PopoverComponent.new key: 'work.role_term' %>
     <%= select_role %>
   </div>
@@ -17,13 +17,13 @@
     is
   </div>
   <div class="col-md-4" data-contributors-target="personName">
-    <%= form.label :first_name, class: 'form-label' %>
+      <%= form.label :first_name, first_name_label, class: 'form-label' %>
     <%= render PopoverComponent.new key: 'work.first_name' %>
     <%= form.text_field :first_name, html_options('personNameInput', 'contributorFirst') %>
     <div class="invalid-feedback">You must provide a first name</div>
   </div>
   <div class="col-md-4" data-contributors-target="personName">
-    <%= form.label :last_name, class: 'form-label' %>
+    <%= form.label :last_name, last_name_label, class: 'form-label' %>
     <%= form.text_field :last_name, html_options('personNameInput', 'contributorLast') %>
     <div class="invalid-feedback">You must provide a last name</div>
   </div>
