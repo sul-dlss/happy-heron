@@ -13,7 +13,7 @@ module Dashboard
     attr_reader :collection, :counts
 
     def draft_label
-      case @collection.head.state
+      case @collection.head&.state
       when 'first_draft'
         return '- Draft'
       when 'version_draft'
