@@ -6,7 +6,7 @@
                               bs_toggle: 'modal',
                               bs_target: '#contactUsModal' }) %>
   </p>
-  <div class="dropzone dropzone-default<%= ' is-invalid' if error? %>">
+  <div class="dropzone dropzone-default<%= ' is-invalid' if error? %>" data-dropzone-target="container">
     <%= form.file_field :files, multiple: true, direct_upload: true,
                         data: { dropzone_target: 'input' } %>
     <div class="dz-message needsclick text-secondary">
@@ -14,8 +14,8 @@
     </div>
   </div>
   <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
-  <div class="invalid-feedback"><%= error_message %></div>
-  <div class="dropzone-previews" data-dropzone-target="previews">
+  <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
+  <div class="dropzone-previews" data-dropzone-target="previewsContainer">
     <%= form.fields_for :attached_files do |file_form| %>
       <%= render Works::FileRowComponent.new(form: file_form) %>
     <% end %>

@@ -1,6 +1,7 @@
 @import "dropzoneKeyframes";
-
 .dropzone {
+  @extend .form-control; // provides the is-invalid style
+
   margin: 20px 0;
   min-height: 90px;
   border: 1px dashed gray;
