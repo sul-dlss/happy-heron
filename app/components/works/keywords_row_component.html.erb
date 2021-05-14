@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <%= form.label :label, 'Keyword', class: 'col-form-label sr-only' %>
     <%= form.text_field :label, class: "form-control#{ 'is-invalid' if error?}", required: true %>
-    <div class="invalid-feedback">Please add at least one keyword</div>
+    <div class="invalid-feedback">Keyword must be filled in</div>
   </div>
   <% if not_first_keyword? %>
     <div class="col-sm-1">
