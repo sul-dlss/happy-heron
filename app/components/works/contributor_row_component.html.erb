@@ -28,7 +28,7 @@
     <div class="invalid-feedback">You must provide a last name</div>
   </div>
   <div class="col-md-8" data-contributors-target="organizationName">
-    <%= form.label :full_name, 'Organization Name', class: 'form-label' %>
+    <%= form.label :full_name, 'Organization Name *', class: 'form-label' %>
     <%= render PopoverComponent.new key: 'work.organization' %>
     <%= form.text_field :full_name, html_options('organizationNameInput', 'contributorOrg') %>
     <div class="invalid-feedback">You must provide a name</div>
