@@ -73,7 +73,7 @@ class CollectionSettingsForm < Reform::Form
 
   sig { params(field: String).returns(T::Array[User]) }
   def field_to_users(field)
-    sunetids = field.split(/\s*,\s*/)
+    sunetids = field.split(/\s*,\s*/).uniq
     emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
     emails.map do |email|
       # It's odd that we need to do both, but this is how it's written.
