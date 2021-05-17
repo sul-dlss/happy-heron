@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<div class="mb-5 row work-types">
+<div class="mb-5 row work-types" data-controller="more-types">
   <% if other_type? %>
     <%= form.label :subtype, 'Other', class: 'col-sm-2 col-form-label' %>
     <div class="col-sm-10">
@@ -28,11 +28,11 @@
       </div>
     <% end %>
 
-    <a href="#" class="mt-4 more-options collapsed" data-action="edit-deposit#toggleMoreTypes" data-edit-deposit-target="moreTypesLink">
+    <a href="#" class="mt-4 more-options collapsed" data-action="more-types#toggleMoreTypes" data-more-types-target="moreTypesLink">
       See more options
     </a>
 
-    <div class="row" data-edit-deposit-target="moreTypes" hidden>
+    <div class="row" data-more-types-target="moreTypes" hidden>
       <% more_types.each do |more_type| %>
         <div class="col-sm-4">
           <div class="form-check">
