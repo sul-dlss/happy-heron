@@ -47,14 +47,11 @@
        <%= form.label :created_type_range, 'Date range' %>
     </div>
 
-    <div class="col-md-10 date-range">
+    <div class="col-md-10 date-range" data-controller="date-range">
       <div class="start-date" data-controller="date-validation">
         <div class="year">
           <label for="work_created_range_start_year" class="visually-hidden">Created range start year</label>
-          <%= number_field_tag 'work[created_range(1i)]', created_range_start_year,
-              data: { date_validation_target: 'year', action: 'date-validation#change' },
-              id: 'work_created_range_start_year',
-              class: "form-control", min: min_year, max: max_year %>
+          <%= date_range_start_year %>
           <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
         </div>
         <div class="month">
@@ -86,9 +83,7 @@
       <div class="end-date" data-controller="date-validation">
         <div class="year">
           <label for="work_created_range_end_year" class="visually-hidden">Created range end year</label>
-          <%= number_field_tag 'work[created_range(4i)]', created_range_end_year,
-              data: { date_validation_target: 'year', action: 'date-validation#change' },
-              id: 'work_created_range_end_year', class: "form-control", min: min_year, max: max_year %>
+          <%= date_range_end_year %>
           <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
         </div>
         <div class="month">

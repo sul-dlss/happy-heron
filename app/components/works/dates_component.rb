@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 module Works
@@ -11,6 +11,28 @@ module Works
     end
 
     attr_reader :form, :min_year, :max_year
+
+    def date_range_start_year
+      number_field_tag 'work[created_range(1i)]', created_range_start_year,
+                       data: {
+                         date_validation_target: 'year',
+                         date_range_target: 'year',
+                         action: 'date-validation#change date-range#change'
+                       },
+                       id: 'work_created_range_start_year',
+                       class: 'form-control', min: min_year, max: max_year
+    end
+
+    def date_range_end_year
+      number_field_tag 'work[created_range(4i)]', created_range_end_year,
+                       data: {
+                         date_validation_target: 'year',
+                         date_range_target: 'year',
+                         action: 'date-validation#change date-range#change'
+                       },
+                       id: 'work_created_range_end_year',
+                       class: 'form-control', min: min_year, max: max_year
+    end
 
     def created_year
       created_edtf&.year
