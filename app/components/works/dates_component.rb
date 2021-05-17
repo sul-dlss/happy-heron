@@ -20,6 +20,7 @@ module Works
                          action: 'date-validation#change date-range#change'
                        },
                        id: 'work_created_range_start_year',
+                       placeholder: 'year',
                        class: 'form-control', min: min_year, max: max_year
     end
 
@@ -31,6 +32,7 @@ module Works
                          action: 'date-validation#change date-range#change'
                        },
                        id: 'work_created_range_end_year',
+                       placeholder: 'year',
                        class: 'form-control', min: min_year, max: max_year
     end
 

@@ -57,6 +57,7 @@ module Works
                          action: 'change->auto-citation#updateDisplay date-validation#change'
                        },
                        id: 'work_published_year',
+                       placeholder: 'year',
                        class: "form-control#{' is-invalid' if error?}",
                        min: min_year,
                        max: max_year
