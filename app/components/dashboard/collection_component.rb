@@ -14,8 +14,6 @@ module Dashboard
     sig { returns(Collection) }
     attr_reader :collection
 
-    delegate :current_user, :user_with_groups, to: :helpers
-
     sig { returns(ActiveRecord::Relation) }
     def visible_deposits
       # This component only displays MAX_DEPOSITS_TO_SHOW works but we query for
@@ -25,13 +23,6 @@ module Dashboard
       # that would double the number of queries run for each instance of this
       # component.
       collection.works.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
-    end
-
-    private
-
-    sig { returns(WorkPolicy) }
-    def policy
-      WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
     end
   end
 end
