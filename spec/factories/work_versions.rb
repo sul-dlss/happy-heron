@@ -26,8 +26,9 @@ FactoryBot.define do
       factory :work_version_with_work do
         transient do
           collection { nil }
+          depositor { association(:user) }
         end
-        work { association :work, collection: collection }
+        work { association :work, collection: collection, depositor: depositor }
 
         after(:create) do |work_version, _evaluator|
           work_version.work.update(head: work_version)

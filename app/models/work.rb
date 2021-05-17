@@ -14,6 +14,7 @@ class Work < ApplicationRecord
 
   def broadcast_update
     broadcast_replace_to self
+    broadcast_replace_to :summary_rows, partial: 'dashboards/collection_summary_row'
   end
 
   sig { returns(T.nilable(String)) }

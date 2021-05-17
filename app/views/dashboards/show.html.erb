@@ -15,12 +15,10 @@
         <% end %>
       </header>
 
-      <%= turbo_stream_from :collection_summary %>
+      <%= turbo_stream_from :summary_rows %>
 
       <ul class="collections">
-        <% @presenter.collections.each do |collection| %>
-          <%= render 'collection_summary', collection: collection %>
-        <% end %>
+        <%= render Dashboard::CollectionComponent.with_collection(@presenter.collections) %>
       </ul>
 
       <%= render Works::WorkTypeModalComponent.new %>

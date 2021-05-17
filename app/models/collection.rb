@@ -25,10 +25,6 @@ class Collection < ApplicationRecord
                                          locals: { collection_version: head }
   end
 
-  def broadcast_update_collection_summary
-    broadcast_replace_to :collection_summary, partial: 'dashboards/collection_summary'
-  end
-
   sig { returns(T.nilable(Date)) }
   def release_date
     return nil if release_duration.nil?

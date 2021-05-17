@@ -49,6 +49,30 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     end
   end
 
+  context "when the works don't belong to the user" do
+    let(:collection) { collection_version.collection }
+    let(:collection_version) { create(:collection_version_with_collection) }
+
+    before do
+      create(:work_version_with_work, collection: collection, depositor: user, title: 'my work')
+      create(:work_version_with_work, collection: collection, title: 'not mine')
+    end
+
+    context 'when the user is a depositor' do
+      it 'renders a table with just my works' do
+        expect(rendered.css('.work-title a').map(&:text)).to eq ['my work']
+      end
+    end
+
+    context 'when the user is the collection manager' do
+      let(:collection_version) { create(:collection_version_with_collection, managed_by: [user]) }
+
+      it 'renders all of the works' do
+        expect(rendered.css('.work-title a').map(&:text)).to eq ['not mine', 'my work']
+      end
+    end
+  end
+
   context 'with 4 works' do
     let(:collection) { collection_version.collection }
     let(:collection_version) { create(:collection_version_with_collection) }
