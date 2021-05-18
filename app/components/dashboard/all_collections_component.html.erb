@@ -1,4 +1,17 @@
-<section class="mb-5">
+<section class="mb-5" style="position: relative">
+  <%= form_with url: search_path, method: :get, local: false,
+                data: { controller: 'find-druid', type: 'html', action: 'ajax:error->find-druid#onFailure' },
+                class: "row row-cols-lg-auto g-3 align-items-center float-end",
+                html: { style: "position: relative; top: 3rem" } do %>
+    <div class="col-12">
+      <label class="visually-hidden" for="q">Druid</label>
+      <input type="search" name="q" class="form-control" placeholder="Druid" />
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary">Search</button>
+    </div>
+  <% end %>
+
   <table class="table table-sm">
     <caption>All Collections</caption>
 
