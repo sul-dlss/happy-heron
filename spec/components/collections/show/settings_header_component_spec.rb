@@ -9,8 +9,9 @@ RSpec.describe Collections::Show::SettingsHeaderComponent, type: :component do
   context 'with a new, first draft collection' do
     let(:collection_version) { build_stubbed(:collection_version, :first_draft) }
 
-    it 'does not render the spinner' do
+    it 'does not render the spinner and renders the edit link' do
       expect(rendered.to_html).not_to include 'fa-spinner'
+      expect(rendered.css('a.btn').text).to eq 'Edit or Deposit'
     end
   end
 
@@ -20,6 +21,15 @@ RSpec.describe Collections::Show::SettingsHeaderComponent, type: :component do
     it 'does not render the spinner' do
       expect(rendered.to_html).to include 'Depositing'
       expect(rendered.to_html).to include 'fas fa-spinner fa-pulse'
+      expect(rendered.css('a.btn')).to be_empty
+    end
+  end
+
+  context 'when the collection is deposited' do
+    let(:collection_version) { build_stubbed(:collection_version, :deposited) }
+
+    it 'does not render the link' do
+      expect(rendered.css('a.btn')).to be_empty
     end
   end
 end
