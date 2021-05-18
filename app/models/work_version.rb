@@ -94,6 +94,10 @@ class WorkVersion < ApplicationRecord
     can_update_metadata? || deposited?
   end
 
+  def draft?
+    version_draft? || first_draft?
+  end
+
   sig { void }
   def add_purl_to_citation
     return unless citation
