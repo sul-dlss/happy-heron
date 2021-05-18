@@ -1,0 +1,17 @@
+<% if work_version.purl_reservation? %>
+  <%= link_to '',
+        data: {
+          destination: update_type_work_path(work_version.work),
+          form_method: 'patch',
+          bs_toggle: 'modal',
+          bs_target: '#workTypeModal',
+          action: "work-type#set_collection"
+        },
+        aria: { label: choose_label } do %>
+    <span class="fas fa-pencil-alt <%= css_class %>"</span>
+  <% end %>
+<% else %>
+  <%= link_to edit_work_path(work_version.work, anchor: anchor), aria: { label: edit_label } do %>
+    <span class="fas fa-pencil-alt <%= css_class %>"></span>
+  <% end %>
+<% end %>

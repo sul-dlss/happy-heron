@@ -1,4 +1,4 @@
-<table class="table" data-controller="datatables">
+<table class="table" data-controller="datatables work-type">
   <thead class="table-light">
     <tr>
       <th width="18%"><%= I18n.t 'collection.deposits' %></th>
@@ -15,4 +15,5 @@
   <tbody>
     <%= render Collections::WorkRowComponent.with_collection(works.map(&:head)) %>
   </tbody>
+  <%= render Works::WorkTypeModalComponent.new %>
 </table>
