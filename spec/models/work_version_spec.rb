@@ -271,7 +271,6 @@ RSpec.describe WorkVersion do
 
   describe 'state machine flow' do
     before do
-      allow(work_version.work.collection).to receive(:broadcast_update_collection_summary)
       allow(work_version.work).to receive(:broadcast_update)
     end
 

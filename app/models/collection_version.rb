@@ -10,7 +10,6 @@ class CollectionVersion < ApplicationRecord
   belongs_to :collection
 
   after_update_commit -> { collection.broadcast_update }
-  after_update_commit -> { collection.broadcast_update_collection_summary }
 
   sig { returns(T::Boolean) }
   def accessioned?

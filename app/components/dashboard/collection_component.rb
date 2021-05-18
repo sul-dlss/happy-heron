@@ -1,4 +1,4 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 module Dashboard
@@ -6,7 +6,7 @@ module Dashboard
   class CollectionComponent < ApplicationComponent
     MAX_DEPOSITS_TO_SHOW = 4
 
-    sig { params(collection: Collection).void }
+    # sig { params(collection: Collection).void }
     def initialize(collection:)
       @collection = collection
     end
@@ -24,7 +24,8 @@ module Dashboard
       # displayable works and add another query to get the overall count, but
       # that would double the number of queries run for each instance of this
       # component.
-      collection.works.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
+      scope = policy.apply_scope collection.works, type: :relation
+      scope.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
     end
 
     private
