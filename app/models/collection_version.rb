@@ -56,6 +56,10 @@ class CollectionVersion < ApplicationRecord
     can_update_metadata? || (deposited? && head?)
   end
 
+  def draft?
+    version_draft? || first_draft?
+  end
+
   sig { returns(T::Boolean) }
   def head?
     collection.head == self
