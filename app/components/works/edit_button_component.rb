@@ -14,7 +14,7 @@ module Works
 
     sig { returns(T::Boolean) }
     def render?
-      work_version.updatable?
+      work_version.draft?
     end
 
     def call
