@@ -2,6 +2,6 @@
 <% if depositing? %>
   <span class="state">Depositing <%= spinner %></span>
 <% else %>
-  <%= render Collections::EditLinkComponent.new(collection_version: collection_version, anchor: '', label: "Edit #{name}") %>
+  <%= render Collections::EditLinkComponent.new(collection_version: collection_version, label: "Edit #{name}") %>
   <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if first_draft?%>
 <% end %>

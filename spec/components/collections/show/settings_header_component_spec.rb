@@ -6,6 +6,10 @@ require 'rails_helper'
 RSpec.describe Collections::Show::SettingsHeaderComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection_version: collection_version)) }
 
+  before do
+    allow(controller).to receive_messages(allowed_to?: true)
+  end
+
   context 'with a new, first draft collection' do
     let(:collection_version) { build_stubbed(:collection_version, :first_draft) }
 

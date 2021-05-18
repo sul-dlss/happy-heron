@@ -7,6 +7,10 @@ RSpec.describe Collections::ReleaseComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
   let(:collection_version) { build_stubbed(:collection_version) }
 
+  before do
+    allow(controller).to receive_messages(allowed_to?: true)
+  end
+
   context 'when displaying a collection' do
     let(:access) { collection.access }
     let(:collection) { build_stubbed(:collection, head: collection_version) }

@@ -8,6 +8,10 @@ RSpec.describe Collections::TermsOfUseComponent, type: :component do
 
   let(:collection_version) { build_stubbed(:collection_version) }
 
+  before do
+    allow(controller).to receive_messages(allowed_to?: true)
+  end
+
   context 'with a collection that has a required license' do
     let(:collection) do
       build_stubbed(:collection, :with_required_license, required_license: required_license,

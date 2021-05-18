@@ -6,6 +6,10 @@ require 'rails_helper'
 RSpec.describe Collections::ParticipantsComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
+  before do
+    allow(controller).to receive_messages(allowed_to?: true)
+  end
+
   context 'when displaying a collection' do
     let(:depositors) { collection.depositors.map(&:sunetid).join(', ') }
     let(:managers) { collection.managed_by.map(&:sunetid).join(', ') }
