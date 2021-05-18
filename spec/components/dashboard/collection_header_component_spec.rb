@@ -16,6 +16,22 @@ RSpec.describe Dashboard::CollectionHeaderComponent, type: :component do
     it 'does not render the spinner' do
       expect(rendered.to_html).not_to include 'fa-spinner'
     end
+
+    context 'when allowed to edit' do
+      before do
+        allow(controller).to receive_messages(allowed_to?: true)
+      end
+
+      it 'has an edit button' do
+        expect(rendered.css('a').to_html).to include 'Edit'
+      end
+    end
+
+    context 'when not allowed to edit' do
+      it "doesn't have an edit button" do
+        expect(rendered.css('a').to_html).not_to include 'Edit'
+      end
+    end
   end
 
   context 'with a depositing collection' do

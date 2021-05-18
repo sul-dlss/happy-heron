@@ -80,6 +80,9 @@ RSpec.describe 'Dashboard requests' do
       expect(response).to be_successful
       expect(response.body).to include 'Collections in progress'
       expect(response.body).to include collection_version.name
+
+      # This user is able to edit the collection
+      expect(response.body).to include 'Edit'
     end
   end
 
@@ -220,7 +223,7 @@ RSpec.describe 'Dashboard requests' do
     end
   end
 
-  context 'when user is a depositor in a collection with reviewers' do
+  context 'when user is a depositor in a collection without reviewers' do
     let(:collection) { create(:collection, :with_depositors) }
     let(:user) { collection.depositors.first }
     let(:work) { create(:work, depositor: user) }
@@ -240,7 +243,7 @@ RSpec.describe 'Dashboard requests' do
     end
   end
 
-  context 'when collection has reviewers' do
+  context 'when user is a depositor in a collection with reviewers' do
     let(:collection) { create(:collection, :with_reviewers, :with_depositors) }
     let(:user) { collection.depositors.first }
 
@@ -265,9 +268,6 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include 'Pending approval'
       expect(response.body).to include 'Draft - Not deposited'
       expect(response.body).to include 'Returned'
-
-      # and a link to edit
-      expect(response.body).to include 'Edit'
     end
   end
 end
