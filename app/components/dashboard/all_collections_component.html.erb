@@ -1,8 +1,7 @@
-<section class="mb-5" style="position: relative">
+<section class="mb-5 allCollections">
   <%= form_with url: search_path, method: :get, local: false,
                 data: { controller: 'find-druid', type: 'html', action: 'ajax:error->find-druid#onFailure' },
-                class: "row row-cols-lg-auto g-3 align-items-center float-end",
-                html: { style: "position: relative; top: 3rem" } do %>
+                class: "row row-cols-lg-auto g-3 align-items-center float-end" do %>
     <div class="col-12">
       <label class="visually-hidden" for="q">Druid</label>
       <input type="search" name="q" class="form-control" placeholder="Druid" />
@@ -12,9 +11,10 @@
     </div>
   <% end %>
 
-  <table class="table table-sm">
-    <caption>All Collections</caption>
-
+  <button class="btn collapse-header" data-bs-toggle="collapse" data-bs-target="#collectionsTable" role="button" aria-expanded="false" aria-controls="collectionsTable">
+    All Collections
+  </button>
+  <table class="table table-sm collapse" id="collectionsTable">
     <thead class="table-light">
       <tr>
         <th>Collections</th>
