@@ -148,7 +148,7 @@ class WorksController < ObjectsController
     previous_version.dup.tap do |work_version|
       work_version.state = 'version_draft'
       work_version.version = previous_version.version + 1
-      CollectionObserver.collection_activity(work_version, nil)
+      CollectionObserver.version_draft_created(work_version, nil)
     end
   end
 

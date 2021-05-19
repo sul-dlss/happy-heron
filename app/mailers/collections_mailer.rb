@@ -48,7 +48,23 @@ class CollectionsMailer < ApplicationMailer
       'collection in the SDR')
   end
 
-  def collection_activity
+  def first_draft_created
+    @user = UserPresenter.new(user: params[:user])
+    @collection_version = params[:collection_version]
+    @depositor = params[:depositor]
+
+    mail(to: @user.email, subject: "New activity in the #{@collection_version.name} collection")
+  end
+
+  def item_deposited
+    @user = UserPresenter.new(user: params[:user])
+    @collection_version = params[:collection_version]
+    @depositor = params[:depositor]
+
+    mail(to: @user.email, subject: "New activity in the #{@collection_version.name} collection")
+  end
+
+  def version_draft_created
     @user = UserPresenter.new(user: params[:user])
     @collection_version = params[:collection_version]
     @depositor = params[:depositor]

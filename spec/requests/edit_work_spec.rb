@@ -70,12 +70,12 @@ RSpec.describe 'Updating an existing work' do
 
         before do
           create(:attached_file, :with_file, work_version: work_version)
-          allow(CollectionObserver).to receive(:collection_activity)
+          allow(CollectionObserver).to receive(:version_draft_created)
         end
 
         it 'redirects to the work page' do
           patch "/works/#{work.id}", params: { work: work_params }
-          expect(CollectionObserver).to have_received(:collection_activity)
+          expect(CollectionObserver).to have_received(:version_draft_created)
           expect(WorkVersion.where(work: work).count).to eq 2
           expect(work.reload.head).to be_version_draft
           expect(response).to redirect_to(work)
