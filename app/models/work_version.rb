@@ -9,6 +9,13 @@ class WorkVersion < ApplicationRecord
   belongs_to :work
   has_many :contributors, dependent: :destroy, class_name: 'Contributor'
   has_many :authors, dependent: :destroy, class_name: 'Author'
+  before_destroy do
+    # Unfortunately the STI relationships above, don't delete everything.
+    # I first tried this approach, but it didn't work either
+    #   has_many :abstract_contributors, dependent: :destroy
+    # So this seems to take care of it.
+    AbstractContributor.where(work_version_id: id).destroy_all
+  end
   has_many :related_links, as: :linkable, dependent: :destroy
   has_many :contact_emails, as: :emailable, dependent: :destroy
   has_many :related_works, dependent: :destroy
