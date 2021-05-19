@@ -6,6 +6,6 @@
     <%= link_to 'Complete draft', edit_collection_version_path(collection.head), class: "mb-2 btn btn-primary" %>
   </div>
   <div class="col-5">
-    <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if collection_version.first_draft?%>
+    <%= render Collections::DeleteButtonComponent.new(collection_version: collection_version) %>
   </div>
 </div>
