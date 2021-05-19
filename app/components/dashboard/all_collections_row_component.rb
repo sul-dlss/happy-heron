@@ -1,4 +1,4 @@
-# typed: true
+# typed: false
 # frozen_string_literal: true
 
 module Dashboard
@@ -12,21 +12,15 @@ module Dashboard
 
     attr_reader :collection, :counts
 
-    def draft?
-      return true if @collection.head&.state&.include? 'draft'
-
-      false
-    end
-
     def draft_label
+      return unless @collection.head&.state&.include? 'draft'
+
       case @collection.head&.state
       when 'first_draft'
-        return '- Draft'
+        tag.span ' - Draft', class: 'draft-tag'
       when 'version_draft'
-        return '- Version Draft'
+        tag.span ' - Version Draft', class: 'draft-tag'
       end
-
-      nil
     end
   end
 end
