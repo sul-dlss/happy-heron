@@ -12,6 +12,12 @@ module Dashboard
 
     attr_reader :collection, :counts
 
+    def draft?
+      return true if @collection.head&.state&.include? 'draft'
+
+      false
+    end
+
     def draft_label
       case @collection.head&.state
       when 'first_draft'

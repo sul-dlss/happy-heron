@@ -1,5 +1,5 @@
 <tr>
-  <td><%= link_to collection.head.name, collection %><strong><i><%= draft_label %></i></strong></td>
+  <td><%= link_to collection.head.name, collection %><% if draft? %><strong><i> <%= draft_label %></i></strong><% end %></td>
   <td><%= counts['total'] %></td>
   <td><%= counts['deposited'] %></td>
   <td><%= counts['first_draft'] %></td>

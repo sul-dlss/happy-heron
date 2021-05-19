@@ -177,7 +177,7 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include 'Your collections'
       expect(response.body).to include '+ Create a new collection'
       expect(response.body).to include <<-HTML
-  <td><a href=\"#{collection_path(workful_collection)}\">MyString</a><strong><i></i></strong></td>
+  <td><a href=\"#{collection_path(workful_collection)}\">MyString</a></td>
   <td>5</td>
   <td>1</td>
   <td>1</td>
@@ -187,7 +187,7 @@ RSpec.describe 'Dashboard requests' do
   <td>Dec 02, 2020</td>
       HTML
       expect(response.body).to include <<-HTML
-  <td><a href=\"#{collection_path(workless_collection)}\">MyString</a><strong><i></i></strong></td>
+  <td><a href=\"#{collection_path(workless_collection)}\">MyString</a></td>
   <td>0</td>
   <td></td>
   <td></td>
