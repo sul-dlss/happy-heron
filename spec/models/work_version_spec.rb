@@ -320,7 +320,7 @@ RSpec.describe WorkVersion do
             .from('new').to('first_draft')
             .and change(Event, :count).by(1)
                                       .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                                             'CollectionsMailer', 'collection_activity', 'deliver_now',
+                                             'CollectionsMailer', 'first_draft_created', 'deliver_now',
                                              { params: {
                                                user: collection.managed_by.last,
                                                depositor: work.depositor,

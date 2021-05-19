@@ -46,13 +46,14 @@ class WorkVersion < ApplicationRecord
     after_transition on: :reject, do: WorkObserver.method(:after_rejected)
     after_transition on: :submit_for_review, do: WorkObserver.method(:after_submit_for_review)
     after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
-    after_transition on: :deposit_complete, do: CollectionObserver.method(:collection_activity)
+    after_transition on: :deposit_complete, do: CollectionObserver.method(:item_deposited)
 
     # Trigger the collection observer when starting a new draft,
     # except when the previous state was draft.
-    after_transition except_from: :first_draft, to: :first_draft, do: CollectionObserver.method(:collection_activity)
+    after_transition except_from: :first_draft, to: :first_draft,
+                     do: CollectionObserver.method(:first_draft_created)
     after_transition except_from: :version_draft, to: :version_draft,
-                     do: CollectionObserver.method(:collection_activity)
+                     do: CollectionObserver.method(:version_draft_created)
 
     # NOTE: there is no approval "event" because when a work is approved in review, it goes
     # directly to begin_deposit event, which will transition it to depositing

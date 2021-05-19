@@ -130,12 +130,13 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
   end
 
-  describe '#collection_activity' do
+  describe '#first_draft_created' do
     let(:user) { build(:user) }
     let(:depositor) { build(:user, name: 'Audre Lorde') }
 
     let(:mail) do
-      described_class.with(user: user, collection_version: collection_version, depositor: depositor).collection_activity
+      described_class.with(user: user, collection_version: collection_version,
+                           depositor: depositor).first_draft_created
     end
     let(:collection) { build(:collection) }
 
@@ -146,8 +147,50 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has created a draft / " \
-                                         'submitted a deposit / started a new version'
+      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has created a draft"
+      expect(mail.body.encoded).to match "in the #{collection_name} collection"
+    end
+  end
+
+  describe '#item_deposited' do
+    let(:user) { build(:user) }
+    let(:depositor) { build(:user, name: 'Audre Lorde') }
+
+    let(:mail) do
+      described_class.with(user: user, collection_version: collection_version, depositor: depositor).item_deposited
+    end
+    let(:collection) { build(:collection) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq "New activity in the #{collection_name} collection"
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has submitted a deposit"
+      expect(mail.body.encoded).to match "in the #{collection_name} collection"
+    end
+  end
+
+  describe '#version_draft_created' do
+    let(:user) { build(:user) }
+    let(:depositor) { build(:user, name: 'Audre Lorde') }
+
+    let(:mail) do
+      described_class.with(user: user, collection_version: collection_version,
+                           depositor: depositor).version_draft_created
+    end
+    let(:collection) { build(:collection) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq "New activity in the #{collection_name} collection"
+      expect(mail.to).to eq [user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has started a new version"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
   end
