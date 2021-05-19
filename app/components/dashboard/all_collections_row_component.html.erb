@@ -1,0 +1,10 @@
+<tr>
+  <td><%= link_to collection.head.name, collection %><%= draft_label %></td>
+  <td><%= counts['total'] %></td>
+  <td><%= counts['deposited'] %></td>
+  <td><%= counts['first_draft'] %></td>
+  <td><%= counts['version_draft'] %></td>
+  <td><%= counts['pending_approval'] %></td>
+  <td><%= counts['rejected'] %></td>
+  <td><%= I18n.l(collection.updated_at.to_date, format: :abbr_month) %></td>
+</tr>
