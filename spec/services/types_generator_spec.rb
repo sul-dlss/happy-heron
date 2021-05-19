@@ -10,31 +10,31 @@ RSpec.describe TypesGenerator do
     subject(:generated) { described_class.generate(work_version: work_version) }
 
     context 'with a work containing multiple subtypes' do
-      it 'generates a flat array of structured values for the work type and subtypes' do
-        expect(generated).to include(
-          Cocina::Models::DescriptiveValue.new(
-            source: { value: 'Stanford self-deposit resource types' },
-            type: 'resource type',
-            structuredValue: [
-              Cocina::Models::DescriptiveValue.new(
-                type: 'type',
-                value: 'Text'
-              ),
-              Cocina::Models::DescriptiveValue.new(
-                type: 'subtype',
-                value: 'Article'
-              ),
-              Cocina::Models::DescriptiveValue.new(
-                type: 'subtype',
-                value: 'Technical report'
-              )
-            ]
+      xit 'to be implemented for new type mapping' do
+        it 'generates a flat array of structured values for the work type and subtypes' do
+          expect(generated).to include(
+            Cocina::Models::DescriptiveValue.new(
+              source: { value: 'Stanford self-deposit resource types' },
+              type: 'resource type',
+              structuredValue: [
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'type',
+                  value: 'Text'
+                ),
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'subtype',
+                  value: 'Article'
+                ),
+                Cocina::Models::DescriptiveValue.new(
+                  type: 'subtype',
+                  value: 'Technical report'
+                )
+              ]
+            )
           )
-        )
-      end
+        end
 
-      it 'generates a flat array of genres for the subtypes' do
-        xit 'to be implemented for new type mapping' do
+        it 'generates a flat array of genres for the subtypes' do
           expect(generated).to include(
             Cocina::Models::DescriptiveValue.new(
               type: 'genre',
@@ -50,20 +50,18 @@ RSpec.describe TypesGenerator do
             )
           )
         end
-      end
 
-      it 'generates a flat array of resource types' do
-        expect(generated).to include(
-          Cocina::Models::DescriptiveValue.new(
-            type: 'resource type',
-            value: 'text',
-            source: { value: 'MODS resource types' }
+        it 'generates a flat array of resource types' do
+          expect(generated).to include(
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'text',
+              source: { value: 'MODS resource types' }
+            )
           )
-        )
-      end
+        end
 
-      it 'generates exactly four descriptive values' do
-        xit 'to be implemented for new type mapping' do
+        it 'generates exactly four descriptive values' do
           expect(generated.count).to eq(4)
           expect(generated).to all(be_a(Cocina::Models::DescriptiveValue))
         end
@@ -71,10 +69,10 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type Image with Image subtype (no subtype derived genre)' do
-      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Image']) }
+      xit 'to be implemented for new type mapping' do
+        let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Image']) }
 
-      it 'generates a single structured value, a single resource type and single genre' do
-        xit 'to be implemented for new type mapping' do
+        it 'generates a single structured value, a single resource type and single genre' do
           expect(generated).to eq(
             [
               Cocina::Models::DescriptiveValue.new(
@@ -109,10 +107,10 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type Image with Animation subtype (top level genre plus subtype derived genre)' do
-      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Animation']) }
+      xit 'to be implemented for new type mapping' do
+        let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Animation']) }
 
-      it 'generates a single structured value, two resource types and two genres' do
-        xit 'to be implemented for new type mapping' do
+        it 'generates a single structured value, two resource types and two genres' do
           expect(generated).to eq(
             [
               Cocina::Models::DescriptiveValue.new(
@@ -184,10 +182,10 @@ RSpec.describe TypesGenerator do
     end
 
     context 'with a work of type Sound lacking subtypes' do
-      let(:work_version) { build(:work_version, work_type: 'sound', subtype: []) }
+      xit 'to be implemented for new type mapping' do
+        let(:work_version) { build(:work_version, work_type: 'sound', subtype: []) }
 
-      it 'generates a single structured value, a single resource type, and a single genre' do
-        xit 'to be implemented for new type mapping' do
+        it 'generates a single structured value, a single resource type, and a single genre' do
           expect(generated).to eq(
             [
               Cocina::Models::DescriptiveValue.new(
@@ -266,37 +264,37 @@ RSpec.describe TypesGenerator do
     end
 
     describe 'for "more" types' do
-      let(:all_type_genres) do
-        types_to_genres
-          .values
-          .map { |work_type| work_type['subtypes'].keys }
-          .flatten
-          .sort
-          .uniq
-      end
-      let(:all_type_resource_types) do
-        types_to_resource_types
-          .values
-          .map { |work_type| work_type['subtypes'].keys }
-          .flatten
-          .sort
-          .uniq
-      end
-      # these represent subtypes that will get the genre from the parent type
-      let(:known_genreless) do
-        ['Policy brief', 'Speaker notes', '3D model', 'Book chapter', 'Broadcast',
-         'Conference session', 'Other spoken word', 'Presentation recording',
-         'Presentation slides', 'Text']
-      end
+      xit 'to be implemented for new type mapping' do
+        let(:all_type_genres) do
+          types_to_genres
+            .values
+            .map { |work_type| work_type['subtypes'].keys }
+            .flatten
+            .sort
+            .uniq
+        end
+        let(:all_type_resource_types) do
+          types_to_resource_types
+            .values
+            .map { |work_type| work_type['subtypes'].keys }
+            .flatten
+            .sort
+            .uniq
+        end
+        # these represent subtypes that will get the genre from the parent type
+        let(:known_genreless) do
+          ['Policy brief', 'Speaker notes', '3D model', 'Book chapter', 'Broadcast',
+           'Conference session', 'Other spoken word', 'Presentation recording',
+           'Presentation slides', 'Text']
+        end
 
-      it 'has one genre for each' do
-        xit 'to be implemented for new type mapping' do
+        it 'has one genre for each' do
           expect(all_type_genres).to include(*(WorkType.more_types - known_genreless))
         end
-      end
 
-      it 'has one resource type for each' do
-        expect(all_type_resource_types).to include(*WorkType.more_types)
+        it 'has one resource type for each' do
+          expect(all_type_resource_types).to include(*WorkType.more_types)
+        end
       end
     end
   end

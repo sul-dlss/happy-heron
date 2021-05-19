@@ -106,8 +106,8 @@ RSpec.describe DescriptionGenerator do
     ]
   end
 
-  it 'creates description cocina model' do
-    xit 'to be implemented for new type mapping' do
+  xit 'to be implemented for new type mapping' do
+    it 'creates description cocina model' do
       expect(model).to eq(
         event: [
           {
@@ -202,17 +202,17 @@ RSpec.describe DescriptionGenerator do
   # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   #   examples 5 and 6
   context 'when contributor of type conference or event' do
-    let(:contributor1) { build(:org_contributor, role: 'Event') }
-    let(:contributor2) { build(:person_contributor, role: 'Author') }
-    let(:contributor3) { build(:org_contributor, role: 'Conference') }
-    let(:work_version) do
-      build(:work_version, :with_contact_emails,
-            contributors: [contributor1, contributor2, contributor3],
-            title: 'Test title')
-    end
+    xit 'to be implemented for new type mapping' do
+      let(:contributor1) { build(:org_contributor, role: 'Event') }
+      let(:contributor2) { build(:person_contributor, role: 'Author') }
+      let(:contributor3) { build(:org_contributor, role: 'Conference') }
+      let(:work_version) do
+        build(:work_version, :with_contact_emails,
+              contributors: [contributor1, contributor2, contributor3],
+              title: 'Test title')
+      end
 
-    it 'creates forms as well as contributors in description cocina model' do
-      xit 'to be implemented for new type mapping' do
+      it 'creates forms as well as contributors in description cocina model' do
         expect(model).to eq(
           note: [
             { type: 'summary', value: 'test abstract' },
@@ -277,15 +277,15 @@ RSpec.describe DescriptionGenerator do
   # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   #   example 12
   context 'when publisher and publication date are entered by user' do
-    let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work_version) do
-      build(:work_version, :published, :with_contact_emails,
-            contributors: [contributor],
-            title: 'Test title')
-    end
+    xit 'to be implemented for new type mapping' do
+      let(:contributor) { build(:org_contributor, role: 'Publisher') }
+      let(:work_version) do
+        build(:work_version, :published, :with_contact_emails,
+              contributors: [contributor],
+              title: 'Test title')
+      end
 
-    it 'creates event of type publication with date' do
-      xit 'to be implemented for new type mapping' do
+      it 'creates event of type publication with date' do
         expect(model).to eq(
           note: [
             { type: 'summary', value: 'test abstract' },
@@ -329,14 +329,14 @@ RSpec.describe DescriptionGenerator do
   #   example 13
   #   Note:  no top level contributor -- publisher is under event
   context 'when publisher entered by user, no publication date' do
-    let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work_version) do
-      build(:work_version, :with_contact_emails,
-            contributors: [contributor], title: 'Test title')
-    end
+    xit 'to be implemented for new type mapping' do
+      let(:contributor) { build(:org_contributor, role: 'Publisher') }
+      let(:work_version) do
+        build(:work_version, :with_contact_emails,
+              contributors: [contributor], title: 'Test title')
+      end
 
-    it 'creates event of type publication without date' do
-      xit 'to be implemented for new type mapping' do
+      it 'creates event of type publication without date' do
         expect(model).to eq(
           note: [
             { type: 'summary', value: 'test abstract' },
@@ -371,15 +371,15 @@ RSpec.describe DescriptionGenerator do
 
   # NOTE: Arcadia to add h2 mapping spec for when there is a person and a publisher
   context 'when author, publisher and publication date are entered by user' do
-    let(:person_contrib) { build(:person_contributor, role: 'Author') }
-    let(:pub_contrib) { build(:org_contributor, role: 'Publisher') }
-    let(:work_version) do
-      build(:work_version, :published, :with_contact_emails,
-            contributors: [person_contrib, pub_contrib], title: 'Test title')
-    end
+    xit 'to be implemented for new type mapping' do
+      let(:person_contrib) { build(:person_contributor, role: 'Author') }
+      let(:pub_contrib) { build(:org_contributor, role: 'Publisher') }
+      let(:work_version) do
+        build(:work_version, :published, :with_contact_emails,
+              contributors: [person_contrib, pub_contrib], title: 'Test title')
+      end
 
-    it 'creates event of type publication with date' do
-      xit 'to be implemented for new type mapping' do
+      it 'creates event of type publication with date' do
         expect(model).to eq(
           note: [
             { type: 'summary', value: 'test abstract' },
