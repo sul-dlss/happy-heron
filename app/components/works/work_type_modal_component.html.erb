@@ -14,7 +14,7 @@
       </div>
 
       <div class="modal-body">
-        <form method="get" action="/collections/1/work/new" data-work-type-target="form">
+        <form method="get" action="/collections/1/work/new" class="mb-4" data-work-type-target="form">
           <div class="row">
             <% types.each do |type| %>
               <div class="work-type-box">
@@ -32,11 +32,9 @@
           </template>
 
           <template data-work-type-target="template">
-            <div class="col-md-4">
-              <div class="form-check">
-                <input type="checkbox" name="subtype[]" value="SUBTYPE_LABEL" id="subtype_SUBTYPE_ID" class="form-check-input">
-                <label for="subtype_SUBTYPE_ID" class="form-check-label">SUBTYPE_LABEL</label>
-              </div>
+            <div class="subtype-item">
+              <input type="checkbox" name="subtype[]" value="SUBTYPE_LABEL" id="subtype_SUBTYPE_ID" class="form-check-input">
+              <label for="subtype_SUBTYPE_ID" class="ms-1">SUBTYPE_LABEL</label>
             </div>
           </template>
 
@@ -53,20 +51,20 @@
           </template>
 
           <template data-work-type-target="otherTemplate">
-            <div class="col-md-4">
+            <div class="subtype-item">
               <input type="text" name="subtype[]" class="form-control" id="subtype_other">
             </div>
           </template>
 
           <div class="row" data-work-type-target="area" hidden></div>
 
-          <div class="row mb-4" data-work-type-target="subtype"></div>
+          <div class="mb-4 subtype-container" data-work-type-target="subtype"></div>
 
           <a href="#" class="more-options collapsed" data-action="work-type#toggleMoreTypes" data-work-type-target="moreTypesLink" hidden>
             See more options
           </a>
 
-          <div class="row mb-4" data-work-type-target="moreTypes" hidden></div>
+          <div class="mb-4 subtype-container" data-work-type-target="moreTypes" hidden></div>
 
           <button type="submit" class="btn btn-primary mx-auto d-block" data-work-type-target="continueButton">Continue</button>
         </form>
