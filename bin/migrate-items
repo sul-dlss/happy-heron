@@ -55,10 +55,10 @@ WORK_TYPE = {
   'audio - music' => 'sound',
   'other' => 'other',
   'class project' => 'other',
-  'textbook' => 'other',
-  'thesis' => 'other',
-  'article' => 'other',
-  'technical report' => 'other',
+  'textbook' => 'text',
+  'thesis' => 'text',
+  'article' => 'text',
+  'technical report' => 'text',
   'conference paper / presentation' => 'other',
   'software' => 'software, multimedia',
   'computer game' => 'software, multimedia',
@@ -244,10 +244,17 @@ def build_work_version_attributes(json, type_data)
   subtype = if work_type == 'other'
     warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
     ['placeholder']
-  elsif json.fetch('item_type') == 'audio - spoken'
-    ['Speech']
-  elsif json.fetch('item_type') == 'audio - music'
-    ['Musical performance']
+  else
+    case json.fetch('item_type')
+    when 'audio - spoken'
+      ['Speech']
+    when 'audio - music'
+      ['Musical performance']
+    when 'thesis', 'article', 'technical report'
+      [json.fetch('item_type').capitalize]
+    when 'textbook'
+      ['Book']
+    end
   end
 
   # Overwrite the values if there was a row in the CSV for this item
