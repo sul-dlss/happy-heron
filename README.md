@@ -175,7 +175,7 @@ Next mount the `/data/hydrus-files` mount on the server you are importing to.
 
 Next import the items with their files:
 ```
-RAILS_ENV=production bin/migrate-items items.jsonl
+RAILS_ENV=production bin/migrate-items ~/items.jsonl 0 /data/hydrus-files/
 ```
 
 And finally run the script to batch update the types for some items:
