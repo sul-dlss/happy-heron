@@ -16,6 +16,7 @@ STATES = {
 
 RELEASE_OPTION = {
   'varies' => 'depositor-selects',
+  'fixed' => 'delay',
   'none' => 'immediate'
 }.freeze
 
@@ -38,17 +39,12 @@ def release_attributes(json)
            else
              'depositor-selects'
            end
-  data = { access: access }
-  if json['embargo_option'] == 'fixed'
-    puts "#{json['druid']} has embargo option of 'fixed', which cannot be mapped to h2"
-    # release_date # TODO: This doesn't easily map from Hydrus as it doesn't allow fixed dates.
-    return data
-  end
+  data = {
+    access: access,
+    release_option: RELEASE_OPTION.fetch(json.fetch('embargo_option'))
+  }
 
-  release_option = RELEASE_OPTION.fetch(json.fetch('embargo_option'))
-  data[:release_option] = release_option
-
-  return data unless release_option == 'depositor-selects'
+  return data if data[:release_option] == 'immediate'
 
   data.merge(release_duration: json.fetch('embargo_terms'))
 end
