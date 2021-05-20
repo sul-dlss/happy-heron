@@ -2,14 +2,20 @@
 # frozen_string_literal: true
 
 # Usage:
-#   bin/migrate-items items.jsonl 0 /opt/app/local-files
+#   bin/migrate-items items.jsonl 0 /opt/app/local-files migration_item_type_updates.csv
 #   These two just load metadata:
 #   bin/migrate-items items.jsonl 1000
 #   bin/migrate-items items.jsonl
 
+require 'csv'
 require_relative '../config/environment'
 DEFAULT_DATA_ROOT = '/data/hydrus-files'
 DATA_ROOT = ARGV[2]
+CSV_FILE = ARGV[3]
+
+warn "A data files was not provided" unless CSV_FILE
+Rails.logger.level = :warn
+
 
 warn "A data root was not provided, so no files will be imported" unless DATA_ROOT
 
@@ -141,6 +147,19 @@ INVALID_ROLES = [
   'writer of added commentary'
 ]
 
+
+def load_type_data
+  {}.tap do |data|
+    CSV.foreach(CSV_FILE, headers: true) do |row|
+      druid = "druid:#{row['item_druid']}"
+      data[druid] = {
+        work_type: row['New Work Type'].downcase,
+        subtype: [row['New Subtype 1'], row['New Subtype 2'], row['New Subtype 3'], row['New Subtype 4']].compact
+      }
+    end
+  end
+end
+
 def contact_emails(json)
   return [ContactEmail.new(email: json['contact_email'])] if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
 
@@ -220,7 +239,7 @@ def build_work_attributes(json)
   }
 end
 
-def build_work_version_attributes(json)
+def build_work_version_attributes(json, type_data)
   work_type = WORK_TYPE.fetch(json.fetch('item_type'))
   subtype = if work_type == 'other'
     warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
@@ -230,6 +249,14 @@ def build_work_version_attributes(json)
   elsif json.fetch('item_type') == 'audio - music'
     ['Musical performance']
   end
+
+  # Overwrite the values if there was a row in the CSV for this item
+  if row = type_data[json['druid']]
+    work_type = row.fetch(:work_type)
+    subtype = row.fetch(:subtype)
+  end
+
+
   title = json['title']
   unless title
     warn "#{json['druid']} does not have a title. #{json}"
@@ -274,38 +301,41 @@ def attach_files(json, work_version)
   end
 end
 
-def create_or_update_work(json)
+def create_or_update_work(json, type_data)
   work = Work.find_by(druid: json['druid'])
-  if work
-    if work.update(build_work_attributes(json))
-      puts "Work #{work.id} - #{work.druid}"
+  ActiveRecord::Base.transaction do
+    if work
+      if work.update(build_work_attributes(json))
+        puts "Work #{work.id} - #{work.druid}"
+      else
+        warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+        return
+      end
     else
-      warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
-      return
+      work = Work.new(build_work_attributes(json).merge(druid: json['druid']))
+      if work.save
+        puts "Work #{work.id} - #{work.druid}"
+      else
+        warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+        return
+      end
     end
-  else
-    work = Work.new(build_work_attributes(json).merge(druid: json['druid']))
-    if work.save
-      puts "Work #{work.id} - #{work.druid}"
-    else
-      warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
-      return
-    end
-  end
 
-  work_version = work.head
-  if work_version
-    work_version.update!(build_work_version_attributes(json))
-    attach_files(json, work_version)
-  else
-    work_version = work.build_head(build_work_version_attributes(json).
-      merge(work_id: work.id, version: json.fetch('version')))
-    work_version.save!
-    attach_files(json, work_version)
-    work.update!(head: work_version)
+    work_version = work.head
+    if work_version
+      work_version.update!(build_work_version_attributes(json, type_data))
+      attach_files(json, work_version)
+    else
+      work_version = work.build_head(build_work_version_attributes(json, type_data).
+        merge(work_id: work.id, version: json.fetch('version')))
+      work_version.save!
+      attach_files(json, work_version)
+      work.update!(head: work_version)
+    end
   end
 end
 
+type_data = load_type_data
 OFFSET = ARGV[1].present? ? ARGV[1].to_i : 0
 count = 0
 File.foreach(ARGV[0]) do |data|
@@ -313,5 +343,5 @@ File.foreach(ARGV[0]) do |data|
   next if count < OFFSET
   json = JSON.parse(data)
   next unless json.present?
-  create_or_update_work(json)
+  create_or_update_work(json, type_data)
 end
