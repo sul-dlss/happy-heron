@@ -88,6 +88,7 @@ CONTRIBUTOR_ROLE = {
   'publisher.' => 'Publisher',
   'publisher' => 'Publisher',
   'publisher,' => 'Publisher',
+  'Collector' => 'Data collector',
   'Creator' => 'Creator',
   'creator' => 'Creator', # Bad data? 3 items have this role
   'Conference' => 'Conference',
@@ -113,7 +114,6 @@ CONTRIBUTOR_ROLE = {
 }
 
 INVALID_ROLES = [
-  'Collector',
   'Distributor',
   'contributor',
   'Contributor',
