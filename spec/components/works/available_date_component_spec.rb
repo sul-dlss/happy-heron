@@ -14,9 +14,15 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
     work_form.prepopulate!
   end
 
-  it 'checks the immediate release radio button' do
+  it 'checks the immediate release radio button by default' do
     expect(rendered.css('#release_immediate[@checked]')).to be_present
     expect(rendered.css('#release_embargo[@checked]')).not_to be_present
+  end
+
+  it 'requires all of the date fields to be filled in' do
+    expect(rendered.css('#work_embargo_year[required]')).to be_present
+    expect(rendered.css('#work_embargo_month[required]')).to be_present
+    expect(rendered.css('#work_embargo_day[required]')).to be_present
   end
 
   context 'when the embargo date is set' do
