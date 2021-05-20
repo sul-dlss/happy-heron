@@ -258,11 +258,12 @@ def build_work_version_attributes(json, type_data)
   if row = type_data[json['druid']]
     work_type = row.fetch(:work_type)
     subtype = row.fetch(:subtype)
-  end
-
-  if work_type == 'other'
+  elsif work_type == 'other'
     warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
-    ['placeholder']
+    subtype = ['placeholder']
+  elsif work_type == 'mixed material'
+    warn "#{json['druid']} has a work_type of 'mixed material', but we don't have subtypes. Skipping"
+    return
   end
 
 
@@ -331,11 +332,14 @@ def create_or_update_work(json, type_data)
     end
 
     work_version = work.head
+    work_version_attrs = build_work_version_attributes(json, type_data)
+    return unless work_version_attrs
+
     if work_version
-      work_version.update!(build_work_version_attributes(json, type_data))
+      work_version.update!(work_version_attrs)
       attach_files(json, work_version)
     else
-      work_version = work.build_head(build_work_version_attributes(json, type_data).
+      work_version = work.build_head(work_version_attrs.
         merge(work_id: work.id, version: json.fetch('version')))
       work_version.save!
       attach_files(json, work_version)
