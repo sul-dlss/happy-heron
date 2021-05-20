@@ -8,7 +8,7 @@ module Collections
       attr_reader :collection_form
 
       delegate :model, to: :collection_form
-      delegate :version_draft?, :first_draft?, :name, :collection, to: :model
+      delegate :version_draft?, :first_draft?, :name, :collection, :version_description, to: :model
 
       sig { params(collection_form: DraftCollectionVersionForm).void }
       def initialize(collection_form:)

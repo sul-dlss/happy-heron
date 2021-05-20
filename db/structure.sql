@@ -257,8 +257,7 @@ CREATE TABLE public.collections (
     email_depositors_status_changed boolean,
     review_enabled boolean DEFAULT false,
     license_option character varying DEFAULT 'required'::character varying NOT NULL,
-    head_id bigint,
-    description character varying
+    head_id bigint
 );
 
 
@@ -1284,7 +1283,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210216220559'),
 ('20210218234733'),
 ('20210219142356'),
-('20210513210814'),
 ('20210520161846');
 
 

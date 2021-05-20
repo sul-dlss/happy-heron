@@ -11,6 +11,7 @@ class DraftCollectionForm < Reform::Form
 
   property :name, on: :collection_version
   property :description, on: :collection_version
+  property :version_description, on: :collection_version
   property :access, default: 'world', on: :collection
   property :manager_sunets, virtual: true, on: :collection,
                             prepopulator: ->(_options) { self.manager_sunets = manager_sunets_from_model.join(', ') }
