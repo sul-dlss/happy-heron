@@ -25,5 +25,11 @@ RSpec.describe 'Searches', type: :request do
         expect(response).to be_not_found
       end
     end
+
+    context "when the client doesn't send a 'q' parameter" do
+      it 'raises ParameterMissing error' do
+        expect { get '/search?foo=bar', xhr: true }.to raise_error ActionController::ParameterMissing
+      end
+    end
   end
 end
