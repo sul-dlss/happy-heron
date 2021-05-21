@@ -96,6 +96,8 @@ CONTRIBUTOR_ROLE = {
   'composer' => 'Composer',
   'composer.' => 'Composer',
   'Contributing author' => 'Contributing author',
+  'contributor' => 'Contributing author',
+  'Contributor' => 'Contributing author',
   'Principal investigator' => 'Principal investigator',
   'principal investigator and author.' => 'Principal investigator',
   'Sponsor' => 'Sponsor',
@@ -115,8 +117,6 @@ CONTRIBUTOR_ROLE = {
 
 INVALID_ROLES = [
   'Distributor',
-  'contributor',
-  'Contributor',
   'production company.',
   'compiler',
   'compiler.',
