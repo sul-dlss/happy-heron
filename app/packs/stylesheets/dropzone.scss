@@ -126,11 +126,13 @@
 }
 
 .dz-preview.dz-success .dz-success-mark {
-  -webkit-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
-  -moz-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
-  -ms-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
-  -o-animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
-  animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1); }
+  opacity: 1;
+  color: $stanford-digital-green;
+  -webkit-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -moz-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -ms-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  -o-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
+  animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1); }
 .dz-preview.dz-error .dz-error-mark {
   opacity: 1;
   -webkit-animation: slide-in 3s cubic-bezier(0.77, 0, 0.175, 1);
@@ -142,16 +144,10 @@
   pointer-events: none;
   opacity: 0;
   z-index: 500;
-  position: absolute;
   display: block;
-  top: 50%;
-  left: 50%;
-  margin-left: -27px;
   margin-top: -27px; }
-  .dz-preview .dz-success-mark svg, .dz-preview .dz-error-mark svg {
-    display: block;
-    width: 54px;
-    height: 54px; }
+.dz-preview .dz-success-mark svg, .dz-preview .dz-error-mark svg {
+  display: block; }
 .dz-preview.dz-processing .dz-progress {
   opacity: 1;
   -webkit-transition: all 0.2s linear;

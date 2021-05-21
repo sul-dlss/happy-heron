@@ -1,5 +1,5 @@
 <div class="dz-preview dz-file-preview row <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
-  <div class="thumb">
+  <div class="thumb" class="col-md-1">
     <img data-dz-thumbnail />
   </div>
   <div class="col-md-2">
@@ -10,10 +10,12 @@
       </div>
     <% else %>
       <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
-      <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-      <div class="dz-success-mark"><span>✔</span></div>
-      <div class="dz-error-mark"><span>✘</span></div>
-      <div class="dz-error-message"><span data-dz-errormessage></span></div>
+      <div class="row">
+        <div class="dz-progress col-md-2 align-self-start"><span class="dz-upload" data-dz-uploadprogress></span></div>
+        <div class="dz-success-mark col align-self-end"><span class="fas fa-check fa-sm" /></div>
+        <div class="dz-error-mark col align-self-end"><span class="fas fa-exclamation-triangle fa-lg" /></div>
+        <div class="dz-error-message col d-sm-inline-flex flex-wrap"><span data-dz-errormessage=""></span></div>
+      </div>
     <% end %>
   </div>
 
