@@ -24,7 +24,8 @@ module Works
       persisted? ? work_version.title : 'Deposit your content'
     end
 
-    delegate :persisted?, :purl, to: :work
+    delegate :persisted?, to: :work_form
+    delegate :purl, to: :work
 
     def work
       work_form.model.fetch(:work)
