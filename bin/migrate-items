@@ -244,10 +244,6 @@ def build_work_version_attributes(json, type_data)
   work_type = WORK_TYPE.fetch(raw_item_type)
 
   subtype = case raw_item_type
-    when 'audio - spoken'
-      ['Speech']
-    when 'audio - music'
-      ['Musical performance']
     when 'thesis', 'article', 'technical report'
       [raw_item_type.capitalize]
     when 'textbook'
