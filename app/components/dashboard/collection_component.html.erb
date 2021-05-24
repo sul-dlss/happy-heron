@@ -1,9 +1,7 @@
 <li class="mb-5">
   <section>
     <table class="table">
-      <caption>
-        <%= render Dashboard::CollectionHeaderComponent.new collection_version: collection.head %>
-      </caption>
+      <%= render 'dashboards/collection_header', collection: collection %>
       <thead class="table-light">
         <tr>
           <th>Deposits in collection</th>

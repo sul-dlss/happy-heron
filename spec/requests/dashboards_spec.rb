@@ -80,9 +80,6 @@ RSpec.describe 'Dashboard requests' do
       expect(response).to be_successful
       expect(response.body).to include 'Collections in progress'
       expect(response.body).to include collection_version.name
-
-      # This user is able to edit the collection
-      expect(response.body).to include 'Edit'
     end
   end
 

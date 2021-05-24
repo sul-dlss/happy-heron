@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resources :collections, only: %i[show edit update destroy] do
     member do
       get :deposit_button
+      get :delete_button
+      get :edit_link
     end
 
     resource :validate, only: :show

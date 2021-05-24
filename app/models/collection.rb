@@ -20,9 +20,13 @@ class Collection < ApplicationRecord
                                        '2 years from date of deposit': '2 years',
                                        '3 years from date of deposit': '3 years' }.freeze
   def broadcast_update
+    # Update the collection settings show page
     broadcast_replace_to self, :settings
+    # Update the collection details show page
     broadcast_replace_to self, :details, partial: 'collection_versions/collection_version',
                                          locals: { collection_version: head }
+    # This will update the deposit status of the collection on the dashboard
+    broadcast_replace_to :collection_headers, partial: 'dashboards/collection_header'
   end
 
   sig { returns(T.nilable(Date)) }
