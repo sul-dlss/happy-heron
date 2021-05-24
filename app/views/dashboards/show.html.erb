@@ -15,6 +15,7 @@
         <% end %>
       </header>
 
+      <%= turbo_stream_from :collection_headers %>
       <%= turbo_stream_from :summary_rows %>
 
       <ul class="collections">
