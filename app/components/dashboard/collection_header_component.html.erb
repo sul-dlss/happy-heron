@@ -2,6 +2,6 @@
 <% if depositing? %>
   <span class="state">Depositing <%= spinner %></span>
 <% else %>
-  <%= edit_link %>
+  <%= helpers.turbo_frame_tag dom_id(collection, :edit), src: edit_link_collection_path(collection) %>
   <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if first_draft? %>
 <% end %>

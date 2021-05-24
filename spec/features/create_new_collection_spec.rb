@@ -12,13 +12,14 @@ RSpec.describe 'Create a new collection', js: true do
 
   context 'when successful deposit' do
     let(:collection_version_attrs) { attributes_for(:collection_version) }
+    let(:name) { collection_version_attrs.fetch(:name) }
 
     it 'deposits and renders work show page' do
       visit dashboard_path
 
       click_link '+ Create a new collection'
 
-      fill_in 'Collection name', with: collection_version_attrs.fetch(:name)
+      fill_in 'Collection name', with: name
       fill_in 'Description', with: collection_version_attrs.fetch(:description)
       fill_in 'Contact email', with: 'test@example.edu'
       check 'Send email to collection Managers and Reviewers when participants are added/removed.'
@@ -35,13 +36,18 @@ RSpec.describe 'Create a new collection', js: true do
 
       click_button 'Deposit'
 
-      expect(page).to have_content(collection_version_attrs.fetch(:name))
-      # The deposit button is not present until the collection is accessioned (nor is the button for reserving a PURL)
-      expect(page).not_to have_content('+ Deposit to this collection')
-      expect(page).not_to have_content('Reserve a PURL')
+      expect(page).to have_content name
+      expect(page).to have_content('Depositing')
 
-      # We should not see the delete button for this collection since it is not a draft
-      expect(page).not_to have_selector("[aria-label='Delete #{collection_version_attrs.fetch(:name)}']")
+      # Simulate the deposit process
+      CollectionVersion.last.tap do |version|
+        version.collection.update!(druid: 'druid:dc224fz4940')
+        version.deposit_complete!
+      end
+
+      # This link appears when depositing is complete
+      click_link "Edit #{name}"
+      expect(page).not_to have_content('Depositing')
     end
 
     it 'shows a confirmation if you cancel the collection deposit and goes back if confirmed' do

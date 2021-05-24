@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     member do
       get :deposit_button
       get :delete_button
+      get :edit_link
     end
 
     resource :validate, only: :show
