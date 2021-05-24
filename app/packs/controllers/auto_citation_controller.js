@@ -3,7 +3,7 @@ import { Controller } from "stimulus";
 export default class extends Controller {
   static targets = ["titleField", "manual", "auto", "switch",
     "contributorFirst", "contributorLast", "contributorRole", "contributorOrg",
-    "year", "embargoYear"];
+    "year", "embargoYear", "embargo"];
 
   connect() {
     this.purl = this.data.get("purl") || ":link will be inserted here automatically when available:" // Use a real purl on a persisted item or a placeholder
@@ -73,7 +73,7 @@ export default class extends Controller {
   }
 
   get year() {
-    if (this.hasEmbargoYearTarget && this.yearTarget.value.length < 1) {
+    if (this.hasEmbargoTarget && this.embargoTarget.checked && this.yearTarget.value.length < 1) {
       return this.embargoYearTarget.value
     }
     return this.yearTarget.value
