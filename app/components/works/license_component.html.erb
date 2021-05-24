@@ -9,7 +9,11 @@
       <div class="col-sm-5">
         <%= form.select :license,
                         grouped_options_for_select(License.grouped_options(license), license),
-                        {}, class: "form-select" %>
+                        {}, class: "form-select",
+                        data: { controller: 'license', action: 'change->license#validate' } %>
+        <div class="invalid-feedback">
+          Please select a supported license.
+        </div>
       </div>
       <div class="col-sm-5">
         <%= link_to 'Get help selecting a license', 'https://library.stanford.edu/research/stanford-digital-repository/faqs/sdr-license-options', target: '_blank' %>
