@@ -58,6 +58,13 @@ class CollectionsController < ObjectsController
     render partial: 'collections/deposit_button', locals: { collection: collection }
   end
 
+  # We render this button lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the collection.
+  def delete_button
+    collection = Collection.find(params[:id])
+    render partial: 'collections/delete_button', locals: { collection: collection }
+  end
+
   private
 
   sig { params(collection_version: CollectionVersion, collection: Collection, context: Hash).void }
