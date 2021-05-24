@@ -28,6 +28,9 @@ module Works
       reform.errors.where(:embargo_date)
     end
 
+    # This field is required so that the form can't be submitted until it's filled in.
+    # However, if it is marked as "disabled" (via complex_radio_controller.js) then
+    # required is not applied. This is the desired behavior.
     def year_field
       select_year embargo_year,
                   {
@@ -41,20 +44,29 @@ module Works
                     action: 'change->auto-citation#updateDisplay'
                   },
                   id: 'work_embargo_year',
+                  required: true,
                   class: "form-control#{' is-invalid' if error?}"
     end
 
+    # This field is required so that the form can't be submitted until it's filled in.
+    # However, if it is marked as "disabled" (via complex_radio_controller.js) then
+    # required is not applied. This is the desired behavior.
     def month_field
       select_month embargo_month,
                    { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month' },
                    id: 'work_embargo_month',
+                   required: true,
                    class: "form-control#{' is-invalid' if error?}"
     end
 
+    # This field is required so that the form can't be submitted until it's filled in.
+    # However, if it is marked as "disabled" (via complex_radio_controller.js) then
+    # required is not applied. This is the desired behavior.
     def day_field
       select_day embargo_day,
                  { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day' },
                  id: 'work_embargo_day',
+                 required: true,
                  class: "form-control#{' is-invalid' if error?}"
     end
 
