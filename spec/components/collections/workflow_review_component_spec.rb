@@ -6,6 +6,10 @@ require 'rails_helper'
 RSpec.describe Collections::WorkflowReviewComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection: collection)) }
 
+  before do
+    allow(controller).to receive(:allowed_to?).and_return(true)
+  end
+
   context 'when displaying a collection' do
     let(:reviewers) { collection.reviewed_by.map(&:sunetid).join(', ') }
     let(:collection) { build_stubbed(:collection, :with_reviewers, head: collection_version) }

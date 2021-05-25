@@ -5,7 +5,7 @@
 class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized except: %i[deposit_button delete_button edit_link]
+  verify_authorized except: %i[deposit_button delete_button edit_link header]
 
   def edit
     collection = Collection.find(params[:id])
@@ -70,6 +70,13 @@ class CollectionsController < ObjectsController
   def edit_link
     collection = Collection.find(params[:id])
     render partial: 'collections/edit_link', locals: { collection: collection }
+  end
+
+  # We render this header lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the collection.
+  def header
+    collection = Collection.find(params[:id])
+    render partial: 'collections/header', locals: { collection: collection }
   end
 
   private

@@ -1,6 +1,7 @@
 <% # The collection settings page %>
+<% # TODO: this can move back to being a component %>
 <section id="<%= dom_id(collection) %>">
-  <%= render Collections::Show::SettingsHeaderComponent.new(collection_version: collection.head) %>
+  <%= render 'header', collection: collection %>
   <%= render Collections::ReleaseComponent.new(collection: collection) %>
   <%= render Collections::TermsOfUseComponent.new(collection: collection) %>
   <%= render Collections::ParticipantsComponent.new(collection: collection) %>

@@ -16,11 +16,12 @@ RSpec.describe Collections::Show::DetailsHeaderComponent, type: :component do
 
   context 'with a depositing collection' do
     let(:collection_version) { build_stubbed(:collection_version, :depositing) }
+    let(:collection_id) { collection_version.collection.id }
 
     it 'does not render the spinner' do
       expect(rendered.to_html).to include 'Depositing'
       expect(rendered.to_html).to include 'fas fa-spinner fa-pulse'
-      expect(rendered.css('a').first['href']).to eq "/collection_versions/#{collection_version.id}/edit"
+      expect(rendered.css('turbo-frame').first['src']).to eq "/collections/#{collection_id}/edit_link"
     end
   end
 end

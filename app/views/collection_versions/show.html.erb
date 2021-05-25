@@ -5,7 +5,7 @@
 <main id="content" class="mb-3 mb-md-5">
   <div class="container px-4 px-md-3" id="collection">
     <%= render Collections::Show::TabsComponent.new(collection: @collection_version.collection) %>
-    <%= turbo_stream_from @collection_version.collection, :details %>
+    <%= turbo_stream_from @collection_version.collection, :collection_details_header %>
     <%= render @collection_version %>
   </div>
 </main>
