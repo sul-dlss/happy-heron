@@ -1,6 +1,9 @@
 <table class="table table-sm mb-5 caption-header">
   <caption>Release and visibility
-    <%= render Collections::EditLinkComponent.new(collection_version: collection_version, anchor: 'release_details', label: 'Edit release options') %>
+    <%= helpers.turbo_frame_tag dom_id(collection, :edit_release_details),
+                                src: edit_link_collection_path(collection,
+                                       ref: 'release_details',
+                                       label: 'Edit release options') %>
   </caption>
   <tbody>
     <tr>

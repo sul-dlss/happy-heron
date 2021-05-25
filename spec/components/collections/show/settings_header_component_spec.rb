@@ -8,10 +8,12 @@ RSpec.describe Collections::Show::SettingsHeaderComponent, type: :component do
 
   context 'with a new, first draft collection' do
     let(:collection_version) { build_stubbed(:collection_version, :first_draft) }
+    let(:collection_id) { collection_version.collection_id }
 
     it 'does not render the spinner and renders the edit link' do
       expect(rendered.to_html).not_to include 'fa-spinner'
       expect(rendered.css('a.btn').text).to eq 'Edit or Deposit'
+      expect(rendered.css('turbo-frame').first['src']).to eq "/collections/#{collection_id}/edit_link"
     end
   end
 

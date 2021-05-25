@@ -35,12 +35,6 @@ module Collections
         link_to 'Edit or Deposit', edit_collection_path(collection),
                 class: 'btn btn-outline-primary float-end me-2'
       end
-
-      def edit_link
-        render Collections::EditLinkComponent.new(collection_version: collection_version,
-                                                  anchor: '',
-                                                  label: "Edit #{name}")
-      end
     end
   end
 end

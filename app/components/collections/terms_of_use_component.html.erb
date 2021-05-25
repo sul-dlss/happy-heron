@@ -1,6 +1,9 @@
 <table class="table table-sm mb-5 caption-header">
   <caption>Terms of use and licenses
-    <%= render Collections::EditLinkComponent.new(collection_version: collection_version, anchor: 'terms', label: 'Edit terms of use and license') %>
+    <%= helpers.turbo_frame_tag dom_id(collection, :edit_terms),
+                                src: edit_link_collection_path(collection,
+                                       ref: 'terms',
+                                       label: 'Edit terms of use and license') %>
   </caption>
   <tbody>
     <tr>

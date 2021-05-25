@@ -41,7 +41,11 @@ Rails.application.routes.draw do
   end
 
   resources :first_draft_collections, only: %i[new create edit update]
-  resources :collection_versions, only: %i[show destroy edit update]
+  resources :collection_versions, only: %i[show destroy edit update] do
+    member do
+      get :edit_link
+    end
+  end
   resources :work_versions, only: :destroy
 
   direct :contact_form do

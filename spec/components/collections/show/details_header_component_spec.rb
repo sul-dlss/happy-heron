@@ -20,7 +20,7 @@ RSpec.describe Collections::Show::DetailsHeaderComponent, type: :component do
     it 'does not render the spinner' do
       expect(rendered.to_html).to include 'Depositing'
       expect(rendered.to_html).to include 'fas fa-spinner fa-pulse'
-      expect(rendered.css('a').first['href']).to eq "/collection_versions/#{collection_version.id}/edit"
+      expect(rendered.css('turbo-frame').first['src']).to eq "/collection_versions/#{collection_version.id}/edit_link"
     end
   end
 end
