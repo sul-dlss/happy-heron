@@ -23,7 +23,7 @@ RSpec.describe 'Help modal', js: true do
       select 'I want to ask a question', from: 'How can we help you?*'
       fill_in 'Describe your issue, question, or what you would like to deposit', with: 'A question for the ages'
       click_button 'Submit'
-      expect(page).to have_content 'You should receive a response from our team within 48 hours.'
+      expect(page).to have_content 'Your message has been sent to the SDR team. We will respond to you soon.'
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe 'Help modal', js: true do
       fill_in 'What is your Stanford affiliation/department?', with: 'Lane Medical Library'
       fill_in 'Describe your issue, question, or what you would like to deposit', with: reason
       click_button 'Submit'
-      expect(page).to have_content 'You should receive a response from our team within 48 hours.'
+      expect(page).to have_content 'Your message has been sent to the SDR team. We will respond to you soon.'
     end
   end
 end
