@@ -41,6 +41,9 @@ en:
     last_modified: Modified
     number_of_files: Files
     persistent_link: Persistent link
+    access:
+      world: anyone
+      stanford: Stanford community members only
   tooltip:
     what_type: Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
     further_types: You have the option to further describe the work you are depositing. If you have chosen "Mixed Materials", you must choose at least two of the additional terms. If you have chosen "Music", you must select at least one term from the shorter list of terms below, but you may enter others from the full list as well (choose "See more options"). If you have chosen "Other", you must enter a word or short phrase to describe the overall nature of the work you are depositing.
