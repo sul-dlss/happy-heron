@@ -1,7 +1,7 @@
-<%= turbo_frame_tag dom_id(collection, :edit) do %>
+<%= turbo_frame_tag dom_id(collection, ['edit', anchor].compact.join('_')) do %>
   <% if allowed_to?(:update?, collection.head) %>
-    <%= link_to tag.span(class: 'fas fa-pencil-alt'),
-                edit_collection_path(collection),
-                aria: { label: "Edit #{collection.head.name}" } %>
+    <%= link_to tag.span(class: 'fas fa-pencil-alt edit'),
+                edit_collection_path(collection, anchor: anchor),
+                aria: { label: label } %>
   <% end %>
 <% end %>

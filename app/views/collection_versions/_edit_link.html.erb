@@ -1,0 +1,7 @@
+<%= turbo_frame_tag dom_id(collection_version, :edit) do %>
+  <% if allowed_to?(:update?, collection_version) %>
+    <%= link_to edit_collection_version_path(collection_version), aria: { label: "Edit #{name}" } do %>
+      <%= tag.span class: 'fas fa-pencil-alt edit' %>
+    <% end %>
+  <% end %>
+<% end %>

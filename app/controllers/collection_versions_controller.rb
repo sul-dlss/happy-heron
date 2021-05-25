@@ -5,7 +5,7 @@
 class CollectionVersionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable, except: [:destroy]
-  verify_authorized
+  verify_authorized except: %i[edit_link]
 
   def show
     @collection_version = CollectionVersion.find(params[:id])
@@ -54,6 +54,16 @@ class CollectionVersionsController < ObjectsController
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  # We render this link lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the collection.
+  def edit_link
+    collection_version = CollectionVersion.find(params[:id])
+    render partial: 'edit_link', locals: {
+      collection_version: collection_version,
+      name: collection_version.name
+    }
   end
 
   private

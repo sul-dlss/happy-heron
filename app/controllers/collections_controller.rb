@@ -67,9 +67,16 @@ class CollectionsController < ObjectsController
 
   # We render this link lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.
+  # NOTE, the "ref" parameter is used to create the anchor as well as the dom_id for the turbo-frame
+  # so when you link to this method ensure the dom_id or the containing frame matches the target anchor.
   def edit_link
     collection = Collection.find(params[:id])
-    render partial: 'collections/edit_link', locals: { collection: collection }
+    label = params.fetch(:label) { "Edit #{collection.head.name}" }
+    render partial: 'edit_link', locals: {
+      collection: collection,
+      label: label,
+      anchor: params[:ref]
+    }
   end
 
   private
