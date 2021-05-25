@@ -18,7 +18,6 @@ class FirstDraftCollectionsController < ObjectsController
   end
 
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def create
     collection = Collection.new(creator: current_user)
     authorize! collection
@@ -28,17 +27,12 @@ class FirstDraftCollectionsController < ObjectsController
     if @form.validate(create_params) && @form.save
       collection_version.collection.event_context = { user: current_user }
       collection_version.update_metadata!
-      if deposit_button_pushed?
-        collection_version.begin_deposit!
-        redirect_to dashboard_path
-      else
-        redirect_to collection_path(collection)
-      end
+      collection_version.begin_deposit! if deposit_button_pushed?
+      redirect_to collection_path(collection)
     else
       render :new, status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
   def edit

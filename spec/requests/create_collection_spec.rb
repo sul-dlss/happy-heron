@@ -137,11 +137,11 @@ RSpec.describe 'Create a collection' do
 
         it 'creates a new collection' do
           post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
-          expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(dashboard_path)
           collection = Collection.last
           collection_version = collection.head
 
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(collection_path(collection))
           expect(collection.depositors.size).to eq 6
           expect(collection.depositors).to all(be_kind_of(User))
           expect(collection.depositors).to include(User.find_by!(email: 'maya.aguirre@stanford.edu'))
@@ -175,9 +175,9 @@ RSpec.describe 'Create a collection' do
 
           it 'sets the managers and reviewers fields' do
             post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
-            expect(response).to have_http_status(:found)
-            expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection_path(collection))
             expect(collection.managed_by.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
             expect(collection.reviewed_by.map(&:email)).to eq %w[maya.aguirre@stanford.edu
                                                                  jcairns@stanford.edu faridz@stanford.edu]
@@ -196,9 +196,9 @@ RSpec.describe 'Create a collection' do
 
           it 'nils out the reviewers field' do
             post first_draft_collections_path, params: { collection: collection_params, commit: deposit_button }
-            expect(response).to have_http_status(:found)
-            expect(response).to redirect_to(dashboard_path)
             collection = Collection.last
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection_path(collection))
             expect(collection.reviewed_by).to be_empty
           end
         end
