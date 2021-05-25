@@ -1,6 +1,8 @@
 <header class="title">
   <span class="header-text"><%= name %></span>
-  <%= helpers.turbo_frame_tag dom_id(collection, :edit), src: edit_link_collection_path(collection) %>
+  <%= helpers.turbo_frame_tag dom_id(collection, :edit),
+                              src: edit_link_collection_path(collection),
+                              target: '_top' %>
   <% if depositing? %>
     <span class="state">Depositing <%= spinner %></span>
   <% end %>
