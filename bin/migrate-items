@@ -72,12 +72,14 @@ CONTRIBUTOR_TYPE = {
 }
 
 CONTRIBUTOR_ROLE = {
+  'aut' => 'Author',
   'Author' => 'Author',
   'author' => 'Author', # Bad data? about 1000 items are like this.
   'author,' => 'Author', # Bad data? 4 items have this role
   'author.' => 'Author', # Bad data? 207 items have this role
   'autor' => 'Author', # Bad data? 7 items have this role
   'Department' => 'Research group',
+  'Distributor' => 'Distributor',
   'Editor' => 'Editor',
   'editor' => 'Editor',
   'editor.' => 'Editor',
@@ -116,7 +118,6 @@ CONTRIBUTOR_ROLE = {
 }
 
 INVALID_ROLES = [
-  'Distributor',
   'production company.',
   'compiler',
   'compiler.',
@@ -133,7 +134,6 @@ INVALID_ROLES = [
   'commissioning body',
   'cre', # see druid:jn023kf3320
   'his', # see druid:jn023kf3320
-  'aut', # see druid:ns801cg260 and 19 others
   'ive', # see druid:fg188hk6403 and druid:hd575hm6964
   'ivr', # see druid:fg188hk6403 and druid:hd575hm6964
   'pbl', # see druid:fg188hk6403 and druid:hd575hm6964
@@ -196,10 +196,10 @@ def contributors(json)
     case hydrus_role
     when *INVALID_ROLES # H2 doesn't have an equivalent role
       warn "Found role '#{hydrus_role}' for #{json['druid']}, but there is no H2 equivalent role. Skipping."
-      next
+      return nil
     when ''
       warn "Found empty role for #{json['druid']}, Skipping."
-      next
+      return nil
     end
     role = CONTRIBUTOR_ROLE.fetch(hydrus_role)
 
@@ -269,6 +269,9 @@ def build_work_version_attributes(json, type_data)
     return
   end
 
+  contribs = contributors(json)
+  return unless contribs
+
   created_edtf = EDTF.parse(json.fetch('date_created')) if json['date_created']
   {
     version: json.fetch('version'),
@@ -284,7 +287,7 @@ def build_work_version_attributes(json, type_data)
     state: STATES.fetch(json.fetch('object_status')),
     related_links: related_links(json),
     related_works: related_works(json),
-    contributors: contributors(json)
+    contributors: contribs
   }
 end
 
