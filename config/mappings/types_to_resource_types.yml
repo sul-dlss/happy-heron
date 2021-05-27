@@ -313,8 +313,8 @@ Image:
         source:
           value: MODS resource types
     Database:
-      - type: software, multimedia
-        value: text
+      - type: resource type
+        value: software, multimedia
         source:
           value: MODS resource types
     Documentary:
@@ -579,8 +579,8 @@ Mixed Materials:
         source:
           value: MODS resource types
     Database:
-      - type: software, multimedia
-        value: text
+      - type: resource type
+        value: software, multimedia
         source:
           value: MODS resource types
     Documentary:
@@ -852,8 +852,8 @@ Music:
         source:
           value: MODS resource types
     Database:
-      - type: software, multimedia
-        value: text
+      - type: resource type
+        value: software, multimedia
         source:
           value: MODS resource types
     Documentary:
@@ -1125,8 +1125,8 @@ Other:
         source:
           value: MODS resource types
     Database:
-      - type: software, multimedia
-        value: text
+      - type: resource type
+        value: software, multimedia
         source:
           value: MODS resource types
     Documentary:
@@ -1662,8 +1662,8 @@ Sound:
         source:
           value: MODS resource types
     Database:
-      - type: software, multimedia
-        value: text
+      - type: resource type
+        value: software, multimedia
         source:
           value: MODS resource types
     Documentary:
@@ -2140,8 +2140,8 @@ Video:
         source:
           value: MODS resource types
     Database:
-      - type: software, multimedia
-        value: text
+      - type: resource type
+        value: software, multimedia
         source:
           value: MODS resource types
     Documentary:
