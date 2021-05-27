@@ -7,15 +7,16 @@ en:
       abbr_month: '%b %d, %Y %-I:%M %p'
   event:
     type:
-      pid_assigned: PURL assigned
-      reserve_purl: PURL requested
       begin_deposit: Submitted for deposit
       deposit_complete: Deposit completed
-      update_metadata: Updated by user
+      embargo_lifted: 'Embargo lifted'
+      pid_assigned: PURL assigned
+      reject: Returned by reviewer
+      reserve_purl: PURL requested
       settings_updated: Settings updated
       submit_for_review: Submitted for review
-      reject: Returned by reviewer
       type_selected: Type selected for reserved PURL
+      update_metadata: Updated by user
   contributor:
     roles:
       person: Individual

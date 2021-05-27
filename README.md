@@ -136,7 +136,7 @@ This is going to create queues for this application that bind to some topics.
 ### RabbitMQ queue workers
 In a development environment you can start sneakers this way:
 ```sh
-WORKERS=AssignPidJob,DepositStatusJob bin/rake sneakers:run
+WORKERS=AssignPidJob,DepositStatusJob,RecordEmbargoReleaseJob bin/rake sneakers:run
 ```
 
 but on the production machines we use systemd to do the same:
@@ -153,6 +153,8 @@ This is started automatically during a deploy via capistrano
 H2 uses the [SDR API](https://github.com/sul-dlss/sdr-api) to deposit collections and works (both files and metadata) into SDR.
 
 H2 relies upon dor-services-app publishing messages to the `sdr.objects.created` topic when a resource is persisted. Then RabbitMQ routes this message to a queue `h2.druid_assigned`.  The `AssignPidJob` running via Sneakers works on messages from this queue.  Similarly workflow-server-rails publishes messages to the `sdr.workflow` topic when accessioning is completed.  RabbitMQ then routes these messages to a queue `h2.deposit_complete` which is processed by the `DepositStatusJob` via Sneakers.
+
+There is also a `sdr.objects.embargo_lifted` topic that gets messages when dor-services-app lifts an embargo. H2 monitors those messages and logs an event when it detects one for an item it knows about.
 
 ## Branch aliasing
 

@@ -4,7 +4,7 @@
 # Records events in the lifecycle of a deposit
 class Event < ApplicationRecord
   belongs_to :eventable, polymorphic: true
-  belongs_to :user
+  belongs_to :user, optional: true
 
   sig { params(type: String).returns(T.nilable(Event)) }
   def self.latest_by_type(type)

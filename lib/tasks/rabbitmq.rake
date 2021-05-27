@@ -22,6 +22,9 @@ namespace :rabbitmq do
     queue = channel.queue('h2.druid_assigned', durable: true)
     queue.bind(exchange, routing_key: Settings.h2.project_tag)
 
+    exchange = channel.topic('sdr.objects.embargo_lifted')
+    queue = channel.queue('h2.embargo_lifted', durable: true)
+    queue.bind(exchange, routing_key: Settings.h2.project_tag)
     conn.close
   end
 end

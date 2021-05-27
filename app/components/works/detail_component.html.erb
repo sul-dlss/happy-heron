@@ -214,7 +214,7 @@
       <% events.each do |event| %>
         <tr>
           <td><%= I18n.t event.event_type, scope: 'event.type' %></td>
-          <td><%= event.user.sunetid %></td>
+          <td><%= event.user&.sunetid %></td>
           <td><%= I18n.l(event.created_at, format: :abbr_month) %></td>
 
           <td><%= event.description %></td>
