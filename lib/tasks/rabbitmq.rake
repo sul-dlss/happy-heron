@@ -20,8 +20,7 @@ namespace :rabbitmq do
 
     exchange = channel.topic('sdr.objects.created')
     queue = channel.queue('h2.druid_assigned', durable: true)
-    # TODO: if we set partOfProject when we register, then update this routing key to match
-    queue.bind(exchange, routing_key: '#')
+    queue.bind(exchange, routing_key: Settings.h2.project_tag)
 
     conn.close
   end
