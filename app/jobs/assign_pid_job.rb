@@ -13,11 +13,7 @@ class AssignPidJob
   sig { params(msg: String).returns(Symbol) }
   def work(msg)
     model = build_cocina_model_from_json_str(msg)
-
-    source_id = model.identification&.sourceId
-    Honeybadger.context(source_id: source_id)
-    return ack! unless source_id&.start_with?('hydrus:')
-
+    source_id = model.identification.sourceId
     assign_druid(source_id, model.externalIdentifier)
     ack!
   end
