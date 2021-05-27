@@ -3,7 +3,6 @@
 
 # Renders a widget for describing a related link.
 class PurlCheckLinkComponent < ApplicationComponent
-
   def initialize(work_version:, anchor: nil, label: nil, css_class: nil)
     @work_version = work_version
     @anchor = anchor
@@ -12,12 +11,14 @@ class PurlCheckLinkComponent < ApplicationComponent
   end
 
   def choose_label
-    return "Choose or Edit #{get_title}" if label.nil?
+    return "Choose or Edit #{title}" if label.nil?
+
     label
   end
 
   def edit_label
-    return "Edit #{get_title}" if label.nil?
+    return "Edit #{title}" if label.nil?
+
     label
   end
 
@@ -25,8 +26,7 @@ class PurlCheckLinkComponent < ApplicationComponent
 
   private
 
-  def get_title
+  def title
     Works::DetailComponent.new(work_version: work_version).title
   end
-
 end
