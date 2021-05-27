@@ -151,6 +151,8 @@ RSpec.describe 'Dashboard requests' do
     let(:work_version4) { create(:work_version, state: 'pending_approval', work: work4) }
     let(:work5) { create(:work, depositor: user, collection: workful_collection) }
     let(:work_version5) { create(:work_version, state: 'rejected', work: work5) }
+    let(:work6) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work_version6) { create(:work_version, state: 'purl_reserved', work: work6) }
 
     before do
       create(:collection_version_with_collection, collection: workful_collection)
@@ -164,6 +166,7 @@ RSpec.describe 'Dashboard requests' do
       work3.update(head: work_version3)
       work4.update(head: work_version4)
       work5.update(head: work_version5)
+      work6.update(head: work_version6)
 
       sign_in user, groups: ['dlss:hydrus-app-administrators']
     end
@@ -175,7 +178,8 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include '+ Create a new collection'
       expect(response.body).to include <<-HTML
   <td><a href=\"#{collection_path(workful_collection)}\">MyString</a></td>
-  <td>5</td>
+  <td>6</td>
+  <td>1</td>
   <td>1</td>
   <td>1</td>
   <td>1</td>
@@ -186,6 +190,7 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include <<-HTML
   <td><a href=\"#{collection_path(workless_collection)}\">MyString</a></td>
   <td>0</td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
