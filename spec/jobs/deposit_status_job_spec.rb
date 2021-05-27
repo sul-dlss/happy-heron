@@ -4,10 +4,13 @@
 require 'rails_helper'
 
 RSpec.describe DepositStatusJob do
-  context 'with a work' do
+  subject(:run) { instance.work(message) }
+
+  let(:instance) { described_class.new }
+
+  context 'with a work that is depositing' do
     let(:work_version) do
-      build(:work_version, :depositing, work: work,
-                                        citation: "Zappa, F. (2013) #{WorkVersion::LINK_TEXT}")
+      build(:work_version, :depositing, work: work)
     end
     let(:work) { create(:work, :with_druid, collection: collection, depositor: collection.managed_by.first) }
     let(:collection) { build(:collection, :with_managers) }
@@ -20,9 +23,7 @@ RSpec.describe DepositStatusJob do
     end
 
     it 'updates the work version' do
-      expect do
-        described_class.new.work(message)
-      end.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+      expect { run }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
         'CollectionsMailer', 'item_deposited', 'deliver_now',
         { params: {
           user: collection.managed_by.last,
@@ -32,6 +33,40 @@ RSpec.describe DepositStatusJob do
       )
 
       expect(work_version.reload).to be_deposited
+    end
+  end
+
+  context 'with a work that is already deposited (embargo was released by DSA)' do
+    let(:work_version) do
+      build(:work_version, :deposited, work: work)
+    end
+    let(:work) { create(:work, :with_druid) }
+    let(:message) { "{\"druid\":\"#{work.druid}\"}" }
+
+    before do
+      work.update(head: work_version)
+    end
+
+    it "doesn't do a transition" do
+      expect { run }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
+      expect(work_version.reload).to be_deposited
+    end
+  end
+
+  context 'with a work that is in a verison_draft state (embargo was released by DSA)' do
+    let(:work_version) do
+      build(:work_version, :version_draft, work: work)
+    end
+    let(:work) { create(:work, :with_druid) }
+    let(:message) { "{\"druid\":\"#{work.druid}\"}" }
+
+    before do
+      work.update(head: work_version)
+    end
+
+    it "doesn't do a transition" do
+      expect { run }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
+      expect(work_version.reload).to be_version_draft
     end
   end
 
@@ -45,7 +80,7 @@ RSpec.describe DepositStatusJob do
     end
 
     it 'transitions to deposited state' do
-      described_class.new.work(message)
+      run
       expect(collection_version.reload).to be_deposited
     end
   end
