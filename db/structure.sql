@@ -214,7 +214,8 @@ CREATE TABLE public.collection_versions (
     description character varying,
     collection_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    version_description character varying
 );
 
 
@@ -1281,6 +1282,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210211170008'),
 ('20210216220559'),
 ('20210218234733'),
-('20210219142356');
+('20210219142356'),
+('20210520161846');
 
 

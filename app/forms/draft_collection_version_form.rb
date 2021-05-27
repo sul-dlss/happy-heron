@@ -8,6 +8,8 @@ class DraftCollectionVersionForm < Reform::Form
 
   property :name, on: :collection_version
   property :description, on: :collection_version
+  property :version_description, on: :collection_version
+
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
                               on: :collection_version do

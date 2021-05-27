@@ -89,7 +89,7 @@ class CollectionVersionsController < ObjectsController
   end
 
   def collection_params
-    params.require(:collection_version).permit(:name, :description,
+    params.require(:collection_version).permit(:name, :description, :version_description,
                                                related_links_attributes: %i[_destroy id link_title url],
                                                contact_emails_attributes: %i[_destroy id email])
   end

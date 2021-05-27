@@ -12,6 +12,6 @@ module Collections
     sig { returns(CollectionVersion) }
     attr_reader :collection_version
 
-    delegate :name, :description, :contact_emails, to: :collection_version
+    delegate :name, :description, :version_description, :contact_emails, to: :collection_version
   end
 end
