@@ -335,12 +335,18 @@ def create_or_update_work(json, type_data)
     return unless work_version_attrs
 
     if work_version
-      work_version.update!(work_version_attrs)
+      unless work_version.update(work_version_attrs)
+        warn "Validation of work_version failed on #{json['druid']}, #{work_version.errors.full_messages}, #{work_version_attrs}"
+        return
+      end
       attach_files(json, work_version)
     else
       work_version = work.build_head(work_version_attrs.
         merge(work_id: work.id, version: json.fetch('version')))
-      work_version.save!
+      unless work_version.save
+        warn "Validation of work_version failed on #{json['druid']}, #{work_version.errors.full_messages}, #{work_version_attrs}"
+        return
+      end
       attach_files(json, work_version)
       work.update!(head: work_version)
     end
