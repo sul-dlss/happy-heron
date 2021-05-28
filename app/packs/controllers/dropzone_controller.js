@@ -16,11 +16,9 @@ export default class extends Controller {
     this.dropZone = createDropZone(this, this.templateTarget.innerHTML)
     this.hideFileInput()
     this.fileCount = this.previewTargets.length
+    this.done = true
     this.validate()
     this.bindEvents()
-    this.inputTarget.form.onsubmit = (form) => {
-      this.displayValidateMessage()
-    }
     Dropzone.autoDiscover = false // necessary quirk for Dropzone error in console
   }
 
@@ -78,7 +76,7 @@ export default class extends Controller {
     this.displayValidateMessage()
   }
 
-  // Tell the ProgressController to update
+  // Tell the EditDepositController to update
   informProgress() {
     this.inputTarget.dispatchEvent(new Event('change'))
   }
@@ -94,6 +92,7 @@ export default class extends Controller {
           this.fileCount++
           this.enableSubmission()
       }, 500);
+      this.done = false
     });
 
     this.dropZone.on("removedfile", file => {
@@ -117,6 +116,19 @@ export default class extends Controller {
       this.informProgress()
     })
 
+    this.dropZone.on("queuecomplete", () => {
+      this.done = true
+    })
+
+    this.inputTarget.form.addEventListener('submit', (evt) => {
+      if (!this.done) {
+        alert("Deposit will be enabled once files have finished uploading")
+        evt.preventDefault()
+        evt.stopPropagation()
+      } else {
+        this.displayValidateMessage()
+      }
+    }, false)
   }
 
   get headers() {
