@@ -35,6 +35,16 @@ export default class extends Controller {
     }
   }
 
+  checkForDuplicates(fileName) {
+    // Current files in dropZone
+    const fileNames = this.dropZone.files.map(file => { return file.name })
+    // Remove current fileName
+    fileNames.pop(fileName)
+    // Existing files for this Work
+    this.previewTargets.map(elem => { fileNames.push(elem.children[1].innerText.trim()) })
+    return fileNames.indexOf(fileName) > -1
+  }
+
   displayValidateMessage() {
     // Because the feedback isn't a sibling of the input field, we can't simply
     // rely on the bootstrap selector to display the message
@@ -75,10 +85,14 @@ export default class extends Controller {
 
   bindEvents() {
     this.dropZone.on("addedfile", file => {
+      if (this.checkForDuplicates(file.name) === true) {
+        this.dropZone.emit("error", file, `Duplicate file ${file.name}`);
+        return
+      }
       setTimeout(() => {
-        file.accepted && createDirectUploadController(this, file).start();
-        this.fileCount++
-        this.enableSubmission()
+          file.accepted && createDirectUploadController(this, file).start();
+          this.fileCount++
+          this.enableSubmission()
       }, 500);
     });
 
@@ -91,9 +105,18 @@ export default class extends Controller {
       file.controller && file.controller.xhr.abort();
     });
 
+    this.dropZone.on("error", (file, error) => {
+      file.status = Dropzone.ERROR;
+      this.containerTarget.classList.add("is-invalid")
+      this.feedbackTarget.style.display = 'block'
+      this.feedbackTarget.innerText = error
+      this.dropZone.removeFile(file)
+    })
+
     this.dropZone.on("complete", () => {
       this.informProgress()
     })
+
   }
 
   get headers() {
