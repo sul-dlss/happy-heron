@@ -10,7 +10,7 @@ RSpec.describe CollectionGenerator do
   context 'without a druid' do
     let(:collection) { build(:collection, id: 7) }
     let(:collection_version) do
-      build(:collection_version, :with_related_links, name: 'Test title', collection: collection)
+      build(:collection_version, :with_related_links, :with_contact_emails, name: 'Test title', collection: collection)
     end
     let(:expected_model) do
       {
@@ -23,6 +23,15 @@ RSpec.describe CollectionGenerator do
           partOfProject: project_tag
         },
         description: {
+          access: {
+            accessContact: [
+              {
+                value: 'io@io.io',
+                type: 'email',
+                displayLabel: 'Contact'
+              }
+            ]
+          },
           title: [
             {
               value: 'Test title'
@@ -46,13 +55,15 @@ RSpec.describe CollectionGenerator do
     end
 
     it 'generates the model' do
-      expect(model).to eq Cocina::Models::RequestCollection.new(expected_model)
+      expect(model.to_h).to eq expected_model
     end
   end
 
   context 'with a druid' do
     let(:collection) { build(:collection, id: 7, druid: 'druid:bk123gh4567') }
-    let(:collection_version) { build(:collection_version, name: 'Test title', collection: collection) }
+    let(:collection_version) do
+      build(:collection_version, :with_contact_emails, name: 'Test title', collection: collection)
+    end
 
     let(:expected_model) do
       {
@@ -71,7 +82,21 @@ RSpec.describe CollectionGenerator do
               value: 'Test title'
             }
           ],
-          relatedResource: []
+          purl: 'https://purl.stanford.edu/bk123gh4567',
+          access: {
+            accessContact: [
+              {
+                value: 'io@io.io',
+                type: 'email',
+                displayLabel: 'Contact'
+              }
+            ],
+            digitalRepository: [
+              {
+                value: 'Stanford Digital Repository'
+              }
+            ]
+          }
         },
         identification: {
           sourceId: "hydrus:collection-#{collection.id}"
@@ -80,7 +105,7 @@ RSpec.describe CollectionGenerator do
     end
 
     it 'generates the model' do
-      expect(model).to eq Cocina::Models::Collection.new(expected_model)
+      expect(model.to_h).to eq expected_model
     end
   end
 end

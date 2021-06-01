@@ -45,7 +45,7 @@ class CollectionGenerator
       },
       label: collection_version.name,
       type: Cocina::Models::Vocab.collection,
-      description: description,
+      description: CollectionDescriptionGenerator.generate(collection_version: collection_version),
       version: collection_version.version
     }
   end
@@ -55,14 +55,6 @@ class CollectionGenerator
   def access
     {
       access: 'world'
-    }
-  end
-
-  sig { returns(Hash) }
-  def description
-    {
-      title: [{ value: collection_version.name }],
-      relatedResource: RelatedLinksGenerator.generate(object: collection_version)
     }
   end
 end
