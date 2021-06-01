@@ -61,18 +61,46 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   describe '#created' do
-    let(:work_version) { build_stubbed(:work_version, created_edtf: EDTF.parse('1982-09')) }
+    let(:work_version) { build_stubbed(:work_version, created_edtf: edtf) }
 
-    it 'renders the date' do
-      expect(instance.created).to eq '1982-09'
+    context 'with a plain date' do
+      let(:edtf) { EDTF.parse('1987-04') }
+
+      it 'renders the date' do
+        expect(instance.created).to eq '1987-04'
+      end
+    end
+
+    context 'with an interval' do
+      let(:edtf) { EDTF.parse('1987-04/2020') }
+
+      it 'renders the date' do
+        expect(instance.created).to eq '1987-04 - 2020'
+      end
+    end
+
+    context 'with an aprox interval' do
+      let(:edtf) { EDTF.parse('1987-04?/2020?') }
+
+      it 'renders the date' do
+        expect(instance.created).to eq 'ca. 1987-04 - ca. 2020'
+      end
+    end
+
+    context 'with a nil date' do
+      let(:edtf) { nil }
+
+      it 'renders the date' do
+        expect(instance.created).to be_nil
+      end
     end
   end
 
   describe '#published' do
-    let(:work_version) { build_stubbed(:work_version, published_edtf: EDTF.parse('1987-04')) }
+    let(:work_version) { build_stubbed(:work_version, published_edtf: EDTF.parse('1982-09')) }
 
     it 'renders the date' do
-      expect(instance.published).to eq '1987-04'
+      expect(instance.published).to eq '1982-09'
     end
   end
 end

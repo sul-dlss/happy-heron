@@ -137,7 +137,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_content('sound')
         expect(page).to have_content('Oral history, Podcast, Poetry reading')
         expect(page).to have_content('Best Publisher')
-        expect(page).to have_content('2020-03-06/2020-10-30')
+        expect(page).to have_content('2020-03-06 - 2020-10-30')
         expect(page).to have_content 'User provided abstract'
         expect(page).to have_content 'Citation from user input'
         expect(page).to have_content 'Everyone'

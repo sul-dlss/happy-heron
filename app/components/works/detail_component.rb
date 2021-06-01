@@ -30,7 +30,7 @@ module Works
     # Displays the created date as edtf
     sig { returns(T.nilable(String)) }
     def created
-      created_edtf&.edtf
+      format_edtf(created_edtf&.edtf)
     end
 
     # Displays the published date as edtf
@@ -87,6 +87,16 @@ module Works
     sig { returns(T.nilable(String)) }
     def rejection_reason
       work.last_rejection_description
+    end
+
+    private
+
+    sig { params(edtf: T.nilable(String)).returns(T.nilable(String)) }
+    def format_edtf(edtf)
+      return if edtf.nil?
+
+      # For example, "2020?/2021?" to "ca. 2020 - ca. 2021"
+      edtf.sub(%r{/}, ' - ').gsub(/(\S+)\?/, 'ca. \1')
     end
   end
 end
