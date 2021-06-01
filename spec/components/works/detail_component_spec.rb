@@ -52,11 +52,17 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   describe 'events' do
-    let(:work) { build_stubbed(:work, events: [build_stubbed(:event, description: 'Add more keywords')]) }
+    let(:work) { build_stubbed(:work, events: events) }
+    let(:events) do
+      [
+        build_stubbed(:event, description: 'Add more keywords'),
+        build_stubbed(:embargo_lifted_event)
+      ]
+    end
     let(:work_version) { build_stubbed(:work_version, work: work) }
 
     it 'renders the event' do
-      expect(rendered.css('#events').to_html).to include 'Add more keywords'
+      expect(rendered.css('#events').to_html).to include('Add more keywords', 'Embargo lifted')
     end
   end
 
