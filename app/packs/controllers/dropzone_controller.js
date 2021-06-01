@@ -10,7 +10,7 @@ import {
 } from "helpers";
 
 export default class extends Controller {
-  static targets = ["input", "previewsContainer", "preview", "template", "feedback", "container"];
+  static targets = ["input", "previewsContainer", "preview", "template", "feedback", "container", "fileName"];
 
   connect() {
     this.dropZone = createDropZone(this, this.templateTarget.innerHTML)
@@ -36,12 +36,12 @@ export default class extends Controller {
   }
 
   checkForDuplicates(fileName) {
-    // Current files in dropZone
-    const fileNames = this.dropZone.files.map(file => { return file.name })
+    // Extract all filenames
+    const fileNames = this.fileNameTargets.map(target => { return target.innerText.trim() })
+
     // Remove current fileName
-    fileNames.pop(fileName)
-    // Existing files for this Work
-    this.previewTargets.map(elem => { fileNames.push(elem.children[1].innerText.trim()) })
+    fileNames.splice(fileNames.indexOf(fileName), 1)
+
     return fileNames.indexOf(fileName) > -1
   }
 
@@ -85,7 +85,7 @@ export default class extends Controller {
 
   bindEvents() {
     this.dropZone.on("addedfile", file => {
-      if (this.checkForDuplicates(file.name) === true) {
+      if (this.checkForDuplicates(file.name)) {
         this.dropZone.emit("error", file, `Duplicate file ${file.name}`);
         return
       }
