@@ -109,16 +109,16 @@ RSpec.describe 'Updating an existing collection' do
 
           before do
             create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
-            allow(CollectionObserver).to receive(:after_update_published)
+            allow(CollectionObserver).to receive(:settings_updated)
           end
 
-          it 'runs the observer method after_update_published' do
+          it 'runs the observer method settings_updated' do
             patch "/collections/#{collection.id}",
                   params: { collection: collection_params, commit: save_draft_button }
 
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(collection)
-            expect(CollectionObserver).to have_received(:after_update_published)
+            expect(CollectionObserver).to have_received(:settings_updated)
           end
         end
 
