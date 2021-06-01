@@ -21,7 +21,10 @@
     <%= form.label :url, 'URL', class: 'form-label col-md-2' %>
 
     <div class="col-md-9">
-      <%= form.text_field :url, class: 'form-control' %>
+      <%= form.text_field :url, class: 'form-control', pattern: 'https?://.+' %>
+      <div class="invalid-feedback">
+        URLs must begin with "https://" or "http://".
+      </div>
     </div>
 
     <div class="col-md-1"></div>
