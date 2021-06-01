@@ -41,7 +41,8 @@ module Works
                   },
                   data: {
                     auto_citation_target: 'embargoYear',
-                    action: 'change->auto-citation#updateDisplay'
+                    available_date_target: 'year',
+                    action: 'change->auto-citation#updateDisplay available-date#validate'
                   },
                   id: 'work_embargo_year',
                   required: true,
@@ -54,6 +55,10 @@ module Works
     def month_field
       select_month embargo_month,
                    { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month' },
+                   data: {
+                     available_date_target: 'month',
+                     action: 'available-date#validate'
+                   },
                    id: 'work_embargo_month',
                    required: true,
                    class: "form-control#{' is-invalid' if error?}"
@@ -65,6 +70,10 @@ module Works
     def day_field
       select_day embargo_day,
                  { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day' },
+                 data: {
+                   available_date_target: 'day',
+                   action: 'available-date#validate'
+                 },
                  id: 'work_embargo_day',
                  required: true,
                  class: "form-control#{' is-invalid' if error?}"
