@@ -48,7 +48,7 @@ WORK_TYPE = {
   'audio - music' => 'sound',
   'other' => 'other',
   'class project' => 'other',
-  'textbook' => 'other',
+  'textbook' => 'text',
   'thesis' => 'text',
   'article' => 'text',
   'technical report' => 'text',
@@ -265,7 +265,14 @@ def build_work_version_attributes(json)
   work_type = WORK_TYPE.fetch(json.fetch('item_type'))
   subtype = if work_type == 'other'
     warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
-    [work_type]
+    ['other']
+  else
+    case json.fetch('item_type')
+    when 'thesis', 'article', 'technical report'
+      [json.fetch('item_type').capitalize]
+    when 'textbook'
+      ['Book']
+    end
   end
   title = json['title']
   unless title
