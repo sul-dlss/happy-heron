@@ -2,20 +2,23 @@
 # frozen_string_literal: true
 
 # Usage:
-#   RAILS_ENV=production bin/migrate-items items.jsonl 0 /opt/app/local-files 2>&1 | tee -a migrate-items.log
+#   RAILS_ENV=production bin/migrate-items items.jsonl 0 /opt/app/local-files migration_item_type_updates.csv 2>&1 | tee -a migrate-items.log
 #
 #   These two just load metadata:
 #
 #   RAILS_ENV=production bin/migrate-items items.jsonl 1000
 #   RAILS_ENV=production bin/migrate-items items.jsonl
 
+require 'csv'
 require_relative '../config/environment'
 
 Rails.logger.level = :warn
 
 DEFAULT_DATA_ROOT = '/data/hydrus-files'
 DATA_ROOT = ARGV[2]
+CSV_FILE = ARGV[3]
 
+warn "A data files was not provided" unless CSV_FILE
 warn "A data root was not provided, so no files will be imported" unless DATA_ROOT
 
 STATES = {
@@ -157,6 +160,18 @@ INVALID_ROLES = [
   'writer of added commentary'
 ]
 
+def load_type_data
+  {}.tap do |data|
+    CSV.foreach(CSV_FILE, headers: true) do |row|
+      druid = "druid:#{row['item_druid']}"
+      data[druid] = {
+        work_type: row['New Work Type'].downcase,
+        subtype: [row['New Subtype 1'], row['New Subtype 2'], row['New Subtype 3'], row['New Subtype 4']].compact
+      }
+    end
+  end
+end
+
 def contact_email(json)
   return ContactEmail.new(email: json['contact_email']) if URI::MailTo::EMAIL_REGEXP.match(json['contact_email'])
 
@@ -261,7 +276,7 @@ def build_work_attributes(json)
   }
 end
 
-def build_work_version_attributes(json)
+def build_work_version_attributes(json, type_data)
   work_type = WORK_TYPE.fetch(json.fetch('item_type'))
   subtype = if work_type == 'other'
     warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
@@ -274,6 +289,13 @@ def build_work_version_attributes(json)
       ['Book']
     end
   end
+
+  # Overwrite the values if there was a row in the CSV for this item
+  if row = type_data[json['druid']]
+    work_type = row.fetch(:work_type)
+    subtype = row.fetch(:subtype)
+  end
+
   title = json['title']
   unless title
     warn "#{json['druid']} does not have a title. #{json}"
@@ -321,7 +343,43 @@ def attach_files(json, work_version)
   end
 end
 
+def create_or_update_work(json, type_data)
+  work = Work.find_by(druid: json['druid'])
+  ActiveRecord::Base.transaction do
+    if work
+      if work.update(build_work_attributes(json))
+        puts "Work #{work.id} - #{work.druid}"
+      else
+        warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+        return
+      end
+    else
+      work = Work.new(build_work_attributes(json).merge(druid: json['druid']))
+      if work.save
+        puts "Work #{work.id} - #{work.druid}"
+      else
+        warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+        return
+      end
+    end
+
+    work_version = work.head
+    if work_version
+      work_version.update!(build_work_version_attributes(json, type_data))
+      attach_files(json, work_version)
+      puts "Work #{work.id} (v#{work_version.version}): #{work.druid}"
+    else
+      work_version = work.build_head(build_work_version_attributes(json, type_data).
+        merge(work_id: work.id, version: json.fetch('version')))
+      work_version.save!
+      attach_files(json, work_version)
+      work.update!(head: work_version)
+    end
+  end
+end
+
 puts "STARTING NEW WORK MIGRATION: #{Time.now}"
+type_data = load_type_data
 OFFSET = ARGV[1].present? ? ARGV[1].to_i : 0
 count = 0
 File.foreach(ARGV[0]) do |data|
@@ -330,39 +388,5 @@ File.foreach(ARGV[0]) do |data|
   puts count
   json = JSON.parse(data)
   next unless json.present?
-  work = Work.find_or_initialize_by(druid: json['druid'])
-  work_attributes = build_work_attributes(json)
-  work_version = WorkVersion.find_or_initialize_by(work: work)
-  work_version_attributes = build_work_version_attributes(json)
-  add_events!(work, json)
-
-  if work_attributes.blank?
-    warn "attrs blank for work #{json['druid']}: #{work_attributes.inspect}"
-    next
-  end
-
-  if work_version_attributes.blank?
-    warn "attrs blank for work version #{json['druid']} version: #{work_version_attributes}"
-    next
-  end
-
-  begin
-    work_update_successful = work.update(work_attributes)
-    work_version_update_successful = work_version.update(work_version_attributes)
-    work.update(head: work_version)
-
-    if work_update_successful && work_version_update_successful
-      attach_files(json, work_version)
-      puts "Work #{work.id} (v#{work_version.version}): #{work.druid}"
-    else
-      warn "Validation failed on #{json['druid']}, #{work.errors.full_messages} #{work_version.errors.full_messages}"
-    end
-  rescue ActiveRecord::RecordNotSaved => e
-    warn "unable to migrate #{json['druid']} because contributors: " \
-      "#{attributes[:contributors].reject(&:valid?).map { |c| c.errors.full_messages.join(', ') + " " + c.inspect }}"
-  rescue Errno::ENOENT => e
-    warn "unable to migrate #{json['druid']} because of a file problem: #{e}"
-  end
-
-  puts
+  create_or_update_work(json, type_data)
 end
