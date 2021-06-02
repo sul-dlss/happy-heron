@@ -11,6 +11,8 @@
 
 require_relative '../config/environment'
 
+Rails.logger.level = :warn
+
 DEFAULT_DATA_ROOT = '/data/hydrus-files'
 DATA_ROOT = ARGV[2]
 
