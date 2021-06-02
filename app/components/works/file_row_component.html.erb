@@ -4,12 +4,12 @@
   </div>
   <div class="col-md-2">
     <% if filename %>
-      <div class="dz-filename">
+      <div class="dz-filename" data-dropzone-target="fileName">
         <span class="fas fa-check file-uploaded"></span>
         <%= filename %>
       </div>
     <% else %>
-      <div class="dz-filename"><span data-dz-name></span></div>
+      <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
       <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
       <div class="dz-success-mark"><span>✔</span></div>
       <div class="dz-error-mark"><span>✘</span></div>
