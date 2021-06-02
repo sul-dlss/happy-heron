@@ -327,49 +327,70 @@ def resolve_file(hydrus_path)
   hydrus_path.sub(DEFAULT_DATA_ROOT, DATA_ROOT)
 end
 
-def attach_files(json, work_version)
-  return unless DATA_ROOT
-  json['files'].each do |file_data|
-    pathname = resolve_file(file_data['path'])
-    filename = File.basename(pathname)
-    attached_file = work_version.attached_files.find { |attached| attached.filename == filename }
+def attach_files(work_version, files)
+  files.each do |file_data|
+    attached_file = work_version.attached_files.find { |attached| attached.filename == file_data.fetch(:filename) }
     next if attached_file
 
-    file = File.open(pathname)
-    attached_file = work_version.attached_files.build(label: file_data['label'], hide: file_data['hide'])
-    attached_file.file.attach(io: file, filename: filename)
+    attached_file = work_version.attached_files.build(label: file_data.fetch(:label), hide: file_data.fetch(:hide))
+    attached_file.file.attach(io: file_data.fetch(:file), filename: file_data.fetch(:filename))
     attached_file.save!
   end
 end
 
+def build_files(files)
+  return [] unless DATA_ROOT
+
+  files.map do |file_data|
+    pathname = resolve_file(file_data['path'])
+    filename = File.basename(pathname)
+    {
+      file: File.open(pathname),
+      filename: filename,
+      label: file_data['label'],
+      hide: file_data['hide']
+    }
+  end
+end
+
+# This is similar to File.open do ... end but with a bunch of files
+def with_files(json_files)
+  files = build_files(json_files)
+  yield files
+  files.each { |data| data.fetch(:file).close }
+end
+
 def create_or_update_work(json, type_data)
   work = Work.find_by(druid: json['druid'])
-  ActiveRecord::Base.transaction do
-    if work
-      unless work.update(build_work_attributes(json))
-        warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
-        return
+  # Files must be open until the transaction is closed
+  with_files(json['files']) do |files|
+    ActiveRecord::Base.transaction do
+      if work
+        unless work.update(build_work_attributes(json))
+          warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+          return
+        end
+      else
+        work = Work.new(build_work_attributes(json).merge(druid: json['druid']))
+        unless work.save
+          warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
+          return
+        end
       end
-    else
-      work = Work.new(build_work_attributes(json).merge(druid: json['druid']))
-      unless work.save
-        warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
-        return
-      end
-    end
 
-    work_version = work.head
-    if work_version
-      work_version.update!(build_work_version_attributes(json, type_data))
-      attach_files(json, work_version)
-    else
-      work_version = work.build_head(build_work_version_attributes(json, type_data).
-        merge(work_id: work.id, version: json.fetch('version')))
-      work_version.save!
-      attach_files(json, work_version)
-      work.update!(head: work_version)
+      work_version = work.head
+      if work_version
+        work_version.update!(build_work_version_attributes(json, type_data))
+        attach_files(work_version, files)
+      else
+        work_version = work.build_head(build_work_version_attributes(json, type_data).
+          merge(work_id: work.id, version: json.fetch('version')))
+        work_version.save!
+        attach_files(work_version, files)
+        work.update!(head: work_version)
+      end
+      puts "Work #{work.id} (v#{work_version.version}): #{work.druid}"
     end
-    puts "Work #{work.id} (v#{work_version.version}): #{work.druid}"
   end
 end
 
