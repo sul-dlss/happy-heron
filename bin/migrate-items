@@ -335,11 +335,10 @@ def attach_files(json, work_version)
     attached_file = work_version.attached_files.find { |attached| attached.filename == filename }
     next if attached_file
 
-    File.open(pathname) do |file|
-      attached_file = work_version.attached_files.build(label: file_data['label'], hide: file_data['hide'])
-      attached_file.file.attach(io: file, filename: filename)
-      attached_file.save!
-    end
+    file = File.open(pathname)
+    attached_file = work_version.attached_files.build(label: file_data['label'], hide: file_data['hide'])
+    attached_file.file.attach(io: file, filename: filename)
+    attached_file.save!
   end
 end
 
@@ -347,17 +346,13 @@ def create_or_update_work(json, type_data)
   work = Work.find_by(druid: json['druid'])
   ActiveRecord::Base.transaction do
     if work
-      if work.update(build_work_attributes(json))
-        puts "Work #{work.id} - #{work.druid}"
-      else
+      unless work.update(build_work_attributes(json))
         warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
         return
       end
     else
       work = Work.new(build_work_attributes(json).merge(druid: json['druid']))
-      if work.save
-        puts "Work #{work.id} - #{work.druid}"
-      else
+      unless work.save
         warn "Validation failed on #{json['druid']}, #{work.errors.full_messages}"
         return
       end
@@ -367,7 +362,6 @@ def create_or_update_work(json, type_data)
     if work_version
       work_version.update!(build_work_version_attributes(json, type_data))
       attach_files(json, work_version)
-      puts "Work #{work.id} (v#{work_version.version}): #{work.druid}"
     else
       work_version = work.build_head(build_work_version_attributes(json, type_data).
         merge(work_id: work.id, version: json.fetch('version')))
@@ -375,6 +369,7 @@ def create_or_update_work(json, type_data)
       attach_files(json, work_version)
       work.update!(head: work_version)
     end
+    puts "Work #{work.id} (v#{work_version.version}): #{work.druid}"
   end
 end
 
