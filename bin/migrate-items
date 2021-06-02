@@ -266,10 +266,6 @@ def build_work_version_attributes(json)
   subtype = if work_type == 'other'
     warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
     [work_type]
-  elsif json.fetch('item_type') == 'audio - spoken'
-    ['Speech']
-  elsif json.fetch('item_type') == 'audio - music'
-    ['Performance']
   end
   title = json['title']
   unless title
