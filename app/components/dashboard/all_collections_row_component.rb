@@ -22,5 +22,17 @@ module Dashboard
         tag.span ' - Version Draft', class: 'draft-tag'
       end
     end
+
+    def total
+      return '0' if total_count.zero?
+
+      link_to total_count, collection_works_path(collection)
+    end
+
+    private
+
+    def total_count
+      counts.fetch('total', 0)
+    end
   end
 end
