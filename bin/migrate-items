@@ -278,22 +278,24 @@ end
 
 def build_work_version_attributes(json, type_data)
   work_type = WORK_TYPE.fetch(json.fetch('item_type'))
-  subtype = if work_type == 'other'
-    warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
-    ['other']
-  else
-    case json.fetch('item_type')
-    when 'thesis', 'article', 'technical report'
-      [json.fetch('item_type').capitalize]
-    when 'textbook'
-      ['Book']
-    end
-  end
+  subtype = 'nil'
 
   # Overwrite the values if there was a row in the CSV for this item
   if row = type_data[json['druid']]
     work_type = row.fetch(:work_type)
     subtype = row.fetch(:subtype)
+  else
+    subtype = if work_type == 'other'
+      warn "#{json['druid']} has a work_type of 'other', but Hydrus doesn't specify a subtype.  Setting a placeholder."
+      ['other']
+    else
+      case json.fetch('item_type')
+      when 'thesis', 'article', 'technical report'
+        [json.fetch('item_type').capitalize]
+      when 'textbook'
+        ['Book']
+      end
+    end
   end
 
   title = json['title']
