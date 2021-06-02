@@ -69,18 +69,23 @@ CONTRIBUTOR_ROLE = {
   'Author' => 'Author',
   'Conference' => 'Conference',
   'Contributing author' => 'Contributing author',
+  'contributor' => 'Contributing author',
+  'Contributor' => 'Contributing author',
   'Creator' => 'Creator',
   'Degree granting institution' => 'Degree granting institution',
   'Department' => 'Department',
+  'Distributor' => 'Distributor',
   'Editor' => 'Editor',
   'Primary advisor' => 'Primary thesis advisor',
   'Principal investigator' => 'Principal investigator',
   'Publisher' => 'Publisher',
   'Sponsor' => 'Sponsor',
+  'aut' => 'Author', # Bad data? about 1000 items are like this.
   'author' => 'Author', # Bad data? about 1000 items are like this.
   'author,' => 'Author', # Bad data? 4 items have this role
   'author.' => 'Author', # Bad data? 207 items have this role
   'autor' => 'Author', # Bad data? 7 items have this role
+  'Collector' => 'Data collector',
   'composer' => 'Composer',
   'composer.' => 'Composer',
   'conference' => 'Conference',
@@ -123,10 +128,6 @@ AUTHOR_ROLES = [
 ]
 
 INVALID_ROLES = [
-  'Collector',
-  'Distributor',
-  'contributor',
-  'Contributor',
   'production company.',
   'compiler',
   'compiler.',
@@ -143,7 +144,6 @@ INVALID_ROLES = [
   'commissioning body',
   'cre', # see druid:jn023kf3320
   'his', # see druid:jn023kf3320
-  'aut', # see druid:ns801cg260 and 19 others
   'ive', # see druid:fg188hk6403 and druid:hd575hm6964
   'ivr', # see druid:fg188hk6403 and druid:hd575hm6964
   'pbl', # see druid:fg188hk6403 and druid:hd575hm6964
