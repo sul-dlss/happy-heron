@@ -14,6 +14,8 @@ RSpec.describe Works::SubtypesComponent do
 
     it 'does not label subtypes as optional' do
       expect(rendered.to_html).to include('Work types *')
+      expect(rendered.to_html).to include('Specify "Other" type')
+      expect(rendered.css('a[data-bs-content^="Enter a word or short phrase to describe"]')).to be_present
     end
   end
 
@@ -22,6 +24,8 @@ RSpec.describe Works::SubtypesComponent do
 
     it 'does not label subtypes as optional' do
       expect(rendered.to_html).to include('Work types *')
+      expect(rendered.css('a[data-bs-content^="You must select at least one term from the shorter list"]'))
+        .to be_present
     end
 
     it 'renders a header about selecting one or more terms' do
@@ -34,6 +38,8 @@ RSpec.describe Works::SubtypesComponent do
 
     it 'does not label subtypes as optional' do
       expect(rendered.to_html).to include('Work types *')
+      expect(rendered.css('a[data-bs-content^="You must choose at least two of the terms below"]'))
+        .to be_present
     end
 
     it 'renders a header about selecting two or more terms' do
@@ -44,6 +50,8 @@ RSpec.describe Works::SubtypesComponent do
   context 'when work type is anything else' do
     it 'does not label subtypes as required' do
       expect(rendered.to_html).to include('Work types')
+      expect(rendered.css('a[data-bs-content^="You have the option to choose one or more of the following terms"]'))
+        .to be_present
     end
   end
 end
