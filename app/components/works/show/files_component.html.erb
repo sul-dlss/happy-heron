@@ -4,7 +4,7 @@
     <th scope="col" class="table-title col-3">Files
       <span class="ms-3"><%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'file', label: 'Edit files') %></span>
       <%= link_to work_zip_path(work_version.work), class: 'ms-4' do %>
-        <span class="fas fa-download"></span><span class="visually-hidden">Download All Files</span>
+        <span class="fas fa-download" aria-hidden="true"></span><span class="visually-hidden">Download All Files</span>
       <% end %>
     </th>
     <th scope="col">Description</th>
@@ -16,7 +16,7 @@
       <tr>
         <td><%= af.filename %>
           <%= link_to rails_blob_path(af.file, disposition: "attachment"), class: 'ms-2' do %>
-            <span class="fas fa-download"></span><span class="visually-hidden">Download</span>
+            <span class="fas fa-download" aria-hidden="true"></span><span class="visually-hidden">Download</span>
           <% end %>
         </td>
         <td><%= af.label %></td>

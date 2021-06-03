@@ -10,11 +10,11 @@
               action: "work-type#set_collection"
             },
             aria: { label: "Choose Type and Edit #{Works::DetailComponent.new(work_version: work.head).title}" } do %>
-        <span class="fas fa-pencil-alt"></span>
+        <span class="fas fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% else %>
       <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work_version: work.head).title}" } do %>
-        <span class="fas fa-pencil-alt"></span>
+        <span class="fas fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% end %>
   <% end %>

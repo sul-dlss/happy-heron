@@ -3,7 +3,7 @@
   <td>
     <% if allowed_to? :edit?, work_version %>
       <%= link_to [:edit, work], aria: { label: "Edit #{Works::DetailComponent.new(work_version: work_version).title}" } do %>
-        <span class="fas fa-pencil-alt"></span>
+        <span class="fas fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% end %>
     <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
