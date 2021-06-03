@@ -97,7 +97,9 @@ RSpec.describe Works::DatesComponent do
   end
 
   context 'with a different type of form' do
-    let(:work_form) { DraftWorkForm.new(work_version: work_version, work: work) }
+    before do
+      allow(work_form.model_name).to receive(:param_key).and_return('draft_work')
+    end
 
     it 'uses the param_key from the form' do
       expect(rendered.css('#draft_work_created_year')).to be_present

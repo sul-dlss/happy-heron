@@ -175,4 +175,9 @@ class DraftWorkForm < Reform::Form
   def to_param
     model.fetch(:work).to_param
   end
+
+  # Override reform so that this looks just like a Work
+  def model_name
+    Work.model_name
+  end
 end
