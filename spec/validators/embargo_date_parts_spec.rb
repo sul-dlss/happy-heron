@@ -27,7 +27,7 @@ RSpec.describe EmbargoDateParts do
     end
 
     it 'has errors' do
-      expect(record.errors.full_messages).to eq ['Embargo-date Must provide all parts']
+      expect(record.errors.full_messages).to eq ['Embargo date must provide all parts']
     end
   end
 end
