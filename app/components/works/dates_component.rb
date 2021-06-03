@@ -13,7 +13,7 @@ module Works
     attr_reader :form, :min_year, :max_year
 
     def date_range_start_year
-      number_field_tag 'work[created_range(1i)]', created_range_start_year,
+      number_field_tag "#{prefix}[created_range(1i)]", created_range_start_year,
                        data: {
                          date_validation_target: 'year',
                          date_range_target: 'year',
@@ -25,7 +25,7 @@ module Works
     end
 
     def date_range_end_year
-      number_field_tag 'work[created_range(4i)]', created_range_end_year,
+      number_field_tag "#{prefix}[created_range(4i)]", created_range_end_year,
                        data: {
                          date_validation_target: 'year',
                          date_range_target: 'year',
@@ -121,6 +121,11 @@ module Works
     sig { returns(DraftWorkForm) }
     def reform
       form.object
+    end
+
+    sig { returns(String) }
+    def prefix
+      reform.model_name.param_key
     end
 
     private
