@@ -34,4 +34,13 @@ RSpec.describe Dashboard::AllCollectionsRowComponent, type: :component do
       expect(rendered.to_html).not_to include 'Draft'
     end
   end
+
+  context 'with a collection that has works' do
+    let(:counts) { { 'total' => 5 } }
+    let(:url) { Rails.application.routes.url_helpers.collection_works_path(collection) }
+
+    it 'links to the works' do
+      expect(rendered.css("a[href=\"#{url}\"]").text).to eq '5'
+    end
+  end
 end
