@@ -191,7 +191,7 @@ RSpec.describe WorkForm do
 
   describe 'embargo validation' do
     context 'with a collection that allows depositor to select embargo' do
-      let(:errors) { form.errors.where(:'embargo-date') }
+      let(:errors) { form.errors.where(:embargo_date) }
       let(:messages) { errors.map(&:message) }
 
       before do
@@ -223,7 +223,7 @@ RSpec.describe WorkForm do
       context 'when release is embargo and a date is not provided' do
         it 'has an error' do
           form.validate(release: 'embargo', 'embargo_date(1i)' => '2040', 'embargo_date(2i)' => '2')
-          expect(messages).to eq ['Must provide all parts']
+          expect(messages).to eq ['must provide all parts']
         end
       end
     end
