@@ -34,8 +34,8 @@ export default class extends Controller {
   }
 
   checkForDuplicates(fileName) {
-    // Extract all filenames
-    const fileNames = this.fileNameTargets.map(target => { return target.innerText.trim() })
+    // Extract all filenames that are visible
+    const fileNames = this.fileNameTargets.map(target => { if (target.offsetParent !== null) return target.innerText.trim() })
 
     // Remove current fileName
     fileNames.splice(fileNames.indexOf(fileName), 1)
