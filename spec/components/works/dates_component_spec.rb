@@ -95,4 +95,14 @@ RSpec.describe Works::DatesComponent do
       expect(rendered.css('#work_created_approx0_').first.attribute('checked').value).to eq 'checked'
     end
   end
+
+  context 'with a different type of form' do
+    let(:work_form) { DraftWorkForm.new(work_version: work_version, work: work) }
+
+    it 'uses the param_key from the form' do
+      expect(rendered.css('#draft_work_created_year')).to be_present
+      expect(rendered.css('#draft_work_created_month')).to be_present
+      expect(rendered.css('#draft_work_created_day')).to be_present
+    end
+  end
 end

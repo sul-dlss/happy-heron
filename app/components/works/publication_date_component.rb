@@ -18,6 +18,11 @@ module Works
       form.object
     end
 
+    sig { returns(String) }
+    def prefix
+      reform.model_name.param_key
+    end
+
     def error?
       errors.present?
     end
@@ -50,13 +55,13 @@ module Works
     end
 
     def year_field
-      number_field_tag 'work[published(1i)]', published_year,
+      number_field_tag "#{prefix}[published(1i)]", published_year,
                        data: {
                          auto_citation_target: 'year',
                          date_validation_target: 'year',
                          action: 'change->auto-citation#updateDisplay date-validation#change'
                        },
-                       id: 'work_published_year',
+                       id: "#{prefix}_published_year",
                        placeholder: 'year',
                        class: "form-control#{' is-invalid' if error?}",
                        min: min_year,
@@ -65,23 +70,23 @@ module Works
 
     def month_field
       select_month published_month,
-                   { prefix: 'work', field_name: 'published(2i)', prompt: 'month' },
+                   { prefix: prefix, field_name: 'published(2i)', prompt: 'month' },
                    data: {
                      date_validation_target: 'month',
                      action: 'date-validation#change'
                    },
-                   id: 'work_published_month',
+                   id: "#{prefix}_published_month",
                    class: "form-control#{' is-invalid' if error?}"
     end
 
     def day_field
       select_day published_day,
-                 { prefix: 'work', field_name: 'published(3i)', prompt: 'day' },
+                 { prefix: prefix, field_name: 'published(3i)', prompt: 'day' },
                  data: {
                    date_validation_target: 'day',
                    action: 'date-validation#change'
                  },
-                 id: 'work_published_day',
+                 id: "#{prefix}_published_day",
                  class: "form-control#{' is-invalid' if error?}"
     end
   end

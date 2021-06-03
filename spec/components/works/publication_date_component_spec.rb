@@ -44,4 +44,14 @@ RSpec.describe Works::PublicationDateComponent, type: :component do
       expect(rendered.css('#work_published_day option[@selected="selected"]')).to be_empty
     end
   end
+
+  context 'with a different type of form' do
+    let(:work_form) { DraftWorkForm.new(work_version: work_version, work: work) }
+
+    it 'uses the param_key from the form' do
+      expect(rendered.css('#draft_work_published_year')).to be_present
+      expect(rendered.css('#draft_work_published_month')).to be_present
+      expect(rendered.css('#draft_work_published_day')).to be_present
+    end
+  end
 end
