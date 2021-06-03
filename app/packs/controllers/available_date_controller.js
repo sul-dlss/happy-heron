@@ -5,8 +5,8 @@ export default class extends Controller {
 
   validate() {
     this.errors = {}
-    this.allPartsPresent()
     this.dateInFuture()
+    this.allPartsPresent()
     this.displayErrors()
   }
 
@@ -21,6 +21,11 @@ export default class extends Controller {
 
   hideError() {
     this.errorTarget.style.display = 'none'
+  }
+
+  clearError() {
+    this.errors = {}
+    this.displayErrors()
   }
 
   displayErrors () {

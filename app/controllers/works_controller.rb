@@ -74,8 +74,8 @@ class WorksController < ObjectsController
     end
 
     authorize! work_version
-    @form = work_form(work_version)
 
+    @form = work_form(work_version)
     if @form.validate(clean_params) && @form.save
       after_save(work_version: work_version, work: work)
     else
