@@ -1,13 +1,18 @@
 <div class="mb-3 row">
   <div class="col-sm-12 h5">
     Work types <%= '*' unless optional? %>
-    <%= render PopoverComponent.new key: 'work.subtypes' %>
+    <%= tooltip %>
   </div>
 </div>
 
 <div class="mb-5 row work-types" data-controller="more-types">
   <% if other_type? %>
-    <%= form.label :subtype, 'Other', class: 'col-sm-2 col-form-label' %>
+    <div class="col-sm-2">
+      <div class="col-form-label">
+        <%= form.label :subtype, 'Specify "Other" type' %> <%= render PopoverComponent.new key: 'work.subtypes.other' %>
+      </div>
+    </div>
+
     <div class="col-sm-10">
       <%= form.text_field :subtype, class: 'form-control', required: true, multiple: true %>
       <div class="invalid-feedback">You must provide a subtype for works of type 'Other'</div>
