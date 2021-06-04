@@ -12,16 +12,16 @@ RSpec.describe Works::VersionDescriptionComponent do
   context 'with a first draft' do
     let(:work_version) { build(:work_version, work: work) }
 
-    it 'does not renders the component' do
-      expect(rendered.to_html).not_to include('Version your work')
+    it 'does not render the component' do
+      expect(rendered.to_html).not_to include('Version your work *')
     end
   end
 
   context 'with a deposited work' do
     let(:work_version) { build(:work_version, work: work, state: 'deposited') }
 
-    it 'does not renders the component' do
-      expect(rendered.to_html).to include('Version your work')
+    it 'renders the component' do
+      expect(rendered.to_html).to include('Version your work *')
     end
   end
 end
