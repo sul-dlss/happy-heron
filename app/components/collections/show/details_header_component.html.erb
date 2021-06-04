@@ -1,25 +1,30 @@
 <header class="title">
+  <% if depositing? %>
+    <span class="state">Depositing <%= spinner %></span>
+  <% end %>
+  <div class="row">
+    <div class="col"> </div>
+    <div class="col-4">
+      <%= edit_button %>
+      <% if can_create_work? %>
+        <span class="deposit-button" data-controller="work-type">
+          <%= button_tag '+ Deposit to this collection',
+                data: {
+                  destination: new_collection_work_path(collection),
+                  bs_toggle: 'modal',
+                  bs_target: '#workTypeModal',
+                  action: "work-type#set_collection"
+                },
+                class: "btn btn-primary" %>
+
+          <%= render Works::WorkTypeModalComponent.new %>
+          <%= render CitationModalComponent.new %>
+        </span>
+      <% end %>
+    </div>
+  </div>
   <span class="header-text"><%= name %></span>
   <%= helpers.turbo_frame_tag dom_id(collection_version, :edit),
                               src: edit_link_collection_version_path(collection_version),
                               target: '_top' %>
-  <% if depositing? %>
-    <span class="state">Depositing <%= spinner %></span>
-  <% end %>
-  <% if can_create_work? %>
-    <span class="deposit-button float-end" data-controller="work-type">
-      <%= button_tag '+ Deposit to this collection',
-            data: {
-              destination: new_collection_work_path(collection),
-              bs_toggle: 'modal',
-              bs_target: '#workTypeModal',
-              action: "work-type#set_collection"
-            },
-            class: "btn btn-primary" %>
-
-      <%= render Works::WorkTypeModalComponent.new %>
-      <%= render CitationModalComponent.new %>
-    </span>
-  <% end %>
-  <%= edit_button %>
 </header>

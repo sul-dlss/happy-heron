@@ -33,7 +33,7 @@ module Collections
         return unless draft?
 
         link_to 'Edit or Deposit', edit_collection_path(collection),
-                class: 'btn btn-outline-primary float-end me-2'
+                class: 'btn btn-outline-primary me-2'
       end
     end
   end
