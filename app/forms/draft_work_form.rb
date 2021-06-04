@@ -27,14 +27,9 @@ class DraftWorkForm < Reform::Form
   property :created_edtf, edtf: true, range: true, on: :work_version
   property :published_edtf, edtf: true, on: :work_version
   property :release, virtual: true, prepopulator: (proc do |*|
-    self.release = embargo_date.present? ? 'embargo' : 'immediate'
+    self.release = embargo_date.present? ? 'embargo' : 'immediate' if release.blank?
   end)
-  property :embargo_date, embargo_date: true, on: :work_version, prepopulator: (proc do |*|
-    if embargo_date.present? && embargo_date <= Time.zone.today
-      self.embargo_date = nil
-      self.release = 'immediate'
-    end
-  end)
+  property :embargo_date, embargo_date: true, on: :work_version
 
   validates_with EmbargoDateParts,
                  if: proc { |form| form.user_can_set_availability? && form.release == 'embargo' }

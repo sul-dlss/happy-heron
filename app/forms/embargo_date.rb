@@ -7,7 +7,7 @@ module EmbargoDate
   module ClassMethods
     def property(prop_name, options = {}, &block)
       if options[:embargo_date]
-        property "#{prop_name}(1i)", virtual: true
+        property "#{prop_name}(1i)", virtual: true, default: Time.zone.today.year
         property "#{prop_name}(2i)", virtual: true
         property "#{prop_name}(3i)", virtual: true
       end

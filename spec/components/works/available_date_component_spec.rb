@@ -50,6 +50,37 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
     end
   end
 
+  context 'when the embargo date is provided by embargo fields' do
+    before do
+      work_form.validate({
+                           release: 'embargo',
+                           "embargo_date(1i)": '2022',
+                           "embargo_date(2i)": '2',
+                           "embargo_date(3i)": '3'
+                         })
+    end
+
+    it 'checks the embargo release radio button' do
+      expect(rendered.css('#release_embargo[@checked]')).to be_present
+      expect(rendered.css('#release_immediate[@checked]')).not_to be_present
+    end
+
+    it 'renders the year' do
+      expect(rendered.css('#work_embargo_year option[@selected]').first['value'])
+        .to eq '2022'
+    end
+
+    it 'renders the month' do
+      expect(rendered.css('#work_embargo_month option[@selected]').first['value'])
+        .to eq '2'
+    end
+
+    it 'renders the day' do
+      expect(rendered.css('#work_embargo_day option[@selected]').first['value'])
+        .to eq '3'
+    end
+  end
+
   context 'when there is an error' do
     let(:work_version) { build(:work_version, :embargoed) }
 

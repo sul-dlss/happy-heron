@@ -34,7 +34,7 @@ module Works
     def year_field
       select_year embargo_year,
                   {
-                    prefix: 'work',
+                    prefix: reform.model_name.param_key,
                     field_name: 'embargo_date(1i)',
                     start_year: Time.zone.today.year,
                     end_year: 3.years.from_now.year
@@ -54,7 +54,7 @@ module Works
     # required is not applied. This is the desired behavior.
     def month_field
       select_month embargo_month,
-                   { prefix: 'work', field_name: 'embargo_date(2i)', prompt: 'month' },
+                   { prefix: reform.model_name.param_key, field_name: 'embargo_date(2i)', prompt: 'month' },
                    data: {
                      available_date_target: 'month',
                      action: 'available-date#validate'
@@ -69,7 +69,7 @@ module Works
     # required is not applied. This is the desired behavior.
     def day_field
       select_day embargo_day,
-                 { prefix: 'work', field_name: 'embargo_date(3i)', prompt: 'day' },
+                 { prefix: reform.model_name.param_key, field_name: 'embargo_date(3i)', prompt: 'day' },
                  data: {
                    available_date_target: 'day',
                    action: 'available-date#validate'
@@ -80,15 +80,15 @@ module Works
     end
 
     def embargo_year
-      embargo_date&.year || Time.zone.today.year
+      embargo_date&.year || reform.send(:"embargo_date(1i)").to_i
     end
 
     def embargo_month
-      embargo_date&.month
+      embargo_date&.month || reform.send(:"embargo_date(2i)").to_i
     end
 
     def embargo_day
-      embargo_date&.day
+      embargo_date&.day || reform.send(:"embargo_date(3i)").to_i
     end
   end
 end
