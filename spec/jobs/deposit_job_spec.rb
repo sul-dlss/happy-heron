@@ -61,13 +61,13 @@ RSpec.describe DepositJob do
   context 'when the deposit request is not successful' do
     before do
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
       allow(SdrClient::Deposit::CreateResource).to receive(:run).and_raise('Deposit failed.')
     end
 
     it 'notifies' do
-      described_class.perform_now(work_version)
+      expect { described_class.perform_now(work_version) }.to raise_error(RuntimeError, 'Deposit failed.')
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      expect(Honeybadger).to have_received(:notify)
     end
   end
 end
