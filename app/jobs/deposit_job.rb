@@ -9,8 +9,6 @@ class DepositJob < BaseDepositJob
   def perform(work_version)
     deposit(request_dro: RequestGenerator.generate_model(work_version: work_version),
             blobs: work_version.attached_files.map { |af| af.file.attachment.blob })
-  rescue StandardError => e
-    Honeybadger.notify(e)
   end
 
   private
