@@ -6,7 +6,7 @@ AGPL-3.0-only:
 Apache-2.0:
   selectable: true
   label: Apache-2.0
-  uri: "http://www.apache.org/licenses/LICENSE-2.0"
+  uri: "https://www.apache.org/licenses/LICENSE-2.0"
 BSD-2-Clause:
   selectable: true
   label: "BSD-2-Clause \"Simplified\" License"
@@ -70,19 +70,19 @@ MIT:
 MPL-2.0:
   selectable: true
   label: "MPL-2.0 Mozilla Public License"
-  uri: "http://www.mozilla.org/MPL/2.0/"
+  uri: "https://www.mozilla.org/MPL/2.0/"
 ODC-By-1.0:
   selectable: true
   label: "ODC-By-1.0 Attribution License"
-  uri: "https://opendatacommons.org/licenses/by/1.0/"
+  uri: "https://opendatacommons.org/licenses/by/1-0/"
 ODbL-1.0:
   selectable: true
   label: "ODbL-1.0 Open Database License"
-  uri: "https://opendatacommons.org/licenses/odbl/1.0/"
+  uri: "https://opendatacommons.org/licenses/odbl/1-0/"
 PDDL-1.0:
   selectable: true
   label: "PDDL-1.0 Public Domain Dedication and License"
-  uri: "http://opendatacommons.org/licenses/pddl/1.0/"
+  uri: "https://opendatacommons.org/licenses/pddl/1-0/"
 none:
   selectable: true
   label: "No License"
