@@ -150,7 +150,7 @@ class WorkVersion < ApplicationRecord
     work_type == WorkType.purl_reservation_type.id
   end
 
-  sig { params(work_type: String, subtype: T::Array[String], modifier: User).void }
+  sig { params(work_type: String, subtype: T.nilable(T::Array[String]), modifier: User).void }
   def choose_type_for_purl_reservation(work_type, subtype, modifier)
     raise WorkTypeUpdateError, 'Cannot update Work Version type, no longer PURL reservation' unless purl_reservation?
 
