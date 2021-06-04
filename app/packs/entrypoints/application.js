@@ -7,6 +7,8 @@ require("@rails/ujs").start()
 require("@rails/activestorage").start()
 require("channels")
 import '@popperjs/core'
+import '@github/time-elements'
+
 window.bootstrap = require("bootstrap") // Required for contact_us_controller
 import 'controllers'
 

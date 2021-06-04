@@ -46,12 +46,12 @@ module Works
 
     sig { returns(String) }
     def created_at
-      work_version.created_at.to_formatted_s(:long)
+      render LocalTimeComponent.new(datetime: work_version.created_at)
     end
 
     sig { returns(String) }
     def updated_at
-      work_version.updated_at.to_formatted_s(:long)
+      render LocalTimeComponent.new(datetime: work_version.updated_at)
     end
 
     sig { returns(String) }
