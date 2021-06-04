@@ -12,8 +12,8 @@ RSpec.describe Collections::VersionDescriptionComponent do
   context 'with a first draft' do
     let(:collection_version) { build_stubbed(:collection_version) }
 
-    it 'does not renders the component' do
-      expect(rendered.to_html).not_to include('Version your work')
+    it 'does not render the component' do
+      expect(rendered.to_html).to be_blank
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe Collections::VersionDescriptionComponent do
     let(:collection_version) { build_stubbed(:collection_version, state: :deposited) }
 
     it 'renders the component' do
-      expect(rendered.to_html).to include('Version your work')
+      expect(rendered.to_html).to include('Version your collection *')
     end
   end
 end
