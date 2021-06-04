@@ -16,7 +16,7 @@
       <tr>
         <%= render Works::LinkToShowComponent.new(work_version: submission) %>
         <td><%= submission.work.depositor.sunetid %></td>
-        <td><%= submission.work.collection.head.name %></td>
+        <td><%= render Collections::LinkToShowComponent.new(collection_version: submission.work.collection.head) %></td>
         <td><%= render Works::StateDisplayComponent.new(work_version: submission) %></td>
         <td><%= I18n.l(submission.updated_at.to_date, format: :abbr_month) %></td>
       </tr>
