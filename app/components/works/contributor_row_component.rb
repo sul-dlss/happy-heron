@@ -55,13 +55,12 @@ module Works
       options = {
         class: 'form-control',
         data: {
-          action: 'change->contributors#inputChanged',
           contributors_target: contributors_target
         },
         required: required?
       }
       if citation?
-        options[:data][:action] += ' change->auto-citation#updateDisplay'
+        options[:data][:action] = 'change->auto-citation#updateDisplay'
         options[:data][:auto_citation_target] = auto_citation_target
       end
 

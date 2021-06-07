@@ -1,5 +1,5 @@
 <div class="row inner-container" data-controller="contributors" data-contributors-required-value="<%= required? %>"">
-  <div class="contributors-container col-md-12" data-contributors-target="container">
+  <div class="col-md-12">
     <% if not_first_contributor? %>
       <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: 'Remove' },
                      data: { action: "click->nested-form#removeAssociation" } do %>
@@ -33,5 +33,4 @@
     <%= form.text_field :full_name, html_options('organizationNameInput', 'contributorOrg') %>
     <div class="invalid-feedback">You must provide a name</div>
   </div>
-  <div data-contributors-target="error" class="invalid-feedback"></div>
 </div>
