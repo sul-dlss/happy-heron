@@ -1,15 +1,11 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["personName", "organizationName", "role", "personNameInput", "organizationNameInput", "container", "error"]
+  static targets = ["personName", "organizationName", "role", "personNameInput", "organizationNameInput"]
   static values = { required: Boolean }
 
   connect() {
     this.updateDisplay()
-  }
-
-  inputChanged() {
-    this.containerTarget.classList.remove('is-invalid')
   }
 
   typeChanged() {

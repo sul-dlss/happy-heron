@@ -86,7 +86,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           # This is the div that contains the contributor remove button. The button
           # should NOT be rendered since there's one and only one author at
           # this point, which is not removable.
-          within '.contributors-container' do
+          within '.inner-container' do
             expect(page).not_to have_selector('button')
           end
 
