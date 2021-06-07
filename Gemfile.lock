@@ -120,7 +120,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     chronic (0.10.2)
-    cocina-models (0.59.1)
+    cocina-models (0.60.0)
       activesupport
       dry-struct (~> 1.0)
       dry-types (~> 1.1)
@@ -132,7 +132,7 @@ GEM
       highline (~> 2.0.0)
     commonmarker (0.21.2)
       ruby-enum (~> 0.5)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     config (2.2.3)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
@@ -171,10 +171,10 @@ GEM
     dry-configurable (0.12.1)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.5, >= 0.5.0)
-    dry-container (0.7.2)
+    dry-container (0.8.0)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.1, >= 0.1.3)
-    dry-core (0.5.0)
+    dry-core (0.6.0)
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.3.0)
     dry-inflector (0.2.0)
@@ -422,9 +422,9 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     safe_type (1.1.1)
-    sdr-client (0.56.0)
+    sdr-client (0.57.0)
       activesupport
-      cocina-models (~> 0.59.0)
+      cocina-models (~> 0.60.0)
       dry-monads
       faraday (>= 0.16)
     semantic_range (3.0.0)
