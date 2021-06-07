@@ -80,15 +80,15 @@ module Works
     end
 
     def embargo_year
-      embargo_date&.year || reform.send(:"embargo_date(1i)").to_i
+      embargo_date&.year || reform.send(:'embargo_date(1i)').to_i
     end
 
     def embargo_month
-      embargo_date&.month || reform.send(:"embargo_date(2i)").to_i
+      embargo_date&.month || reform.send(:'embargo_date(2i)').to_i
     end
 
     def embargo_day
-      embargo_date&.day || reform.send(:"embargo_date(3i)").to_i
+      embargo_date&.day || reform.send(:'embargo_date(3i)').to_i
     end
   end
 end

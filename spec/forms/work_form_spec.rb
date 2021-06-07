@@ -114,7 +114,7 @@ RSpec.describe WorkForm do
     it 'validates with a correct contact email' do
       form.validate(contact_emails: valid_email)
       expect(form.contact_emails.size).to eq 2
-      expect(form.errors.messages).not_to include({ "contact_emails.email": ['is invalid'] })
+      expect(form.errors.messages).not_to include({ 'contact_emails.email': ['is invalid'] })
     end
   end
 
