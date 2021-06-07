@@ -2,9 +2,6 @@ en:
   date:
     formats:
       abbr_month: '%b %d, %Y'
-  time:
-    formats:
-      abbr_month: '%b %d, %Y %-I:%M %p'
   event:
     type:
       begin_deposit: Submitted for deposit

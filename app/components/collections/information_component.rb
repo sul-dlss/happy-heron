@@ -17,18 +17,12 @@ module Collections
 
     sig { returns(String) }
     def created
-      format_date_string(collection.created_at)
+      render LocalTimeComponent.new(datetime: collection.created_at)
     end
 
     sig { returns(String) }
     def last_saved
-      format_date_string(collection_version.updated_at)
-    end
-
-    private
-
-    def format_date_string(date)
-      I18n.l(date, format: :abbr_month)
+      render LocalTimeComponent.new(datetime: collection_version.updated_at)
     end
   end
 end

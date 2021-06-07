@@ -12,7 +12,7 @@
       <tr>
         <td><%= I18n.t event.event_type, scope: 'event.type' %></td>
         <td><%= event.user.sunetid %></td>
-        <td><%= I18n.l(event.created_at, format: :abbr_month) %></td>
+        <td><%= render LocalTimeComponent.new(datetime: event.created_at) %></td>
         <td><%= simple_format(event.description) %></td>
       </tr>
     <% end %>
