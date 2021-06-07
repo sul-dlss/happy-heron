@@ -1,0 +1,50 @@
+<div class="row inner-container" data-controller="contributors" data-contributors-required-value="true"">
+  <div class="col-md-11">
+    <div class="row">
+      <div class="col-md-3">
+        <%= form.label :role_term, role_term_label, class: 'form-label' %>
+        <%= render PopoverComponent.new key: 'work.role_term' %>
+        <%= select_role %>
+      </div>
+      <div class="col-md-1 role-prefix">
+        is
+      </div>
+      <div class="col-md-4" data-contributors-target="personName">
+        <%= form.label :first_name, first_name_label, class: 'form-label' %>
+        <%= render PopoverComponent.new key: 'work.first_name' %>
+        <%= form.text_field :first_name, html_options('personNameInput', 'contributorFirst') %>
+        <div class="invalid-feedback">You must provide a first name</div>
+      </div>
+      <div class="col-md-4" data-contributors-target="personName">
+        <%= form.label :last_name, last_name_label, class: 'form-label' %>
+        <%= form.text_field :last_name, html_options('personNameInput', 'contributorLast') %>
+        <div class="invalid-feedback">You must provide a last name</div>
+      </div>
+      <div class="col-md-8" data-contributors-target="organizationName">
+        <%= form.label :full_name, 'Organization Name *', class: 'form-label' %>
+        <%= render PopoverComponent.new key: 'work.organization' %>
+        <%= form.text_field :full_name, html_options('organizationNameInput', 'contributorOrg') %>
+        <div class="invalid-feedback">You must provide a name</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1 text-end">
+    <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Remove' },
+                   data: { action: "click->ordered-nested-form#removeAssociation" } do %>
+      <span class="far fa-trash-alt"></span>
+    <% end %>
+    <%= form.hidden_field :_destroy %>
+    <div>
+      <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move up' },
+                     data: { action: "click->ordered-nested-form#moveUp" } do %>
+        <span class="fas fa-arrow-up"></span>
+      <% end %>
+    </div>
+    <div>
+      <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move down' },
+                     data: { action: "click->ordered-nested-form#moveDown" } do %>
+        <span class="fas fa-arrow-down"></span>
+      <% end %>
+    </div>
+  </div>
+</div>
