@@ -54,9 +54,9 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
     before do
       work_form.validate({
                            release: 'embargo',
-                           "embargo_date(1i)": '2022',
-                           "embargo_date(2i)": '2',
-                           "embargo_date(3i)": '3'
+                           'embargo_date(1i)': '2022',
+                           'embargo_date(2i)': '2',
+                           'embargo_date(3i)': '3'
                          })
     end
 
