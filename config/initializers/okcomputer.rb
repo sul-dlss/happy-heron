@@ -1,6 +1,4 @@
-# rubocop:disable Sorbet/FalseSigil
-# typed: ignore
-# rubocop:enable Sorbet/FalseSigil
+# typed: false
 # frozen_string_literal: true
 
 OkComputer.mount_at = 'status'
