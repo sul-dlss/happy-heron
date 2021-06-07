@@ -35,7 +35,8 @@ CREATE TABLE public.abstract_contributors (
     contributor_type character varying NOT NULL,
     role character varying NOT NULL,
     full_name character varying,
-    type character varying
+    type character varying,
+    weight integer
 );
 
 
@@ -1284,6 +1285,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210218234733'),
 ('20210219142356'),
 ('20210520161846'),
-('20210527193102');
+('20210527193102'),
+('20210608161622');
 
 

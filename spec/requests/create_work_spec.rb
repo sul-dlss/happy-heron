@@ -87,10 +87,10 @@ RSpec.describe 'Create a new work' do
             { '_destroy' => '1', 'first_name' => 'Justin',
               'last_name' => 'Coyne', 'role_term' => 'person|Data collector' },
             '999' =>
-            { '_destroy' => 'false', 'first_name' => 'Naomi',
+            { '_destroy' => 'false', 'first_name' => 'Naomi', 'weight' => '1',
               'last_name' => 'Dushay', 'full_name' => 'Stanford', 'role_term' => 'person|Author' },
             '1002' =>
-            { '_destroy' => 'false', 'first_name' => 'Naomi',
+            { '_destroy' => 'false', 'first_name' => 'Naomi', 'weight' => '0',
               'last_name' => 'Dushay', 'full_name' => 'The Leland Stanford Junior University',
               'role_term' => 'organization|Host institution' } }
         end
@@ -215,7 +215,7 @@ RSpec.describe 'Create a new work' do
           expect(response).to have_http_status(:found)
           work_version = Work.last.head
           expect(work_version.authors.size).to eq 2
-          expect(work_version.authors.last.full_name).to eq 'The Leland Stanford Junior University'
+          expect(work_version.authors.first.full_name).to eq 'The Leland Stanford Junior University'
           expect(work_version.attached_files.size).to eq 2
           expect(work_version.contact_emails.size).to eq 2
           expect(work_version.keywords.size).to eq 2

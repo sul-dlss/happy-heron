@@ -82,6 +82,7 @@ class DraftWorkForm < Reform::Form
     property :full_name
     property :role_term
     property :_destroy, virtual: true
+    property :weight
   }
 
   collection :contributors,
