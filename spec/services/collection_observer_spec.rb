@@ -87,7 +87,7 @@ RSpec.describe CollectionObserver do
       let(:manager) { create(:user) }
       let(:collection_after) { collection.dup.tap { |col| col.managed_by = [manager] } }
 
-      it 'sends emails to those removed' do
+      it 'sends emails to those added' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'manage_access_granted_email', 'deliver_now',
           { params: { user: manager, collection_version: collection_version }, args: [] }
