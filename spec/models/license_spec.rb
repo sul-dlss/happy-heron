@@ -142,7 +142,7 @@ RSpec.describe License do
 
       it 'includes the specified license marked as disabled' do
         expect(legacy_option.last).to include(
-          ['CC Attribution Non Commercial 3.0 (Unsupported)', license, { disabled: true }]
+          ['CC-BY-NC-3.0 Attribution Non Commercial (Unsupported)', license, { disabled: true }]
         )
       end
     end

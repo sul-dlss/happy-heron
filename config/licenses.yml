@@ -89,25 +89,25 @@ none:
   uri: ''
 CC-BY-3.0:
   selectable: false
-  label: 'CC Attribution 3.0 (Unsupported)'
+  label: 'CC-BY-3.0 Attribution (Unsupported)'
   uri: "https://creativecommons.org/licenses/by/3.0/legalcode"
 CC-BY-SA-3.0:
   selectable: false
-  label: 'CC Attribution Share Alike 3.0 (Unsupported)'
+  label: 'CC-BY-SA-3.0 Attribution Share Alike (Unsupported)'
   uri: "https://creativecommons.org/licenses/by-sa/3.0/legalcode"
 CC-BY-ND-3.0:
   selectable: false
-  label: 'CC Attribution No Derivatives 3.0 (Unsupported)'
+  label: 'CC-BY-ND-3.0 Attribution No Derivatives (Unsupported)'
   uri: "https://creativecommons.org/licenses/by-nd/3.0/legalcode"
 CC-BY-NC-3.0:
   selectable: false
-  label: 'CC Attribution Non Commercial 3.0 (Unsupported)'
+  label: 'CC-BY-NC-3.0 Attribution Non Commercial (Unsupported)'
   uri: "https://creativecommons.org/licenses/by-nc/3.0/legalcode"
 CC-BY-NC-SA-3.0:
   selectable: false
-  label: 'CC Attribution Non Commercial Share Alike 3.0 (Unsupported)'
+  label: 'CC-BY-NC-SA-3.0 Attribution Non Commercial Share Alike (Unsupported)'
   uri: "https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"
 CC-BY-NC-ND-3.0:
   selectable: false
-  label: 'CC Attribution Non Commercial No Derivatives 3.0 (Unsupported)'
+  label: 'CC-BY-NC-ND-3.0 Attribution Non Commercial No Derivatives (Unsupported)'
   uri: "https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"
