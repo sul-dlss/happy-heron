@@ -12,8 +12,9 @@ RSpec.describe Works::Show::FilesComponent, type: :component do
       create(:attached_file, :with_file, work_version: work_version)
     end
 
-    it 'shows a download link' do
+    it 'shows a download link and the hide status' do
       expect(rendered.css('a').last['href']).to start_with '/rails/active_storage/blobs/redirect/'
+      expect(rendered.css('td').last.to_html).to include 'No'
     end
   end
 end
