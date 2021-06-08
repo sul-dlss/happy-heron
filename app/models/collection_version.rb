@@ -33,6 +33,11 @@ class CollectionVersion < ApplicationRecord
           CollectionsMailer.with(collection_version: collection_version, user: reviewer)
                            .review_access_granted_email.deliver_later
         end
+
+        collection_version.collection.managed_by.each do |manager|
+          CollectionsMailer.with(collection_version: collection_version, user: manager)
+                           .manage_access_granted_email.deliver_later
+        end
       end
       DepositCollectionJob.perform_later(collection_version)
     end

@@ -36,9 +36,12 @@ RSpec.describe CollectionVersion do
 
   describe 'state machine flow' do
     let(:collection) { collection_version.collection }
+    let(:manager1) { create(:user) }
+    let(:manager2) { create(:user) }
 
     before do
       collection.update(head: collection_version)
+      collection.managed_by = [manager1, manager2]
     end
 
     describe 'a begin_deposit event' do
@@ -53,6 +56,20 @@ RSpec.describe CollectionVersion do
           .to change(collection_version, :state)
           .to('depositing')
           .and change(Event, :count).by(1)
+                                    .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                                           'CollectionsMailer', 'manage_access_granted_email', 'deliver_now',
+                                           { params: {
+                                             user: manager1,
+                                             collection_version: collection_version
+                                           }, args: [] }
+                                         ))
+                                    .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                                           'CollectionsMailer', 'manage_access_granted_email', 'deliver_now',
+                                           { params: {
+                                             user: manager2,
+                                             collection_version: collection_version
+                                           }, args: [] }
+                                         ))
         expect(DepositCollectionJob).to have_received(:perform_later).with(collection_version)
       end
     end
