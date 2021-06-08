@@ -31,6 +31,11 @@ authorization_workgroup_names:
   administrators: 'dlss:hydrus-app-administrators'
   collection_creators: 'dlss:hydrus-app-collection-creators'
 
+# lookups for typeahead
+autocomplete_lookup:
+  url: https://lookup.ld4l.org/authorities/search/linked_data/oclcfast_direct
+  max_records: 4
+
 file_uploads_root: tmp/uploads
 
 faq_url: https://library.stanford.edu/research/stanford-digital-repository/terms-deposit
