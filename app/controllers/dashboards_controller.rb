@@ -15,10 +15,14 @@ class DashboardsController < ApplicationController
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def build_presenter
     DashboardPresenter.new(
       just_signed_in: session.delete(:just_signed_in),
-      collections: authorized_scope(Collection.all, as: :deposit),
+      collections: authorized_scope(Collection
+                                      .all
+                                      .includes('collection_versions')
+                                      .order('collection_versions.name'), as: :deposit),
       approvals: WorkVersion.awaiting_review_by(current_user),
       in_progress: WorkVersion.with_state(:first_draft, :version_draft, :rejected)
                      .joins(:work)
@@ -28,4 +32,5 @@ class DashboardsController < ApplicationController
                                          .where('managers.user_id' => current_user)
     )
   end
+  # rubocop:enable Metrics/AbcSize
 end
