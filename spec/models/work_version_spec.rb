@@ -20,6 +20,25 @@ RSpec.describe WorkVersion do
     expect(work_version.related_works).to all(be_a(RelatedWork))
   end
 
+  describe 'authors' do
+    let(:work) { create(:work) }
+    let(:work_version) { create(:work_version, work: work) }
+
+    before do
+      allow(work_version.work).to receive(:broadcast_update)
+      work_version.authors.create([
+                                    { contributor_type: 'person', role: 'Author', 'first_name' => 'John',
+                                      'last_name' => 'Lennon', 'weight' => '1' },
+                                    { contributor_type: 'person', role: 'Author', 'first_name' => 'Ringo',
+                                      'last_name' => 'Starr', 'weight' => '0' }
+                                  ])
+    end
+
+    it 'orders by weight' do
+      expect(work_version.authors.pluck(:last_name)).to eq %w[Starr Lennon]
+    end
+  end
+
   describe '#updatable?' do
     subject { work_version.updatable? }
 

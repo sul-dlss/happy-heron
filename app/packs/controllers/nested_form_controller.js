@@ -6,15 +6,22 @@ export default class extends Controller {
 
   addAssociation(event) {
     event.preventDefault()
-    const content = this.templateTarget.innerHTML.replace(/TEMPLATE_RECORD/g, new Date().valueOf())
-    this.add_itemTarget.insertAdjacentHTML('beforebegin', content)
+    this.add_itemTarget.insertAdjacentHTML('beforebegin', this.buildNewRowFromTemplate())
   }
 
   removeAssociation(event) {
     event.preventDefault()
-    const item = event.target.closest(this.selectorValue)
+    const item = this.getItemForButton(event.target)
     item.querySelectorAll('input').forEach((element) => element.required = false)
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
+  }
+
+  getItemForButton(button) {
+    return button.closest(this.selectorValue)
+  }
+
+  buildNewRowFromTemplate() {
+    return this.templateTarget.innerHTML.replace(/TEMPLATE_RECORD/g, new Date().valueOf())
   }
 }

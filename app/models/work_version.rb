@@ -8,7 +8,7 @@ class WorkVersion < ApplicationRecord
 
   belongs_to :work
   has_many :contributors, dependent: :destroy, class_name: 'Contributor'
-  has_many :authors, dependent: :destroy, class_name: 'Author'
+  has_many :authors, -> { order(weight: :asc) }, inverse_of: :work_version, dependent: :destroy, class_name: 'Author'
   before_destroy do
     # Unfortunately the STI relationships above, don't delete everything.
     # I first tried this approach, but it didn't work either
