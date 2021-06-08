@@ -49,7 +49,7 @@ class CollectionVersionsController < ObjectsController
     authorize! collection_version
     @form = collection_form(collection_version)
     if @form.validate(clean_params) && @form.save
-      after_save(collection: collection_version.collection, collection_version: collection_version)
+      after_save(form: @form)
     else
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
@@ -76,16 +76,24 @@ class CollectionVersionsController < ObjectsController
     end
   end
 
-  sig { params(collection_version: CollectionVersion, collection: Collection, context: Hash).void }
-  def after_save(collection_version:, collection:, context: {})
-    collection_version.collection.event_context = context.merge(user: current_user)
+  sig { params(form: T.any(CollectionVersionForm, DraftCollectionVersionForm)).void }
+  def after_save(form:)
+    collection_version = form.model
+    collection_version.collection.event_context = event_context(form)
     collection_version.update_metadata!
     if deposit_button_pushed?
       collection_version.begin_deposit!
       redirect_to dashboard_path
     else
-      redirect_to collection_path(collection)
+      redirect_to collection_path(collection_version.collection)
     end
+  end
+
+  def event_context(form)
+    {
+      user: current_user,
+      description: CollectionVersionEventDescriptionBuilder.build(form)
+    }
   end
 
   def collection_params
