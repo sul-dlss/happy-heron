@@ -19,7 +19,7 @@ NOTE: H2 uses Ruby 2.7.2.
 
 ## Development
 
-Start up dependencies with `docker-compose up db redis` (with `-d` to run in background).
+Start up dependencies with `docker compose up db redis` (with `-d` to run in background).
 
 To run the H2 application in development mode, set `REMOTE_USER` because we aren't running behind Shibboleth, and set the `ROLES` environment variable to grant your fake user session administrative privileges:
 
@@ -35,14 +35,14 @@ bin/webpack-dev-server
 
 ## Testing
 
-Start up dependencies with `docker-compose up db` (with `-d` to run in background), then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
+Start up dependencies with `docker compose up db` (with `-d` to run in background), then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
 
 ### Integration
 
-Spin up all docker-compose services for local development and in-browser testing:
+Spin up all docker compose services for local development and in-browser testing:
 
 ```shell
-$ docker-compose up # use -d to run in background
+$ docker compose up # use -d to run in background
 ```
 
 This will spin up the H2 web application, its background workers, and all service dependencies declared in docker-compose.yml.
@@ -115,7 +115,7 @@ Thereafter, every time you push commits that change `Gemfile.lock` or any files 
 
 #### Note: Requires Postgres
 
-Before running `rake rails_rbi:all`, make sure the `db` docker-compose service is running, else the type definitions for the app's models will be deleted.
+Before running `rake rails_rbi:all`, make sure the `db` docker compose service is running, else the type definitions for the app's models will be deleted.
 
 #### Note: Updating hidden definitions
 
