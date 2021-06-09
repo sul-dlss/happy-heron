@@ -22,7 +22,7 @@ RSpec.describe 'Create a new collection', js: true do
       fill_in 'Collection name', with: name
       fill_in 'Description', with: collection_version_attrs.fetch(:description)
       fill_in 'Contact email', with: 'test@example.edu'
-      check 'Send email to collection Managers and Reviewers when participants are added/removed.'
+      check 'Send email to Collection Managers and Reviewers when participants are added/removed.'
 
       select 'Apache-2.0', from: 'collection_required_license'
 
