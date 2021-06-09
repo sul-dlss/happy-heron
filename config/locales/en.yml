@@ -83,7 +83,7 @@ en:
   hints:
     collection:
       review_enabled: >
-        A reviewer checks a deposit for clarity, accuracy, and completeness before
+        A Reviewer checks a deposit for clarity, accuracy, and completeness before
         approving the publication. Only one Reviewer is required to review each
         deposit. A Reviewer can edit a deposit or return it to the Depositor with
         a request for changes. The Depositor will receive a notification when
