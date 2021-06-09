@@ -27,6 +27,6 @@ class PurlCheckLinkComponent < ApplicationComponent
   private
 
   def title
-    Works::DetailComponent.new(work_version: work_version).title
+    WorkTitlePresenter.show(work_version)
   end
 end
