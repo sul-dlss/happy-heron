@@ -23,6 +23,12 @@ module Dashboard
       end
     end
 
+    def state_count(state)
+      return 0 unless counts.key? state
+
+      counts.fetch(state)
+    end
+
     def total
       return '0' if total_count.zero?
 
