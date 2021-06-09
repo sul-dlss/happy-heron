@@ -1344,7 +1344,7 @@ Other:
         value: text
         source:
           value: MODS resource types
-Software/Code:
+Software/<wbr>Code:
   type:
     - type: resource type
       value: software, multimedia

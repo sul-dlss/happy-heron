@@ -1686,7 +1686,7 @@ Other:
         uri: http://vocab.getty.edu/page/aat/300256200
         source:
           code: aat
-Software/Code:
+Software/<wbr>Code:
   subtypes:
     Animation:
       - type: genre

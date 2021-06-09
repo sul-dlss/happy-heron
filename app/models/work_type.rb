@@ -111,7 +111,7 @@ class WorkType
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'data', label: 'Data', icon: 'chart-bar', subtypes: DATA_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'software, multimedia', label: 'Software/Code', icon: 'mouse', subtypes: SOFTWARE_TYPES,
+      new(id: 'software, multimedia', label: 'Software/<wbr>Code'.html_safe, icon: 'mouse', subtypes: SOFTWARE_TYPES,
           cocina_type: Cocina::Models::Vocab.object),
       new(id: 'image', label: 'Image', icon: 'images', subtypes: IMAGE_TYPES,
           cocina_type: Cocina::Models::Vocab.image),
