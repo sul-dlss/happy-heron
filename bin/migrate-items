@@ -219,7 +219,7 @@ def contributors_and_authors(json)
     authors: []
   }
 
-  json.fetch('contributors').map do |attributes|
+  json.fetch('contributors').map.with_index do |attributes, index|
     contributor_attributes = attributes.dup
     hydrus_role = contributor_attributes.delete('role')
     case hydrus_role
@@ -237,7 +237,7 @@ def contributors_and_authors(json)
       contributor_attributes.merge!(split_name(contributor_attributes.delete('full_name')))
     end
     if role.in?(AUTHOR_ROLES)
-      data[:authors] << Author.new(contributor_attributes.merge(contributor_type: type, role: role))
+      data[:authors] << Author.new(contributor_attributes.merge(contributor_type: type, role: role, weight: index))
     else
       data[:contributors] << Contributor.new(contributor_attributes.merge(contributor_type: type, role: role))
     end
