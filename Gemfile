@@ -16,6 +16,7 @@ group :development, :test do
   gem 'rubocop-sorbet', require: false
   gem 'simplecov', require: false
   gem 'super_diff', require: false
+  gem 'webmock' # test calls to external QA lookup service for autocomplete
 end
 
 group :development do
