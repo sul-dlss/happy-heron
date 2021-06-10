@@ -11,6 +11,7 @@ class WorkVersionsController < ObjectsController
   def destroy
     version = WorkVersion.find(params[:id])
     work = version.work
+    collection = work.collection
     authorize! version
     version.transaction do
       # delete the head version and revert to previous version
@@ -19,6 +20,6 @@ class WorkVersionsController < ObjectsController
       version.destroy
     end
 
-    redirect_to dashboard_path
+    redirect_to collection_works_path(collection)
   end
 end

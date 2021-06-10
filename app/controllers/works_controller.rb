@@ -98,13 +98,14 @@ class WorksController < ObjectsController
 
   def destroy
     work = Work.find(params[:id])
+    collection = work.collection
     authorize! work
     work.transaction do
       work.update(head: nil)
       work.destroy
     end
 
-    redirect_to dashboard_path
+    redirect_to collection_works_path(collection)
   end
 
   def next_step
