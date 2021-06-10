@@ -1,4 +1,4 @@
-<div class="mb-3 row plain-container">
+<div class="mb-3 row plain-container g-0">
   <div class="col-sm-6">
     <%= form.label :label, 'Keyword', class: 'col-form-label sr-only' %>
     <%= form.text_field :label, class: "form-control#{ 'is-invalid' if error?}", required: true %>
@@ -6,7 +6,7 @@
   </div>
   <% if not_first_keyword? %>
     <div class="col-sm-1">
-      <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: 'Remove' },
+      <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Remove' },
       data: { action: "click->nested-form#removeAssociation",
               plain: true } do %>
         <span class="far fa-trash-alt"></span>
