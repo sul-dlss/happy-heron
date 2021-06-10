@@ -1,8 +1,9 @@
-# typed: strict
+# typed: false
 # frozen_string_literal: true
 
 # Records events in the lifecycle of a deposit
 class Event < ApplicationRecord
+  default_scope { order(created_at: :desc) }
   belongs_to :eventable, polymorphic: true
   belongs_to :user, optional: true
 
