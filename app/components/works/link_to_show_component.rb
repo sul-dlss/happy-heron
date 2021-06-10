@@ -13,7 +13,7 @@ module Works
     end
 
     def title
-      @title ||= Works::DetailComponent.new(work_version: work_version).title
+      @title ||= WorkTitlePresenter.show(work_version)
     end
 
     attr_reader :work_version

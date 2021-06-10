@@ -19,7 +19,7 @@ module Dashboard
     end
 
     def title
-      @title ||= Works::DetailComponent.new(work_version: work_version).title
+      @title ||= WorkTitlePresenter.show(work_version)
     end
 
     def work_link

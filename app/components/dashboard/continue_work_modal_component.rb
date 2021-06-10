@@ -19,7 +19,7 @@ module Dashboard
     delegate :work, to: :work_version
 
     def title
-      @title ||= Works::DetailComponent.new(work_version: work_version).title
+      @title ||= WorkTitlePresenter.show(work_version)
     end
   end
 end

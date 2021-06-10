@@ -47,7 +47,7 @@ module Works
 
     sig { returns(String) }
     def title
-      work_version.title.presence || 'No title'
+      WorkTitlePresenter.show(work_version)
     end
 
     sig { returns(String) }
