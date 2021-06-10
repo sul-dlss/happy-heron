@@ -32,6 +32,7 @@ RSpec.describe 'Delete a draft work', js: true do
         click_link 'Discard draft'
       end
       expect(Work.exists?(work.id)).to be false
+      expect(page).to have_current_path(collection_works_path(collection.id))
     end
   end
 end
