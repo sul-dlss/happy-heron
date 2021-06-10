@@ -14,13 +14,19 @@ module Works
 
     delegate :purl, :collection, :depositor, :events, to: :work
 
-    delegate :version, :work_type, :contact_emails, :abstract, :citation,
+    delegate :work_type, :contact_emails, :abstract, :citation,
              :attached_files, :related_works, :related_links,
              :created_edtf, :published_edtf, :rejected?, :work, :description, to: :work_version
 
     sig { returns(T::Array[AbstractContributor]) }
     def contributors
       work_version.authors + work_version.contributors
+    end
+
+    def version
+      return '1 - initial version' if work_version.version == 1
+
+      "#{work_version.version} - #{description}"
     end
 
     def collection_name

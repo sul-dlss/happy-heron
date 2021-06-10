@@ -16,14 +16,16 @@ RSpec.describe Works::DetailComponent, type: :component do
 
     it 'renders the draft title' do
       expect(rendered.css('.state').to_html).to include('Draft - Not deposited')
+      expect(rendered.to_html).to include '1 - initial version'
     end
   end
 
   context 'when deposited' do
-    let(:work_version) { build_stubbed(:work_version, :deposited) }
+    let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, description: 'changed the title') }
 
     it 'renders the draft title' do
       expect(rendered.css('.state').to_html).not_to include('Not deposited')
+      expect(rendered.to_html).to include '2 - changed the title'
     end
   end
 
