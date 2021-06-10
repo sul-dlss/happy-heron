@@ -31,6 +31,12 @@
     }
   }
 
+  .dataTable-wrapper {
+    .dataTable-search {
+      visibility: hidden;
+    }
+  }
+
   // The pencil icon
   .edit {
     margin-left: 10px;
