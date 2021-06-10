@@ -134,9 +134,9 @@ RSpec.describe DescriptionGenerator do
         }
       ],
       subject: [
-        { type: 'topic', value: 'MyString' },
-        { type: 'topic', value: 'MyString' },
-        { type: 'topic', value: 'MyString' }
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' }
       ],
       note: [
         { type: 'summary', value: 'test abstract' },

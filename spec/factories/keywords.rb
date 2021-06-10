@@ -4,7 +4,7 @@
 FactoryBot.define do
   factory :keyword do
     work_version { nil }
-    label { 'MyString' }
-    uri { 'MyString' }
+    label { 'MyKeyword' }
+    uri { 'http://example.org/uri' }
   end
 end
