@@ -46,8 +46,14 @@
     border-bottom: 1px solid black;
     margin-bottom: 10px;
     .nav {
+      .nav-link {
+        color: $gray-700;
+        width: 10.5rem; // keep the tabs from changing position when the active tab gets a bold style.
+      }
       .active {
         border-bottom: 3px solid black;
+        color: $primary;
+        font-weight: bold;
       }
     }
   }
