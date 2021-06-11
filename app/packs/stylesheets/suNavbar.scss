@@ -15,14 +15,14 @@
     background-color: rgba(255, 255, 255, 0.7);
   }
   .sdr-header {
-    color: $alabaster;
+    color: $white;
 
     .stanford {
       @extend h3;
       line-height: 2.2  ;
       font-family: Palatino, ‘Palatino Linotype’, ‘Hoefler Text’, Times, ‘Times New Roman’, serif;
       padding-right: 1rem;
-      border-right: 1px solid $alabaster;
+      border-right: 1px solid $white;
     }
 
     .digital-repo {
