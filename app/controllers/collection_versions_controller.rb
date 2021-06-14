@@ -85,7 +85,7 @@ class CollectionVersionsController < ObjectsController
       collection_version.begin_deposit!
       redirect_to dashboard_path
     else
-      redirect_to collection_path(collection_version.collection)
+      redirect_to collection_version_path(collection_version)
     end
   end
 
