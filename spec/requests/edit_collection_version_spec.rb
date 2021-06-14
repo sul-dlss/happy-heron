@@ -69,7 +69,7 @@ RSpec.describe 'Updating an existing collection version' do
             patch "/collection_versions/#{collection_version.id}",
                   params: { collection_version: collection_params, commit: save_draft_button }
             expect(response).to have_http_status(:found)
-            expect(response).to redirect_to(collection_path(collection))
+            expect(response).to redirect_to(collection_version_path(collection_version))
             collection_version.reload
             expect(collection_version.name).to eq 'My Test Collection'
           end
