@@ -523,7 +523,7 @@ RSpec.describe TypesGenerator do
               {
                 structuredValue: [
                   {
-                    value: 'Software/<wbr>Code',
+                    value: 'Software/Code',
                     type: 'type'
                   },
                   {
