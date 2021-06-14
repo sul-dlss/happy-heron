@@ -3,7 +3,7 @@ import { DataTable } from "simple-datatables"
 
 export default class extends Controller {
   connect() {
-    new DataTable("#approvalsTable", {
+    new DataTable(this.element, {
       paging: false,
       columns: [
         { select: 0, sort: "asc" },  // Sort the first column in ascending order
