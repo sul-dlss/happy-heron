@@ -26,7 +26,7 @@
             id: "#{prefix}_created_year",
             placeholder: 'year',
             class: "form-control", min: min_year, max: max_year %>
-        <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
+        <div class="invalid-feedback" data-date-validation-target="error"></div>
       </div>
       <div class="month">
         <label for="<%= prefix %>_created_month" class="visually-hidden">Created month</label>
@@ -60,13 +60,14 @@
         <div class="year">
           <label for="<%= prefix %>_created_range_start_year" class="visually-hidden">Created range start year</label>
           <%= date_range_start_year %>
-          <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
+          <div class="invalid-feedback" data-date-validation-target="error"></div>
+          <div class="invalid-feedback" data-date-range-target="startError"></div>
         </div>
         <div class="month">
           <label for="<%= prefix %>_created_range_start_month" class="visually-hidden">Created range start month</label>
           <%= select_month created_range_start_month,
               { prefix: prefix, field_name: 'created_range(2i)', prompt: 'month'},
-              data: { date_validation_target: 'month', action: 'date-validation#change' },
+              data: { date_validation_target: 'month', date_range_target: 'startMonth', action: 'date-range#change' },
               id: "#{prefix}_created_range_start_month",
               class: "form-control" %>
         </div>
@@ -74,7 +75,7 @@
           <label for="<%= prefix %>_created_range_start_day" class="visually-hidden">Created range start day</label>
           <%= select_day created_range_start_day,
               { prefix: prefix, field_name: 'created_range(3i)', prompt: 'day'},
-              data: { date_validation_target: 'day', action: 'date-validation#change' },
+              data: { date_validation_target: 'day', date_range_target: 'startDay', action: 'date-range#change' },
               id: "#{prefix}_created_range_start_day",
               class: "form-control" %>
         </div>
@@ -92,13 +93,14 @@
         <div class="year">
           <label for="<%= prefix %>_created_range_end_year" class="visually-hidden">Created range end year</label>
           <%= date_range_end_year %>
-          <div class="invalid-feedback">Created year must be between <%= min_year %> and <%= max_year %></div>
+          <div class="invalid-feedback" data-date-validation-target="error"></div>
+          <div class="invalid-feedback" data-date-range-target="endError"></div>
         </div>
         <div class="month">
           <label for="<%= prefix %>_created_range_end_month" class="visually-hidden">Created range end month</label>
           <%= select_month created_range_end_month,
               { prefix: prefix, field_name: 'created_range(5i)', prompt: 'month' },
-              data: { date_validation_target: 'month', action: 'date-validation#change' },
+              data: { date_validation_target: 'month', date_range_target: 'endMonth', action: 'date-range#change' },
               id: "#{prefix}_created_range_end_month", class: "form-control" %>
         </div>
 
@@ -106,7 +108,7 @@
           <label for="<%= prefix %>_created_range_end_day" class="visually-hidden">Created range end day</label>
           <%= select_day created_range_end_day,
               { prefix: prefix, field_name: 'created_range(6i)', prompt: 'day' },
-              data: { date_validation_target: 'day', action: 'date-validation#change' },
+              data: { date_validation_target: 'day', date_range_target: 'endDay', action: 'date-range#change' },
               id: "#{prefix}_created_range_end_day", class: "form-control" %>
         </div>
         <div>

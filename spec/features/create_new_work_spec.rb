@@ -55,10 +55,10 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         fill_in 'Created year', with: '999'
         click_button 'Deposit'
         expect(page).to have_content(
-          "Publication year must be between #{Settings.earliest_year} and #{Time.zone.today.year}"
+          'must be after 1000'
         )
         expect(page).to have_content(
-          "Created year must be between #{Settings.earliest_year} and #{Time.zone.today.year}"
+          'must be in the past'
         )
         expect(page).to have_content('You must provide an abstract')
 
