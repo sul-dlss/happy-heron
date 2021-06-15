@@ -51,8 +51,8 @@ RSpec.describe 'Edit a draft work', js: true do
         expect(nav).to have_content('Edit')
       end
 
-      expect(page).to have_content('Work types')
-      expect(page).not_to have_content('Work types (optional)')
+      expect(page).to have_content('Work subtypes')
+      expect(page).not_to have_content('Work subtypes (optional)')
 
       fill_in "What's changing?", with: 'Fixing title per request'
 
@@ -105,7 +105,7 @@ RSpec.describe 'Edit a draft work', js: true do
       click_link 'Yes!'
 
       expect(page).to have_content work_version.title
-      expect(page).to have_content('Work types')
+      expect(page).to have_content('Work subtypes')
       expect(page).to have_content('Select at least one term below')
       expect(find('#work_subtype_preprint', visible: :all)).not_to be_visible
       expect(find('#work_subtype_data')).to be_visible
