@@ -19,7 +19,7 @@
             <% types.each do |type| %>
               <div class="work-type-box">
                 <%= render CheckboxButtonComponent.new(name: 'work_type', value: type.id, data: { action: "work-type#change" }) do %>
-                  <span class="fas fa-2x fa-<%= type.icon %>" aria-hidden="true"></span> <div class="work-type-button-text"><%= type.label %></div>
+                  <span class="fas fa-2x fa-<%= type.icon %>" aria-hidden="true"></span> <div class="work-type-button-text"><%= type.html_label %></div>
                 <% end %>
               </div>
             <% end %>

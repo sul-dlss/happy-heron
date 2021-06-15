@@ -73,6 +73,9 @@ class WorkType
   attr_reader :label
 
   sig { returns(String) }
+  attr_reader :html_label
+
+  sig { returns(String) }
   attr_reader :icon
 
   sig { returns(String) }
@@ -81,18 +84,18 @@ class WorkType
   sig { returns(T::Array[String]) }
   attr_reader :subtypes
 
-  sig { params(id: String, label: String, icon: String, subtypes: T::Array[String], cocina_type: String).void }
-  def initialize(id:, label:, icon:, subtypes:, cocina_type:)
-    @id = id
-    @label = label
-    @icon = icon
-    @subtypes = subtypes
-    @cocina_type = cocina_type
+  def initialize(**params)
+    @id = params.fetch(:id)
+    @label = params.fetch(:label)
+    @html_label = params.fetch(:html_label)
+    @icon = params.fetch(:icon)
+    @subtypes = params.fetch(:subtypes)
+    @cocina_type = params.fetch(:cocina_type)
   end
 
   sig { returns(WorkType) }
   def self.purl_reservation_type
-    new(id: 'purl_reservation', label: 'PURL reservation', icon: '', subtypes: [],
+    new(id: 'purl_reservation', label: 'PURL reservation', html_label: 'PURL reservation', icon: '', subtypes: [],
         cocina_type: Cocina::Models::Vocab.object)
   end
 
@@ -107,24 +110,24 @@ class WorkType
   sig { returns(T::Array[WorkType]) }
   def self.all
     [
-      new(id: 'text', label: 'Text', icon: 'book-open', subtypes: TEXT_TYPES,
-          cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'data', label: 'Data', icon: 'chart-bar', subtypes: DATA_TYPES,
-          cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'software, multimedia', label: 'Software/Code', icon: 'mouse', subtypes: SOFTWARE_TYPES,
-          cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'image', label: 'Image', icon: 'images', subtypes: IMAGE_TYPES,
-          cocina_type: Cocina::Models::Vocab.image),
-      new(id: 'sound', label: 'Sound', icon: 'microphone-alt', subtypes: SOUND_TYPES,
-          cocina_type: Cocina::Models::Vocab.media),
-      new(id: 'video', label: 'Video', icon: 'film', subtypes: VIDEO_TYPES,
-          cocina_type: Cocina::Models::Vocab.media),
-      new(id: 'music', label: 'Music', icon: 'music', subtypes: MUSIC_TYPES,
-          cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'mixed material', label: 'Mixed Materials', icon: 'play', subtypes: MIXED_TYPES,
-          cocina_type: Cocina::Models::Vocab.object),
-      new(id: 'other', label: 'Other', icon: 'archive', subtypes: [],
-          cocina_type: Cocina::Models::Vocab.object)
+      new(id: 'text', label: 'Text', html_label: 'Text', icon: 'book-open',
+          subtypes: TEXT_TYPES, cocina_type: Cocina::Models::Vocab.object),
+      new(id: 'data', label: 'Data', html_label: 'Data', icon: 'chart-bar',
+          subtypes: DATA_TYPES, cocina_type: Cocina::Models::Vocab.object),
+      new(id: 'software, multimedia', label: 'Software/Code', html_label: 'Software/<wbr>Code'.html_safe, icon: 'mouse',
+          subtypes: SOFTWARE_TYPES, cocina_type: Cocina::Models::Vocab.object),
+      new(id: 'image', label: 'Image', html_label: 'Image', icon: 'images',
+          subtypes: IMAGE_TYPES, cocina_type: Cocina::Models::Vocab.image),
+      new(id: 'sound', label: 'Sound', html_label: 'Sound', icon: 'microphone-alt',
+          subtypes: SOUND_TYPES, cocina_type: Cocina::Models::Vocab.media),
+      new(id: 'video', label: 'Video', html_label: 'Video', icon: 'film',
+          subtypes: VIDEO_TYPES, cocina_type: Cocina::Models::Vocab.media),
+      new(id: 'music', label: 'Music', html_label: 'Music', icon: 'music',
+          subtypes: MUSIC_TYPES, cocina_type: Cocina::Models::Vocab.object),
+      new(id: 'mixed material', label: 'Mixed Materials', html_label: 'Mixed Materials', icon: 'play',
+          subtypes: MIXED_TYPES, cocina_type: Cocina::Models::Vocab.object),
+      new(id: 'other', label: 'Other', html_label: 'Other', icon: 'archive',
+          subtypes: [], cocina_type: Cocina::Models::Vocab.object)
     ]
   end
   # rubocop:enable Metrics/MethodLength
