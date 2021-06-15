@@ -316,3 +316,8 @@ Style/MultilineInPatternThen: # (new in 1.16)
   Enabled: true
 Style/QuotedSymbols: # (new in 1.16)
   Enabled: true
+
+RSpec/IdenticalEqualityAssertion: # (new in 2.4)
+  Enabled: true
+RSpec/Rails/AvoidSetupHook: # (new in 2.4)
+  Enabled: true
