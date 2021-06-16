@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/hotwired/turbo-rails.git
+  revision: d89e1a0f36373180806ceab6949fb25e0d74264a
+  ref: d89e1a0
+  specs:
+    turbo-rails (0.5.11)
+      rails (>= 6.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -235,7 +243,7 @@ GEM
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
-    ffi (1.15.1)
+    ffi (1.15.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (1.0.1)
@@ -386,7 +394,7 @@ GEM
     rspec-support (3.10.2)
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.16.1)
+    rubocop (1.17.0)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -443,8 +451,8 @@ GEM
       rake (~> 12.3)
       serverengine (~> 2.1.0)
       thor
-    sorbet (0.5.6442)
-      sorbet-static (= 0.5.6442)
+    sorbet (0.5.6445)
+      sorbet-static (= 0.5.6445)
     sorbet-coerce (0.5.0)
       polyfill (~> 1.8)
       safe_type (~> 1.1, >= 1.1.1)
@@ -455,15 +463,15 @@ GEM
       parser (>= 2.7)
       sorbet-coerce (>= 0.2.6)
       sorbet-runtime (>= 0.5)
-    sorbet-runtime (0.5.6442)
-    sorbet-static (0.5.6442-universal-darwin-14)
-    sorbet-static (0.5.6442-universal-darwin-15)
-    sorbet-static (0.5.6442-universal-darwin-16)
-    sorbet-static (0.5.6442-universal-darwin-17)
-    sorbet-static (0.5.6442-universal-darwin-18)
-    sorbet-static (0.5.6442-universal-darwin-19)
-    sorbet-static (0.5.6442-universal-darwin-20)
-    sorbet-static (0.5.6442-x86_64-linux)
+    sorbet-runtime (0.5.6445)
+    sorbet-static (0.5.6445-universal-darwin-14)
+    sorbet-static (0.5.6445-universal-darwin-15)
+    sorbet-static (0.5.6445-universal-darwin-16)
+    sorbet-static (0.5.6445-universal-darwin-17)
+    sorbet-static (0.5.6445-universal-darwin-18)
+    sorbet-static (0.5.6445-universal-darwin-19)
+    sorbet-static (0.5.6445-universal-darwin-20)
+    sorbet-static (0.5.6445-x86_64-linux)
     sorted_set (1.0.3)
       rbtree
       set (~> 1.0)
@@ -496,8 +504,6 @@ GEM
       diff-lcs
       patience_diff
     thor (1.1.0)
-    turbo-rails (0.5.9)
-      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -593,7 +599,7 @@ DEPENDENCIES
   state_machines-activerecord
   state_machines-graphviz
   super_diff
-  turbo-rails (= 0.5.9)
+  turbo-rails!
   view_component (~> 2.18)
   web-console (>= 3.3.0)
   webmock
