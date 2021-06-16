@@ -563,10 +563,10 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 CREATE TABLE public.work_versions (
     id bigint NOT NULL,
     version integer DEFAULT 1,
-    title character varying NOT NULL,
+    title character varying,
     work_type character varying NOT NULL,
     created_edtf character varying,
-    abstract text NOT NULL,
+    abstract text,
     citation character varying,
     access public.work_access DEFAULT 'world'::public.work_access NOT NULL,
     embargo_date date,
@@ -1286,6 +1286,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210219142356'),
 ('20210520161846'),
 ('20210527193102'),
-('20210608161622');
+('20210608161622'),
+('20210616201626');
 
 

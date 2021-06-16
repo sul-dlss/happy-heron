@@ -21,7 +21,7 @@ module Works
 
     sig { returns(String) }
     def page_title
-      persisted? ? work_version.title : 'Deposit your content'
+      work_version.title.presence || 'Deposit your content'
     end
 
     delegate :persisted?, to: :work_form

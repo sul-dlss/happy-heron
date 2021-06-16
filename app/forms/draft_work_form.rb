@@ -8,12 +8,13 @@ class DraftWorkForm < Reform::Form
   feature Edtf
   feature EmbargoDate
   include Composition
+  feature Coercion # Casts properties to a specific type
 
   property :work_type, on: :work_version
   property :description, on: :work_version
   property :subtype, on: :work_version
-  property :title, on: :work_version
-  property :abstract, on: :work_version
+  property :title, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
+  property :abstract, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
   property :citation, on: :work_version
   property :default_citation, virtual: true, default: true
   property :citation_auto, virtual: true
