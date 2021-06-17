@@ -57,7 +57,8 @@
       <div class="col-sm-10">
         <%= form.text_area :citation, class: "form-control",
                            aria: { label: 'Provided citation' },
-                           data: { auto_citation_target: 'manual' } %>
+                           data: { auto_citation_target: 'manual',
+                                   action: "no-newlines#change", no_newlines_target: 'input', controller: 'no-newlines' } %>
         <%= form.text_area :citation_auto,
                            class: "form-control", readonly: true,
                            aria: { label: 'Automatically generated citation' },

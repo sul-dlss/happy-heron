@@ -3,7 +3,9 @@
     <%= form.label :citation, 'Citation of related published work', class: 'form-label col-md-2' %>
 
     <div class="col-md-9">
-      <%= form.text_field :citation, class: 'form-control' %>
+      <%= form.text_area :citation, class: 'form-control',
+                         data: { action: "no-newlines#change", no_newlines_target: 'input', controller: 'no-newlines' }
+                          %>
     </div>
 
     <div class="col-md-1">
