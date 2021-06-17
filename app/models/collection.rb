@@ -29,8 +29,11 @@ class Collection < ApplicationRecord
     broadcast_replace_to self, :details, partial: 'collection_versions/collection_version',
                                          locals: { collection_version: head }
 
-    # This will update the deposit status of the collection on the dashboard
-    broadcast_replace_to :collection_headers, partial: 'dashboards/collection_header'
+    # This will update the summary of the collection on the dashboard including the
+    # status and the buttons.
+    broadcast_replace_to :summary,
+                         target: ActionView::RecordIdentifier.dom_id(self, :summary),
+                         partial: 'dashboards/collection_without_user'
   end
 
   sig { returns(T.nilable(Date)) }

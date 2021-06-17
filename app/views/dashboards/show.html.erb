@@ -15,11 +15,11 @@
         <% end %>
       </header>
 
-      <%= turbo_stream_from :collection_headers %>
+      <%= turbo_stream_from :summary %>
       <%= turbo_stream_from :summary_rows %>
 
       <ul class="collections">
-        <%= render Dashboard::CollectionComponent.with_collection(@presenter.collections) %>
+        <%= render partial: 'collection_without_user', collection: @presenter.collections, as: :collection %>
       </ul>
 
       <%= render Works::WorkTypeModalComponent.new %>

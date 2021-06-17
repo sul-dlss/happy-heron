@@ -23,6 +23,7 @@ RSpec.describe 'Delete a draft work', js: true do
       accept_confirm do
         click_link "Delete #{work_version.title}"
       end
+      sleep(1)
       expect(Work.exists?(work.id)).to be false
     end
 
