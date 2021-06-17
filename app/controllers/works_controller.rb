@@ -57,6 +57,8 @@ class WorksController < ObjectsController
       # browsers will follow the redirect using the original request method... To work around this... return
       # a 303 See Other status code which will be followed using a GET request."
       redirect_to action: 'edit', status: :see_other
+    rescue ActiveRecord::RecordInvalid => e
+      validate_work_types! if /Validation failed/i.match?(e.message)
     rescue WorkVersion::WorkTypeUpdateError
       flash[:error] = 'Unexpected error attempting to edit PURL reservation'
       redirect_to dashboard_path, status: :see_other
@@ -220,14 +222,14 @@ class WorksController < ObjectsController
     end
 
     unless WorkSubtypeValidator.valid?(params[:work_type], params[:subtype])
-      errors << "Invalid subtype value for work_type '#{params[:work_type]}': " +
+      errors << "Invalid subtype value for work of type '#{params[:work_type]}': " +
                 (Array(params[:subtype]).join.presence || 'missing')
     end
 
     return if errors.empty?
 
     flash[:error] = errors.join("\n")
-    redirect_to dashboard_path
+    redirect_to dashboard_path, status: :see_other
   end
 
   def purl_reservation?

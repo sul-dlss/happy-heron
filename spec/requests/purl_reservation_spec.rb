@@ -54,6 +54,19 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
         end
       end
 
+      context 'when the work version has no type and is then given an invalid type' do
+        let(:work_version) { create(:work_version, :purl_reserved, work: work) }
+
+        it 'returns the user to the dashboard with an explanatory error message' do
+          patch "/works/#{work.id}/update_type", params: { work_type: 'other', subtype: [] }
+
+          expect(response).to redirect_to('/dashboard')
+          follow_redirect!
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include('Invalid subtype value for work of type')
+        end
+      end
+
       context 'when the work version has already had a type chosen' do
         let(:work_version) { create(:work_version, work: work) }
 
