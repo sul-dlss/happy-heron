@@ -16,7 +16,7 @@
       <%= render PopoverComponent.new key: 'collection.description' %>
     </div>
     <div class="col-sm-10 col-xl-8">
-      <%= form.text_field :description, class: "form-control", required: true %>
+      <%= form.text_area :description, class: "form-control", required: true %>
       <div class="invalid-feedback">You must provide a description</div>
     </div>
   </div>
