@@ -1,9 +1,15 @@
 <script language='javascript'>
-  window.onload = function() { 
-    document.getElementById("print-link").style.display='none';
-    document.getElementById("save-link").style.display='none';
-    window.print(); 
+  window.onload = function() {
+    window.print();
   }
 </script>
-<a href="javascript:window.close();">Close window</a>
-<%= render partial: 'shared/terms_of_deposit' %>
+<style>
+  @media print {
+    #closeWindow {
+      display: none;
+    }
+  }
+</style>
+<a id="closeWindow" href="javascript:window.close();">Close window</a>
+<h1>Terms of Deposit</h1>
+<%= render 'terms/show' %>

@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :terms, only: :show
+
   resources :first_draft_collections, only: %i[new create edit update]
   resources :collection_versions, only: %i[show destroy edit update] do
     member do
