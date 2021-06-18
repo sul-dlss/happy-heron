@@ -72,7 +72,7 @@ gem 'sneakers', '~> 2.11'
 gem 'sorbet-rails', '0.7.1'
 gem 'sorbet-runtime'
 gem 'state_machines-activerecord'
-gem 'turbo-rails', '0.5.9' # pinned because 0.5.11 broke the build
+gem 'turbo-rails', github: 'hotwired/turbo-rails', ref: 'd89e1a0'
 gem 'view_component', '~> 2.18'
 gem 'webpacker', '6.0.0.beta7'
 gem 'whenever'

@@ -4,7 +4,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@github/time-elements": "^3.1.2",
-    "@hotwired/turbo-rails": "^7.0.0-beta.5",
+    "@hotwired/turbo-rails": "^7.0.0-beta.7",
     "@popperjs/core": "2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
