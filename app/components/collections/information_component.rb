@@ -12,7 +12,7 @@ module Collections
     sig { returns(CollectionVersion) }
     attr_reader :collection_version
 
-    delegate :collection, :version, to: :collection_version
+    delegate :collection, :description, to: :collection_version
     delegate :creator, :druid, :purl, to: :collection
 
     sig { returns(String) }
@@ -23,6 +23,13 @@ module Collections
     sig { returns(String) }
     def last_saved
       render LocalTimeComponent.new(datetime: collection_version.updated_at)
+    end
+
+    sig { returns(String) }
+    def version
+      return '1 - initial version' if collection_version.version == 1
+
+      "#{collection_version.version} - #{description}"
     end
   end
 end
