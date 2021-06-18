@@ -148,6 +148,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         expect(page).to have_content 'Citation from user input'
         expect(page).to have_content 'Everyone'
         expect(page).to have_content 'CC0-1.0'
+
+        within '#events' do
+          # The things that have been updated should only be logged in one event
+          expect(page).to have_content 'title of deposit modified', count: 1
+        end
       end
     end
 

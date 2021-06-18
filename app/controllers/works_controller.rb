@@ -27,7 +27,6 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
-      work.event_context = { user: current_user }
       after_save(form: @form)
     else
       @form.prepopulate!
