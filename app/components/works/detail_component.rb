@@ -12,7 +12,7 @@ module Works
     sig { returns(WorkVersion) }
     attr_reader :work_version
 
-    delegate :purl, :collection, :depositor, :events, to: :work
+    delegate :purl, :collection, :events, to: :work
 
     delegate :work_type, :contact_emails, :abstract, :citation,
              :attached_files, :related_works, :related_links,
@@ -21,6 +21,10 @@ module Works
     sig { returns(T::Array[AbstractContributor]) }
     def contributors
       work_version.authors + work_version.contributors
+    end
+
+    def depositor
+      work.depositor.sunetid
     end
 
     def version

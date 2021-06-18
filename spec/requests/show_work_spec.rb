@@ -49,6 +49,7 @@ RSpec.describe 'Show a work detail' do
     it 'displays the work' do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include work_version.title
+      expect(response.body).to include "<td>#{user.sunetid}</td>"
     end
 
     context 'when the work has a blank title' do
