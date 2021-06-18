@@ -3,10 +3,10 @@
   <div class="row">
     <div class="form-check col-auto">
       <%= form.check_box :agree_to_terms, required: true, class: 'form-check-input' %>
-      <%= form.label :agree_to_terms,
-       "I agree to the #{link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'}}".html_safe,
-       class: 'form-check-label' %>
-       <div class="invalid-feedback">You must agree to the Terms of Deposit.</div>
+      <%= form.label :agree_to_terms, class: 'form-check-label' do %>
+        I agree to the <%= link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'} %>
+      <% end %>
+      <div class="invalid-feedback">You must agree to the Terms of Deposit.</div>
     </div>
   </div>
 </section>
