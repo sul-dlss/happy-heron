@@ -116,13 +116,11 @@ RSpec.describe 'Dashboard requests' do
 
     it 'shows draft and rejected deposits as being in progress' do
       get '/dashboard'
+
       expect(response).to be_successful
       expect(response.body).to include('I am a first draft')
       expect(response.body).to include('I am a version draft')
       expect(response.body).to include('I am rejected')
-      expect(response.body).to include('I am deposited')
-      expect(response.body).to include('I am depositing')
-      expect(response.body).to include('See all deposits')
       expect(response.body).not_to include('I am pending approval')
     end
   end
@@ -242,7 +240,6 @@ RSpec.describe 'Dashboard requests' do
     it 'shows statuses Pending Approval, Returned, First Draft' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include 'Pending approval'
       expect(response.body).to include 'Draft - Not deposited'
       expect(response.body).to include 'Returned'
     end

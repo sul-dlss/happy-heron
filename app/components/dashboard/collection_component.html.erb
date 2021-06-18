@@ -1,28 +1,26 @@
-<li class="mb-5">
-  <section>
-    <table class="table table-striped">
-      <%= render 'dashboards/collection_header', collection: collection %>
-      <thead class="table-light">
-        <tr>
-          <th>Deposits in collection</th>
-          <th><span class="visually-hidden">Actions</span></th>
-          <th>Deposit status</th>
-          <th>Last modified</th>
-          <th>Persistent link</th>
-          <th>Citation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% visible_deposits.take(MAX_DEPOSITS_TO_SHOW).each do |work| %>
-          <%= render 'dashboards/collection_summary_row', work: work %>
-        <% end %>
-      </tbody>
-    </table>
+<section>
+  <table class="table table-striped">
+    <%= render 'dashboards/collection_header', collection: collection %>
+    <thead class="table-light">
+      <tr>
+        <th>Deposits in collection</th>
+        <th><span class="visually-hidden">Actions</span></th>
+        <th>Deposit status</th>
+        <th>Last modified</th>
+        <th>Persistent link</th>
+        <th>Citation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% visible_deposits.take(MAX_DEPOSITS_TO_SHOW).each do |work| %>
+        <%= render 'dashboards/collection_summary_row', work: work %>
+      <% end %>
+    </tbody>
+  </table>
 
-    <% if visible_deposits.count > MAX_DEPOSITS_TO_SHOW %>
-      <div class="mb-3"><%= link_to 'See all deposits', collection_works_path(collection) %></div>
-    <% end %>
+  <% if visible_deposits.count > MAX_DEPOSITS_TO_SHOW %>
+    <div class="mb-3"><%= link_to 'See all deposits', collection_works_path(collection) %></div>
+  <% end %>
 
-    <%= helpers.turbo_frame_tag dom_id(collection, :deposit), src: deposit_button_collection_path(collection) %>
-  </section>
-</li>
+  <%= helpers.turbo_frame_tag dom_id(collection, :deposit), src: deposit_button_collection_path(collection) %>
+</section>

@@ -5,7 +5,7 @@
 class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized except: %i[deposit_button delete_button edit_link]
+  verify_authorized except: %i[deposit_button delete_button edit_link dashboard]
 
   def edit
     collection = Collection.find(params[:id])
@@ -49,6 +49,13 @@ class CollectionsController < ObjectsController
     end
 
     redirect_to dashboard_path
+  end
+
+  # We render this partial lazily because it requires doing a query to see if the user has access.
+  # The access can vary depending on the user and the state of the collection.
+  def dashboard
+    collection = Collection.find(params[:id])
+    render partial: 'collections/dashboard', locals: { collection: collection }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
