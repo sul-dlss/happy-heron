@@ -327,9 +327,9 @@ RSpec.describe 'Create a new work' do
                                                                 commit: 'Save as draft' }
           expect(response).to have_http_status(:found)
           work_version = Work.last.head
-          expect(work_version.title).to be_empty
+          expect(work_version.title).to be_nil
           expect(work_version.contact_emails).to be_empty
-          expect(work_version.abstract).to be_empty
+          expect(work_version.abstract).to be_nil
           expect(work_version.authors).to be_empty
           expect(work_version.attached_files).to be_empty
           expect(work_version.keywords.size).to eq 0
@@ -365,9 +365,9 @@ RSpec.describe 'Create a new work' do
                                                                 commit: 'Save as draft' }
           expect(response).to have_http_status(:found)
           work_version = Work.last.head
-          expect(work_version.title).to be_empty
+          expect(work_version.title).to be_nil
           expect(work_version.contact_emails).to be_empty
-          expect(work_version.abstract).to be_empty
+          expect(work_version.abstract).to be_nil
           expect(work_version.authors).to be_empty
           expect(work_version.attached_files).to be_empty
           expect(work_version.keywords.size).to eq 0

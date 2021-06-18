@@ -28,7 +28,7 @@ class WorksController < ObjectsController
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
       work.event_context = { user: current_user }
-      after_save(work_version: work_version, work: work)
+      after_save(form: @form)
     else
       @form.prepopulate!
       render :new, status: :unprocessable_entity
@@ -79,7 +79,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     if @form.validate(clean_params) && @form.save
-      after_save(work_version: work_version, work: work)
+      after_save(form: @form)
     else
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
@@ -166,18 +166,20 @@ class WorksController < ObjectsController
     end
   end
 
-  sig { params(work_version: WorkVersion, work: Work).void }
-  def after_save(work_version:, work:)
-    work.event_context = { user: current_user }
+  sig { params(form: T.any(ReservationForm, WorkForm, DraftWorkForm)).void }
+  def after_save(form:) # rubocop:disable Metrics/MethodLength
+    work_version = form.model[:work_version]
 
     if purl_reservation?
       work_version.reserve_purl!
       return redirect_to dashboard_path
     end
 
+    work = form.model[:work]
+    work.event_context = event_context(form)
     work_version.update_metadata!
 
-    return redirect_to work unless  deposit_button_pushed?
+    return redirect_to work unless deposit_button_pushed?
 
     if work.collection.review_enabled?
       work_version.submit_for_review!
@@ -186,6 +188,13 @@ class WorksController < ObjectsController
       work_version.begin_deposit!
       redirect_to next_step_work_path(work)
     end
+  end
+
+  def event_context(form)
+    {
+      user: current_user,
+      description: WorkVersionEventDescriptionBuilder.build(form)
+    }
   end
 
   # rubocop:disable Metrics/MethodLength

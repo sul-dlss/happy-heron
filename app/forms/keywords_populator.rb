@@ -11,6 +11,8 @@ class KeywordsPopulator < ApplicationPopulator
     if fragment['_destroy'] == '1'
       form.keywords.delete(item)
       return skip!
+    elsif fragment['label'].blank?
+      return skip!
     end
     item || form.keywords.append(Keyword.new)
   end
