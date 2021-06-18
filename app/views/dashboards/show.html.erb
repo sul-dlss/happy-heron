@@ -8,17 +8,18 @@
     <%= render Dashboard::InProgressCollectionComponent.new(presenter: @presenter) %>
     <%= render Dashboard::ApprovalsComponent.new(presenter: @presenter) %>
 
-    <section id="your-collections" data-controller="work-type purl-reservation">
-      <header>Your collections
-        <% if allowed_to?(:create?, Collection) %>
-          <%= link_to '+ Create a new collection', new_first_draft_collection_path, class: "btn btn-outline-primary float-end" %>
-        <% end %>
-      </header>
+    <section id="your-collections" class="yourCollections" data-controller="work-type purl-reservation">
+      <% if allowed_to?(:create?, Collection) %>
+        <%= link_to '+ Create a new collection', new_first_draft_collection_path, class: "btn btn-outline-primary float-end" %>
+      <% end %>
+      <button class="btn collapse-header" data-bs-toggle="collapse" data-bs-target="#your-collections-table" role="button" aria-expanded="true" aria-controls="your-collections-table">
+        Your collections
+      </button>
 
       <%= turbo_stream_from :summary %>
       <%= turbo_stream_from :summary_rows %>
 
-      <ul class="collections">
+      <ul class="collections show" id="your-collections-table">
         <%= render partial: 'collection_without_user', collection: @presenter.collections, as: :collection %>
       </ul>
 
