@@ -12,7 +12,7 @@ module Collections
     sig { returns(CollectionVersion) }
     attr_reader :collection_version
 
-    delegate :collection, :description, to: :collection_version
+    delegate :collection, :version_description, to: :collection_version
     delegate :creator, :druid, :purl, to: :collection
 
     sig { returns(String) }
@@ -29,7 +29,7 @@ module Collections
     def version
       return '1 - initial version' if collection_version.version == 1
 
-      "#{collection_version.version} - #{description}"
+      "#{collection_version.version} - #{version_description}"
     end
   end
 end
