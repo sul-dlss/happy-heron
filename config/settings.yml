@@ -31,10 +31,12 @@ authorization_workgroup_names:
   administrators: 'dlss:hydrus-app-administrators'
   collection_creators: 'dlss:hydrus-app-collection-creators'
 
-# lookups for typeahead
+# See https://www.oclc.org/developer/develop/web-services/fast-api/assign-fast.en.html for more information
 autocomplete_lookup:
-  url: https://lookup.ld4l.org/authorities/search/linked_data/oclcfast_direct
-  max_records: 4
+  url: https://fast.oclc.org/searchfast/fastsuggest
+  num_records: 20
+  query_index: suggestall # fastsuggest
+  query_return: suggestall,idroot,auth,type
 
 file_uploads_root: tmp/uploads
 
