@@ -13,10 +13,16 @@ RSpec.describe Works::DetailComponent, type: :component do
 
   context 'when a first draft' do
     let(:work_version) { build_stubbed(:work_version) }
+    let(:user) { build(:user, name: 'Pyotr Kropotkin', email: 'kropot00@stanford.edu') }
+
+    before do
+      work_version.work.depositor = user
+    end
 
     it 'renders the draft title' do
       expect(rendered.css('.state').to_html).to include('Draft - Not deposited')
       expect(rendered.to_html).to include '1 - initial version'
+      expect(rendered.to_html).to include 'kropot00 (Pyotr Kropotkin)'
     end
   end
 
