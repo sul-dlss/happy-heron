@@ -27,7 +27,7 @@ RSpec.describe Collections::WorksComponent, type: :component do
     end
 
     it 'renders the works detail table component' do
-      expect(rendered.css('table').to_html).to include('Test title').exactly(8).times
+      expect(rendered.css('table').to_html).to include('Test title').exactly(6).times
     end
   end
 end

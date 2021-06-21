@@ -11,7 +11,7 @@ class PurlCheckLinkComponent < ApplicationComponent
   end
 
   def choose_label
-    return "Choose or Edit #{title}" if label.nil?
+    return "Choose Type and Edit #{title}" if label.nil?
 
     label
   end

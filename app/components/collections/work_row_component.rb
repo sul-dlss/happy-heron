@@ -19,6 +19,5 @@ module Collections
     end
 
     delegate :work, :attached_files, to: :work_version
-    delegate :allowed_to?, to: :helpers
   end
 end
