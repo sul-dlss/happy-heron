@@ -4,7 +4,13 @@
 # Actions that happen when something happens to a work
 class WorkObserver
   def self.before_transition(work_version, transition)
-    work_version.work.events.create(work_version.work.event_context.merge(event_type: transition.event))
+    attributes = work_version.work.event_context.merge(event_type: transition.event)
+
+    # an begin_deposit event is always preceded by a update_metadata event.
+    # We don't want to log the description for that event twice, so clear it out.
+    attributes = attributes.except(:description) if transition.event == :begin_deposit
+
+    work_version.work.events.create(attributes)
   end
 
   def self.after_transition(work_version, transition)
