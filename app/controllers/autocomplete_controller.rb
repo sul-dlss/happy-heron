@@ -8,11 +8,13 @@ class AutocompleteController < ApplicationController
     lookup_resp = lookup(query)
     if lookup_resp.success? || lookup_resp.status == :no_content
       @suggestions = suggestions(lookup_resp.body)
-      render status: :no_content, text: '' if @suggestions.empty?
+      render status: :no_content, html: '' and return if @suggestions.empty?
+
+      render status: :ok, layout: false
     else
       logger.warn("Autocomplete results for #{query} returned #{lookup_resp.status}")
       @suggestions = []
-      render status: :internal_server_error, text: ''
+      render status: :internal_server_error, html: ''
     end
   end
 
