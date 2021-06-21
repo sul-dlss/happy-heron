@@ -7,7 +7,7 @@ RSpec.describe Works::TitleComponent do
   let(:form) do
     instance_double(ActionView::Helpers::FormBuilder,
                     label: nil,
-                    text_field: nil,
+                    text_area: nil,
                     fields_for: nil)
   end
 

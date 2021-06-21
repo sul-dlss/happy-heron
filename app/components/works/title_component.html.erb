@@ -6,9 +6,13 @@
        <%= render PopoverComponent.new key: 'work.title' %>
      </div>
      <div class="col-sm-9">
-       <%= form.text_field :title, class: "form-control", required: true,
-                           data: { action: "change->auto-citation#updateDisplay",
-                                   auto_citation_target: 'titleField' } %>
+       <%= form.text_area :title, class: "form-control", required: true, rows: 1,
+                           data: { action: "no-newlines#change change->auto-citation#updateDisplay",
+                                   auto_citation_target: 'titleField',
+                                   no_newlines_target: 'input',
+                                   controller: 'no-newlines'
+
+                           } %>
        <div class="invalid-feedback">You must provide a title</div>
      </div>
    </div>
