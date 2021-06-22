@@ -40,11 +40,11 @@ class WorkVersionEventDescriptionBuilder
   # The has many relationships are showing as changed and that their "id" has changed. I don't know why.
   # So we check for changes in the sub-properties instead
   def contact_email
-    'contact email modified' if contact_emails_changed?
+    'contact email modified' if form.changed?('contact_emails')
   end
 
   def related_links
-    'related links modified' if related_links_changed?
+    'related links modified' if form.changed?('related_links')
   end
 
   def publication_date
@@ -80,7 +80,18 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def files
-    'files added/removed' if form.changed?('attached_files')
+    attributes = form.input_params[:attached_files_attributes]
+    return unless attributes
+
+    # We can't check for changes resulting from a remove on the attached_files since they're already gone.
+    destroyed = attributes.values.any? { |params| params['_destroy'] == '1' }
+
+    # we don't want description changes to cause an "added new file" message
+    added = form.attached_files.any? { |af| af.changed?('_destroy') }
+
+    return unless added || destroyed
+
+    'files added/removed'
   end
 
   def file_visibility
@@ -93,19 +104,5 @@ class WorkVersionEventDescriptionBuilder
 
   def related_works
     'related works modified' if form.changed?('related_works')
-  end
-
-  # The has many relationships are showing as changed and that their "id" has changed. I don't know why.
-  # So we check for changes in the sub-properties instead
-  def contact_emails_changed?
-    form.contact_emails.any? { |email| email.changed?(:email) }
-  end
-
-  # The has many relationships are showing as changed and that their "id" has changed. I don't know why.
-  # So we check for changes in the sub-properties instead
-  def related_links_changed?
-    form.related_links.any? do |link|
-      link.changed?(:link_title) || link.changed?(:url)
-    end
   end
 end

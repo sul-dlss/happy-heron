@@ -28,7 +28,7 @@ RSpec.describe WorkForm do
       expect(form.attached_files.size).to eq 1
       expect(form.attached_files.first.label).to eq 'hello'
       expect(form.attached_files.first.hide).to be true
-      expect(form.attached_files.first.file).to eq blob.signed_id
+      expect(form.attached_files.first.model.file.blob_id).to eq blob.id
     end
   end
 
