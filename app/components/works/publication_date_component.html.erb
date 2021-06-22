@@ -7,8 +7,9 @@
     <div class="year">
       <label for="work_published_year" class="visually-hidden">Publication year</label>
       <%= year_field %>
+      <div class="invalid-feedback" data-date-validation-target="error"></div>
       <% unless error? # This is only used before the form is submitted %>
-        <div class="invalid-feedback">Publication year must be between <%= min_year %> and <%= max_year %></div>
+        <div class="invalid-feedback" data-date-validation-target="error"></div>
       <% end %>
     </div>
     <div class="month">

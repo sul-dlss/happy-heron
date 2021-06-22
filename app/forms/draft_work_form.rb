@@ -23,7 +23,7 @@ class DraftWorkForm < Reform::Form
   property :license, on: :work_version
   property :agree_to_terms, on: :work_version
   property :created_type, virtual: true, prepopulator: (proc do |*|
-    self.created_type = created_edtf.is_a?(EDTF::Interval) ? 'range' : 'single'
+    self.created_type = created_edtf.is_a?(EDTF::Interval) ? 'range' : 'single' unless created_type
   end)
   property :created_edtf, edtf: true, range: true, on: :work_version
   property :published_edtf, edtf: true, on: :work_version
@@ -34,6 +34,9 @@ class DraftWorkForm < Reform::Form
 
   validates_with EmbargoDateParts,
                  if: proc { |form| form.user_can_set_availability? && form.release == 'embargo' }
+
+  validates_with CreatedDateParts,
+                 if: proc { |form| form.created_type == 'range' }
 
   delegate :user_can_set_availability?, to: :collection
 

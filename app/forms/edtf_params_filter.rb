@@ -12,7 +12,6 @@ class EdtfParamsFilter
 
       date_attributes[dfn[:name]] = deserialize(params, name, dfn[:range] && params["#{name}_type"] == 'range')
     end
-
     params.merge(date_attributes)
   end
 
@@ -21,10 +20,10 @@ class EdtfParamsFilter
   end
 
   def deserialize_edtf(params, date_attribute, offset = 0)
-    year = params.delete("#{date_attribute}(#{1 + offset}i)")
-    month = params.delete("#{date_attribute}(#{2 + offset}i)")
-    day = params.delete("#{date_attribute}(#{3 + offset}i)")
-    uncertain = params.delete("#{date_attribute}(approx#{offset})")
+    year = params["#{date_attribute}(#{1 + offset}i)"]
+    month = params["#{date_attribute}(#{2 + offset}i)"]
+    day = params["#{date_attribute}(#{3 + offset}i)"]
+    uncertain = params["#{date_attribute}(approx#{offset})"]
 
     deserialize_edtf_date(year, month, day, uncertain)
   end

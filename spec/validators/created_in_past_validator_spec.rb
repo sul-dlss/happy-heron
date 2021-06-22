@@ -98,5 +98,14 @@ RSpec.describe CreatedInPastValidator do
                                                    'Created edtf end must be in the past']
       end
     end
+
+    context 'with dates out of order' do
+      let(:attribute) { :created_edtf }
+      let(:value) { EDTF.parse('2000-01-01/1900-01-01') }
+
+      it 'has errors' do
+        expect(record.errors.full_messages).to eq ['Created date range start must be before end']
+      end
+    end
   end
 end

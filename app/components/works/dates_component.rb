@@ -16,8 +16,9 @@ module Works
       number_field_tag "#{prefix}[created_range(1i)]", created_range_start_year,
                        data: {
                          date_validation_target: 'year',
-                         date_range_target: 'year',
-                         action: 'date-validation#change date-range#change'
+                         date_range_target: 'startYear',
+                         action: 'date-range#change clear->date-validation#clearValidations ' \
+                                    'validate->date-validation#validate'
                        },
                        id: 'work_created_range_start_year',
                        placeholder: 'year',
@@ -28,8 +29,9 @@ module Works
       number_field_tag "#{prefix}[created_range(4i)]", created_range_end_year,
                        data: {
                          date_validation_target: 'year',
-                         date_range_target: 'year',
-                         action: 'date-validation#change date-range#change'
+                         date_range_target: 'endYear',
+                         action: 'date-range#change clear->date-validation#clearValidations ' \
+                                    'validate->date-validation#validate'
                        },
                        id: 'work_created_range_end_year',
                        placeholder: 'year',
@@ -56,16 +58,19 @@ module Works
 
     delegate :published_edtf, to: :reform
 
+    # In getters below, reform.send is used to return the original submitted values are returned when an EDTF
+    # couldn't be created.
+
     def created_range_start_year
-      created_range_start&.year
+      created_range_start&.year || reform.send(:'created_range(1i)').presence&.to_i
     end
 
     def created_range_start_month
-      resolve_month(created_range_start)
+      resolve_month(created_range_start) || reform.send(:'created_range(2i)').presence&.to_i
     end
 
     def created_range_start_day
-      resolve_day(created_range_start)
+      resolve_day(created_range_start) || reform.send(:'created_range(3i)').presence&.to_i
     end
 
     def created_range_start_approximate?
@@ -75,15 +80,15 @@ module Works
     end
 
     def created_range_end_year
-      created_range_end&.year
+      created_range_end&.year || reform.send(:'created_range(4i)').presence&.to_i
     end
 
     def created_range_end_month
-      resolve_month(created_range_end)
+      resolve_month(created_range_end) || reform.send(:'created_range(5i)').presence&.to_i
     end
 
     def created_range_end_day
-      resolve_day(created_range_end)
+      resolve_day(created_range_end) || reform.send(:'created_range(6i)').presence&.to_i
     end
 
     def created_range_end_approximate?
@@ -94,12 +99,12 @@ module Works
 
     sig { returns(T.nilable(Date)) }
     def created_range_start
-      created_interval&.begin
+      created_interval&.from
     end
 
     sig { returns(T.nilable(Date)) }
     def created_range_end
-      created_interval&.end
+      created_interval&.to
     end
 
     sig { returns(T.nilable(EDTF::Interval)) }

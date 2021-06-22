@@ -18,7 +18,7 @@ module Works
     private
 
     delegate :object, to: :form
-    delegate :first_draft?, :version_draft?, :title, to: :work_version
+    delegate :title, to: :work_version
     delegate :collection, to: :model
 
     def work_version
@@ -32,6 +32,16 @@ module Works
     sig { returns(T.nilable(T::Boolean)) }
     def work_in_reviewed_coll?
       collection.review_enabled?
+    end
+
+    sig { returns(T::Boolean) }
+    def show_version_draft_cancel?
+      work_version.version_draft? && work_version.persisted?
+    end
+
+    sig { returns(T::Boolean) }
+    def show_first_draft_cancel?
+      work_version.first_draft?
     end
   end
 end

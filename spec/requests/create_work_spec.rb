@@ -659,6 +659,30 @@ RSpec.describe 'Create a new work' do
           expect(DepositJob).to have_received(:perform_later)
         end
       end
+
+      context 'with a partial create date range' do
+        let(:collection_version) { create(:collection_version_with_collection, depositors: [user]) }
+
+        let(:work_params) do
+          {
+            title: '',
+            abstract: '',
+            license: License.license_list.first,
+            work_type: 'text',
+            release: 'immediate',
+            created_type: 'range',
+            'created_range(1i)' => '2020', 'created_range(2i)' => '3', 'created_range(3i)' => '4',
+            'created_range(4i)' => '', 'created_range(5i)' => '', 'created_range(6i)' => ''
+          }
+        end
+
+        it 'displays the draft work with a validation error' do
+          post "/collections/#{collection.id}/works", params: { work: work_params,
+                                                                commit: 'Save as draft' }
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to include 'end must be provided'
+        end
+      end
     end
   end
 end
