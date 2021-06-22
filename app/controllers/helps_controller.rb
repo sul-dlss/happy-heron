@@ -3,6 +3,11 @@
 
 # The endpoint for the help modal
 class HelpsController < ApplicationController
+  def new
+    @email = current_user&.email
+    @help_how_value = 'I want to become an SDR depositor' unless current_user
+  end
+
   def create
     HelpsMailer.with(name: params[:name],
                      email: params[:email],

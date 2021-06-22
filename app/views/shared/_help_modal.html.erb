@@ -1,0 +1,13 @@
+<div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="help-prompt" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="help-prompt">Help</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= turbo_frame_tag :help, src: new_help_path, loading: 'lazy' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   direct :contact_form do
     { controller: 'welcome', action: 'show', anchor: 'help' }
   end
-  resource :help, only: :create
+  resource :help, only: %i[new create]
   get 'print_terms_of_deposit', to: 'print#terms_of_deposit'
 
   get 'autocomplete', to: 'autocomplete#show', defaults: { format: 'html' }
