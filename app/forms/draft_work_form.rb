@@ -161,12 +161,18 @@ class DraftWorkForm < Reform::Form
     model.fetch(:work).persisted?
   end
 
-  # Ensure that this work version is now the head of the work versions for this work
-  def save_model
+  # Wrap the entire operation (root model and nested model save) in a transaction.
+  # See https://github.com/apotonick/disposable/blob/v0.5.0/lib/disposable/twin/save.rb#L11
+  def save!(*)
     Work.transaction do
       super
-      model.fetch(:work).update(head: model.fetch(:work_version))
     end
+  end
+
+  # Ensure that this work version is now the head of the work versions for this work
+  def save_model
+    super
+    model.fetch(:work).update(head: model.fetch(:work_version))
   end
 
   def to_param
