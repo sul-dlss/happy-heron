@@ -35,8 +35,9 @@ RSpec.describe CollectionObserver do
         let(:reviewer2) { create(:user) }
         let(:manager) { create(:user) }
         let(:collection) do
+          # Notice that manager is also a reviewer.
           create(:collection, :with_depositors, :email_when_participants_changed,
-                 managed_by: [manager], reviewed_by: [reviewer, reviewer2], depositor_count: 2)
+                 managed_by: [manager], reviewed_by: [reviewer, reviewer2, manager], depositor_count: 2)
         end
 
         it 'sends emails to the managers about the participants change' do
@@ -114,10 +115,30 @@ RSpec.describe CollectionObserver do
       let(:reviewer) { create(:user) }
       let(:collection_after) { collection.dup.tap { |col| col.reviewed_by = [reviewer] } }
 
-      it 'sends emails to those removed' do
+      it 'sends emails to those added' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
           { params: { user: reviewer, collection_version: collection_version }, args: [] }
+        )
+      end
+    end
+
+    context 'when manager added as reviewer to a collection' do
+      let(:collection) { create(:collection, :email_when_participants_changed, managed_by: [manager]) }
+      let(:manager) { create(:user) }
+      let(:collection_after) do
+        collection.dup.tap do |col|
+          col.reviewed_by << manager
+          col.managed_by = [manager] # Already set on collection. Duping here.
+        end
+      end
+
+      it 'sends access granted email but not participant change notification to manager' do
+        expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+          'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
+          { params: { user: manager, collection_version: collection_version }, args: [] }
+        ).and not_to_have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+          'CollectionsMailer', 'participants_changed_email', anything, anything
         )
       end
     end
