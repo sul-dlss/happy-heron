@@ -31,7 +31,6 @@
 
   <div class="dz-details col-md-2">
     <%= form.hidden_field :_destroy %>
-    <%= form.hidden_field :file %>
     <%= form.check_box :hide, class: 'form-check-input' %>
     <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
     <%= render PopoverComponent.new key: 'work.hide_file' %>

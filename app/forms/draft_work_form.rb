@@ -77,13 +77,13 @@ class DraftWorkForm < Reform::Form
   end
 
   contributor = lambda { |*|
-    property :id
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :first_name
     property :last_name
     property :full_name
     property :role_term
-    property :_destroy, virtual: true
-    property :weight
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+    property :weight, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
   }
 
   collection :contributors,
@@ -101,50 +101,46 @@ class DraftWorkForm < Reform::Form
   collection :attached_files,
              populator: AttachedFilesPopulator.new(:attached_files, AttachedFile),
              on: :work_version do
-    property :id
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :label
-    property :hide
-    # The file property is virtual so it doesn't get set on update, which causes:
-    # ArgumentError: Could not find or build blob
-    # So we set it manually when creating.
-    property :file, virtual: true
-    property :_destroy, virtual: true
+    property :hide, type: Dry::Types['params.bool']
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
                               on: :work_version do
-    property :id
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :email
-    property :_destroy, virtual: true
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :keywords,
              populator: KeywordsPopulator.new(:keywords, Keyword),
              prepopulator: ->(*) { keywords << Keyword.new if keywords.blank? },
              on: :work_version do
-    property :id
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :label
     property :uri
-    property :_destroy, virtual: true
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :related_works,
              populator: RelatedWorksPopulator.new(:related_works, RelatedWork),
              prepopulator: ->(*) { related_works << RelatedWork.new if related_works.blank? },
              on: :work_version do
-    property :id
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :citation
-    property :_destroy, virtual: true
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
                              prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
                              on: :work_version do
-    property :id
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :link_title
     property :url
-    property :_destroy, virtual: true
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   def collection
