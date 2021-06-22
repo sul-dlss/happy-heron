@@ -62,7 +62,8 @@ class DescriptionGenerator
   sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
   def keywords
     work_version.keywords.map do |keyword|
-      Cocina::Models::DescriptiveValue.new(value: T.must(keyword.label), type: 'topic', uri: keyword.uri)
+      props = { value: T.must(keyword.label), type: 'topic', uri: keyword.uri.presence }.compact
+      Cocina::Models::DescriptiveValue.new(props)
     end
   end
 
