@@ -7,7 +7,7 @@
     <div class="col-4">
       <%= edit_button %>
       <% if can_create_work? %>
-        <span class="deposit-button" data-controller="work-type">
+        <span class="deposit-button">
           <%= button_tag '+ Deposit to this collection',
                 data: {
                   destination: new_collection_work_path(collection),
@@ -16,8 +16,6 @@
                   action: "work-type#set_collection"
                 },
                 class: "btn btn-primary" %>
-
-          <%= render Works::WorkTypeModalComponent.new %>
           <%= render CitationModalComponent.new %>
         </span>
       <% end %>

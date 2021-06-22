@@ -87,7 +87,7 @@ class WorksController < ObjectsController
 
   def index
     @collection = Collection.find(params[:collection_id])
-    authorize! @collection.head, to: :show?
+    authorize! @collection, to: :show?
 
     @works = authorized_scope(@collection.works, as: :edits, with: WorkVersionPolicy)
   end

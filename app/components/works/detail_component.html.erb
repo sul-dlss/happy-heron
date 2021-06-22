@@ -16,7 +16,7 @@
 
   <header class="title">
     <span class="header-text"><%= title %></span>
-    <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: '', label: "Edit #{title}") %>
+    <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: '') %>
     <span class="state"><%= render Works::StateDisplayComponent.new(work_version: work_version) %></span>
     <%= render Works::EditButtonComponent.new(work_version: work_version) %>
   </header>

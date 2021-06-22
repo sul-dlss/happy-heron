@@ -6,16 +6,10 @@ require 'rails_helper'
 RSpec.describe 'Show the collection work list page' do
   let(:collection) { collection_version.collection }
   let(:collection_version) { create(:collection_version_with_collection) }
-  let(:work1) { create(:work, collection: collection) }
-  let(:work2) { create(:work, collection: collection) }
-  let(:work_version1) { create(:work_version, work: work1) }
-  let(:work_version2) { create(:work_version, work: work2) }
   let(:user) { create(:user) }
+  let!(:work_version1) { create(:work_version_with_work, collection: collection) }
 
-  before do
-    work1.update(head: work_version1)
-    work2.update(head: work_version2)
-  end
+  before { create(:work_version_with_work, collection: collection) }
 
   context 'with an admin user' do
     let(:attached_file) { build(:attached_file, :with_file) }
