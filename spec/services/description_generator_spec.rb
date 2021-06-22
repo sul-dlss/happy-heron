@@ -489,4 +489,16 @@ RSpec.describe DescriptionGenerator do
       expect(model[:note]).to be nil
     end
   end
+
+  context 'with subject that has a blank URI' do
+    let(:keyword) { build(:keyword, uri: '') }
+
+    let(:work_version) do
+      build(:work_version, keywords: [keyword])
+    end
+
+    it 'does not add URI to model' do
+      expect(model[:subject]).to eq [{ value: 'MyKeyword', type: 'topic' }]
+    end
+  end
 end
