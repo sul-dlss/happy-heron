@@ -19,6 +19,13 @@ module Collections
             .order('updated_at DESC')
     end
 
+    sig { returns(T::Boolean) }
+    def hide_depositor?
+      !(user_with_groups.administrator? ||
+        collection.managed_by.include?(current_user) ||
+        collection.reviewed_by.include?(current_user))
+    end
+
     private
 
     sig { returns(WorkVersionPolicy) }

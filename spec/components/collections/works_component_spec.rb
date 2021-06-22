@@ -10,8 +10,7 @@ RSpec.describe Collections::WorksComponent, type: :component do
     let(:collection) { create(:collection) }
     let(:user_with_groups) { UserWithGroups.new(user: user, groups: groups) }
     let(:user) { create(:user) }
-    let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-    let(:work1) { create(:work, collection: collection) }
+    let(:work1) { create(:work, collection: collection, depositor: user) }
     let(:work2) { create(:work, collection: collection) }
     let(:work_version1) { create(:work_version, work: work1) }
     let(:work_version2) { create(:work_version, work: work2) }
@@ -26,8 +25,21 @@ RSpec.describe Collections::WorksComponent, type: :component do
       )
     end
 
-    it 'renders the works detail table component' do
-      expect(rendered.css('table').to_html).to include('Test title').exactly(6).times
+    context 'when administrator' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+
+      it 'renders the works detail table component' do
+        expect(rendered.css('table').to_html).to include('Test title').exactly(6).times
+        expect(rendered.to_html).to include('data-datatable-works-hide-depositor-value="false"')
+      end
+    end
+
+    context 'when depositor' do
+      let(:groups) { [] }
+
+      it 'renders the works detail table component' do
+        expect(rendered.to_html).to include('data-datatable-works-hide-depositor-value="true"')
+      end
     end
   end
 end
