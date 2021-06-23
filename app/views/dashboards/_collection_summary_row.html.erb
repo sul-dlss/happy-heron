@@ -6,6 +6,11 @@
   </td>
   <td><%= render Works::StateDisplayComponent.new(work_version: work.head) %></td>
   <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
-  <td><%= link_to work.purl, work.purl if work.purl %></td>
+  <td>
+    <% if work.purl %>
+      <%= link_to work.purl, work.purl %>
+      <a class="copy-button" data-controller="copy" data-copy-clip-value="<%= work.purl %>" data-action="copy#copy" aria-label="Copy persistent link" href=""><span class="fas fa-copy"></span></a>
+    <% end %>
+  </td>
   <td><%= render CitationComponent.new(work_version: work.head) %></td>
 </tr>
