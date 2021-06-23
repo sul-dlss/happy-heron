@@ -29,6 +29,7 @@
         <td>
           <% if purl %>
             <%= link_to purl, purl %>
+            <a class="copy-button" data-controller="copy" data-copy-clip-value="<%= purl %>" data-action="copy#copy" aria-label="Copy persistent link" href=""><span class="fas fa-copy"></span></a>
           <% else %>
             <em>Link will become available once the work has been deposited.</em>
           <% end %>
