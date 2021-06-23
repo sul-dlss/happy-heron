@@ -33,27 +33,27 @@ RSpec.describe DescriptionGenerator do
           },
           {
             type: 'subtype',
-            value: 'Article'
+            value: 'Code'
           },
           {
             type: 'subtype',
-            value: 'Technical report'
+            value: 'Oral history'
           }
         ],
         type: 'resource type'
       },
       {
         source: {
-          code: 'aat'
+          code: 'marcgt'
         },
         type: 'genre',
-        uri: 'http://vocab.getty.edu/page/aat/300048715',
-        value: 'articles'
+        uri: 'http://id.loc.gov/vocabulary/marcgt/com',
+        value: 'computer program'
       },
       {
         type: 'genre',
-        value: 'Technical reports',
-        uri: 'http://id.loc.gov/authorities/genreForms/gf2015026093',
+        value: 'Oral histories',
+        uri: 'http://id.loc.gov/authorities/genreForms/gf2011026431',
         source: {
           code: 'lcgft'
         }
@@ -134,9 +134,9 @@ RSpec.describe DescriptionGenerator do
         }
       ],
       subject: [
-        { type: 'topic', value: 'MyString', uri: 'http://example.org/uri' },
-        { type: 'topic', value: 'MyString', uri: 'http://example.org/uri' },
-        { type: 'topic', value: 'MyString', uri: 'http://example.org/uri' }
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' }
       ],
       note: [
         { type: 'summary', value: 'test abstract' },
@@ -273,51 +273,49 @@ RSpec.describe DescriptionGenerator do
   # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
   #   example 12
   context 'when publisher and publication date are entered by user' do
-    xit 'to be implemented for new type mapping' do
-      let(:contributor) { build(:org_contributor, role: 'Publisher') }
-      let(:work_version) do
-        build(:work_version, :published, :with_contact_emails,
-              contributors: [contributor],
-              title: 'Test title')
-      end
+    let(:contributor) { build(:org_contributor, role: 'Publisher') }
+    let(:work_version) do
+      build(:work_version, :published, :with_contact_emails,
+            contributors: [contributor],
+            title: 'Test title')
+    end
 
-      it 'creates event of type publication with date' do
-        expect(model).to eq(
-          note: [
-            { type: 'summary', value: 'test abstract' },
-            { type: 'preferred citation', value: 'test citation' }
-          ],
-          title: [{ value: 'Test title' }],
-          event: [
-            {
-              type: 'publication',
-              contributor: [
-                {
-                  name: [{ value: contributor.full_name }],
-                  role: publisher_roles
-                }
-              ],
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2020-02-14',
-                  type: 'publication'
-                }
-              ]
-            }
-          ],
-          form: types_form,
-          access: {
-            accessContact: [
+    it 'creates event of type publication with date' do
+      expect(model).to eq(
+        note: [
+          { type: 'summary', value: 'test abstract' },
+          { type: 'preferred citation', value: 'test citation' }
+        ],
+        title: [{ value: 'Test title' }],
+        event: [
+          {
+            type: 'publication',
+            contributor: [
               {
-                value: 'io@io.io',
-                type: 'email',
-                displayLabel: 'Contact'
+                name: [{ value: contributor.full_name }],
+                role: publisher_roles
+              }
+            ],
+            date: [
+              {
+                encoding: { code: 'edtf' },
+                value: '2020-02-14',
+                type: 'publication'
               }
             ]
           }
-        )
-      end
+        ],
+        form: types_form,
+        access: {
+          accessContact: [
+            {
+              value: 'io@io.io',
+              type: 'email',
+              displayLabel: 'Contact'
+            }
+          ]
+        }
+      )
     end
   end
 

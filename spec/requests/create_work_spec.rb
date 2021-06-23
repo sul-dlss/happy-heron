@@ -226,7 +226,7 @@ RSpec.describe 'Create a new work' do
           expect(work_version.published_edtf.to_edtf).to eq '2020-02-14'
           expect(work_version.created_edtf.to_s).to eq '2020-03-04/2020-10-31'
           expect(work_version.embargo_date).to eq Date.parse("#{embargo_year}-04-04")
-          expect(work_version.subtype).to eq ['Article', 'Technical report']
+          expect(work_version.subtype).to eq ['Code', 'Oral history']
           expect(DepositJob).to have_received(:perform_later).with(work_version)
           expect(work_version.state).to eq 'depositing'
           expect(work_version.access).to eq 'world' # shows that `stanford` was overwritten
