@@ -119,6 +119,7 @@ end
 def build_collection_attributes(json)
   {
     creator: User.find_or_create_by!(email: "#{json.dig('creator', 'sunetid')}@stanford.edu"),
+    review_enabled: json['requires_human_approval'] == 'yes',
     created_at: Time.parse(json['created_at']),
     updated_at: Time.parse(json['updated_at'])
   }.merge(release_attributes(json)).
