@@ -7,6 +7,13 @@ OkComputer.check_in_parallel = true
 # Required
 OkComputer::Registry.register 'ruby_version', OkComputer::RubyVersionCheck.new
 OkComputer::Registry.register 'redis', OkComputer::RedisCheck.new(url: ENV.fetch('REDIS_URL', Settings.redis_url))
+if Settings.rabbitmq.enabled
+  OkComputer::Registry.register 'rabbit',
+                                OkComputer::RabbitmqCheck.new(hostname: Settings.rabbitmq.hostname,
+                                                              vhost: Settings.rabbitmq.vhost,
+                                                              username: Settings.rabbitmq.username,
+                                                              password: Settings.rabbitmq.password)
+end
 
 # Optional
 OkComputer::Registry.register 'background_jobs', OkComputer::SidekiqLatencyCheck.new('default', 25)
