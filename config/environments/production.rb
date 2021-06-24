@@ -48,7 +48,7 @@ Rails.application.configure do
   # shared_configs here.
   config.action_cable.allowed_request_origins = [
     %r{https://sul-h2.*\.stanford\.edu},
-    %r{https://sdr.*\.stanford\.edu}
+    %r{https://(new-)?sdr\.stanford\.edu}
   ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
