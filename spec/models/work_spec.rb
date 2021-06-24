@@ -14,7 +14,7 @@ RSpec.describe Work do
     context 'with a druid' do
       it 'constructs purl' do
         work.update(druid: 'druid:hb093rg5848')
-        expect(work.purl).to eq('https://purl.stanford.edu/hb093rg5848')
+        expect(work.purl).to eq('http://purl.stanford.edu/hb093rg5848')
       end
     end
 
