@@ -43,8 +43,17 @@ class CollectionChangeSet
 
   sig { returns(T::Boolean) }
   def participants_changed?
-    added_managers.present? || added_depositors.present? || added_reviewers.present? ||
-      removed_managers.present? || removed_depositors.present? || removed_reviewers.present?
+    changed_participants.present?
+  end
+
+  sig { returns(T::Array[User]) }
+  def changed_participants
+    (added_managers +
+      added_depositors +
+      added_reviewers +
+      removed_managers +
+      removed_depositors +
+      removed_reviewers).uniq
   end
 
   sig { returns(String) }

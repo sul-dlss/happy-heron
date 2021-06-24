@@ -101,9 +101,12 @@ class CollectionObserver
   def self.send_participant_change_emails(collection, change_set)
     return unless collection.email_when_participants_changed? && change_set.participants_changed?
 
-    (collection.managed_by + collection.reviewed_by).each do |user|
-      CollectionsMailer.with(collection_version: collection.head, user: user)
-                       .participants_changed_email.deliver_later
+    (collection.managed_by + collection.reviewed_by).uniq.each do |user|
+      # Don't send if the user is the only changed participant.
+      unless change_set.changed_participants == [user]
+        CollectionsMailer.with(collection_version: collection.head, user: user)
+                         .participants_changed_email.deliver_later
+      end
     end
   end
   private_class_method :send_participant_change_emails
