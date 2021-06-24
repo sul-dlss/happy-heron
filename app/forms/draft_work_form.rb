@@ -107,6 +107,8 @@ class DraftWorkForm < Reform::Form
     property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :label
     property :hide, type: Dry::Types['params.bool']
+    # The file property is only necessary if there is a server side validation error and we need to re-render the form.
+    property :file, virtual: true
     property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
