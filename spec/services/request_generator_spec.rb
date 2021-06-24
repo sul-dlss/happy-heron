@@ -151,7 +151,7 @@ RSpec.describe RequestGenerator do
             ],
             form: types_form,
             access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
-            purl: 'https://purl.stanford.edu/bk123gh4567'
+            purl: 'http://purl.stanford.edu/bk123gh4567'
           },
           identification: {
             sourceId: "hydrus:object-#{work_version.work.id}"
@@ -305,7 +305,7 @@ RSpec.describe RequestGenerator do
             ],
             form: types_form,
             access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
-            purl: 'https://purl.stanford.edu/bk123gh4567'
+            purl: 'http://purl.stanford.edu/bk123gh4567'
           },
           identification: {
             sourceId: "hydrus:object-#{work_version.work.id}"

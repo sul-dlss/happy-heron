@@ -119,7 +119,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     end
 
     it 'renders a link to purl' do
-      expect(rendered.css('a').map { |node| node['href'] }).to include 'https://purl.stanford.edu/yq268qt4607'
+      expect(rendered.css('a').map { |node| node['href'] }).to include 'http://purl.stanford.edu/yq268qt4607'
     end
   end
 end

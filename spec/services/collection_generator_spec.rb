@@ -82,7 +82,7 @@ RSpec.describe CollectionGenerator do
               value: 'Test title'
             }
           ],
-          purl: 'https://purl.stanford.edu/bk123gh4567',
+          purl: 'http://purl.stanford.edu/bk123gh4567',
           access: {
             accessContact: [
               {
