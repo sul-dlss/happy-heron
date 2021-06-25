@@ -41,5 +41,11 @@ module HappyHeron
     config.action_cable.mount_path = '/cable'
 
     config.action_mailer.default_url_options = { host: Settings.host }
+
+    console do
+      Honeybadger.configure do |config|
+        config.report_data = false
+      end
+    end
   end
 end
