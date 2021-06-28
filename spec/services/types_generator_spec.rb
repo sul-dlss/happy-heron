@@ -22,11 +22,11 @@ RSpec.describe TypesGenerator do
               ),
               Cocina::Models::DescriptiveValue.new(
                 type: 'subtype',
-                value: 'Article'
+                value: 'Code'
               ),
               Cocina::Models::DescriptiveValue.new(
                 type: 'subtype',
-                value: 'Technical report'
+                value: 'Oral history'
               )
             ]
           )
@@ -36,15 +36,15 @@ RSpec.describe TypesGenerator do
       it 'generates a flat array of genres for the subtypes' do
         expect(generated).to include(
           Cocina::Models::DescriptiveValue.new(
+            source: { code: 'marcgt' },
             type: 'genre',
-            value: 'articles',
-            uri: 'http://vocab.getty.edu/page/aat/300048715',
-            source: { code: 'aat' }
+            uri: 'http://id.loc.gov/vocabulary/marcgt/com',
+            value: 'computer program'
           ),
           Cocina::Models::DescriptiveValue.new(
             type: 'genre',
-            value: 'Technical reports',
-            uri: 'http://id.loc.gov/authorities/genreForms/gf2015026093',
+            value: 'Oral histories',
+            uri: 'http://id.loc.gov/authorities/genreForms/gf2011026431',
             source: { code: 'lcgft' }
           )
         )
@@ -66,44 +66,8 @@ RSpec.describe TypesGenerator do
       end
     end
 
-    context 'with a work of type Image with Image subtype (no subtype derived genre)' do
-      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Image']) }
-
-      it 'generates a single structured value, a single resource type and single genre' do
-        expect(generated).to eq(
-          [
-            Cocina::Models::DescriptiveValue.new(
-              structuredValue: [
-                Cocina::Models::DescriptiveValue.new(
-                  type: 'type',
-                  value: 'Image'
-                ),
-                Cocina::Models::DescriptiveValue.new(
-                  type: 'subtype',
-                  value: 'Image'
-                )
-              ],
-              source: { value: 'Stanford self-deposit resource types' },
-              type: 'resource type'
-            ),
-            Cocina::Models::DescriptiveValue.new(
-              type: 'genre',
-              value: 'Pictures',
-              uri: 'http://id.loc.gov/authorities/genreForms/gf2017027251',
-              source: { code: 'lcgft' }
-            ),
-            Cocina::Models::DescriptiveValue.new(
-              type: 'resource type',
-              value: 'still image',
-              source: { value: 'MODS resource types' }
-            )
-          ]
-        )
-      end
-    end
-
     context 'with a work of type Image with Animation subtype (top level genre plus subtype derived genre)' do
-      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['Animation']) }
+      let(:work_version) { build(:work_version, work_type: 'image', subtype: ['CAD']) }
 
       it 'generates a single structured value, two resource types and two genres' do
         expect(generated).to eq(
@@ -116,7 +80,7 @@ RSpec.describe TypesGenerator do
                 ),
                 Cocina::Models::DescriptiveValue.new(
                   type: 'subtype',
-                  value: 'Animation'
+                  value: 'CAD'
                 )
               ],
               source: { value: 'Stanford self-deposit resource types' },
@@ -124,24 +88,13 @@ RSpec.describe TypesGenerator do
             ),
             Cocina::Models::DescriptiveValue.new(
               type: 'genre',
-              value: 'Pictures',
-              uri: 'http://id.loc.gov/authorities/genreForms/gf2017027251',
-              source: { code: 'lcgft' }
-            ),
-            Cocina::Models::DescriptiveValue.new(
-              type: 'genre',
-              value: 'animations (visual works)',
-              uri: 'http://vocab.getty.edu/page/aat/300411663',
-              source: { code: 'aat' }
+              value: 'Computer-aided designs',
+              uri: 'http://id.loc.gov/vocabulary/graphicMaterials/tgm002405',
+              source: { code: 'lctgm' }
             ),
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
               value: 'still image',
-              source: { value: 'MODS resource types' }
-            ),
-            Cocina::Models::DescriptiveValue.new(
-              type: 'resource type',
-              value: 'moving image',
               source: { value: 'MODS resource types' }
             )
           ]
@@ -178,7 +131,7 @@ RSpec.describe TypesGenerator do
     context 'with a work of type Sound lacking subtypes' do
       let(:work_version) { build(:work_version, work_type: 'sound', subtype: []) }
 
-      it 'generates a single structured value, a single resource type, and a single genre' do
+      it 'generates a single structured value and a single resource type' do
         expect(generated).to eq(
           [
             Cocina::Models::DescriptiveValue.new(
@@ -190,12 +143,6 @@ RSpec.describe TypesGenerator do
                   value: 'Sound'
                 )
               ]
-            ),
-            Cocina::Models::DescriptiveValue.new(
-              type: 'genre',
-              value: 'Sound recordings',
-              uri: 'http://id.loc.gov/authorities/genreForms/gf2011026594',
-              source: { code: 'lcgft' }
             ),
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
@@ -274,9 +221,11 @@ RSpec.describe TypesGenerator do
       end
       # these represent subtypes that will get the genre from the parent type
       let(:known_genreless) do
-        ['Policy brief', 'Speaker notes', '3D model', 'Book chapter', 'Broadcast',
-         'Conference session', 'Other spoken word', 'Presentation recording',
-         'Presentation slides', 'Text']
+        ['Animation', 'Article', 'Book', 'Book chapter', 'Broadcast', 'Conference session', 'Correspondence',
+         'Documentation', 'Event', 'Government document', 'Image', 'Manuscript', 'MIDI', 'Musical transcription',
+         'Notated music', 'Other spoken word', 'Policy brief', 'Presentation recording', 'Presentation slides',
+         'Questionnaire', 'Report', 'Software', 'Sound recording', 'Speaker notes', 'Technical report', 'Text',
+         'Thesis', 'Video recording', 'Video art']
       end
 
       it 'has one genre for each' do
@@ -295,51 +244,6 @@ RSpec.describe TypesGenerator do
     subject(:cocina_props) { { form: described_class.generate(work_version: work_version).map(&:to_h) } }
 
     let(:work_version) { build(:work_version, work_type: work_type, subtype: work_subtypes) }
-
-    context 'with Text - Article (AAT genre)' do
-      let(:work_type) { 'text' }
-      let(:work_subtypes) { ['Article'] }
-
-      it 'generates cocina props' do
-        expect(cocina_props).to eq(
-          {
-            form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Text',
-                    type: 'type'
-                  },
-                  {
-                    value: 'Article',
-                    type: 'subtype'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                value: 'articles',
-                type: 'genre',
-                uri: 'http://vocab.getty.edu/page/aat/300048715',
-                source: {
-                  code: 'aat'
-                }
-              },
-              {
-                value: 'text',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              }
-            ]
-          }
-        )
-      end
-    end
 
     context 'with Text - Essay (LC genre)' do
       let(:work_type) { 'text' }
@@ -426,10 +330,18 @@ RSpec.describe TypesGenerator do
                 }
               },
               {
-                value: 'software, multimedia',
-                type: 'resource type',
+                value: 'three-dimensional scan',
+                type: 'genre',
                 source: {
-                  value: 'MODS resource types'
+                  code: 'local'
+                }
+              },
+              {
+                value: 'Dataset',
+                type: 'resource type',
+                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
+                source: {
+                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
                 }
               },
               {
@@ -485,18 +397,19 @@ RSpec.describe TypesGenerator do
                 }
               },
               {
-                value: 'Geographic information systems',
+                value: 'cartographic dataset',
                 type: 'genre',
-                uri: 'http://id.loc.gov/authorities/genreForms/gf2011026294',
+                uri: 'http://rdvocab.info/termList/RDAContentType/1001',
                 source: {
-                  code: 'lcgft'
+                  code: 'rdacontent'
                 }
               },
               {
-                value: 'software, multimedia',
+                value: 'Dataset',
+                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
                 type: 'resource type',
                 source: {
-                  value: 'MODS resource types'
+                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
                 }
               },
               {
@@ -541,19 +454,11 @@ RSpec.describe TypesGenerator do
                 type: 'resource type'
               },
               {
-                value: 'programs (computer)',
+                value: 'computer program',
                 type: 'genre',
-                uri: 'http://vocab.getty.edu/page/aat/300312188',
+                uri: 'http://id.loc.gov/vocabulary/marcgt/com',
                 source: {
-                  code: 'aat'
-                }
-              },
-              {
-                value: 'technical manuals',
-                type: 'genre',
-                uri: 'http://vocab.getty.edu/page/aat/300026413',
-                source: {
-                  code: 'aat'
+                  code: 'marcgt'
                 }
               },
               {

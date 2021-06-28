@@ -33,27 +33,27 @@ RSpec.describe DescriptionGenerator do
           },
           {
             type: 'subtype',
-            value: 'Article'
+            value: 'Code'
           },
           {
             type: 'subtype',
-            value: 'Technical report'
+            value: 'Oral history'
           }
         ],
         type: 'resource type'
       },
       {
         source: {
-          code: 'aat'
+          code: 'marcgt'
         },
         type: 'genre',
-        uri: 'http://vocab.getty.edu/page/aat/300048715',
-        value: 'articles'
+        uri: 'http://id.loc.gov/vocabulary/marcgt/com',
+        value: 'computer program'
       },
       {
         type: 'genre',
-        value: 'Technical reports',
-        uri: 'http://id.loc.gov/authorities/genreForms/gf2015026093',
+        value: 'Oral histories',
+        uri: 'http://id.loc.gov/authorities/genreForms/gf2011026431',
         source: {
           code: 'lcgft'
         }

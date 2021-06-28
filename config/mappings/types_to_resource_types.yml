@@ -1,9 +1,10 @@
 Data:
   type:
     - type: resource type
-      value: software, multimedia
+      value: Dataset
+      uri: http://id.loc.gov/vocabulary/resourceTypes/dat
       source:
-        value: MODS resource types
+        uri: http://id.loc.gov/vocabulary/resourceTypes/
   subtypes:
     3D model:
       - type: resource type
@@ -75,7 +76,10 @@ Data:
     Field recording:
       # no value
     Game:
-      # no value
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
     Geospatial data:
       - type: resource type
         value: cartographic
@@ -107,7 +111,7 @@ Data:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -186,7 +190,10 @@ Data:
         source:
           value: MODS resource types
     Software:
-      # no value
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
     Sound recording:
       - type: resource type
         value: sound recording
@@ -200,7 +207,10 @@ Data:
     Speech:
       # no value
     Statistical model:
-      # no value
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
     Story:
       # no value
     Syllabus:
@@ -309,14 +319,16 @@ Image:
       # no value
     Data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -343,9 +355,10 @@ Image:
           value: MODS resource types
     Geospatial data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
       - type: resource type
         value: cartographic
         source:
@@ -373,7 +386,7 @@ Image:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -436,7 +449,11 @@ Image:
         source:
           value: MODS resource types
     Remote sensing imagery:
-      # no value
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       - type: resource type
         value: text
@@ -461,7 +478,7 @@ Image:
       # no value
     Statistical model:
       - type: resource type
-        value: software, multimedia
+        value: text
         source:
           value: MODS resource types
     Story:
@@ -476,6 +493,11 @@ Image:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       - type: resource type
         value: text
@@ -486,6 +508,11 @@ Image:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       - type: resource type
         value: text
@@ -575,14 +602,16 @@ Mixed Materials:
       # no value
     Data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -609,9 +638,10 @@ Mixed Materials:
           value: MODS resource types
     Geospatial data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
       - type: resource type
         value: cartographic
         source:
@@ -642,7 +672,7 @@ Mixed Materials:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -715,6 +745,11 @@ Mixed Materials:
         value: still image
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       - type: resource type
         value: text
@@ -739,7 +774,7 @@ Mixed Materials:
       # no value
     Statistical model:
       - type: resource type
-        value: software, multimedia
+        value: text
         source:
           value: MODS resource types
     Story:
@@ -754,6 +789,11 @@ Mixed Materials:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       - type: resource type
         value: text
@@ -764,6 +804,11 @@ Mixed Materials:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       - type: resource type
         value: text
@@ -848,14 +893,16 @@ Music:
       # no value
     Data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -882,9 +929,10 @@ Music:
           value: MODS resource types
     Geospatial data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
       - type: resource type
         value: cartographic
         source:
@@ -915,7 +963,7 @@ Music:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -988,6 +1036,11 @@ Music:
         value: still image
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       - type: resource type
         value: text
@@ -1012,7 +1065,7 @@ Music:
       # no value
     Statistical model:
       - type: resource type
-        value: software, multimedia
+        value: text
         source:
           value: MODS resource types
     Story:
@@ -1027,6 +1080,11 @@ Music:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       - type: resource type
         value: text
@@ -1037,6 +1095,11 @@ Music:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       - type: resource type
         value: text
@@ -1121,14 +1184,16 @@ Other:
       # no value
     Data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -1155,9 +1220,10 @@ Other:
           value: MODS resource types
     Geospatial data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
       - type: resource type
         value: cartographic
         source:
@@ -1188,7 +1254,7 @@ Other:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -1261,6 +1327,11 @@ Other:
         value: still image
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       - type: resource type
         value: text
@@ -1285,7 +1356,7 @@ Other:
       # no value
     Statistical model:
       - type: resource type
-        value: software, multimedia
+        value: text
         source:
           value: MODS resource types
     Story:
@@ -1300,6 +1371,11 @@ Other:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       - type: resource type
         value: text
@@ -1310,6 +1386,11 @@ Other:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       - type: resource type
         value: text
@@ -1398,9 +1479,17 @@ Software/Code:
     Course/instructional materials:
       # no value
     Data:
-      # no value
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
-      # no value
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -1427,6 +1516,11 @@ Software/Code:
         value: cartographic
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Government document:
       # no value
     Image:
@@ -1453,7 +1547,7 @@ Software/Code:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -1526,6 +1620,11 @@ Software/Code:
         value: still image
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       - type: resource type
         value: text
@@ -1546,7 +1645,10 @@ Software/Code:
     Speech:
       # no value
     Statistical model:
-      # no value
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
     Story:
       # no value
     Syllabus:
@@ -1559,6 +1661,11 @@ Software/Code:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       - type: resource type
         value: text
@@ -1569,6 +1676,11 @@ Software/Code:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       - type: resource type
         value: text
@@ -1658,14 +1770,16 @@ Sound:
       # no value
     Data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -1692,9 +1806,10 @@ Sound:
           value: MODS resource types
     Geospatial data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
       - type: resource type
         value: cartographic
         source:
@@ -1724,7 +1839,10 @@ Sound:
         source:
           value: MODS resource types
     MIDI:
-      # no value
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
     Musical transcription:
       - type: resource type
         value: notated music
@@ -1795,6 +1913,11 @@ Sound:
         value: still image
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       - type: resource type
         value: text
@@ -1816,7 +1939,7 @@ Sound:
       # no value
     Statistical model:
       - type: resource type
-        value: software, multimedia
+        value: text
         source:
           value: MODS resource types
     Story:
@@ -1831,6 +1954,11 @@ Sound:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       - type: resource type
         value: text
@@ -1841,6 +1969,11 @@ Sound:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       - type: resource type
         value: text
@@ -1915,11 +2048,16 @@ Text:
       # no value
     Data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
-      # no value
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -1943,9 +2081,10 @@ Text:
           value: MODS resource types
     Geospatial data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
       - type: resource type
         value: cartographic
         source:
@@ -1970,7 +2109,7 @@ Text:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -2031,6 +2170,11 @@ Text:
         value: still image
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       # no value
     Software:
@@ -2048,20 +2192,25 @@ Text:
     Speech:
       # no value
     Statistical model:
-      - type: resource type
-        value: software, multimedia
-        source:
-          value: MODS resource types
+      # no value
     Story:
       # no value
     Syllabus:
       # no value
     Tabular data:
-      # no value
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       # no value
     Text corpus:
-      # no value
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       # no value
     Thesis:
@@ -2136,14 +2285,16 @@ Video:
       # no value
     Data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Database:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Documentary:
       # no value
     Documentation:
@@ -2170,9 +2321,10 @@ Video:
           value: MODS resource types
     Geospatial data:
       - type: resource type
-        value: software, multimedia
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
         source:
-          value: MODS resource types
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
       - type: resource type
         value: cartographic
         source:
@@ -2203,7 +2355,7 @@ Video:
           value: MODS resource types
     MIDI:
       - type: resource type
-        value: sound recording
+        value: sound recording-musical
         source:
           value: MODS resource types
     Musical transcription:
@@ -2273,6 +2425,11 @@ Video:
         value: still image
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Report:
       - type: resource type
         value: text
@@ -2297,7 +2454,7 @@ Video:
       # no value
     Statistical model:
       - type: resource type
-        value: software, multimedia
+        value: text
         source:
           value: MODS resource types
     Story:
@@ -2312,6 +2469,11 @@ Video:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Technical report:
       - type: resource type
         value: text
@@ -2322,6 +2484,11 @@ Video:
         value: text
         source:
           value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
     Text:
       - type: resource type
         value: text
