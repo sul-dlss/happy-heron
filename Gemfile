@@ -65,7 +65,7 @@ gem 'redis', '~> 4.0'
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
 gem 'reform', '~> 2.5.0'
 gem 'reform-rails', '~> 0.2.0'
-gem 'sdr-client', '~> 0.56'
+gem 'sdr-client', '~> 0.58'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 # pinned because 0.7.2 broke the build with 181 new errors related (apparently?) to the parlour 5.0.0 bump
