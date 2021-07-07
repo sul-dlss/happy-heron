@@ -64,10 +64,13 @@ class WorksController < ObjectsController
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def update
     work = Work.find(params[:id])
     work_version = work.head
-    clean_params = work_params
+    orig_work_version = work.head
+    orig_clean_params = work_params
+    clean_params = orig_clean_params.deep_dup
 
     if work_version.deposited?
       work_version = create_new_version(work_version)
@@ -78,12 +81,13 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     if @form.validate(clean_params) && @form.save
-      after_save(form: @form)
+      after_save(form: @form, context_form: context_form(orig_work_version, orig_clean_params))
     else
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def index
     @collection = Collection.find(params[:collection_id])
@@ -165,8 +169,11 @@ class WorksController < ObjectsController
     end
   end
 
-  sig { params(form: T.any(ReservationForm, WorkForm, DraftWorkForm)).void }
-  def after_save(form:) # rubocop:disable Metrics/MethodLength
+  sig do
+    params(form: T.any(ReservationForm, WorkForm, DraftWorkForm),
+           context_form: T.nilable(T.any(ReservationForm, WorkForm, DraftWorkForm))).void
+  end
+  def after_save(form:, context_form: nil) # rubocop:disable Metrics/MethodLength
     work_version = form.model[:work_version]
 
     if purl_reservation?
@@ -175,7 +182,7 @@ class WorksController < ObjectsController
     end
 
     work = form.model[:work]
-    work.event_context = event_context(form)
+    work.event_context = event_context(context_form || form)
     work_version.update_metadata!
 
     return redirect_to work unless deposit_button_pushed?
@@ -194,6 +201,14 @@ class WorksController < ObjectsController
       user: current_user,
       description: WorkVersionEventDescriptionBuilder.build(form)
     }
+  end
+
+  def context_form(work_version, params)
+    # NewVersionParameterFilter removes collection parameters, which makes it seem like they have changed.
+    # This form has the unfiltered parameters, which is used to determine what has changed.
+    context_form = work_form(work_version)
+    context_form.validate(params)
+    context_form
   end
 
   # rubocop:disable Metrics/MethodLength
