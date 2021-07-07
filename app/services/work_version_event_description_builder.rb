@@ -72,7 +72,7 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def embargo
-    'embargo modified' if form.changed?('release') || form.changed?('embargo_date')
+    'embargo modified' if form.changed?('embargo_date')
   end
 
   def license
