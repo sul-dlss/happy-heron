@@ -67,4 +67,9 @@ FactoryBot.define do
   trait :depositor_selects_access do
     access { 'depositor-selects' }
   end
+
+  trait :depositor_selects_release_date do
+    release_option { 'depositor-selects' }
+    release_duration { '3 years' }
+  end
 end

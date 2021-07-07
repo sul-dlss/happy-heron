@@ -6,16 +6,113 @@ require 'rails_helper'
 RSpec.describe WorkVersionEventDescriptionBuilder do
   subject(:result) { described_class.build(form) }
 
-  let(:work_version) { create(:work_version_with_work, collection: build(:collection, :depositor_selects_access)) }
+  let(:collection) { build(:collection, :depositor_selects_access, :depositor_selects_release_date) }
+  let(:work_version) { create(:work_version_with_work, collection: collection) }
   let(:work) { work_version.work }
   let(:form) { DraftWorkForm.new(work_version: work_version, work: work) }
 
   context 'when nothing has changed' do
+    let(:params) do
+      ActionController::Parameters.new(
+        # TODO: to make realistic, add ALL the params that get passed in from the form
+        work_type: work_version.work_type,
+        title: work_version.title,
+        abstract: work_version.abstract,
+        citation: work_version.citation
+      )
+    end
+
     before do
-      form.validate({})
+      form.validate(params)
     end
 
     it { is_expected.to be_blank }
+  end
+
+  context 'when embargoed, then edited with no changes to embargo' do
+    let(:embargo_date) { 11.months.from_now }
+    let(:work_version) { create(:work_version_with_work, embargo_date: embargo_date, collection: collection) }
+    let(:params) do
+      ActionController::Parameters.new(
+        title: 'new title',
+        release: 'embargo',
+        'embargo_date(1i)' => embargo_date.year,
+        'embargo_date(2i)' => embargo_date.month,
+        'embargo_date(3i)' => embargo_date.day
+      )
+    end
+
+    before do
+      form.validate(params)
+    end
+
+    it 'description does not show embargo modified' do
+      expect(result).to eq 'title of deposit modified'
+    end
+  end
+
+  context 'when embargoed, then changes to embargo date' do
+    let(:embargo_date) { 10.months.from_now }
+    let(:new_embargo_date) { 11.months.from_now }
+    let(:work_version) { create(:work_version_with_work, embargo_date: embargo_date, collection: collection) }
+    let(:params) do
+      ActionController::Parameters.new(
+        title: 'new title',
+        release: 'embargo',
+        'embargo_date(1i)' => new_embargo_date.year,
+        'embargo_date(2i)' => new_embargo_date.month,
+        'embargo_date(3i)' => new_embargo_date.day
+      )
+    end
+
+    before do
+      form.validate(params)
+    end
+
+    it 'description does show embargo modified' do
+      expect(result).to eq 'title of deposit modified, embargo modified'
+    end
+  end
+
+  context 'when not embargoed, then embargo set' do
+    let(:new_embargo_date) { 11.months.from_now }
+    let(:work_version) { create(:work_version_with_work, collection: collection) }
+    let(:params) do
+      ActionController::Parameters.new(
+        title: 'new title',
+        release: 'embargo',
+        'embargo_date(1i)' => new_embargo_date.year,
+        'embargo_date(2i)' => new_embargo_date.month,
+        'embargo_date(3i)' => new_embargo_date.day
+      )
+    end
+
+    before do
+      form.validate(params)
+    end
+
+    it 'description does show embargo modified' do
+      expect(result).to eq 'title of deposit modified, embargo modified'
+    end
+  end
+
+  context 'when embargoed, then embargo removed' do
+    let(:embargo_date) { 10.months.from_now }
+    let(:work_version) { create(:work_version_with_work, embargo_date: embargo_date, collection: collection) }
+    let(:params) do
+      ActionController::Parameters.new(
+        title: 'new title',
+        release: 'immediate'
+      )
+    end
+
+    before do
+      form.validate(params)
+    end
+
+    it 'description does show embargo modified' do
+      expect(result).to eq 'title of deposit modified, embargo modified'
+    end
   end
 
   context 'when file visibility has changed' do
@@ -43,7 +140,8 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
   context 'when many fields have changed' do
     let(:params) do
       ActionController::Parameters.new(
-        title: 'new title', abstract: 'foo',
+        title: 'new title',
+        abstract: 'foo',
         contact_emails: [{ 'email' => 'foo@bar.io' }],
         authors: [{ 'role_term' => 'person|Author', 'first_name' => 'Megan' }],
         contributors: [{ 'role_term' => 'person|Author', 'first_name' => 'Sara' }],
