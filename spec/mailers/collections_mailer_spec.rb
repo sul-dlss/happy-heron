@@ -50,7 +50,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq "Your Depositor permissions for the #{collection_name} " \
-        'collection in the SDR have been removed'
+                                 'collection in the SDR have been removed'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
@@ -67,14 +67,14 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq "You are invited to participate as a Manager in the #{collection_name} " \
-        'collection in the SDR'
+                                 'collection in the SDR'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('You have been invited to be a Manager ' \
-        "of the #{collection_name} collection")
+                                         "of the #{collection_name} collection")
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq "Your permissions have changed for the #{collection_name} " \
-        'collection in the SDR'
+                                 'collection in the SDR'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
@@ -102,14 +102,14 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq "You are invited to participate as a Reviewer in the #{collection_name} " \
-        'collection in the SDR'
+                                 'collection in the SDR'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('You have been invited to review new deposits ' \
-        "to the #{collection_name} collection")
+                                         "to the #{collection_name} collection")
     end
   end
 
@@ -120,7 +120,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq "Your permissions have changed for the #{collection_name} " \
-        'collection in the SDR'
+                                 'collection in the SDR'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end

@@ -321,3 +321,18 @@ RSpec/IdenticalEqualityAssertion: # (new in 2.4)
   Enabled: true
 RSpec/Rails/AvoidSetupHook: # (new in 2.4)
   Enabled: true
+
+Layout/LineEndStringConcatenationIndentation: # (new in 1.18)
+  Enabled: true
+Naming/InclusiveLanguage: # (new in 1.18)
+  Enabled: true
+Rails/AddColumnIndex: # (new in 2.11)
+  Enabled: true
+Rails/EagerEvaluationLogMessage: # (new in 2.11)
+  Enabled: true
+Rails/ExpandedDateRange: # (new in 2.11)
+  Enabled: true
+Rails/I18nLocaleAssignment: # (new in 2.11)
+  Enabled: true
+Rails/UnusedIgnoredColumns: # (new in 2.11)
+  Enabled: true

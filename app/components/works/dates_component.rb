@@ -18,7 +18,7 @@ module Works
                          date_validation_target: 'year',
                          date_range_target: 'startYear',
                          action: 'date-range#change clear->date-validation#clearValidations ' \
-                                    'validate->date-validation#validate'
+                                 'validate->date-validation#validate'
                        },
                        id: 'work_created_range_start_year',
                        placeholder: 'year',
@@ -31,7 +31,7 @@ module Works
                          date_validation_target: 'year',
                          date_range_target: 'endYear',
                          action: 'date-range#change clear->date-validation#clearValidations ' \
-                                    'validate->date-validation#validate'
+                                 'validate->date-validation#validate'
                        },
                        id: 'work_created_range_end_year',
                        placeholder: 'year',
