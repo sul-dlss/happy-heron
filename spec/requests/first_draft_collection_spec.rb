@@ -56,8 +56,14 @@ RSpec.describe 'Updating a first draft (non-deposited) collection' do
             description: 'This is a new collection description',
             access: 'world',
             required_license: 'CC0-1.0',
-            manager_sunets: user.sunetid,
-            depositor_sunets: 'maya.aguirre, jcairns, cchavez, premad, giancarlo, zhengyi',
+            depositors_attributes: {
+              '9999' => { 'sunetid' => 'maya.aguirre', '_destroy' => 'false' },
+              '9998' => { 'sunetid' => 'jcairns', '_destroy' => 'false' },
+              '9997' => { 'sunetid' => 'cchavez', '_destroy' => 'false' },
+              '9996' => { 'sunetid' => 'premad', '_destroy' => 'false' },
+              '9995' => { 'sunetid' => 'giancarlo', '_destroy' => 'false' },
+              '9994' => { 'sunetid' => 'zhengyi', '_destroy' => 'false' }
+            },
             email_depositors_status_changed: true,
             contact_emails_attributes: {}
           }.tap do |param|

@@ -11,8 +11,7 @@ class DraftCollectionForm < Reform::Form
   property :description, on: :collection_version
   property :version_description, on: :collection_version
   property :access, default: 'world', on: :collection
-  property :manager_sunets, virtual: true, on: :collection,
-                            prepopulator: ->(_options) { self.manager_sunets = manager_sunets_from_model.join(', ') }
+
   property :email_when_participants_changed, on: :collection
   property :email_depositors_status_changed, on: :collection
 
@@ -22,14 +21,7 @@ class DraftCollectionForm < Reform::Form
   property :license_option, on: :collection
   property :required_license, on: :collection
   property :default_license, on: :collection
-
-  property :depositor_sunets, virtual: true, on: :collection,
-                              prepopulator: lambda { |_options|
-                                              self.depositor_sunets = depositor_sunets_from_model.join(', ')
-                                            }
   property :review_enabled, on: :collection
-  property :reviewer_sunets, virtual: true, on: :collection,
-                             prepopulator: ->(_options) { self.reviewer_sunets = reviewer_sunets_from_model.join(', ') }
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
@@ -48,6 +40,31 @@ class DraftCollectionForm < Reform::Form
     property :_destroy, virtual: true
   end
 
+  collection :managed_by, populator: CollectionContributorPopulator.new(:managed_by, User),
+                          prepopulator: ->(*) { managed_by << collection.creator if managed_by.empty? },
+                          on: :collection do
+    property :id, writeable: false
+    property :sunetid, writeable: false
+    property :name
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+  end
+
+  collection :reviewed_by, populator: ReviewersPopulator.new(:reviewed_by, User),
+                           on: :collection do
+    property :id, writeable: false
+    property :sunetid, writeable: false
+    property :name
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+  end
+
+  collection :depositors, populator: CollectionContributorPopulator.new(:depositors, User),
+                          on: :collection do
+    property :id, writeable: false
+    property :sunetid, writeable: false
+    property :name
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+  end
+
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
   validates :release_duration, inclusion: { in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values },
                                allow_blank: true
@@ -62,55 +79,11 @@ class DraftCollectionForm < Reform::Form
     super(params)
   end
 
-  def sync(*)
-    update_depositors
-    update_reviewers
-    update_managers
-
-    super
-  end
-
   def collection
     model.fetch(:collection)
   end
 
   private
-
-  def update_depositors
-    collection.depositors = field_to_users(depositor_sunets)
-  end
-
-  def update_managers
-    collection.managed_by = field_to_users(manager_sunets)
-  end
-
-  def update_reviewers
-    return collection.reviewed_by = [] unless review_enabled == 'true'
-
-    collection.reviewed_by = field_to_users(reviewer_sunets)
-  end
-
-  def field_to_users(field)
-    sunetids = field.split(/\s*,\s*/).uniq
-    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
-    emails.map do |email|
-      # It's odd that we need to do both, but this is how it's written.
-      # See: https://github.com/rails/rails/issues/36027
-      User.find_by(email: email) || User.create_or_find_by(email: email)
-    end
-  end
-
-  def depositor_sunets_from_model
-    collection.depositors.map(&:sunetid)
-  end
-
-  def reviewer_sunets_from_model
-    collection.reviewed_by.map(&:sunetid)
-  end
-
-  def manager_sunets_from_model
-    (collection.managed_by.presence || [collection.creator]).map(&:sunetid)
-  end
 
   def save_model
     Work.transaction do

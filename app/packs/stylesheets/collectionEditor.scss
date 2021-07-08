@@ -1,6 +1,10 @@
 .collection-editor {
   @include editor;
 
+  legend.participant-type + * {
+    clear: none;
+  }
+
   .release-option, .license-option {
     .form-check {
       @include embargo;
@@ -34,5 +38,16 @@
     background-color: $ibis-white;
     border-color: $stanford-cardinal;
     border-width: 3px;
+  }
+
+  .participant-overlay {
+    background-color: white;
+    border: $toast-border-width solid $toast-border-color;
+    box-shadow: $toast-box-shadow;
+    padding: $toast-padding-x; // apply to both vertical and horizontal
+    position: absolute;
+    width: 100%;
+    z-index: $zindex-tooltip;
+    @include border-radius($toast-border-radius);
   }
 }

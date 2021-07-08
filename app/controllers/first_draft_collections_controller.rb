@@ -23,6 +23,7 @@ class FirstDraftCollectionsController < ObjectsController
 
     collection_version = CollectionVersion.new(collection: collection)
     @form = collection_form(collection_version)
+
     if @form.validate(create_params) && @form.save
       collection_version.collection.event_context = { user: current_user }
       collection_version.update_metadata!
@@ -81,13 +82,15 @@ class FirstDraftCollectionsController < ObjectsController
 
   def create_params
     params.require(:collection).permit(:name, :description, :access,
-                                       :manager_sunets, :depositor_sunets,
-                                       :review_enabled, :reviewer_sunets, :license_option,
+                                       :review_enabled, :license_option,
                                        :required_license, :default_license,
                                        :email_when_participants_changed,
                                        :email_depositors_status_changed,
                                        :release_option, :release_duration,
                                        related_links_attributes: %i[_destroy id link_title url],
-                                       contact_emails_attributes: %i[_destroy id email])
+                                       contact_emails_attributes: %i[_destroy id email],
+                                       managed_by_attributes: %i[_destroy id sunetid],
+                                       reviewed_by_attributes: %i[_destroy id sunetid],
+                                       depositors_attributes: %i[_destroy id sunetid])
   end
 end
