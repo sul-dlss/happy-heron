@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/cocina-models/all/cocina-models.rbi
 #
-# cocina-models-0.58.2
+# cocina-models-0.61.1
 
 module Cocina
 end
@@ -44,4 +44,46 @@ module Anonymous_Dry_Core_Deprecations_Tagged_81
 end
 module Anonymous_Module_82
   def const_missing(missing); end
+end
+class Cocina::Models::Vocab
+  def self.admin_policy; end
+  def self.agreement; end
+  def self.book; end
+  def self.collection; end
+  def self.curated_collection; end
+  def self.document; end
+  def self.exhibit; end
+  def self.file; end
+  def self.geo; end
+  def self.image; end
+  def self.manuscript; end
+  def self.map; end
+  def self.media; end
+  def self.object; end
+  def self.page; end
+  def self.photograph; end
+  def self.series; end
+  def self.three_dimensional; end
+  def self.track; end
+  def self.user_collection; end
+  def self.webarchive_binary; end
+  def self.webarchive_seed; end
+end
+class Cocina::Models::Vocab::Resources
+  def self.attachment; end
+  def self.audio; end
+  def self.document; end
+  def self.file; end
+  def self.image; end
+  def self.main_augmented; end
+  def self.main_original; end
+  def self.media; end
+  def self.object; end
+  def self.page; end
+  def self.permissions; end
+  def self.preview; end
+  def self.supplement; end
+  def self.three_dimensional; end
+  def self.thumb; end
+  def self.video; end
 end

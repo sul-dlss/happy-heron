@@ -7,10 +7,14 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/super_diff/all/super_diff.rbi
 #
-# super_diff-0.6.1
+# super_diff-0.8.0
 
 module SuperDiff
   def self.configuration; end
   def self.configure; end
+  def self.insert_overrides(target_module, mod = nil, &block); end
+  def self.insert_singleton_overrides(target_module, mod = nil, &block); end
+  def self.inspect_object(object, as_lines:, **rest); end
+  def self.primitive?(value); end
   def self.time_like?(value); end
 end

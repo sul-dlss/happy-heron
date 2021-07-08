@@ -50,6 +50,7 @@ gem 'action_policy', '~> 0.5.3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bunny', '~> 2.17' # RabbitMQ library
 gem 'config', '~> 2.2'
+gem 'datacite', '~> 0.1'
 gem 'devise', '~> 4.7'
 gem 'devise-remote-user', '~> 1.0'
 gem 'druid-tools'

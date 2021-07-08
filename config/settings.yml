@@ -1,3 +1,9 @@
+datacite:
+  username: SUL
+  password: changeme
+  host: api.test.datacite.org
+  prefix: '10.25740'
+
 sdr_api:
   url: http://localhost:8080
   email: testing@example.org

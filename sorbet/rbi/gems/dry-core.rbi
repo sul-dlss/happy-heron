@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-core/all/dry-core.rbi
 #
-# dry-core-0.5.0
+# dry-core-0.7.0
 
 module Dry
   def self.Equalizer(*keys, **options); end
@@ -44,12 +44,12 @@ module Dry::Core::ClassAttributes
 end
 module Dry::Core::Deprecations
   def self.[](tag); end
-  def self.announce(name, msg, tag: nil); end
+  def self.announce(name, msg, tag: nil, uplevel: nil); end
   def self.deprecated_name_message(old, new = nil, msg = nil); end
   def self.deprecation_message(name, msg); end
   def self.logger(output = nil); end
   def self.set_logger!(output = nil); end
-  def self.warn(msg, tag: nil); end
+  def self.warn(msg, tag: nil, uplevel: nil); end
 end
 class Dry::Core::Deprecations::Tagged < Module
   def extended(base); end

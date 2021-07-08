@@ -2660,6 +2660,9 @@ class ActionController::Live::Buffer
 end
 
 class ActionController::Live::Buffer
+  def self.queue_size(); end
+
+  def self.queue_size=(queue_size); end
 end
 
 module ActionController::Live::ClassMethods
@@ -10355,6 +10358,7 @@ module ActionView::TestCase::TestController::HelperMethods
   include ::Turbo::Streams::ActionHelper
   include ::Webpacker::Helper
   include ::DeviseHelper
+  include ::PreviewHelper
 end
 
 module ActionView::TestCase::TestController::HelperMethods
@@ -11427,6 +11431,8 @@ class ActiveModel::DeprecationHandlingMessageHash
 end
 
 module ActiveModel::Dirty
+  def as_json(options=T.unsafe(nil)); end
+
   def attribute_previously_was(attr_name); end
 
   def attribute_was(attr_name); end
@@ -13328,9 +13334,6 @@ module ActiveRecord::Batches
   ORDER_IGNORE_MESSAGE = ::T.let(nil, ::T.untyped)
 end
 
-module ActiveRecord::Batches
-end
-
 module ActiveRecord::Calculations
   def average(column_name); end
 
@@ -13502,6 +13505,8 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
   def prefetch_primary_key?(table_name=T.unsafe(nil)); end
 
   def prepared_statements(); end
+
+  def prepared_statements?(); end
 
   def prepared_statements_disabled_cache(); end
 
@@ -14283,7 +14288,7 @@ class ActiveRecord::ConnectionAdapters::LegacyPoolManager
 
   def remove_pool_config(_, shard); end
 
-  def set_pool_config(_, shard, pool_config); end
+  def set_pool_config(role, shard, pool_config); end
 
   def shard_names(); end
 end
@@ -15675,6 +15680,10 @@ class ActiveRecord::ConnectionAdapters::TransactionState
 
   def initialize(state=T.unsafe(nil)); end
 
+  def invalidate!(); end
+
+  def invalidated?(); end
+
   def nullify!(); end
 
   def rollback!(); end
@@ -16030,7 +16039,7 @@ end
 module ActiveRecord::Enum
   include ::ActiveSupport::ForkTracker::CoreExtPrivate
   include ::ActiveSupport::ForkTracker::CoreExt
-  def enum(*args, &blk); end
+  def enum(arg0, &blk); end
 
   def inherited(base); end
   SR_ENUM_KEYWORDS = ::T.let(nil, ::T.untyped)
@@ -16040,6 +16049,8 @@ class ActiveRecord::Enum::EnumType
   def assert_valid_value(value); end
 
   def initialize(name, mapping, subtype); end
+
+  def subtype(); end
 
   def type(*_, &_1); end
 end
@@ -16084,6 +16095,7 @@ end
 
 class ActiveRecord::ExplainRegistry
   extend ::ActiveSupport::PerThreadRegistry
+  def self.collect?(*_, &_1); end
 end
 
 class ActiveRecord::ExplainSubscriber
@@ -18126,7 +18138,7 @@ class ActiveRecord::StatementCache::PartialQueryCollector
 
   def add_bind(obj); end
 
-  def add_binds(binds); end
+  def add_binds(binds, proc_for_binds=T.unsafe(nil)); end
 
   def preparable(); end
 
@@ -18859,6 +18871,10 @@ module ActiveStorage
 
   def verifier=(val); end
 
+  def video_preview_arguments(); end
+
+  def video_preview_arguments=(val); end
+
   def web_image_content_types(); end
 
   def web_image_content_types=(val); end
@@ -19451,6 +19467,12 @@ end
 class ActiveStorage::Preview
 end
 
+class ActiveStorage::PreviewError
+end
+
+class ActiveStorage::PreviewError
+end
+
 class ActiveStorage::Previewer
   def blob(); end
 
@@ -19571,8 +19593,14 @@ end
 module ActiveStorage::Representations
 end
 
-class ActiveStorage::Representations::ProxyController
+class ActiveStorage::Representations::BaseController
   include ::ActiveStorage::SetBlob
+end
+
+class ActiveStorage::Representations::BaseController
+end
+
+class ActiveStorage::Representations::ProxyController
   include ::ActiveStorage::SetHeaders
   def show(); end
 end
@@ -19581,7 +19609,6 @@ class ActiveStorage::Representations::ProxyController
 end
 
 class ActiveStorage::Representations::RedirectController
-  include ::ActiveStorage::SetBlob
   def show(); end
 end
 
@@ -19937,6 +19964,10 @@ module ActiveStorage
 
   def self.verifier=(val); end
 
+  def self.video_preview_arguments(); end
+
+  def self.video_preview_arguments=(val); end
+
   def self.web_image_content_types(); end
 
   def self.web_image_content_types=(val); end
@@ -20053,7 +20084,7 @@ class ActiveSupport::Cache::FileStore
   include ::ActiveSupport::Cache::Strategy::LocalCache
   def cache_path(); end
 
-  def initialize(cache_path, options=T.unsafe(nil)); end
+  def initialize(cache_path, **options); end
 end
 
 class ActiveSupport::Cache::FileStore
@@ -23116,6 +23147,15 @@ module Addressable::URI::CharacterClasses
   UNRESERVED = ::T.let(nil, ::T.untyped)
 end
 
+module Addressable::URI::NormalizeCharacterClasses
+  FRAGMENT = ::T.let(nil, ::T.untyped)
+  HOST = ::T.let(nil, ::T.untyped)
+  PCHAR = ::T.let(nil, ::T.untyped)
+  QUERY = ::T.let(nil, ::T.untyped)
+  SCHEME = ::T.let(nil, ::T.untyped)
+  UNRESERVED = ::T.let(nil, ::T.untyped)
+end
+
 module Addressable::VERSION
   MAJOR = ::T.let(nil, ::T.untyped)
   MINOR = ::T.let(nil, ::T.untyped)
@@ -23174,6 +23214,7 @@ module ApplicationController::HelperMethods
   include ::Turbo::Streams::ActionHelper
   include ::Webpacker::Helper
   include ::DeviseHelper
+  include ::PreviewHelper
   def user_with_groups(*args, &block); end
 end
 
@@ -23340,7 +23381,7 @@ class Arel::Collectors::Bind
 
   def add_bind(bind); end
 
-  def add_binds(binds); end
+  def add_binds(binds, proc_for_binds=T.unsafe(nil)); end
 
   def value(); end
 end
@@ -23353,7 +23394,7 @@ class Arel::Collectors::Composite
 
   def add_bind(bind, &block); end
 
-  def add_binds(binds, &block); end
+  def add_binds(binds, proc_for_binds=T.unsafe(nil), &block); end
 
   def initialize(left, right); end
 
@@ -23379,7 +23420,7 @@ end
 class Arel::Collectors::SQLString
   def add_bind(bind); end
 
-  def add_binds(binds, &block); end
+  def add_binds(binds, proc_for_binds=T.unsafe(nil), &block); end
 
   def initialize(*_); end
 
@@ -23396,7 +23437,7 @@ class Arel::Collectors::SubstituteBinds
 
   def add_bind(bind); end
 
-  def add_binds(binds); end
+  def add_binds(binds, proc_for_binds=T.unsafe(nil)); end
 
   def initialize(quoter, delegate_collector); end
 
@@ -24006,6 +24047,8 @@ class Arel::Nodes::HomogeneousIn
   def ivars(); end
 
   def left(); end
+
+  def proc_for_binds(); end
 
   def right(); end
 
@@ -31107,6 +31150,12 @@ module CapybaraScreenshot::Helpers
   COLORS = ::T.let(nil, ::T.untyped)
 end
 
+module Channels
+end
+
+module Channels
+end
+
 module Chronic
   VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -31267,6 +31316,8 @@ class Cocina::Generator::SchemaArray
 end
 
 class Cocina::Generator::SchemaBase
+  def any_datatype?(doc); end
+
   def description(); end
 
   def dry_datatype(doc); end
@@ -31275,7 +31326,7 @@ class Cocina::Generator::SchemaBase
 
   def filename(); end
 
-  def initialize(schema_doc, key: T.unsafe(nil), required: T.unsafe(nil), nullable: T.unsafe(nil), parent: T.unsafe(nil)); end
+  def initialize(schema_doc, key: T.unsafe(nil), required: T.unsafe(nil), nullable: T.unsafe(nil), parent: T.unsafe(nil), relaxed: T.unsafe(nil)); end
 
   def key(); end
 
@@ -31290,6 +31341,10 @@ class Cocina::Generator::SchemaBase
   def parent(); end
 
   def quote(item); end
+
+  def relaxed(); end
+
+  def relaxed_comment(); end
 
   def required(); end
 
@@ -31333,7 +31388,10 @@ end
 module Cocina::Models
   BusinessBarcode = ::T.let(nil, ::T.untyped)
   CatkeyBarcode = ::T.let(nil, ::T.untyped)
+  DOI = ::T.let(nil, ::T.untyped)
   Druid = ::T.let(nil, ::T.untyped)
+  LaneMedicalBarcode = ::T.let(nil, ::T.untyped)
+  Purl = ::T.let(nil, ::T.untyped)
   SourceId = ::T.let(nil, ::T.untyped)
   StandardBarcode = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
@@ -31342,13 +31400,11 @@ end
 class Cocina::Models::Access
   def access(); end
 
-  def copyright(); end
+  def controlledDigitalLending(); end
 
-  def license(); end
+  def download(); end
 
   def readLocation(); end
-
-  def useAndReproductionStatement(); end
 end
 
 class Cocina::Models::Access
@@ -31476,6 +31532,19 @@ end
 module Cocina::Models::Checkable
 end
 
+class Cocina::Models::CitationOnlyAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::CitationOnlyAccess
+end
+
 class Cocina::Models::Collection
   include ::Cocina::Models::Checkable
   def access(); end
@@ -31498,6 +31567,19 @@ end
 
 class Cocina::Models::Collection
   def self.new(attributes=T.unsafe(nil), safe=T.unsafe(nil), validate=T.unsafe(nil), &block); end
+end
+
+class Cocina::Models::CollectionAccess
+  def access(); end
+
+  def copyright(); end
+
+  def license(); end
+
+  def useAndReproductionStatement(); end
+end
+
+class Cocina::Models::CollectionAccess
 end
 
 class Cocina::Models::CollectionIdentification
@@ -31525,6 +31607,19 @@ class Cocina::Models::Contributor
   def type(); end
 
   def valueAt(); end
+end
+
+class Cocina::Models::ControlledDigitalLendingAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::ControlledDigitalLendingAccess
 end
 
 class Cocina::Models::DRO
@@ -31584,6 +31679,19 @@ class Cocina::Models::DROStructural
   def hasMemberOrders(); end
 
   def isMemberOf(); end
+end
+
+class Cocina::Models::DarkAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::DarkAccess
 end
 
 class Cocina::Models::Description
@@ -31826,6 +31934,12 @@ end
 class Cocina::Models::Embargo
   def access(); end
 
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+
   def releaseDate(); end
 
   def useAndReproductionStatement(); end
@@ -31944,6 +32058,8 @@ class Cocina::Models::Identification
 
   def catalogLinks(); end
 
+  def doi(); end
+
   def sourceId(); end
 end
 
@@ -31987,6 +32103,32 @@ class Cocina::Models::Language
 end
 
 class Cocina::Models::Language
+end
+
+class Cocina::Models::LocationBasedAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::LocationBasedAccess
+end
+
+class Cocina::Models::LocationBasedDownloadAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::LocationBasedDownloadAccess
 end
 
 class Cocina::Models::MessageDigest
@@ -32193,6 +32335,8 @@ class Cocina::Models::RequestIdentification
 
   def catalogLinks(); end
 
+  def doi(); end
+
   def sourceId(); end
 end
 
@@ -32240,6 +32384,19 @@ end
 class Cocina::Models::Standard
 end
 
+class Cocina::Models::StanfordAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
+end
+
+class Cocina::Models::StanfordAccess
+end
+
 class Cocina::Models::Title
   def appliesTo(); end
 
@@ -32285,90 +32442,21 @@ class Cocina::Models::Validator
   def self.validate(clazz, attributes); end
 end
 
-class Cocina::Models::Vocab
+class Cocina::Models::WorldAccess
+  def access(); end
+
+  def controlledDigitalLending(); end
+
+  def download(); end
+
+  def readLocation(); end
 end
 
-class Cocina::Models::Vocab::Resources
+class Cocina::Models::WorldAccess
 end
 
-class Cocina::Models::Vocab::Resources
-  def self.attachment(); end
-
-  def self.audio(); end
-
-  def self.document(); end
-
-  def self.file(); end
-
-  def self.image(); end
-
-  def self.main_augmented(); end
-
-  def self.main_original(); end
-
-  def self.media(); end
-
-  def self.object(); end
-
-  def self.page(); end
-
-  def self.permissions(); end
-
-  def self.preview(); end
-
-  def self.supplement(); end
-
-  def self.three_dimensional(); end
-
-  def self.thumb(); end
-
-  def self.video(); end
-end
-
-class Cocina::Models::Vocab
-  def self.admin_policy(); end
-
-  def self.agreement(); end
-
-  def self.book(); end
-
-  def self.collection(); end
-
-  def self.curated_collection(); end
-
-  def self.document(); end
-
-  def self.exhibit(); end
-
-  def self.file(); end
-
-  def self.geo(); end
-
-  def self.image(); end
-
-  def self.manuscript(); end
-
-  def self.map(); end
-
-  def self.media(); end
-
-  def self.object(); end
-
-  def self.page(); end
-
-  def self.photograph(); end
-
-  def self.series(); end
-
-  def self.three_dimensional(); end
-
-  def self.track(); end
-
-  def self.user_collection(); end
-
-  def self.webarchive_binary(); end
-
-  def self.webarchive_seed(); end
+class CocinaModelsInflector
+  INFLECTIONS = ::T.let(nil, ::T.untyped)
 end
 
 class Collection
@@ -32615,6 +32703,11 @@ class CollectionChangeSet
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class CollectionDescriptionGenerator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class CollectionGenerator
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -32731,11 +32824,6 @@ class Collections::EditLicenseComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class Collections::EditLinkComponent
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
-end
-
 class Collections::HistoryComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -32797,6 +32885,11 @@ class Collections::Update::TabsComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Collections::VersionDescriptionComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Collections::WorkflowReviewComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -32814,26 +32907,8 @@ module CommonMarker
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-class CommonMarker::Config::Parse
-  DEFAULT = ::T.let(nil, ::T.untyped)
-  FOOTNOTES = ::T.let(nil, ::T.untyped)
-  LIBERAL_HTML_TAG = ::T.let(nil, ::T.untyped)
-  SMART = ::T.let(nil, ::T.untyped)
-  STRIKETHROUGH_DOUBLE_TILDE = ::T.let(nil, ::T.untyped)
-  UNSAFE = ::T.let(nil, ::T.untyped)
-  VALIDATE_UTF8 = ::T.let(nil, ::T.untyped)
-end
-
-class CommonMarker::Config::Render
-  DEFAULT = ::T.let(nil, ::T.untyped)
-  FOOTNOTES = ::T.let(nil, ::T.untyped)
-  FULL_INFO_STRING = ::T.let(nil, ::T.untyped)
-  GITHUB_PRE_LANG = ::T.let(nil, ::T.untyped)
-  HARDBREAKS = ::T.let(nil, ::T.untyped)
-  NOBREAKS = ::T.let(nil, ::T.untyped)
-  SOURCEPOS = ::T.let(nil, ::T.untyped)
-  TABLE_PREFER_STYLE_ATTRIBUTES = ::T.let(nil, ::T.untyped)
-  UNSAFE = ::T.let(nil, ::T.untyped)
+module CommonMarker::Config
+  OPTS = ::T.let(nil, ::T.untyped)
 end
 
 module CommonMarker::Node::Inspect
@@ -33015,6 +33090,16 @@ class ContributorsGenerator
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+module Controllers
+end
+
+module Controllers
+end
+
+class Crack::JSON
+  DATE_REGEX = ::T.let(nil, ::T.untyped)
+end
+
 class Crass::Parser
   BLOCK_END_TOKENS = ::T.let(nil, ::T.untyped)
 end
@@ -33036,6 +33121,9 @@ class Crass::Tokenizer
   RE_UNICODE_RANGE_START = ::T.let(nil, ::T.untyped)
   RE_WHITESPACE = ::T.let(nil, ::T.untyped)
   RE_WHITESPACE_ANCHORED = ::T.let(nil, ::T.untyped)
+end
+
+class CreatedDateParts
 end
 
 class CreatedInPastValidator
@@ -33255,6 +33343,11 @@ class Dashboard::AllCollectionsComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Dashboard::AllCollectionsRowComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Dashboard::ApprovalsComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -33288,6 +33381,41 @@ end
 class DashboardPresenter
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+module Datacite
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Datacite::AutogenerateDoi
+  def initialize(prefix:); end
+
+  def to_json(*_args); end
+end
+
+class Datacite::AutogenerateDoi
+end
+
+class Datacite::Client
+  include ::Dry::Monads::Result::Mixin
+  include ::Dry::Monads::Result::Mixin::Constructors
+  def autogenerate_doi(prefix:); end
+
+  def initialize(username:, password:, host: T.unsafe(nil)); end
+end
+
+class Datacite::Client
+end
+
+class Datacite::Response
+  def body(); end
+
+  def doi(); end
+
+  def initialize(response); end
+end
+
+class Datacite::Response
 end
 
 class Date
@@ -33812,6 +33940,8 @@ end
 class Devise::Delegator
 end
 
+Devise::DeprecatedConstantAccessor = ActiveSupport::Deprecation::DeprecatedConstantAccessor
+
 module Devise::Encryptor
 end
 
@@ -34084,6 +34214,7 @@ module Devise::Models
 end
 
 module Devise::Models::Authenticatable
+  include ::ActiveSupport::Deprecation::DeprecatedConstantAccessor
   def active_for_authentication?(); end
 
   def apply_to_attribute_or_variable(attr, method); end
@@ -34107,7 +34238,7 @@ module Devise::Models::Authenticatable
   def unauthenticated_message(); end
 
   def valid_for_authentication?(); end
-  BLACKLIST_FOR_SERIALIZATION = ::T.let(nil, ::T.untyped)
+  UNSAFE_ATTRIBUTES_FOR_SERIALIZATION = ::T.let(nil, ::T.untyped)
 end
 
 module Devise::Models::Authenticatable::ClassMethods
@@ -34349,6 +34480,8 @@ module Devise::Models::Lockable
   def lock_strategy_enabled?(*_, &_1); end
 
   def resend_unlock_instructions(); end
+
+  def reset_failed_attempts!(); end
 
   def send_unlock_instructions(); end
 
@@ -35168,6 +35301,7 @@ module DeviseController::HelperMethods
   include ::Turbo::Streams::ActionHelper
   include ::Webpacker::Helper
   include ::DeviseHelper
+  include ::PreviewHelper
   def devise_mapping(*args, &block); end
 
   def resource(*args, &block); end
@@ -35377,6 +35511,10 @@ class Disposable::Twin
   INVALID_PROPERTY_NAMES = ::T.let(nil, ::T.untyped)
 end
 
+module Disposable::Twin::Coercion
+  DRY_TYPES_VERSION = ::T.let(nil, ::T.untyped)
+end
+
 class Disposable::Twin
   extend ::Uber::Delegates
 end
@@ -35421,6 +35559,7 @@ class DraftWorkForm
   include ::Edtf
   include ::EmbargoDate
   include ::Disposable::Twin::Composition
+  include ::Disposable::Twin::Coercion
   def attached_files_attributes=(); end
 
   def authors_attributes=(); end
@@ -35596,10 +35735,6 @@ end
 
 Dry::Monads::Failure = Dry::Monads::Result::Failure
 
-Dry::Monads::Result::Mixin::Failure = Dry::Monads::Result::Failure
-
-Dry::Monads::Result::Mixin::Success = Dry::Monads::Result::Success
-
 Dry::Monads::Success = Dry::Monads::Result::Success
 
 module Dry::Schema
@@ -35658,6 +35793,10 @@ class Dry::Schema::Messages::YAML
   EMPTY_CONTEXT = ::T.let(nil, ::T.untyped)
   LOCALE_TOKEN = ::T.let(nil, ::T.untyped)
   TOKEN_REGEXP = ::T.let(nil, ::T.untyped)
+end
+
+class Dry::Schema::Path
+  EMPTY = ::T.let(nil, ::T.untyped)
 end
 
 class Dry::Schema::Trace
@@ -35855,11 +35994,15 @@ class Encoding
   def self._load(_); end
 end
 
+module Entrypoints
+end
+
+module Entrypoints
+end
+
 module Enumerable
   include ::ActiveSupport::ToJsonWithActiveSupportEncoder
   def as_json(options=T.unsafe(nil)); end
-
-  def chain(*_); end
 
   def compact_blank(); end
 
@@ -36692,7 +36835,7 @@ end
 class FactoryBot::Decorator::InvocationTracker
   def __invoked_methods__(); end
 
-  def method_missing(name, *args, **kwargs, &block); end
+  def method_missing(name, *args, &block); end
 end
 
 class FactoryBot::Decorator::InvocationTracker
@@ -36862,7 +37005,7 @@ class FactoryBot::Evaluator
 
   def instance=(instance); end
 
-  def method_missing(method_name, *args, **kwargs, &block); end
+  def method_missing(method_name, *args, &block); end
 end
 
 class FactoryBot::Evaluator
@@ -37479,105 +37622,8 @@ class Faraday::Adapter
   TIMEOUT_KEYS = ::T.let(nil, ::T.untyped)
 end
 
-class Faraday::Adapter::EMHttp
-  include ::Faraday::Adapter::EMHttp::Options
-  def create_request(env); end
-
-  def error_message(client); end
-
-  def parallel?(env); end
-
-  def perform_request(env); end
-
-  def perform_single_request(env); end
-
-  def raise_error(msg); end
-
-  def timeout_message?(msg); end
-end
-
-class Faraday::Adapter::EMHttp::Manager
-  def add(&block); end
-
-  def check_finished(); end
-
-  def perform_request(); end
-
-  def reset(); end
-
-  def run(); end
-
-  def running?(); end
-end
-
-class Faraday::Adapter::EMHttp::Manager
-end
-
-module Faraday::Adapter::EMHttp::Options
-  def configure_compression(options, env); end
-
-  def configure_proxy(options, env); end
-
-  def configure_socket(options, env); end
-
-  def configure_ssl(options, env); end
-
-  def configure_timeout(options, env); end
-
-  def connection_config(env); end
-
-  def read_body(env); end
-
-  def request_config(env); end
-
-  def request_options(env); end
-end
-
-module Faraday::Adapter::EMHttp::Options
-end
-
-class Faraday::Adapter::EMHttp
-  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
-end
-
-class Faraday::Adapter::EMSynchrony
-  include ::Faraday::Adapter::EMHttp::Options
-  def create_request(env); end
-end
-
-class Faraday::Adapter::EMSynchrony
-  def self.setup_parallel_manager(_options=T.unsafe(nil)); end
-end
-
 class Faraday::Adapter::Excon
-  def build_connection(env); end
-
-  def read_body(env); end
   OPTS_KEYS = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Adapter::Excon
-end
-
-class Faraday::Adapter::HTTPClient
-  def build_connection(env); end
-
-  def configure_client(client); end
-
-  def configure_proxy(client, proxy); end
-
-  def configure_socket(client, bind); end
-
-  def configure_ssl(client, ssl); end
-
-  def configure_timeouts(client, req); end
-
-  def ssl_cert_store(ssl); end
-
-  def ssl_verify_mode(ssl); end
-end
-
-class Faraday::Adapter::HTTPClient
 end
 
 class Faraday::Adapter::NetHttp
@@ -37588,21 +37634,8 @@ class Faraday::Adapter::NetHttpPersistent
   SSL_CONFIGURATIONS = ::T.let(nil, ::T.untyped)
 end
 
-class Faraday::Adapter::NetHttpPersistent
-end
-
 class Faraday::Adapter::Patron
-  def build_connection(env); end
-
-  def configure_proxy(session, proxy); end
-
-  def configure_ssl(session, ssl); end
-
-  def configure_timeouts(session, req); end
   CURL_TIMEOUT_MESSAGES = ::T.let(nil, ::T.untyped)
-end
-
-class Faraday::Adapter::Patron
 end
 
 class Faraday::Adapter::Rack
@@ -37691,6 +37724,14 @@ module Faraday::DecodeMethods
   SUBKEYS_REGEX = ::T.let(nil, ::T.untyped)
 end
 
+module Faraday::EmHttp
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Faraday::EmSynchrony
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 class Faraday::Env
   ContentLength = ::T.let(nil, ::T.untyped)
   MethodsWithBodies = ::T.let(nil, ::T.untyped)
@@ -37698,13 +37739,29 @@ class Faraday::Env
   SuccessfulStatuses = ::T.let(nil, ::T.untyped)
 end
 
+module Faraday::Excon
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 Faraday::FilePart = UploadIO
+
+module Faraday::HTTPClient
+  VERSION = ::T.let(nil, ::T.untyped)
+end
 
 module Faraday::NetHttp
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module Faraday::NetHttpPersistent
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 Faraday::Parts = Parts
+
+module Faraday::Patron
+  VERSION = ::T.let(nil, ::T.untyped)
+end
 
 class Faraday::RackBuilder
   LOCK_ERR = ::T.let(nil, ::T.untyped)
@@ -37750,6 +37807,10 @@ class Faraday::Request::Multipart
   DEFAULT_BOUNDARY_PREFIX = ::T.let(nil, ::T.untyped)
 end
 
+Faraday::Request::OAuth = FaradayMiddleware::OAuth
+
+Faraday::Request::OAuth2 = FaradayMiddleware::OAuth2
+
 class Faraday::Request::Retry
   DEFAULT_EXCEPTIONS = ::T.let(nil, ::T.untyped)
   IDEMPOTENT_METHODS = ::T.let(nil, ::T.untyped)
@@ -37771,6 +37832,10 @@ class Faraday::Request::UrlEncoded
   CONTENT_TYPE = ::T.let(nil, ::T.untyped)
 end
 
+class Faraday::RequestOptions
+  include ::FaradayMiddleware::OptionsExtension
+end
+
 class Faraday::Response::Logger
   def initialize(app, logger=T.unsafe(nil), options=T.unsafe(nil)); end
 end
@@ -37778,10 +37843,22 @@ end
 class Faraday::Response::Logger
 end
 
+Faraday::Response::Mashify = FaradayMiddleware::Mashify
+
+Faraday::Response::ParseJson = FaradayMiddleware::ParseJson
+
+Faraday::Response::ParseMarshal = FaradayMiddleware::ParseMarshal
+
+Faraday::Response::ParseXml = FaradayMiddleware::ParseXml
+
+Faraday::Response::ParseYaml = FaradayMiddleware::ParseYaml
+
 class Faraday::Response::RaiseError
   ClientErrorStatuses = ::T.let(nil, ::T.untyped)
   ServerErrorStatuses = ::T.let(nil, ::T.untyped)
 end
+
+Faraday::Response::Rashify = FaradayMiddleware::Rashify
 
 Faraday::Timer = Timeout
 
@@ -37794,6 +37871,287 @@ end
 
 class Faraday::Utils::Headers
   KeyMap = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::Caching
+  def build_query(*args, &block); end
+
+  def cache(); end
+
+  def cache_key(env); end
+
+  def cache_on_complete(env); end
+
+  def finalize_response(response, env); end
+
+  def full_key?(); end
+
+  def initialize(app, cache=T.unsafe(nil), options=T.unsafe(nil)); end
+
+  def params_to_ignore(); end
+
+  def parse_query(*args, &block); end
+
+  def store_response_in_cache(key, response); end
+  CACHEABLE_STATUS_CODES = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::Caching
+  extend ::Forwardable
+end
+
+class FaradayMiddleware::Chunked
+  def chunked_encoding?(headers); end
+  TRANSFER_ENCODING = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::Chunked
+end
+
+class FaradayMiddleware::EncodeJson
+  def encode(data); end
+
+  def has_body?(env); end
+
+  def match_content_type(env); end
+
+  def process_request?(env); end
+
+  def request_type(env); end
+  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
+  MIME_TYPE = ::T.let(nil, ::T.untyped)
+  MIME_TYPE_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::EncodeJson
+end
+
+class FaradayMiddleware::FollowRedirects
+  def initialize(app, options=T.unsafe(nil)); end
+  ALLOWED_METHODS = ::T.let(nil, ::T.untyped)
+  AUTH_HEADER = ::T.let(nil, ::T.untyped)
+  ENV_TO_CLEAR = ::T.let(nil, ::T.untyped)
+  FOLLOW_LIMIT = ::T.let(nil, ::T.untyped)
+  REDIRECT_CODES = ::T.let(nil, ::T.untyped)
+  URI_UNSAFE = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::FollowRedirects
+end
+
+class FaradayMiddleware::Gzip
+  def brotli_inflate(body); end
+
+  def inflate(body); end
+
+  def raw_body(body); end
+
+  def reset_body(env); end
+
+  def uncompress_gzip(body); end
+  ACCEPT_ENCODING = ::T.let(nil, ::T.untyped)
+  BROTLI_SUPPORTED = ::T.let(nil, ::T.untyped)
+  CONTENT_ENCODING = ::T.let(nil, ::T.untyped)
+  CONTENT_LENGTH = ::T.let(nil, ::T.untyped)
+  SUPPORTED_ENCODINGS = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::Gzip
+  def self.optional_dependency(lib=T.unsafe(nil)); end
+
+  def self.supported_encodings(); end
+end
+
+class FaradayMiddleware::Instrumentation
+  def initialize(app, options=T.unsafe(nil)); end
+end
+
+class FaradayMiddleware::Instrumentation
+end
+
+class FaradayMiddleware::Mashify
+  def mash_class(); end
+
+  def mash_class=(mash_class); end
+
+  def parse(body); end
+end
+
+class FaradayMiddleware::Mashify
+  def self.mash_class(); end
+
+  def self.mash_class=(mash_class); end
+end
+
+class FaradayMiddleware::MethodOverride
+  def initialize(app, options=T.unsafe(nil)); end
+
+  def rewrite_request(env, original_method); end
+
+  def rewrite_request?(method); end
+  HEADER = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::MethodOverride
+end
+
+class FaradayMiddleware::OAuth
+  def body_params(env); end
+
+  def include_body_params?(env); end
+
+  def initialize(app, options); end
+
+  def oauth_header(env); end
+
+  def oauth_options(env); end
+
+  def parse_nested_query(*args, &block); end
+
+  def sign_request?(env); end
+
+  def signature_params(params); end
+  AUTH_HEADER = ::T.let(nil, ::T.untyped)
+  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
+  TYPE_URLENCODED = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::OAuth
+  extend ::Forwardable
+end
+
+class FaradayMiddleware::OAuth2
+  def build_query(*args, &block); end
+
+  def initialize(app, token=T.unsafe(nil), options=T.unsafe(nil)); end
+
+  def param_name(); end
+
+  def parse_query(*args, &block); end
+
+  def query_params(url); end
+
+  def token_type(); end
+  AUTH_HEADER = ::T.let(nil, ::T.untyped)
+  PARAM_NAME = ::T.let(nil, ::T.untyped)
+  TOKEN_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::OAuth2
+  extend ::Forwardable
+end
+
+module FaradayMiddleware::OptionsExtension
+  def each(&blk); end
+
+  def fetch(key, *args); end
+
+  def preserve_raw(); end
+
+  def preserve_raw=(preserve_raw); end
+
+  def to_hash(); end
+end
+
+module FaradayMiddleware::OptionsExtension
+end
+
+class FaradayMiddleware::ParseDates
+  def initialize(app, options=T.unsafe(nil)); end
+  ISO_DATE_FORMAT = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::ParseDates
+end
+
+class FaradayMiddleware::ParseJson
+end
+
+class FaradayMiddleware::ParseJson::MimeTypeFix
+  def first_char(body); end
+  BRACKETS = ::T.let(nil, ::T.untyped)
+  MIME_TYPE = ::T.let(nil, ::T.untyped)
+  WHITESPACE = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::ParseJson::MimeTypeFix
+end
+
+class FaradayMiddleware::ParseJson
+end
+
+class FaradayMiddleware::ParseMarshal
+end
+
+class FaradayMiddleware::ParseMarshal
+end
+
+class FaradayMiddleware::ParseXml
+end
+
+class FaradayMiddleware::ParseXml
+end
+
+class FaradayMiddleware::ParseYaml
+end
+
+class FaradayMiddleware::ParseYaml
+end
+
+class FaradayMiddleware::RackCompatible
+  def call(env); end
+
+  def finalize_response(env, rack_response); end
+
+  def headers_to_rack(env); end
+
+  def initialize(app, rack_handler, *args); end
+
+  def prepare_env(faraday_env); end
+
+  def restore_env(rack_env); end
+  NON_PREFIXED_HEADERS = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::RackCompatible
+end
+
+class FaradayMiddleware::Rashify
+end
+
+class FaradayMiddleware::Rashify
+end
+
+class FaradayMiddleware::RedirectLimitReached
+  def initialize(response); end
+end
+
+class FaradayMiddleware::RedirectLimitReached
+end
+
+class FaradayMiddleware::ResponseMiddleware
+  def call(environment); end
+
+  def parse(body); end
+
+  def parse_response?(env); end
+
+  def preserve_raw?(env); end
+
+  def process_response(env); end
+
+  def process_response_type?(type); end
+
+  def response_type(env); end
+  CONTENT_TYPE = ::T.let(nil, ::T.untyped)
+end
+
+class FaradayMiddleware::ResponseMiddleware
+  def self.define_parser(parser=T.unsafe(nil), &block); end
+
+  def self.parser(); end
+
+  def self.parser=(parser); end
 end
 
 class Fiber
@@ -38525,6 +38883,10 @@ Gem::Version::Requirement = Gem::Requirement
 module GeneratedUrlHelpers
   def _routes(); end
 
+  def autocomplete_path(*args); end
+
+  def autocomplete_url(*args); end
+
   def collection_validate_path(*args); end
 
   def collection_validate_url(*args); end
@@ -38536,6 +38898,10 @@ module GeneratedUrlHelpers
   def contact_form_path(*args); end
 
   def contact_form_url(*args); end
+
+  def dashboard_collection_path(*args); end
+
+  def dashboard_collection_url(*args); end
 
   def delete_button_collection_path(*args); end
 
@@ -38561,6 +38927,14 @@ module GeneratedUrlHelpers
 
   def edit_first_draft_collection_url(*args); end
 
+  def edit_link_collection_path(*args); end
+
+  def edit_link_collection_url(*args); end
+
+  def edit_link_collection_version_path(*args); end
+
+  def edit_link_collection_version_url(*args); end
+
   def first_draft_collection_path(*args); end
 
   def first_draft_collection_url(*args); end
@@ -38572,6 +38946,18 @@ module GeneratedUrlHelpers
   def new_first_draft_collection_path(*args); end
 
   def new_first_draft_collection_url(*args); end
+
+  def new_help_path(*args); end
+
+  def new_help_url(*args); end
+
+  def next_step_review_work_path(*args); end
+
+  def next_step_review_work_url(*args); end
+
+  def next_step_work_path(*args); end
+
+  def next_step_work_url(*args); end
 
   def preview_view_component_path(*args); end
 
@@ -38600,6 +38986,14 @@ module GeneratedUrlHelpers
   def rails_mailers_path(*args); end
 
   def rails_mailers_url(*args); end
+
+  def search_path(*args); end
+
+  def search_url(*args); end
+
+  def terms_path(*args); end
+
+  def terms_url(*args); end
 
   def update_type_work_path(*args); end
 
@@ -38852,9 +39246,14 @@ class Hash
   def self.try_convert(_); end
 end
 
-class Help::FormComponent
-  extend ::T::Private::Methods::MethodHooks
-  extend ::T::Private::Methods::SingletonMethodHooks
+module Hashdiff
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+module Helpers
+end
+
+module Helpers
 end
 
 class HelpsMailerPreview
@@ -39503,6 +39902,12 @@ module IRB
   def self.setup(ap_path, argv: T.unsafe(nil)); end
 end
 
+module Images
+end
+
+module Images
+end
+
 class Integer
   include ::JSON::Ext::Generator::GeneratorMethods::Integer
   include ::ActiveSupport::NumericWithFormat
@@ -39632,6 +40037,10 @@ module Launchy::Version
   PATCH = ::T.let(nil, ::T.untyped)
 end
 
+class License::Instance
+  def self.inherited(s); end
+end
+
 class License
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -39705,6 +40114,11 @@ end
 
 class LoadError
   def is_missing?(location); end
+end
+
+class LocalTimeComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Logger
@@ -40930,6 +41344,12 @@ class Module
   def self.attr_internal_naming_format=(attr_internal_naming_format); end
 end
 
+module Modules
+end
+
+module Modules
+end
+
 class Monitor
   def enter(); end
 
@@ -40987,6 +41407,10 @@ class MultiJson::Version
   MINOR = ::T.let(nil, ::T.untyped)
   PATCH = ::T.let(nil, ::T.untyped)
   PRE = ::T.let(nil, ::T.untyped)
+end
+
+class MultiRBTree
+  include ::Enumerable
 end
 
 module Mutex_m
@@ -41430,6 +41854,7 @@ module Nokogiri
   LIBXML_COMPILED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXML_ICONV_ENABLED = ::T.let(nil, ::T.untyped)
   LIBXML_LOADED_VERSION = ::T.let(nil, ::T.untyped)
+  LIBXML_MEMORY_MANAGEMENT = ::T.let(nil, ::T.untyped)
   LIBXSLT_COMPILED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXSLT_LOADED_VERSION = ::T.let(nil, ::T.untyped)
   LIBXSLT_PATCHES = ::T.let(nil, ::T.untyped)
@@ -41764,6 +42189,48 @@ class Object
   TOPLEVEL_BINDING = ::T.let(nil, ::T.untyped)
 end
 
+module ObjectSpace
+  def self.allocation_class_path(_); end
+
+  def self.allocation_generation(_); end
+
+  def self.allocation_method_id(_); end
+
+  def self.allocation_sourcefile(_); end
+
+  def self.allocation_sourceline(_); end
+
+  def self.count_imemo_objects(*_); end
+
+  def self.count_nodes(*_); end
+
+  def self.count_objects_size(*_); end
+
+  def self.count_symbols(*_); end
+
+  def self.count_tdata_objects(*_); end
+
+  def self.dump(*_); end
+
+  def self.dump_all(*_); end
+
+  def self.internal_class_of(_); end
+
+  def self.internal_super_of(_); end
+
+  def self.memsize_of(_); end
+
+  def self.memsize_of_all(*_); end
+
+  def self.reachable_objects_from(_); end
+
+  def self.reachable_objects_from_root(); end
+
+  def self.trace_object_allocations(); end
+
+  def self.trace_object_allocations_debug_start(); end
+end
+
 class OkComputer::OptionalCheck
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
 end
@@ -41880,6 +42347,103 @@ module OpenSSL
 end
 
 class OpenStruct
+  def __id__!(); end
+
+  def __send__!(*_); end
+
+  def class!(); end
+
+  def clone!(*_); end
+
+  def define_singleton_method!(*_); end
+
+  def delete_field!(name); end
+
+  def dig!(name, *names); end
+
+  def display!(*_); end
+
+  def dup!(); end
+
+  def each_pair!(); end
+
+  def encode_with(coder); end
+
+  def encode_with!(coder); end
+
+  def enum_for!(*_); end
+
+  def extend!(mod, *args); end
+
+  def freeze!(); end
+
+  def hash!(); end
+
+  def init_with(coder); end
+
+  def init_with!(coder); end
+
+  def inspect!(); end
+
+  def instance_eval!(*_); end
+
+  def instance_exec!(*_); end
+
+  def instance_variable_get!(_); end
+
+  def instance_variable_set!(_, _1); end
+
+  def instance_variables!(); end
+
+  def itself!(); end
+
+  def marshal_dump!(); end
+
+  def method!(_); end
+
+  def methods!(*_); end
+
+  def object_id!(); end
+
+  def private_methods!(*_); end
+
+  def protected_methods!(*_); end
+
+  def public_method!(_); end
+
+  def public_methods!(*_); end
+
+  def public_send!(*_); end
+
+  def remove_instance_variable!(_); end
+
+  def send!(*_); end
+
+  def singleton_class!(); end
+
+  def singleton_method!(_); end
+
+  def singleton_methods!(*_); end
+
+  def taint!(); end
+
+  def tap!(); end
+
+  def then!(); end
+
+  def to_enum!(*_); end
+
+  def to_h!(&block); end
+
+  def to_s!(); end
+
+  def trust!(); end
+
+  def untaint!(); end
+
+  def untrust!(); end
+
+  def yield_self!(); end
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
@@ -44015,6 +44579,17 @@ module Polyfill
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module PreviewHelper
+  def preview_source(); end
+
+  def prism_language_name(template:); end
+  AVAILABLE_PRISM_LANGUAGES = ::T.let(nil, ::T.untyped)
+  FALLBACK_LANGUAGE = ::T.let(nil, ::T.untyped)
+end
+
+module PreviewHelper
+end
+
 class Proc
   def <<(_); end
 
@@ -44254,6 +44829,12 @@ end
 
 module Puma::Util
   DEFAULT_SEP = ::T.let(nil, ::T.untyped)
+end
+
+class RBTree
+end
+
+class RBTree
 end
 
 class RDoc::Alias
@@ -44745,6 +45326,11 @@ class RDoc::TopLevel
   def initialize(absolute_name, relative_name=T.unsafe(nil)); end
 end
 
+class REXML::Light::Node
+  NAMESPLIT = ::T.let(nil, ::T.untyped)
+  PARENTS = ::T.let(nil, ::T.untyped)
+end
+
 class REXML::Parsers::BaseParser
   EXTERNAL_ID_PUBLIC = ::T.let(nil, ::T.untyped)
   EXTERNAL_ID_SYSTEM = ::T.let(nil, ::T.untyped)
@@ -44906,6 +45492,7 @@ end
 
 module RSpec::Matchers
   include ::Capybara::RSpecMatcherProxyInstaller
+  def not_to_have_enqueued_job(*args, &block); end
   BE_PREDICATE_REGEX = ::T.let(nil, ::T.untyped)
   DYNAMIC_MATCHER_REGEX = ::T.let(nil, ::T.untyped)
   HAS_REGEX = ::T.let(nil, ::T.untyped)
@@ -45518,6 +46105,7 @@ module Rails::ApplicationController::HelperMethods
   include ::Turbo::Streams::ActionHelper
   include ::Webpacker::Helper
   include ::DeviseHelper
+  include ::PreviewHelper
 end
 
 module Rails::ApplicationController::HelperMethods
@@ -45784,6 +46372,7 @@ module Rails::MailersController::HelperMethods
   include ::Turbo::Streams::ActionHelper
   include ::Webpacker::Helper
   include ::DeviseHelper
+  include ::PreviewHelper
   def locale_query(*args, &block); end
 
   def part_query(*args, &block); end
@@ -46170,6 +46759,11 @@ module Readline
   def self.completion_quote_character(); end
 end
 
+class RecordEmbargoReleaseJob
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Redis
   include ::ActiveSupport::Cache::ConnectionPoolLike
   Boolify = ::T.let(nil, ::T.untyped)
@@ -46351,7 +46945,7 @@ class Redis::Distributed
 
   def llen(key); end
 
-  def lpop(key); end
+  def lpop(key, count=T.unsafe(nil)); end
 
   def lpush(key, value); end
 
@@ -46435,7 +47029,7 @@ class Redis::Distributed
 
   def ring(); end
 
-  def rpop(key); end
+  def rpop(key, count=T.unsafe(nil)); end
 
   def rpoplpush(source, destination); end
 
@@ -48165,6 +48759,10 @@ module RequestStore
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+class ReservationForm
+  include ::Disposable::Twin::Composition
+end
+
 class Resolv::DNS
   def extract_resources(msg, name, typeclass); end
   RequestID = ::T.let(nil, ::T.untyped)
@@ -48998,10 +49596,12 @@ module RuboCop::AST::NodePattern::Sets
   SET_ATTR_READER_ATTR_WRITER_ATTR_ACCESSOR_ATTR = ::T.let(nil, ::T.untyped)
   SET_BACKGROUND_SCENARIO_XSCENARIO_ETC = ::T.let(nil, ::T.untyped)
   SET_BEFORE_AFTER = ::T.let(nil, ::T.untyped)
+  SET_BEGINNING_OF_DAY_BEGINNING_OF_WEEK_BEGINNING_OF_MONTH_ETC = ::T.let(nil, ::T.untyped)
   SET_BELONGS_TO_HAS_ONE_HAS_MANY_HAS_AND_BELONGS_TO_MANY = ::T.let(nil, ::T.untyped)
   SET_BE_EQ_EQL_EQUAL = ::T.let(nil, ::T.untyped)
   SET_BE_TRUTHY_BE_FALSEY_BE_FALSY_ETC = ::T.let(nil, ::T.untyped)
   SET_BINWRITE_SYSWRITE_WRITE_WRITE_NONBLOCK = ::T.let(nil, ::T.untyped)
+  SET_BRANCH_REF_TAG = ::T.let(nil, ::T.untyped)
   SET_CALLER_CALLER_LOCATIONS = ::T.let(nil, ::T.untyped)
   SET_CALL_RUN = ::T.let(nil, ::T.untyped)
   SET_CAPTURE2_CAPTURE2E_CAPTURE3_ETC = ::T.let(nil, ::T.untyped)
@@ -49015,6 +49615,7 @@ module RuboCop::AST::NodePattern::Sets
   SET_COUNT_LENGTH_SIZE = ::T.let(nil, ::T.untyped)
   SET_CREATED_AT_UPDATED_AT = ::T.let(nil, ::T.untyped)
   SET_CREATED_AT_UPDATED_AT_2 = ::T.let(nil, ::T.untyped)
+  SET_DEFINE_METHOD = ::T.let(nil, ::T.untyped)
   SET_DEFINE_METHOD_DEFINE_SINGLETON_METHOD = ::T.let(nil, ::T.untyped)
   SET_DESCRIBE_FEATURE = ::T.let(nil, ::T.untyped)
   SET_DOUBLE_SPY = ::T.let(nil, ::T.untyped)
@@ -49022,14 +49623,15 @@ module RuboCop::AST::NodePattern::Sets
   SET_EACH_EXAMPLE = ::T.let(nil, ::T.untyped)
   SET_EACH_WITH_INDEX_WITH_INDEX = ::T.let(nil, ::T.untyped)
   SET_EACH_WITH_OBJECT_WITH_OBJECT = ::T.let(nil, ::T.untyped)
+  SET_END_OF_DAY_END_OF_WEEK_END_OF_MONTH_ETC = ::T.let(nil, ::T.untyped)
   SET_ENUMERATOR_RATIONAL_COMPLEX_THREAD = ::T.let(nil, ::T.untyped)
+  SET_EQL_EQ_BE = ::T.let(nil, ::T.untyped)
   SET_ESCAPE_ENCODE_UNESCAPE_DECODE = ::T.let(nil, ::T.untyped)
   SET_EXACTLY_AT_LEAST_AT_MOST = ::T.let(nil, ::T.untyped)
   SET_EXECUTE_REMOVE_BELONGS_TO = ::T.let(nil, ::T.untyped)
   SET_EXPECT_ALLOW = ::T.let(nil, ::T.untyped)
   SET_FACTORYGIRL_FACTORYBOT = ::T.let(nil, ::T.untyped)
   SET_FIRST_LAST__ETC = ::T.let(nil, ::T.untyped)
-  SET_FIRST_TAKE = ::T.let(nil, ::T.untyped)
   SET_FIXNUM_BIGNUM = ::T.let(nil, ::T.untyped)
   SET_FLATTEN_FLATTEN = ::T.let(nil, ::T.untyped)
   SET_FORMAT_SPRINTF_PRINTF = ::T.let(nil, ::T.untyped)
@@ -49082,7 +49684,6 @@ module RuboCop::AST::NodePattern::Sets
   SET_SELECT_SELECT = ::T.let(nil, ::T.untyped)
   SET_SEND_PUBLIC_SEND___SEND__ = ::T.let(nil, ::T.untyped)
   SET_SHOULD_SHOULD_NOT = ::T.let(nil, ::T.untyped)
-  SET_SINCE_FROM_NOW_AFTER_ETC = ::T.let(nil, ::T.untyped)
   SET_SKIP_AFTER_ACTION_SKIP_AROUND_ACTION_SKIP_BEFORE_ACTION_SKIP_ACTION_CALLBACK = ::T.let(nil, ::T.untyped)
   SET_SKIP_PENDING = ::T.let(nil, ::T.untyped)
   SET_SORT_BY_SORT = ::T.let(nil, ::T.untyped)
@@ -49234,8 +49835,16 @@ end
 class RuboCop::Cop::Bundler::GemComment
   CHECKED_OPTIONS_CONFIG = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
+  RESTRICTIVE_VERSION_PATTERN = ::T.let(nil, ::T.untyped)
+  RESTRICTIVE_VERSION_SPECIFIERS_OPTION = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
   VERSION_SPECIFIERS_OPTION = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Bundler::GemVersion
+  FORBIDDEN_MSG = ::T.let(nil, ::T.untyped)
+  REQUIRED_MSG = ::T.let(nil, ::T.untyped)
+  VERSION_SPECIFICATION_REGEX = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Bundler::InsecureProtocolSource
@@ -49549,6 +50158,12 @@ class RuboCop::Cop::Layout::LeadingEmptyLines
   MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Layout::LineEndStringConcatenationIndentation
+  MSG_ALIGN = ::T.let(nil, ::T.untyped)
+  MSG_INDENT = ::T.let(nil, ::T.untyped)
+  PARENT_TYPES_FOR_INDENTED = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Layout::LineLength
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -49609,12 +50224,20 @@ class RuboCop::Cop::Layout::ParameterAlignment
   FIXED_INDENT_MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Layout::RedundantLineBreak
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Layout::RescueEnsureAlignment
   ALTERNATIVE_ACCESS_MODIFIERS = ::T.let(nil, ::T.untyped)
   ANCESTOR_TYPES = ::T.let(nil, ::T.untyped)
   ANCESTOR_TYPES_WITH_ACCESS_MODIFIERS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   RUBY_2_5_ANCESTOR_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Layout::SingleLineBlockChain
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Layout::SpaceAfterColon
@@ -49777,7 +50400,9 @@ class RuboCop::Cop::Lint::Debugger
 end
 
 class RuboCop::Cop::Lint::DeprecatedClassMethods
+  CLASS_METHOD_DELIMETER = ::T.let(nil, ::T.untyped)
   DEPRECATED_METHODS_OBJECT = ::T.let(nil, ::T.untyped)
+  INSTANCE_METHOD_DELIMETER = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -49862,6 +50487,10 @@ class RuboCop::Cop::Lint::EmptyExpression
 end
 
 class RuboCop::Cop::Lint::EmptyFile
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::EmptyInPattern
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -50068,6 +50697,7 @@ end
 
 class RuboCop::Cop::Lint::RedundantCopDisableDirective
   COP_NAME = ::T.let(nil, ::T.untyped)
+  DEPARTMENT_MARKER = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantCopEnableDirective
@@ -50237,6 +50867,7 @@ class RuboCop::Cop::Lint::UnreachableCode
 end
 
 class RuboCop::Cop::Lint::UnreachableLoop
+  CONTINUE_KEYWORDS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -50392,6 +51023,10 @@ class RuboCop::Cop::Naming::HeredocDelimiterNaming
   MSG = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Naming::InclusiveLanguage
+  EMPTY_ARRAY = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Naming::MemoizedInstanceVariableName
   DYNAMIC_DEFINE_METHODS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
@@ -50516,6 +51151,11 @@ class RuboCop::Cop::Performance::IoReadlines
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Performance::MapCompact
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Performance::MethodObjectAsBlock
   MSG = ::T.let(nil, ::T.untyped)
 end
@@ -50564,6 +51204,11 @@ class RuboCop::Cop::Performance::ReverseEach
 end
 
 class RuboCop::Cop::Performance::ReverseFirst
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Performance::SelectMap
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -50729,7 +51374,7 @@ class RuboCop::Cop::RSpec::EmptyLineAfterSubject
 end
 
 class RuboCop::Cop::RSpec::ExampleLength
-  MSG = ::T.let(nil, ::T.untyped)
+  LABEL = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::ExampleWithoutDescription
@@ -50801,6 +51446,11 @@ end
 
 class RuboCop::Cop::RSpec::HooksBeforeExamples
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::IdenticalEqualityAssertion
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::RSpec::ImplicitBlockExpectation
@@ -50916,6 +51566,10 @@ class RuboCop::Cop::RSpec::OverwritingSetup
 end
 
 class RuboCop::Cop::RSpec::Pending
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::RSpec::Rails::AvoidSetupHook
   MSG = ::T.let(nil, ::T.untyped)
 end
 
@@ -51061,6 +51715,11 @@ class RuboCop::Cop::Rails::ActiveSupportAliases
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Rails::AddColumnIndex
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Rails::AfterCommitOverride
   AFTER_COMMIT_CALLBACKS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
@@ -51111,6 +51770,15 @@ class RuboCop::Cop::Rails::DelegateAllowBlank
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Rails::DynamicFindBy
+  IGNORED_ARGUMENT_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::EagerEvaluationLogMessage
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Rails::EnumHash
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
@@ -51123,8 +51791,19 @@ class RuboCop::Cop::Rails::EnvironmentComparison
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Rails::EnvironmentVariableAccess
+  READ_MSG = ::T.let(nil, ::T.untyped)
+  WRITE_MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Rails::Exit
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::ExpandedDateRange
+  MAPPED_DATE_RANGE_METHODS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+  PREFERRED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Rails::FilePath
@@ -51157,6 +51836,11 @@ class RuboCop::Cop::Rails::HttpPositionalArguments
 end
 
 class RuboCop::Cop::Rails::HttpStatus
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::I18nLocaleAssignment
+  MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
@@ -51254,11 +51938,16 @@ class RuboCop::Cop::Rails::RedundantForeignKey
 end
 
 class RuboCop::Cop::Rails::ReflectionClassName
+  ALLOWED_REFLECTION_CLASS_TYPES = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Rails::RefuteMethods
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::RelativeDateConstant
+  RELATIVE_DATE_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Rails::RenderInline
@@ -51273,6 +51962,15 @@ end
 
 class RuboCop::Cop::Rails::RequestReferer
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::RequireDependency
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::ReversibleMigrationMethodDefinition
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Rails::SafeNavigation
@@ -51299,11 +51997,25 @@ class RuboCop::Cop::Rails::SquishedSQLHeredocs
   SQUISH = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Rails::TimeZone
+  TIMEZONE_SPECIFIER = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::TimeZoneAssignment
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Rails::UniqBeforePluck
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Rails::UniqueValidationWithoutIndex
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Rails::UnusedIgnoredColumns
+  MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
@@ -51370,6 +52082,10 @@ class RuboCop::Cop::Severity
   NAMES = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Sorbet::CallbackConditionalsBinding
+  CALLBACKS = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Sorbet::EnforceSigilOrder
   CODING_REGEX = ::T.let(nil, ::T.untyped)
   FROZEN_REGEX = ::T.let(nil, ::T.untyped)
@@ -51385,6 +52101,10 @@ end
 
 class RuboCop::Cop::Sorbet::ForbidIncludeConstLiteral
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Sorbet::ForbidRBIOutsideOfSorbetDir
+  PATH_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Sorbet::ForbidSuperclassConstLiteral
@@ -51570,7 +52290,8 @@ end
 
 class RuboCop::Cop::Style::CommentAnnotation
   MISSING_NOTE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
+  MSG_COLON_STYLE = ::T.let(nil, ::T.untyped)
+  MSG_SPACE_STYLE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::CommentedKeyword
@@ -51836,6 +52557,10 @@ class RuboCop::Cop::Style::ImplicitRuntimeError
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Style::InPatternThen
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Style::InfiniteLoop
   LEADING_SPACE = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
@@ -51940,6 +52665,10 @@ end
 class RuboCop::Cop::Style::MultilineIfThen
   MSG = ::T.let(nil, ::T.untyped)
   NON_MODIFIER_THEN = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::MultilineInPatternThen
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MultilineMemoization
@@ -52077,6 +52806,11 @@ end
 
 class RuboCop::Cop::Style::Proc
   MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::QuotedSymbols
+  MSG_DOUBLE = ::T.let(nil, ::T.untyped)
+  MSG_SINGLE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RaiseArgs
@@ -52250,6 +52984,7 @@ end
 
 class RuboCop::Cop::Style::SingleLineMethods
   MSG = ::T.let(nil, ::T.untyped)
+  NOT_SUPPORTED_ENDLESS_METHOD_BODY_TYPES = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::SlicingWithRange
@@ -52345,6 +53080,11 @@ class RuboCop::Cop::Style::TernaryParentheses
   MSG_COMPLEX = ::T.let(nil, ::T.untyped)
   NON_COMPLEX_TYPES = ::T.let(nil, ::T.untyped)
   VARIABLE_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::TopLevelMethodDefinition
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::TrailingBodyOnClass
@@ -52506,7 +53246,8 @@ class RuboCop::DirectiveComment
   COP_NAMES_PATTERN = ::T.let(nil, ::T.untyped)
   COP_NAME_PATTERN = ::T.let(nil, ::T.untyped)
   DIRECTIVE_COMMENT_REGEXP = ::T.let(nil, ::T.untyped)
-  REDUNDANT_COP = ::T.let(nil, ::T.untyped)
+  REDUNDANT_DIRECTIVE_COP = ::T.let(nil, ::T.untyped)
+  REDUNDANT_DIRECTIVE_COP_DEPARTMENT = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Formatter::ClangStyleFormatter
@@ -52658,10 +53399,6 @@ module RuboCop::Version
   CANONICAL_FEATURE_NAMES = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
   STRING = ::T.let(nil, ::T.untyped)
-end
-
-module Ruby::Enum
-  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class RubyLex
@@ -52969,7 +53706,7 @@ end
 class SdrClient::Deposit::File
   def as_json(); end
 
-  def initialize(external_identifier:, label:, filename:, access: T.unsafe(nil), preserve: T.unsafe(nil), shelve: T.unsafe(nil), publish: T.unsafe(nil), mime_type: T.unsafe(nil), md5: T.unsafe(nil), sha1: T.unsafe(nil), use: T.unsafe(nil)); end
+  def initialize(external_identifier:, label:, filename:, access: T.unsafe(nil), download: T.unsafe(nil), preserve: T.unsafe(nil), shelve: T.unsafe(nil), publish: T.unsafe(nil), mime_type: T.unsafe(nil), md5: T.unsafe(nil), sha1: T.unsafe(nil), use: T.unsafe(nil)); end
 end
 
 class SdrClient::Deposit::File
@@ -53151,7 +53888,7 @@ class SdrClient::Deposit::Request
 
   def for(filename); end
 
-  def initialize(apo:, source_id:, label: T.unsafe(nil), access: T.unsafe(nil), download: T.unsafe(nil), use_statement: T.unsafe(nil), copyright: T.unsafe(nil), collection: T.unsafe(nil), catkey: T.unsafe(nil), embargo_release_date: T.unsafe(nil), embargo_access: T.unsafe(nil), type: T.unsafe(nil), viewing_direction: T.unsafe(nil), file_sets: T.unsafe(nil), files_metadata: T.unsafe(nil)); end
+  def initialize(apo:, source_id:, label: T.unsafe(nil), access: T.unsafe(nil), download: T.unsafe(nil), use_statement: T.unsafe(nil), copyright: T.unsafe(nil), collection: T.unsafe(nil), catkey: T.unsafe(nil), embargo_release_date: T.unsafe(nil), embargo_access: T.unsafe(nil), embargo_download: T.unsafe(nil), type: T.unsafe(nil), viewing_direction: T.unsafe(nil), file_sets: T.unsafe(nil), files_metadata: T.unsafe(nil)); end
 
   def type(); end
 
@@ -53225,7 +53962,7 @@ end
 module SdrClient::Deposit
   def self.model_run(request_dro:, url:, accession:, files: T.unsafe(nil), logger: T.unsafe(nil)); end
 
-  def self.run(apo:, source_id:, url:, label: T.unsafe(nil), type: T.unsafe(nil), viewing_direction: T.unsafe(nil), access: T.unsafe(nil), download: T.unsafe(nil), use_statement: T.unsafe(nil), copyright: T.unsafe(nil), collection: T.unsafe(nil), catkey: T.unsafe(nil), embargo_release_date: T.unsafe(nil), embargo_access: T.unsafe(nil), files: T.unsafe(nil), files_metadata: T.unsafe(nil), accession: T.unsafe(nil), grouping_strategy: T.unsafe(nil), logger: T.unsafe(nil)); end
+  def self.run(apo:, source_id:, url:, label: T.unsafe(nil), type: T.unsafe(nil), viewing_direction: T.unsafe(nil), access: T.unsafe(nil), download: T.unsafe(nil), use_statement: T.unsafe(nil), copyright: T.unsafe(nil), collection: T.unsafe(nil), catkey: T.unsafe(nil), embargo_release_date: T.unsafe(nil), embargo_access: T.unsafe(nil), embargo_download: T.unsafe(nil), files: T.unsafe(nil), files_metadata: T.unsafe(nil), accession: T.unsafe(nil), grouping_strategy: T.unsafe(nil), logger: T.unsafe(nil)); end
 end
 
 class SdrClient::Error
@@ -53459,11 +54196,20 @@ module SimpleCov
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
+module SimpleCov::Configuration
+  DEFAULT_COVERAGE_CRITERION = ::T.let(nil, ::T.untyped)
+  SUPPORTED_COVERAGE_CRITERIA = ::T.let(nil, ::T.untyped)
+end
+
 module SimpleCov::ExitCodes
   EXCEPTION = ::T.let(nil, ::T.untyped)
   MAXIMUM_COVERAGE_DROP = ::T.let(nil, ::T.untyped)
   MINIMUM_COVERAGE = ::T.let(nil, ::T.untyped)
   SUCCESS = ::T.let(nil, ::T.untyped)
+end
+
+class SimpleCov::ExitCodes::MaximumCoverageDropCheck
+  MAX_DROP_ACCURACY = ::T.let(nil, ::T.untyped)
 end
 
 class SimpleCov::Formatter::HTMLFormatter
@@ -53476,6 +54222,15 @@ class SimpleCov::LinesClassifier
   RELEVANT = ::T.let(nil, ::T.untyped)
   WHITESPACE_LINE = ::T.let(nil, ::T.untyped)
   WHITESPACE_OR_COMMENT_LINE = ::T.let(nil, ::T.untyped)
+end
+
+class SimpleCov::SourceFile
+  RUBY_FILE_ENCODING_MAGIC_COMMENT_REGEX = ::T.let(nil, ::T.untyped)
+  SHEBANG_REGEX = ::T.let(nil, ::T.untyped)
+end
+
+class SimpleCovJSONFormatter::ResultExporter
+  FILENAME = ::T.let(nil, ::T.untyped)
 end
 
 class SimpleDelegator
@@ -53721,14 +54476,6 @@ module SorbetRails
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
-class SortedSet
-  def initialize(*args, &block); end
-end
-
-class SortedSet
-  def self.setup(); end
-end
-
 class StatBuilder
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -53855,10 +54602,22 @@ class StructuralGenerator
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+module Stylesheets
+end
+
+module Stylesheets
+end
+
 module SuperDiff::ColorizedDocumentExtensions
   def actual(*args, **opts, &block); end
 
+  def border(*args, **opts, &block); end
+
+  def elision_marker(*args, **opts, &block); end
+
   def expected(*args, **opts, &block); end
+
+  def header(*args, **opts, &block); end
 end
 
 module SuperDiff::ColorizedDocumentExtensions
@@ -53878,9 +54637,9 @@ class SuperDiff::Configuration
 
   def add_extra_differ_classes(*classes); end
 
-  def add_extra_inspector_class(*classes); end
+  def add_extra_inspection_tree_builder_class(*classes); end
 
-  def add_extra_inspector_classes(*classes); end
+  def add_extra_inspection_tree_builder_classes(*classes); end
 
   def add_extra_operation_tree_builder_class(*classes); end
 
@@ -53894,6 +54653,22 @@ class SuperDiff::Configuration
 
   def border_color=(border_color); end
 
+  def color_enabled?(); end
+
+  def diff_elision_enabled(); end
+
+  def diff_elision_enabled=(diff_elision_enabled); end
+
+  def diff_elision_enabled?(); end
+
+  def diff_elision_maximum(); end
+
+  def diff_elision_maximum=(diff_elision_maximum); end
+
+  def elision_marker_color(); end
+
+  def elision_marker_color=(elision_marker_color); end
+
   def expected_color(); end
 
   def expected_color=(expected_color); end
@@ -53902,7 +54677,7 @@ class SuperDiff::Configuration
 
   def extra_differ_classes(); end
 
-  def extra_inspector_classes(); end
+  def extra_inspection_tree_builder_classes(); end
 
   def extra_operation_tree_builder_classes(); end
 
@@ -53911,6 +54686,14 @@ class SuperDiff::Configuration
   def header_color(); end
 
   def header_color=(header_color); end
+
+  def initialize(options=T.unsafe(nil)); end
+
+  def merge!(configuration_or_options); end
+
+  def to_h(); end
+
+  def updated(); end
 end
 
 class SuperDiff::Configuration
@@ -54122,91 +54905,6 @@ module SuperDiff::Csi
   def self.reset_sequence(); end
 end
 
-module SuperDiff::DiffFormatters
-  DEFAULTS = ::T.let(nil, ::T.untyped)
-end
-
-class SuperDiff::DiffFormatters::Array
-end
-
-class SuperDiff::DiffFormatters::Array
-  def self.applies_to?(operation_tree); end
-end
-
-class SuperDiff::DiffFormatters::Base
-  include ::SuperDiff::ImplementationChecks
-  def add_comma?(); end
-
-  def call(); end
-
-  def initialize(*values); end
-end
-
-class SuperDiff::DiffFormatters::Base
-  def self.applies_to?(*_); end
-
-  def self.call(*args, **opts, &block); end
-end
-
-class SuperDiff::DiffFormatters::Collection
-  def add_comma?(); end
-
-  def call(); end
-
-  def initialize(*values); end
-  ICONS = ::T.let(nil, ::T.untyped)
-  STYLES = ::T.let(nil, ::T.untyped)
-end
-
-class SuperDiff::DiffFormatters::Collection
-  def self.call(*args, **opts, &block); end
-end
-
-class SuperDiff::DiffFormatters::CustomObject
-end
-
-class SuperDiff::DiffFormatters::CustomObject
-end
-
-class SuperDiff::DiffFormatters::DefaultObject
-  def initialize(operation_tree, value_class: T.unsafe(nil), **rest); end
-
-  def value_class(); end
-end
-
-class SuperDiff::DiffFormatters::DefaultObject
-  def self.applies_to?(operation_tree); end
-end
-
-class SuperDiff::DiffFormatters::Hash
-end
-
-class SuperDiff::DiffFormatters::Hash
-  def self.applies_to?(operation_tree); end
-end
-
-class SuperDiff::DiffFormatters::Main
-  def add_comma?(); end
-
-  def call(); end
-
-  def initialize(*values); end
-end
-
-class SuperDiff::DiffFormatters::Main
-  def self.call(*args, **opts, &block); end
-end
-
-class SuperDiff::DiffFormatters::MultilineString
-end
-
-class SuperDiff::DiffFormatters::MultilineString
-  def self.applies_to?(operation_tree); end
-end
-
-module SuperDiff::DiffFormatters
-end
-
 module SuperDiff::Differs
   DEFAULTS = ::T.let(nil, ::T.untyped)
 end
@@ -54221,8 +54919,6 @@ end
 class SuperDiff::Differs::Base
   include ::SuperDiff::ImplementationChecks
   def call(); end
-
-  def indentation(); end
 
   def initialize(*values); end
 
@@ -54427,12 +55123,21 @@ class SuperDiff::GemVersion
 end
 
 module SuperDiff::Helpers
+  def jruby?(); end
+
+  def object_address_for(object); end
+
+  def plural_type_for(value); end
+
+  def ruby_version_matches?(version_string); end
+
+  def style(*args, color_enabled: T.unsafe(nil), **opts, &block); end
+
+  def with_slice_of_array_replaced(array, range, replacement); end
 end
 
 module SuperDiff::Helpers
-  def self.plural_type_for(value); end
-
-  def self.style(*args, color_enabled: T.unsafe(nil), **opts, &block); end
+  extend ::SuperDiff::Helpers
 end
 
 module SuperDiff::ImplementationChecks
@@ -54444,76 +55149,143 @@ end
 module SuperDiff::ImplementationChecks
 end
 
+class SuperDiff::Line
+  def add_comma(); end
+
+  def add_comma?(); end
+
+  def as_elided(); end
+
+  def children(); end
+
+  def clone_with(overrides=T.unsafe(nil)); end
+
+  def closes_collection?(); end
+
+  def collection_bookend(); end
+
+  def color(); end
+
+  def complete_bookend(); end
+
+  def complete_bookend?(); end
+
+  def elided(); end
+
+  def elided?(); end
+
+  def icon(); end
+
+  def indentation_level(); end
+
+  def initialize(*values); end
+
+  def opens_collection?(); end
+
+  def prefix(); end
+
+  def prefixed_with(prefix); end
+
+  def type(); end
+
+  def value(); end
+
+  def with_comma(); end
+
+  def with_complete_bookend(complete_bookend); end
+
+  def with_value_appended(suffix); end
+
+  def with_value_prepended(prelude); end
+  COLORS = ::T.let(nil, ::T.untyped)
+  ICONS = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::Line
+end
+
 module SuperDiff::ObjectInspection
 end
 
 class SuperDiff::ObjectInspection::InspectionTree
   include ::Enumerable
-  def add_break(*args, &block); end
+  def add_inspection_of(*args, **options, &block); end
 
-  def add_inspection_of(value=T.unsafe(nil), &block); end
+  def add_text(*args, **options, &block); end
 
-  def add_text(*args, &block); end
+  def as_lines_when_rendering_to_lines(*args, **options, &block); end
 
-  def apply_tree(tree); end
+  def as_prefix_when_rendering_to_lines(*args, **options, &block); end
+
+  def as_prelude_when_rendering_to_lines(*args, **options, &block); end
+
+  def as_single_line(*args, **options, &block); end
 
   def before_each_callbacks(); end
 
   def each(&block); end
 
-  def evaluate(object, as_single_line:, indent_level:); end
-
   def evaluate_block(object, &block); end
 
-  def initialize(&block); end
+  def initialize(disallowed_node_names: T.unsafe(nil), &block); end
 
   def insert_array_inspection_of(array); end
 
-  def insert_hash_inspection_of(hash, initial_break: T.unsafe(nil)); end
+  def insert_hash_inspection_of(hash); end
 
-  def insert_separated_list(enumerable, separator: T.unsafe(nil)); end
+  def insert_separated_list(enumerable, &block); end
 
-  def nested(&block); end
+  def nested(*args, **options, &block); end
 
-  def when_empty(&block); end
+  def only_when(*args, **options, &block); end
 
-  def when_multiline(&block); end
+  def render_to_lines(object, type:, indentation_level:); end
 
-  def when_non_empty(&block); end
+  def render_to_string(object); end
 
-  def when_singleline(&block); end
+  def when_rendering_to_lines(*args, **options, &block); end
+
+  def when_rendering_to_string(*args, **options, &block); end
 end
 
-class SuperDiff::ObjectInspection::InspectionTree::BlockArgument
-  def as_single_line(); end
+class SuperDiff::ObjectInspection::InspectionTree::DisallowedNodeError
+  def initialize(_message=T.unsafe(nil)); end
 
-  def as_single_line?(); end
+  def node_name(); end
+
+  def node_name=(node_name); end
+end
+
+class SuperDiff::ObjectInspection::InspectionTree::DisallowedNodeError
+  def self.create(node_name:); end
+end
+
+class SuperDiff::ObjectInspection::InspectionTree::UpdateTieredLines
+  def call(); end
 
   def initialize(*values); end
-
-  def object(); end
 end
 
-class SuperDiff::ObjectInspection::InspectionTree::BlockArgument
+class SuperDiff::ObjectInspection::InspectionTree::UpdateTieredLines
+  def self.call(*args, **opts, &block); end
 end
 
 class SuperDiff::ObjectInspection::InspectionTree
 end
 
-module SuperDiff::ObjectInspection::Inspectors
+module SuperDiff::ObjectInspection::InspectionTreeBuilders
   DEFAULTS = ::T.let(nil, ::T.untyped)
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Array
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Array
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Array
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Array
   def self.applies_to?(value); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Base
-  def as_single_line?(); end
-
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Base
+  include ::SuperDiff::ImplementationChecks
   def call(); end
 
   def initialize(*values); end
@@ -54521,93 +55293,110 @@ class SuperDiff::ObjectInspection::Inspectors::Base
   def inspection_tree(); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Base
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Base
   extend ::SuperDiff::ImplementationChecks
   def self.applies_to?(_value); end
 
-  def self.call(*args, **opts, &block); end
+  def self.call(*args, &block); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::CustomObject
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::CustomObject
 end
 
-class SuperDiff::ObjectInspection::Inspectors::CustomObject
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::CustomObject
   def self.applies_to?(value); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::DefaultObject
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::DefaultObject
 end
 
-class SuperDiff::ObjectInspection::Inspectors::DefaultObject
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::DefaultObject
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Hash
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Hash
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Hash
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Hash
   def self.applies_to?(value); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Main
-  def as_single_line?(); end
-
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Main
   def call(); end
 
   def initialize(*values); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Main
-  def self.call(*args, **opts, &block); end
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Main
+  def self.call(*args, &block); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Primitive
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Primitive
 end
 
-class SuperDiff::ObjectInspection::Inspectors::Primitive
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::Primitive
   def self.applies_to?(value); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::String
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::TimeLike
 end
 
-class SuperDiff::ObjectInspection::Inspectors::String
+class SuperDiff::ObjectInspection::InspectionTreeBuilders::TimeLike
   def self.applies_to?(value); end
 end
 
-class SuperDiff::ObjectInspection::Inspectors::TimeLike
-  TIME_FORMAT = ::T.let(nil, ::T.untyped)
-end
-
-class SuperDiff::ObjectInspection::Inspectors::TimeLike
-  def self.applies_to?(value); end
-end
-
-module SuperDiff::ObjectInspection::Inspectors
+module SuperDiff::ObjectInspection::InspectionTreeBuilders
 end
 
 module SuperDiff::ObjectInspection::Nodes
 end
 
+class SuperDiff::ObjectInspection::Nodes::AsLinesWhenRenderingToLines
+  def initialize(tree, *args, add_comma: T.unsafe(nil), collection_bookend: T.unsafe(nil), **rest); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::AsLinesWhenRenderingToLines
+end
+
+class SuperDiff::ObjectInspection::Nodes::AsPrefixWhenRenderingToLines
+  def render_to_lines(object, **_); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::AsPrefixWhenRenderingToLines
+end
+
+class SuperDiff::ObjectInspection::Nodes::AsPreludeWhenRenderingToLines
+  def render_to_lines(object, **_); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::AsPreludeWhenRenderingToLines
+end
+
+class SuperDiff::ObjectInspection::Nodes::AsSingleLine
+end
+
+class SuperDiff::ObjectInspection::Nodes::AsSingleLine
+end
+
 class SuperDiff::ObjectInspection::Nodes::Base
-  def clone_with(tree: T.unsafe(nil), immediate_value: T.unsafe(nil), block: T.unsafe(nil)); end
+  include ::SuperDiff::ImplementationChecks
+  def clone_with(tree: T.unsafe(nil), immediate_value: T.unsafe(nil), block: T.unsafe(nil), **rest); end
 
-  def evaluate(object, indent_level:, as_single_line:); end
-
-  def initialize(tree, *args, &block); end
+  def initialize(tree, *args, **options, &block); end
 
   def pretty_print(pp); end
 
-  def type(); end
+  def render(object, preferably_as_lines:, **rest); end
+
+  def render_to_lines(object, type:, indentation_level:); end
+
+  def render_to_string(object); end
 end
 
 class SuperDiff::ObjectInspection::Nodes::Base
-end
+  extend ::SuperDiff::ImplementationChecks
+  def self.method_name(); end
 
-class SuperDiff::ObjectInspection::Nodes::Break
-  def evaluate(_object, indent_level:, as_single_line:); end
-end
-
-class SuperDiff::ObjectInspection::Nodes::Break
+  def self.node_name(); end
 end
 
 class SuperDiff::ObjectInspection::Nodes::Inspection
@@ -54622,45 +55411,51 @@ end
 class SuperDiff::ObjectInspection::Nodes::Nesting
 end
 
-class SuperDiff::ObjectInspection::Nodes::Text
-  def evaluate(object, **_); end
+class SuperDiff::ObjectInspection::Nodes::OnlyWhen
+  def initialize(tree, test, **options, &block); end
+end
+
+class SuperDiff::ObjectInspection::Nodes::OnlyWhen
 end
 
 class SuperDiff::ObjectInspection::Nodes::Text
+  def render_to_lines(object, **_); end
 end
 
-class SuperDiff::ObjectInspection::Nodes::WhenEmpty
+class SuperDiff::ObjectInspection::Nodes::Text
 end
 
-class SuperDiff::ObjectInspection::Nodes::WhenEmpty
+class SuperDiff::ObjectInspection::Nodes::WhenRenderingToLines
+  def render_to_string(*_); end
 end
 
-class SuperDiff::ObjectInspection::Nodes::WhenMultiline
+class SuperDiff::ObjectInspection::Nodes::WhenRenderingToLines
 end
 
-class SuperDiff::ObjectInspection::Nodes::WhenMultiline
+class SuperDiff::ObjectInspection::Nodes::WhenRenderingToString
+  def render_to_lines(*_, **_1); end
 end
 
-class SuperDiff::ObjectInspection::Nodes::WhenNonEmpty
-end
-
-class SuperDiff::ObjectInspection::Nodes::WhenNonEmpty
-end
-
-class SuperDiff::ObjectInspection::Nodes::WhenSingleline
-end
-
-class SuperDiff::ObjectInspection::Nodes::WhenSingleline
+class SuperDiff::ObjectInspection::Nodes::WhenRenderingToString
 end
 
 module SuperDiff::ObjectInspection::Nodes
-  def self.fetch(type); end
-
   def self.registry(); end
 end
 
+class SuperDiff::ObjectInspection::PrefixForNextNode
+end
+
+class SuperDiff::ObjectInspection::PrefixForNextNode
+end
+
+class SuperDiff::ObjectInspection::PreludeForNextNode
+end
+
+class SuperDiff::ObjectInspection::PreludeForNextNode
+end
+
 module SuperDiff::ObjectInspection
-  def self.inspect(object, as_single_line:, indent_level: T.unsafe(nil)); end
 end
 
 module SuperDiff::OperationTreeBuilders
@@ -54762,13 +55557,115 @@ end
 module SuperDiff::OperationTreeBuilders
 end
 
+module SuperDiff::OperationTreeFlatteners
+end
+
+class SuperDiff::OperationTreeFlatteners::Array
+  def close_token(); end
+
+  def open_token(); end
+end
+
+class SuperDiff::OperationTreeFlatteners::Array
+end
+
+class SuperDiff::OperationTreeFlatteners::Base
+  include ::SuperDiff::ImplementationChecks
+  def build_tiered_lines(); end
+
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::OperationTreeFlatteners::Base
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::OperationTreeFlatteners::Collection
+  def add_comma_at_end_of_lines(lines); end
+
+  def add_prefix_at_beginning_of_lines(lines, operation); end
+
+  def add_prefix_at_beginning_of_lines?(operation); end
+
+  def build_lines_for_change_operation(operation); end
+
+  def build_lines_for_non_change_operation(operation); end
+
+  def build_lines_from_inspection_of(value, type:, indentation_level:); end
+
+  def inner_lines(); end
+
+  def item_prefix_for(_operation); end
+
+  def last_item_in_collection?(operation); end
+
+  def maybe_add_comma_at_end_of_lines(lines, operation); end
+
+  def maybe_add_prefix_at_beginning_of_lines(lines, operation); end
+
+  def recursive_operation?(operation); end
+end
+
+class SuperDiff::OperationTreeFlatteners::Collection::InfiniteRecursionError
+  def initialize(_message=T.unsafe(nil)); end
+end
+
+class SuperDiff::OperationTreeFlatteners::Collection::InfiniteRecursionError
+end
+
+class SuperDiff::OperationTreeFlatteners::Collection
+end
+
+class SuperDiff::OperationTreeFlatteners::CustomObject
+  def close_token(); end
+
+  def item_prefix_for(operation); end
+
+  def open_token(); end
+end
+
+class SuperDiff::OperationTreeFlatteners::CustomObject
+end
+
+class SuperDiff::OperationTreeFlatteners::DefaultObject
+  def close_token(); end
+
+  def item_prefix_for(operation); end
+
+  def open_token(); end
+end
+
+class SuperDiff::OperationTreeFlatteners::DefaultObject
+end
+
+class SuperDiff::OperationTreeFlatteners::Hash
+  def close_token(); end
+
+  def item_prefix_for(operation); end
+
+  def open_token(); end
+end
+
+class SuperDiff::OperationTreeFlatteners::Hash
+end
+
+class SuperDiff::OperationTreeFlatteners::MultilineString
+end
+
+class SuperDiff::OperationTreeFlatteners::MultilineString
+end
+
+module SuperDiff::OperationTreeFlatteners
+end
+
 module SuperDiff::OperationTrees
   DEFAULTS = ::T.let(nil, ::T.untyped)
 end
 
 class SuperDiff::OperationTrees::Array
-  def to_diff(indent_level:, collection_prefix:, add_comma:); end
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+  def operation_tree_flattener_class(); end
 end
 
 class SuperDiff::OperationTrees::Array
@@ -54776,20 +55673,32 @@ class SuperDiff::OperationTrees::Array
 end
 
 class SuperDiff::OperationTrees::Base
+  include ::Enumerable
+  include ::SuperDiff::ImplementationChecks
+  def <<(*args, &block); end
+
+  def delete(*args, &block); end
+
+  def each(*args, &block); end
+
+  def flatten(indentation_level:); end
+
+  def initialize(operations); end
+
+  def perhaps_elide(tiered_lines); end
+
   def pretty_print(pp); end
 
-  def to_diff(indent_level:, add_comma: T.unsafe(nil), collection_prefix: T.unsafe(nil)); end
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+  def to_diff(indentation_level:); end
 end
 
 class SuperDiff::OperationTrees::Base
   extend ::SuperDiff::ImplementationChecks
-  def self.applies_to?(_value); end
+  extend ::Forwardable
+  def self.applies_to?(*_); end
 end
 
 class SuperDiff::OperationTrees::CustomObject
-  def to_diff(indent_level:, add_comma: T.unsafe(nil), collection_prefix: T.unsafe(nil)); end
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
 end
 
 class SuperDiff::OperationTrees::CustomObject
@@ -54797,20 +55706,18 @@ class SuperDiff::OperationTrees::CustomObject
 end
 
 class SuperDiff::OperationTrees::DefaultObject
-  def initialize(collection, value_class:); end
+  def initialize(operations, underlying_object:); end
 
-  def to_diff(indent_level:, add_comma: T.unsafe(nil), **_rest); end
+  def operation_tree_flattener_class(); end
 
-  def value_class(); end
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+  def underlying_object(); end
 end
 
 class SuperDiff::OperationTrees::DefaultObject
 end
 
 class SuperDiff::OperationTrees::Hash
-  def to_diff(indent_level:, collection_prefix:, add_comma:); end
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+  def operation_tree_flattener_class(); end
 end
 
 class SuperDiff::OperationTrees::Hash
@@ -54828,8 +55735,7 @@ class SuperDiff::OperationTrees::Main
 end
 
 class SuperDiff::OperationTrees::MultilineString
-  def to_diff(indent_level:, collection_prefix:, add_comma:); end
-  RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
+  def operation_tree_flattener_class(); end
 end
 
 class SuperDiff::OperationTrees::MultilineString
@@ -54843,7 +55749,7 @@ module SuperDiff::Operations
 end
 
 class SuperDiff::Operations::BinaryOperation
-  def child_operations(); end
+  def children(); end
 
   def initialize(*values); end
 
@@ -54864,8 +55770,6 @@ class SuperDiff::Operations::BinaryOperation
   def right_key(); end
 
   def right_value(); end
-
-  def should_add_comma_after_displaying?(); end
 end
 
 class SuperDiff::Operations::BinaryOperation
@@ -54876,15 +55780,11 @@ class SuperDiff::Operations::UnaryOperation
 
   def index(); end
 
-  def index_in_collection(); end
-
-  def initialize(name:, collection:, key:, value:, index:, index_in_collection: T.unsafe(nil)); end
+  def initialize(*values); end
 
   def key(); end
 
   def name(); end
-
-  def should_add_comma_after_displaying?(); end
 
   def value(); end
 end
@@ -54901,13 +55801,134 @@ module SuperDiff::RecursionGuard
 end
 
 module SuperDiff::RecursionGuard
-  def self.already_seen_object_ids(); end
+  def self.already_seen?(object); end
 
-  def self.already_seen_objects(); end
+  def self.already_seen_object_ids(); end
 
   def self.guarding_recursion_of(*objects, &block); end
 
   def self.substituting_recursion_of(*objects); end
+end
+
+class SuperDiff::TieredLines
+end
+
+class SuperDiff::TieredLines
+end
+
+class SuperDiff::TieredLinesElider
+  include ::SuperDiff::Helpers
+  def call(); end
+
+  def initialize(*values); end
+  SIZE_OF_ELISION = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::TieredLinesElider::Box
+  def extend_to(new_end); end
+
+  def extended_to(new_end); end
+
+  def fits_fully_within?(other); end
+
+  def fully_contains?(other); end
+
+  def indentation_level(); end
+
+  def initialize(*values); end
+
+  def range(); end
+end
+
+class SuperDiff::TieredLinesElider::Box
+end
+
+class SuperDiff::TieredLinesElider::BuildBoxes
+  def build(); end
+
+  def final_boxes(); end
+
+  def initialize(lines); end
+end
+
+class SuperDiff::TieredLinesElider::BuildBoxes
+  def self.call(lines); end
+end
+
+class SuperDiff::TieredLinesElider::BuildPanes
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::TieredLinesElider::BuildPanes
+  def self.call(*args, **opts, &block); end
+end
+
+class SuperDiff::TieredLinesElider::Elision
+  def add_comma?(); end
+
+  def children(); end
+
+  def elided?(); end
+
+  def indentation_level(); end
+
+  def initialize(*values); end
+
+  def prefix(); end
+
+  def type(); end
+
+  def value(); end
+end
+
+class SuperDiff::TieredLinesElider::Elision
+end
+
+class SuperDiff::TieredLinesElider::Pane
+  def capped_to(beginning, ending); end
+
+  def extended_to(new_end); end
+
+  def initialize(*values); end
+
+  def padded(); end
+
+  def range(); end
+
+  def type(); end
+end
+
+class SuperDiff::TieredLinesElider::Pane
+end
+
+class SuperDiff::TieredLinesElider
+  def self.call(*args, &block); end
+end
+
+class SuperDiff::TieredLinesFormatter
+  def call(); end
+
+  def initialize(*values); end
+end
+
+class SuperDiff::TieredLinesFormatter::FormattableLine
+  def color(); end
+
+  def content(); end
+
+  def initialize(*values); end
+  COLORS = ::T.let(nil, ::T.untyped)
+  ICONS = ::T.let(nil, ::T.untyped)
+  INDENTATION_UNIT = ::T.let(nil, ::T.untyped)
+end
+
+class SuperDiff::TieredLinesFormatter::FormattableLine
+end
+
+class SuperDiff::TieredLinesFormatter
+  def self.call(*args, &block); end
 end
 
 class Symbol
@@ -55027,7 +56048,7 @@ end
 class Time
   def self.===(other); end
 
-  def self.at_with_coercion(*args, **kwargs); end
+  def self.at_with_coercion(*args); end
 
   def self.at_without_coercion(*_); end
 
@@ -55046,6 +56067,10 @@ class Time
   def self.zone_default(); end
 
   def self.zone_default=(zone_default); end
+end
+
+module Timeout
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class TracePoint
@@ -55229,6 +56254,10 @@ module URI
   def self.parser(); end
 end
 
+module Uber
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
 Uber::InheritableAttribute = Uber::InheritableAttr
 
 class Unicode::DisplayWidth
@@ -55248,6 +56277,7 @@ end
 
 class User
   include ::Devise::Models::Authenticatable
+  include ::ActiveSupport::Deprecation::DeprecatedConstantAccessor
   include ::Devise::Models::RemoteUserAuthenticatable
   def autosave_associated_records_for_deposits(*args); end
 
@@ -55508,8 +56538,12 @@ end
 
 class ViewComponent::Base
   include ::ActiveSupport::Configurable
+  include ::ViewComponent::ContentAreas
   include ::ViewComponent::Previewable
   include ::ViewComponent::SlotableV2
+  include ::ViewComponent::WithContentHelper
+  def _output_postamble(); end
+
   def before_render(); end
 
   def before_render_check(); end
@@ -55558,15 +56592,17 @@ class ViewComponent::Base
 
   def show_previews(); end
 
+  def show_previews_source(); end
+
   def test_controller(); end
 
   def test_controller=(val); end
 
   def view_cache_dependencies(); end
 
-  def virtual_path(); end
+  def view_component_path(); end
 
-  def with(area, content=T.unsafe(nil), &block); end
+  def virtual_path(); end
 
   def with_variant(variant); end
   RESERVED_PARAMETER = ::T.let(nil, ::T.untyped)
@@ -55579,11 +56615,15 @@ class ViewComponent::Base
 
   def self.collection_counter_parameter(); end
 
+  def self.collection_iteration_parameter(); end
+
   def self.collection_parameter(); end
 
   def self.compile(raise_errors: T.unsafe(nil)); end
 
   def self.compiled?(); end
+
+  def self.compiler(); end
 
   def self.content_areas(); end
 
@@ -55600,6 +56640,8 @@ class ViewComponent::Base
   def self.format(); end
 
   def self.identifier(); end
+
+  def self.iteration_argument_present?(); end
 
   def self.preview_controller(); end
 
@@ -55633,11 +56675,13 @@ class ViewComponent::Base
 
   def self.show_previews=(val); end
 
+  def self.show_previews_source(); end
+
+  def self.show_previews_source=(val); end
+
   def self.source_location(); end
 
   def self.source_location=(source_location); end
-
-  def self.template_compiler(); end
 
   def self.test_controller(); end
 
@@ -55649,15 +56693,17 @@ class ViewComponent::Base
 
   def self.validate_initialization_parameters!(); end
 
+  def self.view_component_path(); end
+
+  def self.view_component_path=(val); end
+
   def self.virtual_path(); end
 
   def self.virtual_path=(virtual_path); end
 
   def self.with_collection(collection, **args); end
 
-  def self.with_collection_parameter(param); end
-
-  def self.with_content_areas(*areas); end
+  def self.with_collection_parameter(parameter); end
 end
 
 class ViewComponent::Collection
@@ -55699,10 +56745,32 @@ end
 class ViewComponent::Compiler
 end
 
+class ViewComponent::ComponentError
+end
+
+class ViewComponent::ComponentError
+end
+
+module ViewComponent::ContentAreas
+  def with(area, content=T.unsafe(nil), &block); end
+end
+
+module ViewComponent::ContentAreas
+  extend ::ActiveSupport::Concern
+end
+
 class ViewComponent::Engine
 end
 
 class ViewComponent::Engine
+end
+
+module ViewComponent::Instrumentation
+  def render_in(view_context, &block); end
+end
+
+module ViewComponent::Instrumentation
+  def self.included(mod); end
 end
 
 class ViewComponent::Preview
@@ -55732,6 +56800,8 @@ class ViewComponent::Preview
 
   def self.preview_name(); end
 
+  def self.preview_source(example); end
+
   def self.render_args(example, params: T.unsafe(nil)); end
 end
 
@@ -55758,11 +56828,12 @@ class ViewComponent::Slot
 end
 
 class ViewComponent::SlotV2
-  def _component_instance=(_component_instance); end
+  include ::ViewComponent::WithContentHelper
+  def __vc_component_instance=(__vc_component_instance); end
 
-  def _content=(_content); end
+  def __vc_content=(__vc_content); end
 
-  def _content_block=(_content_block); end
+  def __vc_content_block=(__vc_content_block); end
 
   def initialize(parent); end
 
@@ -55832,6 +56903,8 @@ module ViewComponent::TestHelpers
 
   def with_controller_class(klass); end
 
+  def with_request_url(path); end
+
   def with_variant(variant); end
 end
 
@@ -55841,9 +56914,10 @@ end
 module ViewComponent::Translatable
   def i18n_scope(); end
 
-  def t(key=T.unsafe(nil), locale: T.unsafe(nil), **options); end
+  def t(key=T.unsafe(nil), **options); end
 
-  def translate(key=T.unsafe(nil), locale: T.unsafe(nil), **options); end
+  def translate(key=T.unsafe(nil), **options); end
+  HTML_SAFE_TRANSLATION_KEY = ::T.let(nil, ::T.untyped)
 end
 
 module ViewComponent::Translatable::ClassMethods
@@ -55869,6 +56943,13 @@ end
 
 module ViewComponent::Translatable
   extend ::ActiveSupport::Concern
+end
+
+module ViewComponent::WithContentHelper
+  def with_content(value); end
+end
+
+module ViewComponent::WithContentHelper
 end
 
 module ViewComponent
@@ -56070,11 +57151,30 @@ module WebConsole
   extend ::ActiveSupport::Autoload
 end
 
+module WebMock
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class WebMock::BodyPattern
+  BODY_FORMATS = ::T.let(nil, ::T.untyped)
+end
+
+WebMock::HttpLibAdapters::NetHttpAdapter::OriginalNetBufferedIO = Net::BufferedIO
+
+WebMock::HttpLibAdapters::NetHttpAdapter::OriginalNetHTTP = Net::HTTP
+
+class WebMock::Util::URI
+  ADDRESSABLE_URIS = ::T.let(nil, ::T.untyped)
+  NORMALIZED_URIS = ::T.let(nil, ::T.untyped)
+end
+
+module WebMock::Util::URI::CharacterClasses
+  USERINFO = ::T.let(nil, ::T.untyped)
+end
+
 class WebSocket::Driver
-  BINARY = ::T.let(nil, ::T.untyped)
   MAX_LENGTH = ::T.let(nil, ::T.untyped)
   STATES = ::T.let(nil, ::T.untyped)
-  UNICODE = ::T.let(nil, ::T.untyped)
 end
 
 class WebSocket::Driver::Client
@@ -56463,8 +57563,6 @@ end
 class Webpacker::Configuration
   def additional_paths(); end
 
-  def additional_paths_globbed(); end
-
   def cache_manifest?(); end
 
   def cache_path(); end
@@ -56479,9 +57577,7 @@ class Webpacker::Configuration
 
   def env(); end
 
-  def extensions(); end
-
-  def extract_css?(); end
+  def fetch(key); end
 
   def initialize(root_path:, config_path:, env:); end
 
@@ -56496,8 +57592,6 @@ class Webpacker::Configuration
   def source_entry_path(); end
 
   def source_path(); end
-
-  def source_path_globbed(); end
 
   def webpack_compile_output?(); end
 end
@@ -56577,17 +57671,17 @@ module Webpacker::Helper
 
   def favicon_pack_tag(name, **options); end
 
+  def image_pack_path(name, **options); end
+
   def image_pack_tag(name, **options); end
 
-  def javascript_pack_tag(*names, **options); end
+  def image_pack_url(name, **options); end
 
-  def javascript_packs_with_chunks_tag(*names, **options); end
+  def javascript_pack_tag(*names, **options); end
 
   def preload_pack_asset(name, **options); end
 
   def stylesheet_pack_tag(*names, **options); end
-
-  def stylesheet_packs_with_chunks_tag(*names, **options); end
 end
 
 module Webpacker::Helper
@@ -56753,12 +57847,21 @@ class Work
   def self.before_remove_for_work_versions=(value); end
 end
 
+class WorkPolicy
+  def __scoping__relation__default(relation); end
+end
+
 class WorkReminderGenerator
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class WorkSubtypeValidator
+end
+
+class WorkTitlePresenter
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class WorkType
@@ -56981,6 +58084,11 @@ class Works::ApprovalComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Works::AuthorRowComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Works::AuthorsAndContributorsComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -56997,6 +58105,11 @@ class Works::ButtonsComponent
 end
 
 class Works::ContactEmailRowComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::ContributorRoleComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -57021,6 +58134,11 @@ class Works::DetailComponent
   extend ::T::Private::Methods::SingletonMethodHooks
 end
 
+class Works::EditButtonComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class Works::EditLinkComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
@@ -57032,6 +58150,16 @@ class Works::FileRowComponent
 end
 
 class Works::FormComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::KeywordsRowComponent
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
+class Works::PublicationDateComponent
   extend ::T::Private::Methods::MethodHooks
   extend ::T::Private::Methods::SingletonMethodHooks
 end
@@ -57056,6 +58184,7 @@ module WorksController::HelperMethods
   include ::Turbo::Streams::ActionHelper
   include ::Webpacker::Helper
   include ::DeviseHelper
+  include ::PreviewHelper
   def normalize_key(*args, &block); end
 end
 
@@ -57107,7 +58236,8 @@ end
 class ZipTricks::ZipWriter
   C_CHAR = ::T.let(nil, ::T.untyped)
   C_INT4 = ::T.let(nil, ::T.untyped)
-  EMPTY_DIRECTORY_EXTERNAL_ATTRS = ::T.let(nil, ::T.untyped)
+  DEFAULT_DIRECTORY_UNIX_PERMISSIONS = ::T.let(nil, ::T.untyped)
+  DEFAULT_FILE_UNIX_PERMISSIONS = ::T.let(nil, ::T.untyped)
 end
 
 module Zipline

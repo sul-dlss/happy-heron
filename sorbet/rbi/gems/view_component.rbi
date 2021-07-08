@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.30.0
+# view_component-2.35.0
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -32,12 +32,19 @@ module ViewComponent::CompileCache
   def self.invalidate!; end
   def self.register(klass); end
 end
-module ViewComponent::Previewable
-  extend ActiveSupport::Concern
-end
 class ViewComponent::Slot
   def content; end
   def content=(arg0); end
+end
+module ViewComponent::ContentAreas
+  def with(area, content = nil, &block); end
+  extend ActiveSupport::Concern
+end
+module ViewComponent::ContentAreas::ClassMethods
+  def with_content_areas(*areas); end
+end
+module ViewComponent::Previewable
+  extend ActiveSupport::Concern
 end
 module ViewComponent::Slotable
   def slot(slot_name, **args, &block); end
@@ -47,15 +54,19 @@ module ViewComponent::Slotable::ClassMethods
   def inherited(child); end
   def with_slot(*slot_names, collection: nil, class_name: nil); end
 end
+module ViewComponent::WithContentHelper
+  def with_content(value); end
+end
 class ViewComponent::SlotV2
-  def _component_instance=(arg0); end
-  def _content=(arg0); end
-  def _content_block=(arg0); end
+  def __vc_component_instance=(arg0); end
+  def __vc_content=(arg0); end
+  def __vc_content_block=(arg0); end
   def html_safe?; end
   def initialize(parent); end
   def method_missing(symbol, *args, &block); end
   def respond_to_missing?(symbol, include_all = nil); end
   def to_s; end
+  include ViewComponent::WithContentHelper
 end
 module ViewComponent::SlotableV2
   def get_slot(slot_name); end
@@ -70,6 +81,7 @@ module ViewComponent::SlotableV2::ClassMethods
   def validate_slot_name(slot_name); end
 end
 class ViewComponent::Base < ActionView::Base
+  def _output_postamble; end
   def before_render; end
   def before_render_check; end
   def config(**, &&); end
@@ -100,9 +112,11 @@ class ViewComponent::Base < ActionView::Base
   def self._after_compile; end
   def self._sidecar_files(extensions); end
   def self.collection_counter_parameter; end
+  def self.collection_iteration_parameter; end
   def self.collection_parameter; end
   def self.compile(raise_errors: nil); end
   def self.compiled?; end
+  def self.compiler; end
   def self.content_areas; end
   def self.content_areas=(value); end
   def self.content_areas?; end
@@ -114,6 +128,7 @@ class ViewComponent::Base < ActionView::Base
   def self.inherited(child); end
   def self.initialize_parameter_names; end
   def self.initialize_parameters; end
+  def self.iteration_argument_present?; end
   def self.preview_controller; end
   def self.preview_controller=(val); end
   def self.preview_path; end
@@ -131,32 +146,38 @@ class ViewComponent::Base < ActionView::Base
   def self.short_identifier; end
   def self.show_previews; end
   def self.show_previews=(val); end
+  def self.show_previews_source; end
+  def self.show_previews_source=(val); end
   def self.source_location; end
   def self.source_location=(arg0); end
-  def self.template_compiler; end
   def self.test_controller; end
   def self.test_controller=(val); end
   def self.type; end
   def self.validate_collection_parameter!(validate_default: nil); end
   def self.validate_initialization_parameters!; end
+  def self.view_component_path; end
+  def self.view_component_path=(val); end
   def self.virtual_path; end
   def self.virtual_path=(arg0); end
   def self.with_collection(collection, **args); end
-  def self.with_collection_parameter(param); end
-  def self.with_content_areas(*areas); end
+  def self.with_collection_parameter(parameter); end
   def show_previews; end
+  def show_previews_source; end
   def test_controller; end
   def test_controller=(val); end
   def view_cache_dependencies; end
+  def view_component_path; end
   def view_context; end
   def virtual_path; end
-  def with(area, content = nil, &block); end
   def with_variant(variant); end
   extend ActiveSupport::Configurable::ClassMethods
+  extend ViewComponent::ContentAreas::ClassMethods
   extend ViewComponent::SlotableV2::ClassMethods
   include ActiveSupport::Configurable
+  include ViewComponent::ContentAreas
   include ViewComponent::Previewable
   include ViewComponent::SlotableV2
+  include ViewComponent::WithContentHelper
 end
 class ViewComponent::Base::ViewContextCalledBeforeRenderError < StandardError
 end
@@ -174,6 +195,10 @@ class ViewComponent::Compiler
   def templates; end
   def variants; end
   def variants_from_inline_calls(calls); end
+end
+module PreviewHelper
+  def preview_source; end
+  def prism_language_name(template:); end
 end
 class ViewComponentsController < Rails::ApplicationController
   def _layout(lookup_context, formats); end
@@ -201,6 +226,7 @@ module ViewComponent::TestHelpers
   def rendered_component; end
   def request; end
   def with_controller_class(klass); end
+  def with_request_url(path); end
   def with_variant(variant); end
   include Capybara::Minitest::Assertions
 end

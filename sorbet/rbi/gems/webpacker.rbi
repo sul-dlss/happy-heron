@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/webpacker/all/webpacker.rbi
 #
-# webpacker-5.2.1
+# webpacker-6.0.0.beta.7
 
 class Webpacker::Instance
   def commands; end
@@ -36,7 +36,6 @@ class Webpacker::Env
 end
 class Webpacker::Configuration
   def additional_paths; end
-  def additional_paths_globbed; end
   def cache_manifest?; end
   def cache_path; end
   def check_yarn_integrity=(value); end
@@ -46,20 +45,15 @@ class Webpacker::Configuration
   def defaults; end
   def dev_server; end
   def env; end
-  def extensions; end
-  def extract_css?; end
   def fetch(key); end
-  def globbed_path_with_extensions(path); end
   def initialize(root_path:, config_path:, env:); end
   def load; end
   def public_manifest_path; end
   def public_output_path; end
   def public_path; end
-  def resolved_paths; end
   def root_path; end
   def source_entry_path; end
   def source_path; end
-  def source_path_globbed; end
   def webpack_compile_output?; end
 end
 class Webpacker::Manifest
@@ -96,6 +90,7 @@ class Webpacker::Compiler
   def initialize(webpacker); end
   def last_compilation_digest; end
   def logger(**, &&); end
+  def optionalRubyRunner; end
   def record_compilation_digest; end
   def run_webpack; end
   def self.env; end
@@ -145,16 +140,14 @@ module Webpacker::Helper
   def asset_pack_url(name, **options); end
   def current_webpacker_instance; end
   def favicon_pack_tag(name, **options); end
+  def image_pack_path(name, **options); end
   def image_pack_tag(name, **options); end
+  def image_pack_url(name, **options); end
   def javascript_pack_tag(*names, **options); end
-  def javascript_packs_with_chunks_tag(*names, **options); end
   def preload_pack_asset(name, **options); end
-  def resolve_path_to_image(name); end
-  def sources_from_manifest_entries(names, type:); end
+  def resolve_path_to_image(name, **options); end
   def sources_from_manifest_entrypoints(names, type:); end
-  def stylesheet?(name); end
   def stylesheet_pack_tag(*names, **options); end
-  def stylesheet_packs_with_chunks_tag(*names, **options); end
 end
 class Webpacker::DevServerProxy < Rack::Proxy
   def config(**, &&); end

@@ -72,7 +72,7 @@ class SorbetRails::Config
   def enabled_gem_plugins=(arg0); end
   def enabled_model_plugins(*args, &blk); end
   def enabled_model_plugins=(arg0); end
-  def enabled_plugins(*args, &blk); end
+  def enabled_plugins(&blk); end
   def extra_helper_includes(*args, &blk); end
   def extra_helper_includes=(arg0); end
   def initialize(&blk); end
@@ -142,9 +142,9 @@ module SorbetRails::ModelUtils
   include SorbetRails::ModelColumnUtils
 end
 module SorbetRails::ModelPlugins
-  def get_plugin_by_name(*args, &blk); end
+  def get_plugin_by_name(arg0, &blk); end
   def get_plugins(*args, &blk); end
-  def register_plugin(*args, &blk); end
+  def register_plugin(arg0, &blk); end
   def register_plugin_by_name(arg0, &blk); end
   def set_plugins(*args, &blk); end
   extend T::Private::Methods::MethodHooks
@@ -290,13 +290,13 @@ class SorbetRails::TypedEnumConfig < T::Struct
   extend T::Props::Serializable::ClassMethods
 end
 module ActiveRecord::Enum
-  def _define_enum(*args, &blk); end
+  def _define_enum(arg0, &blk); end
   def _define_typed_enum(*args, &blk); end
-  def extract_enum_values(*args, &blk); end
-  def gen_typed_enum_values(*args, &blk); end
+  def extract_enum_values(arg0, &blk); end
+  def gen_typed_enum_values(arg0, &blk); end
   def old_enum(definitions); end
   def typed_enum(*args, &blk); end
-  def typed_enum_reflections(*args, &blk); end
+  def typed_enum_reflections(&blk); end
   extend T::Private::Methods::MethodHooks
   extend T::Private::Methods::SingletonMethodHooks
   extend T::Sig

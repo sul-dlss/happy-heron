@@ -13,8 +13,8 @@ module Parlour
 end
 module Parlour::Debugging
   def self.debug_mode=(*args, &blk); end
-  def self.debug_mode?(*args, &blk); end
-  def self.debug_puts(*args, &blk); end
+  def self.debug_mode?(&blk); end
+  def self.debug_puts(arg0, arg1, &blk); end
   def self.name_for_debug_caller(*args, &blk); end
   extend T::Private::Methods::MethodHooks
   extend T::Private::Methods::SingletonMethodHooks
@@ -35,8 +35,8 @@ end
 class Parlour::Plugin
   def generate(*args, &blk); end
   def initialize(*args, &blk); end
-  def self.inherited(*args, &blk); end
-  def self.registered_plugins(*args, &blk); end
+  def self.inherited(arg0, &blk); end
+  def self.registered_plugins(&blk); end
   def self.run_plugins(*args, &blk); end
   def strictness(*args, &blk); end
   def strictness=(arg0); end

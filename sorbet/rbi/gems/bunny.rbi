@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/bunny/all/bunny.rbi
 #
-# bunny-2.17.0
+# bunny-2.19.0
 
 module Bunny
   def self.new(connection_string_or_opts = nil, opts = nil); end
@@ -283,6 +283,7 @@ class Bunny::Session
   def after_recovery_completed(&block); end
   def announce_network_failure_recovery; end
   def automatically_recover?; end
+  def before_recovery_attempt_starts(&block); end
   def blocked?; end
   def channel(n = nil, consumer_pool_size = nil, consumer_pool_abort_on_exception = nil, consumer_pool_shutdown_timeout = nil); end
   def channel_id_allocator; end
@@ -343,6 +344,7 @@ class Bunny::Session
   def normalize_auth_mechanism(value); end
   def normalize_client_channel_max(n); end
   def normalize_log_level(level); end
+  def notify_of_recovery_attempt_start; end
   def notify_of_recovery_completion; end
   def on_blocked(&block); end
   def on_unblocked(&block); end

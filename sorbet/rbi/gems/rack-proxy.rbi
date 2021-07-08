@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rack-proxy/all/rack-proxy.rbi
 #
-# rack-proxy-0.6.5
+# rack-proxy-0.7.0
 
 class Net::HTTP < Net::Protocol
   def begin_request_hacked(req); end

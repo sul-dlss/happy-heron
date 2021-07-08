@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activerecord/all/activerecord.rbi
 #
-# activerecord-6.1.3.1
+# activerecord-6.1.4
 
 module Arel
   def self.arel_node?(value); end
@@ -503,7 +503,7 @@ class Arel::Collectors::PlainString
 end
 class Arel::Collectors::SQLString < Arel::Collectors::PlainString
   def add_bind(bind); end
-  def add_binds(binds, &block); end
+  def add_binds(binds, proc_for_binds = nil, &block); end
   def initialize(*arg0); end
   def preparable; end
   def preparable=(arg0); end
@@ -773,6 +773,7 @@ class Arel::Nodes::HomogeneousIn < Arel::Nodes::Node
   def invert; end
   def ivars; end
   def left; end
+  def proc_for_binds; end
   def right; end
   def table_name; end
   def type; end
@@ -2315,7 +2316,7 @@ module ActiveRecord::Enum
   def assert_valid_enum_definition_values(values); end
   def detect_enum_conflict!(enum_name, method_name, klass_method = nil); end
   def detect_negative_enum_conditions!(method_names); end
-  def enum(*args, &blk); end
+  def enum(arg0, &blk); end
   def inherited(base); end
   def raise_conflict_error(enum_name, method_name, type: nil, source: nil); end
   def self.extended(base); end
@@ -2327,7 +2328,6 @@ class ActiveRecord::Enum::EnumType < ActiveModel::Type::Value
   def initialize(name, mapping, subtype); end
   def mapping; end
   def name; end
-  def serializable?(value); end
   def serialize(value); end
   def subtype; end
   def type(**, &&); end
@@ -2385,7 +2385,7 @@ module ActiveRecord::Core::ClassMethods
   def arel_table; end
   def cached_find_by_statement(key, &block); end
   def filter_attributes; end
-  def filter_attributes=(arg0); end
+  def filter_attributes=(filter_attributes); end
   def find(*ids); end
   def find_by!(*args); end
   def find_by(*args); end
@@ -2394,6 +2394,7 @@ module ActiveRecord::Core::ClassMethods
   def initialize_find_by_cache; end
   def initialize_generated_modules; end
   def inspect; end
+  def inspection_filter; end
   def predicate_builder; end
   def relation; end
   def table_metadata; end
@@ -3279,37 +3280,6 @@ class ActiveRecord::DestroyAssociationAsyncJob < ActiveJob::Base
   def self.queue_name; end
   def self.rescue_handlers; end
 end
-class ActiveRecord::ConnectionAdapters::SchemaCache
-  def add(table_name); end
-  def clear!; end
-  def clear_data_source_cache!(name); end
-  def columns(table_name); end
-  def columns_hash(table_name); end
-  def columns_hash?(table_name); end
-  def connection; end
-  def connection=(arg0); end
-  def data_source_exists?(name); end
-  def data_sources(name); end
-  def database_version; end
-  def deep_deduplicate(value); end
-  def derive_columns_hash_and_deduplicate_values; end
-  def dump_to(filename); end
-  def encode_with(coder); end
-  def indexes(table_name); end
-  def init_with(coder); end
-  def initialize(conn); end
-  def initialize_dup(other); end
-  def marshal_dump; end
-  def marshal_load(array); end
-  def open(filename); end
-  def prepare_data_sources; end
-  def primary_keys(table_name); end
-  def reset_version!; end
-  def self.load_from(filename); end
-  def self.read(filename, &block); end
-  def size; end
-  def version; end
-end
 module ActiveRecord::ConnectionAdapters::Deduplicable
   def -@; end
   def deduplicate; end
@@ -3429,14 +3399,14 @@ end
 class Arel::Collectors::Bind
   def <<(str); end
   def add_bind(bind); end
-  def add_binds(binds); end
+  def add_binds(binds, proc_for_binds = nil); end
   def initialize; end
   def value; end
 end
 class Arel::Collectors::Composite
   def <<(str); end
   def add_bind(bind, &block); end
-  def add_binds(binds, &block); end
+  def add_binds(binds, proc_for_binds = nil, &block); end
   def initialize(left, right); end
   def left; end
   def preparable; end
@@ -3447,7 +3417,7 @@ end
 class Arel::Collectors::SubstituteBinds
   def <<(str); end
   def add_bind(bind); end
-  def add_binds(binds); end
+  def add_binds(binds, proc_for_binds = nil); end
   def delegate; end
   def initialize(quoter, delegate_collector); end
   def preparable; end
@@ -3728,6 +3698,7 @@ class ActiveRecord::ConnectionAdapters::AbstractAdapter
   def pool=(arg0); end
   def prefetch_primary_key?(table_name = nil); end
   def prepared_statements; end
+  def prepared_statements?; end
   def prepared_statements_disabled_cache; end
   def preventing_writes?; end
   def raw_connection; end
@@ -4676,7 +4647,7 @@ class ActiveRecord::ConnectionAdapters::LegacyPoolManager
   def initialize; end
   def pool_configs(_ = nil); end
   def remove_pool_config(_, shard); end
-  def set_pool_config(_, shard, pool_config); end
+  def set_pool_config(role, shard, pool_config); end
   def shard_names; end
 end
 module ActiveRecord::FinderMethods
@@ -4895,6 +4866,7 @@ class ActiveRecord::Relation::WhereClause
   def any?(**, &&); end
   def ast; end
   def contradiction?; end
+  def each_attributes; end
   def empty?(**, &&); end
   def equalities(predicates, equality_only); end
   def equality_node?(node); end
@@ -4930,7 +4902,7 @@ module ActiveRecord::QueryMethods
   def arel_column(field); end
   def arel_columns(columns); end
   def assert_mutability!; end
-  def build_arel(aliases); end
+  def build_arel(aliases = nil); end
   def build_cast_value(name, value); end
   def build_from; end
   def build_having_clause(opts, rest = nil); end
@@ -5174,6 +5146,37 @@ module ActiveRecord::Tasks::DatabaseTasks
   def truncate_tables(db_config); end
   def verbose?; end
   extend ActiveRecord::Tasks::DatabaseTasks
+end
+class ActiveRecord::ConnectionAdapters::SchemaCache
+  def add(table_name); end
+  def clear!; end
+  def clear_data_source_cache!(name); end
+  def columns(table_name); end
+  def columns_hash(table_name); end
+  def columns_hash?(table_name); end
+  def connection; end
+  def connection=(arg0); end
+  def data_source_exists?(name); end
+  def data_sources(name); end
+  def database_version; end
+  def deep_deduplicate(value); end
+  def derive_columns_hash_and_deduplicate_values; end
+  def dump_to(filename); end
+  def encode_with(coder); end
+  def indexes(table_name); end
+  def init_with(coder); end
+  def initialize(conn); end
+  def initialize_dup(other); end
+  def marshal_dump; end
+  def marshal_load(array); end
+  def open(filename); end
+  def prepare_data_sources; end
+  def primary_keys(table_name); end
+  def reset_version!; end
+  def self.load_from(filename); end
+  def self.read(filename, &block); end
+  def size; end
+  def version; end
 end
 class ActiveRecord::Base
   def __callbacks; end

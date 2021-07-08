@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 # A proxy to Settings.autocomplete_lookup.url to get OCLC's FAST data for typeahead
