@@ -9,6 +9,8 @@ class Collection < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   has_many :collection_versions, dependent: :destroy
 
+  validates :doi_option, inclusion: { in: %w[depositor-selects no yes] }
+
   belongs_to :creator, class_name: 'User'
   belongs_to :head, class_name: 'CollectionVersion', optional: true
   has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
