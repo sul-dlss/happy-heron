@@ -55,6 +55,30 @@ RSpec.describe RequestGenerator do
     ]
   end
 
+  let(:admin_metadata) do
+    {
+      event: [
+        {
+          type: 'creation',
+          date: [
+            {
+              value: '2007-02-10',
+              encoding: {
+                code: 'w3cdtf'
+              }
+            }
+          ]
+        }
+      ],
+      note: [
+        {
+          value: 'Metadata created by user via Stanford self-deposit application',
+          type: 'record origin'
+        }
+      ]
+    }
+  end
+
   let(:license_uri) { License.find('CC0-1.0').uri }
 
   context 'when files are not present' do
@@ -94,7 +118,8 @@ RSpec.describe RequestGenerator do
                 type: 'preferred citation'
               }
             ],
-            form: types_form
+            form: types_form,
+            adminMetadata: admin_metadata
           },
           identification: {
             sourceId: "hydrus:object-#{work_version.work.id}"
@@ -151,7 +176,8 @@ RSpec.describe RequestGenerator do
             ],
             form: types_form,
             access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
-            purl: 'http://purl.stanford.edu/bk123gh4567'
+            purl: 'http://purl.stanford.edu/bk123gh4567',
+            adminMetadata: admin_metadata
           },
           identification: {
             sourceId: "hydrus:object-#{work_version.work.id}"
@@ -226,7 +252,8 @@ RSpec.describe RequestGenerator do
                 type: 'preferred citation'
               }
             ],
-            form: types_form
+            form: types_form,
+            adminMetadata: admin_metadata
           },
           identification: {
             sourceId: "hydrus:object-#{work_version.work.id}"
@@ -305,7 +332,8 @@ RSpec.describe RequestGenerator do
             ],
             form: types_form,
             access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
-            purl: 'http://purl.stanford.edu/bk123gh4567'
+            purl: 'http://purl.stanford.edu/bk123gh4567',
+            adminMetadata: admin_metadata
           },
           identification: {
             sourceId: "hydrus:object-#{work_version.work.id}"

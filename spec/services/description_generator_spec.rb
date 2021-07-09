@@ -105,6 +105,29 @@ RSpec.describe DescriptionGenerator do
       contributor_role
     ]
   end
+  let(:admin_metadata) do
+    {
+      event: [
+        {
+          type: 'creation',
+          date: [
+            {
+              value: '2007-02-10',
+              encoding: {
+                code: 'w3cdtf'
+              }
+            }
+          ]
+        }
+      ],
+      note: [
+        {
+          value: 'Metadata created by user via Stanford self-deposit application',
+          type: 'record origin'
+        }
+      ]
+    }
+  end
 
   it 'creates description cocina model' do
     expect(model).to eq(
@@ -193,7 +216,8 @@ RSpec.describe DescriptionGenerator do
             displayLabel: 'Contact'
           }
         ]
-      }
+      },
+      adminMetadata: admin_metadata
     )
   end
 
@@ -265,7 +289,8 @@ RSpec.describe DescriptionGenerator do
               displayLabel: 'Contact'
             }
           ]
-        }
+        },
+        adminMetadata: admin_metadata
       )
     end
   end
@@ -314,7 +339,8 @@ RSpec.describe DescriptionGenerator do
               displayLabel: 'Contact'
             }
           ]
-        }
+        },
+        adminMetadata: admin_metadata
       )
     end
   end
@@ -356,7 +382,8 @@ RSpec.describe DescriptionGenerator do
               displayLabel: 'Contact'
             }
           ]
-        }
+        },
+        adminMetadata: admin_metadata
       )
     end
   end
@@ -425,7 +452,8 @@ RSpec.describe DescriptionGenerator do
               displayLabel: 'Contact'
             }
           ]
-        }
+        },
+        adminMetadata: admin_metadata
       )
     end
 

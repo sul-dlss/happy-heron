@@ -27,7 +27,8 @@ class DescriptionGenerator
       relatedResource: related_resources.presence,
       form: TypesGenerator.generate(work_version: work_version).presence,
       access: access,
-      purl: work_version.work.purl
+      purl: work_version.work.purl,
+      adminMetadata: admin_metadata
     }.compact)
   end
   # rubocop:enable Metrics/AbcSize
@@ -177,4 +178,27 @@ class DescriptionGenerator
       )
     end
   end
+
+  # rubocop:disable Metrics/MethodLength
+  sig { returns(Cocina::Models::DescriptiveAdminMetadata) }
+  def admin_metadata
+    Cocina::Models::DescriptiveAdminMetadata.new(
+      event: [
+        Cocina::Models::Event.new(type: 'creation',
+                                  date: [
+                                    {
+                                      value: work_version.work.created_at.strftime('%Y-%m-%d'),
+                                      encoding: { code: 'w3cdtf' }
+                                    }
+                                  ])
+      ],
+      note: [
+        Cocina::Models::DescriptiveValue.new(
+          value: 'Metadata created by user via Stanford self-deposit application',
+          type: 'record origin'
+        )
+      ]
+    )
+  end
+  # rubocop:enable Metrics/MethodLength
 end

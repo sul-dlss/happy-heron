@@ -5,6 +5,7 @@ FactoryBot.define do
   factory :work do
     depositor { association(:user) }
     head { nil }
+    created_at { Time.zone.parse('2007-02-10 15:30:45') }
     collection
   end
 
