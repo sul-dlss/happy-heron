@@ -105,8 +105,8 @@ RSpec.describe WorksMailer, type: :mailer do
 
     it 'renders the reason' do
       expect(mail.body.encoded).to match 'Your deposit, “Tiramisu lemon drops chocolate cake” to the ' \
-        "small batch organic\r\n  collection in the Stanford Digital Repository, " \
-        'is now waiting for review by a collection Manager.'
+                                         "small batch organic\r\n  collection in the Stanford Digital Repository, " \
+                                         'is now waiting for review by a collection Manager.'
     end
   end
 
@@ -137,7 +137,7 @@ RSpec.describe WorksMailer, type: :mailer do
 
     it 'renders the headers' do
       exp_subj = "Reminder: New version of a deposit to the #{work.collection_name} " \
-        'collection in the SDR is in progress'
+                 'collection in the SDR is in progress'
       expect(mail.subject).to eq exp_subj
       expect(mail.to).to eq [work.depositor.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']

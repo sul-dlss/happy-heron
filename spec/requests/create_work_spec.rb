@@ -355,7 +355,7 @@ RSpec.describe 'Create a new work' do
             release: 'immediate',
             citation: 'manual one',
             citation_auto: 'Zappa, F. (2020). Test publication yy/mm date in past. ' \
-              'Stanford Digital Repository. Available at :link:',
+                           'Stanford Digital Repository. Available at :link:',
             default_citation: true
           }
         end
@@ -376,7 +376,7 @@ RSpec.describe 'Create a new work' do
           expect(work_version.embargo_date).to be_nil
           expect(work_version.subtype).to be_empty
           expect(work_version.citation).to eq 'Zappa, F. (2020). Test publication yy/mm ' \
-            'date in past. Stanford Digital Repository. Available at :link:'
+                                              'date in past. Stanford Digital Repository. Available at :link:'
           expect(work_version.license).to eq License.license_list.first
           expect(work_version.state).to eq 'first_draft'
           expect(DepositJob).not_to have_received(:perform_later)

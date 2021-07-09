@@ -202,7 +202,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         click_link 'My Title'
 
         expect(page).to have_content 'Keller, M. (2020). My Title. ' \
-          "Stanford Digital Repository. Available at #{WorkVersion::LINK_TEXT}"
+                                     "Stanford Digital Repository. Available at #{WorkVersion::LINK_TEXT}"
       end
     end
   end

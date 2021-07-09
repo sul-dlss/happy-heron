@@ -18,7 +18,7 @@ RSpec.describe DescriptionGenerator do
 
   let(:citation_value) do
     'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
-        'Journal of Librarianship and Scholarly Communication, 1(3).'
+      'Journal of Librarianship and Scholarly Communication, 1(3).'
   end
   let(:types_form) do
     [
