@@ -49,6 +49,15 @@ module Cocina::Models
   def initialize(url: nil, accessContact: nil, digitalRepository: nil); end
   end
 
+  class DescriptiveAdminMetadata
+    sig do
+        params(event: T.nilable(T::Array[Event]),
+               note: T.nilable(T::Array[DescriptiveValue]),
+        ).void
+    end
+  def initialize(event: nil, note: nil); end
+  end
+
   class RelatedResource
     sig do
       params(type: T.nilable(String),

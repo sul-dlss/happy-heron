@@ -30,6 +30,8 @@ Metrics/BlockLength:
 
 Metrics/ClassLength:
   Max: 150
+  Exclude:
+    - app/services/description_generator.rb
 
 Metrics/MethodLength:
   Max: 15
