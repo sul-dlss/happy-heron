@@ -88,14 +88,14 @@ RSpec.describe WorkVersion do
     end
 
     context 'when the user is a reviewer' do
-      let(:collection) { create(:collection, :with_reviewers) }
+      let(:collection) { create(:collection, :with_reviewers, :with_managers) }
       let(:user) { collection.reviewed_by.first }
 
       it { is_expected.to eq [work_version1] }
     end
 
     context 'when the user is a manager' do
-      let(:collection) { create(:collection, :with_managers) }
+      let(:collection) { create(:collection, :with_reviewers, :with_managers) }
       let(:user) { collection.managed_by.first }
 
       it { is_expected.to eq [work_version1] }
