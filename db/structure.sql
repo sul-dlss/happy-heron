@@ -259,7 +259,8 @@ CREATE TABLE public.collections (
     email_depositors_status_changed boolean,
     review_enabled boolean DEFAULT false,
     license_option character varying DEFAULT 'required'::character varying NOT NULL,
-    head_id bigint
+    head_id bigint,
+    doi_option character varying DEFAULT 'yes'::character varying
 );
 
 
@@ -613,7 +614,9 @@ CREATE TABLE public.works (
     collection_id bigint,
     depositor_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    assign_doi boolean DEFAULT false NOT NULL,
+    doi character varying
 );
 
 
@@ -1289,6 +1292,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210527193102'),
 ('20210608161622'),
 ('20210616201626'),
+('20210709182654'),
+('20210709184325'),
 ('20210719185721'),
 ('20210721164925'),
 ('20210802203252');
