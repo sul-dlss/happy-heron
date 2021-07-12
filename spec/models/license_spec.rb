@@ -31,7 +31,8 @@ RSpec.describe License do
           'LGPL-3.0-only',
           'MIT',
           'MPL-2.0',
-          'none'
+          'none',
+          'PDM-1.0'
         ]
       end
     end
@@ -63,6 +64,7 @@ RSpec.describe License do
           'MIT',
           'MPL-2.0',
           'none',
+          'PDM-1.0',
           'CC-BY-3.0',
           'CC-BY-SA-3.0',
           'CC-BY-ND-3.0',
@@ -119,9 +121,10 @@ RSpec.describe License do
             ]
           ],
           [
-            'No License',
+            'Other',
             [
-              ['No License', 'none']
+              ['No License', 'none'],
+              ['Public Domain Mark 1.0', 'PDM-1.0']
             ]
           ]
         ]
