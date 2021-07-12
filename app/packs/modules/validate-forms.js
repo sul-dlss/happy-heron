@@ -10,11 +10,20 @@
     Array.prototype.slice.call(forms)
       .forEach(function (form) {
         form.addEventListener('submit', function (event) {
-          if (event.submitter.id === 'save-draft-button') return // do not run client side validation for saving drafts
+          if (event.submitter.id === 'save-draft-button') {
+            // limited client side validation for saving drafts
+            const elem = form.querySelector('.date-range *:invalid')
+            if(!elem) return
+            event.preventDefault()
+            event.stopPropagation()
+            scrollToElement(elem)
+            return
+          }
+
           if (!form.checkValidity()) {
             event.preventDefault()
             event.stopPropagation()
-            scrollToFirstInvalidElement(form)
+            scrollToElement(form.querySelector(':invalid'))
           }
 
           form.classList.add('was-validated')
@@ -22,9 +31,8 @@
       })
   })
 
-  function scrollToFirstInvalidElement(form) {
+  function scrollToElement(elem) {
     const yOffset = -10
-    const elem = form.querySelector(':invalid')
     const originalDisplay = elem.style.display
     // Allow hidden element to scroll into display.
     elem.style.display = 'block'
