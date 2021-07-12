@@ -200,7 +200,7 @@ RSpec.describe 'Autocomplete Controller' do
     it 'returns html <li> item for each suggestion' do
       get '/autocomplete', params: { q: query }
 
-      li_prefix = '<li class="list-group-item" role="option"'
+      li_prefix = '<li class="dropdown-item" role="option"'
       suggestions.each do |suggestion|
         actual_suggestion = suggestion.keys.first
         uri = suggestion.values.first
