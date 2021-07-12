@@ -20,6 +20,7 @@ class DraftCollectionForm < Reform::Form
 
   property :release_option, default: 'immediate', on: :collection
   property :release_duration, on: :collection
+  property :doi_option, default: 'yes', on: :collection
 
   property :license_option, on: :collection
   property :required_license, on: :collection
