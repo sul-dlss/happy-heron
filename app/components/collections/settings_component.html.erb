@@ -32,7 +32,7 @@
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="mb-5" >
       <legend class="h5">Who will have permission to download files for deposits to this collection? * <%= render PopoverComponent.new key: 'collection.access' %></legend>
       <div class="form-check">
         <%= form.radio_button :access, 'world', class: "form-check-input" %>
@@ -45,6 +45,24 @@
       <div class="form-check">
         <%= form.radio_button :access, 'depositor-selects', class: "form-check-input" %>
         <%= form.label 'access_depositor-selects', t('options.collection.access.depositor_selects'), class: "form-check-label" %>
+      </div>
+    </fieldset>
+
+    <fieldset class="mb-5">
+      <legend class="h5">Will a DOI be assigned to the deposits in this collection?* <%= render PopoverComponent.new key: 'collection.doi' %>
+        <%= link_to 'What is a DOI?', 'https://library.stanford.edu/data-services/doi-services' %>
+      </legend>
+      <div class="form-check">
+        <%= form.radio_button :doi_option, 'yes', class: "form-check-input" %>
+        <%= form.label 'doi_option_yes', t('options.collection.doi.yes'), class: "form-check-label" %>
+      </div>
+      <div class="form-check">
+        <%= form.radio_button :doi_option, 'no', class: "form-check-input" %>
+        <%= form.label 'doi_option_no', t('options.collection.doi.no'), class: "form-check-label" %>
+      </div>
+      <div class="form-check">
+        <%= form.radio_button :doi_option, 'depositor-selects', class: "form-check-input" %>
+        <%= form.label 'doi_option_depositor-selects', t('options.collection.doi.depositor_selects'), class: "form-check-label" %>
       </div>
     </fieldset>
   </section>
