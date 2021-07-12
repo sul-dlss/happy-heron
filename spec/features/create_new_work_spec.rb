@@ -136,6 +136,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         # We should not see the delete button for this work since it is not a draft
         expect(page).not_to have_selector("[aria-label='Delete #{WorkVersion.last.title}']")
 
+        expect(page).to have_content('Deposit to this collection')
         click_link 'My Title'
         expect(page).to have_content('My Title')
         expect(page).to have_link(collection_version.name)
@@ -199,6 +200,8 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
         expect(page).to have_content 'You have successfully deposited your work'
         click_link 'Return to dashboard'
+
+        expect(page).to have_content('Deposit to this collection')
         click_link 'My Title'
 
         expect(page).to have_content 'Keller, M. (2020). My Title. ' \

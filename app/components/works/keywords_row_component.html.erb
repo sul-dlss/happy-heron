@@ -1,7 +1,7 @@
 <div class="mb-3 row plain-container g-0">
   <div class="col-sm-6">
     <%= form.label :label, 'Keyword', class: 'col-form-label sr-only' %>
-    <div data-controller="autocomplete" data-autocomplete-url-value="/autocomplete" class="dropdown">
+    <div data-controller="autocomplete" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3" class="dropdown">
       <%= form.text_field :label, { class: "form-control#{ 'is-invalid' if error?}", required: true, 'data-autocomplete-target': 'input' } %>
       <%= form.hidden_field :uri, { required: true, 'data-autocomplete-target': 'hidden' }%>
       <ul class="show dropdown-menu" data-autocomplete-target="results"></ul>
