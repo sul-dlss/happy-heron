@@ -33,6 +33,7 @@ class WorkVersion < ApplicationRecord
       .left_outer_joins(work: { collection: :reviewed_by })
       .left_outer_joins(work: { collection: :managed_by })
       .where('reviewers.user_id = %s OR managers.user_id = %s', user.id, user.id)
+      .distinct
   }
 
   enum access: {
