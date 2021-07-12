@@ -13,6 +13,8 @@ export default class extends Controller {
     ]
     if (this.hideDepositorValue) columns.push({ select: 2, hidden: true})
     new DataTable("#worksTable", {
-      columns: columns})
+      columns: columns,
+      searchable: true
+    })
   }
 }
