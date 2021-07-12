@@ -81,7 +81,7 @@ RSpec.describe 'Updating an existing work' do
           expect(work.reload.head).to be_version_draft
           # Only changed fields are recorded in event.
           expect(work.events.first.description).to eq('title of deposit modified, contact email modified, ' \
-            'authors modified, file description changed')
+                                                      'authors modified, file description changed')
           expect(response).to redirect_to(work)
         end
       end
