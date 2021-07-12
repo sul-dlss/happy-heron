@@ -136,6 +136,7 @@ RSpec.describe 'Create a collection' do
             required_license: 'CC0-1.0',
             'release_option' => 'delay',
             'release_duration' => '1 year',
+            doi_option: 'depositor-selects',
             contact_emails_attributes: contact_emails,
             related_links_attributes: related_links
           }
@@ -156,6 +157,7 @@ RSpec.describe 'Create a collection' do
           expect(collection.email_depositors_status_changed).to eq true
           expect(collection.release_option).to eq 'delay'
           expect(collection.release_date).to eq next_year
+          expect(collection.doi_option).to eq 'depositor-selects'
           expect(collection_version.contact_emails.size).to eq 2
           expect(collection_version.contact_emails).to all(be_kind_of(ContactEmail))
           expect(collection_version.related_links.size).to eq 2
