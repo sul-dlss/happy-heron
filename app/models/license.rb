@@ -97,8 +97,11 @@ class License
       ]
     },
     {
-      label: 'No License',
-      options: ['none']
+      label: 'Other',
+      options: [
+        'none',
+        'PDM-1.0'
+      ]
     }
   ].freeze
 end

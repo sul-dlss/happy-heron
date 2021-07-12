@@ -87,6 +87,10 @@ none:
   selectable: true
   label: "No License"
   uri: ''
+PDM-1.0:
+  selectable: true
+  label: "Public Domain Mark 1.0"
+  uri: "https://creativecommons.org/publicdomain/mark/1.0/"
 CC-BY-3.0:
   selectable: false
   label: 'CC-BY-3.0 Attribution (Unsupported)'
