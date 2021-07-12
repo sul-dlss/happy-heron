@@ -109,24 +109,13 @@ class CollectionsController < ObjectsController
     DraftCollectionForm.new(collection_version: collection_version, collection: collection_version.collection)
   end
 
-  def create_params
-    params.require(:collection).permit(:name, :description, :access,
-                                       :manager_sunets, :depositor_sunets,
-                                       :review_enabled, :reviewer_sunets, :license_option,
-                                       :required_license, :default_license,
-                                       :email_when_participants_changed,
-                                       :email_depositors_status_changed,
-                                       :release_option, :release_duration,
-                                       related_links_attributes: %i[_destroy id link_title url],
-                                       contact_emails_attributes: %i[_destroy id email])
-  end
-
   def update_params
     params.require(:collection).permit(:access, :manager_sunets, :depositor_sunets,
                                        :review_enabled, :reviewer_sunets, :license_option,
                                        :required_license, :default_license,
                                        :email_when_participants_changed,
                                        :email_depositors_status_changed,
-                                       :release_option, :release_duration)
+                                       :release_option, :release_duration,
+                                       :doi_option)
   end
 end

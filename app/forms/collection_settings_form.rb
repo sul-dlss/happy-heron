@@ -15,6 +15,7 @@ class CollectionSettingsForm < Reform::Form
 
   property :release_option, default: 'immediate'
   property :release_duration
+  property :doi_option, default: 'yes'
 
   property :license_option
   property :required_license
