@@ -1,21 +1,19 @@
 <div class="mb-3 row plain-container g-0">
   <div class="col-sm-6">
     <%= form.label :label, 'Keyword', class: 'col-form-label sr-only' %>
-    <div data-controller="autocomplete" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3" class="dropdown">
-      <%= form.text_field :label, { class: "form-control#{ 'is-invalid' if error?}", required: true, 'data-autocomplete-target': 'input' } %>
-      <%= form.hidden_field :uri, { required: true, 'data-autocomplete-target': 'hidden' }%>
+    <div data-controller="autocomplete autocomplete-edit" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3" class="dropdown">
+      <%= form.text_field :label, { class: "form-control#{ 'is-invalid' if error?}", required: true, 'data-autocomplete-target': 'input', 'data-autocomplete-edit-target': 'input' } %>
+      <%= form.hidden_field :uri, { required: true, 'data-autocomplete-target': 'hidden', 'data-autocomplete-edit-target': 'uri', 'data-action': 'autocomplete-edit#change' }%>
       <ul class="show dropdown-menu" data-autocomplete-target="results"></ul>
       <div class="invalid-feedback">Keyword must be filled in</div>
     </div>
   </div>
-  <% if not_first_keyword? %>
-    <div class="col-sm-1">
-      <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Remove' },
-      data: { action: "click->nested-form#removeAssociation",
-              plain: true } do %>
-        <span class="far fa-trash-alt"></span>
-      <% end %>
-      <%= form.hidden_field :_destroy %>
-    </div>
-  <% end %>
+  <div class="col-sm-1">
+    <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Remove' },
+    data: { action: "click->nested-form#removeAssociation",
+            plain: true } do %>
+      <span class="far fa-trash-alt"></span>
+    <% end %>
+    <%= form.hidden_field :_destroy %>
+  </div>
 </div>

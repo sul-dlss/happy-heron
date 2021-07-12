@@ -5,7 +5,7 @@ export default class extends Controller {
   static values = { selector: String }
 
   addAssociation(event) {
-    event.preventDefault()
+    if(event) event.preventDefault()
     this.add_itemTarget.insertAdjacentHTML('beforebegin', this.buildNewRowFromTemplate())
   }
 
@@ -15,6 +15,8 @@ export default class extends Controller {
     item.querySelectorAll('input').forEach((element) => element.required = false)
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
+
+    if(this.isOnlyAssociation(item)) this.addAssociation()
   }
 
   getItemForButton(button) {
@@ -23,5 +25,11 @@ export default class extends Controller {
 
   buildNewRowFromTemplate() {
     return this.templateTarget.innerHTML.replace(/TEMPLATE_RECORD/g, new Date().valueOf())
+  }
+
+  isOnlyAssociation(item) {
+    var onlyAssociation = true
+    item.parentNode.querySelectorAll(this.selectorValue).forEach((node) =>  {if(node.style.display === '') onlyAssociation = false})
+    return onlyAssociation
   }
 }
