@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-# Assigns a druid to a model
+# Assigns a DRUID and DOI to a model
 class AssignPidJob
   extend T::Sig
   include Sneakers::Worker
@@ -14,11 +14,18 @@ class AssignPidJob
   def work(msg)
     model = build_cocina_model_from_json_str(msg)
     source_id = model.identification.sourceId
-    assign_druid(source_id, model.externalIdentifier)
+    attrs = case model
+            when Cocina::Models::DRO
+              { druid: model.externalIdentifier, doi: model.identification.doi }
+            else
+              { druid: model.externalIdentifier }
+            end
+    update_attributes_by_source(source_id, **attrs)
     ack!
   end
 
-  def assign_druid(source_id, druid)
+  sig { params(source_id: String, args: T::Hash[Symbol, String]).void }
+  def update_attributes_by_source(source_id, args)
     unprefixed = source_id.delete_prefix('hydrus:')
     # Without this, the database connection pool gets exhausted
     ActiveRecord::Base.connection_pool.with_connection do
@@ -28,7 +35,7 @@ class AssignPidJob
                  Collection.find(unprefixed.delete_prefix('collection-'))
                end
 
-      object.update(druid: druid)
+      object.update(args)
 
       return unless object.is_a? Work
 
