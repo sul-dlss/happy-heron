@@ -27,3 +27,10 @@ import 'simple-datatables'
 // const imagePath = (name) => images(name, true)
 
 require('modules/validate-forms')
+
+window.addEventListener("turbolinks:before-cache", function() {
+    // Close modal window
+    document.querySelectorAll('div.modal').forEach(function (elem) {
+        bootstrap.Modal.getInstance(elem).hide()
+    })
+})
