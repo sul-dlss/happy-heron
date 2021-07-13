@@ -28,9 +28,9 @@ import 'simple-datatables'
 
 require('modules/validate-forms')
 
-window.addEventListener("turbolinks:before-cache", function() {
+window.addEventListener("turbo:before-cache", function() {
     // Close modal window
     document.querySelectorAll('div.modal').forEach(function (elem) {
-        bootstrap.Modal.getInstance(elem).hide()
+        bootstrap.Modal.getInstance(elem)?.hide()
     })
 })
