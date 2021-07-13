@@ -6,7 +6,7 @@ RSpec.describe AssignPidJob do
   let(:message) { { model: model }.to_json }
   let(:druid) { 'druid:bc123df4567' }
 
-  context 'with a work' do
+  context "with a work that doesn't have a doi" do
     let(:model) do
       Cocina::Models::DRO.new(externalIdentifier: druid,
                               type: Cocina::Models::Vocab.object,
@@ -27,6 +27,32 @@ RSpec.describe AssignPidJob do
     it 'updates the druid' do
       described_class.new.work(message)
       expect(work.reload.druid).to eq druid
+    end
+  end
+
+  context 'with a work that has a doi' do
+    let(:model) do
+      Cocina::Models::DRO.new(externalIdentifier: druid,
+                              type: Cocina::Models::Vocab.object,
+                              label: 'my repository object',
+                              version: 1,
+                              access: {},
+                              administrative: { hasAdminPolicy: 'druid:xx999xx9999' },
+                              identification: {
+                                sourceId: "hydrus:object-#{work.id}",
+                                doi: '10.25740/bc123df4567'
+                              },
+                              structural: {
+                                contains: []
+                              })
+    end
+    let(:work) { create(:work_version_with_work, collection: collection, state: 'depositing').work }
+    let(:collection) { create(:collection_version_with_collection).collection }
+
+    it 'updates the druid' do
+      described_class.new.work(message)
+      expect(work.reload.druid).to eq druid
+      expect(work.doi).to eq '10.25740/bc123df4567'
     end
   end
 
