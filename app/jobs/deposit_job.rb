@@ -24,7 +24,9 @@ class DepositJob < BaseDepositJob
   def create_or_update(new_request_dro)
     case new_request_dro
     when Cocina::Models::RequestDRO
-      SdrClient::Deposit::CreateResource.run(accession: !arguments.first.reserving_purl?,
+      work_version = arguments.first
+      SdrClient::Deposit::CreateResource.run(accession: !work_version.reserving_purl?,
+                                             assign_doi: work_version.work.assign_doi?,
                                              metadata: new_request_dro,
                                              logger: Rails.logger,
                                              connection: connection)
