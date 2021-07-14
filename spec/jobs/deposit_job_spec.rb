@@ -52,7 +52,18 @@ RSpec.describe DepositJob do
 
       it 'calls CreateResource.run with false for the accession param' do
         described_class.perform_now(work_version)
-        expect(SdrClient::Deposit::CreateResource).to have_received(:run).with(a_hash_including(accession: false))
+        expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+          .with(a_hash_including(accession: false, assign_doi: false))
+      end
+    end
+
+    context 'when the deposit wants a doi' do
+      let(:work) { build(:work, collection: collection, assign_doi: true) }
+
+      it 'calls CreateResource.run with true for the assign_doi param' do
+        described_class.perform_now(work_version)
+        expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+          .with(a_hash_including(accession: true, assign_doi: true))
       end
     end
   end
