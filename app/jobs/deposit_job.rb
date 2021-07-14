@@ -7,39 +7,58 @@ class DepositJob < BaseDepositJob
 
   sig { params(work_version: WorkVersion).void }
   def perform(work_version)
-    deposit(request_dro: RequestGenerator.generate_model(work_version: work_version),
-            blobs: work_version.attached_files.map { |af| af.file.attachment.blob })
+    login_result = login
+    raise login_result.failure unless login_result.success?
+
+    updated_cocina_model = upload_files(work_version)
+
+    case updated_cocina_model
+    when Cocina::Models::RequestDRO
+      create(updated_cocina_model,
+             accession: !work_version.reserving_purl?,
+             assign_doi: work_version.work.assign_doi?)
+    when Cocina::Models::DRO
+      update(updated_cocina_model)
+    end
   end
 
   private
 
+  sig { params(work_version: WorkVersion).returns(T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO)) }
+  def upload_files(work_version)
+    cocina_model = RequestGenerator.generate_model(work_version: work_version)
+
+    upload_responses = upload_responses(collect_blobs(work_version))
+    SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: cocina_model,
+                                                            upload_responses: upload_responses)
+  end
+
   sig do
-    params(request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO), blobs: T::Array[ActiveStorage::Blob])
-      .returns(Integer)
+    params(work_version: WorkVersion).returns(T::Array[ActiveStorage::Blob])
   end
-  def deposit(request_dro:, blobs:)
-    login_result = login
-    raise login_result.failure unless login_result.success?
-
-    new_request_dro = SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,
-                                                                              upload_responses: upload_responses(blobs))
-
-    create_or_update(new_request_dro)
+  def collect_blobs(work_version)
+    work_version.attached_files.map { |af| af.file.attachment.blob }
   end
 
-  sig { params(new_request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO)).returns(Integer) }
-  def create_or_update(new_request_dro)
-    case new_request_dro
-    when Cocina::Models::RequestDRO
-      SdrClient::Deposit::CreateResource.run(accession: !arguments.first.reserving_purl?,
-                                             metadata: new_request_dro,
-                                             logger: Rails.logger,
-                                             connection: connection)
-    when Cocina::Models::DRO
-      SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
-                                             logger: Rails.logger,
-                                             connection: connection)
-    end
+  sig do
+    params(request_dro: Cocina::Models::RequestDRO,
+           accession: T::Boolean,
+           assign_doi: T::Boolean).returns(Integer)
+  end
+  # Accession is set if true if this is a deposit and false if this is registering a DRUID
+  def create(request_dro, accession:, assign_doi:)
+    SdrClient::Deposit::CreateResource.run(accession: accession,
+                                           assign_doi: assign_doi,
+                                           metadata: request_dro,
+                                           logger: Rails.logger,
+                                           connection: connection)
+  end
+
+  sig { params(request_dro: Cocina::Models::DRO).returns(Integer) }
+  def update(request_dro)
+    SdrClient::Deposit::UpdateResource.run(metadata: request_dro,
+                                           logger: Rails.logger,
+                                           connection: connection)
   end
 
   sig { params(blobs: T::Array[ActiveStorage::Blob]).returns(T::Array[SdrClient::Deposit::Files::DirectUploadRequest]) }
