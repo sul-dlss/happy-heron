@@ -1,5 +1,7 @@
 import { Controller } from "stimulus"
 
+// This must be wrapped around the WorkTypeModalComponent because that renders
+// all of the targets that this script expects.
 export default class extends Controller {
   static targets = [
     "form", "template", "otherTemplate", "subtype", "area", "templateHeader",

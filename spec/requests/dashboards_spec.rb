@@ -100,6 +100,8 @@ RSpec.describe 'Dashboard requests' do
     let(:work_version6) do
       create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6)
     end
+    let(:work7) { create(:work, depositor: user, collection: collection) }
+    let(:work_version7) { create(:work_version, state: 'purl_reserved', title: 'I am reserved purl', work: work6) }
 
     before do
       create(:collection_version_with_collection, collection: collection)
@@ -110,6 +112,7 @@ RSpec.describe 'Dashboard requests' do
       work4.update(head: work_version4)
       work5.update(head: work_version5)
       work6.update(head: work_version6)
+      work7.update(head: work_version7)
 
       sign_in user
     end
@@ -121,6 +124,7 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include('I am a first draft')
       expect(response.body).to include('I am a version draft')
       expect(response.body).to include('I am rejected')
+      expect(response.body).to include('I am reserved purl')
       expect(response.body).not_to include('I am pending approval')
     end
   end

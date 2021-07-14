@@ -24,7 +24,7 @@ class DashboardsController < ApplicationController
                                       .includes('collection_versions')
                                       .order('collection_versions.name'), as: :deposit),
       approvals: WorkVersion.awaiting_review_by(current_user),
-      in_progress: WorkVersion.with_state(:first_draft, :version_draft, :rejected)
+      in_progress: WorkVersion.with_state(:first_draft, :version_draft, :rejected, :purl_reserved)
                      .joins(:work)
                      .where('works.depositor' => current_user),
       collection_managers_in_progress: CollectionVersion.with_state(:first_draft, :version_draft)
