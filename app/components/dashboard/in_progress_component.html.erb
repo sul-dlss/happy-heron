@@ -1,4 +1,8 @@
 <section class="mb-5" id="deposits-in-progress">
-  <header>Deposits in progress</header>
-  <%= render Dashboard::InProgressRowComponent.with_collection(in_progress) %>
+  <button class="btn collapse-header" data-bs-toggle="collapse" data-bs-target="#in-progress-list" role="button" aria-expanded="true" aria-controls="in-progress-list">
+    Deposits in progress
+  </button>
+  <ul id="in-progress-list" class="show">
+    <%= render Dashboard::InProgressRowComponent.with_collection(in_progress) %>
+  </ul>
 </section>
