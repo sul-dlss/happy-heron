@@ -12,7 +12,8 @@ class DashboardPresenter
            collections: ActiveRecord::Relation,
            collection_managers_in_progress: ActiveRecord::Relation).void
   end
-  def initialize(just_signed_in:, in_progress:, approvals:, collections:, collection_managers_in_progress:)
+  def initialize(just_signed_in:, in_progress:, approvals:, collections:,
+                 collection_managers_in_progress:)
     @just_signed_in = just_signed_in
     @in_progress = in_progress
     @approvals = approvals
@@ -37,6 +38,6 @@ class DashboardPresenter
 
   sig { returns(T.nilable(T::Boolean)) }
   def show_popup?
-    @just_signed_in && in_progress.any?
+    @just_signed_in && @in_progress.any? { |deposit| !deposit.purl_reserved? }
   end
 end
