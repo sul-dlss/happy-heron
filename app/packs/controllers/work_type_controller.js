@@ -1,5 +1,7 @@
 import { Controller } from "stimulus"
 
+// Opens the modal for the user to select a work type and subtypes when they
+// indicate they would like to start a new deposit.
 // This must be wrapped around the WorkTypeModalComponent because that renders
 // all of the targets that this script expects.
 export default class extends Controller {
@@ -10,7 +12,7 @@ export default class extends Controller {
   ]
 
   // Sets the form in the popup to use the action in the data-destination attribute
-  set_collection(event) {
+  setCollection(event) {
     event.preventDefault()
     // Use currentTarget (instead of target) because it gets the element with the Stimulus data attributes. Useful
     // when the data attributes and Stimulus action are defined on an element that wraps other elements. E.g. when an
