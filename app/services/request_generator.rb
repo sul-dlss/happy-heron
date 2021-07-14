@@ -17,8 +17,8 @@ class RequestGenerator
 
   sig { returns(T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO)) }
   def generate_model
-    if work_version.work.druid
-      Cocina::Models::DRO.new(model_attributes.merge(externalIdentifier: work_version.work.druid), false, false)
+    if druid
+      Cocina::Models::DRO.new(model_attributes.merge(externalIdentifier: druid), false, false)
     else
       Cocina::Models::RequestDRO.new(model_attributes, false, false)
     end
@@ -28,6 +28,9 @@ class RequestGenerator
 
   attr_reader :work_version
 
+  delegate :work, to: :work_version
+  delegate :druid, to: :work
+
   sig { returns(Hash) }
   def model_attributes
     {
@@ -36,15 +39,21 @@ class RequestGenerator
         hasAdminPolicy: Settings.h2.hydrus_apo,
         partOfProject: Settings.h2.project_tag
       },
-      identification: {
-        sourceId: "hydrus:object-#{work_version.work.id}" # TODO: what should this be?
-      },
+      identification: identification,
       structural: structural,
       label: work_version.title,
       type: cocina_type,
       description: DescriptionGenerator.generate(work_version: work_version),
       version: work_version.version
     }
+  end
+
+  sig { returns(Hash) }
+  def identification
+    {
+      sourceId: "hydrus:object-#{work.id}",
+      doi: work.doi
+    }.compact
   end
 
   sig { returns(String) }
