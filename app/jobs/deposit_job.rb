@@ -14,7 +14,9 @@ class DepositJob < BaseDepositJob
 
     case updated_cocina_model
     when Cocina::Models::RequestDRO
-      create(updated_cocina_model, accession: !work_version.reserving_purl?)
+      create(updated_cocina_model,
+             accession: !work_version.reserving_purl?,
+             assign_doi: work_version.work.assign_doi?)
     when Cocina::Models::DRO
       update(updated_cocina_model)
     end
@@ -40,11 +42,13 @@ class DepositJob < BaseDepositJob
 
   sig do
     params(request_dro: Cocina::Models::RequestDRO,
-           accession: T::Boolean).returns(Integer)
+           accession: T::Boolean,
+           assign_doi: T::Boolean).returns(Integer)
   end
   # Accession is set if true if this is a deposit and false if this is registering a DRUID
-  def create(request_dro, accession:)
+  def create(request_dro, accession:, assign_doi:)
     SdrClient::Deposit::CreateResource.run(accession: accession,
+                                           assign_doi: assign_doi,
                                            metadata: request_dro,
                                            logger: Rails.logger,
                                            connection: connection)
