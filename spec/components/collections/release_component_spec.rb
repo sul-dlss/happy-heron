@@ -40,4 +40,37 @@ RSpec.describe Collections::ReleaseComponent, type: :component do
       expect(rendered.css('table').to_html).to include('2 years from date of deposit')
     end
   end
+
+  context 'when displaying a collection with no DOI assignment' do
+    let(:collection) do
+      build_stubbed(:collection, doi_option: 'no', head: collection_version)
+    end
+    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+
+    it 'renders the release component with the DOI assignment message' do
+      expect(rendered.css('table').to_html).to include('Not assigned')
+    end
+  end
+
+  context 'when displaying a collection with DOI assignment' do
+    let(:collection) do
+      build_stubbed(:collection, doi_option: 'yes', head: collection_version)
+    end
+    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+
+    it 'renders the release component with the DOI assignment message' do
+      expect(rendered.css('table').to_html).to include('Automatically assigned')
+    end
+  end
+
+  context 'when displaying a collection with depositor selected DOI assignment' do
+    let(:collection) do
+      build_stubbed(:collection, doi_option: 'depositor-selects', head: collection_version)
+    end
+    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+
+    it 'renders the release component with the DOI assignment message' do
+      expect(rendered.css('table').to_html).to include('Depositor selects')
+    end
+  end
 end
