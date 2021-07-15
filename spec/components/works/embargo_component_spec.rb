@@ -18,6 +18,8 @@ RSpec.describe Works::EmbargoComponent do
   it 'renders the component' do
     expect(rendered.to_html)
       .to include('Settings for release date and download access')
+    expect(rendered.to_html)
+      .to include('DOI assignment')
   end
 
   context 'when user can choose availability' do

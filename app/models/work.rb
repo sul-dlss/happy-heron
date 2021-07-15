@@ -46,6 +46,10 @@ class Work < ApplicationRecord
     head&.deposited? && head.embargo_date.present? && head.embargo_date < Time.zone.today
   end
 
+  def assign_doi?
+    collection.doi_option == 'yes' || (collection.doi_option == 'depositor-selects' && assign_doi)
+  end
+
   delegate :name, to: :depositor, prefix: true
   delegate :purl_reservation?, to: :head
 
