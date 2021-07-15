@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AccessGenerator do
+RSpec.describe CocinaGenerator::AccessGenerator do
   let(:model) { described_class.generate(work_version: work_version) }
   let(:license_uri) { License.find('CC0-1.0').uri }
 

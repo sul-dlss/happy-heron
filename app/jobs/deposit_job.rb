@@ -7,7 +7,7 @@ class DepositJob < BaseDepositJob
 
   sig { params(work_version: WorkVersion).void }
   def perform(work_version)
-    deposit(request_dro: RequestGenerator.generate_model(work_version: work_version),
+    deposit(request_dro: CocinaGenerator::DROGenerator.generate_model(work_version: work_version),
             blobs: work_version.attached_files.map { |af| af.file.attachment.blob })
   end
 

@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ContributorsGenerator do
+RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
   subject(:cocina_model) { described_class.generate(work_version: work_version) }
 
   let(:marc_relator_source) do

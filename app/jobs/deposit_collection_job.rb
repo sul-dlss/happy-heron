@@ -7,7 +7,7 @@ class DepositCollectionJob < BaseDepositJob
 
   sig { params(collection_version: CollectionVersion).void }
   def perform(collection_version)
-    deposit(request_dro: CollectionGenerator.generate_model(collection_version: collection_version))
+    deposit(request_dro: CocinaGenerator::CollectionGenerator.generate_model(collection_version: collection_version))
   rescue StandardError => e
     Honeybadger.notify(e)
   end

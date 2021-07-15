@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CollectionGenerator do
+RSpec.describe CocinaGenerator::CollectionGenerator do
   let(:model) { described_class.generate_model(collection_version: collection_version) }
   let(:project_tag) { Settings.h2.project_tag }
 
