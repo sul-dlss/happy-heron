@@ -155,6 +155,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         access: 'stanford',
         citation: 'Lorem ipsum',
         subtype: %w[foo bar],
+        assign_doi: 'false',
         attached_files_attributes: { '0' =>
                       { 'label' => '', '_destroy' => 'false', 'hide' => '0',
                         'file' => 'eyJfcmFpbHMiOnsibWVzc2FnZS...' } }
@@ -175,7 +176,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
                            'keywords modified, work subtypes modified, ' \
                            'citation modified, embargo modified, ' \
                            'visibility modified, license modified, ' \
-                           'files added/removed, file description changed'
+                           'files added/removed, file description changed, assign DOI modified'
     end
   end
 end

@@ -1,0 +1,31 @@
+<fieldset class="mb-5">
+  <legend class="h5">
+    DOI assignment
+
+  </legend>
+  <%= link_to 'What is a DOI?', 'https://library.stanford.edu/data-services/doi-services' %>
+  <div class="mb-3 inner-container">
+    <% if doi %>
+      <p>The DOI assigned to this work is <%= link_to doi, doi %>.</p>
+    <% elsif collection_doi_option == 'yes' %>
+      <p>A DOI will be assigned.</p>
+    <% elsif collection_doi_option == 'no' %>
+      <p>A DOI will not be assigned.</p>
+    <% else %>
+      <div class="row">
+        <%= form.label :assign_doi, 'Do you want a DOI to be assigned to your deposit?', class: "form-check-label col-sm-5" %>
+
+        <div class="col-sm-2">
+          <div class="form-check form-switch">
+            <%= form.check_box :assign_doi,
+                               {
+                                 class: 'form-check-input'
+                               },
+                               'true', 'false' %>
+          </div>
+        </div>
+      </div>
+
+  <% end %>
+  </div>
+</fieldset>
