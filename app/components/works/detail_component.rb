@@ -9,7 +9,7 @@ module Works
 
     attr_reader :work_version
 
-    delegate :purl, :collection, :events, :doi, to: :work
+    delegate :purl, :collection, :events, :doi, :assign_doi, to: :work
 
     delegate :work_type, :contact_emails, :abstract, :citation,
              :attached_files, :related_works, :related_links,
@@ -30,6 +30,14 @@ module Works
 
       link = "https://doi.org/#{doi}"
       link_to link, link
+    end
+
+    def doi_setting
+      return 'DOI assigned (see above)' if doi
+      return 'DOI not assigned' if assign_doi
+      return 'Opted out of receiving a DOI' if collection.doi_option == 'depositor-selects'
+
+      'DOI will not be assigned'
     end
 
     def depositor
