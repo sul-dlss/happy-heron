@@ -18,6 +18,8 @@ RSpec.describe Works::EmbargoComponent do
   it 'renders the component' do
     expect(rendered.to_html)
       .to include('Manage release of this deposit for discovery and download after publication')
+    expect(rendered.to_html)
+      .to include('DOI assignment')
   end
 
   context 'when user can choose availablity' do

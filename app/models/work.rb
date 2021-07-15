@@ -41,6 +41,11 @@ class Work < ApplicationRecord
     collection.head.name
   end
 
+  sig { returns(T::Boolean) }
+  def assign_doi?
+    collection.doi_option == 'yes' || (collection.doi_option == 'depositor-selects' && assign_doi)
+  end
+
   delegate :name, to: :depositor, prefix: true
   delegate :purl_reservation?, to: :head
 

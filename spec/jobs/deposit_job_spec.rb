@@ -15,11 +15,11 @@ RSpec.describe DepositJob do
     )
   end
   let(:attached_file) { build(:attached_file) }
-  let(:work) { build(:work, collection: collection) }
+  let(:work) { build(:work, collection: collection, assign_doi: false) }
   let(:work_version) do
     build(:work_version, id: 8, work: work, attached_files: [attached_file])
   end
-  let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
+  let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
 
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
