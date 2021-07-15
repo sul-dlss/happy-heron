@@ -4,23 +4,12 @@
   <% end %>
   <div class="row">
     <div class="col"> </div>
-    <div class="col-4">
+    <div class="col-6" data-controller="work-type purl-reservation">
       <%= edit_button %>
-      <% if can_create_work? %>
-        <span class="deposit-button" data-controller="work-type">
-          <%= button_tag '+ Deposit to this collection',
-                data: {
-                  destination: new_collection_work_path(collection),
-                  bs_toggle: 'modal',
-                  bs_target: '#workTypeModal',
-                  action: "work-type#setCollection"
-                },
-                class: "btn btn-primary" %>
-
-          <%= render Works::WorkTypeModalComponent.new %>
-          <%= render CitationModalComponent.new %>
-        </span>
-      <% end %>
+      <%= helpers.turbo_frame_tag dom_id(collection, :deposit), src: deposit_button_collection_path(collection) %>
+      <%= render Works::WorkTypeModalComponent.new %>
+      <%= render Works::PurlReservationModalComponent.new %>
+      <%= render CitationModalComponent.new %>
     </div>
   </div>
   <span class="header-text"><%= name %></span>

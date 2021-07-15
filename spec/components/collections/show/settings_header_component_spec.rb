@@ -13,14 +13,18 @@ RSpec.describe Collections::Show::SettingsHeaderComponent, type: :component do
     it 'does not render the spinner and renders the edit link' do
       expect(rendered.to_html).not_to include 'fa-spinner'
       expect(rendered.css('a.btn').text).to eq 'Edit or Deposit'
-      expect(rendered.css('turbo-frame').first['src']).to eq "/collections/#{collection_id}/edit_link"
+    end
+
+    it 'renders turbo frames' do
+      expect(rendered.css('turbo-frame')[0]['src']).to eq "/collections/#{collection_id}/deposit_button"
+      expect(rendered.css('turbo-frame')[1]['src']).to eq "/collections/#{collection_id}/edit_link"
     end
   end
 
   context 'with a depositing collection' do
     let(:collection_version) { build_stubbed(:collection_version, :depositing) }
 
-    it 'does not render the spinner' do
+    it 'renders the spinner' do
       expect(rendered.to_html).to include 'Depositing'
       expect(rendered.to_html).to include 'fas fa-spinner fa-pulse'
       expect(rendered.css('a.btn')).to be_empty
