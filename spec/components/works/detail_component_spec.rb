@@ -74,6 +74,16 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
   end
 
+  context 'with a DOI' do
+    let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, work: work) }
+    let(:work) { build_stubbed(:work, doi: '10.25740/bc123df4567') }
+
+    it 'renders the doi_link' do
+      expect(rendered.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
+        .to include 'doi:10.25740/bc123df4567'
+    end
+  end
+
   describe '#created' do
     let(:work_version) { build_stubbed(:work_version, created_edtf: edtf) }
 
