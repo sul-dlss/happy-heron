@@ -45,6 +45,15 @@ module Collection::GeneratedAttributeMethods
   def default_license?; end
 
   sig { returns(T.nilable(String)) }
+  def doi_option; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def doi_option=(value); end
+
+  sig { returns(T::Boolean) }
+  def doi_option?; end
+
+  sig { returns(T.nilable(String)) }
   def druid; end
 
   sig { params(value: T.nilable(T.any(String, Symbol))).void }
