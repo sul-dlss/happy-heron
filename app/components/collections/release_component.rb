@@ -25,5 +25,17 @@ module Collections
         "depositor selects release date at no more than #{collection.release_duration} from date of deposit"
       end
     end
+
+    sig { returns(String) }
+    def doi_assignment
+      case collection.doi_option
+      when 'no'
+        'Not assigned'
+      when 'depositor-selects'
+        'Depositor selects'
+      else
+        'Automatically assigned'
+      end
+    end
   end
 end
