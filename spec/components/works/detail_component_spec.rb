@@ -94,6 +94,38 @@ RSpec.describe Works::DetailComponent, type: :component do
     it 'renders the doi_link' do
       expect(rendered.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
         .to include 'https://doi.org/10.25740/bc123df4567'
+      expect(rendered.to_html).to include 'DOI assigned (see above)'
+    end
+  end
+
+  describe 'DOI settings' do
+    context 'when DOI was requested' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, assign_doi: true) }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'DOI not assigned'
+      end
+    end
+
+    context 'when DOI was refused' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, assign_doi: false, collection: collection) }
+      let(:collection) { build_stubbed(:collection, doi_option: 'depositor-selects') }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'Opted out of receiving a DOI'
+      end
+    end
+
+    context "when collection doesn't permit DOIs" do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection) }
+      let(:collection) { build_stubbed(:collection, doi_option: 'no') }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'DOI will not be assigned'
+      end
     end
   end
 
