@@ -93,7 +93,7 @@ RSpec.describe Works::DetailComponent, type: :component do
 
     it 'renders the doi_link' do
       expect(rendered.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
-        .to include 'doi:10.25740/bc123df4567'
+        .to include 'https://doi.org/10.25740/bc123df4567'
     end
   end
 

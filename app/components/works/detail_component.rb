@@ -28,7 +28,8 @@ module Works
     def doi_link
       return unless doi
 
-      link_to "doi:#{doi}", "https://doi.org/#{doi}"
+      link = "https://doi.org/#{doi}"
+      link_to link, link
     end
 
     def depositor
