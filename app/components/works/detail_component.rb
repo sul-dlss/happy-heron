@@ -9,7 +9,7 @@ module Works
 
     attr_reader :work_version
 
-    delegate :purl, :collection, :events, to: :work
+    delegate :purl, :collection, :events, :doi, to: :work
 
     delegate :work_type, :contact_emails, :abstract, :citation,
              :attached_files, :related_works, :related_links,
@@ -23,6 +23,12 @@ module Works
       return '1 - initial version' if work_version.version == 1
 
       "#{work_version.version} - #{description}"
+    end
+
+    def doi_link
+      return unless doi
+
+      link_to "doi:#{doi}", "https://doi.org/#{doi}"
     end
 
     def depositor
