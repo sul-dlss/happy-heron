@@ -57,9 +57,8 @@ module Works
     def year_field
       number_field_tag "#{prefix}[published(1i)]", published_year,
                        data: {
-                         auto_citation_target: 'year',
                          date_validation_target: 'year',
-                         action: 'change->auto-citation#updateDisplay date-validation#change'
+                         action: 'date-validation#change'
                        },
                        id: "#{prefix}_published_year",
                        placeholder: 'year',

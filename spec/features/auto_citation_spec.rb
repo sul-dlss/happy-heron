@@ -45,13 +45,6 @@ RSpec.describe 'Automatically generate a citation', js: true do
 
       # Citation now is one year ahead of today
       expect(elem.value).to have_content "Scully, D. (#{Time.zone.today.year + 1})"
-
-      # Change the publication year
-      fill_in 'Publication year', with: 1996
-      blur_from 'Publication year'
-
-      # Citation now has publication year
-      expect(elem.value).to have_content 'Scully, D. (1996)'
     end
   end
 end
