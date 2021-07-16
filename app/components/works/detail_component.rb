@@ -12,7 +12,9 @@ module Works
     sig { returns(WorkVersion) }
     attr_reader :work_version
 
-    delegate :purl, :collection, :events, :doi, :assign_doi, to: :work
+    delegate :purl, :collection, :events, :doi, :assign_doi, :druid, to: :work
+
+    delegate :doi_option, to: :collection
 
     delegate :work_type, :contact_emails, :abstract, :citation,
              :attached_files, :related_works, :related_links,
@@ -29,19 +31,33 @@ module Works
       "#{work_version.version} - #{description}"
     end
 
-    def doi_link
-      return unless doi
+    def doi_value
+      # If there is a DOI, return a link to it.
+      return doi_link if doi
 
-      link = "https://doi.org/#{doi}"
-      link_to link, link
+      # If not assigning a DOI, return nothing.
+      return if doi_option == 'no'
+
+      # If possibly assigning a DOI and the PURL has been assigned, return possible DOI.
+      return doi_tbd if purl
+
+      # If assigning a DOI and PURL has not been assigned, return message.
+      return unless doi_option == 'yes' || (doi_option == 'depositor-selects' && assign_doi)
+
+      tag.em 'DOI will become available once the work has been deposited.'
     end
 
     def doi_setting
       return 'DOI assigned (see above)' if doi
-      return 'DOI not assigned' if assign_doi
-      return 'Opted out of receiving a DOI' if collection.doi_option == 'depositor-selects'
 
-      'DOI will not be assigned'
+      case doi_option
+      when 'depositor-selects'
+        assign_doi ? 'DOI not assigned' : 'Opted out of receiving a DOI'
+      when 'yes'
+        'DOI not assigned'
+      else # 'no'
+        'DOI will not be assigned'
+      end
     end
 
     def depositor
@@ -122,6 +138,15 @@ module Works
 
       # For example, "2020?/2021?" to "ca. 2020 - ca. 2021"
       edtf.sub(%r{/}, ' - ').gsub(/(\S+)\?/, 'ca. \1')
+    end
+
+    def doi_link
+      link = "https://doi.org/#{doi}"
+      link_to link, link
+    end
+
+    def doi_tbd
+      "The DOI for this item will be DOI:#{Settings.datacite.prefix}/#{druid.delete_prefix('druid:')} (if assigned)."
     end
   end
 end
