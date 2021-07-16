@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RequestGenerator do
+RSpec.describe CocinaGenerator::DROGenerator do
   let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
   let(:model) { described_class.generate_model(work_version: work_version) }
   let(:project_tag) { Settings.h2.project_tag }

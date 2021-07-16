@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FileGenerator do
+RSpec.describe CocinaGenerator::Structural::FileGenerator do
   let(:model) { described_class.generate(work_version: work_version, attached_file: attached_file) }
   let(:work_version) { build(:work_version) }
 

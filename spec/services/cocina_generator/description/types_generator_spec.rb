@@ -3,7 +3,7 @@
 
 require 'rails_helper'
 
-RSpec.describe TypesGenerator do
+RSpec.describe CocinaGenerator::Description::TypesGenerator do
   let(:work_version) { build(:work_version) }
 
   describe '.generate' do
