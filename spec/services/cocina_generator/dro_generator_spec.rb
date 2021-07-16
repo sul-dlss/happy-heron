@@ -225,7 +225,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
           note: [
             {
               value: 'test abstract',
-              type: 'summary'
+              type: 'abstract'
             },
             {
               value: 'test citation',
@@ -240,6 +240,65 @@ RSpec.describe CocinaGenerator::DROGenerator do
         identification: {
           sourceId: "hydrus:object-#{work_version.work.id}",
           doi: '10.800/bk123gh4567'
+        },
+        structural: {
+          contains: [],
+          isMemberOf: [collection.druid]
+        }
+      }
+    end
+
+    it 'generates the model' do
+      expect(model.to_h).to eq expected_model
+    end
+  end
+
+  context 'when a doi is requested' do
+    let(:work_version) do
+      build(:work_version, :version_draft, work_type: 'text', title: 'Test title', work: work)
+    end
+    let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection: collection) }
+
+    let(:expected_model) do
+      {
+        externalIdentifier: 'druid:bk123gh4567',
+        type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+        label: 'Test title',
+        version: 1,
+        access: {
+          access: 'world',
+          download: 'world',
+          license: license_uri,
+          useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+        },
+        administrative: {
+          hasAdminPolicy: 'druid:zx485kb6348',
+          partOfProject: project_tag
+        },
+        description: {
+          title: [
+            {
+              value: 'Test title'
+            }
+          ],
+          note: [
+            {
+              value: 'test abstract',
+              type: 'abstract'
+            },
+            {
+              value: 'test citation',
+              type: 'preferred citation'
+            }
+          ],
+          form: types_form,
+          access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
+          purl: 'https://purl.stanford.edu/bk123gh4567',
+          adminMetadata: admin_metadata
+        },
+        identification: {
+          sourceId: "hydrus:object-#{work_version.work.id}",
+          doi: '10.80343/bk123gh4567'
         },
         structural: {
           contains: [],
