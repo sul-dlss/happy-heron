@@ -52,8 +52,18 @@ class RequestGenerator
   def identification
     {
       sourceId: "hydrus:object-#{work.id}",
-      doi: work.doi
+      doi: doi
     }.compact
+  end
+
+  sig { returns(T.nilable(String)) }
+  # If the work already has a DOI, just return it.
+  # If the user decides they want a DOI minted on a new version, we need to set it here.
+  def doi
+    return work.doi if work.doi
+    return if work_version.first_draft? || !work.assign_doi?
+
+    "#{Settings.datacite.prefix}/#{work.druid.delete_prefix('druid:')}"
   end
 
   sig { returns(String) }
