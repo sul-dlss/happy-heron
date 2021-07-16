@@ -74,14 +74,56 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
   end
 
-  context 'with a DOI' do
-    let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, work: work) }
-    let(:work) { build_stubbed(:work, doi: '10.25740/bc123df4567') }
+  describe 'DOI' do
+    context 'with a DOI' do
+      let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, work: work) }
+      let(:work) { build_stubbed(:work, doi: '10.25740/bc123df4567') }
 
-    it 'renders the doi_link' do
-      expect(rendered.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
-        .to include 'https://doi.org/10.25740/bc123df4567'
-      expect(rendered.to_html).to include 'DOI assigned (see above)'
+      it 'renders the doi_link' do
+        expect(rendered.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
+          .to include 'https://doi.org/10.25740/bc123df4567'
+        expect(rendered.to_html).to include 'DOI assigned (see above)'
+      end
+    end
+
+    context 'with reserved PURL and collection automatically assigns DOI' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
+      let(:collection) { build_stubbed(:collection, doi_option: 'yes') }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'The DOI for this item will be DOI:10.80343/bc123df4567'
+      end
+    end
+
+    context 'with reserved PURL and collection allows depositor to select' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
+      let(:collection) { build_stubbed(:collection, doi_option: 'depositor-selects') }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'The DOI for this item will be DOI:10.80343/bc123df4567'
+      end
+    end
+
+    context 'without a reserved PURL and collection automatically assigns DOI' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false) }
+      let(:collection) { build_stubbed(:collection, doi_option: 'yes') }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'DOI will become available once the work has been deposited.'
+      end
+    end
+
+    context 'without a reserved PURL and depositor selects to assign' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection, assign_doi: true) }
+      let(:collection) { build_stubbed(:collection, doi_option: 'depositor-selects') }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'DOI will become available once the work has been deposited.'
+      end
     end
   end
 
@@ -107,11 +149,21 @@ RSpec.describe Works::DetailComponent, type: :component do
 
     context "when collection doesn't permit DOIs" do
       let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, collection: collection) }
+      let(:work) { build_stubbed(:work, collection: collection, assign_doi: true) }
       let(:collection) { build_stubbed(:collection, doi_option: 'no') }
 
       it 'renders the doi setting' do
         expect(rendered.to_html).to include 'DOI will not be assigned'
+      end
+    end
+
+    context 'when collection automatically assigns DOI' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false) }
+      let(:collection) { build_stubbed(:collection, doi_option: 'yes') }
+
+      it 'renders the doi setting' do
+        expect(rendered.to_html).to include 'DOI not assigned'
       end
     end
   end
