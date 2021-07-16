@@ -10,6 +10,9 @@ accountws:
 
 redis_url: redis://localhost:6379/
 
+datacite:
+  prefix: '10.80343'
+
 # The HTTP_X_REMOTE_USER variable comes from our Apache config behind a reverse
 # proxy, where we can't set or build upon REMOTE_USER. Instead, we set the
 # X-Remote-User header and that is translated to the HTTP_X_REMOTE_USER
