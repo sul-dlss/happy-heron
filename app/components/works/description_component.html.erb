@@ -36,20 +36,23 @@
     <p>This is the text that others can use when they want to cite this deposit. We highly recommend that you provide the text of that citation here to make it easier for them to cite your work and give you proper credit.</p>
 
     <div class="mb-3 row">
-      <%= form.label :default_citation, 'Use default citation', class: "form-check-label col-sm-2" %>
+      <%= form.label :default_citation, 'Use auto-generated citation', class: "form-check-label col-sm-2" %>
 
       <div class="col-sm-3">
-        <div class="form-check form-switch">
+        <label class="switch" aria-label="Use auto-generated citation">
           <%= form.check_box :default_citation,
                 {
                   data: {
                     action: 'change->auto-citation#switchChanged',
                     auto_citation_target: 'switch'
-                  },
-                  class: 'form-check-input'
+                  }
                 },
                 'true', 'false' %>
-        </div>
+          <div class="slider round">
+            <span class="on">Yes</span>
+            <span class="off">No</span>
+          </div>
+        </label>
       </div>
     </div>
     <div class="mb-3 row">
