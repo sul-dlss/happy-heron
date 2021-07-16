@@ -84,9 +84,9 @@ module Works
       Array(work_version.subtype).join(', ')
     end
 
-    sig { returns(String) }
+    sig { returns(T::Array[String]) }
     def keywords
-      work_version.keywords.map(&:label).join(', ')
+      work_version.keywords.map(&:label)
     end
 
     sig { returns(T::Boolean) }
