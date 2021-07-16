@@ -614,7 +614,7 @@ CREATE TABLE public.works (
     depositor_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    assign_doi boolean DEFAULT false NOT NULL,
+    assign_doi boolean DEFAULT true NOT NULL,
     doi character varying
 );
 
@@ -1292,6 +1292,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210608161622'),
 ('20210616201626'),
 ('20210709182654'),
-('20210709184325');
+('20210709184325'),
+('20210715161256');
 
 

@@ -31,6 +31,7 @@ class DraftWorkForm < Reform::Form
     self.release = embargo_date.present? ? 'embargo' : 'immediate' if release.blank?
   end)
   property :embargo_date, embargo_date: true, on: :work_version
+  property :assign_doi, on: :work
 
   validates_with EmbargoDateParts,
                  if: proc { |form| form.user_can_set_availability? && form.release == 'embargo' }

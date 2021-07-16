@@ -17,7 +17,8 @@ class WorkVersionEventDescriptionBuilder
     [
       title, abstract, contact_email, authors, contributors, related_links,
       related_works, publication_date, created_date, keywords, subtype,
-      citation, embargo, access, license, files, file_visibility, file_description
+      citation, embargo, access, license, files, file_visibility, file_description,
+      assign_doi
     ].compact.join(', ')
   end
 
@@ -104,5 +105,9 @@ class WorkVersionEventDescriptionBuilder
 
   def related_works
     'related works modified' if form.changed?('related_works')
+  end
+
+  def assign_doi
+    'assign DOI modified' if form.changed?(:assign_doi)
   end
 end
