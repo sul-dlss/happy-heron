@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/redis/all/redis.rbi
 #
-# redis-4.2.5
+# redis-4.3.1
 
 class Redis
   def _bpop(cmd, args, &blk); end
@@ -15,12 +15,12 @@ class Redis
   def _eval(cmd, args); end
   def _exists(*keys); end
   def _geoarguments(*args, options: nil, sort: nil, count: nil); end
-  def _scan(command, cursor, args, match: nil, count: nil, &block); end
+  def _scan(command, cursor, args, match: nil, count: nil, type: nil, &block); end
   def _subscription(method, timeout, channels, block); end
   def _xread(args, keys, ids, blocking_timeout_msec); end
   def append(key, value); end
   def asking; end
-  def auth(password); end
+  def auth(*args); end
   def bgrewriteaof; end
   def bgsave; end
   def bitcount(key, start = nil, stop = nil); end
@@ -95,7 +95,7 @@ class Redis
   def lindex(key, index); end
   def linsert(key, where, pivot, value); end
   def llen(key); end
-  def lpop(key); end
+  def lpop(key, count = nil); end
   def lpush(key, value); end
   def lpushx(key, value); end
   def lrange(key, start, stop); end
@@ -137,7 +137,7 @@ class Redis
   def rename(old_name, new_name); end
   def renamenx(old_name, new_name); end
   def restore(key, ttl, serialized_value, replace: nil); end
-  def rpop(key); end
+  def rpop(key, count = nil); end
   def rpoplpush(source, destination); end
   def rpush(key, value); end
   def rpushx(key, value); end
@@ -386,6 +386,7 @@ class Redis::Client
   def reconnect; end
   def scheme; end
   def timeout; end
+  def username; end
   def with_reconnect(val = nil); end
   def with_socket_timeout(timeout); end
   def without_reconnect(&blk); end

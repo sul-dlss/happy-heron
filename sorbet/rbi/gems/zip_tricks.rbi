@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/zip_tricks/all/zip_tricks.rbi
 #
-# zip_tricks-5.5.0
+# zip_tricks-5.6.0
 
 class ZipTricks::BlockDeflate
   def self.deflate_chunk(bytes, level: nil); end
@@ -188,6 +188,8 @@ class Anonymous_Struct_93 < Struct
   def storage_mode=(_); end
   def uncompressed_size; end
   def uncompressed_size=(_); end
+  def unix_permissions; end
+  def unix_permissions=(_); end
   def use_data_descriptor; end
   def use_data_descriptor=(_); end
 end
@@ -198,10 +200,10 @@ class ZipTricks::Streamer::Entry < Anonymous_Struct_93
 end
 class ZipTricks::Streamer
   def <<(binary_data); end
-  def add_deflated_entry(filename:, modification_time: nil, compressed_size: nil, uncompressed_size: nil, crc32: nil, use_data_descriptor: nil); end
-  def add_empty_directory(dirname:, modification_time: nil); end
-  def add_file_and_write_local_header(filename:, modification_time:, crc32:, storage_mode:, compressed_size:, uncompressed_size:, use_data_descriptor:); end
-  def add_stored_entry(filename:, modification_time: nil, size: nil, crc32: nil, use_data_descriptor: nil); end
+  def add_deflated_entry(filename:, modification_time: nil, compressed_size: nil, uncompressed_size: nil, crc32: nil, unix_permissions: nil, use_data_descriptor: nil); end
+  def add_empty_directory(dirname:, modification_time: nil, unix_permissions: nil); end
+  def add_file_and_write_local_header(filename:, modification_time:, crc32:, storage_mode:, compressed_size:, uncompressed_size:, use_data_descriptor:, unix_permissions:); end
+  def add_stored_entry(filename:, modification_time: nil, size: nil, crc32: nil, unix_permissions: nil, use_data_descriptor: nil); end
   def close; end
   def create_writer; end
   def initialize(writable, writer: nil, auto_rename_duplicate_filenames: nil); end
@@ -212,8 +214,8 @@ class ZipTricks::Streamer
   def update_last_entry_and_write_data_descriptor(crc32:, compressed_size:, uncompressed_size:); end
   def verify_offsets!; end
   def write(binary_data); end
-  def write_deflated_file(filename, modification_time: nil); end
-  def write_stored_file(filename, modification_time: nil); end
+  def write_deflated_file(filename, modification_time: nil, unix_permissions: nil); end
+  def write_stored_file(filename, modification_time: nil, unix_permissions: nil); end
 end
 class ZipTricks::Streamer::EntryBodySizeMismatch < StandardError
 end
@@ -257,12 +259,13 @@ class ZipTricks::WriteBuffer
   def initialize(writable, buffer_size); end
 end
 class ZipTricks::ZipWriter
+  def generate_external_attrs(unix_permissions_int, file_type_int); end
   def pack_array(values_to_packspecs); end
   def timestamp_extra_for_central_directory_entry(mtime); end
   def timestamp_extra_for_local_file_header(mtime); end
   def to_binary_dos_date(t); end
   def to_binary_dos_time(t); end
-  def write_central_directory_file_header(io:, local_file_header_location:, gp_flags:, storage_mode:, compressed_size:, uncompressed_size:, mtime:, crc32:, filename:); end
+  def write_central_directory_file_header(io:, local_file_header_location:, gp_flags:, storage_mode:, compressed_size:, uncompressed_size:, mtime:, crc32:, filename:, unix_permissions: nil); end
   def write_data_descriptor(io:, compressed_size:, uncompressed_size:, crc32:); end
   def write_end_of_central_directory(io:, start_of_central_directory_location:, central_directory_size:, num_files_in_archive:, comment: nil); end
   def write_local_file_header(io:, filename:, compressed_size:, uncompressed_size:, crc32:, gp_flags:, mtime:, storage_mode:); end

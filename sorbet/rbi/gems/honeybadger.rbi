@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/honeybadger/all/honeybadger.rbi
 #
-# honeybadger-4.8.0
+# honeybadger-4.9.0
 
 module Honeybadger
   def add_breadcrumb(*args, &block); end
@@ -559,7 +559,7 @@ class Honeybadger::Agent
   def self.instance=(instance); end
   def send_now(object); end
   def stop(force = nil); end
-  def track_deployment(env: nil, revision: nil, local_username: nil, repository: nil); end
+  def track_deployment(environment: nil, revision: nil, local_username: nil, repository: nil); end
   def validate_notify_opts!(opts); end
   def with_error_handling; end
   def with_rack_env(rack_env, &block); end
@@ -643,7 +643,7 @@ end
 module Honeybadger::Plugins::Sidekiq
 end
 class Honeybadger::Plugins::Sidekiq::Middleware
-  def call(worker, msg, queue); end
+  def call(_worker, _msg, _queue); end
 end
 module Honeybadger::Plugins::Shoryuken
 end

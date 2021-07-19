@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/factory_bot/all/factory_bot.rbi
 #
-# factory_bot-6.1.0
+# factory_bot-6.2.0
 
 module FactoryBot
   def self.aliases; end
@@ -249,7 +249,7 @@ class FactoryBot::Evaluator
   def initialize(build_strategy, overrides = nil); end
   def instance; end
   def instance=(arg0); end
-  def method_missing(method_name, *args, **kwargs, &block); end
+  def method_missing(method_name, *args, &block); end
   def respond_to_missing?(method_name, _include_private = nil); end
   def self.attribute_list; end
   def self.attribute_lists; end
@@ -406,6 +406,7 @@ class FactoryBot::Definition
   def define_constructor(&block); end
   def define_trait(trait); end
   def defined_traits; end
+  def error_with_definition_name(error); end
   def expand_enum_traits(klass); end
   def inherit_traits(new_traits); end
   def initialize(name, base_traits = nil); end
@@ -502,7 +503,7 @@ end
 class FactoryBot::Decorator::InvocationTracker < FactoryBot::Decorator
   def __invoked_methods__; end
   def initialize(component); end
-  def method_missing(name, *args, **kwargs, &block); end
+  def method_missing(name, *args, &block); end
 end
 class FactoryBot::Decorator::NewConstructor < FactoryBot::Decorator
   def initialize(component, build_class); end

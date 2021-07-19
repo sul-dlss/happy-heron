@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-performance/all/rubocop-performance.rbi
 #
-# rubocop-performance-1.10.2
+# rubocop-performance-1.11.4
 
 module RuboCop
 end
@@ -229,6 +229,15 @@ class RuboCop::Cop::Performance::InefficientHashSearch < RuboCop::Cop::Base
   def use_long_method; end
   extend RuboCop::Cop::AutoCorrector
 end
+class RuboCop::Cop::Performance::MapCompact < RuboCop::Cop::Base
+  def invoke_method_after_map_compact_on_same_line?(compact_node, chained_method); end
+  def map_compact(param0 = nil); end
+  def on_send(node); end
+  def remove_compact_method(corrector, compact_node); end
+  extend RuboCop::Cop::AutoCorrector
+  extend RuboCop::Cop::TargetRubyVersion
+  include RuboCop::Cop::RangeHelp
+end
 class RuboCop::Cop::Performance::MethodObjectAsBlock < RuboCop::Cop::Base
   def method_object_as_argument?(param0 = nil); end
   def on_block_pass(node); end
@@ -382,6 +391,14 @@ class RuboCop::Cop::Performance::ReverseFirst < RuboCop::Cop::Base
   def on_send(node); end
   def reverse_first_candidate?(param0 = nil); end
   extend RuboCop::Cop::AutoCorrector
+  include RuboCop::Cop::RangeHelp
+end
+class RuboCop::Cop::Performance::SelectMap < RuboCop::Cop::Base
+  def bad_method?(param0 = nil); end
+  def map_method_candidate(node); end
+  def offense_range(node, map_method); end
+  def on_send(node); end
+  extend RuboCop::Cop::TargetRubyVersion
   include RuboCop::Cop::RangeHelp
 end
 class RuboCop::Cop::Performance::Size < RuboCop::Cop::Base

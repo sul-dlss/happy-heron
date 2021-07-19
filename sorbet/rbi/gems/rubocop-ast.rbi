@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop-ast/all/rubocop-ast.rbi
 #
-# rubocop-ast-1.4.1
+# rubocop-ast-1.8.0
 
 module RuboCop
 end
@@ -806,7 +806,8 @@ module RuboCop::AST::MethodDispatchNode
   def block_node; end
   def command?(name); end
   def const_receiver?; end
-  def def_modifier?; end
+  def def_modifier(node = nil); end
+  def def_modifier?(node = nil); end
   def dot?; end
   def double_colon?; end
   def implicit_call?; end
@@ -910,6 +911,7 @@ class RuboCop::AST::BreakNode < RuboCop::AST::Node
   include RuboCop::AST::ParameterizedNode::WrappedArguments
 end
 class RuboCop::AST::CaseMatchNode < RuboCop::AST::Node
+  def branches; end
   def each_in_pattern(&block); end
   def else?; end
   def else_branch; end
@@ -1006,6 +1008,12 @@ class RuboCop::AST::IfNode < RuboCop::AST::Node
   def unless?; end
   include RuboCop::AST::ConditionalNode
   include RuboCop::AST::ModifierNode
+end
+class RuboCop::AST::InPatternNode < RuboCop::AST::Node
+  def body; end
+  def branch_index; end
+  def pattern; end
+  def then?; end
 end
 class RuboCop::AST::IndexNode < RuboCop::AST::Node
   def assignment_method?; end

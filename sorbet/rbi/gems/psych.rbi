@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/psych/all/psych.rbi
 #
-# psych-3.3.1
+# psych-3.3.2
 
 module Psych
   def self.add_builtin_type(type_tag, &block); end
@@ -34,6 +34,8 @@ module Psych
   def self.safe_load(yaml, legacy_permitted_classes = nil, legacy_permitted_symbols = nil, legacy_aliases = nil, legacy_filename = nil, permitted_classes: nil, permitted_symbols: nil, aliases: nil, filename: nil, fallback: nil, symbolize_names: nil, freeze: nil); end
   def self.safe_load_file(filename, **kwargs); end
   def self.to_json(object); end
+  def self.unsafe_load(yaml, legacy_filename = nil, filename: nil, fallback: nil, symbolize_names: nil, freeze: nil); end
+  def self.unsafe_load_file(filename, **kwargs); end
   def self.warn_with_uplevel(message, uplevel: nil); end
 end
 class Psych::Exception < RuntimeError

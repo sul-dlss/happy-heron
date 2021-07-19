@@ -11,12 +11,6 @@
 
 module REXML
 end
-module REXML::Security
-  def self.entity_expansion_limit; end
-  def self.entity_expansion_limit=(val); end
-  def self.entity_expansion_text_limit; end
-  def self.entity_expansion_text_limit=(val); end
-end
 class REXML::ParseException < RuntimeError
   def context; end
   def continued_exception; end
@@ -29,6 +23,116 @@ class REXML::ParseException < RuntimeError
   def source; end
   def source=(arg0); end
   def to_s; end
+end
+class REXML::UndefinedNamespaceException < REXML::ParseException
+  def initialize(prefix, source, parser); end
+end
+module REXML::Encoding
+  def decode(string); end
+  def encode(string); end
+  def encoding; end
+  def encoding=(encoding); end
+  def find_encoding(name); end
+end
+class REXML::SourceFactory
+  def self.create_from(arg); end
+end
+class REXML::Source
+  def buffer; end
+  def consume(pattern); end
+  def current_line; end
+  def detect_encoding; end
+  def empty?; end
+  def encoding; end
+  def encoding=(enc); end
+  def encoding_updated; end
+  def initialize(arg, encoding = nil); end
+  def line; end
+  def match(pattern, cons = nil); end
+  def match_to(char, pattern); end
+  def match_to_consume(char, pattern); end
+  def position; end
+  def read; end
+  def scan(pattern, cons = nil); end
+  include REXML::Encoding
+end
+class REXML::IOSource < REXML::Source
+  def consume(pattern); end
+  def current_line; end
+  def empty?; end
+  def encoding_updated; end
+  def initialize(arg, block_size = nil, encoding = nil); end
+  def match(pattern, cons = nil); end
+  def position; end
+  def read; end
+  def readline; end
+  def scan(pattern, cons = nil); end
+end
+module REXML::Parsers
+end
+class REXML::Parsers::BaseParser
+  def add_listener(listener); end
+  def empty?; end
+  def entity(reference, entities); end
+  def has_next?; end
+  def initialize(source); end
+  def need_source_encoding_update?(xml_declaration_encoding); end
+  def normalize(input, entities = nil, entity_filter = nil); end
+  def parse_attributes(prefixes, curr_ns); end
+  def parse_id(base_error_message, accept_external_id:, accept_public_id:); end
+  def parse_id_invalid_details(accept_external_id:, accept_public_id:); end
+  def parse_name(base_error_message); end
+  def peek(depth = nil); end
+  def position; end
+  def process_instruction; end
+  def pull; end
+  def pull_event; end
+  def source; end
+  def stream=(source); end
+  def unnormalize(string, entities = nil, filter = nil); end
+  def unshift(token); end
+end
+class REXML::Parsers::StreamParser
+  def add_listener(listener); end
+  def initialize(source, listener); end
+  def parse; end
+end
+module REXML::XMLTokens
+end
+module REXML::Light
+end
+class REXML::Light::Node
+  def <<(element); end
+  def =~(path); end
+  def [](reference, ns = nil); end
+  def []=(reference, ns, value = nil); end
+  def children; end
+  def each; end
+  def has_name?(name, namespace = nil); end
+  def initialize(node = nil); end
+  def local_name; end
+  def local_name=(name_str); end
+  def name; end
+  def name=(name_str, ns = nil); end
+  def namespace(prefix = nil); end
+  def namespace=(namespace); end
+  def namespace_of(node, prefix = nil); end
+  def namesplit; end
+  def node_type; end
+  def parent; end
+  def parent=(node); end
+  def prefix(namespace = nil); end
+  def prefix_of(node, namespace = nil); end
+  def root; end
+  def size; end
+  def text=(foo); end
+  def to_s; end
+end
+module REXML::Security
+  def self.entity_expansion_limit; end
+  def self.entity_expansion_limit=(val); end
+  def self.entity_expansion_text_limit; end
+  def self.entity_expansion_text_limit=(val); end
 end
 module REXML::Formatters
 end
@@ -80,6 +184,23 @@ class REXML::Child
   def replace_with(child); end
   include REXML::Node
 end
+class REXML::Entity < REXML::Child
+  def external; end
+  def initialize(stream, value = nil, parent = nil, reference = nil); end
+  def name; end
+  def ndata; end
+  def normalized; end
+  def pubid; end
+  def ref; end
+  def self.matches?(string); end
+  def to_s; end
+  def unnormalized; end
+  def value; end
+  def write(out, indent = nil); end
+  include REXML::XMLTokens
+end
+module REXML::EntityConst
+end
 class REXML::Parent < REXML::Child
   def <<(object); end
   def [](index); end
@@ -106,8 +227,6 @@ class REXML::Parent < REXML::Child
   def unshift(object); end
   include Enumerable
 end
-module REXML::XMLTokens
-end
 module REXML::Namespace
   def expanded_name; end
   def fully_expanded_name; end
@@ -118,64 +237,6 @@ module REXML::Namespace
   def prefix; end
   def prefix=(arg0); end
   include REXML::XMLTokens
-end
-module REXML::Encoding
-  def decode(string); end
-  def encode(string); end
-  def encoding; end
-  def encoding=(encoding); end
-  def find_encoding(name); end
-end
-class REXML::SourceFactory
-  def self.create_from(arg); end
-end
-class REXML::Source
-  def buffer; end
-  def consume(pattern); end
-  def current_line; end
-  def detect_encoding; end
-  def empty?; end
-  def encoding; end
-  def encoding=(enc); end
-  def encoding_updated; end
-  def initialize(arg, encoding = nil); end
-  def line; end
-  def match(pattern, cons = nil); end
-  def match_to(char, pattern); end
-  def match_to_consume(char, pattern); end
-  def position; end
-  def read; end
-  def scan(pattern, cons = nil); end
-  include REXML::Encoding
-end
-class REXML::IOSource < REXML::Source
-  def consume(pattern); end
-  def current_line; end
-  def empty?; end
-  def encoding_updated; end
-  def initialize(arg, block_size = nil, encoding = nil); end
-  def match(pattern, cons = nil); end
-  def position; end
-  def read; end
-  def readline; end
-  def scan(pattern, cons = nil); end
-end
-class REXML::Entity < REXML::Child
-  def external; end
-  def initialize(stream, value = nil, parent = nil, reference = nil); end
-  def name; end
-  def ndata; end
-  def normalized; end
-  def pubid; end
-  def ref; end
-  def self.matches?(string); end
-  def to_s; end
-  def unnormalized; end
-  def value; end
-  def write(out, indent = nil); end
-  include REXML::XMLTokens
-end
-module REXML::EntityConst
 end
 class REXML::AttlistDecl < REXML::Child
   def [](key); end
@@ -292,8 +353,6 @@ class REXML::CData < REXML::Text
   def write(output = nil, indent = nil, transitive = nil, ie_hack = nil); end
 end
 module REXML::Functions
-end
-module REXML::Parsers
 end
 class REXML::Parsers::XPathParser
   def AdditiveExpr(path, parsed); end
@@ -514,36 +573,6 @@ class REXML::Output
   def initialize(real_IO, encd = nil); end
   def to_s; end
   include REXML::Encoding
-end
-class REXML::UndefinedNamespaceException < REXML::ParseException
-  def initialize(prefix, source, parser); end
-end
-class REXML::Parsers::BaseParser
-  def add_listener(listener); end
-  def empty?; end
-  def entity(reference, entities); end
-  def has_next?; end
-  def initialize(source); end
-  def need_source_encoding_update?(xml_declaration_encoding); end
-  def normalize(input, entities = nil, entity_filter = nil); end
-  def parse_attributes(prefixes, curr_ns); end
-  def parse_id(base_error_message, accept_external_id:, accept_public_id:); end
-  def parse_id_invalid_details(accept_external_id:, accept_public_id:); end
-  def parse_name(base_error_message); end
-  def peek(depth = nil); end
-  def position; end
-  def process_instruction; end
-  def pull; end
-  def pull_event; end
-  def source; end
-  def stream=(source); end
-  def unnormalize(string, entities = nil, filter = nil); end
-  def unshift(token); end
-end
-class REXML::Parsers::StreamParser
-  def add_listener(listener); end
-  def initialize(source, listener); end
-  def parse; end
 end
 module REXML::Validation
 end

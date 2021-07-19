@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/parser/all/parser.rbi
 #
-# parser-3.0.1.0
+# parser-3.0.2.0
 
 module Parser
   def self.warn_syntax_deviation(feature, version); end
@@ -217,6 +217,7 @@ class Parser::Source::Comment
   def loc; end
   def location; end
   def self.associate(ast, comments); end
+  def self.associate_by_identity(ast, comments); end
   def self.associate_locations(ast, comments); end
   def text; end
   def type; end
@@ -226,6 +227,7 @@ class Parser::Source::Comment::Associator
   def advance_through_directives; end
   def associate; end
   def associate_and_advance_comment(node); end
+  def associate_by_identity; end
   def associate_locations; end
   def children_in_source_order(node); end
   def current_comment_before?(node); end

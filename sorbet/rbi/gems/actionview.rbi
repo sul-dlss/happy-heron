@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionview/all/actionview.rbi
 #
-# actionview-6.1.3.1
+# actionview-6.1.4
 
 module ActionView
   def self.eager_load!; end
@@ -347,7 +347,7 @@ module ActionView::Helpers::UrlHelper
   def add_method_to_attributes!(html_options, method); end
   def button_to(name = nil, options = nil, html_options = nil, &block); end
   def convert_options_to_data_attributes(options, html_options); end
-  def current_page?(options = nil, check_parameters: nil, **options_as_kwargs); end
+  def current_page?(*args); end
   def link_to(name = nil, options = nil, html_options = nil, &block); end
   def link_to_if(condition, name, options = nil, html_options = nil, &block); end
   def link_to_remote_options?(options); end
@@ -1354,6 +1354,7 @@ end
 module ActionView::TestCase::TestController::HelperMethods
   include ActionController::Base::HelperMethods
   include DeviseHelper
+  include PreviewHelper
 end
 module ActionView::TestCase::Behavior
   def _routes; end

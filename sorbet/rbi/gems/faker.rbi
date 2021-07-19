@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/faker/all/faker.rbi
 #
-# faker-2.17.0
+# faker-2.18.0
 
 module Faker
 end
@@ -98,6 +98,21 @@ class Faker::Creature
 end
 class Faker::Creature::Animal < Faker::Base
   def self.name; end
+end
+class Faker::Creature::Bird < Faker::Base
+  def self.adjective; end
+  def self.anatomy; end
+  def self.anatomy_past_tense; end
+  def self.color; end
+  def self.common_family_name; end
+  def self.common_name(tax_order = nil); end
+  def self.emotional_adjective; end
+  def self.geo; end
+  def self.implausible_common_name; end
+  def self.order; end
+  def self.order_with_common_name(tax_order = nil); end
+  def self.plausible_common_name; end
+  def self.silly_adjective; end
 end
 class Faker::Creature::Cat < Faker::Base
   def self.breed; end
@@ -391,6 +406,7 @@ class Faker::Crypto < Faker::Base
   def self.md5; end
   def self.sha1; end
   def self.sha256; end
+  def self.sha512; end
 end
 class Faker::CryptoCoin < Faker::Base
   def self.acronym(legacy_coin = nil, coin: nil); end
@@ -585,6 +601,8 @@ class Faker::IDNumber < Faker::Base
   def self.brazilian_rg(legacy_formatted = nil, formatted: nil); end
   def self.chilean_id; end
   def self.chilean_verification_code(digits); end
+  def self.croatian_id(international: nil); end
+  def self.croatian_id_checksum_digit(digits); end
   def self.invalid; end
   def self.invalid_south_african_id_number; end
   def self.south_african_id_checksum_digit(id_number); end
@@ -842,6 +860,8 @@ class Faker::Restaurant < Faker::Base
 end
 class Faker::Science < Faker::Base
   def self.element; end
+  def self.element_state; end
+  def self.element_subcategory; end
   def self.element_symbol; end
   def self.scientist; end
 end
@@ -918,6 +938,10 @@ class Faker::Superhero < Faker::Base
   def self.power; end
   def self.prefix; end
   def self.suffix; end
+end
+class Faker::Tea < Faker::Base
+  def self.type; end
+  def self.variety(type: nil); end
 end
 class Faker::Team < Faker::Base
   def self.creature; end
@@ -1165,11 +1189,14 @@ class Faker::Games::WarhammerFantasy < Faker::Base
   def self.quote; end
 end
 class Faker::Games::Witcher < Faker::Base
+  def self.book; end
   def self.character; end
   def self.location; end
   def self.monster; end
+  def self.potion; end
   def self.quote; end
   def self.school; end
+  def self.sign; end
   def self.witcher; end
 end
 class Faker::Games::WorldOfWarcraft < Faker::Base
@@ -1333,6 +1360,7 @@ class Faker::Music < Faker::Base
   def self.key_types; end
   def self.key_variants; end
   def self.keys; end
+  def self.mambo_no_5; end
 end
 class Faker::Music::GratefulDead < Faker::Base
   def self.player; end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/turbo-rails/all/turbo-rails.rbi
 #
-# turbo-rails-0.5.9
+# turbo-rails-d89e1a0f3637
 
 module Turbo
   def self.railtie_helpers_paths; end
@@ -22,7 +22,7 @@ module Turbo
 end
 module Turbo::TestAssertions
   def assert_no_turbo_stream(action:, target: nil); end
-  def assert_turbo_stream(action:, target: nil, &block); end
+  def assert_turbo_stream(action:, target: nil, status: nil, &block); end
   extend ActiveSupport::Concern
 end
 class Turbo::Engine < Rails::Engine
@@ -36,10 +36,12 @@ module Turbo::Broadcastable
   def broadcast_action_later(action:, target: nil, **rendering); end
   def broadcast_action_later_to(*streamables, action:, target: nil, **rendering); end
   def broadcast_action_to(*streamables, action:, target: nil, **rendering); end
+  def broadcast_after_to(*streamables, target:, **rendering); end
   def broadcast_append(target: nil, **rendering); end
   def broadcast_append_later(target: nil, **rendering); end
   def broadcast_append_later_to(*streamables, target: nil, **rendering); end
   def broadcast_append_to(*streamables, target: nil, **rendering); end
+  def broadcast_before_to(*streamables, target:, **rendering); end
   def broadcast_prepend(target: nil, **rendering); end
   def broadcast_prepend_later(target: nil, **rendering); end
   def broadcast_prepend_later_to(*streamables, target: nil, **rendering); end
@@ -89,7 +91,7 @@ module Turbo::IncludesHelper
 end
 module Turbo::StreamsHelper
   def turbo_stream; end
-  def turbo_stream_from(*streamables); end
+  def turbo_stream_from(*streamables, **attributes); end
 end
 module Turbo::Streams::ActionHelper
   def convert_to_turbo_stream_dom_id(target); end
@@ -98,8 +100,12 @@ end
 module Turbo::Streams::Broadcasts
   def broadcast_action_later_to(*streamables, action:, target:, **rendering); end
   def broadcast_action_to(*streamables, action:, target:, **rendering); end
+  def broadcast_after_later_to(*streamables, target:, **rendering); end
+  def broadcast_after_to(*streamables, target:, **rendering); end
   def broadcast_append_later_to(*streamables, target:, **rendering); end
   def broadcast_append_to(*streamables, target:, **rendering); end
+  def broadcast_before_later_to(*streamables, target:, **rendering); end
+  def broadcast_before_to(*streamables, target:, **rendering); end
   def broadcast_prepend_later_to(*streamables, target:, **rendering); end
   def broadcast_prepend_to(*streamables, target:, **rendering); end
   def broadcast_remove_to(*streamables, target:); end
@@ -153,13 +159,17 @@ module Anonymous_Module_92
 end
 class Turbo::Streams::BroadcastJob < ActiveJob::Base
   def perform(stream, **rendering); end
+  def self.rescue_handlers; end
 end
 class Turbo::Streams::ActionBroadcastJob < ActiveJob::Base
   def perform(stream, action:, target:, **rendering); end
+  def self.rescue_handlers; end
 end
 class Turbo::Streams::TagBuilder
   def action(name, target, content = nil, allow_inferred_rendering: nil, **rendering, &block); end
+  def after(target, content = nil, **rendering, &block); end
   def append(target, content = nil, **rendering, &block); end
+  def before(target, content = nil, **rendering, &block); end
   def extract_target_name_from(target); end
   def initialize(view_context); end
   def prepend(target, content = nil, **rendering, &block); end

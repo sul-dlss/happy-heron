@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/openapi_parser/all/openapi_parser.rbi
 #
-# openapi_parser-0.12.1
+# openapi_parser-0.14.1
 
 module OpenAPIParser
   def self.file_uri(filepath); end
@@ -96,6 +96,10 @@ class OpenAPIParser::InvalidEmailFormat < OpenAPIParser::OpenAPIError
   def message; end
 end
 class OpenAPIParser::InvalidUUIDFormat < OpenAPIParser::OpenAPIError
+  def initialize(value, reference); end
+  def message; end
+end
+class OpenAPIParser::InvalidDateFormat < OpenAPIParser::OpenAPIError
   def initialize(value, reference); end
   def message; end
 end
@@ -247,6 +251,7 @@ module OpenAPIParser::ParameterValidatable
   def header_parameter_hash; end
   def path_parameter_hash; end
   def query_parameter_hash; end
+  def set_parent_path_item(path_item); end
   def validate_header_parameter(headers, object_reference, options); end
   def validate_path_params(path_params, options); end
   def validate_query_parameter(params, object_reference, options); end
@@ -318,9 +323,9 @@ class OpenAPIParser::Schemas::PathItem < OpenAPIParser::Schemas::Base
   def patch; end
   def post; end
   def put; end
+  def set_path_item_to_operation; end
   def summary; end
   def trace; end
-  include OpenAPIParser::ParameterValidatable
 end
 class OpenAPIParser::Schemas::Paths < OpenAPIParser::Schemas::Base
   def path; end
@@ -464,6 +469,7 @@ class OpenAPIParser::SchemaValidator
   def one_of_validator; end
   def self.validate(value, schema, options); end
   def string_validator; end
+  def unspecified_type_validator; end
   def validate_data; end
   def validate_integer(value, schema); end
   def validate_schema(value, schema, **keyword_args); end
@@ -492,7 +498,7 @@ class OpenAPIParser::SchemaValidator::Base
   def coerce_and_validate(_value, _schema, **_keyword_args); end
   def initialize(validatable, coerce_value); end
   def validatable; end
-  def validate_discriminator_schema(discriminator, value); end
+  def validate_discriminator_schema(discriminator, value, parent_discriminator_schemas: nil); end
 end
 class OpenAPIParser::SchemaValidator::StringValidator < OpenAPIParser::SchemaValidator::Base
   def coerce_and_validate(value, schema, **_keyword_args); end
@@ -500,6 +506,7 @@ class OpenAPIParser::SchemaValidator::StringValidator < OpenAPIParser::SchemaVal
   def initialize(validator, coerce_value, datetime_coerce_class); end
   def parse_date_time(value, schema); end
   def pattern_validate(value, schema); end
+  def validate_date_format(value, schema); end
   def validate_email_format(value, schema); end
   def validate_max_min_length(value, schema); end
   def validate_uuid_format(value, schema); end
@@ -521,9 +528,10 @@ end
 class OpenAPIParser::SchemaValidator::BooleanValidator < OpenAPIParser::SchemaValidator::Base
   def coerce(value); end
   def coerce_and_validate(value, schema, **_keyword_args); end
+  include OpenAPIParser::SchemaValidator::Enumable
 end
 class OpenAPIParser::SchemaValidator::ObjectValidator < OpenAPIParser::SchemaValidator::Base
-  def coerce_and_validate(value, schema, parent_all_of: nil, discriminator_property_name: nil); end
+  def coerce_and_validate(value, schema, parent_all_of: nil, parent_discriminator_schemas: nil, discriminator_property_name: nil); end
 end
 class OpenAPIParser::SchemaValidator::ArrayValidator < OpenAPIParser::SchemaValidator::Base
   def coerce_and_validate(value, schema, **_keyword_args); end
@@ -533,13 +541,16 @@ class OpenAPIParser::SchemaValidator::AnyOfValidator < OpenAPIParser::SchemaVali
   def coerce_and_validate(value, schema, **_keyword_args); end
 end
 class OpenAPIParser::SchemaValidator::AllOfValidator < OpenAPIParser::SchemaValidator::Base
-  def coerce_and_validate(value, schema, **_keyword_args); end
+  def coerce_and_validate(value, schema, **keyword_args); end
 end
 class OpenAPIParser::SchemaValidator::OneOfValidator < OpenAPIParser::SchemaValidator::Base
   def coerce_and_validate(value, schema, **_keyword_args); end
 end
 class OpenAPIParser::SchemaValidator::NilValidator < OpenAPIParser::SchemaValidator::Base
   def coerce_and_validate(value, schema, **_keyword_args); end
+end
+class OpenAPIParser::SchemaValidator::UnspecifiedTypeValidator < OpenAPIParser::SchemaValidator::Base
+  def coerce_and_validate(value, _schema, **_keyword_args); end
 end
 module OpenAPIParser::SchemaValidator::Validatable
   def validate_integer(_value, _schema); end

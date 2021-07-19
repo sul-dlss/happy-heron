@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 # This creates an appropriate description for an update event on a WorkVersion

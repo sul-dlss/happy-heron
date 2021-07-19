@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activestorage/all/activestorage.rbi
 #
-# activestorage-6.1.3.1
+# activestorage-6.1.4
 
 module ActiveStorage
   def analyzers; end
@@ -75,6 +75,8 @@ module ActiveStorage
   def self.verifier; end
   def self.verifier=(val); end
   def self.version; end
+  def self.video_preview_arguments; end
+  def self.video_preview_arguments=(val); end
   def self.web_image_content_types; end
   def self.web_image_content_types=(val); end
   def service_urls_expire_in; end
@@ -87,6 +89,8 @@ module ActiveStorage
   def variant_processor=(val); end
   def verifier; end
   def verifier=(val); end
+  def video_preview_arguments; end
+  def video_preview_arguments=(val); end
   def web_image_content_types; end
   def web_image_content_types=(val); end
   extend ActiveSupport::Autoload
@@ -104,6 +108,8 @@ end
 class ActiveStorage::IntegrityError < ActiveStorage::Error
 end
 class ActiveStorage::FileNotFoundError < ActiveStorage::Error
+end
+class ActiveStorage::PreviewError < ActiveStorage::Error
 end
 module ActiveStorage::Transformers
   extend ActiveSupport::Autoload
@@ -754,28 +760,34 @@ class ActiveStorage::Preview
 end
 class ActiveStorage::Preview::UnprocessedError < StandardError
 end
-class ActiveStorage::Representations::ProxyController < ActiveStorage::BaseController
+class ActiveStorage::Representations::BaseController < ActiveStorage::BaseController
   def _layout(lookup_context, formats); end
   def _layout_from_proc; end
-  def representation; end
   def self.__callbacks; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
-  def show; end
+  def set_representation; end
   include ActiveStorage::SetBlob
+  include Anonymous_Module_27
+end
+class ActiveStorage::Representations::ProxyController < ActiveStorage::Representations::BaseController
+  def _layout(lookup_context, formats); end
+  def _layout_from_proc; end
+  def self._wrapper_options; end
+  def self.helpers_path; end
+  def self.middleware_stack; end
+  def show; end
   include ActiveStorage::SetHeaders
   include Anonymous_Module_27
 end
-class ActiveStorage::Representations::RedirectController < ActiveStorage::BaseController
+class ActiveStorage::Representations::RedirectController < ActiveStorage::Representations::BaseController
   def _layout(lookup_context, formats); end
   def _layout_from_proc; end
-  def self.__callbacks; end
   def self._wrapper_options; end
   def self.helpers_path; end
   def self.middleware_stack; end
   def show; end
-  include ActiveStorage::SetBlob
   include Anonymous_Module_27
 end
 class ActiveStorage::Blobs::ProxyController < ActiveStorage::BaseController
