@@ -20,7 +20,7 @@ class DraftWorkForm < Reform::Form
   property :collection_id, on: :work
   property :access, on: :work_version
   property :license, on: :work_version
-  property :agree_to_terms, on: :work_version
+  property :agree_to_terms, on: :work_version, prepopulator: (proc { self.agree_to_terms = default_agree_to_terms })
   property :created_type, virtual: true, prepopulator: (proc do |*|
     self.created_type = created_edtf.is_a?(EDTF::Interval) ? 'range' : 'single' unless created_type
   end)
@@ -155,6 +155,19 @@ class DraftWorkForm < Reform::Form
     return if model.fetch(:work_version).deposited?
 
     super
+  end
+
+  # the terms agreement default to saved value for this object if persisted,
+  #  or false if (a) never accepted or (b) not accepted in the last year,
+  #  else it defaults to true
+  #  (i.e a new draft with a previously agreed work in the last year defaults to true)
+  def default_agree_to_terms
+    return model.fetch(:work_version).agree_to_terms if persisted?
+
+    last_work_terms_agreement = model.fetch(:work).collection.creator.last_work_terms_agreement
+    return false unless last_work_terms_agreement
+
+    Time.zone.now.years_ago(1) < last_work_terms_agreement
   end
 
   def persisted?
