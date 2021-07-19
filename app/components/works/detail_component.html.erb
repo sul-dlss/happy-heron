@@ -139,7 +139,11 @@
     </tr>
     <tr>
       <th scope="row">Keywords</th>
-      <td><%= keywords %></td>
+      <td>
+        <% keywords.each do |keyword| %>
+          <p><%= keyword %></p>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <th scope="row">Deposit subtypes</th>
