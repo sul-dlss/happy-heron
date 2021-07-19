@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/commonmarker/all/commonmarker.rbi
 #
-# commonmarker-0.21.2
+# commonmarker-0.22.0
 
 module CommonMarker
   def self.extensions; end
@@ -66,20 +66,7 @@ class CommonMarker::Node
   include Enumerable
 end
 module CommonMarker::Config
-  def self.check_option(option, type); end
   def self.process_options(option, type); end
-end
-class CommonMarker::Config::Parse
-  def self.new(*arg0); end
-  extend Enumerable
-  extend Ruby::Enum::ClassMethods
-  include Ruby::Enum
-end
-class CommonMarker::Config::Render
-  def self.new(*arg0); end
-  extend Enumerable
-  extend Ruby::Enum::ClassMethods
-  include Ruby::Enum
 end
 module CommonMarker::Node::Inspect
   def inspect; end

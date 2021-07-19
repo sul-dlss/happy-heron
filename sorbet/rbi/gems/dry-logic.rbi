@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-logic/all/dry-logic.rbi
 #
-# dry-logic-1.1.0
+# dry-logic-1.2.0
 
 module Dry
 end
@@ -47,7 +47,7 @@ module Anonymous_Dry_Core_Equalizer_61
 end
 class Dry::Logic::Operations::Binary < Dry::Logic::Operations::Abstract
   def ast(input = nil); end
-  def initialize(*rules, **options); end
+  def initialize(left, right, **options); end
   def left; end
   def right; end
   def to_s; end

@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/activesupport/all/activesupport.rbi
 #
-# activesupport-6.1.3.1
+# activesupport-6.1.4
 
 class Hash
   def _deep_transform_keys_in_object!(object, &block); end
@@ -340,7 +340,7 @@ class Time
   def seconds_since_midnight; end
   def seconds_until_end_of_day; end
   def self.===(other); end
-  def self.at_with_coercion(*args, **kwargs); end
+  def self.at_with_coercion(*args); end
   def self.at_without_coercion(*arg0); end
   def self.current; end
   def self.days_in_month(month, year = nil); end
@@ -2632,7 +2632,7 @@ class ActiveSupport::Cache::FileStore < ActiveSupport::Cache::Store
   def ensure_cache_path(path); end
   def file_path_key(path); end
   def increment(name, amount = nil, **options); end
-  def initialize(cache_path, options = nil); end
+  def initialize(cache_path, **options); end
   def lock_file(file_name, &block); end
   def modify_value(name, amount, options); end
   def normalize_key(key, options); end

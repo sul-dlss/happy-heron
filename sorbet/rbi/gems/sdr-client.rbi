@@ -7,24 +7,25 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sdr-client/all/sdr-client.rbi
 #
-# sdr-client-0.55.1
+# sdr-client-0.59.0
 
 module SdrClient
 end
 module SdrClient::Deposit
   def self.model_run(request_dro:, url:, accession:, files: nil, logger: nil); end
-  def self.run(apo:, source_id:, url:, label: nil, type: nil, viewing_direction: nil, access: nil, download: nil, use_statement: nil, copyright: nil, collection: nil, catkey: nil, embargo_release_date: nil, embargo_access: nil, files: nil, files_metadata: nil, accession: nil, grouping_strategy: nil, logger: nil); end
+  def self.run(apo:, source_id:, url:, label: nil, type: nil, viewing_direction: nil, access: nil, download: nil, use_statement: nil, copyright: nil, collection: nil, catkey: nil, embargo_release_date: nil, embargo_access: nil, embargo_download: nil, files: nil, files_metadata: nil, accession: nil, grouping_strategy: nil, logger: nil); end
 end
 class SdrClient::Deposit::CreateResource
   def accession?; end
+  def assign_doi?; end
   def connection; end
-  def initialize(accession:, metadata:, logger:, connection:); end
+  def initialize(accession:, assign_doi:, metadata:, logger:, connection:); end
   def logger; end
   def metadata; end
   def metadata_request; end
   def path; end
   def run; end
-  def self.run(accession:, metadata:, logger:, connection:); end
+  def self.run(accession:, metadata:, logger:, connection:, assign_doi: nil); end
 end
 class SdrClient::Deposit::SingleFileGroupingStrategy
   def self.run(uploads: nil); end
@@ -82,7 +83,7 @@ end
 class SdrClient::Deposit::File
   def as_json; end
   def create_message_digest(algorithm, digest); end
-  def initialize(external_identifier:, label:, filename:, access: nil, preserve: nil, shelve: nil, publish: nil, mime_type: nil, md5: nil, sha1: nil, use: nil); end
+  def initialize(external_identifier:, label:, filename:, access: nil, download: nil, preserve: nil, shelve: nil, publish: nil, mime_type: nil, md5: nil, sha1: nil, use: nil); end
   def message_digests; end
 end
 module SdrClient::Deposit::FileMetadataBuilderOperations
@@ -121,12 +122,13 @@ class SdrClient::Deposit::Request
   def copyright; end
   def download; end
   def embargo_access; end
+  def embargo_download; end
   def embargo_release_date; end
   def file_sets; end
   def files_metadata; end
   def for(filename); end
   def identification; end
-  def initialize(apo:, source_id:, label: nil, access: nil, download: nil, use_statement: nil, copyright: nil, collection: nil, catkey: nil, embargo_release_date: nil, embargo_access: nil, type: nil, viewing_direction: nil, file_sets: nil, files_metadata: nil); end
+  def initialize(apo:, source_id:, label: nil, access: nil, download: nil, use_statement: nil, copyright: nil, collection: nil, catkey: nil, embargo_release_date: nil, embargo_access: nil, embargo_download: nil, type: nil, viewing_direction: nil, file_sets: nil, files_metadata: nil); end
   def label; end
   def source_id; end
   def structural; end
@@ -151,7 +153,7 @@ class SdrClient::Deposit::ModelProcess
   def child_files_match; end
   def connection; end
   def files; end
-  def initialize(request_dro:, connection:, accession:, files: nil, logger: nil); end
+  def initialize(request_dro:, connection:, accession:, files: nil, assign_doi: nil, logger: nil); end
   def logger; end
   def mime_types; end
   def request_dro; end
@@ -163,7 +165,7 @@ class SdrClient::Deposit::Process
   def connection; end
   def files; end
   def grouping_strategy; end
-  def initialize(metadata:, connection:, accession:, grouping_strategy: nil, files: nil, logger: nil); end
+  def initialize(metadata:, connection:, accession:, grouping_strategy: nil, files: nil, assign_doi: nil, logger: nil); end
   def logger; end
   def metadata; end
   def mime_types; end

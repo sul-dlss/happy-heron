@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/actionpack/all/actionpack.rbi
 #
-# actionpack-6.1.3.1
+# actionpack-6.1.4
 
 module ActionPack
   def self.gem_version; end
@@ -1855,6 +1855,24 @@ class ActionDispatch::RequestId
   def internal_request_id; end
   def make_request_id(request_id); end
 end
+class ActionDispatch::Static
+  def call(env); end
+  def initialize(app, path, index: nil, headers: nil); end
+end
+class ActionDispatch::FileHandler
+  def attempt(env); end
+  def call(env); end
+  def clean_path(path_info); end
+  def compressible?(content_type); end
+  def each_candidate_filepath(path_info); end
+  def each_precompressed_filepath(filepath); end
+  def file_readable?(path); end
+  def find_file(path_info, accept_encoding:); end
+  def initialize(root, index: nil, headers: nil, precompressed: nil, compressible_content_types: nil); end
+  def serve(request, filepath, content_headers); end
+  def try_files(filepath, content_type, accept_encoding:); end
+  def try_precompressed_files(filepath, headers, accept_encoding:); end
+end
 class ActionDispatch::MiddlewareStack
   def [](i); end
   def assert_index(index, where); end
@@ -1908,24 +1926,6 @@ class ActionDispatch::HostAuthorization::Permissions
   def sanitize_hosts(hosts); end
   def sanitize_regexp(host); end
   def sanitize_string(host); end
-end
-class ActionDispatch::Static
-  def call(env); end
-  def initialize(app, path, index: nil, headers: nil); end
-end
-class ActionDispatch::FileHandler
-  def attempt(env); end
-  def call(env); end
-  def clean_path(path_info); end
-  def compressible?(content_type); end
-  def each_candidate_filepath(path_info); end
-  def each_precompressed_filepath(filepath); end
-  def file_readable?(path); end
-  def find_file(path_info, accept_encoding:); end
-  def initialize(root, index: nil, headers: nil, precompressed: nil, compressible_content_types: nil); end
-  def serve(request, filepath, content_headers); end
-  def try_files(filepath, content_type, accept_encoding:); end
-  def try_precompressed_files(filepath, headers, accept_encoding:); end
 end
 class ActionDispatch::Executor
   def call(env); end
@@ -3371,6 +3371,7 @@ class ActionController::Live::ClientDisconnected < RuntimeError
 end
 class ActionController::Live::Buffer < ActionDispatch::Response::Buffer
   def abort; end
+  def build_queue(queue_size); end
   def call_on_error; end
   def close; end
   def connected?; end
@@ -3379,6 +3380,8 @@ class ActionController::Live::Buffer < ActionDispatch::Response::Buffer
   def ignore_disconnect=(arg0); end
   def initialize(response); end
   def on_error(&block); end
+  def self.queue_size; end
+  def self.queue_size=(arg0); end
   def write(string); end
   include MonitorMixin
 end
