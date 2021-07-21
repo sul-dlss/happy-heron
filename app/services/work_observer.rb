@@ -25,8 +25,6 @@ class WorkObserver
   end
 
   def self.after_deposit_complete(work_version, _transition)
-    # store the current date as the last time the terms of deposit were accepted
-    work_version.work.depositor.update(last_work_terms_agreement: Time.zone.now)
     mailer = work_mailer(work_version)
     job = if work_version.work.collection.review_enabled?
             mailer.approved_email

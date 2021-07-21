@@ -573,7 +573,6 @@ CREATE TABLE public.work_versions (
     access public.work_access DEFAULT 'world'::public.work_access NOT NULL,
     embargo_date date,
     license character varying NOT NULL,
-    agree_to_terms boolean DEFAULT false,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     state character varying NOT NULL,
@@ -1291,4 +1290,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210608161622'),
 ('20210616201626'),
 ('20210719185721');
+('20210721164925');
 ('20210802203252');

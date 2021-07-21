@@ -29,7 +29,6 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       fill_in "What's changing?", with: 'Fixing title per request'
 
       fill_in 'Title of deposit', with: new_work_title
-      check 'I agree to the SDR Terms of Deposit'
 
       click_button 'Submit for approval'
 
@@ -52,7 +51,6 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
 
       find("a[aria-label='Edit #{new_work_title}']").click
       fill_in 'Title of deposit', with: newest_work_title
-      check 'I agree to the SDR Terms of Deposit'
       click_button 'Submit for approval'
 
       expect(page).to have_content 'You have successfully submitted your deposit'

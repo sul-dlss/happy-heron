@@ -24,6 +24,13 @@ class User < ApplicationRecord
 
   devise :remote_user_authenticatable
 
+  # this is the timeframe after which the user must agree to the terms again on a work
+  sig { returns(ActiveSupport::TimeWithZone) }
+  def terms_agreement_renewal_timeframe
+    Time.zone.now.years_ago(1)
+  end
+
+  sig { returns(String) }
   def to_s
     email
   end
@@ -34,5 +41,17 @@ class User < ApplicationRecord
 
   def to_honeybadger_context
     { user_id: id, user_email: email }
+  end
+
+  sig { returns(T::Boolean) }
+  def agreed_to_terms_recently?
+    return false unless last_work_terms_agreement
+
+    terms_agreement_renewal_timeframe < last_work_terms_agreement
+  end
+
+  sig { returns(T::Boolean) }
+  def agreed_to_terms
+    update(last_work_terms_agreement: Time.zone.now)
   end
 end
