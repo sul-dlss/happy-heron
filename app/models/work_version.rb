@@ -128,17 +128,12 @@ class WorkVersion < ApplicationRecord
   #  false if (a) never previously accepted or (b) not accepted in the last year; it is true otherwise
   sig { returns(T::Boolean) }
   def agree_to_terms
-    return false unless work&.depositor
-
     work.depositor.agreed_to_terms_recently?
   end
 
   # the terms agreement checkbox value is not persisted in the database with the work but instead at the user level
-  # TODO: this can be a boolean or a string??
-  # sig { params(value: T.nilable(String)).void }
+  sig { params(value: T.any(String, T::Boolean)).void }
   def agree_to_terms=(value)
-    return unless work&.depositor
-
     return if value == false || value == '0' || work.depositor.agreed_to_terms_recently?
 
     # update the last time the terms of agreement was accepted for this depositor

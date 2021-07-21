@@ -15,9 +15,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
   end
 
   context 'when a user has previously accepted the terms of agreement less than 1 year ago' do
-    before do
-      user.update(last_work_terms_agreement: Time.zone.now.days_ago(2))
-    end
+    before { user.update(last_work_terms_agreement: Time.zone.now.days_ago(2)) }
 
     context 'when successful deposit' do
       context 'with a user-supplied citation' do
@@ -327,7 +325,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           fill_in 'Keyword', with: 'Springs'
 
-          uncheck 'Use default citation'
+          find('label.switch').click # Use auto-generated citation
           fill_in 'Provided citation', with: 'Citation from user input'
 
           # we need to agree to the terms of deposit once
@@ -336,6 +334,9 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
             'the Depositor grants The Trustees of Leland Stanford Junior University'
           )
           find('.btn-close').click
+
+          # we need to agree to the terms once
+          check 'I agree to the SDR Terms of Deposit'
 
           click_button 'Deposit'
 
