@@ -6,117 +6,116 @@
                                                  min_year: min_year,
                                                  max_year: max_year) %>
 
-  <div class="mb-3 row">
-    <div class="col-sm-3 h6">
-      Creation date
-      <%= render PopoverComponent.new key: 'work.creation_date' %>
-    </div>
-  </div>
+<fieldset>
 
-  <div class="mb-3 row" data-complex-radio-target="selection">
-    <div class="col-sm-2">
-      <%= form.radio_button :created_type, 'single', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
-      <%= form.label :created_type_single, 'Single date' %>
-    </div>
-    <div data-controller="date-validation" class="col-sm-10">
-      <div class="year">
-        <label for="<%= prefix %>_created_year" class="visually-hidden">Created year</label>
-        <%= number_field_tag "#{prefix}[created(1i)]", created_year,
-            data: { date_validation_target: 'year', action: 'date-validation#change' },
-            id: "#{prefix}_created_year",
-            placeholder: 'year',
-            class: "form-control", min: min_year, max: max_year %>
-        <div class="invalid-feedback" data-date-validation-target="error"></div>
+    <legend class="h5">Creation date <%= render PopoverComponent.new key: 'work.creation_date' %></legend>
+
+    <div class="mb-3 row" data-complex-radio-target="selection">
+      <div class="col-sm-2">
+        <%= form.radio_button :created_type, 'single', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+        <%= form.label :created_type_single, 'Single date' %>
       </div>
-      <div class="month">
-        <label for="<%= prefix %>_created_month" class="visually-hidden">Created month</label>
-        <%= select_month created_month, { prefix: prefix, field_name: 'created(2i)', prompt: 'month'},
-                         data: { date_validation_target: 'month', action: 'date-validation#change' },
-                         id: "#{prefix}_created_month", class: "form-control" %>
-      </div>
-
-      <div class="day">
-        <label for="<%= prefix %>_created_day" class="visually-hidden">Created day</label>
-        <%= select_day created_day, { prefix: prefix, field_name: 'created(3i)', prompt: 'day'},
-                       data: { date_validation_target: 'day', action: 'date-validation#change' },
-                       id: "#{prefix}_created_day", class: "form-control" %>
-      </div>
-       <div>
-       <%= check_box_tag "#{prefix}[created(approx0)]", true, created_approximate?, class: 'form-check-input' %>
-       <%= form.label 'created(approx0)', 'Approximate' %>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="mb-3 row" data-complex-radio-target="selection">
-    <div class="col-md-2">
-      <%= form.radio_button :created_type, 'range', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
-       <%= form.label :created_type_range, 'Date range' %>
-    </div>
-
-    <div class="col-md-10 date-range" data-controller="date-range">
-      <div class="start-date" data-controller="date-validation">
+      <div data-controller="date-validation" class="col-sm-10">
         <div class="year">
-          <label for="<%= prefix %>_created_range_start_year" class="visually-hidden">Created range start year</label>
-          <%= date_range_start_year %>
+          <label for="<%= prefix %>_created_year" class="visually-hidden">Created year</label>
+          <%= number_field_tag "#{prefix}[created(1i)]", created_year,
+              data: { date_validation_target: 'year', action: 'date-validation#change' },
+              id: "#{prefix}_created_year",
+              placeholder: 'year',
+              class: "form-control", min: min_year, max: max_year %>
           <div class="invalid-feedback" data-date-validation-target="error"></div>
-          <div class="invalid-feedback" data-date-range-target="startError"></div>
         </div>
         <div class="month">
-          <label for="<%= prefix %>_created_range_start_month" class="visually-hidden">Created range start month</label>
-          <%= select_month created_range_start_month,
-              { prefix: prefix, field_name: 'created_range(2i)', prompt: 'month'},
-              data: { date_validation_target: 'month', date_range_target: 'startMonth', action: 'date-range#change' },
-              id: "#{prefix}_created_range_start_month",
-              class: "form-control" %>
-        </div>
-        <div class="day">
-          <label for="<%= prefix %>_created_range_start_day" class="visually-hidden">Created range start day</label>
-          <%= select_day created_range_start_day,
-              { prefix: prefix, field_name: 'created_range(3i)', prompt: 'day'},
-              data: { date_validation_target: 'day', date_range_target: 'startDay', action: 'date-range#change' },
-              id: "#{prefix}_created_range_start_day",
-              class: "form-control" %>
-        </div>
-        <div>
-         <%= check_box_tag "#{prefix}[created_range(approx0)]", true, created_range_start_approximate?, class: 'form-check-input' %>
-         <label for="<%= prefix %>_created_range_start_approx">Approximate</label>
-        </div>
-      </div>
-
-      <div class="range-separator">
-        to
-      </div>
-
-      <div class="end-date" data-controller="date-validation">
-        <div class="year">
-          <label for="<%= prefix %>_created_range_end_year" class="visually-hidden">Created range end year</label>
-          <%= date_range_end_year %>
-          <div class="invalid-feedback" data-date-validation-target="error"></div>
-          <div class="invalid-feedback" data-date-range-target="endError"></div>
-        </div>
-        <div class="month">
-          <label for="<%= prefix %>_created_range_end_month" class="visually-hidden">Created range end month</label>
-          <%= select_month created_range_end_month,
-              { prefix: prefix, field_name: 'created_range(5i)', prompt: 'month' },
-              data: { date_validation_target: 'month', date_range_target: 'endMonth', action: 'date-range#change' },
-              id: "#{prefix}_created_range_end_month", class: "form-control" %>
+          <label for="<%= prefix %>_created_month" class="visually-hidden">Created month</label>
+          <%= select_month created_month, { prefix: prefix, field_name: 'created(2i)', prompt: 'month'},
+                          data: { date_validation_target: 'month', action: 'date-validation#change' },
+                          id: "#{prefix}_created_month", class: "form-control" %>
         </div>
 
         <div class="day">
-          <label for="<%= prefix %>_created_range_end_day" class="visually-hidden">Created range end day</label>
-          <%= select_day created_range_end_day,
-              { prefix: prefix, field_name: 'created_range(6i)', prompt: 'day' },
-              data: { date_validation_target: 'day', date_range_target: 'endDay', action: 'date-range#change' },
-              id: "#{prefix}_created_range_end_day", class: "form-control" %>
+          <label for="<%= prefix %>_created_day" class="visually-hidden">Created day</label>
+          <%= select_day created_day, { prefix: prefix, field_name: 'created(3i)', prompt: 'day'},
+                        data: { date_validation_target: 'day', action: 'date-validation#change' },
+                        id: "#{prefix}_created_day", class: "form-control" %>
         </div>
         <div>
-         <%= check_box_tag "#{prefix}[created_range(approx3)]", true, created_range_end_approximate?, class: 'form-check-input' %>
-         <label for="<%= prefix %>_created_range_end_approx">Approximate</label>
+        <%= check_box_tag "#{prefix}[created(approx0)]", true, created_approximate?, class: 'form-check-input' %>
+        <%= form.label 'created(approx0)', 'Approximate' %>
         </div>
       </div>
     </div>
-  </div>
+
+
+    <div class="mb-3 row" data-complex-radio-target="selection">
+      <div class="col-md-2">
+        <%= form.radio_button :created_type, 'range', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+        <%= form.label :created_type_range, 'Date range' %>
+      </div>
+
+      <div class="col-md-10 date-range" data-controller="date-range">
+        <div class="start-date" data-controller="date-validation">
+          <div class="year">
+            <label for="<%= prefix %>_created_range_start_year" class="visually-hidden">Created range start year</label>
+            <%= date_range_start_year %>
+            <div class="invalid-feedback" data-date-validation-target="error"></div>
+            <div class="invalid-feedback" data-date-range-target="startError"></div>
+          </div>
+          <div class="month">
+            <label for="<%= prefix %>_created_range_start_month" class="visually-hidden">Created range start month</label>
+            <%= select_month created_range_start_month,
+                { prefix: prefix, field_name: 'created_range(2i)', prompt: 'month'},
+                data: { date_validation_target: 'month', date_range_target: 'startMonth', action: 'date-range#change' },
+                id: "#{prefix}_created_range_start_month",
+                class: "form-control" %>
+          </div>
+          <div class="day">
+            <label for="<%= prefix %>_created_range_start_day" class="visually-hidden">Created range start day</label>
+            <%= select_day created_range_start_day,
+                { prefix: prefix, field_name: 'created_range(3i)', prompt: 'day'},
+                data: { date_validation_target: 'day', date_range_target: 'startDay', action: 'date-range#change' },
+                id: "#{prefix}_created_range_start_day",
+                class: "form-control" %>
+          </div>
+          <div>
+          <%= check_box_tag "#{prefix}[created_range(approx0)]", true, created_range_start_approximate?, class: 'form-check-input' %>
+          <label for="<%= prefix %>_created_range_start_approx">Approximate</label>
+          </div>
+        </div>
+
+        <div class="range-separator">
+          to
+        </div>
+
+        <div class="end-date" data-controller="date-validation">
+          <div class="year">
+            <label for="<%= prefix %>_created_range_end_year" class="visually-hidden">Created range end year</label>
+            <%= date_range_end_year %>
+            <div class="invalid-feedback" data-date-validation-target="error"></div>
+            <div class="invalid-feedback" data-date-range-target="endError"></div>
+          </div>
+          <div class="month">
+            <label for="<%= prefix %>_created_range_end_month" class="visually-hidden">Created range end month</label>
+            <%= select_month created_range_end_month,
+                { prefix: prefix, field_name: 'created_range(5i)', prompt: 'month' },
+                data: { date_validation_target: 'month', date_range_target: 'endMonth', action: 'date-range#change' },
+                id: "#{prefix}_created_range_end_month", class: "form-control" %>
+          </div>
+
+          <div class="day">
+            <label for="<%= prefix %>_created_range_end_day" class="visually-hidden">Created range end day</label>
+            <%= select_day created_range_end_day,
+                { prefix: prefix, field_name: 'created_range(6i)', prompt: 'day' },
+                data: { date_validation_target: 'day', date_range_target: 'endDay', action: 'date-range#change' },
+                id: "#{prefix}_created_range_end_day", class: "form-control" %>
+          </div>
+          <div>
+          <%= check_box_tag "#{prefix}[created_range(approx3)]", true, created_range_end_approximate?, class: 'form-check-input' %>
+          <label for="<%= prefix %>_created_range_end_approx">Approximate</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </fieldset>
 
 </section>

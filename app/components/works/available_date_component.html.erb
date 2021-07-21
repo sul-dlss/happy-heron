@@ -1,40 +1,43 @@
-<div data-controller="complex-radio available-date">
-  <div class="mb-3 row">
-    <div class="col-sm-10 release-option" data-complex-radio-target="selection">
-      <%= form.radio_button :release, 'immediate', class: 'form-check-input',
-                            data: {
-                              action: 'complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#clearError'
-                            } %>
-      <%= form.label :release_immediate, 'Immediately once deposit is completed' %>
-    </div>
-  </div>
-
-  <div class="embargo-date mb-5">
-    <div class="row<%= ' is-invalid' if error? %>">
+<fieldset>
+  <legend class="h5">Release date</legend>
+  <div data-controller="complex-radio available-date">
+    <div class="mb-3 row">
       <div class="col-sm-10 release-option" data-complex-radio-target="selection">
-        <%= form.radio_button :release, 'embargo', class: 'form-check-input',
+        <%= form.radio_button :release, 'immediate', class: 'form-check-input',
                               data: {
-                                action: 'complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#validate',
-                                auto_citation_target: 'embargo'
+                                action: 'complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#clearError'
                               } %>
-        <%= form.label :release_embargo, 'On this date' %>
-
-        <div class="year">
-          <label for="work_embargo_year" class="visually-hidden">Embargo year</label>
-          <%= year_field %>
-        </div>
-
-        <div class="month">
-          <label for="work_embargo_month" class="visually-hidden">Embargo month</label>
-          <%= month_field %>
-        </div>
-
-        <div class="day">
-          <label for="work_embargo_day" class="visually-hidden">Embargo day</label>
-          <%= day_field %>
-        </div>
+        <%= form.label :release_immediate, 'Immediately once deposit is completed' %>
       </div>
     </div>
-    <div class="invalid-feedback" data-available-date-target="error"><%= error_message %></div>
+
+    <div class="embargo-date mb-5">
+      <div class="row<%= ' is-invalid' if error? %>">
+        <div class="col-sm-10 release-option" data-complex-radio-target="selection">
+          <%= form.radio_button :release, 'embargo', class: 'form-check-input',
+                                data: {
+                                  action: 'complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#validate',
+                                  auto_citation_target: 'embargo'
+                                } %>
+          <%= form.label :release_embargo, 'On this date' %>
+
+          <div class="year">
+            <label for="work_embargo_year" class="visually-hidden">Embargo year</label>
+            <%= year_field %>
+          </div>
+
+          <div class="month">
+            <label for="work_embargo_month" class="visually-hidden">Embargo month</label>
+            <%= month_field %>
+          </div>
+
+          <div class="day">
+            <label for="work_embargo_day" class="visually-hidden">Embargo day</label>
+            <%= day_field %>
+          </div>
+        </div>
+      </div>
+      <div class="invalid-feedback" data-available-date-target="error"><%= error_message %></div>
+    </div>
   </div>
-</div>
+</fieldset>
