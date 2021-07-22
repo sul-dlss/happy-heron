@@ -2,7 +2,17 @@
   <button class="btn collapse-header" data-bs-toggle="collapse" data-bs-target="#in-progress-list" role="button" aria-expanded="true" aria-controls="in-progress-list">
     Deposits in progress
   </button>
-  <ul id="in-progress-list" class="show">
-    <%= render Dashboard::InProgressRowComponent.with_collection(in_progress) %>
-  </ul>
+  <table id="in-progress-list" class="show table table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>Deposit</th>
+        <th>Collection</th>
+        <th>Deposit status</th>
+        <th>Last modified</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render Dashboard::InProgressRowComponent.with_collection(in_progress) %>
+    </tbody>
+  </table>
 </section>
