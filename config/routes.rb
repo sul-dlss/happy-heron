@@ -24,8 +24,6 @@ Rails.application.routes.draw do
       get :dashboard
     end
 
-    resource :validate, only: :show
-
     resources :works, shallow: true do
       member do
         get :delete_button

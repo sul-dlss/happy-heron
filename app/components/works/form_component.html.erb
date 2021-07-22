@@ -1,9 +1,8 @@
 <h1><%= page_title %></h1>
 <%= form_with model: work_form, url: url,
     data: {
-      controller: 'edit-deposit auto-citation unsaved-changes',
+      controller: 'auto-citation unsaved-changes',
       action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage',
-      edit_deposit_endpoint_value: work_form.persisted? ? work_validate_path(work.id) : collection_validate_path(work_form.collection_id),
       auto_citation_purl: purl
     },
     html: { class: "needs-validation work-editor", novalidate: true, multipart: true } do |f| %>
@@ -19,7 +18,6 @@
     </div>
   <% end %>
   <%= f.hidden_field :work_type %>
-  <%= render Works::DepositProgressComponent.new %>
   <%= render Works::VersionDescriptionComponent.new(form: f) %>
   <p class="form-instructions"><strong>* REQUIRED FIELDS</strong></p>
   <%= render Works::AddFilesComponent.new(form: f) %>
