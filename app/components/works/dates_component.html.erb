@@ -8,7 +8,14 @@
 
 <fieldset>
 
-    <legend class="h5">Creation date <%= render PopoverComponent.new key: 'work.creation_date' %></legend>
+    <legend class="visually-hidden">Creation date</legend>
+
+    <div class="mb-3 row">
+      <div class="col-sm-3 h6">
+        Creation date
+        <%= render PopoverComponent.new key: 'work.creation_date' %>
+      </div>
+    </div>
 
     <div class="mb-3 row" data-complex-radio-target="selection">
       <div class="col-sm-2">
