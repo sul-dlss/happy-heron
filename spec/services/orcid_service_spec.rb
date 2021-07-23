@@ -12,10 +12,6 @@ RSpec.describe OrcidService do
   let(:body) { '{"last-modified-date":{"value":1460763728406},"name":{"created-date":{"value":1460763728406},"last-modified-date":{"value":1460763728406},"given-names":{"value":"Justin"},"family-name":{"value":"Littman"},"credit-name":null,"source":null,"visibility":"public","path":"0000-0003-1527-0030"},"other-names":{"last-modified-date":null,"other-name":[],"path":"/0000-0003-1527-0030/other-names"},"biography":null,"path":"/0000-0003-1527-0030/personal-details"}' }
   # rubocop:enable Layout/LineLength
 
-  before do
-    WebMock.disable_net_connect!
-  end
-
   context 'when bad orcid id' do
     let(:orcid) { 'abcd-efgh-ijkl-mnop' }
 
