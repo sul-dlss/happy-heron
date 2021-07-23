@@ -16,7 +16,7 @@ export default class extends Controller {
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
 
-    if(this.isOnlyAssociation(item)) this.addAssociation()
+    if(this.isEmpty()) this.addAssociation()
   }
 
   getItemForButton(button) {
@@ -27,9 +27,8 @@ export default class extends Controller {
     return this.templateTarget.innerHTML.replace(/TEMPLATE_RECORD/g, new Date().valueOf())
   }
 
-  isOnlyAssociation(item) {
-    var onlyAssociation = true
-    item.parentNode.querySelectorAll(this.selectorValue).forEach((node) =>  {if(node.style.display === '') onlyAssociation = false})
-    return onlyAssociation
+  // Returns true if there are no visible rows on this form.
+  isEmpty() {
+    return Array.from(this.element.querySelectorAll(this.selectorValue)).find(node => node.style.display === '') === undefined
   }
 }
