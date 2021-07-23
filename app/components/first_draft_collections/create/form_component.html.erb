@@ -6,6 +6,6 @@
     },
     html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
   <%= render FirstDraftCollections::Create::DetailsComponent.new(form: form) %>
-  <%= render FirstDraftCollections::Create::SettingsComponent.new(form: form) %>
+  <%= render Collections::SettingsComponent.new(form: form) %>
   <%= render FirstDraftCollections::Create::ButtonsComponent.new(form: form) %>
 <% end %>
