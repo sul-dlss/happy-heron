@@ -19,5 +19,19 @@ module Works
     end
 
     attr_reader :work_version, :anchor, :label
+
+    def choose_label
+      label || "Choose Type and Edit #{title}"
+    end
+
+    def edit_label
+      label || "Edit #{title}"
+    end
+
+    private
+
+    def title
+      WorkTitlePresenter.show(work_version)
+    end
   end
 end

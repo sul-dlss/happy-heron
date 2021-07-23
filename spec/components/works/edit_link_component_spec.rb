@@ -3,14 +3,13 @@
 
 require 'rails_helper'
 
-RSpec.describe PurlCheckLinkComponent, type: :component do
+RSpec.describe Works::EditLinkComponent, type: :component do
   let(:work) { work_version.work }
   let(:work_version) { build_stubbed(:work_version, state: 'purl_reserved') }
   let(:anchor) { 'top' }
   let(:label) { 'A Small Letter B' }
-  let(:css_class) { 'edit' }
   let(:rendered) do
-    render_inline(described_class.new(work_version: work_version, anchor: anchor, label: label, css_class: css_class))
+    render_inline(described_class.new(work_version: work_version, anchor: anchor, label: label))
   end
 
   context 'with a work in purl reserved state' do
