@@ -1,0 +1,10 @@
+<div class="mb-3 row">
+  <div class="col-sm-2">
+    <%= form.label :manager_sunets, 'Managers *', class: 'col-form-label' %>
+    <%= render PopoverComponent.new key: 'collection.managers' %>
+  </div>
+  <div class="col-sm-10 col-xl-8">
+    <%= form.text_field :manager_sunets, class: "form-control", required: true %>
+    <div class="invalid-feedback">You must provide managers</div>
+  </div>
+</div>
