@@ -5,11 +5,6 @@
     margin-bottom: 1rem;
   }
 
-  .state-display {
-    font-weight: bold;
-    font-style: italic;
-  }
-
   .table {
     th {
       font-size: 14px;
@@ -39,13 +34,4 @@
 ul.collections {
   list-style-type: none;
   padding-left: 0;
-}
-
-#in-progress-list {
-  list-style-type: none;
-  padding-left: 0;
-
-  & > li {
-    margin-bottom: 1rem;
-  }
 }
