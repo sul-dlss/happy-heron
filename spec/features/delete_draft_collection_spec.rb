@@ -18,6 +18,9 @@ RSpec.describe 'Delete a draft collection', js: true do
       it 'allow users to delete the collection and destroys the model' do
         visit dashboard_path
 
+        # There is an occasional problem where the confirmation modal isn't triggered without a delay.
+        sleep(0.5)
+
         accept_confirm do
           within '#your-collections' do
             click_link "Delete #{collection_version.name}"
