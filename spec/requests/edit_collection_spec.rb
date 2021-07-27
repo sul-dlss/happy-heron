@@ -27,6 +27,7 @@ RSpec.describe 'Updating an existing collection' do
       it 'allows GETs to /collections/{id}/edit' do
         get "/collections/#{collection.id}/edit"
         expect(response).to have_http_status(:ok)
+        expect(response.body).to include '<title>SDR | MyString</title>'
       end
     end
 

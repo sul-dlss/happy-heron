@@ -37,6 +37,7 @@ RSpec.describe 'Dashboard requests' do
       expect(response).to be_successful
       expect(response.body).to include 'Happy little title'
       expect(response.body).not_to include 'Secret'
+      expect(response.body).to include '<title>SDR | Dashboard</title>'
     end
   end
 

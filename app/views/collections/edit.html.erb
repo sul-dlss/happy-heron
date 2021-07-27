@@ -1,7 +1,7 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
     breadcrumbs: [ { title: @form.model.head.name, link: collection_path(@form) },
-                   { title: 'Edit' } ]) %>
+                   { title: 'Edit', omit_title: true } ]) %>
 <% end %>
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="collection">
