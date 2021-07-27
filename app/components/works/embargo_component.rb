@@ -10,11 +10,11 @@ module Works
 
     attr_reader :form
 
-    def collection
-      form.object.model.fetch(:work).collection
-    end
+    delegate :collection, to: :work
 
-    delegate :user_can_set_availability?, to: :collection
+    def work
+      form.object.model.fetch(:work)
+    end
 
     # The access level is specified by the collection
     def user_can_set_access?
@@ -23,10 +23,22 @@ module Works
       false
     end
 
-    def availability_from_collection
-      return 'Immediately upon deposit.' if collection.release_option == 'immediate'
+    def user_can_set_availability?
+      return false if already_immediately_released? || already_embargo_released?
 
-      "Starting on #{collection.release_date.to_formatted_s(:long)}."
+      collection.user_can_set_availability?
+    end
+
+    def availability_from_collection
+      if already_immediately_released?
+        'This item was released immediately upon deposit.'
+      elsif already_embargo_released?
+        'This item has been released from embargo.'
+      elsif collection.release_option == 'immediate'
+        'Immediately upon deposit.'
+      else
+        "Starting on #{collection.release_date.to_formatted_s(:long)}."
+      end
     end
 
     def access_from_collection
@@ -37,6 +49,16 @@ module Works
       return 'your deposit is approved' if collection.review_enabled?
 
       'you click "Deposit" at the bottom of this page'
+    end
+
+    private
+
+    def already_immediately_released?
+      work.head&.deposited? && work.head.embargo_date.nil?
+    end
+
+    def already_embargo_released?
+      work.head&.deposited? && work.head.embargo_date.present? && work.head.embargo_date < Time.zone.today
     end
   end
 end

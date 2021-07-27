@@ -12,6 +12,7 @@ RSpec.describe Works::EmbargoComponent do
   let(:rendered) { render_inline(described_class.new(form: form)) }
 
   before do
+    work.head = work_version
     work_form.prepopulate!
   end
 
@@ -20,7 +21,7 @@ RSpec.describe Works::EmbargoComponent do
       .to include('Settings for release date and download access')
   end
 
-  context 'when user can choose availablity' do
+  context 'when user can choose availability' do
     let(:collection) { build(:collection, release_option: 'depositor-selects') }
 
     it 'renders the component' do
@@ -63,6 +64,32 @@ RSpec.describe Works::EmbargoComponent do
 
     it 'renders the component' do
       expect(rendered.to_html).to include "Starting on #{release_date}"
+    end
+  end
+
+  context 'when the collection has been deposited and release is immediate' do
+    let(:work_version) { build(:work_version, work: work, state: 'deposited') }
+
+    it 'renders the component' do
+      expect(rendered.to_html).to include 'This item was released immediately upon deposit.'
+    end
+  end
+
+  context 'when the collection has been deposited and embargo has elapsed' do
+    let(:work_version) { build(:work_version, work: work, state: 'deposited', embargo_date: Time.zone.today - 1.month) }
+
+    it 'renders the component' do
+      expect(rendered.to_html).to include 'This item has been released from embargo.'
+    end
+  end
+
+  context 'when the collection has been deposited and embargo has not elapsed' do
+    let(:collection) { build(:collection, :depositor_selects_access, release_option: 'depositor-selects') }
+    let(:work_version) { build(:work_version, work: work, state: 'deposited', embargo_date: Time.zone.today + 1.month) }
+
+    it 'renders the component' do
+      expect(rendered.to_html)
+        .to include('Select when the files in your deposit will be downloadable from the PURL page.')
     end
   end
 end
