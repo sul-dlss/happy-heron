@@ -24,9 +24,9 @@ module Works
     end
 
     def availability_from_collection
-      return 'immediately upon deposit' if collection.release_option == 'immediate'
+      return 'Immediately upon deposit.' if collection.release_option == 'immediate'
 
-      "starting on #{collection.release_date.to_formatted_s(:long)}"
+      "Starting on #{collection.release_date.to_formatted_s(:long)}."
     end
 
     def access_from_collection

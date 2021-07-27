@@ -105,7 +105,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
         fill_in 'Created range end year', with: '2020'
         select 'October', from: 'Created range end month'
         select '30', from: 'Created range end day'
-        select 'Everyone', from: 'Who can access?'
+        select 'Everyone', from: 'Who can download the files?'
 
         fill_in 'Abstract', with: 'User provided abstract'
         check 'Oral history'

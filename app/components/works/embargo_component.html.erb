@@ -1,30 +1,49 @@
 <section id="release">
-  <% if !user_can_set_availability? && !user_can_set_access? %>
-    <header>Release of this deposit for discovery and download after publication *</header>
-  <% else %>
-    <header>Manage release of this deposit for discovery and download after publication</header>
-  <% end %>
-
-  <% if user_can_set_availability? %>
-    <p>Select when the files in your deposit will be downloadable from the PURL page.
-      If you select "Immediately", your files will be available shortly after <%= when_available_statement %>.
-      Or you may specify a specific date in the future.</p>
-
-    <%= render Works::AvailableDateComponent.new(form: form) %>
-    <% if user_can_set_access? %>
-      <%= render Works::AccessComponent.new(form: form) %>
-    <% else %>
-      <p>The files in your deposit will be downloadable by <%= I18n.t "collection.access.#{access_from_collection}" %>.</p>
+  <header>
+    Settings for release date and download access
+    <% if user_can_set_availability? || user_can_set_access? %>
+     *
     <% end %>
+  </header>
+  <% if user_can_set_availability? %>
+    <fieldset class="mb-5">
+      <legend class="h5">
+        Release date *
+      </legend>
+      <p>Select when the files in your deposit will be downloadable from the PURL page.
+        If you select "Immediately", your files will be available shortly after <%= when_available_statement %>.
+        Or you may specify a specific date in the future.</p>
+      <div class="mb-3 inner-container">
+        <%= render Works::AvailableDateComponent.new(form: form) %>
+      </div>
+    </fieldset>
   <% else %>
-   <% if user_can_set_access?%>
-    <p>The files in your deposit will be downloadable from the PURL
-      page <%= availability_from_collection %>.</p>
-     <%= render Works::AccessComponent.new(form: form) %>
-   <% else %>
-     <p>The files in your deposit will be downloadable by <%= I18n.t "collection.access.#{access_from_collection}" %>
-       from the PURL page <%= availability_from_collection %>.</p>
-   <% end %>
+    <fieldset class="mb-5">
+      <legend class="h5">
+        Release date
+      </legend>
+      <div class="mb-3 inner-container">
+        <%= availability_from_collection %>
+      </div>
+    </fieldset>
   <% end %>
-
+  <% if user_can_set_access? %>
+    <fieldset class="mb-5">
+      <legend class="h5">
+        Download access *
+      </legend>
+      <div class="mb-3 inner-container">
+        <%= render Works::AccessComponent.new(form: form) %>
+      </div>
+    </fieldset>
+  <% else %>
+    <fieldset class="mb-5">
+      <legend class="h5">
+        Download access
+      </legend>
+      <div class="mb-3 inner-container">
+        <p>The files in your deposit will be downloadable by <%= I18n.t "collection.access.#{access_from_collection}" %>.</p>
+      </div>
+    </fieldset>
+  <% end %>
 </section>

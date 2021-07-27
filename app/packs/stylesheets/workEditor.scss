@@ -17,7 +17,6 @@
   .release-option {
     @include embargo;
     align-items: center;
-    font-size: 20px;
 
     input[type="radio"]:not(:checked) + label {
       color: $btn-link-disabled-color;
@@ -70,5 +69,9 @@
     background-color: $ibis-white;
     border-color: $stanford-cardinal;
     border-width: 3px;
+  }
+
+  div.embargo-date {
+    margin-bottom: 1rem !important;
   }
 }
