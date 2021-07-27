@@ -23,7 +23,7 @@ RSpec.describe Works::FormComponent do
                   'List authors and contributors',
                   'Enter dates related to your deposit',
                   'Describe your deposit',
-                  'Manage release of this deposit',
+                  'Settings for release date and download access',
                   'Select a license')
     expect(rendered.to_html)
       .not_to include("What's changing?")

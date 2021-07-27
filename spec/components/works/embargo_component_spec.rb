@@ -17,7 +17,7 @@ RSpec.describe Works::EmbargoComponent do
 
   it 'renders the component' do
     expect(rendered.to_html)
-      .to include('Manage release of this deposit for discovery and download after publication')
+      .to include('Settings for release date and download access')
   end
 
   context 'when user can choose availablity' do
@@ -31,7 +31,7 @@ RSpec.describe Works::EmbargoComponent do
 
   context 'when the collection is configured for immediate deposit' do
     it 'renders the component' do
-      expect(rendered.to_html).to include 'immediately upon deposit.'
+      expect(rendered.to_html).to include 'Immediately upon deposit.'
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe Works::EmbargoComponent do
     let(:release_date) { (Time.zone.today + 1.year).to_formatted_s(:long) }
 
     it 'renders the component' do
-      expect(rendered.to_html).to include "starting on #{release_date}"
+      expect(rendered.to_html).to include "Starting on #{release_date}"
     end
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe Works::AccessComponent, type: :component do
 
   it 'renders the component' do
     expect(rendered.to_html)
-      .to include('Select which audience you would like to have access to download')
+      .to include('Who can download the files?')
   end
 
   context 'when collection access is depositor selects' do
