@@ -118,7 +118,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
         fill_in 'Keyword', with: 'Springs'
 
-        uncheck 'Use default citation'
+        find('label.switch').click # Use auto-generated citation
         fill_in 'Provided citation', with: 'Citation from user input'
 
         click_link 'Terms of Deposit'
