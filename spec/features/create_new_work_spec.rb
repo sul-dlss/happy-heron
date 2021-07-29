@@ -73,7 +73,8 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           click_button('Choose files')
         end
 
-        expect(page).to have_content('Duplicate file sul.svg')
+        expect(page).to have_content('Duplicate file')
+        click_button('Remove file', match: :first)
         # End of client-side validation testing
 
         fill_in 'Title of deposit', with: 'My Title'
