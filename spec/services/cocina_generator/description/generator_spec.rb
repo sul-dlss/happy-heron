@@ -104,6 +104,14 @@ RSpec.describe CocinaGenerator::Description::Generator do
       }
     ]
   end
+  let(:citation_status_note) do
+    [
+      {
+        type: 'citation status',
+        value: 'false'
+      }
+    ]
+  end
   let(:admin_metadata) do
     {
       event: [
@@ -186,7 +194,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
                 uri: 'http://id.loc.gov/vocabulary/relators/'
               }
             },
-            contributor_role
+            note: citation_status_note
           ]
         }
       ],
