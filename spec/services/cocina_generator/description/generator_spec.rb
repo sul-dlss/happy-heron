@@ -332,7 +332,8 @@ RSpec.describe CocinaGenerator::Description::Generator do
             contributor: [
               {
                 name: [{ value: contributor.full_name }],
-                role: publisher_roles
+                role: publisher_roles,
+                type: 'organization'
               }
             ],
             date: [
@@ -382,7 +383,8 @@ RSpec.describe CocinaGenerator::Description::Generator do
             contributor: [
               {
                 name: [{ value: contributor.full_name }],
-                role: publisher_roles
+                role: publisher_roles,
+                type: 'organization'
               }
             ]
           }
@@ -445,7 +447,8 @@ RSpec.describe CocinaGenerator::Description::Generator do
             contributor: [
               {
                 name: [{ value: pub_contrib.full_name }],
-                role: publisher_roles
+                role: publisher_roles,
+                type: 'organization'
               }
             ],
             date: [
