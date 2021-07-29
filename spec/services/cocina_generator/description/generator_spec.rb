@@ -101,8 +101,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
         code: 'aut',
         uri: 'http://id.loc.gov/vocabulary/relators/aut',
         source: marc_relator_source
-      },
-      contributor_role
+      }
     ]
   end
   let(:admin_metadata) do
