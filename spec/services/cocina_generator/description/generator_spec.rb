@@ -256,13 +256,14 @@ RSpec.describe CocinaGenerator::Description::Generator do
         contributor: [
           {
             name: [{ value: contributor1.full_name }],
+            type: 'event',
             status: 'primary',
             role: [
               {
                 value: 'event'
-              },
-              contributor_role
-            ]
+              }
+            ],
+            note: citation_status_note
           },
           {
             name: [
@@ -289,7 +290,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
               {
                 value: 'conference'
               },
-              contributor_role
+              note: citation_status_note
             ]
           }
         ],
