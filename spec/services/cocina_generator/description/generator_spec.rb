@@ -193,9 +193,9 @@ RSpec.describe CocinaGenerator::Description::Generator do
                 code: 'marcrelator',
                 uri: 'http://id.loc.gov/vocabulary/relators/'
               }
-            },
-            note: citation_status_note
-          ]
+            }
+          ],
+          note: citation_status_note
         }
       ],
       relatedResource: [
@@ -249,7 +249,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     it 'creates forms as well as contributors in description cocina model' do
       expect(model).to eq(
         note: [
-          { type: 'summary', value: 'test abstract' },
+          { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
@@ -321,7 +321,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     it 'creates event of type publication with date' do
       expect(model).to eq(
         note: [
-          { type: 'summary', value: 'test abstract' },
+          { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
@@ -371,7 +371,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     it 'creates event of type publication without date' do
       expect(model).to eq(
         note: [
-          { type: 'summary', value: 'test abstract' },
+          { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
@@ -413,7 +413,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     it 'creates event of type publication with date' do
       expect(model).to eq(
         note: [
-          { type: 'summary', value: 'test abstract' },
+          { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
         ],
         title: [{ value: 'Test title' }],
