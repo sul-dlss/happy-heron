@@ -515,6 +515,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
                     { value: '2020-03-04', type: 'start', qualifier: 'approximate' },
                     { value: '2020-10-31', type: 'end', qualifier: 'approximate' }
                   ],
+                  qualifier: 'approximate',
                   type: 'creation'
                 }
               ]
