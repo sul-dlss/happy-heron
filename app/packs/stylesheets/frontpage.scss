@@ -63,9 +63,12 @@
     input:placeholder-shown {
        font-style: italic;
     }
-
   }
 
+  a.btn {
+    color: $white;
+    border-color: $white;
+  }
 }
 
 .whys {

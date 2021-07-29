@@ -31,7 +31,22 @@
 
             <div id="notifications"></div>
 
-            <div id="login" class="nav-link">
+            <%= link_to('Help', '#contactUsModal',
+                        class: 'nav-link',
+                        data: {
+                          bs_toggle: 'modal',
+                          bs_target: '#contactUsModal',
+                          controller: 'contact-us'
+                        }) %> &#8226;
+            <%= link_to('SDR Services', Settings.sdr_url,
+                        class: 'nav-link') %> &#8226;
+            <%= link_to('Terms of Deposit', '#termsOfDepositModal',
+                        class: 'nav-link',
+                        data: {
+                          bs_toggle: 'modal',
+                          bs_target: '#termsOfDepositModal'
+                        }) %> &#8226;
+            <div id="login">
               <% if current_user %>
                 <%= link_to('Logout', destroy_user_session_path, class: 'nav-link') %>
               <% else %>
@@ -39,19 +54,6 @@
               <% end %>
             </div>
 
-            <%= link_to('Help', '#contactUsModal',
-                        class: 'nav-link',
-                        data: {
-                          bs_toggle: 'modal',
-                          bs_target: '#contactUsModal',
-                          controller: 'contact-us'
-                        }) %>
-            <%= link_to('Terms of Deposit', '#termsOfDepositModal',
-                        class: 'nav-link',
-                        data: {
-                          bs_toggle: 'modal',
-                          bs_target: '#termsOfDepositModal'
-                        }) %>
           </nav>
         </header>
         <% if controller_name != 'welcome' %>
