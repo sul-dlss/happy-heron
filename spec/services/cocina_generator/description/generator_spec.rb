@@ -167,7 +167,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
         { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source }
       ],
       note: [
-        { type: 'summary', value: 'test abstract' },
+        { type: 'abstract', value: 'test abstract' },
         { type: 'preferred citation', value: 'Test citation :link:' }
       ],
       title: [{ value: 'Test title' }],
