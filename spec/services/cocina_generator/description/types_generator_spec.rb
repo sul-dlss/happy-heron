@@ -245,11 +245,60 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
 
     let(:work_version) { build(:work_version, work_type: work_type, subtype: work_subtypes) }
 
-    context 'with Text - Essay (LC genre)' do
-      let(:work_type) { 'text' }
-      let(:work_subtypes) { ['Essay'] }
+    context 'with type only, resource type with URI' do
+      let(:work_type) { 'Data' }
+      let(:work_subtypes) { [] }
 
-      it 'generates cocina props' do
+      xit 'not implemented' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Data',
+                    type: 'type'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              },
+              {
+                value: 'Dataset',
+                type: 'resource type',
+                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
+                source: {
+                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
+                }
+              },
+              {
+                value: 'Data sets',
+                type: 'genre',
+                uri: 'https://id.loc.gov/authorities/genreForms/gf2018026119',
+                source: {
+                  code: 'lcgft'
+                }
+              },
+              {
+                value: 'dataset',
+                type: 'genre',
+                source: {
+                  code: 'local'
+                }
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with type and subtype' do
+      let(:work_type) { 'text' }
+      let(:work_subtypes) { ['Article'] }
+
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             form: [
@@ -260,7 +309,7 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                     type: 'type'
                   },
                   {
-                    value: 'Essay',
+                    value: 'Article',
                     type: 'subtype'
                   }
                 ],
@@ -270,11 +319,58 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 type: 'resource type'
               },
               {
-                value: 'Essays',
-                type: 'genre',
-                uri: 'http://id.loc.gov/authorities/genreForms/gf2014026094',
+                value: 'text',
+                type: 'resource type',
                 source: {
-                  code: 'lcgft'
+                  value: 'MODS resource types'
+                }
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with type and multiple subtypes' do
+      let(:work_type) { 'software/code' }
+      let(:work_subtypes) { %w[Code Documentation] }
+
+      xit 'not implemented' do
+        expect(cocina_props).to eq(
+          {
+            form: [
+              {
+                structuredValue: [
+                  {
+                    value: 'Software/Code',
+                    type: 'type'
+                  },
+                  {
+                    value: 'Code',
+                    type: 'subtype'
+                  },
+                  {
+                    value: 'Documentation',
+                    type: 'subtype'
+                  }
+                ],
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                },
+                type: 'resource type'
+              },
+              {
+                value: 'software, multimedia',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'computer program',
+                uri: 'http://id.loc.gov/vocabulary/marcgt/com',
+                source: {
+                  code: 'marcgt'
                 }
               },
               {
@@ -290,146 +386,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
       end
     end
 
-    context 'with Data - 3D model (unauthorized genre)' do
-      let(:work_type) { 'data' }
-      let(:work_subtypes) { ['3D model'] }
-
-      it 'generates cocina props' do
-        expect(cocina_props).to eq(
-          {
-            form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Data',
-                    type: 'type'
-                  },
-                  {
-                    value: '3D model',
-                    type: 'subtype'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                value: 'Data sets',
-                type: 'genre',
-                uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
-                source: {
-                  code: 'lcgft'
-                }
-              },
-              {
-                value: 'dataset',
-                type: 'genre',
-                source: {
-                  code: 'local'
-                }
-              },
-              {
-                value: 'three-dimensional scan',
-                type: 'genre',
-                source: {
-                  code: 'local'
-                }
-              },
-              {
-                value: 'Dataset',
-                type: 'resource type',
-                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
-                source: {
-                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
-                }
-              },
-              {
-                value: 'three-dimensional object',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              }
-            ]
-          }
-        )
-      end
-    end
-
-    context 'with Data - GIS (multiple genres, multiple types of resource)' do
-      let(:work_type) { 'data' }
-      let(:work_subtypes) { ['Geospatial data'] }
-
-      it 'generates cocina props' do
-        expect(cocina_props).to eq(
-          {
-            form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Data',
-                    type: 'type'
-                  },
-                  {
-                    value: 'Geospatial data',
-                    type: 'subtype'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                value: 'Data sets',
-                type: 'genre',
-                uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
-                source: {
-                  code: 'lcgft'
-                }
-              },
-              {
-                value: 'dataset',
-                type: 'genre',
-                source: {
-                  code: 'local'
-                }
-              },
-              {
-                value: 'cartographic dataset',
-                type: 'genre',
-                uri: 'http://rdvocab.info/termList/RDAContentType/1001',
-                source: {
-                  code: 'rdacontent'
-                }
-              },
-              {
-                value: 'Dataset',
-                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
-                type: 'resource type',
-                source: {
-                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
-                }
-              },
-              {
-                value: 'cartographic',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              }
-            ]
-          }
-        )
-      end
-    end
-
     context 'with Software - Code, Documentation (multiple subtypes)' do
       let(:work_type) { 'software, multimedia' }
       let(:work_subtypes) { %w[Code Documentation] }
 
-      it 'generates cocina props' do
+      xit 'can be deleted' do
         expect(cocina_props).to eq(
           {
             form: [
