@@ -127,6 +127,12 @@ RSpec.describe CocinaGenerator::Description::Generator do
       ]
     }
   end
+  let(:fast_source) do
+    {
+      code: 'fast',
+      uri: 'http://id.worldcat.org/fast/'
+    }
+  end
 
   it 'creates description cocina model' do
     expect(model).to eq(
@@ -156,9 +162,9 @@ RSpec.describe CocinaGenerator::Description::Generator do
         }
       ],
       subject: [
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' },
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri' }
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
+        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source }
       ],
       note: [
         { type: 'summary', value: 'test abstract' },
