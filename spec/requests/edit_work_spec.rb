@@ -26,6 +26,7 @@ RSpec.describe 'Updating an existing work' do
       it 'shows the form' do
         get "/works/#{work.id}/edit"
         expect(response).to have_http_status(:ok)
+        expect(response.body).to match(%r{<title>SDR \| MyString \| Test title \d+</title>})
       end
     end
 

@@ -16,6 +16,7 @@ RSpec.describe 'Welcome page' do
       visit '/'
       expect(page).to have_link('Logout')
       expect(page).not_to have_selector '#breadcrumbs'
+      expect(page.title).to eq 'SDR | Stanford Digital Repository' # Default title
     end
   end
 

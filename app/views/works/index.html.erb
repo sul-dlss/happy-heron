@@ -1,7 +1,7 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
     breadcrumbs: [ { title: @collection.head.name, link: collection_path(@collection) },
-                   { title: 'Deposits' } ])
+                   { title: 'Deposits', omit_title: true } ])
   %>
 <% end %>
 <main id="content" class="mb-3 mb-md-5">
