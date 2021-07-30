@@ -286,7 +286,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
           },
           {
             name: [{ value: contributor3.full_name }],
-            type: 'event',
+            type: 'conference',
             role: [
               {
                 value: 'conference'

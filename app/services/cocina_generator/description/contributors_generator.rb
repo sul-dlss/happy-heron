@@ -105,7 +105,8 @@ module CocinaGenerator
 
       sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(String)) }
       def contributor_type(contributor)
-        return 'event' if ['Conference', 'Event'].include?(contributor.role)
+        return 'conference' if contributor.role == 'Conference'
+        return 'event' if contributor.role == 'Event'
 
         contributor.contributor_type
       end
@@ -118,12 +119,14 @@ module CocinaGenerator
         roles
       end
 
-      sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(T::Array[Cocina::Models::DescriptiveValue])) }
+      sig do
+        params(contributor: T.any(Contributor, Author)).returns(T.nilable(T::Array[Cocina::Models::DescriptiveValue]))
+      end
       def notes(contributor)
         return unless contributor.type == 'Contributor'
 
         [
-          { type: 'citation status', value: 'false'}
+          Cocina::Models::DescriptiveValue.new(type: 'citation status', value: 'false')
         ]
       end
 
