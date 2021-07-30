@@ -65,7 +65,13 @@ module CocinaGenerator
       sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
       def keywords
         work_version.keywords.map do |keyword|
-          props = { value: T.must(keyword.label), type: 'topic', uri: keyword.uri.presence }.compact
+          props = {
+            value: T.must(keyword.label), type: 'topic'
+          }
+          if keyword.uri.present?
+            props[:uri] = keyword.uri
+            props[:source] = { code: 'fast', uri: 'http://id.worldcat.org/fast/' }
+          end
           Cocina::Models::DescriptiveValue.new(props)
         end
       end
@@ -76,7 +82,7 @@ module CocinaGenerator
 
         Cocina::Models::DescriptiveValue.new(
           value: work_version.abstract,
-          type: 'summary'
+          type: 'abstract'
         )
       end
 
@@ -121,6 +127,7 @@ module CocinaGenerator
           structured_values << date_props_for(date.from, type: 'start') if date.from
           structured_values << date_props_for(date.to, type: 'end') if date.to
           date_props[:structuredValue] = structured_values
+          date_props[:qualifier] = 'approximate' if date.from&.uncertain? || date.to&.uncertain?
         else
           date_props.merge!(date_props_for(date))
         end
