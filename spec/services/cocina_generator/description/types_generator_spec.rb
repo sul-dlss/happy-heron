@@ -246,10 +246,10 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
     let(:work_version) { build(:work_version, work_type: work_type, subtype: work_subtypes) }
 
     context 'with type only, resource type with URI' do
-      let(:work_type) { 'Data' }
+      let(:work_type) { 'data' }
       let(:work_subtypes) { [] }
 
-      xit 'not implemented' do
+      it 'generates cocina' do
         expect(cocina_props).to eq(
           {
             form: [
@@ -266,17 +266,9 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 type: 'resource type'
               },
               {
-                value: 'Dataset',
-                type: 'resource type',
-                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
-                source: {
-                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
-                }
-              },
-              {
                 value: 'Data sets',
                 type: 'genre',
-                uri: 'https://id.loc.gov/authorities/genreForms/gf2018026119',
+                uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
                 source: {
                   code: 'lcgft'
                 }
@@ -286,6 +278,14 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 type: 'genre',
                 source: {
                   code: 'local'
+                }
+              },
+              {
+                value: 'Dataset',
+                type: 'resource type',
+                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
+                source: {
+                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
                 }
               }
             ]
@@ -298,7 +298,7 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
       let(:work_type) { 'text' }
       let(:work_subtypes) { ['Article'] }
 
-      xit 'not implemented' do
+      it 'generates cocina' do
         expect(cocina_props).to eq(
           {
             form: [
@@ -332,65 +332,10 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
     end
 
     context 'with type and multiple subtypes' do
-      let(:work_type) { 'software/code' }
-      let(:work_subtypes) { %w[Code Documentation] }
-
-      xit 'not implemented' do
-        expect(cocina_props).to eq(
-          {
-            form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Software/Code',
-                    type: 'type'
-                  },
-                  {
-                    value: 'Code',
-                    type: 'subtype'
-                  },
-                  {
-                    value: 'Documentation',
-                    type: 'subtype'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                value: 'software, multimedia',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              },
-              {
-                value: 'computer program',
-                uri: 'http://id.loc.gov/vocabulary/marcgt/com',
-                source: {
-                  code: 'marcgt'
-                }
-              },
-              {
-                value: 'text',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              }
-            ]
-          }
-        )
-      end
-    end
-
-    context 'with Software - Code, Documentation (multiple subtypes)' do
       let(:work_type) { 'software, multimedia' }
       let(:work_subtypes) { %w[Code Documentation] }
 
-      xit 'can be deleted' do
+      it 'generates cocina' do
         expect(cocina_props).to eq(
           {
             form: [
