@@ -1,0 +1,9 @@
+<div class="mb-3 row">
+  <div class="col-sm-2">
+    <%= form.label :depositor_sunets, 'Depositors', class: 'col-form-label' %>
+    <%= render PopoverComponent.new key: 'collection.depositors' %>
+  </div>
+  <div class="col-sm-10 col-xl-8">
+    <%= form.text_area :depositor_sunets, class: "form-control" %>
+  </div>
+</div>

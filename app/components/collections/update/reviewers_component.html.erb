@@ -1,0 +1,11 @@
+<p>Enter SUNet IDs of participants. Separate each one with a comma and a space. (e.g. janelath, lelandst)</p>
+<div class="mb-3 row">
+  <div class="col-sm-2">
+    <%= form.label :reviewer_sunets, 'Additional Reviewers', class: 'col-form-label' %>
+    <%= render PopoverComponent.new key: 'collection.reviewers' %>
+  </div>
+  <div class="col-sm-10 col-xl-8">
+    <%= form.text_field :reviewer_sunets, class: "form-control", required: false, data: { review_workflow_target: 'reviewers' } %> <!-- TODO: should prob have at least one required if enabled? -->
+    <div class="invalid-feedback">You must provide reviewers</div>
+  </div>
+</div>
