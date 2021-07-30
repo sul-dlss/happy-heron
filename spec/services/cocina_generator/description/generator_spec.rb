@@ -514,8 +514,8 @@ RSpec.describe CocinaGenerator::Description::Generator do
                 {
                   encoding: { code: 'edtf' },
                   structuredValue: [
-                    { value: '2020-03-04', type: 'start', qualifier: 'approximate' },
-                    { value: '2020-10-31', type: 'end', qualifier: 'approximate' }
+                    { value: '2020-03-04', type: 'start' },
+                    { value: '2020-10-31', type: 'end' }
                   ],
                   qualifier: 'approximate',
                   type: 'creation'

@@ -127,17 +127,26 @@ module CocinaGenerator
         )
       end
 
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/CyclomaticComplexity
       sig { params(date: EDTF::Interval).returns(T::Hash[T.untyped, T.untyped]) }
       def interval_props_for(date)
         structured_values = []
         structured_values << date_props_for(date.from, type: 'start') if date.from
         structured_values << date_props_for(date.to, type: 'end') if date.to
-        {
+        result_props = {
           structuredValue: structured_values
-        }.tap do |props|
-          props[:qualifier] = 'approximate' if date.from&.uncertain? || date.to&.uncertain?
+        }
+
+        if date.from&.uncertain? || date.to&.uncertain?
+          result_props[:qualifier] = 'approximate'
+          result_props[:structuredValue].each { |struct_date_val| struct_date_val.delete(:qualifier) }
         end
+
+        result_props.compact
       end
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       sig { params(date: Date, type: T.nilable(String)).returns(T::Hash[T.untyped, T.untyped]) }
       def date_props_for(date, type: nil)
