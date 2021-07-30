@@ -68,8 +68,7 @@ gem 'reform-rails', '~> 0.2.0'
 gem 'sdr-client', '~> 0.58'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
-# pinned because 0.7.2 broke the build with 181 new errors related (apparently?) to the parlour 5.0.0 bump
-gem 'sorbet-rails', '0.7.1'
+gem 'sorbet-rails', '~> 0.7.4'
 gem 'sorbet-runtime'
 gem 'state_machines-activerecord'
 gem 'turbo-rails', github: 'hotwired/turbo-rails', ref: 'd89e1a0'
