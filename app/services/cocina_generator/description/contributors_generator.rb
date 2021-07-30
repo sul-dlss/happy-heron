@@ -63,7 +63,8 @@ module CocinaGenerator
         contrib_hash = {
           name: name_descriptive_value(contributor),
           type: contributor_type(contributor),
-          role: cocina_roles(contributor)
+          role: cocina_roles(contributor),
+          note: notes(contributor)
         }.compact
 
         contrib_hash[:status] = 'primary' if primary
@@ -74,7 +75,8 @@ module CocinaGenerator
       def publication_contributor(contributor)
         contrib_hash = {
           name: name_descriptive_value(contributor),
-          role: [T.must(marcrelator_role(contributor.role))]
+          role: [T.must(marcrelator_role(contributor.role))],
+          type: contributor_type(contributor)
         }
         Cocina::Models::Contributor.new(contrib_hash)
       end
@@ -103,8 +105,7 @@ module CocinaGenerator
 
       sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(String)) }
       def contributor_type(contributor)
-        return 'conference' if contributor.role == 'Conference'
-        return nil if contributor.role == 'Event'
+        return 'event' if %w[Conference Event].include?(contributor.role)
 
         contributor.contributor_type
       end
@@ -114,10 +115,18 @@ module CocinaGenerator
         roles = []
         roles << (marcrelator_role(contributor.role) ||
           Cocina::Models::DescriptiveValue.new(value: contributor.role.downcase))
-        if contributor.type == 'Contributor' && has_contributor_role?(roles)
-          roles << marcrelator_role('Contributing author')
-        end
         roles
+      end
+
+      sig do
+        params(contributor: T.any(Contributor, Author)).returns(T.nilable(T::Array[Cocina::Models::DescriptiveValue]))
+      end
+      def notes(contributor)
+        return unless contributor.type == 'Contributor'
+
+        [
+          Cocina::Models::DescriptiveValue.new(type: 'citation status', value: 'false')
+        ]
       end
 
       sig { params(roles: T::Array[Cocina::Models::DescriptiveValue]).returns(T::Boolean) }

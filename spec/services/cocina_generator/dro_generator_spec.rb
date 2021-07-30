@@ -111,7 +111,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
             note: [
               {
                 value: 'test abstract',
-                type: 'summary'
+                type: 'abstract'
               },
               {
                 value: 'test citation',
@@ -167,7 +167,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
             note: [
               {
                 value: 'test abstract',
-                type: 'summary'
+                type: 'abstract'
               },
               {
                 value: 'test citation',
@@ -245,7 +245,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
             note: [
               {
                 value: 'test abstract',
-                type: 'summary'
+                type: 'abstract'
               },
               {
                 value: 'test citation',
@@ -323,7 +323,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
             note: [
               {
                 value: 'test abstract',
-                type: 'summary'
+                type: 'abstract'
               },
               {
                 value: 'test citation',

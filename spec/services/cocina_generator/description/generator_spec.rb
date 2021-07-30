@@ -142,7 +142,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     }
   end
 
-  xit 'creates description cocina model' do
+  it 'creates description cocina model' do
     expect(model).to eq(
       event: [
         {
@@ -246,7 +246,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
             title: 'Test title')
     end
 
-    xit 'creates forms as well as contributors in description cocina model' do
+    it 'creates forms as well as contributors in description cocina model' do
       expect(model).to eq(
         note: [
           { type: 'abstract', value: 'test abstract' },
@@ -281,17 +281,18 @@ RSpec.describe CocinaGenerator::Description::Generator do
               }
             ],
             type: 'person',
-            role: author_roles
+            role: author_roles,
+            note: citation_status_note
           },
           {
             name: [{ value: contributor3.full_name }],
-            type: 'conference',
+            type: 'event',
             role: [
               {
                 value: 'conference'
-              },
-              note: citation_status_note
-            ]
+              }
+            ],
+            note: citation_status_note
           }
         ],
         form: types_form,
@@ -319,7 +320,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
             title: 'Test title')
     end
 
-    xit 'creates event of type publication with date' do
+    it 'creates event of type publication with date' do
       expect(model).to eq(
         note: [
           { type: 'abstract', value: 'test abstract' },
@@ -370,7 +371,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
             contributors: [contributor], title: 'Test title')
     end
 
-    xit 'creates event of type publication without date' do
+    it 'creates event of type publication without date' do
       expect(model).to eq(
         note: [
           { type: 'abstract', value: 'test abstract' },
@@ -406,14 +407,15 @@ RSpec.describe CocinaGenerator::Description::Generator do
 
   # NOTE: Arcadia to add h2 mapping spec for when there is a person and a publisher
   context 'when author, publisher and publication date are entered by user' do
-    let(:person_contrib) { build(:person_contributor, role: 'Author') }
+    let(:person_author) { build(:person_author, role: 'Author') }
     let(:pub_contrib) { build(:org_contributor, role: 'Publisher') }
     let(:work_version) do
       build(:work_version, :published, :with_contact_emails,
-            contributors: [person_contrib, pub_contrib], title: 'Test title')
+            authors: [person_author],
+            contributors: [pub_contrib], title: 'Test title')
     end
 
-    xit 'creates event of type publication with date' do
+    it 'creates event of type publication with date' do
       expect(model).to eq(
         note: [
           { type: 'abstract', value: 'test abstract' },
@@ -426,17 +428,17 @@ RSpec.describe CocinaGenerator::Description::Generator do
               {
                 structuredValue: [
                   {
-                    value: person_contrib.first_name,
+                    value: person_author.first_name,
                     type: 'forename'
                   },
                   {
-                    value: person_contrib.last_name,
+                    value: person_author.last_name,
                     type: 'surname'
                   }
                 ]
               }
             ],
-            type: person_contrib.contributor_type,
+            type: person_author.contributor_type,
             status: 'primary',
             role: author_roles
           }
@@ -503,7 +505,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
         build(:work_version, :with_approximate_creation_date_range)
       end
 
-      xit 'creates event of type creation with approximate date' do
+      it 'creates event of type creation with approximate date' do
         expect(model[:event]).to eq(
           [
             {
