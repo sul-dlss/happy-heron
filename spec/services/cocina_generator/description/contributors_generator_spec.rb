@@ -6,8 +6,6 @@ require 'rails_helper'
 RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
   subject(:cocina_model) { described_class.generate(work_version: work_version) }
 
-  let(:cocina_props) { cocina_model.map(&:to_h) }
-
   let(:marc_relator_source) do
     {
       code: 'marcrelator',
@@ -16,31 +14,22 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
   end
 
   let(:contributing_author_role) do
-    {
+    Cocina::Models::DescriptiveValue.new(
       value: 'contributor',
       code: 'ctb',
       uri: 'http://id.loc.gov/vocabulary/relators/ctb',
       source: marc_relator_source
-    }
+    )
   end
 
   let(:publisher_roles) do
     [
-      {
+      Cocina::Models::DescriptiveValue.new(
         value: 'publisher',
         code: 'pbl',
         uri: 'http://id.loc.gov/vocabulary/relators/pbl',
         source: marc_relator_source
-      }
-    ]
-  end
-
-  let(:citation_status_notes) do
-    [
-      {
-        value: 'false',
-        type: 'citation status'
-      }
+      )
     ]
   end
 
@@ -63,28 +52,26 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         let(:cocina_model) { described_class.events_from_publisher_contributors(work_version: work_version) }
 
         it 'returns Array of populated cocina model events, one for each publisher' do
-          expect(cocina_props).to eq(
+          expect(cocina_model).to eq(
             [
-              {
+              Cocina::Models::Event.new(
                 type: 'publication',
                 contributor: [
                   {
                     name: [{ value: org_contrib1.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
+                    role: publisher_roles
                   }
                 ]
-              },
-              {
+              ),
+              Cocina::Models::Event.new(
                 type: 'publication',
                 contributor: [
                   {
                     name: [{ value: org_contrib2.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
+                    role: publisher_roles
                   }
                 ]
-              }
+              )
             ]
           )
         end
@@ -129,30 +116,28 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         end
 
         it 'returns Array of populated cocina model events, one for each publisher' do
-          expect(cocina_props).to eq(
+          expect(cocina_model).to eq(
             [
-              {
+              Cocina::Models::Event.new(
                 type: 'publication',
                 date: pub_date_value,
                 contributor: [
                   {
                     name: [{ value: org_contrib1.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
+                    role: publisher_roles
                   }
                 ]
-              },
-              {
+              ),
+              Cocina::Models::Event.new(
                 type: 'publication',
                 date: pub_date_value,
                 contributor: [
                   {
                     name: [{ value: org_contrib2.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
+                    role: publisher_roles
                   }
                 ]
-              }
+              )
             ]
           )
         end
@@ -165,19 +150,19 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
     let(:work_version) { build(:work_version, contributors: [contributor]) }
 
     it 'creates Cocina::Models::Contributor without marc relator role' do
-      expect(cocina_props).to eq(
+      expect(cocina_model).to eq(
         [
-          {
+          Cocina::Models::Contributor.new(
             name: [{ value: contributor.full_name }],
-            type: 'event',
+            type: 'conference',
             status: 'primary',
             role: [
               {
                 value: 'conference'
-              }
-            ],
-            note: citation_status_notes
-          }
+              },
+              contributing_author_role
+            ]
+          )
         ]
       )
     end
@@ -188,9 +173,9 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
     let(:work_version) { build(:work_version, contributors: [contributor]) }
 
     it 'creates Cocina::Models::Contributor with DataCite role' do
-      expect(cocina_props).to eq(
+      expect(cocina_model).to eq(
         [
-          {
+          Cocina::Models::Contributor.new(
             name: [
               {
                 structuredValue: [
@@ -207,9 +192,8 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
             ],
             type: 'person',
             status: 'primary',
-            role: [contributing_author_role],
-            note: citation_status_notes
-          }
+            role: [contributing_author_role]
+          )
         ]
       )
     end
@@ -507,7 +491,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:person_contributor, first_name: 'Leland', last_name: 'Stanford') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'generates cocina' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -585,7 +569,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Sponsor') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'generates cocina' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -653,7 +637,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:author) { build(:org_author, full_name: 'San Francisco Symphony Concert', role: 'Event') }
       let(:work_version) { build(:work_version, authors: [author]) }
 
-      it 'generates cocina' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -682,7 +666,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'San Francisco Symphony Concert', role: 'Event') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'generates cocina' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -754,7 +738,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                     value: 'LDCX'
                   }
                 ],
-                type: 'event',
+                type: 'conference',
                 status: 'primary',
                 role: [
                   {
@@ -773,7 +757,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'LDCX', role: 'Conference') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'generates cocina' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -812,7 +796,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                     value: 'LDCX'
                   }
                 ],
-                type: 'event',
+                type: 'conference',
                 role: [
                   {
                     value: 'conference'
@@ -870,7 +854,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Funder') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'creates Cocina::Models::Contributor props' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -973,7 +957,6 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                         value: 'Stanford University Press'
                       }
                     ],
-                    type: 'organization',
                     role: [
                       {
                         value: 'publisher',
@@ -1043,7 +1026,6 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                         value: 'Stanford University Press'
                       }
                     ],
-                    type: 'organization',
                     role: [
                       {
                         value: 'publisher',
@@ -1064,6 +1046,155 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       end
     end
 
+    context 'with cited contributor with Publisher role and publication date' do
+      let(:author) { build(:org_author, full_name: 'Stanford University Press', role: 'Publisher') }
+      let(:work_version) { build(:work_version, authors: [author], published_edtf: Date.parse('2020-02-02')) }
+
+      xit 'can be deleted' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    value: 'Stanford University Press'
+                  }
+                ],
+                type: 'organization',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'publisher',
+                    code: 'pbl',
+                    uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ],
+            event: [
+              {
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [
+                      {
+                        value: 'Stanford University Press'
+                      }
+                    ],
+                    role: [
+                      {
+                        value: 'publisher',
+                        code: 'pbl',
+                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                        source: {
+                          code: 'marcrelator',
+                          uri: 'http://id.loc.gov/vocabulary/relators/'
+                        }
+                      }
+                    ]
+                  }
+                ],
+                date: [
+                  {
+                    encoding: {
+                      code: 'w3cdtf'
+                    },
+                    value: '2020-02-02',
+                    status: 'primary',
+                    type: 'publication'
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'with cited contributor and uncited contributor with Publisher role and publication date' do
+      let(:author) { build(:person_author, first_name: 'Jane', last_name: 'Stanford', role: 'Author') }
+      let(:contributor) { build(:org_contributor, full_name: 'Stanford University Press', role: 'Publisher') }
+      let(:work_version) do
+        build(:work_version, authors: [author], contributors: [contributor], published_edtf: Date.parse('2020-02-02'))
+      end
+
+      xit 'can be deleted' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [
+                  {
+                    value: 'author',
+                    code: 'aut',
+                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                    source: {
+                      code: 'marcrelator',
+                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                    }
+                  }
+                ]
+              }
+            ],
+            event: [
+              {
+                type: 'publication',
+                contributor: [
+                  {
+                    name: [
+                      {
+                        value: 'Stanford University Press'
+                      }
+                    ],
+                    role: [
+                      {
+                        value: 'publisher',
+                        code: 'pbl',
+                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                        source: {
+                          code: 'marcrelator',
+                          uri: 'http://id.loc.gov/vocabulary/relators/'
+                        }
+                      }
+                    ]
+                  }
+                ],
+                date: [
+                  {
+                    encoding: {
+                      code: 'w3cdtf'
+                    },
+                    value: '2020-02-02',
+                    status: 'primary',
+                    type: 'publication'
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
     # NOTE: not included in xit: mappings with ORCID
   end
 end
