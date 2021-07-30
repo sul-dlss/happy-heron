@@ -491,7 +491,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:person_contributor, first_name: 'Leland', last_name: 'Stanford') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -550,6 +550,12 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                       uri: 'http://id.loc.gov/vocabulary/relators/'
                     }
                   }
+                ],
+                note: [
+                  {
+                    type: 'citation status',
+                    value: 'false'
+                  }
                 ]
               }
             ]
@@ -563,7 +569,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Sponsor') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -612,15 +618,12 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                       code: 'marcrelator',
                       uri: 'http://id.loc.gov/vocabulary/relators/'
                     }
-                  },
+                  }
+                ],
+                note: [
                   {
-                    value: 'contributor',
-                    code: 'ctb',
-                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
+                    type: 'citation status',
+                    value: 'false'
                   }
                 ]
               }
@@ -634,7 +637,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:author) { build(:org_author, full_name: 'San Francisco Symphony Concert', role: 'Event') }
       let(:work_version) { build(:work_version, authors: [author]) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -644,6 +647,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                     value: 'San Francisco Symphony Concert'
                   }
                 ],
+                type: 'event',
                 status: 'primary',
                 role: [
                   {
@@ -662,7 +666,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'San Francisco Symphony Concert', role: 'Event') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -696,6 +700,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                 ]
               },
               {
+                type: 'event',
                 name: [
                   {
                     value: 'San Francisco Symphony Concert'
@@ -704,15 +709,12 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                 role: [
                   {
                     value: 'event'
-                  },
+                  }
+                ],
+                note: [
                   {
-                    value: 'contributor',
-                    code: 'ctb',
-                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
+                    type: 'citation status',
+                    value: 'false'
                   }
                 ]
               }
@@ -755,7 +757,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'LDCX', role: 'Conference') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'not implemented' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -798,15 +800,12 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                 role: [
                   {
                     value: 'conference'
-                  },
+                  }
+                ],
+                note: [
                   {
-                    value: 'contributor',
-                    code: 'ctb',
-                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
+                    type: 'citation status',
+                    value: 'false'
                   }
                 ]
               }
@@ -855,7 +854,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:contributor) { build(:org_contributor, full_name: 'Stanford University', role: 'Funder') }
       let(:work_version) { build(:work_version, authors: [author], contributors: [contributor]) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'creates Cocina::Models::Contributor props' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -904,15 +903,12 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                       code: 'marcrelator',
                       uri: 'http://id.loc.gov/vocabulary/relators/'
                     }
-                  },
+                  }
+                ],
+                note: [
                   {
-                    value: 'contributor',
-                    code: 'ctb',
-                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
+                    type: 'citation status',
+                    value: 'false'
                   }
                 ]
               }
@@ -1054,7 +1050,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       let(:author) { build(:org_author, full_name: 'Stanford University Press', role: 'Publisher') }
       let(:work_version) { build(:work_version, authors: [author], published_edtf: Date.parse('2020-02-02')) }
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'can be deleted' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -1126,7 +1122,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         build(:work_version, authors: [author], contributors: [contributor], published_edtf: Date.parse('2020-02-02'))
       end
 
-      it 'creates Cocina::Models::Contributor props' do
+      xit 'can be deleted' do
         expect(cocina_props).to eq(
           {
             contributor: [
@@ -1199,5 +1195,6 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         )
       end
     end
+    # NOTE: not included in xit: mappings with ORCID
   end
 end
