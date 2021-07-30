@@ -105,7 +105,8 @@ module CocinaGenerator
 
       sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(String)) }
       def contributor_type(contributor)
-        return 'event' if %w[Conference Event].include?(contributor.role)
+        return 'conference' if contributor.role == 'Conference'
+        return 'event' if contributor.role == 'Event'
 
         contributor.contributor_type
       end

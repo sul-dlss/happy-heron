@@ -169,7 +169,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         [
           {
             name: [{ value: contributor.full_name }],
-            type: 'event',
+            type: 'conference',
             status: 'primary',
             role: [
               {
@@ -187,7 +187,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
     let(:contributor) { build(:person_contributor) }
     let(:work_version) { build(:work_version, contributors: [contributor]) }
 
-    it 'creates Cocina::Models::Contributor with DataCite role' do
+    it 'creates Cocina::Models::Contributor' do
       expect(cocina_props).to eq(
         [
           {
@@ -754,7 +754,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                     value: 'LDCX'
                   }
                 ],
-                type: 'event',
+                type: 'conference',
                 status: 'primary',
                 role: [
                   {
@@ -812,7 +812,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                     value: 'LDCX'
                   }
                 ],
-                type: 'event',
+                type: 'conference',
                 role: [
                   {
                     value: 'conference'
