@@ -110,7 +110,6 @@ module CocinaGenerator
         event_for(work_version.published_edtf, 'publication')
       end
 
-      # rubocop:disable Metrics/MethodLength
       sig do
         params(date: T.nilable(T.any(Date, EDTF::Interval)), type: String).returns(T.nilable(Cocina::Models::Event))
       end
@@ -120,24 +119,25 @@ module CocinaGenerator
         date_props = {
           encoding: { code: 'edtf' },
           type: type
-        }
-
-        if date.is_a?(EDTF::Interval)
-          structured_values = []
-          structured_values << date_props_for(date.from, type: 'start') if date.from
-          structured_values << date_props_for(date.to, type: 'end') if date.to
-          date_props[:structuredValue] = structured_values
-          date_props[:qualifier] = 'approximate' if date.from&.uncertain? || date.to&.uncertain?
-        else
-          date_props.merge!(date_props_for(date))
-        end
+        }.merge(date.is_a?(EDTF::Interval) ? interval_props_for(date) : date_props_for(date))
 
         Cocina::Models::Event.new(
           type: type,
           date: [date_props]
         )
       end
-      # rubocop:enable Metrics/MethodLength
+
+      sig { params(date: EDTF::Interval).returns(T::Hash[T.untyped, T.untyped]) }
+      def interval_props_for(date)
+        structured_values = []
+        structured_values << date_props_for(date.from, type: 'start') if date.from
+        structured_values << date_props_for(date.to, type: 'end') if date.to
+        {
+          structuredValue: structured_values
+        }.tap do |props|
+          props[:qualifier] = 'approximate' if date.from&.uncertain? || date.to&.uncertain?
+        end
+      end
 
       sig { params(date: Date, type: T.nilable(String)).returns(T::Hash[T.untyped, T.untyped]) }
       def date_props_for(date, type: nil)
