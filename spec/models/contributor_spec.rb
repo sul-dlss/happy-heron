@@ -34,5 +34,17 @@ RSpec.describe Contributor do
 
       it { is_expected.to be_valid }
     end
+
+    context 'when the orcid is invalid' do
+      subject { build(:org_contributor, orcid: '790-123') }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context 'when the orcid is valid' do
+      subject { build(:org_contributor, orcid: '1234-5678-9012-345X') }
+
+      it { is_expected.to be_valid }
+    end
   end
 end

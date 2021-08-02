@@ -61,6 +61,10 @@ class AbstractContributor < ApplicationRecord
   validates :full_name, presence: true, unless: :person?
 
   validates :contributor_type, presence: true, inclusion: { in: %w[person organization] }
+  validates :orcid, allow_blank: true, format: {
+    with: /\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z/,
+    message: 'must be in the format 0000-0000-0000-000X'
+  }
 
   sig { params(citable: T::Boolean).returns(T::Hash[String, T::Array[String]]) }
   def self.grouped_roles(citable:)
