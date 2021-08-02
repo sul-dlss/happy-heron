@@ -11,10 +11,12 @@
     <% else %>
       <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
       <div class="row">
-        <div class="dz-progress col-md-2 align-self-start"><span class="dz-upload" data-dz-uploadprogress></span></div>
-        <div class="dz-success-mark col align-self-end"><span class="fas fa-check fa-sm" /></div>
-        <div class="dz-error-mark col align-self-end"><span class="fas fa-exclamation-triangle fa-lg" /></div>
-        <div class="dz-error-message col d-sm-inline-flex flex-wrap"><span data-dz-errormessage=""></span></div>
+        <div class="dz-progress col-md-2"><span class="dz-upload" data-dz-uploadprogress></span></div>
+        <div class="col">
+          <div class="dz-success-mark"><span class="fas fa-check fa-sm" /></div>
+          <div class="dz-error-mark"><span class="fas fa-exclamation-triangle fa-sm" /></div>
+        </div>
+        <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
       </div>
     <% end %>
   </div>
@@ -37,8 +39,13 @@
     <%= render PopoverComponent.new key: 'work.hide_file' %>
   </div>
 
+  <div class="invalid-feedback col">We were unable to upload your file due to size or other issues. Delete this file and try again.</div>
+
   <div class="col-md-1">
-    <%= button_tag type: 'button', class: "dz-remove pull-right btn", data: { action: "click->dropzone#removeAssociation" } do %>
+    <%= button_tag type: 'button',
+                   class: "dz-remove pull-right btn",
+                   "aria-label": "Remove file",
+                   data: { action: "click->dropzone#removeAssociation" } do %>
       <span class="far fa-trash-alt"></span>
     <% end %>
   </div>

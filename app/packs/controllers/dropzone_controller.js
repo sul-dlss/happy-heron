@@ -3,10 +3,8 @@ import { Controller } from "stimulus";
 import { DirectUpload } from "@rails/activestorage";
 import {
   getMetaValue,
-  toArray,
   findElement,
   removeElement,
-  insertAfter
 } from "helpers";
 
 export default class extends Controller {
@@ -71,6 +69,7 @@ export default class extends Controller {
     const item = event.target.closest('.dz-complete')
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
+    item.querySelector('input.hidden-file')?.classList.remove('is-invalid')
     this.fileCount--
     this.validate()
     this.displayValidateMessage()
@@ -83,14 +82,13 @@ export default class extends Controller {
 
   bindEvents() {
     this.dropZone.on("addedfile", file => {
-      if (this.checkForDuplicates(file.name)) {
-        this.dropZone.emit("error", file, `Duplicate file ${file.name}`);
-        return
-      }
       setTimeout(() => {
-          file.accepted && createDirectUploadController(this, file).start();
-          this.fileCount++
-          this.enableSubmission()
+        file.accepted && createDirectUploadController(this, file).start();
+        this.fileCount++
+        this.enableSubmission()
+        if (this.checkForDuplicates(file.name)) {
+          this.dropZone.emit("error", file, 'Duplicate file');
+        }
       }, 500);
       this.done = false
     });
@@ -106,10 +104,19 @@ export default class extends Controller {
 
     this.dropZone.on("error", (file, error) => {
       file.status = Dropzone.ERROR;
+      file.previewElement.querySelector('.upload-description').style.display = 'none'
+      file.previewElement.querySelector('.dz-details').style.display = 'none'
+      file.previewElement.querySelector('.thumb img').style.display = 'none'
+      const feedbackElem = file.previewElement.querySelector('.invalid-feedback')
+      feedbackElem.style.display = 'none'
+      feedbackElem.innerText = `Unable to upload file due to: ${error}. Delete the file and try again.`
+      file.previewElement.querySelector('.invalid-feedback').style.display = 'block'
+      file.previewElement.querySelector('.dz-upload').classList.remove('dz-upload-success')
+      file.previewElement.querySelector('.dz-upload').classList.add('dz-upload-error')
+      file.previewElement.querySelector('.dz-error-mark').style.display = 'block'
+      file.previewElement.querySelector('.dz-success-mark').style.display = 'none'
+
       this.containerTarget.classList.add("is-invalid")
-      this.feedbackTarget.style.display = 'block'
-      this.feedbackTarget.innerText = error
-      this.dropZone.removeFile(file)
     })
 
     this.dropZone.on("complete", () => {
@@ -172,9 +179,11 @@ class DirectUploadController {
     this.addDescription();
     this.addHideCheckbox();
     this.directUpload.create((error, attributes) => {
-      if (error) {
-        removeElement(this.hiddenInput);
-        this.emitDropzoneError(error);
+      // If the file is named dropzone_error.txt it will trigger an error for testing.
+      if (error || attributes['filename'] == 'dropzone_error.txt') {
+        // Note that setCustomValidity doesn't invalidate a hidden input, so setting class instead.
+        this.hiddenInput.classList.add('is-invalid')
+        this.emitDropzoneError(error || 'Test error');
       } else {
         this.hiddenInput.value = attributes.signed_id;
         this.emitDropzoneSuccess();
@@ -187,7 +196,7 @@ class DirectUploadController {
     detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
   }
 
-  addHideCheckbox() {
+  addHideCheckbox()   {
     const detail = this.file.previewElement.querySelector('.dz-details')
     detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
   }
@@ -195,8 +204,9 @@ class DirectUploadController {
   createHiddenInput() {
     const input = document.createElement("input");
     input.type = "hidden";
+    input.classList.add('hidden-file')
     input.name = `work[attached_files_attributes][${this.count}][file]`
-    insertAfter(input, this.source.previewsContainerTarget);
+    this.file.previewElement.appendChild(input);
     return input;
   }
 
