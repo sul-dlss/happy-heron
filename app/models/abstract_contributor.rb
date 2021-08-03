@@ -62,6 +62,9 @@ class AbstractContributor < ApplicationRecord
 
   validates :contributor_type, presence: true, inclusion: { in: %w[person organization] }
 
+  validates :orcid, format: { with: Orcid::REGEX }, allow_nil: true, if: :person?
+  validates :orcid, absence: true, unless: :person?
+
   sig { params(citable: T::Boolean).returns(T::Hash[String, T::Array[String]]) }
   def self.grouped_roles(citable:)
     return GROUPED_ROLES if citable
