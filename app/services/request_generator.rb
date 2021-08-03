@@ -61,7 +61,7 @@ class RequestGenerator
   # If the user decides they want a DOI minted on a new version, we need to set it here.
   def doi
     return work.doi if work.doi
-    return if work_version.first_draft? || !work.assign_doi?
+    return if !work.assign_doi? || work.druid.blank?
 
     "#{Settings.datacite.prefix}/#{work.druid.delete_prefix('druid:')}"
   end
