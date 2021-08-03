@@ -1064,6 +1064,48 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       end
     end
 
-    # NOTE: not included in xit: mappings with ORCID
+    context 'with contributor with ORCID' do
+      let(:author) do
+        build(:person_author, first_name: 'Jane', last_name: 'Stanford', orcid: 'https://orcid.org/0000-0000-0000-0000')
+      end
+      let(:work_version) { build(:work_version, authors: [author]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          {
+            contributor: [
+              {
+                name: [
+                  {
+                    structuredValue: [
+                      {
+                        value: 'Jane',
+                        type: 'forename'
+                      },
+                      {
+                        value: 'Stanford',
+                        type: 'surname'
+                      }
+                    ]
+                  }
+                ],
+                type: 'person',
+                status: 'primary',
+                role: [contributing_author_role],
+                identifier: [
+                  {
+                    value: '0000-0000-0000-0000',
+                    type: 'ORCID',
+                    source: {
+                      uri: 'https://orcid.org'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
   end
 end

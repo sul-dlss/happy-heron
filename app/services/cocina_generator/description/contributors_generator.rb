@@ -64,7 +64,8 @@ module CocinaGenerator
           name: name_descriptive_value(contributor),
           type: contributor_type(contributor),
           role: cocina_roles(contributor),
-          note: notes(contributor)
+          note: notes(contributor),
+          identifier: identifiers(contributor)
         }.compact
 
         contrib_hash[:status] = 'primary' if primary
@@ -215,7 +216,20 @@ module CocinaGenerator
         'spn' => 'sponsor',
         'ths' => 'thesis advisor'
       }.freeze
+
+      sig do
+        params(contributor: T.any(Contributor, Author)).returns(T.nilable(T::Array[Cocina::Models::DescriptiveValue]))
+      end
+      def identifiers(contributor)
+        return unless contributor.orcid
+
+        source, value = Orcid.split(contributor.orcid)
+
+        [
+          Cocina::Models::DescriptiveValue.new(type: 'ORCID', value: value, source: { uri: source })
+        ]
+      end
+      # rubocop:enable Metrics/ClassLength
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end
