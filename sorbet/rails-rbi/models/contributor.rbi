@@ -62,6 +62,15 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def last_name?; end
 
+  sig { returns(T.nilable(String)) }
+  def orcid; end
+
+  sig { params(value: T.nilable(T.any(String, Symbol))).void }
+  def orcid=(value); end
+
+  sig { returns(T::Boolean) }
+  def orcid?; end
+
   sig { returns(String) }
   def role; end
 
@@ -89,6 +98,15 @@ module Contributor::GeneratedAttributeMethods
   sig { returns(T::Boolean) }
   def updated_at?; end
 
+  sig { returns(T.nilable(Integer)) }
+  def weight; end
+
+  sig { params(value: T.nilable(T.any(Numeric, ActiveSupport::Duration))).void }
+  def weight=(value); end
+
+  sig { returns(T::Boolean) }
+  def weight?; end
+
   sig { returns(Integer) }
   def work_version_id; end
 
@@ -114,6 +132,9 @@ module Contributor::GeneratedAssociationMethods
 
   sig { params(value: ::WorkVersion).void }
   def work_version=(value); end
+
+  sig { returns(::WorkVersion) }
+  def reload_work_version; end
 end
 
 module Contributor::CustomFinderMethods

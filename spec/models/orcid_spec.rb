@@ -17,6 +17,26 @@ RSpec.describe Orcid do
     end
   end
 
+  describe '#split' do
+    let(:split) { described_class.split(orcid_id) }
+
+    context 'with an ORCID' do
+      let(:orcid_id) { 'https://orcid.org/0000-0003-1527-0030' }
+
+      it 'returns split ORCID' do
+        expect(split).to eq(['https://orcid.org', '0000-0003-1527-0030'])
+      end
+    end
+
+    context 'with an invalid ORCID' do
+      let(:orcid_id) { nil }
+
+      it 'returns nil' do
+        expect(split).to eq([nil, nil])
+      end
+    end
+  end
+
   def valid?(orcid_id)
     Orcid::REGEX.match(orcid_id).present?
   end
