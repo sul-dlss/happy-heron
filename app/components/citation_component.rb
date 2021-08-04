@@ -14,7 +14,7 @@ class CitationComponent < ApplicationComponent
 
     attrs[:disabled] = work_version.first_draft? || work_version.purl_reserved?
 
-    tag.button attrs do
+    tag.button(**attrs) do
       # It's a SafeBuffer, not a String
       tag.span(class: 'fas fa-quote-left') + ' Cite' # rubocop:disable Style/StringConcatenation
     end
