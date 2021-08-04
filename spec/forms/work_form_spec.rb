@@ -217,4 +217,71 @@ RSpec.describe WorkForm do
       end
     end
   end
+
+  describe 'release validation' do
+    context 'with a collection that allows depositor to select embargo' do
+      let(:errors) { form.errors.where(:release) }
+      let(:messages) { errors.map(&:message) }
+
+      context 'when release has already been set to immediate' do
+        let(:collection) { build(:collection, release_option: 'depositor-selects') }
+        let(:work_version) { create(:work_version_with_work, :deposited, collection: collection) }
+
+        context 'when release is nil' do
+          it 'validates' do
+            form.validate(release: nil)
+            expect(messages).to be_empty
+          end
+        end
+
+        context 'when release is immediate' do
+          it 'validates' do
+            form.validate(release: 'immediate')
+            expect(messages).to be_empty
+          end
+        end
+      end
+
+      context 'when release has already been set to embargo and it elapsed' do
+        let(:collection) { build(:collection, release_option: 'depositor-selects') }
+        let(:work_version) do
+          create(:work_version_with_work, :deposited, embargo_date: 2.weeks.ago, collection: collection)
+        end
+
+        context 'when release is nil' do
+          it 'validates' do
+            form.validate(release: nil)
+            expect(messages).to be_empty
+          end
+        end
+
+        context 'when release is immediate' do
+          it 'validates' do
+            form.validate(release: 'immediate')
+            expect(messages).to be_empty
+          end
+        end
+      end
+
+      context 'when release has not been set yet' do
+        before do
+          work.collection = build(:collection, release_option: 'depositor-selects')
+        end
+
+        context 'when release is nil' do
+          it 'validates' do
+            form.validate(release: nil)
+            expect(messages).to eq ["can't be blank", 'is not included in the list']
+          end
+        end
+
+        context 'when release is immediate' do
+          it 'validates' do
+            form.validate(release: 'immediate')
+            expect(messages).to be_empty
+          end
+        end
+      end
+    end
+  end
 end

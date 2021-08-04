@@ -17,9 +17,22 @@ class WorkForm < DraftWorkForm
   validates :published_edtf, created_in_past: true
   validates :release, presence: true,
                       inclusion: { in: %w[immediate embargo] },
-                      if: :user_can_set_availability?
-  validates :embargo_date, embargo_date: true, if: :user_can_set_availability?
+                      if: :availability_component_present?
+  validates :embargo_date, embargo_date: true, if: :availability_component_present?
   validates :agree_to_terms, presence: true
 
-  delegate :user_can_set_availability?, to: :collection
+  private
+
+  delegate :already_immediately_released?, :already_embargo_released?, to: :work
+
+  def work
+    model[:work]
+  end
+
+  def availability_component_present?
+    return false if already_immediately_released?
+    return false if already_embargo_released?
+
+    collection.user_can_set_availability?
+  end
 end

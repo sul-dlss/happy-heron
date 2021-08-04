@@ -51,14 +51,6 @@ module Works
       'you click "Deposit" at the bottom of this page'
     end
 
-    private
-
-    def already_immediately_released?
-      work.head&.deposited? && work.head.embargo_date.nil?
-    end
-
-    def already_embargo_released?
-      work.head&.deposited? && work.head.embargo_date.present? && work.head.embargo_date < Time.zone.today
-    end
+    delegate :already_immediately_released?, :already_embargo_released?, to: :work
   end
 end
