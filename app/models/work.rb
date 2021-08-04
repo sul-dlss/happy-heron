@@ -41,6 +41,16 @@ class Work < ApplicationRecord
     collection.head.name
   end
 
+  sig { returns(T.nilable(T::Boolean)) }
+  def already_immediately_released?
+    head&.deposited? && head.embargo_date.nil?
+  end
+
+  sig { returns(T.nilable(T::Boolean)) }
+  def already_embargo_released?
+    head&.deposited? && head.embargo_date.present? && head.embargo_date < Time.zone.today
+  end
+
   delegate :name, to: :depositor, prefix: true
   delegate :purl_reservation?, to: :head
 
