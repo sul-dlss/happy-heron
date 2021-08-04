@@ -19,7 +19,7 @@ class CollectionPolicy < ApplicationPolicy
   sig { returns(T::Boolean) }
   def show?
     administrator? || manages_collection?(record) ||
-      record.reviewed_by.include?(user) ||
+      reviews_collection? ||
       record.depositor_ids.include?(user.id)
   end
 
@@ -35,4 +35,18 @@ class CollectionPolicy < ApplicationPolicy
   end
 
   delegate :administrator?, :collection_creator?, to: :user_with_groups
+
+  sig { returns(T::Boolean) }
+  def review?
+    administrator? ||
+      manages_collection?(record) ||
+      reviews_collection?
+  end
+
+  private
+
+  sig { returns(T::Boolean) }
+  def reviews_collection?
+    record.reviewed_by.include?(user)
+  end
 end

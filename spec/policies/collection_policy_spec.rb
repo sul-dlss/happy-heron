@@ -57,4 +57,24 @@ RSpec.describe CollectionPolicy do
       it { is_expected.to include(collection) }
     end
   end
+
+  describe_rule :review? do
+    failed 'when user is not a collection creator'
+
+    succeed 'when user is an admin' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+    end
+
+    failed 'when user is depositor' do
+      let(:record) { build_stubbed(:collection, depositors: [user]) }
+    end
+
+    succeed 'when user is an reviewer' do
+      let(:record) { build_stubbed(:collection, reviewed_by: [user]) }
+    end
+
+    succeed 'when user is a manager' do
+      let(:record) { build_stubbed(:collection, managed_by: [user]) }
+    end
+  end
 end

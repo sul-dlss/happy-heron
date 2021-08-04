@@ -5,6 +5,7 @@
     <%= turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </td>
   <td><%= render Works::StateDisplayComponent.new(work_version: work.head) %></td>
+  <td class="visible-to-reviewer-<%= work.collection.id %>"><%= work.depositor.sunetid %></td>
   <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
   <td>
     <% if work.purl %>

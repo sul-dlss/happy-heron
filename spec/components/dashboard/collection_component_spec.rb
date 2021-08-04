@@ -61,6 +61,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     context 'when the user is a depositor' do
       it 'renders a table with just my works' do
         expect(rendered.css('.work-title a').map(&:text)).to eq ['my work']
+        expect(rendered.to_html).to include('display: none')
       end
     end
 
@@ -69,6 +70,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
       it 'renders all of the works' do
         expect(rendered.css('.work-title a').map(&:text)).to eq ['not mine', 'my work']
+        expect(rendered.to_html).not_to include('display: none')
       end
     end
   end
