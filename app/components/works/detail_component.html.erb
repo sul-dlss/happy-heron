@@ -94,18 +94,21 @@
     </tbody>
   </table>
 
-  <table class="table table-sm caption-header">
+  <table id="contributors" class="table table-sm caption-header">
     <caption>Authors and contributors
-      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'author', label: 'Edit authors and contributors') %>
+      <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'author', label: 'Edit authors and contributors') %>
     </caption>
     <tbody>
     <% contributors.each do |contributor| %>
       <tr>
         <% if contributor.person? %>
-          <td><%= contributor.first_name %> <%= contributor.last_name %></td>
+          <td>
+            <%= contributor.first_name %> <%= contributor.last_name %>
+          </td>
         <% else %>
           <td><%= contributor.full_name %></td>
         <% end %>
+        <td><%= render Works::Show::OrcidComponent.new(orcid: contributor.orcid) %></td>
         <td><%= contributor.role %></td>
       </tr>
     <% end %>

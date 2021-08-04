@@ -74,6 +74,20 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
   end
 
+  describe 'contributors' do
+    let(:work_version) { build_stubbed(:work_version, authors: [author1, author2], contributors: [contributor]) }
+    let(:author1) { build_stubbed(:person_author, orcid: 'https://orcid.org/0000-0002-1825-0097') }
+    let(:author2) { build_stubbed(:person_author) }
+    let(:contributor) { build_stubbed(:person_contributor, orcid: 'https://orcid.org/0000-0002-1825-0098') }
+
+    it 'renders the contributor' do
+      expect(rendered.css('#contributors a').to_html).to include('https://orcid.org/0000-0002-1825-0097')
+      expect(rendered.css('#contributors a').to_html).to include('https://orcid.org/0000-0002-1825-0098')
+      # Edit pencil and two links. No link for author without ORCID.
+      expect(rendered.css('#contributors').search('a').size).to eq 3
+    end
+  end
+
   describe '#created' do
     let(:work_version) { build_stubbed(:work_version, created_edtf: edtf) }
 
