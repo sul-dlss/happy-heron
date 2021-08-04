@@ -24,15 +24,24 @@ module Dashboard
       # displayable works and add another query to get the overall count, but
       # that would double the number of queries run for each instance of this
       # component.
-      scope = policy.apply_scope collection.works, type: :relation
+      scope = work_policy.apply_scope collection.works, type: :relation
       scope.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
+    end
+
+    def reviewer?
+      policy.review?
     end
 
     private
 
     sig { returns(WorkPolicy) }
-    def policy
+    def work_policy
       WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
+    end
+
+    sig { returns(CollectionPolicy) }
+    def policy
+      CollectionPolicy.new(collection, user: current_user, user_with_groups: user_with_groups)
     end
   end
 end

@@ -1,4 +1,14 @@
 <section>
+  <% cache [current_user, collection] do %>
+    <style>
+      <% if !reviewer? %>
+      .visible-to-reviewer-<%= collection.id %> {
+          display: none;
+      }
+      <% end %>
+    </style>
+  <% end %>
+
   <table class="table table-striped">
     <%= render 'dashboards/collection_header', collection: collection %>
     <thead class="table-light">
@@ -6,6 +16,7 @@
         <th>Deposits in collection</th>
         <th><span class="visually-hidden">Actions</span></th>
         <th>Deposit status</th>
+        <th class="visible-to-reviewer-<%= collection.id %>">Depositor</th>
         <th>Last modified</th>
         <th>Persistent link</th>
         <th>Citation</th>

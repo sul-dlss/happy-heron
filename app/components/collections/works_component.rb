@@ -21,9 +21,7 @@ module Collections
 
     sig { returns(T::Boolean) }
     def hide_depositor?
-      !(user_with_groups.administrator? ||
-        collection.managed_by.include?(current_user) ||
-        collection.reviewed_by.include?(current_user))
+      !collection_policy.review?
     end
 
     private
@@ -31,6 +29,11 @@ module Collections
     sig { returns(WorkVersionPolicy) }
     def policy
       WorkVersionPolicy.new(user: current_user, user_with_groups: user_with_groups)
+    end
+
+    sig { returns(CollectionPolicy) }
+    def collection_policy
+      CollectionPolicy.new(collection, user: current_user, user_with_groups: user_with_groups)
     end
   end
 end

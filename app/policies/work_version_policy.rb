@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-# Authorization policy for Work objects
+# Authorization policy for WorkVersion   objects
 class WorkVersionPolicy < ApplicationPolicy
   alias_rule :edit?, :update_type?, to: :update?
   alias_rule :delete?, to: :destroy?
@@ -75,8 +75,6 @@ class WorkVersionPolicy < ApplicationPolicy
   end
 
   def reviews_collection?
-    administrator? ||
-      manages_collection?(collection) ||
-      collection.reviewed_by.include?(user)
+    allowed_to?(:review?, collection)
   end
 end
