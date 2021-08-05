@@ -43,7 +43,7 @@ module Cocina::Models
     sig do
         params(url: T.nilable(T::Array[DescriptiveValue]),
                accessContact: T.nilable(T::Array[T::Hash[T.untyped, T.untyped]]),
-               digitalRepository: T.nilable(T::Array[T::Hash[T.untyped, T.untyped]]),
+               digitalRepository: T.nilable(T::Array[DescriptiveValue]),
         ).void
     end
   def initialize(url: nil, accessContact: nil, digitalRepository: nil); end
@@ -63,9 +63,10 @@ module Cocina::Models
       params(type: T.nilable(String),
              access: DescriptiveAccessMetadata,
              title: T::Array[DescriptiveValue],
-             note: T::Array[DescriptiveValue]).void
+             note: T::Array[DescriptiveValue],
+             purl: T.nilable(String)).void
     end
-    def initialize(type: nil, access: nil, title: nil, note: nil); end
+    def initialize(type: nil, access: nil, title: nil, note: nil, purl: nil); end
   end
 
   class DROStructural
