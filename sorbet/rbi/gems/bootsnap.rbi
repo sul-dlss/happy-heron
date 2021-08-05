@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/bootsnap/all/bootsnap.rbi
 #
-# bootsnap-1.7.5
+# bootsnap-1.7.6
 
 module Bootsnap
   def bundler?; end
@@ -93,6 +93,7 @@ end
 module Bootsnap::LoadPathCache::ChangeObserver::ArrayMixin
   def <<(entry); end
   def []=(*args, &block); end
+  def append(*entries); end
   def clear(*args, &block); end
   def collect!(*args, &block); end
   def compact!(*args, &block); end
@@ -106,6 +107,7 @@ module Bootsnap::LoadPathCache::ChangeObserver::ArrayMixin
   def keep_if(*args, &block); end
   def map!(*args, &block); end
   def pop(*args, &block); end
+  def prepend(*entries); end
   def push(*entries); end
   def reject!(*args, &block); end
   def replace(*args, &block); end

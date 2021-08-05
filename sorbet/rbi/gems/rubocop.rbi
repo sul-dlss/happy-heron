@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/rubocop/all/rubocop.rbi
 #
-# rubocop-1.18.3
+# rubocop-1.18.4
 
 module RuboCop
 end
@@ -2029,6 +2029,7 @@ class RuboCop::Cop::Layout::ClassStructure < RuboCop::Cop::Base
   def source_range_with_comment(node); end
   def start_line_position(node); end
   def walk_over_nested_class_definition(class_node); end
+  def whole_line_comment_at_line?(line); end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::VisibilityHelp
 end
@@ -2319,6 +2320,7 @@ class RuboCop::Cop::Layout::EndAlignment < RuboCop::Cop::Base
   def alignment_node(node); end
   def alignment_node_for_variable_style(node); end
   def asgn_variable_align_with(outer_node, inner_node); end
+  def assignment_or_operator_method(node); end
   def autocorrect(corrector, node); end
   def check_asgn_alignment(outer_node, inner_node); end
   def check_assignment(node, rhs); end
@@ -2457,7 +2459,7 @@ class RuboCop::Cop::Layout::FirstParameterIndentation < RuboCop::Cop::Base
   include RuboCop::Cop::MultilineElementIndentation
 end
 class RuboCop::Cop::Layout::HashAlignment < RuboCop::Cop::Base
-  def add_offences; end
+  def add_offenses; end
   def adjust(corrector, delta, range); end
   def alignment_for(pair); end
   def alignment_for_colons; end
@@ -2476,13 +2478,13 @@ class RuboCop::Cop::Layout::HashAlignment < RuboCop::Cop::Base
   def good_alignment?(column_deltas); end
   def ignore_hash_argument?(node); end
   def new_alignment(key); end
-  def offences_by; end
-  def offences_by=(arg0); end
+  def offenses_by; end
+  def offenses_by=(arg0); end
   def on_hash(node); end
   def on_send(node); end
   def on_super(node); end
   def on_yield(node); end
-  def register_offences_with_format(offences, format); end
+  def register_offenses_with_format(offenses, format); end
   def reset!; end
   extend RuboCop::Cop::AutoCorrector
   include RuboCop::Cop::HashAlignmentStyles
@@ -2559,7 +2561,7 @@ class RuboCop::Cop::Layout::IndentationStyle < RuboCop::Cop::Base
   def autocorrect(corrector, range); end
   def autocorrect_lambda_for_spaces(corrector, range); end
   def autocorrect_lambda_for_tabs(corrector, range); end
-  def find_offence(line, lineno); end
+  def find_offense(line, lineno); end
   def in_string_literal?(ranges, tabs_range); end
   def message(_node); end
   def on_new_investigation; end
@@ -3379,6 +3381,7 @@ class RuboCop::Cop::Lint::DuplicateBranch < RuboCop::Cop::Base
   def offense_range(duplicate_branch); end
   def on_branching_statement(node); end
   def on_case(node); end
+  def on_case_match(node); end
   def on_if(node); end
   def on_rescue(node); end
   include RuboCop::Cop::RescueNode
@@ -6067,7 +6070,6 @@ class RuboCop::Cop::Style::MutableConstant < RuboCop::Cop::Base
   def mutable_literal?(value); end
   def on_assignment(value); end
   def on_casgn(node); end
-  def on_or_asgn(node); end
   def operation_produces_immutable_object?(param0 = nil); end
   def range_enclosed_in_parentheses?(param0 = nil); end
   def requires_parentheses?(node); end
@@ -6874,6 +6876,7 @@ end
 class RuboCop::Cop::Style::SingleLineMethods < RuboCop::Cop::Base
   def allow_empty?; end
   def autocorrect(corrector, node); end
+  def break_line_before(corrector, node, range, indent_steps: nil); end
   def correct_to_endless(corrector, node); end
   def correct_to_endless?(body_node); end
   def correct_to_multiline(corrector, node); end
@@ -7824,6 +7827,7 @@ class RuboCop::ConfigValidator
   def reject_conflicting_safe_settings; end
   def reject_mutually_exclusive_defaults; end
   def smart_loaded_path(*args, &block); end
+  def suggestion(name); end
   def target_ruby; end
   def target_ruby_version; end
   def validate; end

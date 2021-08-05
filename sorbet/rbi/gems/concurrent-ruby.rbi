@@ -928,6 +928,7 @@ class Concurrent::CRubySet < Set
   def <(*args); end
   def <<(*args); end
   def <=(*args); end
+  def <=>(*args); end
   def ==(*args); end
   def ===(*args); end
   def >(*args); end
@@ -961,6 +962,7 @@ class Concurrent::CRubySet < Set
   def inspect(*args); end
   def intersect?(*args); end
   def intersection(*args); end
+  def join(*args); end
   def keep_if(*args); end
   def length(*args); end
   def map!(*args); end

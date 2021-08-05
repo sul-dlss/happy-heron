@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/view_component/all/view_component.rbi
 #
-# view_component-2.35.0
+# view_component-2.36.0
 
 module ViewComponent
   extend ActiveSupport::Autoload
@@ -75,10 +75,13 @@ module ViewComponent::SlotableV2
 end
 module ViewComponent::SlotableV2::ClassMethods
   def inherited(child); end
+  def raise_if_slot_registered(slot_name); end
   def register_slot(slot_name, collection:, callable:); end
   def renders_many(slot_name, callable = nil); end
   def renders_one(slot_name, callable = nil); end
-  def validate_slot_name(slot_name); end
+  def slot_type(slot_name); end
+  def validate_plural_slot_name(slot_name); end
+  def validate_singular_slot_name(slot_name); end
 end
 class ViewComponent::Base < ActionView::Base
   def _output_postamble; end
