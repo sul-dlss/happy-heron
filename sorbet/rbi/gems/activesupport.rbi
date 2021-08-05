@@ -39,7 +39,7 @@ class Hash
   def reverse_merge(other_hash); end
   def reverse_update(other_hash); end
   def self.[](*arg0); end
-  def self.from_xml(xml, disallowed_types = nil); end
+  def self.try_convert(arg0); end
   def slice!(*keys); end
   def stringify_keys!; end
   def stringify_keys; end
@@ -1860,6 +1860,15 @@ module DateAndTime::Calculations
   def yesterday; end
   def yesterday?; end
 end
+class Integer < Numeric
+  def month; end
+  def months; end
+  def multiple_of?(number); end
+  def ordinal; end
+  def ordinalize; end
+  def year; end
+  def years; end
+end
 class ActiveSupport::Subscriber
   def self.add_event_subscriber(event); end
   def self.attach_to(namespace, subscriber = nil, notifier = nil, inherit_all: nil); end
@@ -2156,15 +2165,6 @@ class ActiveSupport::EventedFileUpdateChecker::Core
   def thread_safely; end
   def updated; end
   def watching?(file); end
-end
-class Integer < Numeric
-  def month; end
-  def months; end
-  def multiple_of?(number); end
-  def ordinal; end
-  def ordinalize; end
-  def year; end
-  def years; end
 end
 module Benchmark
   def self.ms(&block); end

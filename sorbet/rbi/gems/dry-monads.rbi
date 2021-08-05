@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/dry-monads/all/dry-monads.rbi
 #
-# dry-monads-1.3.5
+# dry-monads-1.4.0
 
 module Dry
 end
@@ -29,7 +29,8 @@ module Dry::Monads::Curry
   def self.call(value); end
 end
 class Dry::Monads::UnwrapError < StandardError
-  def initialize(ctx); end
+  def initialize(receiver); end
+  def receiver; end
 end
 class Dry::Monads::InvalidFailureTypeError < StandardError
   def initialize(failure); end
@@ -42,7 +43,7 @@ end
 module Dry::Monads::RightBiased::Right
   def ===(other); end
   def and(mb); end
-  def apply(val = nil); end
+  def apply(val = nil, &block); end
   def bind(*args, **kwargs); end
   def curry; end
   def deconstruct; end
@@ -57,6 +58,7 @@ module Dry::Monads::RightBiased::Right
   def tee(*args, &block); end
   def value!; end
   def value_or(_val = nil); end
+  def |(_alt); end
 end
 module Dry::Monads::RightBiased::Left
   def and(_); end
@@ -73,6 +75,7 @@ module Dry::Monads::RightBiased::Left
   def tee(*arg0); end
   def value!; end
   def value_or(val = nil); end
+  def |(alt); end
 end
 module Dry::Monads::Transformer
   def fmap2(*args); end
@@ -104,6 +107,7 @@ module Anonymous_Module_72
   def to_validated(*arg0); end
 end
 class Dry::Monads::Result::Success < Dry::Monads::Result
+  def alt_map(_ = nil); end
   def either(f, _); end
   def failure?; end
   def flip; end
@@ -117,17 +121,18 @@ class Dry::Monads::Result::Success < Dry::Monads::Result
   def success; end
   def success?; end
   def to_s; end
-  include Anonymous_Dry_Equalizer_73
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_73
+  include Dry::Core::Equalizer::Methods
   include Dry::Monads::RightBiased::Right
 end
-module Anonymous_Dry_Equalizer_73
+module Anonymous_Dry_Core_Equalizer_73
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end
 end
 class Dry::Monads::Result::Failure < Dry::Monads::Result
   def ===(other); end
+  def alt_map(proc = nil, &block); end
   def either(_, g); end
   def failure; end
   def failure?; end
@@ -144,11 +149,11 @@ class Dry::Monads::Result::Failure < Dry::Monads::Result
   def to_s; end
   def trace; end
   def value_or(val = nil); end
-  include Anonymous_Dry_Equalizer_74
-  include Dry::Equalizer::Methods
+  include Anonymous_Dry_Core_Equalizer_74
+  include Dry::Core::Equalizer::Methods
   include Dry::Monads::RightBiased::Left
 end
-module Anonymous_Dry_Equalizer_74
+module Anonymous_Dry_Core_Equalizer_74
   def cmp?(comparator, other); end
   def hash; end
   def inspect; end

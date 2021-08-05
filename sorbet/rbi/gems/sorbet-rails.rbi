@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/sorbet-rails/all/sorbet-rails.rbi
 #
-# sorbet-rails-0.7.1
+# sorbet-rails-0.7.4
 
 module SorbetRails
   def self.config(&blk); end
@@ -156,6 +156,7 @@ class SorbetRails::ModelPlugins::Base < Parlour::Plugin
   def available_classes(*args, &blk); end
   def initialize(*args, &blk); end
   def model_class(*args, &blk); end
+  def serialization_coder_for_column(*args, &blk); end
   extend T::Helpers
   extend T::InterfaceWrapper::Helpers
   extend T::Private::Abstract::Hooks
@@ -209,6 +210,13 @@ class SorbetRails::ModelPlugins::ActiveRecordAssoc < SorbetRails::ModelPlugins::
   def populate_collection_assoc_getter_setter(*args, &blk); end
   def populate_single_assoc_getter_setter(*args, &blk); end
   def relation_should_be_untyped?(*args, &blk); end
+  extend T::Private::Methods::MethodHooks
+  extend T::Private::Methods::SingletonMethodHooks
+end
+class SorbetRails::ModelPlugins::ActiveRecordSerializedAttribute < SorbetRails::ModelPlugins::Base
+  def any_serialized_columns?(*args, &blk); end
+  def attr_types_for_coder(*args, &blk); end
+  def generate(*args, &blk); end
   extend T::Private::Methods::MethodHooks
   extend T::Private::Methods::SingletonMethodHooks
 end
@@ -314,6 +322,8 @@ module SorbetRails::CustomFinderMethods
   def last_n(n); end
 end
 module SorbetRails::PluckToTStruct
+  def map_nil_values_to_default(*args, &blk); end
+  def nilable?(*args, &blk); end
   def pluck_to_tstruct(*args, &blk); end
   extend T::Private::Methods::MethodHooks
   extend T::Private::Methods::SingletonMethodHooks
