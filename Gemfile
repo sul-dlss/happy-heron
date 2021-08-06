@@ -71,7 +71,7 @@ gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'sorbet-rails', '~> 0.7.4'
 gem 'sorbet-runtime'
 gem 'state_machines-activerecord'
-gem 'turbo-rails', github: 'hotwired/turbo-rails', ref: 'd89e1a0'
+gem 'turbo-rails', '~> 0.6.0'
 gem 'view_component', '~> 2.18'
 gem 'webpacker', '6.0.0.beta7'
 gem 'whenever'
