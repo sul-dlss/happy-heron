@@ -7,12 +7,12 @@
 
   <template data-ordered-nested-form-target='template'>
     <%= form.fields_for :authors, Author.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
-      <%= render Works::AuthorRowComponent.new(form: contributor_form) %>
+      <%= render Works::ContributorRowComponent.new(form: contributor_form, is_author: true) %>
     <% end %>
   </template>
 
   <%= form.fields_for :authors do |contributor_form| %>
-    <%= render Works::AuthorRowComponent.new(form: contributor_form) %>
+    <%= render Works::ContributorRowComponent.new(form: contributor_form, is_author: true) %>
   <% end %>
 
   <div data-ordered-nested-form-target="add_item">

@@ -22,11 +22,9 @@ export default class extends NestedFormController {
   filterButtons(element, index) {
     const upButton = element.querySelector("[data-action='click->ordered-nested-form#moveUp']")
     const downButton = element.querySelector("[data-action='click->ordered-nested-form#moveDown']")
-    const removeButton = element.querySelector("[data-action='click->ordered-nested-form#removeAssociation']")
 
     upButton.hidden = (index == 0)
     downButton.hidden = (index == this.count - 1)
-    removeButton.hidden = (this.count == 1)
   }
 
   renumber() {
@@ -61,7 +59,7 @@ export default class extends NestedFormController {
     return this.rows().length
   }
 
-  // Returns all of the not deleted rows (we don't want controlls showing if there is only one visibile row, but many deleted rows)
+  // Returns all of the not deleted rows (we don't want controls showing if there is only one visibile row, but many deleted rows)
   rows() {
     const allRows = this.element.querySelectorAll(this.selectorValue)
     return Array.from(allRows).filter((item) => item.querySelector("input[name*='_destroy']").value != "1")
