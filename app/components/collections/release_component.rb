@@ -1,15 +1,12 @@
-# typed: true
 # frozen_string_literal: true
 
 module Collections
   # Renders the release section of the collection (show page)
   class ReleaseComponent < ApplicationComponent
-    sig { params(collection: Collection).void }
     def initialize(collection:)
       @collection = collection
     end
 
-    sig { returns(Collection) }
     attr_reader :collection
 
     delegate :access, to: :collection
@@ -18,7 +15,6 @@ module Collections
       collection.head
     end
 
-    sig { returns(T.nilable(String)) }
     def release_info
       case collection.release_option
       when 'immediate'

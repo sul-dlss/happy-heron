@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 module Collections
@@ -14,7 +13,6 @@ module Collections
       form.object.model
     end
 
-    sig { returns(T::Boolean) }
     def render?
       %w[deposited rejected version_draft].include? collection_version.state
     end

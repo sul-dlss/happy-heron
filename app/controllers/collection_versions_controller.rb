@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # The endpoint for CRUD about a CollectionVersions
@@ -76,7 +75,6 @@ class CollectionVersionsController < ObjectsController
     end
   end
 
-  sig { params(form: T.any(CollectionVersionForm, DraftCollectionVersionForm)).void }
   def after_save(form:)
     collection_version = form.model
     collection_version.collection.event_context = event_context(form)

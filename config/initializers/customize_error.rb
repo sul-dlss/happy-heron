@@ -1,4 +1,3 @@
-# typed: strict
 # frozen_string_literal: true
 
 # By default rails wraps <label> tags with a div, which screws up Boostrap layouts

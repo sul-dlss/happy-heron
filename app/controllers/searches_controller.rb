@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # When a user searches for a druid, direct them to the correct path.

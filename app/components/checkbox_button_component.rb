@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # A widget to style radio buttons look like large buttons

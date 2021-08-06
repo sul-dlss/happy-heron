@@ -1,10 +1,7 @@
-# typed: false
 # frozen_string_literal: true
 
 # Base class for all controllers in the application.
 class ApplicationController < ActionController::Base
-  extend T::Sig
-
   include DeviseRemoteUser::ControllerBehavior
 
   before_action :add_honeybadger_context
@@ -17,7 +14,6 @@ class ApplicationController < ActionController::Base
 
   authorize :user_with_groups
 
-  sig { returns(T.nilable(UserWithGroups)) }
   def user_with_groups
     UserWithGroups.new(user: current_user, groups: ldap_groups) if current_user
   end
@@ -34,14 +30,12 @@ class ApplicationController < ActionController::Base
     session[:just_signed_in] = current_user.just_signed_in if current_user&.just_signed_in
   end
 
-  sig { returns(T::Array[String]) }
   # This looks first in the session for groups, and then to the headers.
   # This allows the application session to outlive the shiboleth session
   def ldap_groups
     session['groups'].presence || groups_from_request_env
   end
 
-  sig { returns(T::Array[String]) }
   # Get the groups from the headers and store them in the session
   def groups_from_request_env
     session['groups'] = begin
@@ -62,7 +56,7 @@ class ApplicationController < ActionController::Base
   # - The request is handled by a Devise controller such as Devise::SessionsController,
   #   or H2's own LoginController, as that could cause an infinite redirect loop.
   # - The request is an Ajax request as this can lead to very unexpected behaviour.
-  sig { returns(T::Boolean) }
+
   def storable_location?
     request.get? &&
       is_navigational_format? &&
@@ -71,13 +65,11 @@ class ApplicationController < ActionController::Base
       !request.xhr?
   end
 
-  sig { void }
   def store_user_location!
     # :user is the scope we are authenticating
     store_location_for(:user, request.fullpath)
   end
 
-  sig { void }
   def ensure_sdr_updatable
     return if Settings.allow_sdr_content_changes
 

@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 module Works
@@ -15,12 +14,10 @@ module Works
       render PopoverComponent.new key: key
     end
 
-    sig { returns(T::Boolean) }
     def not_first_email?
       form.index != 0
     end
 
-    sig { returns(String) }
     def bootstrap_classes
       return 'col-sm-10 col-xl-8' if form.object_name.start_with?('collection')
 
@@ -28,12 +25,10 @@ module Works
       'col-sm-9'
     end
 
-    sig { returns(T::Array[String]) }
     def errors
       form.object.errors.where(:email)
     end
 
-    sig { returns(T::Boolean) }
     def error?
       errors.present?
     end

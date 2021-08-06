@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Handles updates for first drafts of collections.

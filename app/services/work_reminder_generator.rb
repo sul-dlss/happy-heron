@@ -1,10 +1,7 @@
-# typed: false
 # frozen_string_literal: true
 
 # This creates and queues reminder emails for in-progress drafts
 class WorkReminderGenerator
-  extend T::Sig
-
   # Sends the day's reminders about open drafts, using default values for the notification
   # interval unless the caller overrides the defaults with custom values. Intended to be run daily
   # by a cron job, but the optional manual override for notification interval is useful in case a
@@ -12,7 +9,7 @@ class WorkReminderGenerator
   # something goes awry with the cron job on a particular day. For example, if the cron job got
   # wedged 2 days ago, you could call this method with the the default values plus 2.
   # @note Intervals are specified in days.
-  sig { void }
+
   def self.send_draft_reminders
     first_interval = Settings.notifications.first_draft_reminder.first_interval
     subsequent_interval = Settings.notifications.first_draft_reminder.subsequent_interval
@@ -30,7 +27,6 @@ class WorkReminderGenerator
     end
   end
 
-  sig { params(first_interval: Integer, subsequent_interval: Integer).returns(T::Hash[Symbol, ActiveRecord::Relation]) }
   private_class_method def self.eligible_works(first_interval, subsequent_interval)
     %i[first_draft version_draft].index_with do |state|
       WorkVersion.with_state(state)

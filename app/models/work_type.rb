@@ -1,10 +1,7 @@
-# typed: true
 # frozen_string_literal: true
 
 # Represents the list of valid work types
 class WorkType
-  extend T::Sig
-
   class InvalidType < StandardError; end
 
   MINIMUM_REQUIRED_MUSIC_SUBTYPES = 1
@@ -66,22 +63,16 @@ class WorkType
     'White paper', 'Working paper'
   ].freeze
 
-  sig { returns(String) }
   attr_reader :id
 
-  sig { returns(String) }
   attr_reader :label
 
-  sig { returns(String) }
   attr_reader :html_label
 
-  sig { returns(String) }
   attr_reader :icon
 
-  sig { returns(String) }
   attr_reader :cocina_type
 
-  sig { returns(T::Array[String]) }
   attr_reader :subtypes
 
   def initialize(**params)
@@ -93,13 +84,11 @@ class WorkType
     @cocina_type = params.fetch(:cocina_type)
   end
 
-  sig { returns(WorkType) }
   def self.purl_reservation_type
     new(id: 'purl_reservation', label: 'PURL reservation', html_label: 'PURL reservation', icon: '', subtypes: [],
         cocina_type: Cocina::Models::Vocab.object)
   end
 
-  sig { params(id: T.nilable(String)).returns(WorkType) }
   def self.find(id)
     (all + [purl_reservation_type]).find { |work| work.id == id } || raise(InvalidType, "Unknown worktype #{id}")
   end
@@ -107,7 +96,7 @@ class WorkType
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   # id is a value acceptable for MODS typeOfResource
-  sig { returns(T::Array[WorkType]) }
+
   def self.all
     [
       new(id: 'text', label: 'Text', html_label: 'Text', icon: 'book-open',
@@ -133,17 +122,14 @@ class WorkType
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
-  sig { returns(T::Array[String]) }
   def self.type_list
     all.map(&:id).sort
   end
 
-  sig { returns(T::Array[String]) }
   def self.more_types
     MORE_TYPES
   end
 
-  sig { params(id: T.nilable(String), include_more_types: T::Boolean).returns(T::Array[String]) }
   def self.subtypes_for(id, include_more_types: false)
     subtypes = find(id).subtypes
     return subtypes unless include_more_types
@@ -151,12 +137,10 @@ class WorkType
     subtypes + more_types
   end
 
-  sig { returns(T::Hash[String, T::Array[String]]) }
   def self.to_h
     all.map { |type| [type.id, type.subtypes] }.to_h
   end
 
-  sig { returns(String) }
   def self.to_json
     to_h.to_json
   end

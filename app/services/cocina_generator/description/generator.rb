@@ -1,24 +1,19 @@
-# typed: strict
 # frozen_string_literal: true
 
 module CocinaGenerator
   module Description
     # This generates a RequestDRO Description for a work
     class Generator # rubocop:disable Metrics/ClassLength
-      extend T::Sig
-
-      sig { params(work_version: WorkVersion).returns(Cocina::Models::Description) }
       def self.generate(work_version:)
         new(work_version: work_version).generate
       end
 
-      sig { params(work_version: WorkVersion).void }
       def initialize(work_version:)
         @work_version = work_version
       end
 
       # rubocop:disable Metrics/AbcSize
-      sig { returns(Cocina::Models::Description) }
+
       def generate
         Cocina::Models::Description.new({
           title: title,
@@ -37,36 +32,31 @@ module CocinaGenerator
 
       private
 
-      sig { returns(WorkVersion) }
       attr_reader :work_version
 
-      sig { returns(T::Array[Cocina::Models::Title]) }
       def title
         [
           Cocina::Models::Title.new(value: work_version.title)
         ]
       end
 
-      sig { returns(T::Array[Cocina::Models::Event]) }
       def generate_events
         pub_events = ContributorsGenerator.events_from_publisher_contributors(work_version: work_version,
                                                                               pub_date: published_date)
-        return [T.must(created_date)] + pub_events if pub_events.present? && created_date
+        return [created_date] + pub_events if pub_events.present? && created_date
         return pub_events if pub_events.present? # and no created_date
 
         [created_date, published_date].compact # no pub_events
       end
 
-      sig { returns(T::Array[Cocina::Models::RelatedResource]) }
       def related_resources
         RelatedLinksGenerator.generate(object: work_version) + related_works
       end
 
-      sig { returns(T::Array[Cocina::Models::DescriptiveValue]) }
       def keywords
         work_version.keywords.map do |keyword|
           props = {
-            value: T.must(keyword.label), type: 'topic'
+            value: keyword.label, type: 'topic'
           }
           if keyword.uri.present?
             props[:uri] = keyword.uri
@@ -76,7 +66,6 @@ module CocinaGenerator
         end
       end
 
-      sig { returns(T.nilable(Cocina::Models::DescriptiveValue)) }
       def abstract
         return if work_version.abstract.blank?
 
@@ -86,13 +75,12 @@ module CocinaGenerator
         )
       end
 
-      sig { returns(T.nilable(Cocina::Models::DescriptiveValue)) }
       def citation
         return if work_version.citation.blank?
 
         # :link: is a special placeholder in dor-services-app.
         # See https://github.com/sul-dlss/dor-services-app/pull/1566/files#diff-30396654f0ad00ad1daa7292fd8327759d7ff7f3b92f98f40a2e25b6839807e2R13
-        exportable_citation = T.must(work_version.citation).gsub(WorkVersion::LINK_TEXT, ':link:')
+        exportable_citation = work_version.citation.gsub(WorkVersion::LINK_TEXT, ':link:')
 
         Cocina::Models::DescriptiveValue.new(
           value: exportable_citation,
@@ -100,19 +88,14 @@ module CocinaGenerator
         )
       end
 
-      sig { returns(T.nilable(Cocina::Models::Event)) }
       def created_date
         event_for(work_version.created_edtf, 'creation')
       end
 
-      sig { returns(T.nilable(Cocina::Models::Event)) }
       def published_date
         event_for(work_version.published_edtf, 'publication')
       end
 
-      sig do
-        params(date: T.nilable(T.any(Date, EDTF::Interval)), type: String).returns(T.nilable(Cocina::Models::Event))
-      end
       def event_for(date, type)
         return unless date
 
@@ -129,7 +112,7 @@ module CocinaGenerator
 
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/CyclomaticComplexity
-      sig { params(date: EDTF::Interval).returns(T::Hash[T.untyped, T.untyped]) }
+
       def interval_props_for(date)
         structured_values = []
         structured_values << date_props_for(date.from, type: 'start') if date.from
@@ -148,7 +131,6 @@ module CocinaGenerator
       # rubocop:enable Metrics/AbcSize
       # rubocop:enable Metrics/CyclomaticComplexity
 
-      sig { params(date: Date, type: T.nilable(String)).returns(T::Hash[T.untyped, T.untyped]) }
       def date_props_for(date, type: nil)
         {
           type: type,
@@ -157,7 +139,6 @@ module CocinaGenerator
         }.compact
       end
 
-      sig { returns(T.nilable(Cocina::Models::DescriptiveAccessMetadata)) }
       def access
         args = {
           accessContact: access_contacts,
@@ -168,14 +149,12 @@ module CocinaGenerator
         Cocina::Models::DescriptiveAccessMetadata.new(args)
       end
 
-      sig { returns(T.nilable(T::Array[T::Hash[Symbol, String]])) }
       def repository
         return unless work_version.work.purl
 
         [{ value: 'Stanford Digital Repository' }]
       end
 
-      sig { returns(T.nilable(T::Array[T::Hash[Symbol, String]])) }
       def access_contacts
         return if work_version.contact_emails.empty?
 
@@ -188,7 +167,6 @@ module CocinaGenerator
         end
       end
 
-      sig { returns(T::Array[Cocina::Models::RelatedResource]) }
       def related_works
         work_version.related_works.map do |rel_work|
           Cocina::Models::RelatedResource.new(
@@ -200,7 +178,7 @@ module CocinaGenerator
       end
 
       # rubocop:disable Metrics/MethodLength
-      sig { returns(Cocina::Models::DescriptiveAdminMetadata) }
+
       def admin_metadata
         Cocina::Models::DescriptiveAdminMetadata.new(
           event: [

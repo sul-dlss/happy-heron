@@ -1,4 +1,3 @@
-# typed: strict
 # frozen_string_literal: true
 
 Sidekiq.configure_server do |config|

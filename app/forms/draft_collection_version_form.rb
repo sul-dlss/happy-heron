@@ -1,9 +1,7 @@
-# typed: false
 # frozen_string_literal: true
 
 # The form for collection creation and editing
 class DraftCollectionVersionForm < Reform::Form
-  extend T::Sig
   model 'collection_version' # Required so that rails knows where to route this form to.
 
   property :name, on: :collection_version

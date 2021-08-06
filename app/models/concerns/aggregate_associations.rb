@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Provides a helper method for associations

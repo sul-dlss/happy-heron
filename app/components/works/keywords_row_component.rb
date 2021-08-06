@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 module Works
@@ -10,7 +9,6 @@ module Works
 
     attr_reader :form
 
-    sig { returns(T::Boolean) }
     def not_first_keyword?
       form.index != 0
     end

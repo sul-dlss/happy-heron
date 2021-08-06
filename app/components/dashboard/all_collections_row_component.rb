@@ -1,10 +1,8 @@
-# typed: false
 # frozen_string_literal: true
 
 module Dashboard
   # Renders a list of all collections
   class AllCollectionsRowComponent < ApplicationComponent
-    sig { params(collection: Collection, counts: Hash).void }
     def initialize(collection:, counts:)
       @collection = collection
       @counts = counts

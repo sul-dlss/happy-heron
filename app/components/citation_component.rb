@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # A button that opens a modal containing the citation for a deposit

@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # This is a Rack middleware that we use in testing. It injects headers

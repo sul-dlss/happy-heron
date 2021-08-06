@@ -13,7 +13,6 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-  gem 'rubocop-sorbet', require: false
   gem 'simplecov', require: false
   gem 'super_diff', require: false
   gem 'webmock' # test calls to external QA lookup service for autocomplete
@@ -24,7 +23,6 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false # needed to update RBIs after adding reform-rails
   gem 'puma', '~> 4.1'
-  gem 'sorbet'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'state_machines-graphviz'
@@ -35,7 +33,6 @@ group :test do
   gem 'apparition'
   gem 'capybara', '~> 3.34'
   gem 'capybara-screenshot'
-  gem 'rspec-sorbet'
 end
 
 group :deployment do
@@ -68,8 +65,6 @@ gem 'reform-rails', '~> 0.2.0'
 gem 'sdr-client', '~> 0.58'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
-gem 'sorbet-rails', '~> 0.7.4'
-gem 'sorbet-runtime'
 gem 'state_machines-activerecord'
 gem 'turbo-rails', github: 'hotwired/turbo-rails', ref: 'd89e1a0'
 gem 'view_component', '~> 2.18'

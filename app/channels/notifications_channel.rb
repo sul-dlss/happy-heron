@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # An ApplicationCable channel for sending notifications to a user

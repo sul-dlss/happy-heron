@@ -1,16 +1,13 @@
-# typed: false
 # frozen_string_literal: true
 
 # Assigns a druid to a model
 class AssignPidJob
-  extend T::Sig
   include Sneakers::Worker
   # This worker will connect to "h2.druid_assigned" queue
   # env is set to nil since by default the actual queue name would be
   # "h2.druid_assigned_development"
   from_queue 'h2.druid_assigned', env: nil
 
-  sig { params(msg: String).returns(Symbol) }
   def work(msg)
     model = build_cocina_model_from_json_str(msg)
     source_id = model.identification.sourceId
@@ -37,10 +34,6 @@ class AssignPidJob
     end
   end
 
-  sig do
-    params(str: String)
-      .returns(T.any(Cocina::Models::DRO, Cocina::Models::Collection, Cocina::Models::AdminPolicy))
-  end
   def build_cocina_model_from_json_str(str)
     json = JSON.parse(str)
     Cocina::Models.build(json.fetch('model'))

@@ -1,9 +1,7 @@
-# typed: false
 # frozen_string_literal: true
 
 # The form for collection settings editing and updating
 class CollectionSettingsForm < Reform::Form
-  extend T::Sig
   model 'collection'
   feature EmbargoDate
 
@@ -54,24 +52,20 @@ class CollectionSettingsForm < Reform::Form
 
   private
 
-  sig { void }
   def update_depositors
     model.depositors = field_to_users(depositor_sunets)
   end
 
-  sig { void }
   def update_managers
     model.managed_by = field_to_users(manager_sunets)
   end
 
-  sig { void }
   def update_reviewers
     return model.reviewed_by = [] unless review_enabled == 'true'
 
     model.reviewed_by = field_to_users(reviewer_sunets)
   end
 
-  sig { params(field: String).returns(T::Array[User]) }
   def field_to_users(field)
     sunetids = field.split(/\s*,\s*/).uniq
     emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
@@ -82,17 +76,14 @@ class CollectionSettingsForm < Reform::Form
     end
   end
 
-  sig { returns(T::Array[String]) }
   def depositor_sunets_from_model
     model.depositors.map(&:sunetid)
   end
 
-  sig { returns(T::Array[String]) }
   def reviewer_sunets_from_model
     model.reviewed_by.map(&:sunetid)
   end
 
-  sig { returns(T::Array[String]) }
   def manager_sunets_from_model
     (model.managed_by.presence || [model.creator]).map(&:sunetid)
   end

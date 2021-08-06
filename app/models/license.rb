@@ -1,13 +1,10 @@
-# typed: true
 # frozen_string_literal: true
 
 # Class contains our valid license identifiers from https://spdx.org/licenses/
 #  and other structures used in the work form, model and its validation
 class License
-  extend T::Sig
-
   # used for validation in work model
-  sig { params(include_displayable: T::Boolean).returns(T::Array[String]) }
+
   def self.license_list(include_displayable: false)
     return all.filter_map { |key, license| key if license.selectable } unless include_displayable
 
@@ -15,7 +12,7 @@ class License
   end
 
   # list for the work form pulldown
-  sig { params(license: T.nilable(String)).returns(T::Array[T::Array[T.any(String, T::Array[String])]]) }
+
   def self.grouped_options(license = nil)
     options = GROUPINGS.map do |group|
       [group.fetch(:label), group.fetch(:options).map { |license_id| [label_for(license_id), license_id] }]
@@ -35,7 +32,6 @@ class License
     )
   end
 
-  sig { params(license_id: String).returns(String) }
   def self.label_for(license_id)
     find(license_id).label
   end
@@ -53,11 +49,7 @@ class License
     end
   end
 
-  class Instance < T::Struct
-    const :label, String
-    const :uri, String
-    const :selectable, T::Boolean
-  end
+  Instance = Struct.new(:label, :uri, :selectable, keyword_init: true)
 
   GROUPINGS = [
     {

@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # Filters the passed in parameters so they create new objects rather than point at objects for a past version

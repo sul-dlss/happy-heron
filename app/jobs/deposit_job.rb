@@ -1,11 +1,9 @@
-# typed: false
 # frozen_string_literal: true
 
 # Deposits a Work into SDR API.
 class DepositJob < BaseDepositJob
   queue_as :default
 
-  sig { params(work_version: WorkVersion).void }
   def perform(work_version)
     deposit(request_dro: CocinaGenerator::DROGenerator.generate_model(work_version: work_version),
             blobs: work_version.attached_files.map { |af| af.file.attachment.blob })
@@ -13,10 +11,6 @@ class DepositJob < BaseDepositJob
 
   private
 
-  sig do
-    params(request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO), blobs: T::Array[ActiveStorage::Blob])
-      .returns(Integer)
-  end
   def deposit(request_dro:, blobs:)
     login_result = login
     raise login_result.failure unless login_result.success?
@@ -27,7 +21,6 @@ class DepositJob < BaseDepositJob
     create_or_update(new_request_dro)
   end
 
-  sig { params(new_request_dro: T.any(Cocina::Models::RequestDRO, Cocina::Models::DRO)).returns(Integer) }
   def create_or_update(new_request_dro)
     case new_request_dro
     when Cocina::Models::RequestDRO
@@ -42,22 +35,16 @@ class DepositJob < BaseDepositJob
     end
   end
 
-  sig { params(blobs: T::Array[ActiveStorage::Blob]).returns(T::Array[SdrClient::Deposit::Files::DirectUploadRequest]) }
   def upload_responses(blobs)
     SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs),
                                            logger: Rails.logger,
                                            connection: connection)
   end
 
-  sig { returns(SdrClient::Connection) }
   def connection
     @connection ||= SdrClient::Connection.new(url: Settings.sdr_api.url)
   end
 
-  sig do
-    params(blobs: T::Array[ActiveStorage::Blob])
-      .returns(T::Hash[String, SdrClient::Deposit::Files::DirectUploadRequest])
-  end
   def build_file_metadata(blobs)
     blobs.each_with_object({}) do |blob, obj|
       obj[filename(blob.key)] = SdrClient::Deposit::Files::DirectUploadRequest.new(checksum: blob.checksum,
@@ -67,7 +54,6 @@ class DepositJob < BaseDepositJob
     end
   end
 
-  sig { params(key: String).returns(String) }
   def filename(key)
     ActiveStorage::Blob.service.path_for(key)
   end

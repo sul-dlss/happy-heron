@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # The endpoint for CRUD about a Work
@@ -158,7 +157,6 @@ class WorksController < ObjectsController
     end
   end
 
-  sig { params(work_version: WorkVersion).returns(Reform::Form) }
   def work_form(work_version)
     if purl_reservation?
       ReservationForm.new(work_version: work_version, work: work_version.work)
@@ -169,10 +167,6 @@ class WorksController < ObjectsController
     end
   end
 
-  sig do
-    params(form: T.any(ReservationForm, WorkForm, DraftWorkForm),
-           context_form: T.nilable(T.any(ReservationForm, WorkForm, DraftWorkForm))).void
-  end
   def after_save(form:, context_form: nil) # rubocop:disable Metrics/MethodLength
     work_version = form.model[:work_version]
 
@@ -213,7 +207,7 @@ class WorksController < ObjectsController
 
   # rubocop:disable Metrics/MethodLength
   def work_params
-    top_level = T.cast(params.require(:work), ActionController::Parameters)
+    top_level = params.require(:work)
     top_level.permit(:title, :work_type,
                      'published(1i)', 'published(2i)', 'published(3i)',
                      :created_type,

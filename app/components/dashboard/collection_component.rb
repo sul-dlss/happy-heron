@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 module Dashboard
@@ -6,17 +5,14 @@ module Dashboard
   class CollectionComponent < ApplicationComponent
     MAX_DEPOSITS_TO_SHOW = 4
 
-    # sig { params(collection: Collection).void }
     def initialize(collection:)
       @collection = collection
     end
 
-    sig { returns(Collection) }
     attr_reader :collection
 
     delegate :current_user, :user_with_groups, to: :helpers
 
-    sig { returns(ActiveRecord::Relation) }
     def visible_deposits
       # This component only displays MAX_DEPOSITS_TO_SHOW works but we query for
       # one more as a way to flag to the user that they should click through to
@@ -34,12 +30,10 @@ module Dashboard
 
     private
 
-    sig { returns(WorkPolicy) }
     def work_policy
       WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
     end
 
-    sig { returns(CollectionPolicy) }
     def policy
       CollectionPolicy.new(collection, user: current_user, user_with_groups: user_with_groups)
     end

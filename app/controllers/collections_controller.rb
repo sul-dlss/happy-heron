@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Handles CRUD for Collections
@@ -88,7 +87,6 @@ class CollectionsController < ObjectsController
 
   private
 
-  sig { params(collection_version: CollectionVersion, collection: Collection, context: Hash).void }
   def after_save(collection_version:, collection:, context: {})
     collection_version.collection.event_context = context.merge(user: current_user)
     collection_version.update_metadata!

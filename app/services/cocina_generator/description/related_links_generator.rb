@@ -1,37 +1,28 @@
-# typed: strict
 # frozen_string_literal: true
 
 module CocinaGenerator
   module Description
     # This generates a description from RelatedLinks
     class RelatedLinksGenerator
-      extend T::Sig
-
-      sig { params(object: T.any(CollectionVersion, WorkVersion)).returns(T::Array[Cocina::Models::RelatedResource]) }
       def self.generate(object:)
         new(object: object).generate
       end
 
-      sig { params(object: T.any(CollectionVersion, WorkVersion)).void }
       def initialize(object:)
         @object = object
-        @purl_host = T.let(Settings.purl_url.sub(%r{^https?://}, ''), String)
+        @purl_host = Settings.purl_url.sub(%r{^https?://}, '')
       end
 
-      sig { returns(T::Array[Cocina::Models::RelatedResource]) }
       def generate
         object.related_links.map { |rel_link| build_related_link(rel_link) }
       end
 
       private
 
-      sig { returns(T.any(CollectionVersion, WorkVersion)) }
       attr_reader :object
 
-      sig { returns(String) }
       attr_reader :purl_host
 
-      sig { params(rel_link: RelatedLink).returns(Cocina::Models::RelatedResource) }
       def build_related_link(rel_link)
         return purl_link(rel_link) if purl?(rel_link.url)
 
@@ -44,7 +35,6 @@ module CocinaGenerator
         Cocina::Models::RelatedResource.new(resource_attrs)
       end
 
-      sig { params(rel_link: RelatedLink).returns(Cocina::Models::RelatedResource) }
       # This normalizes the PURL link to http (as it is currently the canonincal PURL)
       def purl_link(rel_link)
         resource_attrs = {
@@ -57,7 +47,6 @@ module CocinaGenerator
         Cocina::Models::RelatedResource.new(resource_attrs)
       end
 
-      sig { params(url: String).returns(T::Boolean) }
       def purl?(url)
         url.start_with?("https://#{purl_host}") || url.start_with?("http://#{purl_host}")
       end

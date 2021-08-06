@@ -1,22 +1,16 @@
-# typed: true
 # frozen_string_literal: true
 
 module CocinaGenerator
   # This generates a the Access cocina model for a work
   class AccessGenerator
-    extend T::Sig
-
-    sig { params(work_version: WorkVersion).returns(Hash) }
     def self.generate(work_version:)
       new(work_version: work_version).generate
     end
 
-    sig { params(work_version: WorkVersion).void }
     def initialize(work_version:)
       @work_version = work_version
     end
 
-    sig { returns(Hash) }
     def generate
       access = work_version.embargo_date ? embargoed_access : regular_access
 

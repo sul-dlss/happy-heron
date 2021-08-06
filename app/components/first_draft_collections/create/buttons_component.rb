@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 module FirstDraftCollections
@@ -11,7 +10,6 @@ module FirstDraftCollections
 
       attr_reader :form
 
-      sig { returns(String) }
       def cancel_button
         link_to 'Cancel', dashboard_path, class: 'btn btn-link'
       end

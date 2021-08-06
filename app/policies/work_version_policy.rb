@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Authorization policy for WorkVersion   objects
@@ -18,7 +17,7 @@ class WorkVersionPolicy < ApplicationPolicy
   # Can deposit a work iff:
   #   1. Collection is accessioned
   #   2. The user is an administrator, or a depositor or a manager of this collection
-  sig { returns(T::Boolean) }
+
   def create?
     return false unless collection.head.accessioned?
 
@@ -34,7 +33,7 @@ class WorkVersionPolicy < ApplicationPolicy
   #     2. The user is the depositor of the work and it is not currently pending approval (review workflow)
   #     3. The user is a manager of the collection the work is in
   #     4. The user is a reviewer of the collection the work is in
-  sig { returns(T::Boolean) }
+
   def update?
     return false unless record.updatable?
     return true if reviews_collection?
@@ -46,18 +45,17 @@ class WorkVersionPolicy < ApplicationPolicy
   #   2. The user is the depositor of the work
   #   3. The user is a manager of the collection the work is in
   #   4. The user is a reviewer of the collection the work is in
-  sig { returns(T::Boolean) }
+
   def show?
     depositor? || reviews_collection?
   end
 
   # The collection reviewers can review a work
-  sig { returns(T::Boolean) }
+
   def review?
     record.pending_approval? && reviews_collection?
   end
 
-  sig { returns(T::Boolean) }
   def destroy?
     (administrator? || depositor?) && record.persisted? && record.version_draft?
   end

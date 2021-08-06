@@ -1,10 +1,8 @@
-# typed: true
 # frozen_string_literal: true
 
 module Dashboard
   # Renders a collection and a summary table of works in the collection
   class ApprovalsComponent < ApplicationComponent
-    sig { params(presenter: DashboardPresenter).void }
     def initialize(presenter:)
       @presenter = presenter
     end

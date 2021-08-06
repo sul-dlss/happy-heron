@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # An ActiveModel validator for EDTF formatted dates

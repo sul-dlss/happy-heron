@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 module CocinaGenerator
@@ -7,28 +6,20 @@ module CocinaGenerator
     # (ultimately in a Cocina::Models::RequestDRO)
     # rubocop:disable Metrics/ClassLength
     class ContributorsGenerator
-      extend T::Sig
-
-      sig { params(work_version: WorkVersion).returns(T::Array[Cocina::Models::Contributor]) }
       def self.generate(work_version:)
         new(work_version: work_version).generate
       end
 
-      sig do
-        params(work_version: WorkVersion, pub_date: T.nilable(Cocina::Models::Event))
-          .returns(T::Array[Cocina::Models::Event])
-      end
       def self.events_from_publisher_contributors(work_version:, pub_date: nil)
         new(work_version: work_version).publication_event_values(pub_date)
       end
 
-      sig { params(work_version: WorkVersion).void }
       def initialize(work_version:)
         @work_version = work_version
       end
 
       # H2 Publisher becomes a Cocina::Models::Event, not a Contributor.  See events_from_publisher_contributors.
-      sig { returns(T::Array[T.nilable(Cocina::Models::Contributor)]) }
+
       def generate
         count = 0
         (work_version.authors + work_version.contributors.reject { |c| c.role == 'Publisher' })
@@ -40,7 +31,6 @@ module CocinaGenerator
         end
       end
 
-      sig { params(pub_date: T.nilable(Cocina::Models::Event)).returns(T::Array[Cocina::Models::Event]) }
       def publication_event_values(pub_date)
         (work_version.authors + work_version.contributors).select { |c| c.role == 'Publisher' }.map do |publisher|
           event = {
@@ -55,10 +45,8 @@ module CocinaGenerator
 
       private
 
-      sig { returns(WorkVersion) }
       attr_reader :work_version
 
-      sig { params(contributor: T.any(Contributor, Author), primary: T::Boolean).returns(Cocina::Models::Contributor) }
       def contributor(contributor, primary)
         contrib_hash = {
           name: name_descriptive_value(contributor),
@@ -72,24 +60,21 @@ module CocinaGenerator
         Cocina::Models::Contributor.new(contrib_hash)
       end
 
-      sig { params(contributor: T.any(Contributor, Author)).returns(Cocina::Models::Contributor) }
       def publication_contributor(contributor)
         contrib_hash = {
           name: name_descriptive_value(contributor),
-          role: [T.must(marcrelator_role(contributor.role))],
+          role: [marcrelator_role(contributor.role)],
           type: contributor_type(contributor)
         }
         Cocina::Models::Contributor.new(contrib_hash)
       end
 
-      sig { params(contributor: T.any(Contributor, Author)).returns(T::Array[Cocina::Models::DescriptiveValue]) }
       def name_descriptive_value(contributor)
         return [Cocina::Models::DescriptiveValue.new(value: full_name(contributor))] unless contributor.person?
 
         [Cocina::Models::DescriptiveValue.new(structuredValue: structured_name(contributor))]
       end
 
-      sig { params(contributor: T.any(Contributor, Author)).returns(T::Array[Cocina::Models::DescriptiveValue]) }
       def structured_name(contributor)
         [
           Cocina::Models::DescriptiveValue.new(value: contributor.first_name, type: 'forename'),
@@ -97,14 +82,12 @@ module CocinaGenerator
         ]
       end
 
-      sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(String)) }
       def full_name(contributor)
         return "#{contributor.last_name}, #{contributor.first_name}" if contributor.person?
 
         contributor.full_name
       end
 
-      sig { params(contributor: T.any(Contributor, Author)).returns(T.nilable(String)) }
       def contributor_type(contributor)
         return 'conference' if contributor.role == 'Conference'
         return 'event' if contributor.role == 'Event'
@@ -112,7 +95,6 @@ module CocinaGenerator
         contributor.contributor_type
       end
 
-      sig { params(contributor: T.any(Contributor, Author)).returns(T::Array[Cocina::Models::DescriptiveValue]) }
       def cocina_roles(contributor)
         roles = []
         roles << (marcrelator_role(contributor.role) ||
@@ -120,9 +102,6 @@ module CocinaGenerator
         roles
       end
 
-      sig do
-        params(contributor: T.any(Contributor, Author)).returns(T.nilable(T::Array[Cocina::Models::DescriptiveValue]))
-      end
       def notes(contributor)
         return unless contributor.type == 'Contributor'
 
@@ -131,14 +110,12 @@ module CocinaGenerator
         ]
       end
 
-      sig { params(roles: T::Array[Cocina::Models::DescriptiveValue]).returns(T::Boolean) }
       def has_contributor_role?(roles)
         roles.none? do |role|
           role.value == 'contributor'
         end
       end
 
-      sig { params(role: String).returns(T.nilable(Cocina::Models::DescriptiveValue)) }
       def marcrelator_role(role)
         mr_code = ROLE_TO_MARC_RELATOR_CODE[role]
         mr_value = MARC_RELATOR_CODE_TO_VALUE[mr_code]
@@ -217,9 +194,6 @@ module CocinaGenerator
         'ths' => 'thesis advisor'
       }.freeze
 
-      sig do
-        params(contributor: T.any(Contributor, Author)).returns(T.nilable(T::Array[Cocina::Models::DescriptiveValue]))
-      end
       def identifiers(contributor)
         return unless contributor.orcid
 

@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # a contoller that has methods useful to works and collections controllers

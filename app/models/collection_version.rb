@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Models a version of a collection in the database
@@ -11,7 +10,6 @@ class CollectionVersion < ApplicationRecord
 
   after_update_commit -> { collection.broadcast_update }
 
-  sig { returns(T::Boolean) }
   def accessioned?
     %w[first_draft depositing].exclude?(state)
   end
@@ -56,7 +54,6 @@ class CollectionVersion < ApplicationRecord
     end
   end
 
-  sig { returns(T::Boolean) }
   def updatable?
     can_update_metadata? || (deposited? && head?)
   end
@@ -65,7 +62,6 @@ class CollectionVersion < ApplicationRecord
     version_draft? || first_draft?
   end
 
-  sig { returns(T::Boolean) }
   def head?
     collection.head == self
   end

@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Displays the list of collections and works to the user

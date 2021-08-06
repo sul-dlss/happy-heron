@@ -1,11 +1,9 @@
-# typed: true
 # frozen_string_literal: true
 
 # This is the parent of Author and Contributors
 # It is necessary so that Rails STI will assign the proper type to each concrete model
 # and so that when you query Work#contributors you only get the non-author contributors.
 class AbstractContributor < ApplicationRecord
-  extend T::Sig
   SEPARATOR = '|'
 
   PERSON_ROLES = [
@@ -65,7 +63,6 @@ class AbstractContributor < ApplicationRecord
   validates :orcid, format: { with: Orcid::REGEX }, allow_nil: true, if: :person?
   validates :orcid, absence: true, unless: :person?
 
-  sig { params(citable: T::Boolean).returns(T::Hash[String, T::Array[String]]) }
   def self.grouped_roles(citable:)
     return GROUPED_ROLES if citable
 
@@ -77,19 +74,18 @@ class AbstractContributor < ApplicationRecord
 
   validates :role, presence: true, inclusion: { in: grouped_roles(citable: false).values.flatten }
 
-  sig { returns(T::Boolean) }
   def person?
     contributor_type == 'person'
   end
 
   # used by DraftWorkForm
-  sig { returns(String) }
+
   def role_term
     [contributor_type, role].join(SEPARATOR)
   end
 
   # used by DraftWorkForm for setting values from the form.
-  sig { params(val: String).void }
+
   def role_term=(val)
     contributor_type, role = val.split(SEPARATOR)
     self.attributes = { contributor_type: contributor_type, role: role }
