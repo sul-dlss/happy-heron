@@ -29,6 +29,7 @@ RSpec.describe CocinaGenerator::Description::RelatedLinksGenerator do
     let(:work_version) do
       build(:work_version, related_links: [
               build(:related_link, url: 'http://purl.stanford.edu/tx853fp2857'),
+              build(:related_link, url: 'https://purl.stanford.edu/xy933bc2222'),
               build(:related_link)
             ])
     end
@@ -37,6 +38,11 @@ RSpec.describe CocinaGenerator::Description::RelatedLinksGenerator do
       expect(model).to eq([
                             {
                               purl: 'http://purl.stanford.edu/tx853fp2857',
+                              title: [{ value: 'My Awesome Research' }],
+                              access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] }
+                            },
+                            {
+                              purl: 'http://purl.stanford.edu/xy933bc2222',
                               title: [{ value: 'My Awesome Research' }],
                               access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] }
                             },
