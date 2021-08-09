@@ -269,6 +269,26 @@ RSpec.describe 'Create a collection' do
             end.to change { ActionMailer::Base.deliveries.count }.by(0) # NO depositor emails sent
           end
         end
+
+        context 'with duplicate depositors' do
+          let(:draft_collection_params) do
+            {
+              name: '',
+              description: '',
+              contact_emails_attributes: no_contact_emails,
+              manager_sunets: user.sunetid,
+              access: 'world',
+              depositor_sunets: 'maya.aguirre, jcairns, maya.aguirre'
+            }
+          end
+
+          it 'removes the duplicates' do
+            post first_draft_collections_path,
+                 params: { collection: draft_collection_params, commit: save_draft_button }
+            collection = Collection.last
+            expect(collection.depositors.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
+          end
+        end
       end
 
       context 'when collection fails to save' do
