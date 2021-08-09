@@ -1,10 +1,7 @@
-# typed: false
 # frozen_string_literal: true
 
 # The form for collection creation
 class CreateCollectionForm < DraftCollectionForm
-  extend T::Sig
-
   # A copy of what is in DraftCollectionForm, but with validation on email
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },

@@ -1,11 +1,7 @@
-# typed: strict
 # frozen_string_literal: true
 
 # Runs queries and builds the data structure for the summary table.
 class StatBuilder
-  extend T::Sig
-
-  sig { returns(T::Hash[Collection, T::Hash[String, Integer]]) }
   def self.build_stats
     works = Work.joins(:head).group(:collection_id, :state).count
 

@@ -1,4 +1,3 @@
-# typed: strict
 # frozen_string_literal: true
 
 # Models a URI that is related to a work

@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # Actions that happen when something happens to a collection

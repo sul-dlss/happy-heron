@@ -1,9 +1,7 @@
-# typed: false
 # frozen_string_literal: true
 
 # Wait for a deposit into SDR API.
 class DepositStatusJob
-  extend T::Sig
   include Sneakers::Worker
   # This worker will connect to "h2.deposit_complete" queue
   # env is set to nil since by default the actual queue name would be
@@ -15,7 +13,6 @@ class DepositStatusJob
   # these messages in addition to those that result from depositing in h2.
   from_queue 'h2.deposit_complete', env: nil
 
-  sig { params(msg: String).returns(Symbol) }
   def work(msg)
     druid = parse_message(msg)
     Honeybadger.context(druid: druid)
@@ -36,7 +33,6 @@ class DepositStatusJob
     ack!
   end
 
-  sig { params(msg: String).returns(String) }
   def parse_message(msg)
     json = JSON.parse(msg)
     druid = json.fetch('druid')

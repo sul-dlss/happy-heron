@@ -1,9 +1,7 @@
-# typed: false
 # frozen_string_literal: true
 
 # The form for collection creation
 class DraftCollectionForm < Reform::Form
-  extend T::Sig
   feature EmbargoDate
   # This form is a composition of 2 models. See: https://github.com/trailblazer/reform#compositions
   include Composition
@@ -78,24 +76,20 @@ class DraftCollectionForm < Reform::Form
 
   private
 
-  sig { void }
   def update_depositors
     collection.depositors = field_to_users(depositor_sunets)
   end
 
-  sig { void }
   def update_managers
     collection.managed_by = field_to_users(manager_sunets)
   end
 
-  sig { void }
   def update_reviewers
     return collection.reviewed_by = [] unless review_enabled == 'true'
 
     collection.reviewed_by = field_to_users(reviewer_sunets)
   end
 
-  sig { params(field: String).returns(T::Array[User]) }
   def field_to_users(field)
     sunetids = field.split(/\s*,\s*/).uniq
     emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
@@ -106,17 +100,14 @@ class DraftCollectionForm < Reform::Form
     end
   end
 
-  sig { returns(T::Array[String]) }
   def depositor_sunets_from_model
     collection.depositors.map(&:sunetid)
   end
 
-  sig { returns(T::Array[String]) }
   def reviewer_sunets_from_model
     collection.reviewed_by.map(&:sunetid)
   end
 
-  sig { returns(T::Array[String]) }
   def manager_sunets_from_model
     (collection.managed_by.presence || [collection.creator]).map(&:sunetid)
   end

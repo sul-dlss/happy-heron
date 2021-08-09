@@ -45,9 +45,6 @@ config/environments/*.local.yml
 # SimpleCov coverage artifacts
 /coverage
 
-# Meaningless Sorbet logs
-sorbet/rbi/hidden-definitions/errors.txt
-
 # allow local gems
 /Gemfile.local
 /Gemfile.local.lock

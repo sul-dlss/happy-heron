@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # Responsible for deserializing the form inputs into Date values

@@ -1,10 +1,8 @@
-# typed: true
 # frozen_string_literal: true
 
 module Dashboard
   # Renders a list of works in progress
   class InProgressComponent < ApplicationComponent
-    sig { params(presenter: DashboardPresenter).void }
     def initialize(presenter:)
       @presenter = presenter
     end

@@ -1,21 +1,15 @@
-# typed: true
 # frozen_string_literal: true
 
 # This looks up a name from ORCID.org
 class OrcidService
-  extend T::Sig
-
-  sig { params(orcid: String).returns(T.any(Dry::Monads::Result::Success, Dry::Monads::Result::Failure)) }
   def self.lookup(orcid:)
     new(orcid: orcid).lookup
   end
 
-  sig { params(orcid: String).void }
   def initialize(orcid:)
     @orcid = orcid
   end
 
-  sig { returns(T.any(Dry::Monads::Result::Success, Dry::Monads::Result::Failure)) }
   def lookup
     return clean_orcid_result if clean_orcid_result.failure?
 

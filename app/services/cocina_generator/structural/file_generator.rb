@@ -1,23 +1,13 @@
-# typed: true
 # frozen_string_literal: true
 
 module CocinaGenerator
   module Structural
     # This generates a File for a work
     class FileGenerator
-      extend T::Sig
-
-      sig do
-        params(
-          work_version: WorkVersion,
-          attached_file: AttachedFile
-        ).returns(T.nilable(T.any(Cocina::Models::File, Cocina::Models::RequestFile)))
-      end
       def self.generate(work_version:, attached_file:)
         new(work_version: work_version, attached_file: attached_file).generate
       end
 
-      sig { params(work_version: WorkVersion, attached_file: AttachedFile).void }
       def initialize(work_version:, attached_file:)
         @work_version = work_version
         @attached_file = attached_file
@@ -25,7 +15,6 @@ module CocinaGenerator
 
       attr_reader :work_version, :attached_file
 
-      sig { returns(T.nilable(T.any(Cocina::Models::File, Cocina::Models::RequestFile))) }
       def generate
         return nil unless blob
 
@@ -85,7 +74,6 @@ module CocinaGenerator
         attached_file.hide?
       end
 
-      sig { returns(Hash) }
       def access
         if hidden_file?
           { access: 'dark', download: 'none' }
@@ -94,7 +82,6 @@ module CocinaGenerator
         end
       end
 
-      sig { params(key: String).returns(String) }
       def file_path(key)
         ActiveStorage::Blob.service.path_for(key)
       end

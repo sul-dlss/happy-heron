@@ -1,16 +1,13 @@
-# typed: false
 # frozen_string_literal: true
 
 # Wait for a deposit into SDR API.
 class RecordEmbargoReleaseJob
-  extend T::Sig
   include Sneakers::Worker
   # This worker will connect to "h2.embargo_lifted" queue
   # env is set to nil since by default the actual queue name would be
   # "h2.embargo_lifted_development"
   from_queue 'h2.embargo_lifted', env: nil
 
-  sig { params(msg: String).returns(Symbol) }
   def work(msg)
     model = build_cocina_model_from_json_str(msg)
     Honeybadger.context(druid: model.externalIdentifier)
@@ -23,10 +20,6 @@ class RecordEmbargoReleaseJob
     ack!
   end
 
-  sig do
-    params(str: String)
-      .returns(T.any(Cocina::Models::DRO, Cocina::Models::Collection, Cocina::Models::AdminPolicy))
-  end
   def build_cocina_model_from_json_str(str)
     json = JSON.parse(str)
     Cocina::Models.build(json.fetch('model'))

@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Models the deposit of an single version of a digital repository object
@@ -107,14 +106,12 @@ class WorkVersion < ApplicationRecord
     version_draft? || first_draft?
   end
 
-  sig { void }
   def add_purl_to_citation
     return unless citation
 
-    update!(citation: T.must(citation).gsub(LINK_TEXT, T.must(work.purl)))
+    update!(citation: citation.gsub(LINK_TEXT, work.purl))
   end
 
-  sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }
   # Ensure that EDTF dates get an EDTF serialization
   def created_edtf=(edtf)
     case edtf
@@ -122,10 +119,11 @@ class WorkVersion < ApplicationRecord
       super
     when Date
       super(edtf.to_edtf)
+    else
+      raise TypeError, 'Expected a Date or EDTF::Interval'
     end
   end
 
-  sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }
   # Ensure that EDTF dates get an EDTF serialization
   def published_edtf=(edtf)
     case edtf
@@ -136,22 +134,18 @@ class WorkVersion < ApplicationRecord
     end
   end
 
-  sig { returns(T.nilable(T.any(EDTF::Interval, Date))) }
   def published_edtf
     EDTF.parse(super)
   end
 
-  sig { returns(T.nilable(T.any(EDTF::Interval, Date))) }
   def created_edtf
     EDTF.parse(super)
   end
 
-  sig { returns(T::Boolean) }
   def purl_reservation?
     work_type == WorkType.purl_reservation_type.id
   end
 
-  sig { params(work_type: String, subtype: T.nilable(T::Array[String]), modifier: User).void }
   def choose_type_for_purl_reservation(work_type, subtype, modifier)
     raise WorkTypeUpdateError, 'Cannot update Work Version type, no longer PURL reservation' unless purl_reservation?
 

@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # The endpoint for the print terms of deposit window

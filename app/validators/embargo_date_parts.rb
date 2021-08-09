@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # Validates embargo month and day

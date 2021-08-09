@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 module Collections
@@ -9,7 +8,6 @@ module Collections
 
       delegate :model, to: :collection_form
 
-      sig { params(collection_form: CollectionSettingsForm).void }
       def initialize(collection_form:)
         @collection_form = collection_form
       end

@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 module Works
@@ -18,7 +17,6 @@ module Works
       form.object
     end
 
-    sig { returns(String) }
     def prefix
       reform.model_name.param_key
     end

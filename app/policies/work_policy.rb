@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Authorization policy for Work objects
@@ -12,7 +11,6 @@ class WorkPolicy < ApplicationPolicy
     )
   end
 
-  sig { returns(T::Boolean) }
   def destroy?
     (administrator? || depositor?) && record.persisted? && record.head.first_draft?
   end

@@ -1,4 +1,3 @@
-# typed: strict
 # frozen_string_literal: true
 
 # Models a notification sent to a user.

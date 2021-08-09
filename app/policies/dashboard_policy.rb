@@ -1,9 +1,7 @@
-# typed: strict
 # frozen_string_literal: true
 
 # Defines who is authorized to see the dashboard
 class DashboardPolicy < ApplicationPolicy
-  sig { returns(T::Boolean) }
   def show?
     # If/when we add the designed "first time user" workflow, we would want to prevent
     # users who don't have any deposits from going right to the dashboard. As of

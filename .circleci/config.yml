@@ -56,9 +56,6 @@ jobs:
       - checkout
       - ruby/install-deps:
           key: happy-heron-v2
-      - run:
-          name: Run static type checking
-          command: bundle exec srb tc
       - ruby/rubocop-check:
           format: progress
           label: Inspecting with Rubocop

@@ -1,15 +1,12 @@
-# typed: true
 # frozen_string_literal: true
 
 module Works
   # Renders a widget corresponding to a single author of the work.
   class AuthorRowComponent < ApplicationComponent
-    sig { params(form: ActionView::Helpers::FormBuilder).void }
     def initialize(form:)
       @form = form
     end
 
-    sig { returns(ActionView::Helpers::FormBuilder) }
     attr_reader :form
 
     def select_role
@@ -37,19 +34,19 @@ module Works
     end
 
     # First name label
-    sig { returns(String) }
+
     def first_name_label
       'First name *'
     end
 
     # Last name label
-    sig { returns(String) }
+
     def last_name_label
       'Last name *'
     end
 
     # Role term label
-    sig { returns(String) }
+
     def role_term_label
       'Role term *'
     end

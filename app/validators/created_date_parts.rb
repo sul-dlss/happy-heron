@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 # Validates created date interval

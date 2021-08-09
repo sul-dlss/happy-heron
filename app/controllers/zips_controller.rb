@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Provides an endpoint to download a zip file of all attached files

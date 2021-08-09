@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 module Works
@@ -10,7 +9,6 @@ module Works
 
     attr_reader :form
 
-    sig { returns(T.nilable(String)) }
     def submit_button_label
       work_in_reviewed_coll? ? 'Submit for approval' : 'Deposit'
     end
@@ -29,17 +27,14 @@ module Works
       object.model.fetch(:work)
     end
 
-    sig { returns(T.nilable(T::Boolean)) }
     def work_in_reviewed_coll?
       collection.review_enabled?
     end
 
-    sig { returns(T::Boolean) }
     def show_version_draft_cancel?
       work_version.version_draft? && work_version.persisted?
     end
 
-    sig { returns(T::Boolean) }
     def show_first_draft_cancel?
       work_version.first_draft?
     end

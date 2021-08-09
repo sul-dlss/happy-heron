@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 module Works
@@ -53,7 +52,7 @@ module Works
     def created_approximate?
       return false unless created_edtf
 
-      T.must(created_edtf).uncertain?
+      created_edtf.uncertain?
     end
 
     delegate :published_edtf, to: :reform
@@ -76,7 +75,7 @@ module Works
     def created_range_start_approximate?
       return false unless created_range_start
 
-      T.must(created_range_start).uncertain?
+      created_range_start.uncertain?
     end
 
     def created_range_end_year
@@ -94,55 +93,47 @@ module Works
     def created_range_end_approximate?
       return false unless created_range_end
 
-      T.must(created_range_end).uncertain?
+      created_range_end.uncertain?
     end
 
-    sig { returns(T.nilable(Date)) }
     def created_range_start
       created_interval&.from
     end
 
-    sig { returns(T.nilable(Date)) }
     def created_range_end
       created_interval&.to
     end
 
-    sig { returns(T.nilable(EDTF::Interval)) }
     def created_interval
       case reform.created_edtf
       when EDTF::Interval
-        T.cast(reform.created_edtf, EDTF::Interval)
+        reform.created_edtf
       end
     end
 
-    sig { returns(T.nilable(Date)) }
     def created_edtf
       case reform.created_edtf
       when Date
-        T.cast(reform.created_edtf, Date)
+        reform.created_edtf
       end
     end
 
-    sig { returns(DraftWorkForm) }
     def reform
       form.object
     end
 
-    sig { returns(String) }
     def prefix
       reform.model_name.param_key
     end
 
     private
 
-    sig { params(created_date: T.nilable(Date)).returns(T.nilable(Integer)) }
     def resolve_day(created_date)
       return unless created_date
 
       created_date.day if created_date.precision == :day
     end
 
-    sig { params(created_date: T.nilable(Date)).returns(T.nilable(Integer)) }
     def resolve_month(created_date)
       return unless created_date
 

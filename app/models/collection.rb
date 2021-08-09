@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Models a collection in the database
@@ -36,7 +35,6 @@ class Collection < ApplicationRecord
                          partial: 'dashboards/collection_without_user'
   end
 
-  sig { returns(T.nilable(Date)) }
   def release_date
     return nil if release_duration.nil?
     return Time.zone.today + 6.months if release_duration == '6 months'
@@ -45,27 +43,25 @@ class Collection < ApplicationRecord
   end
 
   # The collection has allowed the user to specify availablity on the member works
-  sig { returns(T::Boolean) }
+
   def user_can_set_availability?
     release_option == 'depositor-selects'
   end
 
   # The collection has allowed the user to select a license for the member works
-  sig { returns(T::Boolean) }
+
   def user_can_set_license?
     license_option == 'depositor-selects'
   end
 
-  sig { returns(T.nilable(String)) }
   def purl
     return nil unless druid
 
-    File.join(Settings.purl_url, T.must(druid).delete_prefix('druid:'))
+    File.join(Settings.purl_url, druid.delete_prefix('druid:'))
   end
 
   private
 
-  sig { override.returns(T::Hash[Symbol, String]) }
   def default_event_context
     { user: creator }
   end

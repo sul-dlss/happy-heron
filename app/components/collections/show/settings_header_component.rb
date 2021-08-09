@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -8,22 +7,18 @@ module Collections
     # and it ought to be within a data-controller="work-type" attribute because
     # this component contains a button that acts on that controller
     class SettingsHeaderComponent < ApplicationComponent
-      sig { params(collection_version: CollectionVersion).void }
       def initialize(collection_version:)
         @collection_version = collection_version
       end
 
-      sig { returns(CollectionVersion) }
       attr_reader :collection_version
 
       delegate :depositing?, :draft?, :collection, to: :collection_version
 
-      sig { returns(String) }
       def name
         collection_version.name.presence || 'No Title'
       end
 
-      sig { returns(String) }
       def spinner
         tag.span class: 'fas fa-spinner fa-pulse'
       end

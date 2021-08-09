@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 # Allow the feature tests to respond like production (e.g. respond with a 404 rather than an exception)

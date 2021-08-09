@@ -1,9 +1,8 @@
-# typed: false
 # frozen_string_literal: true
 
 # A proxy to Settings.autocomplete_lookup.url to get OCLC's FAST data for typeahead
 class AutocompleteController < ApplicationController
-  T.unsafe(self).include Dry::Monads[:result]
+  include Dry::Monads[:result]
 
   def show
     result = lookups(params.require(:q))

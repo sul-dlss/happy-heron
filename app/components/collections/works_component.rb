@@ -1,15 +1,12 @@
-# typed: true
 # frozen_string_literal: true
 
 module Collections
   # Renders the tabs for the collection show page
   class WorksComponent < ApplicationComponent
-    sig { params(collection: Collection).void }
     def initialize(collection:)
       @collection = collection
     end
 
-    sig { returns(Collection) }
     attr_reader :collection
 
     delegate :current_user, :user_with_groups, to: :helpers
@@ -19,19 +16,16 @@ module Collections
             .order('updated_at DESC')
     end
 
-    sig { returns(T::Boolean) }
     def hide_depositor?
       !collection_policy.review?
     end
 
     private
 
-    sig { returns(WorkVersionPolicy) }
     def policy
       WorkVersionPolicy.new(user: current_user, user_with_groups: user_with_groups)
     end
 
-    sig { returns(CollectionPolicy) }
     def collection_policy
       CollectionPolicy.new(collection, user: current_user, user_with_groups: user_with_groups)
     end

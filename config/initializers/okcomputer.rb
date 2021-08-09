@@ -1,4 +1,3 @@
-# typed: strict
 # frozen_string_literal: true
 
 OkComputer.mount_at = 'status'

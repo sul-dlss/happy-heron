@@ -1,4 +1,3 @@
-# typed: false
 # frozen_string_literal: true
 
 module Collections
@@ -6,7 +5,6 @@ module Collections
   class WorkRowComponent < ApplicationComponent
     with_collection_parameter :work_version
 
-    # sig { params(work_version: WorkVersion).void }
     def initialize(work_version:)
       @work_version = work_version
     end

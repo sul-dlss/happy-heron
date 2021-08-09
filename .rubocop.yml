@@ -2,7 +2,6 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-sorbet
 
 inherit_from: .rubocop_todo.yml
 

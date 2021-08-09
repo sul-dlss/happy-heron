@@ -1,16 +1,13 @@
-# typed: true
 # frozen_string_literal: true
 
 module Works
   # Renders a widget for selecting a contributor role
   class ContributorRoleComponent < ApplicationComponent
-    sig { params(form: ActionView::Helpers::FormBuilder, data_options: Hash).void }
     def initialize(form:, data_options:)
       @form = form
       @data_options = data_options
     end
 
-    sig { returns(ActionView::Helpers::FormBuilder) }
     attr_reader :form
 
     delegate :grouped_collection_select, to: :form
@@ -54,7 +51,7 @@ module Works
     end
 
     # list for work_form pulldown
-    sig { returns(T::Array[ContributorType]) }
+
     def grouped_options
       %w[person organization].map do |key|
         ContributorType.new(key: key, citable: false)
