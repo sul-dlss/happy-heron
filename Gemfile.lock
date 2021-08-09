@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/hotwired/turbo-rails.git
-  revision: d89e1a0f36373180806ceab6949fb25e0d74264a
-  ref: d89e1a0
-  specs:
-    turbo-rails (0.5.11)
-      rails (>= 6.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -470,6 +462,8 @@ GEM
       diff-lcs
       patience_diff
     thor (1.1.0)
+    turbo-rails (0.6.0)
+      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -561,7 +555,7 @@ DEPENDENCIES
   state_machines-activerecord
   state_machines-graphviz
   super_diff
-  turbo-rails!
+  turbo-rails (~> 0.6.0)
   view_component (~> 2.18)
   web-console (>= 3.3.0)
   webmock
