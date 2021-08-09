@@ -12,7 +12,7 @@ class WorkPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (administrator? || depositor?) && record.persisted? && record.head.first_draft?
+    (administrator? || depositor?) && record.persisted? && (record.head.first_draft? || record.head.purl_reservation?)
   end
 
   delegate :administrator?, to: :user_with_groups
