@@ -126,13 +126,11 @@ class WorkVersion < ApplicationRecord
 
   # the terms agreement checkbox value is not persisted in the database with the work and the value is instead:
   #  false if (a) never previously accepted or (b) not accepted in the last year; it is true otherwise
-  sig { returns(T::Boolean) }
   def agree_to_terms
     work.depositor.agreed_to_terms_recently?
   end
 
   # the terms agreement checkbox value is not persisted in the database with the work but instead at the user level
-  sig { params(value: T.any(String, T::Boolean)).void }
   def agree_to_terms=(value)
     return if value == false || value == '0' || work.depositor.agreed_to_terms_recently?
 
@@ -141,7 +139,6 @@ class WorkVersion < ApplicationRecord
     work.depositor.agreed_to_terms
   end
 
-  sig { params(edtf: T.nilable(T.any(EDTF::Interval, Date))).void }
   # Ensure that EDTF dates get an EDTF serialization
   def published_edtf=(edtf)
     case edtf
