@@ -2,7 +2,7 @@
   <header>Terms of Deposit *</header>
   <div class="row">
     <div class="form-check col-auto">
-      <% if form.object.agree_to_terms %>
+      <% if agree_to_terms? %>
         You agreed to the <%= link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'} %>
         <%= time_ago_in_words form.object.model.fetch(:work).depositor.last_work_terms_agreement %> ago.
       <% else %>

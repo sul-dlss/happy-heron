@@ -46,8 +46,4 @@ class User < ApplicationRecord
 
     terms_agreement_renewal_timeframe < last_work_terms_agreement
   end
-
-  def agreed_to_terms
-    update(last_work_terms_agreement: Time.zone.now)
-  end
 end
