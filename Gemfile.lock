@@ -510,6 +510,7 @@ PLATFORMS
 
 DEPENDENCIES
   action_policy (~> 0.5.3)
+  addressable (~> 2.8.0)
   apparition
   bootsnap (>= 1.4.2)
   bunny (~> 2.17)
