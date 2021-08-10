@@ -3,9 +3,11 @@
 # Displays the list of collections and works to the user
 class DashboardsController < ApplicationController
   before_action :authenticate_user!
-  verify_authorized
+  verify_authorized except: :show
 
   def show
+    return redirect_to root_path unless allowed_to?(:show?, :dashboard)
+
     authorize! :dashboard
     @presenter = build_presenter
 

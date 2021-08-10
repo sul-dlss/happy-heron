@@ -5,18 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Dashboard requests' do
   let(:user) { create(:user) }
 
-  context 'when user has no deposits' do
-    before { sign_in user }
-
-    it 'returns an unauthorized http status code' do
-      get '/dashboard'
-      expect(response).to redirect_to(:root)
-      follow_redirect!
-      expect(response).to be_successful
-      expect(response.body).to include 'You are not authorized to perform the requested action'
-    end
-  end
-
   context 'when user has deposits' do
     let(:user) { collection.depositors.first }
     let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }

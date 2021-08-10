@@ -13,16 +13,18 @@ RSpec.describe 'Help modal', js: true do
     it 'opens modal, enters text, and submits query' do
       visit '/'
       click_link 'Help'
-      expect(page).to have_content 'Required fields'
-      # Email is pre-populated from user
-      expect(page).to have_field('What is your email address?*', with: user.email)
-      # Fills in remaining fields
-      fill_in 'What is your name?', with: 'User One'
-      fill_in 'What is your Stanford affiliation/department?', with: 'SUL'
-      select 'I want to ask a question', from: 'How can we help you?*'
-      fill_in 'Describe your issue, question, or what you would like to deposit', with: 'A question for the ages'
-      click_button 'Submit'
-      expect(page).to have_content 'Your message has been sent to the SDR team. We will respond to you soon.'
+      within '#contactUsModal' do
+        expect(page).to have_content 'Required fields'
+        # Email is pre-populated from user
+        expect(page).to have_field('What is your email address?*', with: user.email)
+        # Fills in remaining fields
+        fill_in 'What is your name?', with: 'User One'
+        fill_in 'What is your Stanford affiliation/department?', with: 'SUL'
+        select 'I want to ask a question', from: 'How can we help you?*'
+        fill_in 'Describe your issue, question, or what you would like to deposit', with: 'A question for the ages'
+        click_button 'Submit'
+        expect(page).to have_content 'Your message has been sent to the SDR team. We will respond to you soon.'
+      end
     end
   end
 
