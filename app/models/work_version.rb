@@ -124,6 +124,21 @@ class WorkVersion < ApplicationRecord
     end
   end
 
+  # the terms agreement checkbox value is not persisted in the database with the work and the value is instead:
+  #  false if (a) never previously accepted or (b) not accepted in the last year; it is true otherwise
+  def agree_to_terms
+    work.depositor.agreed_to_terms_recently?
+  end
+
+  # the terms agreement checkbox value is not persisted in the database with the work but instead at the user level
+  def agree_to_terms=(value)
+    return if value == false || value == '0' || work.depositor.agreed_to_terms_recently?
+
+    # update the last time the terms of agreement was accepted for this depositor
+    #  if it has not been accepted within the defined timeframe and the checkbox was checked
+    work.depositor.update(last_work_terms_agreement: Time.zone.now)
+  end
+
   # Ensure that EDTF dates get an EDTF serialization
   def published_edtf=(edtf)
     case edtf

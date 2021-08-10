@@ -7,6 +7,10 @@ module Works
       @form = form
     end
 
+    def agree_to_terms?
+      form.object.agree_to_terms
+    end
+
     attr_reader :form
   end
 end
