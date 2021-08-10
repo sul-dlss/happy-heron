@@ -21,7 +21,6 @@ class AssignPidJob
     ack!
   end
 
-  sig { params(source_id: String, args: T::Hash[Symbol, String]).void }
   def update_attributes_by_source(source_id, args)
     unprefixed = source_id.delete_prefix('hydrus:')
     # Without this, the database connection pool gets exhausted
