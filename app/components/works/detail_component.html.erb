@@ -25,7 +25,7 @@
     <caption>Details</caption>
     <tbody>
       <tr>
-        <th scope="row">Persistent link</th>
+        <th class="col-3" scope="row">Persistent link</th>
         <td>
           <% if purl %>
             <%= link_to purl, purl %>
@@ -36,23 +36,23 @@
         </td>
       </tr>
       <tr>
-        <th scope="row">Collection</th>
+        <th class="col-3" scope="row">Collection</th>
         <td><%= link_to collection_name, collection %></td>
       </tr>
       <tr>
-        <th scope="row">Deposit type</th>
+        <th class="col-3" scope="row">Deposit type</th>
         <td><%= work_type %></td>
       </tr>
       <tr>
-        <th scope="row">Depositor</th>
+        <th class="col-3" scope="row">Depositor</th>
         <td><%= depositor %></td>
       </tr>
       <tr>
-        <th scope="row">Version details</th>
+        <th class="col-3" scope="row">Version details</th>
         <td><%= version %></td>
       </tr>
       <tr>
-        <th scope="row">Deposit created</th>
+        <th class="col-3" scope="row">Deposit created</th>
         <td><%= created_at %></td>
       </tr>
       <!--
@@ -62,7 +62,7 @@
       </tr>
       -->
       <tr>
-        <th scope="row">Last saved</th>
+        <th class="col-3" scope="row">Last saved</th>
         <td><%= updated_at %></td>
       </tr>
     </tbody>
@@ -76,11 +76,11 @@
     </caption>
     <tbody>
     <tr>
-      <th scope="row">Title</th>
+      <th class="col-3" scope="row">Title</th>
       <td><%= title %></td>
     </tr>
     <tr>
-      <th>Contact emails</th>
+      <th class="col-3" >Contact emails</th>
       <% if contact_emails.empty? %>
       <td>None provided</td>
       <% else %>
@@ -121,11 +121,11 @@
     </caption>
     <tbody>
     <tr>
-      <th scope="row">Publication date</th>
+      <th class="col-3" scope="row">Publication date</th>
       <td><%= published %></td>
     </tr>
     <tr>
-      <th scope="row">Creation date</th>
+      <th class="col-3" scope="row">Creation date</th>
       <td><%= created %></td>
     </tr>
     </tbody>
@@ -137,11 +137,11 @@
     </caption>
     <tbody>
     <tr>
-      <th scope="row">Abstract</th>
+      <th class="col-3" scope="row">Abstract</th>
       <td><%= simple_format abstract %></td>
     </tr>
     <tr>
-      <th scope="row">Keywords</th>
+      <th class="col-3" scope="row">Keywords</th>
       <td>
         <% keywords.each do |keyword| %>
           <p><%= keyword %></p>
@@ -149,7 +149,7 @@
       </td>
     </tr>
     <tr>
-      <th scope="row">Deposit subtypes</th>
+      <th class="col-3" scope="row">Deposit subtypes</th>
       <td><%= subtypes %></td>
     </tr>
     <tr>
@@ -159,7 +159,7 @@
       </td>
     </tr>
     <tr>
-      <th scope="row">Related published work</th>
+      <th class="col-3" scope="row">Related published work</th>
       <td>
         <% related_works.each do |related| %>
           <p><%= related.citation %></p>
@@ -167,7 +167,7 @@
       </td>
     </tr>
     <tr>
-      <th scope="row">Related link</th>
+      <th class="col-3" scope="row">Related link</th>
       <td>
         <% related_links.each do |link| %>
           <p><%= link_to link.link_title, link.url %></p>
@@ -183,11 +183,11 @@
     </caption>
     <tbody>
     <tr>
-      <th scope="row">Available</th>
+      <th class="col-3" scope="row">Available</th>
       <td><%= embargo_date %></td>
     </tr>
     <tr>
-      <th scope="row">Access</th>
+      <th class="col-3" scope="row">Access</th>
       <td><%= access %></td>
     </tr>
     </tbody>
@@ -199,11 +199,11 @@
     </caption>
     <tbody>
     <tr>
-      <th scope="row">License</th>
+      <th class="col-3" scope="row">License</th>
       <td><%= license %></td>
     </tr>
     <tr>
-      <th scope="row">Terms of use</th>
+      <th class="col-3" scope="row">Terms of use</th>
       <td><%= Settings.access.use_and_reproduction_statement %></td>
     </tr>
     </tbody>
