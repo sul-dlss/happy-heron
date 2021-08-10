@@ -26,7 +26,6 @@ module Collections
       end
     end
 
-    sig { returns(String) }
     def doi_assignment
       case collection.doi_option
       when 'no'
