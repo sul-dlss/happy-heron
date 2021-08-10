@@ -10,7 +10,7 @@ class AccountService
 
   def fetch(sunetid)
     Rails.cache.fetch(sunetid, namespace: 'account', expires_in: 1.month) do
-      url = "https://#{Settings.accountws.host}/accounts/#{sunetid}"
+      url = template.partial_expand(sunetid: sunetid).pattern
       response = connection.get(url)
       doc = response.body
       doc.slice('name', 'description')
@@ -20,6 +20,10 @@ class AccountService
   private
 
   attr_reader :key, :cert
+
+  def template
+    @template ||= Addressable::Template.new("https://#{Settings.accountws.host}/accounts/{sunetid}")
+  end
 
   def connection
     Faraday::Connection.new(ssl: {
