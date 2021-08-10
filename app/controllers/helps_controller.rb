@@ -7,6 +7,7 @@ class HelpsController < ApplicationController
     @help_how_value = 'I want to become an SDR depositor' unless current_user
   end
 
+  # You can pass an id parameter to this route to define which turbo-frame gets updated
   def create
     HelpsMailer.with(name: params[:name],
                      email: params[:email],

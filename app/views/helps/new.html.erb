@@ -1,5 +1,5 @@
-<turbo-frame id="help">
-  <%= form_with(url: help_path) do |form| %>
+<turbo-frame id="<%= params.fetch(:id, 'help') %>">
+  <%= form_with(url: help_path(id: params[:id])) do |form| %>
     <strong><sup>*</sup>Required fields</strong>
     <div class="container-fluid">
       <div class="row">

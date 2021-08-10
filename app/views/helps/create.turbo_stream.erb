@@ -1,4 +1,4 @@
-<%= turbo_stream.update 'help' do %>
+<%= turbo_stream.update params.fetch(:id, 'help') do %>
   <div data-help-target="results">
     <h2>Help request successfully sent</h2>
     <p>Your message has been sent to the SDR team. We will respond to you soon.</p>
