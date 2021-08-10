@@ -14,7 +14,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end
 
-  it 'deposits a placeholder work, and lists it on the dashboard with its PURL' do
+  it 'deposits a placeholder work, and lists it on the dashboard with its PURL, then remove it' do
     visit dashboard_path
 
     click_button 'Reserve a PURL'
@@ -40,6 +40,15 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
     # this should be updated automatically
     expect(page).to have_content 'PURL Reserved'
+
+    # now delete the reserved purl and confirm it is gone
+    accept_confirm do
+      within '#your-collections-table' do
+        click_link "Delete #{work_version.title}"
+      end
+    end
+    sleep(1)
+    expect(WorkVersion.exists?(work_version.id)).to be false
   end
 
   describe 'setting the type for a reserved purl' do
