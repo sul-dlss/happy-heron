@@ -3,6 +3,11 @@ sdr_api:
   email: testing@example.org
   password: notusedanywhere
 
+
+accountws:
+  pem_file: /etc/pki/tls/certs/sul-h2-qa.stanford.edu.pem
+  host: accountws-uat.stanford.edu
+
 redis_url: redis://localhost:6379/
 
 # The HTTP_X_REMOTE_USER variable comes from our Apache config behind a reverse

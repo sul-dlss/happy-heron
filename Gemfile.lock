@@ -237,6 +237,8 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
+    faraday_middleware (1.0.0)
+      faraday (~> 1.0)
     ffi (1.15.3)
     globalid (0.5.2)
       activesupport (>= 5.0)
@@ -527,6 +529,8 @@ DEPENDENCIES
   edtf
   factory_bot_rails
   faker
+  faraday (~> 1.0)
+  faraday_middleware (~> 1.0)
   honeybadger (~> 4.0)
   jbuilder
   listen (~> 3.2)

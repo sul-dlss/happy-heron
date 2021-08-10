@@ -29,8 +29,7 @@ append :linked_files,
        'config/honeybadger.yml' # in shared_configs
 
 # Default value for linked_dirs is []
-# These directories are handled by shared_configs
-append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/sockets', 'public/system'
+append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

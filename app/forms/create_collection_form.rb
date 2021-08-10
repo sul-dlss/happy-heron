@@ -12,7 +12,9 @@ class CreateCollectionForm < DraftCollectionForm
     validates :email, format: { with: Devise.email_regexp }
   end
 
-  validates :name, :description, :manager_sunets, :access, presence: true
+  validates :name, :description, :access, presence: true
   validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
+  validates :managed_by, length: { minimum: 1, message: 'Please add at least one manager.' }
+
   validates_with CollectionLicenseValidator
 end

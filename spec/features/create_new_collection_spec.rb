@@ -27,9 +27,9 @@ RSpec.describe 'Create a new collection', js: true do
 
       expect(page).to have_content('Send email to Depositors whose status has changed.')
 
-      find_field 'Additional Reviewers', disabled: true
       check 'Enable Review Workflow'
-      find_field 'Additional Reviewers'
+      click_button '+ Add another reviewer'
+      find_field 'lookup SunetID'
 
       # breadcrumbs showing
       find('#breadcrumbs') do |nav|

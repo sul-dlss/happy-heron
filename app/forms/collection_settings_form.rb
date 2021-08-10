@@ -6,8 +6,29 @@ class CollectionSettingsForm < Reform::Form
   feature EmbargoDate
 
   property :access, default: 'world'
-  property :manager_sunets, virtual: true,
-                            prepopulator: ->(_options) { self.manager_sunets = manager_sunets_from_model.join(', ') }
+
+  collection :managed_by, populator: CollectionContributorPopulator.new(:managed_by, User) do
+    property :id, writeable: false
+    property :sunetid, writeable: false
+    property :name
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+  end
+
+  collection :reviewed_by, populator: ReviewersPopulator.new(:reviewed_by, User) do
+    property :id, writeable: false
+    property :sunetid, writeable: false
+    property :name
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+  end
+
+  collection :depositors, populator: CollectionContributorPopulator.new(:depositors, User),
+                          on: :collection do
+    property :id, writeable: false
+    property :sunetid, writeable: false
+    property :name
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+  end
+
   property :email_when_participants_changed
   property :email_depositors_status_changed
 
@@ -17,19 +38,13 @@ class CollectionSettingsForm < Reform::Form
   property :license_option
   property :required_license
   property :default_license
-
-  property :depositor_sunets, virtual: true,
-                              prepopulator: lambda { |_options|
-                                              self.depositor_sunets = depositor_sunets_from_model.join(', ')
-                                            }
   property :review_enabled
-  property :reviewer_sunets, virtual: true,
-                             prepopulator: ->(_options) { self.reviewer_sunets = reviewer_sunets_from_model.join(', ') }
 
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
   validates :release_duration, inclusion: { in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values },
                                allow_blank: true
-  validates :manager_sunets, :access, presence: true
+  validates :access, presence: true
+  validates :managed_by, length: { minimum: 1, message: 'Please add at least one manager.' }
   validates_with CollectionLicenseValidator
 
   def deserialize!(params)
@@ -40,51 +55,5 @@ class CollectionSettingsForm < Reform::Form
       params['required_license'] = nil
     end
     super(params)
-  end
-
-  def sync(*)
-    update_depositors
-    update_reviewers
-    update_managers
-
-    super
-  end
-
-  private
-
-  def update_depositors
-    model.depositors = field_to_users(depositor_sunets)
-  end
-
-  def update_managers
-    model.managed_by = field_to_users(manager_sunets)
-  end
-
-  def update_reviewers
-    return model.reviewed_by = [] unless review_enabled == 'true'
-
-    model.reviewed_by = field_to_users(reviewer_sunets)
-  end
-
-  def field_to_users(field)
-    sunetids = field.split(/\s*,\s*/).uniq
-    emails = sunetids.map { |sunet| "#{sunet}@stanford.edu" }
-    emails.map do |email|
-      # It's odd that we need to do both, but this is how it's written.
-      # See: https://github.com/rails/rails/issues/36027
-      User.find_by(email: email) || User.create_or_find_by(email: email)
-    end
-  end
-
-  def depositor_sunets_from_model
-    model.depositors.map(&:sunetid)
-  end
-
-  def reviewer_sunets_from_model
-    model.reviewed_by.map(&:sunetid)
-  end
-
-  def manager_sunets_from_model
-    (model.managed_by.presence || [model.creator]).map(&:sunetid)
   end
 end

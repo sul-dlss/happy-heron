@@ -21,7 +21,6 @@ class CollectionsController < ObjectsController
   def update
     collection = Collection.find(params[:id])
     authorize! collection
-
     point1 = CollectionChangeSet::PointInTime.new(collection)
     @form = CollectionSettingsForm.new(collection)
     if @form.validate(update_params) && @form.save
@@ -109,22 +108,27 @@ class CollectionsController < ObjectsController
 
   def create_params
     params.require(:collection).permit(:name, :description, :access,
-                                       :manager_sunets, :depositor_sunets,
-                                       :review_enabled, :reviewer_sunets, :license_option,
+                                       :review_enabled, :license_option,
                                        :required_license, :default_license,
                                        :email_when_participants_changed,
                                        :email_depositors_status_changed,
                                        :release_option, :release_duration,
                                        related_links_attributes: %i[_destroy id link_title url],
-                                       contact_emails_attributes: %i[_destroy id email])
+                                       contact_emails_attributes: %i[_destroy id email],
+                                       managed_by_attributes: %i[_destroy id sunetid],
+                                       reviewed_by_attributes: %i[_destroy id sunetid],
+                                       depositors_attributes: %i[_destroy id sunetid])
   end
 
   def update_params
-    params.require(:collection).permit(:access, :manager_sunets, :depositor_sunets,
-                                       :review_enabled, :reviewer_sunets, :license_option,
+    params.require(:collection).permit(:access,
+                                       :review_enabled, :license_option,
                                        :required_license, :default_license,
                                        :email_when_participants_changed,
                                        :email_depositors_status_changed,
-                                       :release_option, :release_duration)
+                                       :release_option, :release_duration,
+                                       managed_by_attributes: %i[_destroy id sunetid],
+                                       reviewed_by_attributes: %i[_destroy id sunetid],
+                                       depositors_attributes: %i[_destroy id sunetid])
   end
 end

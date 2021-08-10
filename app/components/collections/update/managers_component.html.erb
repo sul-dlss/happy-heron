@@ -1,10 +1,43 @@
-<div class="mb-3 row">
-  <div class="col-sm-2">
-    <%= form.label :manager_sunets, 'Managers *', class: 'col-form-label' %>
+<fieldset>
+  <legend class="participant-type" style="font-size: 1rem; width: 5rem; float: left">Managers *</legend>
+  <div style="float: left; margin-right: 6rem">
     <%= render PopoverComponent.new key: 'collection.managers' %>
   </div>
-  <div class="col-sm-10 col-xl-8">
-    <%= form.text_field :manager_sunets, class: "form-control", required: true %>
-    <div class="invalid-feedback">You must provide managers</div>
+  <div class="mb-3 row">
+    <div class="col-sm-12" data-controller="collection-participant-form" data-collection-participant-form-selector-value=".participant-container">
+      <div class="invalid-feedback">You must provide managers</div>
+
+      <template data-collection-participant-form-target='template'>
+        <%= form.fields_for :managed_by, User.new, child_index: 'TEMPLATE_RECORD' do |participant_form| %>
+          <%= render Collections::Update::ParticipantRowComponent.new(form: participant_form) %>
+        <% end %>
+      </template>
+
+      <%= form.fields_for :managed_by do |participant_form| %>
+        <%= render Collections::Update::ParticipantRowComponent.new(form: participant_form) %>
+      <% end %>
+
+      <div data-collection-participant-form-target="control" style="position: relative">
+        <input aria-label="lookup SunetID" class="form-control" style="width:40%"
+          data-action="collection-participant-form#search"
+          data-collection-participant-form-target="lookup">
+        <div data-collection-participant-form-target="result" class="participant-overlay">
+          <div data-collection-participant-form-target="resultOne">
+            <div class="mb-2"><strong>Search results for "<span data-collection-participant-form-target="queryValue"></span>"</strong></div>
+
+            <span data-collection-participant-form-target="resultName"></span>
+            <span data-collection-participant-form-target="resultDescription"></span>
+            <%= button_tag 'Add', type: 'button', class: "btn btn-outline-primary", data: { action: "collection-participant-form#addAssociation" } %>
+          </div>
+          <div data-collection-participant-form-target="resultNone">
+            <strong>No search results found for "<span data-collection-participant-form-target="queryValue"></span>"</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <%= button_tag '+ Add another manager', type: 'button', class: "btn btn-outline-primary", data: { action: "collection-participant-form#openLookup" } %>
+      </div>
+    </div>
   </div>
-</div>
+</fieldset>

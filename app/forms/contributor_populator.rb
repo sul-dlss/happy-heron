@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Populates the nested contributor form
+# Populates the nested item contributor form
 class ContributorPopulator < ApplicationPopulator
   # The fragment represents one row of the contributor data from the HTML form
   # find out if incoming Contributor is already added.
