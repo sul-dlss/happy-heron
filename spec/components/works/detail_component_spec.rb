@@ -98,7 +98,7 @@ RSpec.describe Works::DetailComponent, type: :component do
         expect(rendered.to_html).to include 'DOI assigned (see above)'
       end
     end
-    
+
     context 'with reserved PURL and collection automatically assigns DOI' do
       let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
       let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
