@@ -11,12 +11,12 @@
       <div class="invalid-feedback">You must provide reviewers</div>
 
       <template data-collection-participant-form-target='template'>
-        <%= form.fields_for :depositors, User.new, child_index: 'TEMPLATE_RECORD' do |participant_form| %>
+        <%= form.fields_for :reviewed_by, User.new, child_index: 'TEMPLATE_RECORD' do |participant_form| %>
           <%= render Collections::Update::ParticipantRowComponent.new(form: participant_form) %>
         <% end %>
       </template>
 
-      <%= form.fields_for :depositors do |participant_form| %>
+      <%= form.fields_for :reviewed_by do |participant_form| %>
         <%= render Collections::Update::ParticipantRowComponent.new(form: participant_form) %>
       <% end %>
 
