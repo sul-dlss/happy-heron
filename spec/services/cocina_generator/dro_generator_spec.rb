@@ -128,11 +128,11 @@ RSpec.describe CocinaGenerator::DROGenerator do
             isMemberOf: [collection.druid]
           }
         }
-      }
-    end
+      end
 
-    it 'generates the model' do
-      expect(model.to_h).to eq(expected_model)
+      it 'generates the model' do
+        expect(model.to_h).to eq(expected_model)
+      end
     end
   end
 
