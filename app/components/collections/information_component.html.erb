@@ -2,7 +2,7 @@
   <caption>Collection information</caption>
   <tbody>
     <tr>
-      <th>PURL</th>
+      <th class="col-3">PURL</th>
       <td>
         <% if purl %>
           <%= link_to purl, purl %>
@@ -12,19 +12,19 @@
       </td>
     </tr>
     <tr>
-      <th>Version details</th>
+      <th class="col-3">Version details</th>
       <td><%= version %></td>
     </tr>
     <tr>
-      <th>Created by</th>
+      <th class="col-3">Created by</th>
       <td><%= creator.sunetid %></td>
     </tr>
     <tr>
-      <th>Collection created</th>
+      <th class="col-3">Collection created</th>
       <td><%= created %></td>
     </tr>
     <tr>
-      <th>Last Saved</th>
+      <th class="col-3">Last Saved</th>
       <td><%= last_saved %></td>
     </tr>
   </tbody>
