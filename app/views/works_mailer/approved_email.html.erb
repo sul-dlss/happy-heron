@@ -13,6 +13,10 @@ License: <%= @work_version.license %><br>
 Access level: <%= @work_version.access %><br>
 Release:  <%= @work_version.embargo_date.presence || 'now available' %></p>
 
+<% if @work.doi %>
+  <p>Your work was assigned this DOI: https://doi.org/<%= @work.doi %></p>
+<% end %>
+
 <p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
 
 <p>The Stanford Digital Repository Team</p>
