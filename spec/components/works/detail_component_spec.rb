@@ -105,17 +105,17 @@ RSpec.describe Works::DetailComponent, type: :component do
       let(:collection) { build_stubbed(:collection, doi_option: 'yes') }
 
       it 'renders the doi setting' do
-        expect(rendered.to_html).to include 'The DOI for this item will be DOI:10.80343/bc123df4567'
+        expect(rendered.to_html).to include 'DOI will become available once the work has been deposited.'
       end
     end
 
-    context 'with reserved PURL and collection allows depositor to select' do
+    context 'with reserved PURL and collection allows depositor to select, and they choose no' do
       let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
       let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
       let(:collection) { build_stubbed(:collection, doi_option: 'depositor-selects') }
 
       it 'renders the doi setting' do
-        expect(rendered.to_html).to include 'The DOI for this item will be DOI:10.80343/bc123df4567'
+        expect(rendered.to_html).to include 'A DOI has not been assigned to this item.'
       end
     end
 
