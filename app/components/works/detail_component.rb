@@ -31,16 +31,17 @@ module Works
       # If there is a DOI, return a link to it.
       return doi_link if doi
 
-      # If not assigning a DOI, return nothing.
-      return if doi_option == 'no'
-
-      # If possibly assigning a DOI and the PURL has been assigned, return possible DOI.
-      return doi_tbd if purl
-
-      # If assigning a DOI and PURL has not been assigned, return message.
-      return unless doi_option == 'yes' || (doi_option == 'depositor-selects' && assign_doi)
-
-      tag.em 'DOI will become available once the work has been deposited.'
+      case doi_option
+      when 'yes'
+        doi_later
+      when 'depositor-selects'
+        if assign_doi
+          doi_later
+        else
+          doi_opt_out
+        end
+      end
+      # Nothing is returned if doi_option is 'no'
     end
 
     def doi_setting
@@ -130,8 +131,13 @@ module Works
       link_to link, link
     end
 
-    def doi_tbd
-      "The DOI for this item will be DOI:#{Settings.datacite.prefix}/#{druid.delete_prefix('druid:')} (if assigned)."
+    def doi_opt_out
+      'A DOI has not been assigned to this item. You may edit this item and select ' \
+        '"Yes" for the DOI option if you would like to receive a DOI.'
+    end
+
+    def doi_later
+      tag.em 'DOI will become available once the work has been deposited.'
     end
   end
 end
