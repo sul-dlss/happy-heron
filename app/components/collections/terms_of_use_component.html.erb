@@ -8,17 +8,17 @@
   </caption>
   <tbody>
     <tr>
-      <th>Terms of use</th>
+      <th class="col-3">Terms of use</th>
       <td><%= I18n.t(:terms_of_use) %></td>
     </tr>
     <% if user_can_set_license? %>
       <tr>
-        <th>Default license (depositor selects)</th>
+        <th class="col-3">Default license (depositor selects)</th>
         <td><%= default_license %></td>
       </tr>
     <% else %>
       <tr>
-        <th>Required license</th>
+        <th class="col-3">Required license</th>
         <td><%= required_license %></td>
       </tr>
     <% end %>
