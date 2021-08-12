@@ -5,6 +5,7 @@ class ContributorPopulator < ApplicationPopulator
   # The fragment represents one row of the contributor data from the HTML form
   # find out if incoming Contributor is already added.
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def call(form, fragment:, **)
     item = existing_record(form: form, id: fragment['id'])
 
@@ -23,8 +24,12 @@ class ContributorPopulator < ApplicationPopulator
     else
       fragment['first_name'] = nil
       fragment['last_name'] = nil
+      fragment['orcid'] = nil
     end
+    fragment['orcid'] = fragment['orcid'].presence
+
     item || value(form).append(klass.new)
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 end

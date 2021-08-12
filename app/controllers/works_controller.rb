@@ -222,7 +222,7 @@ class WorksController < ObjectsController
                      :agree_to_terms,
                      subtype: [],
                      attached_files_attributes: %i[_destroy id label hide file],
-                     authors_attributes: %i[_destroy id full_name first_name last_name role_term weight],
+                     authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
                      contributors_attributes: %i[_destroy id full_name first_name last_name role_term],
                      contact_emails_attributes: %i[_destroy id email],
                      keywords_attributes: %i[_destroy id label uri],

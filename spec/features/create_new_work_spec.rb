@@ -19,6 +19,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
     context 'when successful deposit' do
       context 'with a user-supplied citation' do
+        before do
+          allow(OrcidService).to receive(:lookup).and_return(Dry::Monads::Result::Success.new(['Orcid First Name',
+                                                                                               'Orcid Last Name']))
+        end
+
         it 'deposits and renders work show page' do
           visit dashboard_path
 
@@ -86,13 +91,12 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
             fill_in 'First name', with: 'Contributor First Name'
             fill_in 'Last name', with: 'Contributor Last Name'
 
-            # This is the div that contains the contributor remove button. The button
-            # should NOT be rendered since there's one and only one author at
-            # this point, which is not removable.
-            within '.inner-container' do
-              expect(page).not_to have_selector('button')
-            end
+            # Switch to an ORCID
+            choose 'Enter author by ORCID iD'
+            fill_in 'ORCID iD *', with: '0000-0003-1527-0030'
+            expect(page).to have_content('Name associated with this ORCID iD is Orcid First Name Orcid Last Name')
 
+            # Switch to an organization
             select 'Publisher', from: 'Role term'
             fill_in 'Name', with: 'Best Publisher'
           end
@@ -291,13 +295,6 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           within_section 'Authors to include in citation' do
             fill_in 'First name', with: 'Contributor First Name'
             fill_in 'Last name', with: 'Contributor Last Name'
-
-            # This is the div that contains the contributor remove button. The button
-            # should NOT be rendered since there's one and only one author at
-            # this point, which is not removable.
-            within '.inner-container' do
-              expect(page).not_to have_selector('button')
-            end
 
             select 'Publisher', from: 'Role term'
             fill_in 'Name', with: 'Best Publisher'

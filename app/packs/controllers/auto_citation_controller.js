@@ -35,15 +35,28 @@ export default class extends Controller {
     }
   }
 
+  // Authors (person and organization) as an array of strings.
   get authors() {
-    return this.contributorRoleTargets.map((roleField, index) => {
+    return this.contributorRoles.map((roleField, index) => {
       if (roleField.value.startsWith('person')) {
-        const firstInitial = `${this.contributorFirstTargets[index].value.charAt(0)}.`
-        const surname = this.contributorLastTargets[index].value
+        const firstInitial = `${this.contributorFirsts[index].value.charAt(0)}.`
+        const surname = this.contributorLasts[index].value
         return `${surname}, ${firstInitial}`
       }
       return this.contributorOrgTargets[index].value
     })
+  }
+
+  get contributorRoles() {
+    return this.contributorRoleTargets.filter(elem => elem.disabled == false)
+  }
+
+  get contributorFirsts() {
+    return this.contributorFirstTargets.filter(elem => elem.disabled == false)
+  }
+
+  get contributorLasts() {
+    return this.contributorLastTargets.filter(elem => elem.disabled == false)
   }
 
   // Triggered when the switch is toggled
