@@ -36,7 +36,7 @@ module Works
     end
 
     def show_first_draft_cancel?
-      work_version.first_draft?
+      work_version.deleteable?
     end
   end
 end
