@@ -16,13 +16,20 @@
         <%= form.label :assign_doi, 'Do you want a DOI to be assigned to your deposit?', class: "form-check-label col-sm-5" %>
 
         <div class="col-sm-2">
-          <div class="form-check form-switch">
+          <label class="switch" aria-label="Use auto-generated citation">
             <%= form.check_box :assign_doi,
                                {
-                                 class: 'form-check-input'
+                                 data: {
+                                   action: 'change->auto-citation#switchChanged',
+                                   auto_citation_target: 'switch'
+                                 }
                                },
                                'true', 'false' %>
-          </div>
+            <div class="slider round">
+              <span class="on">Yes</span>
+              <span class="off">No</span>
+            </div>
+          </label>
         </div>
       </div>
 
