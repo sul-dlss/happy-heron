@@ -38,5 +38,13 @@ module Works
     def show_first_draft_cancel?
       work_version.first_draft?
     end
+
+    def cancel_link_location
+      if model.persisted?
+        work_path(model)
+      else
+        collection_works_path(collection)
+      end
+    end
   end
 end
