@@ -43,22 +43,14 @@ RSpec.describe 'Create a new collection', js: true do
       expect(page).to have_content('Depositing')
 
       # Simulate the deposit process
-      collection_version = CollectionVersion.last
-      collection_version.collection.update!(druid: 'druid:dc224fz4940')
-      collection_version.deposit_complete!
+      CollectionVersion.last.tap do |version|
+        version.collection.update!(druid: 'druid:dc224fz4940')
+        version.deposit_complete!
+      end
 
       # This link appears when depositing is complete
       click_link "Edit #{name}"
       expect(page).not_to have_content('Depositing')
-
-      # Cancel editing to confirm we get back to the collection settings view page
-      click_link 'Cancel'
-      expect(page).to have_current_path(collection_path(collection_version.collection))
-
-      # now visit the edit details page, and Cancel editing to confirm we return to the collection details view page
-      visit edit_collection_version_path(collection_version)
-      click_link 'Cancel'
-      expect(page).to have_current_path(collection_version_path(collection_version))
     end
 
     it 'shows a confirmation if you cancel the collection deposit and goes back if confirmed' do
