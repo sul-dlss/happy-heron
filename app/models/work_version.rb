@@ -106,6 +106,10 @@ class WorkVersion < ApplicationRecord
     version_draft? || first_draft?
   end
 
+  def deleteable?
+    first_draft? || purl_reservation? || (version == 1 && (pending_approval? || rejected?))
+  end
+
   def add_purl_to_citation
     return unless citation
 
