@@ -12,10 +12,15 @@ class WorkPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (administrator? || depositor?) && record.persisted? && record.head.deleteable?
+    (administrator? || depositor? || reviews_collection? || manages_collection?(collection)) &&
+      record.persisted? && record.head.deleteable?
   end
 
   delegate :administrator?, to: :user_with_groups
+
+  def reviews_collection?
+    allowed_to?(:review?, record.collection)
+  end
 
   def depositor?
     record.depositor == user
