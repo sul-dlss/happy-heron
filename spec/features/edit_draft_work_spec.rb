@@ -62,7 +62,7 @@ RSpec.describe 'Edit a draft work', js: true do
       end
     end
 
-    it 'shows a confirmation if you cancel the deposit and goes back if confirmed' do
+    it 'shows a confirmation if you cancel the deposit and goes back to work show page if confirmed' do
       visit dashboard_path
 
       click_link 'Yes!'
@@ -72,7 +72,7 @@ RSpec.describe 'Edit a draft work', js: true do
         click_link 'Cancel'
       end
 
-      expect(page).to have_current_path(collection_works_path(work.collection))
+      expect(page).to have_current_path(work_path(work))
     end
 
     it 'shows a confirmation if you cancel the deposit and stays on the page if not confirmed' do
