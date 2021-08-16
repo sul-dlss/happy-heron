@@ -11,9 +11,9 @@ module Works
 
     delegate :purl, :collection, :events, :doi, :assign_doi, :druid, to: :work
 
-    delegate :doi_option, to: :collection
+    delegate :doi_option, to: :collection, prefix: true
 
-    delegate :work_type, :contact_emails, :abstract, :citation,
+    delegate :work_type, :contact_emails, :abstract, :citation, :first_draft?,
              :attached_files, :related_works, :related_links,
              :created_edtf, :published_edtf, :rejected?, :work, :description, to: :work_version
 
@@ -22,7 +22,7 @@ module Works
     end
 
     def version
-      return '1 - initial version' if work_version.version == 1
+      return '1 - initial version' if first_draft?
 
       "#{work_version.version} - #{description}"
     end
@@ -31,7 +31,7 @@ module Works
       # If there is a DOI, return a link to it.
       return doi_link if doi
 
-      case doi_option
+      case collection_doi_option
       when 'yes'
         doi_later
       when 'depositor-selects'
@@ -41,13 +41,13 @@ module Works
           doi_opt_out
         end
       end
-      # Nothing is returned if doi_option is 'no'
+      # Nothing is returned if collection_doi_option is 'no'
     end
 
     def doi_setting
       return 'DOI assigned (see above)' if doi
 
-      case doi_option
+      case collection_doi_option
       when 'depositor-selects'
         assign_doi ? 'DOI not assigned' : 'Opted out of receiving a DOI'
       when 'yes'
@@ -137,7 +137,11 @@ module Works
     end
 
     def doi_later
-      tag.em 'DOI will become available once the work has been deposited.'
+      return tag.em 'DOI will become available once the work has been deposited.' if first_draft?
+
+      # This is a version draft, the collection must have been changed to "yes"
+      # after this item was deposited.
+      'DOI will become available once a new version is deposited.'
     end
   end
 end

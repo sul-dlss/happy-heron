@@ -88,59 +88,82 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   describe 'DOI' do
+    subject(:details) { rendered.css('*').xpath("./table[caption/text()='Details']").first }
+
     context 'with a DOI' do
       let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, work: work) }
       let(:work) { build_stubbed(:work, doi: '10.25740/bc123df4567') }
 
       it 'renders the doi_link' do
-        expect(rendered.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
+        expect(details.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
           .to include 'https://doi.org/10.25740/bc123df4567'
-        expect(rendered.to_html).to include 'DOI assigned (see above)'
       end
     end
 
-    context 'with reserved PURL and collection automatically assigns DOI' do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
+    context 'with a collection set to automatically assign a DOI' do
       let(:collection) { build_stubbed(:collection, doi_option: 'yes') }
 
-      it 'renders the doi setting' do
-        expect(rendered.to_html).to include 'DOI will become available once the work has been deposited.'
+      context 'with reserved PURL' do
+        let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+        let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
+
+        it 'renders the doi setting' do
+          expect(details.to_html).to include 'DOI will become available once the work has been deposited.'
+        end
+      end
+
+      context 'when it is a first_draft without a reserved PURL' do
+        let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+        let(:work) { build_stubbed(:work, collection: collection, assign_doi: false) }
+
+        it 'renders the doi setting' do
+          expect(details.to_html).to include 'DOI will become available once the work has been deposited.'
+        end
+      end
+
+      context 'when it is a version_draft without a reserved PURL' do
+        let(:work_version) { build_stubbed(:work_version, :version_draft, work: work) }
+        let(:work) { build_stubbed(:work, collection: collection, assign_doi: false) }
+
+        it 'renders the doi setting' do
+          expect(details.to_html).to include 'DOI will become available once a new version is deposited.'
+        end
       end
     end
 
-    context 'with reserved PURL and collection allows depositor to select, and they choose no' do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
+    context 'with a collection set to depositor-selects' do
       let(:collection) { build_stubbed(:collection, doi_option: 'depositor-selects') }
 
-      it 'renders the doi setting' do
-        expect(rendered.to_html).to include 'A DOI has not been assigned to this item.'
+      context 'when they choose no and have a reserved purl' do
+        let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+        let(:work) { build_stubbed(:work, collection: collection, assign_doi: false, druid: 'druid:bc123df4567') }
+
+        it 'renders the doi setting' do
+          expect(details.to_html).to include 'A DOI has not been assigned to this item.'
+        end
       end
-    end
 
-    context 'without a reserved PURL and collection automatically assigns DOI' do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false) }
-      let(:collection) { build_stubbed(:collection, doi_option: 'yes') }
+      context 'when they choose yes without a reserved purl' do
+        let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+        let(:work) { build_stubbed(:work, collection: collection, assign_doi: true) }
 
-      it 'renders the doi setting' do
-        expect(rendered.to_html).to include 'DOI will become available once the work has been deposited.'
-      end
-    end
-
-    context 'without a reserved PURL and depositor selects to assign' do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, collection: collection, assign_doi: true) }
-      let(:collection) { build_stubbed(:collection, doi_option: 'depositor-selects') }
-
-      it 'renders the doi setting' do
-        expect(rendered.to_html).to include 'DOI will become available once the work has been deposited.'
+        it 'renders the doi setting' do
+          expect(details.to_html).to include 'DOI will become available once the work has been deposited.'
+        end
       end
     end
   end
 
   describe 'DOI settings' do
+    context 'with a DOI' do
+      let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, work: work) }
+      let(:work) { build_stubbed(:work, doi: '10.25740/bc123df4567') }
+
+      it 'renders the doi_link' do
+        expect(rendered.to_html).to include 'DOI assigned (see above)'
+      end
+    end
+
     context 'when DOI was requested' do
       let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
       let(:work) { build_stubbed(:work, assign_doi: true) }
