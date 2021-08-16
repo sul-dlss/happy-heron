@@ -228,21 +228,6 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       user.update(last_work_terms_agreement: Time.zone.now.years_ago(2))
     end
 
-    context 'when user clicks cancel link' do
-      it 'goes to collection deposits page if you click cancel' do
-        visit dashboard_path
-
-        click_button '+ Deposit to this collection' # , match: :first
-        find('label', text: 'Sound').click
-        check 'Podcast'
-        click_button 'Continue'
-
-        click_link 'Cancel'
-
-        expect(page).to have_current_path(collection_works_path(collection))
-      end
-    end
-
     context 'when successful deposit' do
       context 'with a user-supplied citation' do
         it 'deposits and renders work show page' do
