@@ -107,7 +107,7 @@ class WorkVersion < ApplicationRecord
   end
 
   def deleteable?
-    (first_draft? || purl_reservation?) || (version == 1 && (pending_approval? || rejected?))
+    first_draft? || purl_reservation? || (version == 1 && (pending_approval? || rejected?))
   end
 
   def add_purl_to_citation
