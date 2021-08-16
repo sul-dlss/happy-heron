@@ -28,6 +28,9 @@ h2:
 
 earliest_year: 1000
 
+external_links:
+  what_is_a_doi: https://library.stanford.edu/research/stanford-digital-repository/documentation/purls-and-dois
+
 # feature flag
 allow_sdr_content_changes: true
 
