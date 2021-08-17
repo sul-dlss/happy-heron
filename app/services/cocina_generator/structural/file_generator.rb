@@ -78,7 +78,7 @@ module CocinaGenerator
         if hidden_file?
           { access: 'dark', download: 'none' }
         else
-          { access: 'world', download: 'world' }
+          { access: work_version.access, download: work_version.access }
         end
       end
 
