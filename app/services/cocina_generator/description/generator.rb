@@ -56,7 +56,7 @@ module CocinaGenerator
       def keywords
         work_version.keywords.map do |keyword|
           props = {
-            value: keyword.label, type: 'topic'
+            value: keyword.label, type: keyword.cocina_type || 'topic'
           }
           if keyword.uri.present?
             props[:uri] = keyword.uri

@@ -370,7 +370,8 @@ CREATE TABLE public.keywords (
     label character varying,
     uri character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    cocina_type character varying
 );
 
 
@@ -1291,6 +1292,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210616201626'),
 ('20210719185721'),
 ('20210721164925'),
-('20210802203252');
+('20210802203252'),
+('20210816133101');
 
 

@@ -44,7 +44,7 @@ class AutocompleteController < ApplicationController
       req.params['start'] = 0
       req.params['version'] = '2.2'
       req.params['indent'] = 'on'
-      req.params['fl'] = 'id,fullphrase'
+      req.params['fl'] = 'id,fullphrase,type'
       req.params['sort'] = 'usage desc'
     end
 
@@ -59,7 +59,8 @@ class AutocompleteController < ApplicationController
     ng.root.xpath('/response/result/doc').map do |doc_node|
       id = doc_node.at_xpath('str[@name="id"]').content
       label = doc_node.at_xpath('str[@name="fullphrase"]').content
-      { label => authority_uri(id) }
+      type = doc_node.at_xpath('str[@name="type"]').content
+      { label => key(id, type) }
     end
   end
 
@@ -103,7 +104,23 @@ class AutocompleteController < ApplicationController
 
   URI_PREFIX = 'http://id.worldcat.org/fast/'
 
-  def authority_uri(idroot)
-    "#{URI_PREFIX}#{idroot.delete_prefix('fst').to_i}/"
+  def key(idroot, type)
+    "#{URI_PREFIX}#{idroot.delete_prefix('fst').to_i}/::#{cocina_type(type)}"
+  end
+
+  # Map of FAST types to Cocina types.
+  SUBJECT_TYPES = {
+    'person' => 'person',
+    'corporate' => 'organization',
+    'event' => 'event',
+    'geographic' => 'place',
+    'title' => 'title',
+    'form' => 'genre',
+    'meeting' => 'conference',
+    'chronological' => 'time'
+  }.freeze
+
+  def cocina_type(type)
+    SUBJECT_TYPES.fetch(type, 'topic')
   end
 end

@@ -225,7 +225,7 @@ class WorksController < ObjectsController
                      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
                      contributors_attributes: %i[_destroy id full_name first_name last_name role_term],
                      contact_emails_attributes: %i[_destroy id email],
-                     keywords_attributes: %i[_destroy id label uri],
+                     keywords_attributes: %i[_destroy id label uri cocina_type],
                      related_works_attributes: %i[_destroy id citation],
                      related_links_attributes: %i[_destroy id link_title url])
   end
