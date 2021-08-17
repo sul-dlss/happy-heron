@@ -12,7 +12,7 @@ class WorkPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (administrator? || depositor? || reviews_collection? || manages_collection?(collection)) &&
+    (administrator? || depositor? || reviews_collection? || manages_collection?(record.collection)) &&
       record.persisted? && record.head.deleteable?
   end
 
