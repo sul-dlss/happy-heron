@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-require 'capybara/apparition'
+require 'capybara/cuprite'
 require 'capybara/rails'
 require 'capybara/rspec'
 
-# Uncomment for a headed browser:
-# Capybara.register_driver :apparition do |app|
-#   Capybara::Apparition::Driver.new(app, headless: false)
-# end
+Capybara.javascript_driver = :cuprite
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(app, window_size: [1200, 800])
+end
 
-Capybara.javascript_driver = :apparition
 Capybara.disable_animation = true
 Capybara.enable_aria_label = true
 Capybara.server = :puma, { Silent: true }

@@ -30,9 +30,9 @@ group :development do
 end
 
 group :test do
-  gem 'apparition'
   gem 'capybara', '~> 3.34'
   gem 'capybara-screenshot'
+  gem 'cuprite'
 end
 
 group :deployment do
