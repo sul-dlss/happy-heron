@@ -175,7 +175,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
             ],
             form: types_form,
             access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
-            purl: 'http://purl.stanford.edu/bk123gh4567',
+            purl: 'https://purl.stanford.edu/bk123gh4567',
             adminMetadata: admin_metadata
           },
           identification: {
@@ -331,7 +331,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
             ],
             form: types_form,
             access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
-            purl: 'http://purl.stanford.edu/bk123gh4567',
+            purl: 'https://purl.stanford.edu/bk123gh4567',
             adminMetadata: admin_metadata
           },
           identification: {

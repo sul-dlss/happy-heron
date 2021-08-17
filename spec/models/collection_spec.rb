@@ -13,13 +13,13 @@ RSpec.describe Collection do
     context 'with a druid' do
       it 'constructs purl' do
         collection.update(druid: 'druid:hb093rg5848')
-        expect(collection.purl).to eq('http://purl.stanford.edu/hb093rg5848')
+        expect(collection.purl).to eq 'https://purl.stanford.edu/hb093rg5848'
       end
     end
 
     context 'with no druid' do
       it 'returns nil' do
-        expect(collection.purl).to eq(nil)
+        expect(collection.purl).to be_nil
       end
     end
   end
