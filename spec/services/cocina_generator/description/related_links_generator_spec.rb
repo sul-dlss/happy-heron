@@ -36,12 +36,12 @@ RSpec.describe CocinaGenerator::Description::RelatedLinksGenerator do
     it 'creates related links' do
       expect(model).to eq([
                             {
-                              purl: 'http://purl.stanford.edu/tx853fp2857',
+                              purl: 'https://purl.stanford.edu/tx853fp2857',
                               title: [{ value: 'My Awesome Research' }],
                               access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] }
                             },
                             {
-                              purl: 'http://purl.stanford.edu/xy933bc2222',
+                              purl: 'https://purl.stanford.edu/xy933bc2222',
                               title: [{ value: 'My Awesome Research' }],
                               access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] }
                             },

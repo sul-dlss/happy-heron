@@ -35,10 +35,10 @@ module CocinaGenerator
         Cocina::Models::RelatedResource.new(resource_attrs)
       end
 
-      # This normalizes the PURL link to http (as it is currently the canonincal PURL)
+      # This normalizes the PURL link to https (as it is currently the canonincal PURL)
       def purl_link(rel_link)
         resource_attrs = {
-          purl: rel_link.url.sub(/^https/, 'http'),
+          purl: rel_link.url.sub(/^https?/, 'https'),
           access: Cocina::Models::DescriptiveAccessMetadata.new(
             digitalRepository: [Cocina::Models::DescriptiveValue.new(value: 'Stanford Digital Repository')]
           )

@@ -81,7 +81,7 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
               value: 'Test title'
             }
           ],
-          purl: 'http://purl.stanford.edu/bk123gh4567',
+          purl: 'https://purl.stanford.edu/bk123gh4567',
           access: {
             accessContact: [
               {
