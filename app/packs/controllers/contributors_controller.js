@@ -37,6 +37,9 @@ export default class extends Controller {
       element.disabled = true
       element.value = ''
     })
+
+    this.orcidTarget.value = 'https://orcid.org/'
+
     // Name part of ORCID form hidden.
     this.personOrcidNameTarget.hidden = true
   }
@@ -84,7 +87,7 @@ export default class extends Controller {
   }
 
   get hasValidOrcid() {
-    return /\d{4}-\d{4}-\d{4}-[0-9X]{4}$/.test(this.orcidTarget.value)
+    return /^https:\/\/(.*\.)?orcid\.org\/\d{4}-\d{4}-\d{4}-[0-9X]{4}$/.test(this.orcidTarget.value)
   }
 
   get isPersonNameSelected() {
@@ -98,7 +101,7 @@ export default class extends Controller {
       this.orcidTarget.readOnly = true
       this.performLookup()
     } else {
-      this.showOrcidError('Invalid ORCID iD')
+      this.showOrcidError('ORCID iD must be formatted as "https://orcid.org/XXXX-XXXX-XXXX-XXXX"')
     }
   }
 
