@@ -108,6 +108,7 @@ export default class extends Controller {
   clearOrcidError() {
     this.orcidFeedbackTarget.innerText = 'You must provide an ORCID iD'
     this.orcidTarget.classList.remove('is-invalid')
+    this.orcidTarget.setCustomValidity('')
     this.orcidTarget.readOnly = false
   }
 
@@ -115,6 +116,7 @@ export default class extends Controller {
     this.orcidTarget.readOnly = false
     this.orcidFeedbackTarget.innerText = error
     this.orcidTarget.classList.add('is-invalid')
+    this.orcidTarget.setCustomValidity(error)
   }
 
   // Displays name retrieved for ORCID.
