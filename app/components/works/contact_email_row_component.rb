@@ -14,10 +14,6 @@ module Works
       render PopoverComponent.new key: key
     end
 
-    def not_first_email?
-      form.index != 0
-    end
-
     def bootstrap_classes
       return 'col-sm-10 col-xl-8' if form.object_name.start_with?('collection')
 
