@@ -62,6 +62,11 @@ export default class extends Controller {
 
 
   search(e) {
+    if(e.target.value === '') {
+      this.resultTarget.hidden = true
+      return
+    }
+
     this.resultTarget.hidden = false
     fetch('/accounts/' + e.target.value)
       .then(response => response.json())
