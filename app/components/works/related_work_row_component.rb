@@ -11,10 +11,6 @@ module Works
 
     delegate :citation, to: :work
 
-    def not_first_work?
-      form.index != 0
-    end
-
     def work
       form.object
     end

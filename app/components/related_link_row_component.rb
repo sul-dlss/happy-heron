@@ -10,10 +10,6 @@ class RelatedLinkRowComponent < ApplicationComponent
 
   delegate :link_title, to: :model_instance
 
-  def not_first_link?
-    form.index != 0
-  end
-
   def model_instance
     form.object
   end

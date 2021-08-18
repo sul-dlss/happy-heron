@@ -7,7 +7,6 @@
                          pattern: Devise.email_regexp.source, required: true %>
     <div class="invalid-feedback">You must provide a valid email address</div>
   </div>
-  <% if not_first_email? %>
   <div class="col-sm-1">
     <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: 'Remove' },
      data: { action: "click->nested-form#removeAssociation",
@@ -16,5 +15,4 @@
     <% end %>
     <%= form.hidden_field :_destroy %>
   </div>
-  <% end %>
 </div>

@@ -9,13 +9,11 @@
     </div>
 
     <div class="col-md-1">
-      <% if not_first_work? %>
-        <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: "Remove #{citation}" },
-                       data: { action: "click->nested-form#removeAssociation" } do %>
-          <span class="far fa-trash-alt"></span>
-        <% end %>
-        <%= form.hidden_field :_destroy %>
+      <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: "Remove #{citation}" },
+                     data: { action: "click->nested-form#removeAssociation" } do %>
+        <span class="far fa-trash-alt"></span>
       <% end %>
+      <%= form.hidden_field :_destroy %>
     </div>
   </div>
 </div>
