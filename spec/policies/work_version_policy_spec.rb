@@ -151,6 +151,100 @@ RSpec.describe WorkVersionPolicy do
     end
   end
 
+  describe_rule :destroy? do
+    context 'when persisted and version_draft' do
+      before { record.state = 'version_draft' }
+
+      failed 'when user is not a depositor, reviewer or manager for the collection'
+
+      # `succeed` is `context` + `specify`, which checks
+      # that the result of application wasn't successful
+      succeed 'when user is a depositor' do
+        let(:work) { build_stubbed :work, depositor: user }
+      end
+
+      succeed 'when user is a collection manager' do
+        before { collection.managed_by = [user] }
+      end
+
+      succeed 'when user is a reviewer' do
+        before { collection.reviewed_by = [user] }
+      end
+
+      succeed 'when user is an admin' do
+        let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      end
+    end
+
+    context 'when persisted and first_draft' do
+      before { record.state = 'first_draft' }
+
+      failed 'when user is not a depositor, reviewer or manager for the collection'
+
+      # `succeed` is `context` + `specify`, which checks
+      # that the result of application wasn't successful
+      succeed 'when user is a depositor' do
+        let(:work) { build_stubbed :work, depositor: user }
+      end
+
+      succeed 'when user is a collection manager' do
+        before { collection.managed_by = [user] }
+      end
+
+      succeed 'when user is a reviewer' do
+        before { collection.reviewed_by = [user] }
+      end
+
+      succeed 'when user is an admin' do
+        let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      end
+    end
+
+    context 'when deposited (and thus not deletable)' do
+      before { record.state = 'deposited' }
+
+      failed 'when user is neither a depositor, reviewer or manager for the collection'
+
+      failed 'when user is a depositor' do
+        let(:work) { build_stubbed :work, depositor: user }
+      end
+
+      failed 'when user is a collection manager' do
+        before { collection.managed_by = [user] }
+      end
+
+      failed 'when user is a reviewer' do
+        before { collection.reviewed_by = [user] }
+      end
+
+      failed 'when user is an admin' do
+        let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      end
+    end
+
+    context 'when not persisted' do
+      let(:record) { WorkVersion.new(attributes_for(:work_version).merge(work: work)) }
+
+      failed 'when user is not a depositor, reviewer or manager for the collection'
+
+      failed 'when user is a depositor' do
+        let(:work) { build_stubbed :work, depositor: user }
+      end
+
+      failed 'when user is a collection manager' do
+        before { collection.managed_by = [user] }
+      end
+
+      failed 'when user is a reviewer' do
+        before { collection.reviewed_by = [user] }
+      end
+
+      failed 'when user is an admin' do
+        let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+      end
+    end
+  end
+
   describe 'scope' do
     subject(:scope) { policy.apply_scope(collection.works, type: :active_record_relation, name: :edits) }
 
