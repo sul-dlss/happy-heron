@@ -93,7 +93,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
             # Switch to an ORCID
             choose 'Enter author by ORCID iD'
-            fill_in 'ORCID iD *', with: '0000-0003-1527-0030'
+            fill_in 'ORCID iD *', with: 'https://orcid.org/0000-0003-1527-0030'
             expect(page).to have_content('Name associated with this ORCID iD is Orcid First Name Orcid Last Name')
 
             # Switch to an organization
