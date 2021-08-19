@@ -169,9 +169,9 @@ RSpec.describe CocinaGenerator::Description::Generator do
         }
       ],
       subject: [
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
-        { type: 'topic', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source }
+        { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
+        { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
+        { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source }
       ],
       note: [
         { type: 'abstract', value: 'test abstract' },
@@ -537,8 +537,8 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
   end
 
-  context 'with subject that has a blank URI' do
-    let(:keyword) { build(:keyword, uri: '') }
+  context 'with subject that has a blank URI and no cocina type' do
+    let(:keyword) { build(:keyword, uri: '', cocina_type: nil) }
 
     let(:work_version) do
       build(:work_version, keywords: [keyword])

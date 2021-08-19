@@ -127,6 +127,7 @@ class DraftWorkForm < Reform::Form
     property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :label
     property :uri
+    property :cocina_type
     property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 

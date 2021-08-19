@@ -5,5 +5,6 @@ FactoryBot.define do
     work_version { nil }
     label { 'MyKeyword' }
     uri { 'http://example.org/uri' }
+    cocina_type { 'place' }
   end
 end
