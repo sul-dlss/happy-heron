@@ -10,7 +10,10 @@ class ReservationForm < Reform::Form
   property :title, on: :work_version
   property :assign_doi, on: :work
 
+  validates :title, presence: true
+
   def deserialize!(params)
+    params['license'] = collection.default_license if collection.default_license
     deserialize_doi(params)
     super
   end
@@ -25,13 +28,23 @@ class ReservationForm < Reform::Form
     end
   end
 
-  validates :title, presence: true
+  def collection
+    model.fetch(:work).collection
+  end
+
+  def work_version
+    model.fetch(:work_version)
+  end
+
+  def work
+    model.fetch(:work)
+  end
 
   # Ensure that this work version is now the head of the work versions for this work
   def save_model
     Work.transaction do
       super
-      model.fetch(:work).update(head: model.fetch(:work_version))
+      work.update(head: work_version)
     end
   end
 end

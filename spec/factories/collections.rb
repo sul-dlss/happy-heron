@@ -14,6 +14,10 @@ FactoryBot.define do
     license_option { 'required' }
   end
 
+  trait :with_default_license do
+    default_license { 'CC-BY-4.0' }
+  end
+
   trait :with_works do
     transient do
       works_count { 2 }
