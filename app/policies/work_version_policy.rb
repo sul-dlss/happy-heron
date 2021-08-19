@@ -57,7 +57,8 @@ class WorkVersionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (administrator? || depositor?) && record.persisted? && record.version_draft?
+    (administrator? || depositor? || reviews_collection? || manages_collection?(collection)) &&
+      record.persisted? && record.draft?
   end
 
   private
