@@ -6,7 +6,7 @@ require 'capybara/rspec'
 
 Capybara.javascript_driver = :cuprite
 Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(app, window_size: [1200, 800])
+  Capybara::Cuprite::Driver.new(app, window_size: [1200, 800], pending_connection_errors: false)
 end
 
 Capybara.disable_animation = true
