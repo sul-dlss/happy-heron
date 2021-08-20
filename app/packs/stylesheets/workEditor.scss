@@ -9,11 +9,6 @@
     color: $stanford-digital-green;
   }
 
-  .role-prefix {
-    text-align: center;
-    padding-top: 2rem;
-  }
-
   .release-option {
     @include embargo;
     align-items: center;
@@ -73,5 +68,26 @@
 
   div.embargo-date {
     margin-bottom: 1rem !important;
+  }
+
+  // Specified separately so that overrides .work-editor section .inner-container in editor.scss
+  .contributor-row.inner-container {
+      padding-top: 1.5rem;
+    }
+
+  .contributor-row {
+
+    .role-prefix {
+      text-align: center;
+      padding-top: 2rem;
+    }
+
+    .person-name-row {
+      padding-bottom: 1.5rem;
+    }
+
+    .form-text {
+      padding-bottom: 1.5rem;
+    }
   }
 }

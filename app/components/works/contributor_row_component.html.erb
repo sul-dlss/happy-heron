@@ -1,4 +1,4 @@
-<div class="row inner-container" data-controller="contributors" data-contributors-required-value="<%= author? %>">
+<div class="row inner-container contributor-row" data-controller="contributors" data-contributors-required-value="<%= author? %>">
   <div class="col-md-11">
     <div class="row">
       <div class="col-md-3">
@@ -10,7 +10,7 @@
         is
       </div>
       <div class="col" data-contributors-target="person">
-        <div class="row" data-contributors-target="personName">
+        <div class="row person-name-row" data-contributors-target="personName">
           <div class="col-md-1">
             <%= form.radio_button :with_orcid, 'false', html_options_for_radio(true, !orcid?) %>
           </div>
