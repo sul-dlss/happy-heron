@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-# Authorization policy for WorkVersion   objects
-class WorkVersionPolicy < ApplicationPolicy
+# Authorization policy for WorkVersion objects
+class WorkVersionPolicy < CommonWorkPolicy
   alias_rule :edit?, :update_type?, to: :update?
-  alias_rule :delete?, to: :destroy?
 
   relation_scope :edits do |scope|
     if administrator?
@@ -57,8 +56,7 @@ class WorkVersionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (administrator? || depositor? || reviews_collection? || manages_collection?(collection)) &&
-      record.persisted? && record.draft?
+    administors_collection? && record.persisted? && record.draft?
   end
 
   private
@@ -71,9 +69,5 @@ class WorkVersionPolicy < ApplicationPolicy
 
   def depositor?
     record.work.depositor == user
-  end
-
-  def reviews_collection?
-    allowed_to?(:review?, collection)
   end
 end
