@@ -8,6 +8,7 @@ class ReservationForm < Reform::Form
   property :abstract, on: :work_version, default: ''
   property :license, on: :work_version, default: 'none'
   property :title, on: :work_version
+  property :assign_doi, on: :work
 
   # Ensure that this work version is now the head of the work versions for this work
   def save_model
