@@ -42,13 +42,6 @@ RSpec.describe CocinaGenerator::Description::Generator do
         type: 'resource type'
       },
       {
-        value: 'Text',
-        type: 'resource type',
-        source: {
-          value: 'DataCite resource types'
-        }
-      },
-      {
         source: {
           code: 'marcgt'
         },
@@ -70,6 +63,13 @@ RSpec.describe CocinaGenerator::Description::Generator do
         },
         type: 'resource type',
         value: 'text'
+      },
+      {
+        value: 'Text',
+        type: 'resource type',
+        source: {
+          value: 'DataCite resource types'
+        }
       }
     ]
   end
