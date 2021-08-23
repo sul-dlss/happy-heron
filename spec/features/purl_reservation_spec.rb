@@ -4,10 +4,13 @@ require 'rails_helper'
 
 RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true do
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, :depositor_selects_access, managed_by: [user], head: collection_version) }
+  let!(:collection) do
+    create(:collection, :depositor_selects_access, managed_by: [user], head: collection_version, doi_option: doi_option)
+  end
   let(:collection_version) { create(:collection_version, :deposited) }
   let(:druid) { 'druid:bc123df4567' }
   let(:title) { 'my PURL reservation test' }
+  let(:doi_option) { 'depositor-selects' }
 
   before do
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
@@ -19,6 +22,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
     click_button 'Reserve a PURL'
     fill_in 'Enter a title for this deposit', with: title
+    expect(page).to have_content 'Do you want a DOI to be assigned to your deposit?'
     click_button 'Submit'
 
     expect(page).to have_content title
@@ -28,6 +32,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
     expect(work_version.work.collection).to eq collection
     expect(work_version.work.depositor).to eq user
     expect(work_version.work_type).to eq WorkType.purl_reservation_type.id
+    expect(work_version.work.assign_doi).to be true
 
     # IRL, dor-services-app would send a message that RabbitMQ would route to h2.druid_assigned,
     # for processing by AssignPidJob, so we'll just fake that by running the job manually
@@ -49,6 +54,25 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
     end
     sleep(1)
     expect(WorkVersion.exists?(work_version.id)).to be false
+  end
+
+  context 'when depositor cannot select DOI' do
+    let(:doi_option) { 'no' }
+
+    it 'deposits a placeholder work' do
+      visit dashboard_path
+
+      click_button 'Reserve a PURL'
+      fill_in 'Enter a title for this deposit', with: title
+      expect(page).not_to have_content 'Do you want a DOI to be assigned to your deposit?'
+      click_button 'Submit'
+
+      expect(page).to have_content title
+      expect(page).to have_content 'Reserving PURL'
+
+      work_version = WorkVersion.find_by!(title: title)
+      expect(work_version.work.assign_doi?).to be false
+    end
   end
 
   describe 'setting the type for a reserved purl' do
