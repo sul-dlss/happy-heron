@@ -538,7 +538,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
   end
 
   context 'with subject that has a blank URI and no cocina type' do
-    let(:keyword) { build(:keyword, uri: '', cocina_type: nil) }
+    let(:keyword) { build(:keyword, uri: '', cocina_type: '') }
 
     let(:work_version) do
       build(:work_version, keywords: [keyword])
