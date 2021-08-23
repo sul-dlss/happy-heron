@@ -49,7 +49,7 @@ class WorkVersion < ApplicationRecord
 
     after_transition WorkObserver.method(:after_transition)
     after_transition on: :begin_deposit, do: WorkObserver.method(:after_begin_deposit)
-    after_transition on: :reserve_purl, do: WorkObserver.method(:after_begin_deposit)
+    after_transition on: :reserve_purl, do: WorkObserver.method(:after_begin_reserve)
     after_transition on: :reject, do: WorkObserver.method(:after_rejected)
     after_transition on: :submit_for_review, do: WorkObserver.method(:after_submit_for_review)
     after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
