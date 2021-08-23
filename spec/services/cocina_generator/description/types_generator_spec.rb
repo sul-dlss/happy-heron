@@ -86,11 +86,6 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
               type: 'resource type'
             ),
             Cocina::Models::DescriptiveValue.new(
-              type: 'resource type',
-              value: 'Image',
-              source: { value: 'DataCite resource types' }
-            ),
-            Cocina::Models::DescriptiveValue.new(
               type: 'genre',
               value: 'Computer-aided designs',
               uri: 'http://id.loc.gov/vocabulary/graphicMaterials/tgm002405',
@@ -100,6 +95,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
               type: 'resource type',
               value: 'still image',
               source: { value: 'MODS resource types' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'Image',
+              source: { value: 'DataCite resource types' }
             )
           ]
         )
@@ -124,13 +124,13 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
             ),
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
-              value: 'Text',
-              source: { value: 'DataCite resource types' }
+              value: 'text',
+              source: { value: 'MODS resource types' }
             ),
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
-              value: 'text',
-              source: { value: 'MODS resource types' }
+              value: 'Text',
+              source: { value: 'DataCite resource types' }
             )
           ]
         )
@@ -155,13 +155,13 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
             ),
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
-              value: 'Sound',
-              source: { value: 'DataCite resource types' }
+              value: 'sound recording',
+              source: { value: 'MODS resource types' }
             ),
             Cocina::Models::DescriptiveValue.new(
               type: 'resource type',
-              value: 'sound recording',
-              source: { value: 'MODS resource types' }
+              value: 'Sound',
+              source: { value: 'DataCite resource types' }
             )
           ]
         )
@@ -285,11 +285,6 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 type: 'resource type'
               },
               {
-                type: 'resource type',
-                value: 'Dataset',
-                source: { value: 'DataCite resource types' }
-              },
-              {
                 value: 'Data sets',
                 type: 'genre',
                 uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
@@ -311,6 +306,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 source: {
                   uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
                 }
+              },
+              {
+                type: 'resource type',
+                value: 'Dataset',
+                source: { value: 'DataCite resource types' }
               }
             ]
           }
@@ -343,16 +343,16 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 type: 'resource type'
               },
               {
-                type: 'resource type',
-                value: 'Text',
-                source: { value: 'DataCite resource types' }
-              },
-              {
                 value: 'text',
                 type: 'resource type',
                 source: {
                   value: 'MODS resource types'
                 }
+              },
+              {
+                type: 'resource type',
+                value: 'Text',
+                source: { value: 'DataCite resource types' }
               }
             ]
           }
@@ -389,11 +389,6 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 type: 'resource type'
               },
               {
-                type: 'resource type',
-                value: 'Software',
-                source: { value: 'DataCite resource types' }
-              },
-              {
                 value: 'computer program',
                 type: 'genre',
                 uri: 'http://id.loc.gov/vocabulary/marcgt/com',
@@ -414,6 +409,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 source: {
                   value: 'MODS resource types'
                 }
+              },
+              {
+                type: 'resource type',
+                value: 'Software',
+                source: { value: 'DataCite resource types' }
               }
             ]
           }

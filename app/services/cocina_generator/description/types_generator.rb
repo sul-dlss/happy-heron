@@ -15,8 +15,11 @@ module CocinaGenerator
         @work_version = work_version
       end
 
+      # Note that order is important here, because this is the order that dor-services-app
+      # will reconstruct the cocina from the mods.  If they are different it will raise a
+      # round tripping error.
       def generate
-        build_structured_values + datacite_type + build_genres + build_resource_types
+        build_structured_values + build_genres + build_resource_types + datacite_type
       end
 
       private
