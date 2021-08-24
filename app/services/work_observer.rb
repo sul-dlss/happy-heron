@@ -16,6 +16,10 @@ class WorkObserver
     # nop
   end
 
+  def self.after_begin_reserve(work_version, _transition)
+    ReserveJob.perform_later(work_version)
+  end
+
   def self.after_begin_deposit(work_version, _transition)
     DepositJob.perform_later(work_version)
   end
