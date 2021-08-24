@@ -20,12 +20,29 @@ class WorkForm < DraftWorkForm
   validates :embargo_date, embargo_date: true, if: :availability_component_present?
   validates :agree_to_terms, presence: true
 
+  # Copies form properties to the model. Called internally by reform prior to save.
+  def sync(*)
+    maybe_assign_doi
+    super
+  end
+
   private
 
   delegate :already_immediately_released?, :already_embargo_released?, to: :work
 
   def work
     model[:work]
+  end
+
+  # This is responsible for setting the DOI if the request one on a new version.
+  def maybe_assign_doi
+    return unless assign_doi?
+
+    work.doi = "#{Settings.datacite.prefix}/#{work.druid.delete_prefix('druid:')}"
+  end
+
+  def assign_doi?
+    work.druid && collection.doi_option == 'depositor-selects' && assign_doi
   end
 
   def availability_component_present?

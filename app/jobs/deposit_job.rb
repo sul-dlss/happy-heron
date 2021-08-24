@@ -5,8 +5,21 @@ class DepositJob < BaseDepositJob
   queue_as :default
 
   def perform(work_version)
-    deposit(request_dro: CocinaGenerator::DROGenerator.generate_model(work_version: work_version),
-            blobs: work_version.attached_files.map { |af| af.file.attachment.blob })
+    request_dro = CocinaGenerator::DROGenerator.generate_model(work_version: work_version)
+    blobs = work_version.attached_files.map { |af| af.file.attachment.blob }
+
+    login_result = login
+    raise login_result.failure unless login_result.success?
+
+    new_request_dro = SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,
+                                                                              upload_responses: upload_responses(blobs))
+
+    case new_request_dro
+    when Cocina::Models::RequestDRO
+      create(new_request_dro, work_version)
+    when Cocina::Models::DRO
+      update(new_request_dro)
+    end
   end
 
   private
@@ -21,20 +34,18 @@ class DepositJob < BaseDepositJob
     create_or_update(new_request_dro)
   end
 
-  def create_or_update(new_request_dro)
-    case new_request_dro
-    when Cocina::Models::RequestDRO
-      work_version = arguments.first
-      SdrClient::Deposit::CreateResource.run(accession: true,
-                                             assign_doi: work_version.work.assign_doi?,
-                                             metadata: new_request_dro,
-                                             logger: Rails.logger,
-                                             connection: connection)
-    when Cocina::Models::DRO
-      SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
-                                             logger: Rails.logger,
-                                             connection: connection)
-    end
+  def create(new_request_dro, work_version)
+    SdrClient::Deposit::CreateResource.run(accession: true,
+                                           assign_doi: work_version.work.assign_doi?,
+                                           metadata: new_request_dro,
+                                           logger: Rails.logger,
+                                           connection: connection)
+  end
+
+  def update(new_request_dro)
+    SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
+                                           logger: Rails.logger,
+                                           connection: connection)
   end
 
   def upload_responses(blobs)

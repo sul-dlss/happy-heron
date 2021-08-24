@@ -28,29 +28,4 @@ RSpec.describe Work do
       end
     end
   end
-
-  describe '#assign_doi?' do
-    context 'when collection specifies DOI is assigned' do
-      it 'returns true' do
-        expect(work.assign_doi?).to be true
-      end
-    end
-
-    context 'when collection specifies DOI is not assigned' do
-      let(:collection_doi_option) { 'no' }
-      let(:assign_doi) { true }
-
-      it 'returns false' do
-        expect(work.assign_doi?).to be false
-      end
-    end
-
-    context 'when collection specifies depositor selects' do
-      let(:collection_doi_option) { 'depositor-selects' }
-
-      it 'returns assign_doi' do
-        expect(work.assign_doi?).to be false
-      end
-    end
-  end
 end

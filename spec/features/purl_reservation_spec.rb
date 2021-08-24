@@ -32,7 +32,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
     expect(work_version.work.collection).to eq collection
     expect(work_version.work.depositor).to eq user
     expect(work_version.work_type).to eq WorkType.purl_reservation_type.id
-    expect(work_version.work.assign_doi).to be true
+    expect(work_version.work.assign_doi?).to be true
 
     # IRL, dor-services-app would send a message that RabbitMQ would route to h2.druid_assigned,
     # for processing by AssignPidJob, so we'll just fake that by running the job manually
