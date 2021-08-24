@@ -91,7 +91,7 @@ RSpec.describe 'Updating an existing work' do
           let(:work) { create(:work, :with_druid, collection: collection) }
 
           before do
-            work_params[:assign_doi] = '1'
+            work_params[:assign_doi] = 'true'
             collection.update!(doi_option: 'depositor-selects')
           end
 
@@ -100,8 +100,25 @@ RSpec.describe 'Updating an existing work' do
             expect(CollectionObserver).to have_received(:version_draft_created)
             expect(WorkVersion.where(work: work).count).to eq 2
             expect(work.reload.head).to be_depositing
-            # Only changed fields are recorded in event.
             expect(work.doi).to eq '10.80343/bc123df4567'
+            expect(response).to redirect_to(next_step_work_path(work))
+          end
+        end
+
+        context "when a doi is not requested (and wasn't present before)" do
+          let(:work) { create(:work, :with_druid, collection: collection) }
+
+          before do
+            work_params[:assign_doi] = 'false'
+            collection.update!(doi_option: 'depositor-selects')
+          end
+
+          it 'sets the doi' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+            expect(CollectionObserver).to have_received(:version_draft_created)
+            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(work.reload.head).to be_depositing
+            expect(work.doi).to be_nil
             expect(response).to redirect_to(next_step_work_path(work))
           end
         end
