@@ -74,15 +74,36 @@ RSpec.describe 'Updating an existing work' do
           allow(CollectionObserver).to receive(:version_draft_created)
         end
 
-        it 'redirects to the work page' do
-          patch "/works/#{work.id}", params: { work: work_params }
-          expect(CollectionObserver).to have_received(:version_draft_created)
-          expect(WorkVersion.where(work: work).count).to eq 2
-          expect(work.reload.head).to be_version_draft
-          # Only changed fields are recorded in event.
-          expect(work.events.first.description).to eq('title of deposit modified, contact email modified, ' \
-                                                      'authors modified, file description changed')
-          expect(response).to redirect_to(work)
+        context 'when starting a new version draft' do
+          it 'redirects to the work page' do
+            patch "/works/#{work.id}", params: { work: work_params }
+            expect(CollectionObserver).to have_received(:version_draft_created)
+            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(work.reload.head).to be_version_draft
+            # Only changed fields are recorded in event.
+            expect(work.events.first.description).to eq('title of deposit modified, contact email modified, ' \
+                                                        'authors modified, file description changed')
+            expect(response).to redirect_to(work)
+          end
+        end
+
+        context "when a doi is requested (but wasn't present before)" do
+          let(:work) { create(:work, :with_druid, collection: collection) }
+
+          before do
+            work_params[:assign_doi] = '1'
+            collection.update!(doi_option: 'depositor-selects')
+          end
+
+          it 'sets the doi' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+            expect(CollectionObserver).to have_received(:version_draft_created)
+            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(work.reload.head).to be_depositing
+            # Only changed fields are recorded in event.
+            expect(work.doi).to eq '10.80343/bc123df4567'
+            expect(response).to redirect_to(next_step_work_path(work))
+          end
         end
       end
 

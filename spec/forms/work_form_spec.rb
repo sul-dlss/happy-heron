@@ -283,4 +283,34 @@ RSpec.describe WorkForm do
       end
     end
   end
+
+  describe 'setting doi' do
+    context 'when they request a doi' do
+      before do
+        work.collection.doi_option = 'depositor-selects'
+        form.validate(assign_doi: 'true')
+      end
+
+      context 'with a first version (no druid)' do
+        before do
+          form.sync
+        end
+
+        it 'does not assign a doi' do
+          expect(form.model[:work].doi).to be_nil
+        end
+      end
+
+      context 'with a subsequent version (has a druid)' do
+        before do
+          work.druid = 'druid:bc123df4567'
+          form.sync
+        end
+
+        it 'assigns doi' do
+          expect(form.model[:work].doi).to eq '10.80343/bc123df4567'
+        end
+      end
+    end
+  end
 end

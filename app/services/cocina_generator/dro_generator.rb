@@ -49,14 +49,7 @@ module CocinaGenerator
       }.compact
     end
 
-    # If the work already has a DOI, just return it.
-    # If the user decides they want a DOI minted on a new version, we need to set it here.
-    def doi
-      return work.doi if work.doi
-      return if !work.assign_doi? || work.druid.blank?
-
-      "#{Settings.datacite.prefix}/#{work.druid.delete_prefix('druid:')}"
-    end
+    delegate :doi, to: :work
 
     def cocina_type
       WorkType.find(work_version.work_type).cocina_type
