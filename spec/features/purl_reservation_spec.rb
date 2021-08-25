@@ -93,7 +93,6 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
       expect(work_version.reload.work_type).to eq 'music'
       expect(work_version.subtype.sort).to eq %w[Image Sound]
-      expect(page).to have_content "What's changing?"
     end
 
     it 'from the collection works list' do
@@ -107,7 +106,6 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
       expect(work_version.reload.work_type).to eq 'music'
       expect(work_version.subtype.sort).to eq %w[Image Sound]
-      expect(page).to have_content "What's changing?"
     end
 
     it 'from the work show page' do
@@ -121,7 +119,6 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
       expect(work_version.reload.work_type).to eq 'music'
       expect(work_version.subtype.sort).to eq %w[Image Sound]
-      expect(page).to have_content "What's changing?"
     end
   end
 
