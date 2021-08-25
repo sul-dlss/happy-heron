@@ -94,7 +94,7 @@ class WorkVersion < ApplicationRecord
       transition new: :first_draft
 
       transition %i[first_draft version_draft pending_approval rejected] => same
-      transition purl_reserved: :version_draft
+      transition purl_reserved: :first_draft
     end
   end
 
@@ -170,10 +170,10 @@ class WorkVersion < ApplicationRecord
 
     self.work_type = work_type
     self.subtype = subtype
-    work.events.create(user: modifier, event_type: 'type_selected')
     transaction do
-      save!
-      update_metadata!
+      work.events.create(user: modifier, event_type: 'type_selected')
+      save! # Triggers validations of subtypes
+      update_metadata! # also causes a save of all properties
     end
   end
 end
