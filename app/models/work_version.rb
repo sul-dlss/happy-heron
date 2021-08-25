@@ -2,7 +2,6 @@
 
 # Models the deposit of an single version of a digital repository object
 class WorkVersion < ApplicationRecord
-  class WorkTypeUpdateError < RuntimeError; end
   include AggregateAssociations
 
   belongs_to :work
@@ -163,17 +162,5 @@ class WorkVersion < ApplicationRecord
 
   def purl_reservation?
     work_type == WorkType.purl_reservation_type.id
-  end
-
-  def choose_type_for_purl_reservation(work_type, subtype, modifier)
-    raise WorkTypeUpdateError, 'Cannot update Work Version type, no longer PURL reservation' unless purl_reservation?
-
-    self.work_type = work_type
-    self.subtype = subtype
-    transaction do
-      work.events.create(user: modifier, event_type: 'type_selected')
-      save! # Triggers validations of subtypes
-      update_metadata! # also causes a save of all properties
-    end
   end
 end

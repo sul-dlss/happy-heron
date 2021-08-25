@@ -42,27 +42,6 @@ class WorksController < ObjectsController
     @form.prepopulate!
   end
 
-  def update_type
-    work = Work.find(params[:id])
-    work_version = work.head
-    authorize! work_version
-
-    begin
-      work_version.choose_type_for_purl_reservation(params[:work_type], params[:subtype], current_user)
-
-      # from https://apidock.com/rails/ActionController/Redirecting/redirect_to
-      # "If you are using XHR requests other than GET or POST and redirecting after the request then some
-      # browsers will follow the redirect using the original request method... To work around this... return
-      # a 303 See Other status code which will be followed using a GET request."
-      redirect_to action: 'edit', status: :see_other
-    rescue ActiveRecord::RecordInvalid => e
-      validate_work_types! if /Validation failed/i.match?(e.message)
-    rescue WorkVersion::WorkTypeUpdateError
-      flash[:error] = 'Unexpected error attempting to edit PURL reservation'
-      redirect_to dashboard_path, status: :see_other
-    end
-  end
-
   # rubocop:disable Metrics/MethodLength
   def update
     work = Work.find(params[:id])
@@ -158,23 +137,15 @@ class WorksController < ObjectsController
   end
 
   def work_form(work_version)
-    if purl_reservation?
-      ReservationForm.new(work_version: work_version, work: work_version.work)
-    elsif deposit_button_pushed?
+    if deposit_button_pushed?
       WorkForm.new(work_version: work_version, work: work_version.work)
     else
       DraftWorkForm.new(work_version: work_version, work: work_version.work)
     end
   end
 
-  def after_save(form:, context_form: nil) # rubocop:disable Metrics/MethodLength
+  def after_save(form:, context_form: nil)
     work_version = form.model[:work_version]
-
-    if purl_reservation?
-      work_version.reserve_purl!
-      return redirect_to dashboard_path
-    end
-
     work = form.model[:work]
     work.event_context = event_context(context_form || form)
     work_version.update_metadata!
@@ -247,10 +218,6 @@ class WorksController < ObjectsController
 
     flash[:error] = errors.join("\n")
     redirect_to dashboard_path, status: :see_other
-  end
-
-  def purl_reservation?
-    params[:purl_reservation] == 'true'
   end
 end
 # rubocop:enable Metrics/ClassLength

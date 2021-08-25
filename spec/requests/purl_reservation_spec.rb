@@ -17,20 +17,32 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
       sign_in user, groups: ['dlss:hydrus-app-collection-creators']
     end
 
+    let(:form_params) { { work: { title: work_title } } }
+
     describe 'submit to the work creation route in PURL reservation mode' do
-      let(:hidden_form_params) { { commit: 'Deposit', purl_reservation: 'true' } }
-      let(:form_params) { hidden_form_params.merge(work: { title: work_title }) }
+      context 'with valid params' do
+        it 'creates a stub work to get the PURL' do
+          expect do
+            post "/collections/#{collection.id}/reservations", params: form_params
+          end.to change(WorkVersion, :count).by(1)
 
-      it 'creates a stub work to get the PURL' do
-        expect do
-          post "/collections/#{collection.id}/works", params: form_params
-        end.to change(WorkVersion, :count).by(1)
+          work_version = WorkVersion.find_by!(title: work_title)
+          expect(work_version.purl_reservation?).to eq true
+          expect(work_version.work.depositor).to eq user
+          expect(work_version.license).to eq 'CC-BY-4.0'
+          expect(response).to redirect_to(dashboard_path)
+        end
+      end
 
-        work_version = WorkVersion.find_by!(title: work_title)
-        expect(work_version.purl_reservation?).to eq true
-        expect(work_version.work.depositor).to eq user
-        expect(work_version.license).to eq 'CC-BY-4.0'
-        expect(response).to redirect_to(dashboard_path)
+      context 'with invalid params' do
+        let(:work_title) { '  ' }
+
+        it 'returns an error' do
+          expect do
+            post "/collections/#{collection.id}/reservations", params: form_params
+          end.not_to change(WorkVersion, :count)
+          expect(response).to have_http_status(:bad_request)
+        end
       end
     end
 
@@ -44,7 +56,7 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
         let!(:work_version) { create(:work_version, :purl_reserved, work: work) }
 
         it 'sets the type and subtype, then redirects to the work edit page' do
-          patch "/works/#{work.id}/update_type", params: { work_type: 'text', subtype: ['Other spoken word'] }
+          patch "/reservations/#{work.id}", params: { work_type: 'text', subtype: ['Other spoken word'] }
 
           expect(work_version.reload.purl_reservation?).to eq false
           expect(work_version.work_type).to eq 'text'
@@ -58,25 +70,25 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
         let(:work_version) { create(:work_version, :purl_reserved, work: work) }
 
         it 'returns the user to the dashboard with an explanatory error message' do
-          patch "/works/#{work.id}/update_type", params: { work_type: 'other', subtype: [] }
+          patch "/reservations/#{work.id}", params: { work_type: 'other', subtype: [] }
 
           expect(response).to redirect_to('/dashboard')
           follow_redirect!
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include('Invalid subtype value for work of type')
+          expect(response.body).to include 'Invalid subtype value'
         end
       end
 
       context 'when the work version has already had a type chosen' do
         let(:work_version) { create(:work_version, work: work) }
 
-        it 'returns the user to the dashboard with an explanatory error message' do
-          patch "/works/#{work.id}/update_type", params: { work_type: 'text', subtype: ['Other spoken word'] }
+        it 'redirects the user to the homepage with an explanatory error message' do
+          patch "/reservations/#{work.id}", params: { work_type: 'text', subtype: ['Other spoken word'] }
 
-          expect(response).to redirect_to('/dashboard')
+          expect(response).to redirect_to(root_path)
           follow_redirect!
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include('Unexpected error attempting to edit PURL reservation')
+          expect(response.body).to include('You are not authorized to perform the requested action')
         end
       end
     end
