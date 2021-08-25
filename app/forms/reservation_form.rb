@@ -25,6 +25,8 @@ class ReservationForm < Reform::Form
     end
   end
 
+  validates :title, presence: true
+
   # Ensure that this work version is now the head of the work versions for this work
   def save_model
     Work.transaction do
