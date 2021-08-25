@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
   let(:collection_version) { create(:collection_version, :deposited) }
-  let(:collection) { create(:collection, :with_depositors, head: collection_version) }
+  let(:collection) { create(:collection, :with_depositors, :with_default_license, head: collection_version) }
   let(:user) { collection.depositors.first }
   let(:work_title) { 'Pearlescence: An Ontology' }
 
@@ -29,6 +29,7 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
         work_version = WorkVersion.find_by!(title: work_title)
         expect(work_version.purl_reservation?).to eq true
         expect(work_version.work.depositor).to eq user
+        expect(work_version.license).to eq 'CC-BY-4.0'
         expect(response).to redirect_to(dashboard_path)
       end
     end
