@@ -12,8 +12,8 @@ module CocinaGenerator
     end
 
     def generate_model
-      if work_version.work.druid
-        Cocina::Models::DRO.new(model_attributes.merge(externalIdentifier: work_version.work.druid), false, false)
+      if druid
+        Cocina::Models::DRO.new(model_attributes.merge(externalIdentifier: druid), false, false)
       else
         Cocina::Models::RequestDRO.new(model_attributes, false, false)
       end
@@ -23,6 +23,9 @@ module CocinaGenerator
 
     attr_reader :work_version
 
+    delegate :work, to: :work_version
+    delegate :druid, to: :work
+
     def model_attributes
       {
         access: AccessGenerator.generate(work_version: work_version),
@@ -30,9 +33,7 @@ module CocinaGenerator
           hasAdminPolicy: Settings.h2.hydrus_apo,
           partOfProject: Settings.h2.project_tag
         },
-        identification: {
-          sourceId: "hydrus:object-#{work_version.work.id}" # TODO: what should this be?
-        },
+        identification: identification,
         structural: structural,
         label: work_version.title,
         type: cocina_type,
@@ -40,6 +41,15 @@ module CocinaGenerator
         version: work_version.version
       }
     end
+
+    def identification
+      {
+        sourceId: "hydrus:object-#{work.id}",
+        doi: doi
+      }.compact
+    end
+
+    delegate :doi, to: :work
 
     def cocina_type
       WorkType.find(work_version.work_type).cocina_type

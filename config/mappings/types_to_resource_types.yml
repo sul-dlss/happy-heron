@@ -5,6 +5,7 @@ Data:
       uri: http://id.loc.gov/vocabulary/resourceTypes/dat
       source:
         uri: http://id.loc.gov/vocabulary/resourceTypes/
+  datacite_type: Dataset
   subtypes:
     3D model:
       - type: resource type
@@ -273,6 +274,7 @@ Image:
       value: still image
       source:
         value: MODS resource types
+  datacite_type: Image
   subtypes:
     3D model:
       - type: resource type
@@ -553,6 +555,7 @@ Mixed Materials:
       value: mixed materials
       source:
         value: MODS resource types
+  datacite_type: Collection
   subtypes:
     3D model:
       - type: resource type
@@ -844,6 +847,7 @@ Mixed Materials:
         source:
           value: MODS resource types
 Music:
+  datacite_type: Other
   subtypes:
     3D model:
       - type: resource type
@@ -1135,6 +1139,7 @@ Music:
         source:
           value: MODS resource types
 Other:
+  datacite_type: Other
   subtypes:
     3D model:
       - type: resource type
@@ -1431,6 +1436,7 @@ Software/Code:
       value: software, multimedia
       source:
         value: MODS resource types
+  datacite_type: Software
   subtypes:
     3D model:
       - type: resource type
@@ -1721,6 +1727,7 @@ Sound:
       value: sound recording
       source:
         value: MODS resource types
+  datacite_type: Sound
   subtypes:
     3D model:
       - type: resource type
@@ -2014,6 +2021,7 @@ Text:
       value: text
       source:
         value: MODS resource types
+  datacite_type: Text
   subtypes:
     3D model:
       - type: resource type
@@ -2239,6 +2247,7 @@ Video:
       value: moving image
       source:
         value: MODS resource types
+  datacite_type: Audiovisual                
   subtypes:
     3D model:
       - type: resource type

@@ -14,7 +14,7 @@
             destination: collection_works_path(collection),
             bs_toggle: 'modal',
             bs_target: '#purlReservationModal',
-            action: "purl-reservation#setCollection"
+            action: collection.doi_option == 'depositor-selects' ? "purl-reservation#setCollection purl-reservation#showSelectDoi" : "purl-reservation#setCollection"
           },
           class: "btn btn btn-outline-primary" %>
   <% end %>

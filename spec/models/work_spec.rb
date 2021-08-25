@@ -3,7 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Work do
-  subject(:work) { build(:work) }
+  subject(:work) { build(:work, collection: collection, assign_doi: assign_doi) }
+
+  let(:assign_doi) { false }
+
+  let(:collection) { build(:collection, doi_option: collection_doi_option) }
+  let(:collection_doi_option) { 'yes' }
 
   it 'belongs to a collection' do
     expect(work.collection).to be_a(Collection)

@@ -12,8 +12,28 @@
             <small class="form-text">You can update this later.</small>
             <input type="hidden" name="purl_reservation" value="true">
           </div>
-        </div>
+          <div data-purl-reservation-target="doiSection">
+            <legend class="h6">
+              DOI assignment
+            </legend>
+            <%= link_to 'What is a DOI?', Settings.external_links.what_is_a_doi, target: '_blank' %>
+            <div class="mb-3 inner-container">
+              <div class="row">
+                <label class="form-check-label col-sm-9" for="work_assign_doi">Do you want a DOI to be assigned to your deposit?</label>
 
+                <div class="col-sm-2">
+                  <label class="switch" aria-label="Use auto-generated citation">
+                    <input name="work[assign_doi]" type="hidden" value="false"><input data-action="change->auto-citation#switchChanged" data-auto-citation-target="switch" type="checkbox" value="true" checked="checked" name="work[assign_doi]" id="work_assign_doi">
+                    <div class="slider round">
+                      <span class="on">Yes</span>
+                      <span class="off">No</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="modal-footer">
           <%= button_tag 'Submit', class: 'btn btn-primary' %>
           <%= button_tag 'Cancel',

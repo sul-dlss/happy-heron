@@ -10,6 +10,9 @@ accountws:
 
 redis_url: redis://localhost:6379/
 
+datacite:
+  prefix: '10.80343'
+
 # The HTTP_X_REMOTE_USER variable comes from our Apache config behind a reverse
 # proxy, where we can't set or build upon REMOTE_USER. Instead, we set the
 # X-Remote-User header and that is translated to the HTTP_X_REMOTE_USER
@@ -24,6 +27,9 @@ h2:
   project_tag: 'H2'
 
 earliest_year: 1000
+
+external_links:
+  what_is_a_doi: https://library.stanford.edu/research/stanford-digital-repository/documentation/purls-and-dois
 
 # feature flag
 allow_sdr_content_changes: true
@@ -64,3 +70,6 @@ notifications:
 
 access:
   use_and_reproduction_statement: User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the depositor.
+
+datacite:
+  prefix: '10.80343'

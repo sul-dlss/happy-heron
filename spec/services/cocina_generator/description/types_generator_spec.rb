@@ -59,8 +59,8 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
         )
       end
 
-      it 'generates exactly four descriptive values' do
-        expect(generated.count).to eq(4)
+      it 'generates exactly five descriptive values' do
+        expect(generated.count).to eq(5)
         expect(generated).to all(be_a(Cocina::Models::DescriptiveValue))
       end
     end
@@ -95,6 +95,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
               type: 'resource type',
               value: 'still image',
               source: { value: 'MODS resource types' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'Image',
+              source: { value: 'DataCite resource types' }
             )
           ]
         )
@@ -121,6 +126,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
               type: 'resource type',
               value: 'text',
               source: { value: 'MODS resource types' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'Text',
+              source: { value: 'DataCite resource types' }
             )
           ]
         )
@@ -147,6 +157,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
               type: 'resource type',
               value: 'sound recording',
               source: { value: 'MODS resource types' }
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'Sound',
+              source: { value: 'DataCite resource types' }
             )
           ]
         )
@@ -172,6 +187,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                   value: 'Dance notation'
                 )
               ]
+            ),
+            Cocina::Models::DescriptiveValue.new(
+              type: 'resource type',
+              value: 'Other',
+              source: { value: 'DataCite resource types' }
             )
           ]
         )
@@ -286,6 +306,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 source: {
                   uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
                 }
+              },
+              {
+                type: 'resource type',
+                value: 'Dataset',
+                source: { value: 'DataCite resource types' }
               }
             ]
           }
@@ -323,6 +348,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 source: {
                   value: 'MODS resource types'
                 }
+              },
+              {
+                type: 'resource type',
+                value: 'Text',
+                source: { value: 'DataCite resource types' }
               }
             ]
           }
@@ -379,6 +409,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                 source: {
                   value: 'MODS resource types'
                 }
+              },
+              {
+                type: 'resource type',
+                value: 'Software',
+                source: { value: 'DataCite resource types' }
               }
             ]
           }
@@ -409,6 +444,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
                   value: 'Stanford self-deposit resource types'
                 },
                 type: 'resource type'
+              },
+              {
+                type: 'resource type',
+                value: 'Other',
+                source: { value: 'DataCite resource types' }
               }
             ]
           }

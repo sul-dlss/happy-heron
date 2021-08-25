@@ -5,6 +5,7 @@ module CocinaGenerator
     # Maps work types and subtypes to Cocina
     class TypesGenerator
       RESOURCE_TYPE_SOURCE_LABEL = 'Stanford self-deposit resource types'
+      DATACITE_SOURCE_LABEL = 'DataCite resource types'
 
       def self.generate(work_version:)
         new(work_version: work_version).generate
@@ -14,8 +15,11 @@ module CocinaGenerator
         @work_version = work_version
       end
 
+      # Note that order is important here, because this is the order that dor-services-app
+      # will reconstruct the cocina from the mods.  If they are different it will raise a
+      # round tripping error.
       def generate
-        build_structured_values + build_genres + build_resource_types
+        build_structured_values + build_genres + build_resource_types + datacite_type
       end
 
       private
@@ -35,6 +39,20 @@ module CocinaGenerator
           Cocina::Models::DescriptiveValue.new(
             structuredValue: structured_type_and_subtypes,
             source: { value: RESOURCE_TYPE_SOURCE_LABEL },
+            type: 'resource type'
+          )
+
+        ]
+      end
+
+      def datacite_type
+        value = types_to_resource_types.dig(work_type, 'datacite_type')
+        return [] unless value
+
+        [
+          Cocina::Models::DescriptiveValue.new(
+            value: value,
+            source: { value: DATACITE_SOURCE_LABEL },
             type: 'resource type'
           )
         ]

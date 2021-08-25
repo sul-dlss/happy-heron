@@ -38,6 +38,7 @@ RSpec.describe 'Updating an existing collection' do
             description: 'This is a very good collection.',
             access: 'world',
             required_license: 'CC0-1.0',
+            doi_option: 'depositor-selects',
             depositors_attributes: {
               '9999' => { 'sunetid' => 'maya.aguirre', '_destroy' => 'false' },
               '9998' => { 'sunetid' => 'jcairns', '_destroy' => 'false' },
@@ -64,8 +65,9 @@ RSpec.describe 'Updating an existing collection' do
           it 'updates the collection' do
             patch "/collections/#{collection.id}", params: { collection: collection_params }
             expect(response).to redirect_to(collection)
-            expect(collection.depositors.size).to eq 6
             collection.reload
+            expect(collection.depositors.size).to eq 6
+            expect(collection.doi_option).to eq 'depositor-selects'
             expect(collection.email_depositors_status_changed).to be true
           end
         end

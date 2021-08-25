@@ -14,11 +14,11 @@ RSpec.describe DepositJob do
     )
   end
   let(:attached_file) { build(:attached_file) }
-  let(:work) { build(:work, collection: collection) }
+  let(:work) { build(:work, collection: collection, assign_doi: false) }
   let(:work_version) do
     build(:work_version, id: 8, work: work, attached_files: [attached_file])
   end
-  let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
+  let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
 
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
@@ -45,14 +45,13 @@ RSpec.describe DepositJob do
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
     end
 
-    context 'when the deposit is for a PURL reservation' do
-      let(:work_version) do
-        build(:work_version, :reserving_purl, work: work)
-      end
+    context 'when the deposit wants a doi' do
+      let(:work) { build(:work, collection: collection, assign_doi: true) }
 
-      it 'calls CreateResource.run with false for the accession param' do
+      it 'calls CreateResource.run with true for the assign_doi param' do
         described_class.perform_now(work_version)
-        expect(SdrClient::Deposit::CreateResource).to have_received(:run).with(a_hash_including(accession: false))
+        expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+          .with(a_hash_including(accession: true, assign_doi: true))
       end
     end
   end

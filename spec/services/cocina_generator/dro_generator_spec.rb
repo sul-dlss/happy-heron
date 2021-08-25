@@ -50,6 +50,13 @@ RSpec.describe CocinaGenerator::DROGenerator do
         },
         type: 'resource type',
         value: 'text'
+      },
+      {
+        value: 'Text',
+        type: 'resource type',
+        source: {
+          value: 'DataCite resource types'
+        }
       }
     ]
   end
@@ -134,63 +141,178 @@ RSpec.describe CocinaGenerator::DROGenerator do
         expect(model.to_h).to eq(expected_model)
       end
     end
+  end
 
-    context 'with a druid' do
-      let(:work_version) do
-        build(:work_version, work_type: 'text', title: 'Test title', work: work)
-      end
-      let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection: collection) }
-
-      let(:expected_model) do
-        {
-          externalIdentifier: 'druid:bk123gh4567',
-          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
-          label: 'Test title',
-          version: 1,
-          access: {
-            access: 'world',
-            download: 'world',
-            license: license_uri,
-            useAndReproductionStatement: Settings.access.use_and_reproduction_statement
-          },
-          administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348',
-            partOfProject: project_tag
-          },
-          description: {
-            title: [
-              {
-                value: 'Test title'
-              }
-            ],
-            note: [
-              {
-                value: 'test abstract',
-                type: 'abstract'
-              },
-              {
-                value: 'test citation',
-                type: 'preferred citation'
-              }
-            ],
-            form: types_form,
-            access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
-            purl: 'https://purl.stanford.edu/bk123gh4567',
-            adminMetadata: admin_metadata
-          },
-          identification: {
-            sourceId: "hydrus:object-#{work_version.work.id}"
-          },
-          structural: {
-            contains: [],
-            isMemberOf: [collection.druid]
-          }
+  context 'with a druid, assign_doi is false' do
+    let(:work_version) do
+      build(:work_version, work_type: 'text', title: 'Test title', work: work)
+    end
+    let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection: collection) }
+    let(:expected_model) do
+      {
+        externalIdentifier: 'druid:bk123gh4567',
+        type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+        label: 'Test title',
+        version: 1,
+        access: {
+          access: 'world',
+          download: 'world',
+          license: license_uri,
+          useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+        },
+        administrative: {
+          hasAdminPolicy: 'druid:zx485kb6348',
+          partOfProject: project_tag
+        },
+        description: {
+          title: [
+            {
+              value: 'Test title'
+            }
+          ],
+          note: [
+            {
+              value: 'test abstract',
+              type: 'abstract'
+            },
+            {
+              value: 'test citation',
+              type: 'preferred citation'
+            }
+          ],
+          form: types_form,
+          access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
+          purl: 'https://purl.stanford.edu/bk123gh4567',
+          adminMetadata: admin_metadata
+        },
+        identification: {
+          sourceId: "hydrus:object-#{work_version.work.id}"
+        },
+        structural: {
+          contains: [],
+          isMemberOf: [collection.druid]
         }
-      end
+      }
+    end
 
-      it 'generates the model' do
-        expect(model.to_h).to eq expected_model
-      end
+    before do
+      allow(work).to receive(:assign_doi?).and_return(false)
+    end
+
+    it 'generates the model' do
+      expect(model.to_h).to eq expected_model
+    end
+  end
+
+  context 'with a doi' do
+    let(:work_version) do
+      build(:work_version, work_type: 'text', title: 'Test title', work: work)
+    end
+    let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', doi: '10.800/bk123gh4567', collection: collection) }
+    let(:expected_model) do
+      {
+        externalIdentifier: 'druid:bk123gh4567',
+        type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+        label: 'Test title',
+        version: 1,
+        access: {
+          access: 'world',
+          download: 'world',
+          license: license_uri,
+          useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+        },
+        administrative: {
+          hasAdminPolicy: 'druid:zx485kb6348',
+          partOfProject: project_tag
+        },
+        description: {
+          title: [
+            {
+              value: 'Test title'
+            }
+          ],
+          note: [
+            {
+              value: 'test abstract',
+              type: 'abstract'
+            },
+            {
+              value: 'test citation',
+              type: 'preferred citation'
+            }
+          ],
+          form: types_form,
+          access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] },
+          purl: 'https://purl.stanford.edu/bk123gh4567',
+          adminMetadata: admin_metadata
+        },
+        identification: {
+          sourceId: "hydrus:object-#{work_version.work.id}",
+          doi: '10.800/bk123gh4567'
+        },
+        structural: {
+          contains: [],
+          isMemberOf: [collection.druid]
+        }
+      }
+    end
+
+    it 'generates the model' do
+      expect(model.to_h).to eq expected_model
+    end
+  end
+
+  context 'when a doi is requested and there is no druid' do
+    let(:work_version) do
+      build(:work_version, :version_draft, work_type: 'text', title: 'Test title', work: work)
+    end
+    let(:work) { build(:work, id: 7, druid: nil, collection: collection) }
+    let(:expected_model) do
+      {
+        type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+        label: 'Test title',
+        version: 1,
+        access: {
+          access: 'world',
+          download: 'world',
+          license: license_uri,
+          useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+        },
+        administrative: {
+          hasAdminPolicy: 'druid:zx485kb6348',
+          partOfProject: project_tag
+        },
+        description: {
+          title: [
+            {
+              value: 'Test title'
+            }
+          ],
+          note: [
+            {
+              value: 'test abstract',
+              type: 'abstract'
+            },
+            {
+              value: 'test citation',
+              type: 'preferred citation'
+            }
+          ],
+          form: types_form,
+          adminMetadata: admin_metadata
+        },
+        identification: {
+          sourceId: "hydrus:object-#{work_version.work.id}"
+        },
+        structural: {
+          contains: [],
+          isMemberOf: [collection.druid]
+        }
+      }
+    end
+
+    it 'generates the model' do
+      expect(model.to_h).to eq expected_model
     end
   end
 
@@ -208,6 +330,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
       # rubocop:disable RSpec/MessageChain
       allow(attached_file).to receive_message_chain(:file, :attachment, :blob).and_return(blob)
       # rubocop:enable RSpec/MessageChain
+      allow(work).to receive(:assign_doi?).and_return(false)
     end
 
     after do
