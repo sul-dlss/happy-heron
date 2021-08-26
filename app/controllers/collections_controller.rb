@@ -86,26 +86,6 @@ class CollectionsController < ObjectsController
 
   private
 
-  def after_save(collection_version:, collection:, context: {})
-    collection_version.collection.event_context = context.merge(user: current_user)
-    collection_version.update_metadata!
-    if deposit_button_pushed?
-      collection_version.begin_deposit!
-      redirect_to dashboard_path
-    else
-      redirect_to collection_path(collection)
-    end
-  end
-
-  def collection_form(collection_version)
-    if deposit_button_pushed?
-      return CreateCollectionForm.new(collection_version: collection_version,
-                                      collection: collection_version.collection)
-    end
-
-    DraftCollectionForm.new(collection_version: collection_version, collection: collection_version.collection)
-  end
-
   def update_params
     params.require(:collection).permit(:access, :doi_option,
                                        :review_enabled, :license_option,

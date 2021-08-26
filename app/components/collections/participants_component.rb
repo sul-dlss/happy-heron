@@ -9,10 +9,6 @@ module Collections
 
     attr_reader :collection
 
-    def collection_version
-      collection.head
-    end
-
     def depositors
       collection.depositors.map(&:sunetid).join(', ')
     end
