@@ -28,9 +28,7 @@ class ReservationForm < Reform::Form
     end
   end
 
-  def collection
-    model.fetch(:work).collection
-  end
+  delegate :collection, to: :work
 
   def work_version
     model.fetch(:work_version)
