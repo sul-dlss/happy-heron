@@ -11,7 +11,7 @@
 
     <%= button_tag 'Reserve a PURL',
           data: {
-            destination: collection_works_path(collection),
+            destination: collection_reservations_path(collection),
             bs_toggle: 'modal',
             bs_target: '#purlReservationModal',
             action: collection.doi_option == 'depositor-selects' ? "purl-reservation#setCollection purl-reservation#showSelectDoi" : "purl-reservation#setCollection"

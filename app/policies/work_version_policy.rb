@@ -2,7 +2,7 @@
 
 # Authorization policy for WorkVersion objects
 class WorkVersionPolicy < CommonWorkPolicy
-  alias_rule :edit?, :update_type?, to: :update?
+  alias_rule :edit?, to: :update?
 
   relation_scope :edits do |scope|
     if administrator?
@@ -25,6 +25,10 @@ class WorkVersionPolicy < CommonWorkPolicy
     (collection.depositor_ids.include?(user.id) || manages_collection?(collection))
   end
 
+  def update_type?
+    record.purl_reservation? && update?
+  end
+
   # Can edit a work iff:
   #   The work is in a state where it can be updated (e.g. not depositing, not an in-progress purl reservation)
   #   AND if any one of the following is true:
@@ -32,19 +36,18 @@ class WorkVersionPolicy < CommonWorkPolicy
   #     2. The user is the depositor of the work and it is not currently pending approval (review workflow)
   #     3. The user is a manager of the collection the work is in
   #     4. The user is a reviewer of the collection the work is in
-
   def update?
     return false unless record.updatable?
     return true if reviews_collection?
 
     depositor? && !record.pending_approval?
   end
+
   # Can show a work iff any one of the following is true:
   #   1. The user is an administrator
   #   2. The user is the depositor of the work
   #   3. The user is a manager of the collection the work is in
   #   4. The user is a reviewer of the collection the work is in
-
   def show?
     depositor? || reviews_collection?
   end

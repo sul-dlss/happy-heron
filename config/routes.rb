@@ -30,13 +30,14 @@ Rails.application.routes.draw do
         get :edit_button
         get :next_step
         get :next_step_review
-        patch 'update_type'
       end
 
       resource :review, only: :create
       resource :validate, only: :show
       resource :zip, only: :show
     end
+
+    resources :reservations, shallow: true, only: %i[create update]
   end
 
   resource :terms, only: :show

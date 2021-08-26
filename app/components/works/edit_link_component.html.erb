@@ -1,7 +1,7 @@
 <% if work_version.purl_reservation? %>
   <%= link_to '',
         data: {
-          destination: update_type_work_path(work_version.work),
+          destination: reservation_path(work_version.work),
           form_method: 'patch',
           bs_toggle: 'modal',
           bs_target: '#workTypeModal',
