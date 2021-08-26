@@ -110,12 +110,6 @@ module CocinaGenerator
         ]
       end
 
-      def has_contributor_role?(roles)
-        roles.none? do |role|
-          role.value == 'contributor'
-        end
-      end
-
       def marcrelator_role(role)
         mr_code = ROLE_TO_MARC_RELATOR_CODE[role]
         mr_value = MARC_RELATOR_CODE_TO_VALUE[mr_code]

@@ -24,10 +24,6 @@ class WorkObserver
     DepositJob.perform_later(work_version)
   end
 
-  def self.after_work_rejected(work_version, _transition)
-    work_mailer(work_version).reject_email.deliver_later
-  end
-
   def self.after_deposit_complete(work_version, _transition)
     mailer = work_mailer(work_version)
     job = if work_version.work.collection.review_enabled?
