@@ -36,13 +36,14 @@ class WorkForm < DraftWorkForm
 
   # This is responsible for setting the DOI if the request one on a new version.
   def maybe_assign_doi
-    return unless assign_doi?
-
-    work.doi = "#{Settings.datacite.prefix}/#{work.druid.delete_prefix('druid:')}"
+    work.doi = Doi.for(work.druid) if assign_doi?
   end
 
   def assign_doi?
-    work.druid && collection.doi_option == 'depositor-selects' && assign_doi
+    return false unless work.druid
+
+    (collection.doi_option == 'depositor-selects' && assign_doi) ||
+      collection.doi_option == 'yes'
   end
 
   def availability_component_present?
