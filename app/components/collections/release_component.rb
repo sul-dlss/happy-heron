@@ -11,10 +11,6 @@ module Collections
 
     delegate :access, to: :collection
 
-    def collection_version
-      collection.head
-    end
-
     def release_info
       case collection.release_option
       when 'immediate'

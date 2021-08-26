@@ -117,14 +117,6 @@ class WorksController < ObjectsController
     render partial: 'works/edit_button', locals: { work: work }
   end
 
-  def normalize_key(key)
-    keys = { attached_files: 'file', embargo_date: 'embargo-date' }
-    return key unless keys.key? key
-
-    keys[key]
-  end
-  helper_method :normalize_key
-
   private
 
   # Create the next WorkVersion for this work
