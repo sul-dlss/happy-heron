@@ -25,7 +25,6 @@ task assign_pids: :environment do
   WorkVersion.with_state('reserving_purl').each do |object|
     druid = random_druid
     object.work.update(druid: druid)
-    object.add_purl_to_citation
     object.pid_assigned!
     puts "Assigned #{druid} to #{object.title} (id=#{object.id})"
   end
