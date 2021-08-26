@@ -35,7 +35,6 @@ class AssignPidJob
 
       return unless object.is_a? Work
 
-      object.head.add_purl_to_citation
       object.head.pid_assigned!
     end
   end

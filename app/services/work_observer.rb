@@ -20,6 +20,12 @@ class WorkObserver
     ReserveJob.perform_later(work_version)
   end
 
+  def self.after_druid_assigned(work_version, transition)
+    work = work_version.work
+    work.update(doi: Doi.for(work.druid)) if transition.to_name == :purl_reserved && work.assign_doi?
+    work_version.add_purl_to_citation
+  end
+
   def self.after_begin_deposit(work_version, _transition)
     DepositJob.perform_later(work_version)
   end
