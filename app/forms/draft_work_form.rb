@@ -150,18 +150,16 @@ class DraftWorkForm < Reform::Form
     property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
-  def collection
-    model.fetch(:work).collection
+  delegate :collection, :persisted?, :to_param, to: :work
+
+  def work
+    model[:work]
   end
 
   def description
     return if model.fetch(:work_version).deposited?
 
     super
-  end
-
-  def persisted?
-    model.fetch(:work).persisted?
   end
 
   # Wrap the entire operation (root model and nested model save) in a transaction.
@@ -175,11 +173,7 @@ class DraftWorkForm < Reform::Form
   # Ensure that this work version is now the head of the work versions for this work
   def save_model
     super
-    model.fetch(:work).update(head: model.fetch(:work_version))
-  end
-
-  def to_param
-    model.fetch(:work).to_param
+    work.update(head: model.fetch(:work_version))
   end
 
   # Override reform so that this looks just like a Work

@@ -26,13 +26,24 @@ class WorkForm < DraftWorkForm
     super
   end
 
+  def deserialize!(params)
+    deserialize_doi(params)
+    super
+  end
+
+  # Force assign_doi to match what the collection enforces
+  def deserialize_doi(params)
+    case collection.doi_option
+    when 'no'
+      params['assign_doi'] = 'false'
+    when 'yes'
+      params['assign_doi'] = 'true'
+    end
+  end
+
   private
 
   delegate :already_immediately_released?, :already_embargo_released?, to: :work
-
-  def work
-    model[:work]
-  end
 
   # This is responsible for setting the DOI if the request one on a new version.
   def maybe_assign_doi

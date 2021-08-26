@@ -122,6 +122,23 @@ RSpec.describe 'Updating an existing work' do
             expect(response).to redirect_to(next_step_work_path(work))
           end
         end
+
+        context 'when a doi is not permitted' do
+          let(:work) { create(:work, :with_druid, collection: collection) }
+
+          before do
+            collection.update!(doi_option: 'no')
+          end
+
+          it 'sets assign_doi to false' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+            expect(CollectionObserver).to have_received(:version_draft_created)
+            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(work.reload.head).to be_depositing
+            expect(work.assign_doi).to be false
+            expect(response).to redirect_to(next_step_work_path(work))
+          end
+        end
       end
 
       context 'with a validation problem' do
