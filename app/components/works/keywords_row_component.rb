@@ -9,10 +9,6 @@ module Works
 
     attr_reader :form
 
-    def not_first_keyword?
-      form.index != 0
-    end
-
     def error?
       errors.present?
     end

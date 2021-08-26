@@ -23,10 +23,6 @@ module Collections
         tag.span class: 'fas fa-spinner fa-pulse'
       end
 
-      def can_create_work?
-        collection_version.accessioned?
-      end
-
       def edit_button
         return unless draft?
 

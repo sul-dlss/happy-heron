@@ -9,10 +9,6 @@ module Collections
 
     attr_reader :collection
 
-    def collection_version
-      collection.head
-    end
-
     def review_workflow_status
       collection.review_enabled? ? 'On' : 'Off'
     end
