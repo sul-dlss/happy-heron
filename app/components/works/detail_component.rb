@@ -27,23 +27,6 @@ module Works
       "#{work_version.version} - #{description}"
     end
 
-    def doi_value
-      # If there is a DOI, return a link to it.
-      return doi_link if doi
-
-      case collection_doi_option
-      when 'yes'
-        doi_later
-      when 'depositor-selects'
-        if assign_doi
-          doi_later
-        else
-          doi_opt_out
-        end
-      end
-      # Nothing is returned if collection_doi_option is 'no'
-    end
-
     def doi_setting
       return 'DOI assigned (see above)' if doi
 
@@ -124,24 +107,6 @@ module Works
 
       # For example, "2020?/2021?" to "ca. 2020 - ca. 2021"
       edtf.sub(%r{/}, ' - ').gsub(/(\S+)\?/, 'ca. \1')
-    end
-
-    def doi_link
-      link = "https://doi.org/#{doi}"
-      link_to link, link
-    end
-
-    def doi_opt_out
-      'A DOI has not been assigned to this item. You may edit this item and select ' \
-        '"Yes" for the DOI option if you would like to receive a DOI.'
-    end
-
-    def doi_later
-      return tag.em 'DOI will become available once the work has been deposited.' if first_draft?
-
-      # This is a version draft, the collection must have been changed to "yes"
-      # after this item was deposited.
-      'DOI will become available once a new version is deposited.'
     end
   end
 end
