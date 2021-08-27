@@ -1,4 +1,4 @@
-<p>Dear <%= @user.name %>,</p>
+<p>Dear <%= @user.first_name %>,</p>
 
 <p>The Depositor <%= @work.depositor_name %> has submitted the deposit "<%= @work_version.title %>" for
   review in the <%= @work.collection_name %> collection. You can access this item directly at <%= link_to work_url(@work), work_url(@work) %></p>
