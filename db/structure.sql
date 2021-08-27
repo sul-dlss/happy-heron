@@ -537,7 +537,8 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
-    last_work_terms_agreement timestamp without time zone
+    last_work_terms_agreement timestamp without time zone,
+    first_name character varying
 );
 
 
@@ -1299,6 +1300,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210719185721'),
 ('20210721164925'),
 ('20210802203252'),
-('20210816133101');
+('20210816133101'),
+('20210827165420');
 
 

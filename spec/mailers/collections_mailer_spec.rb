@@ -6,6 +6,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
   let(:collection_version) { build_stubbed(:collection_version, collection: collection) }
   let(:collection_name) { collection_version.name }
   let(:collection) { build_stubbed(:collection) }
+  let(:a_user) { build_stubbed(:user, name: 'Al Dente', first_name: 'Fred') }
 
   describe '#invitation_to_deposit_email for new user with no name' do
     let(:user) { collection.depositors.first }
@@ -18,7 +19,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 
-    it 'renders the body' do
+    it 'renders the body with salutation of default name' do
       expect(mail.body.encoded).to match('Dear New SDR User,')
       expect(mail.body.encoded).to match("You have been invited to deposit to the #{collection_name} collection")
     end
@@ -29,7 +30,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     let(:mail) { described_class.with(user: user, collection_version: collection_version).invitation_to_deposit_email }
     let(:collection) { build_stubbed(:collection, :with_depositors) }
 
-    before { user.update(name: 'Smart Person') }
+    before { user.update(name: 'Smart Person', first_name: 'Maxwell') }
 
     it 'renders the headers' do
       expect(mail.subject).to eq "Invitation to deposit to the #{collection_name} collection in the SDR"
@@ -37,14 +38,14 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 
-    it 'renders the body' do
-      expect(mail.body.encoded).to match('Dear Smart Person,')
+    it 'renders the body with salutation of first name' do
+      expect(mail.body.encoded).to match('Dear Maxwell,')
       expect(mail.body.encoded).to match("You have been invited to deposit to the #{collection_name} collection")
     end
   end
 
   describe '#deposit_access_removed_email' do
-    let(:user) { build(:user) }
+    let(:user) { a_user }
     let(:mail) { described_class.with(user: user, collection_version: collection_version).deposit_access_removed_email }
 
     it 'renders the headers' do
@@ -57,10 +58,15 @@ RSpec.describe CollectionsMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match("A Manager of the #{collection_name} collection has updated the permissions")
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#manage_access_granted_email' do
-    let(:user) { build(:user) }
+    let(:user) { a_user }
     let(:mail) { described_class.with(user: user, collection_version: collection_version).manage_access_granted_email }
     let(:collection) { build(:collection) }
 
@@ -75,10 +81,15 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.body.encoded).to match('You have been invited to be a Manager ' \
                                          "of the #{collection_name} collection")
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#manage_access_removed_email' do
-    let(:user) { build(:user) }
+    let(:user) { a_user }
     let(:mail) { described_class.with(user: user, collection_version: collection_version).manage_access_removed_email }
     let(:collection) { build(:collection) }
 
@@ -92,10 +103,15 @@ RSpec.describe CollectionsMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match("A Manager of the #{collection_name} collection has updated the permissions")
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#review_access_granted_email' do
-    let(:user) { build(:user) }
+    let(:user) { a_user }
     let(:mail) { described_class.with(user: user, collection_version: collection_version).review_access_granted_email }
     let(:collection) { build(:collection) }
 
@@ -110,10 +126,15 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.body.encoded).to match('You have been invited to review new deposits ' \
                                          "to the #{collection_name} collection")
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#review_access_removed_email' do
-    let(:user) { build(:user) }
+    let(:user) { a_user }
     let(:mail) { described_class.with(user: user, collection_version: collection_version).review_access_removed_email }
     let(:collection) { build(:collection) }
 
@@ -127,11 +148,16 @@ RSpec.describe CollectionsMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match("A Manager of the #{collection_name} collection has updated the permissions")
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#first_draft_created' do
-    let(:user) { build(:user) }
-    let(:depositor) { build(:user, name: 'Audre Lorde') }
+    let(:user) { a_user }
+    let(:depositor) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
       described_class.with(user: user, collection_version: collection_version,
@@ -149,11 +175,16 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.body.encoded).to match "The Depositor #{depositor.name} has created a draft"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#item_deposited' do
-    let(:user) { build(:user) }
-    let(:depositor) { build(:user, name: 'Audre Lorde') }
+    let(:user) { a_user }
+    let(:depositor) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
       described_class.with(user: user, collection_version: collection_version, depositor: depositor).item_deposited
@@ -170,10 +201,15 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.body.encoded).to match "The Depositor #{depositor.name} has submitted a deposit"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#version_draft_created' do
-    let(:user) { build(:user) }
+    let(:user) { a_user }
     let(:depositor) { build(:user, name: 'Audre Lorde') }
 
     let(:mail) do
@@ -192,10 +228,15 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.body.encoded).to match "The Depositor #{depositor.name} has started a new version"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe '#participants_changed_email' do
-    let(:user) { build(:user) }
+    let(:user) { a_user }
     let(:mail) { described_class.with(user: user, collection_version: collection_version).participants_changed_email }
     let(:collection) { build(:collection) }
 
@@ -208,6 +249,11 @@ RSpec.describe CollectionsMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match 'Members have been either added to or removed from the ' \
                                          "#{collection_name} collection."
+    end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
     end
   end
 end

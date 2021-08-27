@@ -12,5 +12,8 @@ DeviseRemoteUser.configure do |config|
   config.logout_url = '/Shibboleth.sso/Logout'
   config.auto_create = true
   config.auto_update = true
-  config.attribute_map = { name: Settings.name_header }
+  config.attribute_map = {
+    name: Settings.full_name_header,
+    first_name: Settings.first_name_header
+  }
 end

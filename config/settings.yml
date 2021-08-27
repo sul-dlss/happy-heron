@@ -35,7 +35,8 @@ external_links:
 allow_sdr_content_changes: true
 
 authorization_group_header: HTTP_X_GROUPS
-name_header: HTTP_X_PERSON_NAME
+first_name_header: HTTP_X_PERSON_NAME
+full_name_header: HTTP_X_PERSON_FORMAL_NAME
 
 # mappings from authorization role to workgroup name
 authorization_workgroup_names:

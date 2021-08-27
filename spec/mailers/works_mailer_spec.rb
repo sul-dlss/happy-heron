@@ -3,8 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe WorksMailer, type: :mailer do
+  let(:work_depositor) { build_stubbed(:user, email: work.depositor.email, name: 'Al Dente', first_name: 'Fred') }
+  let(:a_user) { build(:user, name: 'Al Dente', first_name: 'Fred') }
+
   describe 'reject_email' do
-    let(:user) { work.depositor }
+    let(:user) { work_depositor }
     let(:mail) { described_class.with(user: user, work_version: work_version).reject_email }
     let(:work) do
       create(:work, collection: collection,
@@ -23,10 +26,15 @@ RSpec.describe WorksMailer, type: :mailer do
     it 'renders the reason' do
       expect(mail.body.encoded).to match('Add something to make it pop.')
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe 'deposited_email' do
-    let(:user) { work.depositor }
+    let(:user) { work_depositor }
     let(:mail) { described_class.with(user: user, work_version: work_version).deposited_email }
     let(:work) { build_stubbed(:work, collection: collection, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
     let(:work_version) { build_stubbed(:work_version, :deposited, title: 'Photo booth activated charcoal', work: work) }
@@ -44,10 +52,15 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.body.encoded).to have_content('gastropub humblebrag taiyaki collection')
       expect(mail.body.encoded).to have_content('https://doi.org/10.001/bc123df4567')
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe 'new_version_deposited_email' do
-    let(:user) { work.depositor }
+    let(:user) { work_depositor }
     let(:mail) { described_class.with(user: user, work_version: work_version).new_version_deposited_email }
     let(:work) { build_stubbed(:work, collection: collection, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
     let(:work_version) { build_stubbed(:work_version, :deposited, title: 'twee retro man braid', work: work) }
@@ -65,10 +78,15 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.body.encoded).to have_content('listicle fam ramps flannel')
       expect(mail.body.encoded).to have_content('https://doi.org/10.001/bc123df4567')
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe 'approved_email' do
-    let(:user) { work.depositor }
+    let(:user) { work_depositor }
     let(:mail) { described_class.with(user: user, work_version: work_version).approved_email }
     let(:work) { build_stubbed(:work, collection: collection, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
     let(:work_version) { build_stubbed(:work_version, :deposited, title: 'Hammock kombucha mustache', work: work) }
@@ -86,10 +104,15 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.body.encoded).to have_content('Farm-to-table beard aesthetic collection')
       expect(mail.body.encoded).to have_content('https://doi.org/10.001/bc123df4567')
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe 'submitted_email' do
-    let(:user) { build(:user, name: 'Al Dente') }
+    let(:user) { a_user }
     let(:mail) { described_class.with(user: user, work_version: work_version).submitted_email }
     let(:work) { build_stubbed(:work, collection: collection, depositor: user) }
     let(:work_version) do
@@ -110,10 +133,15 @@ RSpec.describe WorksMailer, type: :mailer do
                                          "small batch organic\r\n  collection in the Stanford Digital Repository, " \
                                          'is now waiting for review by a collection Manager.'
     end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{user.first_name},")
+      expect(mail.body).not_to include("Dear #{user.name},")
+    end
   end
 
   describe 'first_draft_reminder_email' do
-    let(:work) { build_stubbed(:work, collection: collection) }
+    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user) }
     let(:work_version) { build_stubbed(:work_version, work: work) }
     let(:mail) { described_class.with(work_version: work_version).first_draft_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
@@ -128,10 +156,15 @@ RSpec.describe WorksMailer, type: :mailer do
     it 'renders a link to edit the draft in the body' do
       expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
     end
+
+    it 'salutation uses work.depositor.first_name' do
+      expect(mail.body).to include("Dear #{work.depositor.first_name},")
+      expect(mail.body).not_to include("Dear #{work.depositor.name},")
+    end
   end
 
   describe 'new_version_reminder_email' do
-    let(:work) { build_stubbed(:work, collection: collection) }
+    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user) }
     let(:work_version) { build_stubbed(:work_version, work: work) }
     let(:mail) { described_class.with(work_version: work_version).new_version_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
@@ -143,6 +176,11 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.subject).to eq exp_subj
       expect(mail.to).to eq [work.depositor.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'salutation uses work.depositor.first_name' do
+      expect(mail.body).to include("Dear #{work.depositor.first_name},")
+      expect(mail.body).not_to include("Dear #{work.depositor.name},")
     end
 
     it 'renders a link to edit the draft in the body' do
