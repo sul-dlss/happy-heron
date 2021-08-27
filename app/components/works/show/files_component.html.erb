@@ -2,8 +2,10 @@
   <thead class="table-light">
   <tr>
     <th scope="col" class="table-title">Files
-      <span class="ms-3"><%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'file', label: 'Edit files') %></span>
-      <%= link_to work_zip_path(work_version.work), class: 'ms-4' do %>
+      <span class="ms-3">
+        <%= helpers.turbo_frame_tag dom_id(work, 'edit_file'), src: edit_button_work_path(work, tag: 'file'), target: '_top' %>
+      </span>
+      <%= link_to work_zip_path(work), class: 'ms-4' do %>
         <span class="fas fa-download" aria-hidden="true"></span><span class="visually-hidden">Download All Files</span>
       <% end %>
     </th>

@@ -1,4 +1,4 @@
-<%= turbo_frame_tag dom_id(work, :edit) do %>
+<%= turbo_frame_tag dom_id(work, ['edit', anchor].compact.join('_')) do %>
   <% if allowed_to?(:edit?, work.head) %>
     <% if work.purl_reservation? %>
       <%= link_to '',
@@ -9,11 +9,11 @@
               bs_target: '#workTypeModal',
               action: "work-type#setCollection"
             },
-            aria: { label: "Choose Type and Edit #{WorkTitlePresenter.show(work.head)}" } do %>
+            aria: { label: edit_label } do %>
         <span class="fas fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% else %>
-      <%= link_to [:edit, work], aria: { label: "Edit #{WorkTitlePresenter.show(work.head)}" } do %>
+      <%= link_to edit_work_path(work, anchor: anchor), aria: { label: edit_label } do %>
         <span class="fas fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% end %>

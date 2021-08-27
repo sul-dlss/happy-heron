@@ -37,6 +37,13 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
 
       expect(page).to have_content 'You have successfully submitted your deposit'
 
+      click_link 'Return to dashboard'
+      click_link new_work_title
+      expect(page).to have_text 'Your deposit has been sent for approval.'
+
+      # A work submitted for approval should not be editable.
+      expect(page).not_to have_css("a[aria-label='Edit #{new_work_title}']", wait: 0)
+
       # Now acting as the collection reviewer
       sign_in reviewer
       visit dashboard_path

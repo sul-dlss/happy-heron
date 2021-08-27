@@ -82,8 +82,8 @@ RSpec.describe Works::DetailComponent, type: :component do
     it 'renders the contributor' do
       expect(rendered.css('#contributors a').to_html).to include('https://orcid.org/0000-0002-1825-0097')
       expect(rendered.css('#contributors a').to_html).to include('https://orcid.org/0000-0002-1825-0098')
-      # Edit pencil and two links. No link for author without ORCID.
-      expect(rendered.css('#contributors').search('a').size).to eq 3
+      # No link for author without ORCID.
+      expect(rendered.css('#contributors').search('a').size).to eq 2
     end
   end
 

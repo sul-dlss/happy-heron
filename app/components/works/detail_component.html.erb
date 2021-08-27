@@ -16,7 +16,7 @@
 
   <header class="title">
     <span class="header-text"><%= title %></span>
-    <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: '') %>
+    <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
     <span class="state"><%= render Works::StateDisplayComponent.new(work_version: work_version) %></span>
     <%= render Works::EditButtonComponent.new(work_version: work_version) %>
   </header>
@@ -78,7 +78,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Title and contact
-      <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'title', label: 'Edit title and contact') %>
+      <%= helpers.turbo_frame_tag dom_id(work, 'edit_title'), src: edit_button_work_path(work, tag: 'title'), target: '_top' %>
     </caption>
     <tbody>
     <tr>
@@ -102,7 +102,7 @@
 
   <table id="contributors" class="table table-sm caption-header">
     <caption>Authors and contributors
-      <%= render Works::EditLinkComponent.new(work_version: work_version, anchor: 'author', label: 'Edit authors and contributors') %>
+      <%= helpers.turbo_frame_tag dom_id(work, 'edit_author'), src: edit_button_work_path(work, tag: 'author'), target: '_top' %>
     </caption>
     <tbody>
     <% contributors.each do |contributor| %>
@@ -123,7 +123,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Dates
-      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'dates', label: 'Edit dates') %>
+      <%= helpers.turbo_frame_tag dom_id(work, 'edit_dates'), src: edit_button_work_path(work, tag: 'dates'), target: '_top' %>
     </caption>
     <tbody>
     <tr>
@@ -139,7 +139,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Description
-      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'description', label: 'Edit description') %>
+      <%= helpers.turbo_frame_tag dom_id(work, 'edit_description'), src: edit_button_work_path(work, tag: 'description'), target: '_top' %>
     </caption>
     <tbody>
     <tr>
@@ -185,7 +185,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Release and visibility
-      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'release', label: 'Edit release data and visibility') %>
+      <%= helpers.turbo_frame_tag dom_id(work, 'edit_release'), src: edit_button_work_path(work, tag: 'release'), target: '_top' %>
     </caption>
     <tbody>
     <tr>
@@ -205,7 +205,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Terms of use and license
-      <%= render Works::EditLinkComponent.new(work_version: work_version,anchor: 'license', label: 'Edit terms of use and license') %>
+      <%= helpers.turbo_frame_tag dom_id(work, 'edit_license'), src: edit_button_work_path(work, tag: 'license'), target: '_top' %>
     </caption>
     <tbody>
     <tr>
