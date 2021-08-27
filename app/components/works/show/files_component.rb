@@ -10,7 +10,7 @@ module Works
 
       attr_reader :work_version
 
-      delegate :attached_files, to: :work_version
+      delegate :attached_files, :work, to: :work_version
     end
   end
 end

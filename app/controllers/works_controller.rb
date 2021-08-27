@@ -112,9 +112,18 @@ class WorksController < ObjectsController
 
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the work.
+  # (e.g. a depositor can not edit a work they have submitted for review)
   def edit_button
     work = Work.find(params[:id])
-    render partial: 'works/edit_button', locals: { work: work }
+
+    default_label = if work.purl_reservation?
+                      "Choose Type and Edit #{WorkTitlePresenter.show(work.head)}"
+                    else
+                      "Edit #{WorkTitlePresenter.show(work.head)}"
+                    end
+    edit_label = I18n.t params[:tag], scope: %i[work edit_links], default: default_label
+
+    render partial: 'works/edit_button', locals: { work: work, anchor: params[:tag], edit_label: edit_label }
   end
 
   private
