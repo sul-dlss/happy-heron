@@ -52,7 +52,7 @@ file_uploads_root: tmp/uploads
 
 faq_url: https://library.stanford.edu/research/stanford-digital-repository/terms-deposit
 purl_url: https://purl.stanford.edu
-terms_url: https://stanford.app.box.com/s/lozngarhdzj56z44la38v1zn3a1ggbyu
+terms_url: https://library.stanford.edu/research/stanford-digital-repository/documentation/sdr-terms-deposit
 sdr_url: https://library.stanford.edu/research/stanford-digital-repository
 
 host: <%= Socket.gethostname %>
