@@ -38,7 +38,7 @@
       <tr>
         <th class="col-3" scope="row">DOI</th>
         <td>
-          <%= doi_value %>
+          <%= render Works::Show::DoiComponent.new(work_version: work_version) %>
         </td>
       </tr>
       <tr>
