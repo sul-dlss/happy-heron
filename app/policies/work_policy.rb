@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 # Authorization policy for Work objects
-class WorkPolicy < CommonWorkPolicy
+class WorkPolicy < ApplicationPolicy
+  alias_rule :delete?, to: :destroy?
+
   # Return the relation defining the collections you can view.
   scope_for :relation do |relation|
     relation.where(collection_id: user.manages_collection_ids + user.reviews_collection_ids).or(
@@ -10,13 +12,13 @@ class WorkPolicy < CommonWorkPolicy
   end
 
   def destroy?
-    administors_collection? && record.persisted? && record.head.deleteable?
+    (allowed_to?(:review?, collection) || depositor_of_the_work?) && record.persisted? && record.head.deleteable?
   end
 
   delegate :administrator?, to: :user_with_groups
   delegate :collection, to: :record
 
-  def depositor?
+  def depositor_of_the_work?
     record.depositor == user
   end
 end
