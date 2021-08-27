@@ -10,10 +10,17 @@ FactoryBot.define do
     factory :collection_version_with_collection do
       transient do
         depositors { [] }
+        reviewed_by { [] }
         managed_by { [] }
+        review_enabled { false }
       end
       state { 'deposited' }
-      collection { association :collection, depositors: depositors, managed_by: managed_by }
+      collection do
+        association(:collection, depositors: depositors,
+                                 managed_by: managed_by,
+                                 reviewed_by: reviewed_by,
+                                 review_enabled: review_enabled)
+      end
 
       after(:create) do |collection_version, _evaluator|
         collection_version.collection.update(head: collection_version)
