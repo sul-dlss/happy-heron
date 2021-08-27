@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 # Authorization policy for WorkVersion objects
-class WorkVersionPolicy < CommonWorkPolicy
+class WorkVersionPolicy < ApplicationPolicy
   alias_rule :edit?, to: :update?
+  alias_rule :delete?, to: :destroy?
 
   relation_scope :edits do |scope|
     if administrator?
@@ -16,10 +17,8 @@ class WorkVersionPolicy < CommonWorkPolicy
   # Can deposit a work iff:
   #   1. Collection is accessioned
   #   2. The user is an administrator, or a depositor or a manager of this collection
-
   def create?
     return false unless collection.head.accessioned?
-
     return true if administrator?
 
     (collection.depositor_ids.include?(user.id) || manages_collection?(collection))
@@ -38,9 +37,9 @@ class WorkVersionPolicy < CommonWorkPolicy
   #     4. The user is a reviewer of the collection the work is in
   def update?
     return false unless record.updatable?
-    return true if reviews_collection?
+    return true if allowed_to?(:review?, collection)
 
-    depositor? && !record.pending_approval?
+    depositor_of_the_work? && !record.pending_approval?
   end
 
   # Can show a work iff any one of the following is true:
@@ -49,17 +48,17 @@ class WorkVersionPolicy < CommonWorkPolicy
   #   3. The user is a manager of the collection the work is in
   #   4. The user is a reviewer of the collection the work is in
   def show?
-    depositor? || reviews_collection?
+    depositor_of_the_work? || allowed_to?(:review?, collection)
   end
 
   # The collection reviewers can review a work
 
   def review?
-    record.pending_approval? && reviews_collection?
+    record.pending_approval? && allowed_to?(:review?, collection)
   end
 
   def destroy?
-    administors_collection? && record.persisted? && record.draft?
+    (allowed_to?(:review?, collection) || depositor_of_the_work?) && record.persisted? && record.draft?
   end
 
   private
@@ -70,7 +69,7 @@ class WorkVersionPolicy < CommonWorkPolicy
     record.work.collection
   end
 
-  def depositor?
+  def depositor_of_the_work?
     record.work.depositor == user
   end
 end
