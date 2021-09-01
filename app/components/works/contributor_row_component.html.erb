@@ -73,13 +73,13 @@
       <%= form.hidden_field :weight %>
       <div>
         <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move up' },
-                       data: { action: "click->ordered-nested-form#moveUp" } do %>
+                       data: { action: "click->ordered-nested-form#moveUp auto-citation#updateDisplay" } do %>
           <span class="fas fa-arrow-up"></span>
         <% end %>
       </div>
       <div>
         <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move down' },
-                       data: { action: "click->ordered-nested-form#moveDown" } do %>
+                       data: { action: "click->ordered-nested-form#moveDown auto-citation#updateDisplay" } do %>
           <span class="fas fa-arrow-down"></span>
         <% end %>
       </div>
