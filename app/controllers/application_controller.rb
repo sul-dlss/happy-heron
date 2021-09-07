@@ -70,6 +70,17 @@ class ApplicationController < ActionController::Base
     store_location_for(:user, request.fullpath)
   end
 
+  MAX_LOCATION_SIZE = ActionDispatch::Cookies::MAX_COOKIE_SIZE / 2
+
+  # This overrides devise so that we always check that we have enough space in the cookie
+  # to store the full location.
+  # This is adapted from: https://daniel.fone.net.nz/blog/2014/11/28/actiondispatch-cookies-cookieoverflow-via-devise-s-user-return-to/
+  # This situation typically occurs when we are scanned for vulnerabilities and a
+  # CRLF Injection attack is attempted, see https://www.geeksforgeeks.org/crlf-injection-attack/
+  def store_location_for(resource_or_scope, location)
+    super unless location && location.size > MAX_LOCATION_SIZE
+  end
+
   def ensure_sdr_updatable
     return if Settings.allow_sdr_content_changes
 
