@@ -7,12 +7,12 @@ class LocalTimeComponent < ApplicationComponent
   end
 
   def call
-    tag :'local-time', datetime: @datetime.iso8601,
-                       month: 'short',
-                       day: 'numeric',
-                       year: 'numeric',
-                       hour: 'numeric',
-                       minute: 'numeric',
-                       'time-zone-name': 'short'
+    tag.local_time(datetime: @datetime.iso8601,
+                   month: 'short',
+                   day: 'numeric',
+                   year: 'numeric',
+                   hour: 'numeric',
+                   minute: 'numeric',
+                   'time-zone-name': 'short')
   end
 end
