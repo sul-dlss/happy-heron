@@ -552,7 +552,7 @@ Image:
 Mixed Materials:
   type:
     - type: resource type
-      value: mixed materials
+      value: mixed material
       source:
         value: MODS resource types
   datacite_type: Collection
