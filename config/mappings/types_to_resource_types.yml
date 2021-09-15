@@ -9,7 +9,7 @@ Data:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -278,7 +278,7 @@ Image:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -559,7 +559,7 @@ Mixed Materials:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -851,7 +851,7 @@ Music:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -1143,7 +1143,7 @@ Other:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -1440,7 +1440,7 @@ Software/Code:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -1731,7 +1731,7 @@ Sound:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -2025,7 +2025,7 @@ Text:
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
@@ -2247,11 +2247,11 @@ Video:
       value: moving image
       source:
         value: MODS resource types
-  datacite_type: Audiovisual                
+  datacite_type: Audiovisual
   subtypes:
     3D model:
       - type: resource type
-        value: three-dimensional object
+        value: three dimensional object
         source:
           value: MODS resource types
     Animation:
