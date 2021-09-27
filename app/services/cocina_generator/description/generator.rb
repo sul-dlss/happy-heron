@@ -13,7 +13,6 @@ module CocinaGenerator
       end
 
       # rubocop:disable Metrics/AbcSize
-
       def generate
         Cocina::Models::Description.new({
           title: title,

@@ -5,11 +5,18 @@ require 'rails_helper'
 RSpec.describe CocinaGenerator::CollectionGenerator do
   let(:model) { described_class.generate_model(collection_version: collection_version) }
   let(:project_tag) { Settings.h2.project_tag }
+  let(:description) do
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' \
+      'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+  end
 
   context 'without a druid' do
     let(:collection) { build(:collection, id: 7) }
     let(:collection_version) do
-      build(:collection_version, :with_related_links, :with_contact_emails, name: 'Test title', collection: collection)
+      build(:collection_version, :with_related_links, :with_contact_emails,
+            name: 'Test title',
+            description: description,
+            collection: collection)
     end
     let(:expected_model) do
       {
@@ -34,6 +41,12 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
           title: [
             {
               value: 'Test title'
+            }
+          ],
+          note: [
+            {
+              value: description,
+              type: 'abstract'
             }
           ],
           relatedResource: [
@@ -61,7 +74,10 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
   context 'with a druid' do
     let(:collection) { build(:collection, id: 7, druid: 'druid:bk123gh4567') }
     let(:collection_version) do
-      build(:collection_version, :with_contact_emails, name: 'Test title', collection: collection)
+      build(:collection_version, :with_contact_emails,
+            name: 'Test title',
+            description: description,
+            collection: collection)
     end
 
     let(:expected_model) do
@@ -79,6 +95,12 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
           title: [
             {
               value: 'Test title'
+            }
+          ],
+          note: [
+            {
+              value: description,
+              type: 'abstract'
             }
           ],
           purl: 'https://purl.stanford.edu/bk123gh4567',

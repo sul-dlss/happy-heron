@@ -311,7 +311,7 @@ RSpec.describe 'Create a collection' do
             post first_draft_collections_path,
                  params: { collection: draft_collection_params, commit: save_draft_button }
             collection = Collection.last
-            expect(collection.depositors.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
+            expect(collection.depositors.map(&:sunetid)).to contain_exactly('maya.aguirre', 'jcairns')
           end
         end
       end
