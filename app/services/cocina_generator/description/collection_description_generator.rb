@@ -15,6 +15,7 @@ module CocinaGenerator
       def generate
         Cocina::Models::Description.new({
           title: title,
+          note: [abstract],
           relatedResource: related_resources.presence,
           access: access,
           purl: collection_version.collection.purl
@@ -24,6 +25,13 @@ module CocinaGenerator
       private
 
       attr_reader :collection_version
+
+      def abstract
+        Cocina::Models::DescriptiveValue.new(
+          value: collection_version.description,
+          type: 'abstract'
+        )
+      end
 
       def title
         [
