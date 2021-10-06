@@ -71,6 +71,6 @@ gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
 gem 'turbo-rails', '~> 0.6.0'
 gem 'view_component', '~> 2.18'
-gem 'webpacker', '6.0.0.rc3'
+gem 'webpacker', '6.0.0.rc5'
 gem 'whenever'
 gem 'zipline', '~> 1.3'
