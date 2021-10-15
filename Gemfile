@@ -69,7 +69,7 @@ gem 'sdr-client', '~> 0.60'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
-gem 'turbo-rails', '~> 0.6.0'
+gem 'turbo-rails', '~> 7.1'
 gem 'view_component', '~> 2.18'
 gem 'webpacker', '6.0.0.rc3'
 gem 'whenever'
