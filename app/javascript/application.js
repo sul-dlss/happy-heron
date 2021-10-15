@@ -8,10 +8,9 @@ window.bootstrap = require("bootstrap") // Required for contact_us_controller
 import './controllers'
 
 import '@hotwired/turbo-rails'
-require.context('../images', true)
 import '@fortawesome/fontawesome-free/js/all.js'
 import 'simple-datatables'
-  
+
 require('./modules/validate-forms')
 
 window.addEventListener("turbo:before-cache", function() {

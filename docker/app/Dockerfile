@@ -25,6 +25,6 @@ RUN bundle config set without 'production' && \
 
 COPY . .
 
-RUN bin/rails webpacker:compile
+RUN bin/rails assets:precompile
 
 CMD ["./docker/app/invoke.sh"]

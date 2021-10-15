@@ -1,8 +1,8 @@
 import { Application } from "stimulus"
 import { Autocomplete } from 'stimulus-autocomplete'
-import { definitions } from 'stimulus:./controllers'
+import { definitions } from 'stimulus:./'
 
-const app = Application.start()
+const application = Application.start()
 application.load(definitions)
 
 application.register('autocomplete', Autocomplete)

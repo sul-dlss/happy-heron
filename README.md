@@ -32,26 +32,6 @@ Then run the asset pipeline and webserver:
 REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 ```
 
-If you are going to be changing any of the assets compiled by webpack (e.g., JavaScript code, stylesheets), you may also find it helpful to run the webpack dev server which speeds up page reloads after asset changes:
-
-```shell
-bin/webpack-dev-server
-```
-
-If you see
-
-```
-# Webpacker::Manifest::MissingEntryError:
- #   Webpacker can't find static/... in ...
-```
-
-then do
-```
-rm -r public/packs*
-```
-
-and make sure webpacker runs again.  This is likely caused by a webpacker server upgrade that occurred since you last pulled the code from github.
-
 ## Testing
 
 Start up dependencies with `docker compose up db` (with `-d` to run in background), then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.

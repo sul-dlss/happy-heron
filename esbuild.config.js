@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const esbuild = require("esbuild");
 const { stimulusPlugin } = require("esbuild-plugin-stimulus");
 

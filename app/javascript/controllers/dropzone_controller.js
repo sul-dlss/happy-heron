@@ -5,7 +5,7 @@ import {
   getMetaValue,
   findElement,
   removeElement,
-} from "helpers";
+} from "../helpers";
 
 export default class extends Controller {
   static targets = ["input", "previewsContainer", "preview", "template", "feedback", "container", "fileName"];
