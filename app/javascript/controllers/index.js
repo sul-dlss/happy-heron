@@ -1,9 +1,8 @@
 import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
 import { Autocomplete } from 'stimulus-autocomplete'
+import { definitions } from 'stimulus:./'
 
 const application = Application.start()
-const context = require.context(".", true, /\.js$/)
-application.load(definitionsFromContext(context))
+application.load(definitions)
 
 application.register('autocomplete', Autocomplete)

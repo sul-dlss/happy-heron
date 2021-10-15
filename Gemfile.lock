@@ -135,6 +135,8 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    cssbundling-rails (0.2.4)
+      railties (>= 6.0.0)
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
@@ -253,6 +255,8 @@ GEM
     ice_nine (0.11.2)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    jsbundling-rails (0.1.9)
+      railties (>= 6.0.0)
     launchy (2.5.0)
       addressable (~> 2.7)
     listen (3.7.0)
@@ -306,8 +310,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
-    rack-proxy (0.7.0)
-      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.1.4.1)
@@ -414,7 +416,6 @@ GEM
       cocina-models (~> 0.62.0)
       dry-monads
       faraday (>= 0.16)
-    semantic_range (3.0.0)
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.0.1)
@@ -487,11 +488,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (6.0.0.rc.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -524,6 +520,7 @@ DEPENDENCIES
   capybara (~> 3.34)
   capybara-screenshot
   config (~> 2.2)
+  cssbundling-rails (~> 0.2.4)
   cuprite
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
@@ -537,6 +534,7 @@ DEPENDENCIES
   faraday_middleware (~> 1.0)
   honeybadger (~> 4.0)
   jbuilder
+  jsbundling-rails (~> 0.1.9)
   listen (~> 3.2)
   lograge (~> 0.11.2)
   multi_json
@@ -567,7 +565,6 @@ DEPENDENCIES
   view_component (~> 2.18)
   web-console (>= 3.3.0)
   webmock
-  webpacker (= 6.0.0.rc3)
   whenever
   zipline (~> 1.3)
 
