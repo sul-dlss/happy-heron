@@ -14,7 +14,6 @@ import 'controllers'
 
 import '@hotwired/turbo-rails'
 require.context('../images', true)
-import './application.scss'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import 'simple-datatables'

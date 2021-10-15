@@ -74,3 +74,5 @@ gem 'view_component', '~> 2.18'
 gem 'webpacker', '6.0.0.rc3'
 gem 'whenever'
 gem 'zipline', '~> 1.3'
+
+gem "cssbundling-rails", "~> 0.2.4"

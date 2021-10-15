@@ -135,6 +135,8 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    cssbundling-rails (0.2.4)
+      railties (>= 6.0.0)
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
@@ -524,6 +526,7 @@ DEPENDENCIES
   capybara (~> 3.34)
   capybara-screenshot
   config (~> 2.2)
+  cssbundling-rails (~> 0.2.4)
   cuprite
   devise (~> 4.7)
   devise-remote-user (~> 1.0)

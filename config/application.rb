@@ -12,7 +12,7 @@ require 'active_job/railtie'
 require 'active_record/railtie'
 require 'active_storage/engine'
 # require 'rails/test_unit/railtie'
-# require 'sprockets/railtie'
+require 'sprockets/railtie'
 require 'view_component/engine'
 
 # Require the gems listed in Gemfile, including any gems

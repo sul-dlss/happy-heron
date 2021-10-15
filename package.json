@@ -15,7 +15,7 @@
     "css-minimizer-webpack-plugin": "^3.0.2",
     "dropzone": "^5.7.2",
     "mini-css-extract-plugin": "^1.6.0",
-    "sass": "^1.32.12",
+    "sass": "^1.43.2",
     "sass-loader": "^11.1.0",
     "simple-datatables": "^3.0.0",
     "stimulus": "2.0.0",
@@ -35,5 +35,8 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  }
 }

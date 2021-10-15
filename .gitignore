@@ -48,3 +48,6 @@ config/environments/*.local.yml
 # allow local gems
 /Gemfile.local
 /Gemfile.local.lock
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
