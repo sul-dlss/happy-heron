@@ -23,8 +23,13 @@ Start up dependencies with `docker compose up db redis` (with `-d` to run in bac
 
 To run the H2 application in development mode, set `REMOTE_USER` because we aren't running behind Shibboleth, and set the `ROLES` environment variable to grant your fake user session administrative privileges:
 
+```
+gem install foreman
+```
+
+Then run the asset pipeline and webserver:
 ```shell
-REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/rails server
+REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 ```
 
 If you are going to be changing any of the assets compiled by webpack (e.g., JavaScript code, stylesheets), you may also find it helpful to run the webpack dev server which speeds up page reloads after asset changes:

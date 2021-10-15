@@ -62,6 +62,8 @@ gem 'okcomputer'
 gem 'pg'
 gem 'rails', '~> 6.1'
 gem 'redis', '~> 4.0'
+gem 'cssbundling-rails', '~> 0.2.4'
+gem 'jsbundling-rails', '~> 0.1.9'
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
 gem 'reform', '~> 2.5.0'
 gem 'reform-rails', '~> 0.2.0'
@@ -74,5 +76,3 @@ gem 'view_component', '~> 2.18'
 gem 'webpacker', '6.0.0.rc3'
 gem 'whenever'
 gem 'zipline', '~> 1.3'
-
-gem "cssbundling-rails", "~> 0.2.4"

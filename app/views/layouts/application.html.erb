@@ -10,8 +10,9 @@
     <%= stylesheet_link_tag "https://www-media.stanford.edu/su-identity/css/su-identity.css" %>
     <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" %>
     <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/simple-datatables@2.1.13/dist/style.css" %>
-    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
   <body>
@@ -26,7 +27,7 @@
         <header class="navbar navbar-expand navbar-dark stanford-navbar">
           <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
             <a class="navbar-brand p-0 me-auto" href="/" aria-label="Stanford Digital Repository">
-              <%= image_pack_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
+              <%= image_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
             </a>
 
             <div id="notifications"></div>
@@ -81,7 +82,7 @@
         <div id="sul-footer">
           <div id="sul-footer-img" class="span2">
             <%= link_to 'https://library.stanford.edu' do %>
-              <%= image_pack_tag "sul-logo-stacked.svg", alt: "Stanford Libraries", height: 45 %>
+              <%= image_tag "sul-logo-stacked.svg", alt: "Stanford Libraries", height: 45 %>
             <% end %>
           </div>
           <div id="sul-footer-links" class="span2">

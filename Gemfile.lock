@@ -255,6 +255,8 @@ GEM
     ice_nine (0.11.2)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    jsbundling-rails (0.1.9)
+      railties (>= 6.0.0)
     launchy (2.5.0)
       addressable (~> 2.7)
     listen (3.7.0)
@@ -540,6 +542,7 @@ DEPENDENCIES
   faraday_middleware (~> 1.0)
   honeybadger (~> 4.0)
   jbuilder
+  jsbundling-rails (~> 0.1.9)
   listen (~> 3.2)
   lograge (~> 0.11.2)
   multi_json
