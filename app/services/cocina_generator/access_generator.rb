@@ -32,7 +32,7 @@ module CocinaGenerator
       {
         access: 'citation-only',
         download: 'none',
-        embargo: { access: 'world', download: 'world', releaseDate: work_version.embargo_date.iso8601 }
+        embargo: regular_access.merge({ releaseDate: work_version.embargo_date.iso8601 })
       }
     end
 
