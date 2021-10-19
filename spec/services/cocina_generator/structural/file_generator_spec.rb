@@ -28,6 +28,13 @@ RSpec.describe CocinaGenerator::Structural::FileGenerator do
       let(:work_version) { build(:work_version) }
       let(:attached_file) { create(:attached_file, :with_file, work_version: work_version, hide: true) }
 
+      it { is_expected.to eq Cocina::Models::FileAccess.new(access: 'world', download: 'world') }
+    end
+
+    context 'when object is embargoed' do
+      let(:work_version) { build(:work_version, :embargoed) }
+      let(:attached_file) { create(:attached_file, :with_file, work_version: work_version, hide: true) }
+
       it { is_expected.to eq Cocina::Models::FileAccess.new(access: 'dark', download: 'none') }
     end
   end
