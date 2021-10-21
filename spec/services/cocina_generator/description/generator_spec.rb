@@ -482,6 +482,98 @@ RSpec.describe CocinaGenerator::Description::Generator do
       )
     end
 
+    context 'when publication date of year only' do
+      let(:work_version) do
+        build(:work_version, :published_with_year_only)
+      end
+
+      it 'creates event of type publication with year only date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'publication',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2021',
+                  type: 'publication'
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when publication date of year and month only' do
+      let(:work_version) do
+        build(:work_version, :published_with_year_month_only)
+      end
+
+      it 'creates event of type publication with year and month only date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'publication',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2021-04',
+                  type: 'publication'
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when creation date of year only' do
+      let(:work_version) do
+        build(:work_version, :with_creation_date_year_only)
+      end
+
+      it 'creates event of type creation with year only date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'creation',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2020',
+                  type: 'creation'
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when creation date of year and month only' do
+      let(:work_version) do
+        build(:work_version, :with_creation_date_year_month_only)
+      end
+
+      it 'creates event of type creation with year and month only date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'creation',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2020-06',
+                  type: 'creation'
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
     context 'when approximate creation date' do
       let(:work_version) do
         build(:work_version, :with_approximate_creation_date)
