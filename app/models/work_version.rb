@@ -116,18 +116,6 @@ class WorkVersion < ApplicationRecord
     update!(citation: citation.gsub(LINK_TEXT, work.purl))
   end
 
-  # Ensure that EDTF dates get an EDTF serialization
-  def created_edtf=(edtf)
-    case edtf
-    when nil, EDTF::Interval
-      super
-    when Date
-      super(edtf.to_edtf)
-    else
-      raise TypeError, 'Expected a Date or EDTF::Interval'
-    end
-  end
-
   # the terms agreement checkbox value is not persisted in the database with the work and the value is instead:
   #  false if (a) never previously accepted or (b) not accepted in the last year; it is true otherwise
   def agree_to_terms
@@ -153,6 +141,19 @@ class WorkVersion < ApplicationRecord
     end
   end
 
+  # Ensure that EDTF dates get an EDTF serialization
+  def created_edtf=(edtf)
+    case edtf
+    when nil, EDTF::Interval
+      super
+    when Date
+      super(edtf.to_edtf)
+    else
+      raise TypeError, 'Expected a Date or EDTF::Interval'
+    end
+  end
+
+  # see https://github.com/inukshuk/edtf-ruby for details on the parsing gem used
   def published_edtf
     EDTF.parse(super)
   end

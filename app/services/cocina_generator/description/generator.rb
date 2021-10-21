@@ -134,7 +134,7 @@ module CocinaGenerator
         {
           type: type,
           qualifier: date.uncertain? ? 'approximate' : nil,
-          value: date.to_s
+          value: date.uncertain? ? date.to_s : date.edtf
         }.compact
       end
 

@@ -40,6 +40,14 @@ FactoryBot.define do
     published_edtf { EDTF.parse('2020-02-14') }
   end
 
+  trait :published_with_year_only do
+    published_edtf { EDTF.parse('2021') }
+  end
+
+  trait :published_with_year_month_only do
+    published_edtf { EDTF.parse('2021-04') }
+  end
+
   trait :embargoed do
     embargo_date { 30.months.from_now }
   end
@@ -60,6 +68,14 @@ FactoryBot.define do
 
   trait :with_creation_date do
     created_edtf { EDTF.parse('2020-03-08') }
+  end
+
+  trait :with_creation_date_year_only do
+    created_edtf { EDTF.parse('2020') }
+  end
+
+  trait :with_creation_date_year_month_only do
+    created_edtf { EDTF.parse('2020-06') }
   end
 
   trait :with_approximate_creation_date do
