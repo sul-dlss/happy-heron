@@ -20,11 +20,8 @@ export default class extends NestedFormController {
   }
 
   filterButtons(element, index) {
-    const upButton = element.querySelector("[data-action='click->ordered-nested-form#moveUp']")
-    const downButton = element.querySelector("[data-action='click->ordered-nested-form#moveDown']")
-
-    upButton.hidden = (index == 0)
-    downButton.hidden = (index == this.count - 1)
+    this.upButtonTarget.hidden = (index == 0)
+    this.downButtonTarget.hidden = (index == this.count - 1)
   }
 
   renumber() {
