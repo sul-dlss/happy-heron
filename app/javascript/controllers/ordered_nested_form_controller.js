@@ -10,8 +10,8 @@ export default class extends NestedFormController {
     // This depends on the superclass inserting the element before the add_itemTarget
     const element = this.add_itemTarget.previousElementSibling
     this.setWeight(element, this.count)
-    this.rows().forEach((row, index) => {
-      this.filterButtons(row, index)
+    this.rows().forEach((_, index) => {
+      this.filterButtons(index)
     })
   }
 
@@ -19,18 +19,15 @@ export default class extends NestedFormController {
     element.querySelector("input[name*='weight']").value = value
   }
 
-  filterButtons(element, index) {
-    const upButton = element.querySelector("[data-action='click->ordered-nested-form#moveUp']")
-    const downButton = element.querySelector("[data-action='click->ordered-nested-form#moveDown']")
-
-    upButton.hidden = (index == 0)
-    downButton.hidden = (index == this.count - 1)
+  filterButtons(index) {
+    this.upButtonTargets[index].hidden = (index == 0)
+    this.downButtonTargets[index].hidden = (index == this.count - 1)
   }
 
   renumber() {
     this.rows().forEach((row, index) => {
       this.setWeight(row, index)
-      this.filterButtons(row, index)
+      this.filterButtons(index)
     })
   }
 

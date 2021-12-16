@@ -1,7 +1,10 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["add_item", "template"]
+  // Declare targets for this controller and its children because adding to
+  // inherited targets in children causes Stimulus controller errors
+  // ("ordered_nested_form_controller_default is not defined")
+  static targets = ["add_item", "template", "upButton", "downButton"]
   static values = { selector: String }
 
   addAssociation(event) {
