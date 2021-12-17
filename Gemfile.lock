@@ -119,7 +119,7 @@ GEM
       launchy
     chronic (0.10.2)
     cliver (0.3.2)
-    cocina-models (0.62.0)
+    cocina-models (0.62.1)
       activesupport
       dry-struct (~> 1.0)
       dry-types (~> 1.1)
@@ -278,7 +278,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.6.1)
-    minitest (5.14.4)
+    minitest (5.15.0)
     msgpack (1.4.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
