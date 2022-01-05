@@ -2,9 +2,10 @@
 
 # Populates the nested keywords form
 class KeywordsPopulator < ApplicationPopulator
-  def call(form, fragment:, **)
+  def call(form, args)
     # The fragment represents one row of the attached file data from the HTML form
     # find out if incoming file is already added.
+    fragment = args.fetch(:fragment)
     item = existing_record(form: form, id: fragment['id'])
 
     if fragment['_destroy'] == '1'

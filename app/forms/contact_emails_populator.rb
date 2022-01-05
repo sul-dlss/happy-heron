@@ -3,7 +3,8 @@
 # Populates the nested contact email form
 class ContactEmailsPopulator < ApplicationPopulator
   # The fragment represents one row of the attached file data from the HTML form
-  def call(form, fragment:, **)
+  def call(form, args)
+    fragment = args.fetch(:fragment)
     item = existing_record(form: form, id: fragment['id'])
 
     if fragment['_destroy'] == '1'

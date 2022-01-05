@@ -248,7 +248,7 @@ RSpec.describe WorkVersionPolicy do
   describe 'scope' do
     subject(:scope) { policy.apply_scope(collection.works, type: :active_record_relation, name: :edits) }
 
-    let(:policy) { described_class.new context }
+    let(:policy) { described_class.new(**context) }
     let(:collection) { create(:collection) }
     let(:work) { create(:work, collection: collection) }
 

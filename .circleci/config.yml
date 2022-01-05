@@ -4,7 +4,7 @@ orbs:
   ruby: circleci/ruby@1.1.4
   browser-tools: circleci/browser-tools@1.1.3
 references:
-  default_ruby_version: &default_ruby_version 2.7-browsers
+  default_ruby_version: &default_ruby_version 3.0-browsers
   default_postgres_version: &default_postgres_version 13-ram
   ruby_envs: &ruby_envs
     environment:

@@ -6,7 +6,8 @@ class ContributorPopulator < ApplicationPopulator
   # find out if incoming Contributor is already added.
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
-  def call(form, fragment:, **)
+  def call(form, args)
+    fragment = args.fetch(:fragment)
     item = existing_record(form: form, id: fragment['id'])
 
     if fragment['_destroy'] == '1'

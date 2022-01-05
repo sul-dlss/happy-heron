@@ -1,7 +1,7 @@
 # This Dockerfile is optimized for running in development. That means it trades
 # build speed for size. If we were using this for production, we might instead
 # optimize for a smaller size at the cost of a slower build.
-FROM ruby:2.7.2-alpine
+FROM ruby:3.0-alpine
 
 # postgresql-client is required for invoke.sh
 RUN apk add --update --no-cache \
