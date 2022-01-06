@@ -5,6 +5,7 @@ orbs:
       docker: circleci/docker@2.0.1
       node: circleci/node@3.0
       ruby: circleci/ruby@1.2.0
+      browser-tools: circleci/browser-tools@1.2.3
     commands:
       validate-api:
         description: Validate openapi specification
@@ -48,8 +49,12 @@ orbs:
             default: false
             description: True if this is an API only Rails app.
             type: boolean
+          install-chrome:
+            default: false
+            description: True to install Chrome
+            type: boolean
         docker:
-          - image: 'cimg/ruby:<< parameters.ruby-tag >>-browsers'
+          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
           - image: 'cimg/postgres:<< parameters.postgres-tag >>'
             environment:
               POSTGRES_USER: postgres
@@ -66,6 +71,10 @@ orbs:
         steps:
           - checkout
           - ruby/install-deps
+          - when:
+              condition: << parameters.install-chrome >>
+              steps:
+                - browser-tools/install-chrome
           - unless:
               condition: << parameters.api-only >>
               steps:
