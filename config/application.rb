@@ -40,6 +40,9 @@ module HappyHeron
 
     config.action_mailer.default_url_options = { host: Settings.host }
 
+    # Override the default (5.minutes), so that large files have enough time to upload
+    config.active_storage.service_urls_expire_in = 120.minutes
+
     console do
       Honeybadger.configure do |config|
         config.report_data = false
