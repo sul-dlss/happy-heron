@@ -61,6 +61,7 @@ orbs:
           PGPASSWORD: sekret
           PGUSER: circleci
           RAILS_ENV: test
+          PAGER: cat
         parallelism: 3
         steps:
           - checkout
@@ -75,7 +76,7 @@ orbs:
               name: Wait for DB
           - run:
               name: Test prepare
-              command: bin/rails db:create db:migrate
+              command: bin/rails db:test:prepare
           - run:
               name: Setup Code Climate test-reporter
               command: |
@@ -132,8 +133,6 @@ orbs:
 workflows:
   build:
     jobs:
-      - ruby-rails/validate-api:
-          name: validate
       - ruby-rails/lint:
           name: lint
       - ruby-rails/test:
