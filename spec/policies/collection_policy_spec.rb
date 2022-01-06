@@ -31,7 +31,7 @@ RSpec.describe CollectionPolicy do
   describe 'scope' do
     subject(:scope) { policy.apply_scope(Collection, type: :active_record_relation, name: :deposit) }
 
-    let(:policy) { described_class.new context }
+    let(:policy) { described_class.new(**context) }
     let!(:collection) { create(:collection) }
 
     context 'when the user is not affiliated' do

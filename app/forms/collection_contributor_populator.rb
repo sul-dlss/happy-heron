@@ -4,7 +4,10 @@
 class CollectionContributorPopulator < ApplicationPopulator
   # The fragment represents one contributor from the HTML form
   # find out if incoming contributor is already added.
-  def call(form, fragment:, as:, collection:, **) # rubocop:disable Naming/MethodParameterName
+  def call(form, args) # rubocop:disable Metrics/AbcSize
+    fragment = args.fetch(:fragment)
+    as = args.fetch(:as)
+
     item = existing_record(form: form, id: fragment['id'])
     if fragment['_destroy'] == '1'
       # Remove contributor
@@ -13,6 +16,7 @@ class CollectionContributorPopulator < ApplicationPopulator
     end
 
     # Prevent duplicates
+    collection = args.fetch(:collection)
     return skip! if collection.map(&:sunetid).include?(fragment['sunetid'])
     return item if item
 
