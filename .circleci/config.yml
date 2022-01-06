@@ -146,6 +146,7 @@ workflows:
           name: lint
       - ruby-rails/test:
           name: test
+          install-chrome: true
 
 # orbs:
 #   node: circleci/node@4.1.0
