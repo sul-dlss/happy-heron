@@ -40,6 +40,10 @@ module HappyHeron
 
     config.action_mailer.default_url_options = { host: Settings.host }
 
+    # Override the default (5.minutes), so that large files have enough time to upload
+    # Currently 90 minutes is based on most 10G uploads on slow connections taking just under 1.5 hours
+    config.active_storage.service_urls_expire_in = 90.minutes
+
     console do
       Honeybadger.configure do |config|
         config.report_data = false
