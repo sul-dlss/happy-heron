@@ -225,6 +225,6 @@ workflows:
     jobs:
       - ruby-rails/lint:
           name: lint
-      - ruby-rails/test:
+      - ruby-rails/test-rails:
           name: test
           install-chrome: true
