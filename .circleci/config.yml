@@ -6,7 +6,96 @@ orbs:
       node: circleci/node@3.0
       ruby: circleci/ruby@1.2.0
       browser-tools: circleci/browser-tools@1.2.3
+    executors:
+      ruby:
+        description: Ruby-only executor.
+        parameters:
+          ruby-tag:
+            default: '2.7.5'
+            description: The `cimg/ruby` Docker image version tag.
+            type: string
+        docker:
+          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
+            environment:
+              BUNDLE_JOBS: '3'
+              BUNDLE_RETRY: '3'
+      ruby-postgres:
+        description: Ruby and postgres-only executor.
+        parameters:
+          ruby-tag:
+            default: '2.7.5'
+            description: The `cimg/ruby` Docker image version tag.
+            type: string
+          postgres-tag:
+            default: '11.13'
+            description: The `cimg/postgres` Docker image version tag.
+            type: string
+        docker:
+          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
+            environment:
+              BUNDLE_JOBS: '3'
+              BUNDLE_RETRY: '3'
+              PGHOST: 127.0.0.1
+              PGPASSWORD: sekret
+              PGUSER: circleci
+              RAILS_ENV: test
+              PAGER: cat
+          - image: 'cimg/postgres:<< parameters.postgres-tag >>'
+            environment:
+              POSTGRES_USER: postgres
+              POSTGRES_PASSWORD: sekret        
+      ruby-postgres-redis:
+        description: Ruby, postgres, and redis-only executor.
+        parameters:
+          ruby-tag:
+            default: '2.7.5'
+            description: The `cimg/ruby` Docker image version tag.
+            type: string
+          postgres-tag:
+            default: '11.13'
+            description: The `cimg/postgres` Docker image version tag.
+            type: string
+        docker:
+          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
+            environment:
+              BUNDLE_JOBS: '3'
+              BUNDLE_RETRY: '3'
+              PGHOST: 127.0.0.1
+              PGPASSWORD: sekret
+              PGUSER: circleci
+              RAILS_ENV: test
+              PAGER: cat
+          - image: 'cimg/postgres:<< parameters.postgres-tag >>'
+            environment:
+              POSTGRES_USER: circleci
+              POSTGRES_PASSWORD: sekret              
+          - image: circleci/redis:3
     commands:
+      gem-install-deps:
+        description: Install dependencies without using deployment mode (suitable for gems)
+        steps:
+          - run:
+              name: Bundle Install
+              command: bundle check || bundle install
+      test:
+        description: Runs rspec wrapped with code climate
+        parameters:
+          cc-test-reporter-id:
+            default: CC_TEST_REPORTER_ID
+            description: |
+              Name of environment variable storing your Code Climate reporter test id
+            type: env_var_name
+        steps:
+          - run:
+              name: Setup Code Climate test-reporter
+              command: |
+                curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                chmod +x ./cc-test-reporter
+                ./cc-test-reporter before-build
+          - ruby/rspec-test
+          - run:
+              name: upload test coverage report to Code Climate
+              command: ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $? -r $<< parameters.cc-test-reporter-id >>
       validate-api:
         description: Validate openapi specification
         steps:
@@ -25,26 +114,36 @@ orbs:
     jobs:
       lint:
         parameters:
-          ruby-tag:
-            default: '2.7.5'
-            description: The `cimg/ruby` Docker image version tag.
-            type: string
-        docker:
-          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
+          executor:
+            default: ruby
+            description: Executor to use for this job, defaults to ruby executor
+            type: executor
+        executor: <<parameters.executor>>
         steps:
           - checkout
-          - ruby/install-deps
+          - gem-install-deps
           - ruby/rubocop-check
-      test:
+      test-gem:
         parameters:
-          ruby-tag:
-            default: '2.7.5'
-            description: The `cimg/ruby` Docker image version tag.
-            type: string
-          postgres-tag:
-            default: '11.13'
-            description: The `cimg/postgres` Docker image version tag.
-            type: string
+          executor:
+            default: ruby
+            description: Executor to use for this job, defaults to ruby executor
+            type: executor
+        executor: <<parameters.executor>>
+        parallelism: 3
+        steps:
+          - checkout
+          - gem-install-deps
+          - run:
+              name: Install rspec_junit_formatter
+              command: bundle add rspec_junit_formatter
+          - test
+      test-rails:
+        parameters:
+          executor:
+            default: ruby-postgres
+            description: Executor to use for this job, defaults to ruby-postgres executor
+            type: executor
           api-only:
             default: false
             description: True if this is an API only Rails app.
@@ -53,20 +152,11 @@ orbs:
             default: false
             description: True to install Chrome
             type: boolean
-        docker:
-          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
-          - image: 'cimg/postgres:<< parameters.postgres-tag >>'
-            environment:
-              POSTGRES_USER: postgres
-              POSTGRES_PASSWORD: sekret
-        environment:
-          BUNDLE_JOBS: '3'
-          BUNDLE_RETRY: '3'
-          PGHOST: 127.0.0.1
-          PGPASSWORD: sekret
-          PGUSER: circleci
-          RAILS_ENV: test
-          PAGER: cat
+          db-prepare-command:
+            default: db:test:prepare
+            description: Database prepare command
+            type: string
+        executor: << parameters.executor >>
         parallelism: 3
         steps:
           - checkout
@@ -85,17 +175,8 @@ orbs:
               name: Wait for DB
           - run:
               name: Test prepare
-              command: bin/rails db:test:prepare
-          - run:
-              name: Setup Code Climate test-reporter
-              command: |
-                curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                chmod +x ./cc-test-reporter
-                ./cc-test-reporter before-build
-          - ruby/rspec-test
-          - run:
-              name: upload test coverage report to Code Climate
-              command: ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+              command: bin/rails << parameters.db-prepare-command >>
+          - test
       validate-api:
         description: Validate openapi specification
         executor: node/default
