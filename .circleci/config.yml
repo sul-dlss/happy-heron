@@ -6,69 +6,58 @@ orbs:
       node: circleci/node@3.0
       ruby: circleci/ruby@1.2.0
       browser-tools: circleci/browser-tools@1.2.3
+    references:
+      ruby-version-ref: &ruby-version-ref '2.7.5'
+      postgres-version-ref: &postgres-version-ref '11.13'
+      ruby-executor-refs: &ruby-executor-refs
+        image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
+        environment:
+          BUNDLE_JOBS: '3'
+          BUNDLE_RETRY: '3'
+          RAILS_ENV: test
+          PAGER: cat
+          TZ: "America/Los_Angeles"
+      postgres-executor-refs: &postgres-executor-refs
+        image: 'cimg/postgres:<< parameters.postgres-tag >>'
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: sekret
+      ruby-tag-parameter-ref: &ruby-tag-parameter-ref
+        default: *ruby-version-ref
+        description: The `cimg/ruby` Docker image version tag.
+        type: string
+      postgres-tag-parameter-ref: &postgres-tag-parameter-ref
+          default: *postgres-version-ref
+          description: The `cimg/postgres` Docker image version tag.
+          type: string
     executors:
       ruby:
         description: Ruby-only executor.
         parameters:
           ruby-tag:
-            default: '2.7.5'
-            description: The `cimg/ruby` Docker image version tag.
-            type: string
+            <<: *ruby-tag-parameter-ref
         docker:
-          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
-            environment:
-              BUNDLE_JOBS: '3'
-              BUNDLE_RETRY: '3'
+          - <<: *ruby-executor-refs
       ruby-postgres:
         description: Ruby and postgres-only executor.
         parameters:
           ruby-tag:
-            default: '2.7.5'
-            description: The `cimg/ruby` Docker image version tag.
-            type: string
+            <<: *ruby-tag-parameter-ref
           postgres-tag:
-            default: '11.13'
-            description: The `cimg/postgres` Docker image version tag.
-            type: string
+            <<: *postgres-tag-parameter-ref
         docker:
-          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
-            environment:
-              BUNDLE_JOBS: '3'
-              BUNDLE_RETRY: '3'
-              PGHOST: 127.0.0.1
-              PGPASSWORD: sekret
-              PGUSER: circleci
-              RAILS_ENV: test
-              PAGER: cat
-          - image: 'cimg/postgres:<< parameters.postgres-tag >>'
-            environment:
-              POSTGRES_USER: postgres
-              POSTGRES_PASSWORD: sekret        
+          - <<: *ruby-executor-refs        
+          - <<: *postgres-executor-refs
       ruby-postgres-redis:
         description: Ruby, postgres, and redis-only executor.
         parameters:
           ruby-tag:
-            default: '2.7.5'
-            description: The `cimg/ruby` Docker image version tag.
-            type: string
+            <<: *ruby-tag-parameter-ref
           postgres-tag:
-            default: '11.13'
-            description: The `cimg/postgres` Docker image version tag.
-            type: string
+            <<: *postgres-tag-parameter-ref
         docker:
-          - image: 'cimg/ruby:<< parameters.ruby-tag >>-node'
-            environment:
-              BUNDLE_JOBS: '3'
-              BUNDLE_RETRY: '3'
-              PGHOST: 127.0.0.1
-              PGPASSWORD: sekret
-              PGUSER: circleci
-              RAILS_ENV: test
-              PAGER: cat
-          - image: 'cimg/postgres:<< parameters.postgres-tag >>'
-            environment:
-              POSTGRES_USER: circleci
-              POSTGRES_PASSWORD: sekret              
+          - <<: *ruby-executor-refs
+          - <<: *postgres-executor-refs
           - image: circleci/redis:3
     commands:
       gem-install-deps:
@@ -118,7 +107,7 @@ orbs:
             default: ruby
             description: Executor to use for this job, defaults to ruby executor
             type: executor
-        executor: <<parameters.executor>>
+        executor: << parameters.executor >>
         steps:
           - checkout
           - gem-install-deps
@@ -129,7 +118,11 @@ orbs:
             default: ruby
             description: Executor to use for this job, defaults to ruby executor
             type: executor
-        executor: <<parameters.executor>>
+          before-test:
+            default: []
+            description: Optional steps to run before running rspec
+            type: steps
+        executor: << parameters.executor >>
         parallelism: 3
         steps:
           - checkout
@@ -137,6 +130,9 @@ orbs:
           - run:
               name: Install rspec_junit_formatter
               command: bundle add rspec_junit_formatter
+          - when:
+              condition: << parameters.before-test >>
+              steps: << parameters.before-test >>
           - test
       test-rails:
         parameters:
@@ -156,6 +152,10 @@ orbs:
             default: db:test:prepare
             description: Database prepare command
             type: string
+          before-test:
+            default: []
+            description: Optional steps to run before running rspec
+            type: steps
         executor: << parameters.executor >>
         parallelism: 3
         steps:
@@ -176,6 +176,9 @@ orbs:
           - run:
               name: Test prepare
               command: bin/rails << parameters.db-prepare-command >>
+          - when:
+              condition: << parameters.before-test >>
+              steps: << parameters.before-test >>
           - test
       validate-api:
         description: Validate openapi specification
