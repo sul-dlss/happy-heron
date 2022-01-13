@@ -29,6 +29,11 @@ gem install foreman
 
 Then run the asset pipeline and webserver:
 ```shell
+bin/dev
+```
+
+You can change user or roles by setting environment variables:
+```shell
 REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 ```
 
