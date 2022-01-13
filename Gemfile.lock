@@ -475,8 +475,9 @@ GEM
       diff-lcs
       patience_diff
     thor (1.2.1)
-    turbo-rails (0.8.3)
-      rails (>= 6.0.0)
+    turbo-rails (1.0.0)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -568,7 +569,7 @@ DEPENDENCIES
   state_machines-activerecord
   state_machines-graphviz
   super_diff
-  turbo-rails (~> 0.8.2)
+  turbo-rails (~> 1.0)
   view_component (~> 2.18)
   web-console (>= 3.3.0)
   webmock
