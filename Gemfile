@@ -71,7 +71,7 @@ gem 'sdr-client', '~> 0.63'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
-gem 'turbo-rails', '~> 0.8.2'
+gem 'turbo-rails', '~> 1.0'
 gem 'view_component', '~> 2.18'
 gem 'whenever'
 gem 'zipline', '~> 1.3'
