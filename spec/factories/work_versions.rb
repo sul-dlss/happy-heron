@@ -82,6 +82,14 @@ FactoryBot.define do
     created_edtf { EDTF.parse('2020-03-08?') }
   end
 
+  trait :with_approximate_creation_date_year_only do
+    created_edtf { EDTF.parse('2020?') }
+  end
+
+  trait :with_approximate_creation_date_year_month_only do
+    created_edtf { EDTF.parse('2020-06?') }
+  end
+
   trait :with_keywords do
     transient do
       keywords_count { 3 }

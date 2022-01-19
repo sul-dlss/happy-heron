@@ -598,6 +598,54 @@ RSpec.describe CocinaGenerator::Description::Generator do
       end
     end
 
+    context 'when approximate creation date of year only' do
+      let(:work_version) do
+        build(:work_version, :with_approximate_creation_date_year_only)
+      end
+
+      it 'creates event of type creation with approximate year only date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'creation',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2020',
+                  type: 'creation',
+                  qualifier: 'approximate'
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
+    context 'when approximate creation date of year and month only date' do
+      let(:work_version) do
+        build(:work_version, :with_approximate_creation_date_year_month_only)
+      end
+
+      it 'creates event of type creation with approximate year and month only date' do
+        expect(model[:event]).to eq(
+          [
+            {
+              type: 'creation',
+              date: [
+                {
+                  encoding: { code: 'edtf' },
+                  value: '2020-06',
+                  type: 'creation',
+                  qualifier: 'approximate'
+                }
+              ]
+            }
+          ]
+        )
+      end
+    end
+
     context 'when approximate creation date range' do
       let(:work_version) do
         build(:work_version, :with_approximate_creation_date_range)
