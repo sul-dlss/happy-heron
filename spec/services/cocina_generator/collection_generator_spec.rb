@@ -19,55 +19,57 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
             collection: collection)
     end
     let(:expected_model) do
-      {
-        type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
-        label: 'Test title',
-        version: 1,
-        access: { access: 'world' },
-        administrative: {
-          hasAdminPolicy: 'druid:zx485kb6348',
-          partOfProject: project_tag
-        },
-        description: {
-          access: {
-            accessContact: [
+      Cocina::Models::RequestCollection.new(
+        {
+          type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
+          label: 'Test title',
+          version: 1,
+          access: { access: 'world' },
+          administrative: {
+            hasAdminPolicy: 'druid:zx485kb6348',
+            partOfProject: project_tag
+          },
+          description: {
+            access: {
+              accessContact: [
+                {
+                  value: 'io@io.io',
+                  type: 'email',
+                  displayLabel: 'Contact'
+                }
+              ]
+            },
+            title: [
               {
-                value: 'io@io.io',
-                type: 'email',
-                displayLabel: 'Contact'
+                value: 'Test title'
+              }
+            ],
+            note: [
+              {
+                value: description,
+                type: 'abstract'
+              }
+            ],
+            relatedResource: [
+              {
+                title: [{ value: 'My Awesome Research' }],
+                access: { url: [{ value: 'http://my.awesome.research.io' }] }
+              },
+              {
+                title: [{ value: 'My Awesome Research' }],
+                access: { url: [{ value: 'http://my.awesome.research.io' }] }
               }
             ]
           },
-          title: [
-            {
-              value: 'Test title'
-            }
-          ],
-          note: [
-            {
-              value: description,
-              type: 'abstract'
-            }
-          ],
-          relatedResource: [
-            {
-              title: [{ value: 'My Awesome Research' }],
-              access: { url: [{ value: 'http://my.awesome.research.io' }] }
-            },
-            {
-              title: [{ value: 'My Awesome Research' }],
-              access: { url: [{ value: 'http://my.awesome.research.io' }] }
-            }
-          ]
-        },
-        identification: {
-          sourceId: "hydrus:collection-#{collection.id}"
+          identification: {
+            sourceId: "hydrus:collection-#{collection.id}"
+          }
         }
-      }
+      )
     end
 
     it 'generates the model' do
-      expect(model.to_h).to eq expected_model
+      expect(model.to_h).to eq expected_model.to_h
     end
   end
 
@@ -81,52 +83,54 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
     end
 
     let(:expected_model) do
-      {
-        externalIdentifier: 'druid:bk123gh4567',
-        type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
-        label: 'Test title',
-        version: 1,
-        access: { access: 'world' },
-        administrative: {
-          hasAdminPolicy: 'druid:zx485kb6348',
-          partOfProject: project_tag
-        },
-        description: {
-          title: [
-            {
-              value: 'Test title'
-            }
-          ],
-          note: [
-            {
-              value: description,
-              type: 'abstract'
-            }
-          ],
-          purl: 'https://purl.stanford.edu/bk123gh4567',
-          access: {
-            accessContact: [
+      Cocina::Models::Collection.new(
+        {
+          externalIdentifier: 'druid:bk123gh4567',
+          type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
+          label: 'Test title',
+          version: 1,
+          access: { access: 'world' },
+          administrative: {
+            hasAdminPolicy: 'druid:zx485kb6348',
+            partOfProject: project_tag
+          },
+          description: {
+            title: [
               {
-                value: 'io@io.io',
-                type: 'email',
-                displayLabel: 'Contact'
+                value: 'Test title'
               }
             ],
-            digitalRepository: [
+            note: [
               {
-                value: 'Stanford Digital Repository'
+                value: description,
+                type: 'abstract'
               }
-            ]
+            ],
+            purl: 'https://purl.stanford.edu/bk123gh4567',
+            access: {
+              accessContact: [
+                {
+                  value: 'io@io.io',
+                  type: 'email',
+                  displayLabel: 'Contact'
+                }
+              ],
+              digitalRepository: [
+                {
+                  value: 'Stanford Digital Repository'
+                }
+              ]
+            }
+          },
+          identification: {
+            sourceId: "hydrus:collection-#{collection.id}"
           }
-        },
-        identification: {
-          sourceId: "hydrus:collection-#{collection.id}"
         }
-      }
+      )
     end
 
     it 'generates the model' do
-      expect(model.to_h).to eq expected_model
+      expect(model.to_h).to eq expected_model.to_h
     end
   end
 end
