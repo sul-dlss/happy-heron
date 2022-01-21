@@ -272,46 +272,46 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
         expect(cocina_props).to eq(
           {
             form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Data',
-                    type: 'type'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                value: 'Data sets',
-                type: 'genre',
-                uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
-                source: {
-                  code: 'lcgft'
-                }
-              },
-              {
-                value: 'dataset',
-                type: 'genre',
-                source: {
-                  code: 'local'
-                }
-              },
-              {
-                value: 'Dataset',
-                type: 'resource type',
-                uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
-                source: {
-                  uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
-                }
-              },
-              {
-                type: 'resource type',
-                value: 'Dataset',
-                source: { value: 'DataCite resource types' }
-              }
+              Cocina::Models::DescriptiveValue.new({
+                                                     structuredValue: [
+                                                       {
+                                                         value: 'Data',
+                                                         type: 'type'
+                                                       }
+                                                     ],
+                                                     source: {
+                                                       value: 'Stanford self-deposit resource types'
+                                                     },
+                                                     type: 'resource type'
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     value: 'Data sets',
+                                                     type: 'genre',
+                                                     uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
+                                                     source: {
+                                                       code: 'lcgft'
+                                                     }
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     value: 'dataset',
+                                                     type: 'genre',
+                                                     source: {
+                                                       code: 'local'
+                                                     }
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     value: 'Dataset',
+                                                     type: 'resource type',
+                                                     uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
+                                                     source: {
+                                                       uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
+                                                     }
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     type: 'resource type',
+                                                     value: 'Dataset',
+                                                     source: { value: 'DataCite resource types' }
+                                                   }).to_h
             ]
           }
         )
@@ -326,34 +326,34 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
         expect(cocina_props).to eq(
           {
             form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Text',
-                    type: 'type'
-                  },
-                  {
-                    value: 'Article',
-                    type: 'subtype'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                value: 'text',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              },
-              {
-                type: 'resource type',
-                value: 'Text',
-                source: { value: 'DataCite resource types' }
-              }
+              Cocina::Models::DescriptiveValue.new({
+                                                     structuredValue: [
+                                                       {
+                                                         value: 'Text',
+                                                         type: 'type'
+                                                       },
+                                                       {
+                                                         value: 'Article',
+                                                         type: 'subtype'
+                                                       }
+                                                     ],
+                                                     source: {
+                                                       value: 'Stanford self-deposit resource types'
+                                                     },
+                                                     type: 'resource type'
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     value: 'text',
+                                                     type: 'resource type',
+                                                     source: {
+                                                       value: 'MODS resource types'
+                                                     }
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     type: 'resource type',
+                                                     value: 'Text',
+                                                     source: { value: 'DataCite resource types' }
+                                                   }).to_h
             ]
           }
         )
@@ -368,53 +368,53 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
         expect(cocina_props).to eq(
           {
             form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Software/Code',
-                    type: 'type'
-                  },
-                  {
-                    value: 'Code',
-                    type: 'subtype'
-                  },
-                  {
-                    value: 'Documentation',
-                    type: 'subtype'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                value: 'computer program',
-                type: 'genre',
-                uri: 'http://id.loc.gov/vocabulary/marcgt/com',
-                source: {
-                  code: 'marcgt'
-                }
-              },
-              {
-                value: 'software, multimedia',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              },
-              {
-                value: 'text',
-                type: 'resource type',
-                source: {
-                  value: 'MODS resource types'
-                }
-              },
-              {
-                type: 'resource type',
-                value: 'Software',
-                source: { value: 'DataCite resource types' }
-              }
+              Cocina::Models::DescriptiveValue.new({
+                                                     structuredValue: [
+                                                       {
+                                                         value: 'Software/Code',
+                                                         type: 'type'
+                                                       },
+                                                       {
+                                                         value: 'Code',
+                                                         type: 'subtype'
+                                                       },
+                                                       {
+                                                         value: 'Documentation',
+                                                         type: 'subtype'
+                                                       }
+                                                     ],
+                                                     source: {
+                                                       value: 'Stanford self-deposit resource types'
+                                                     },
+                                                     type: 'resource type'
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     value: 'computer program',
+                                                     type: 'genre',
+                                                     uri: 'http://id.loc.gov/vocabulary/marcgt/com',
+                                                     source: {
+                                                       code: 'marcgt'
+                                                     }
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     value: 'software, multimedia',
+                                                     type: 'resource type',
+                                                     source: {
+                                                       value: 'MODS resource types'
+                                                     }
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     value: 'text',
+                                                     type: 'resource type',
+                                                     source: {
+                                                       value: 'MODS resource types'
+                                                     }
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     type: 'resource type',
+                                                     value: 'Software',
+                                                     source: { value: 'DataCite resource types' }
+                                                   }).to_h
             ]
           }
         )
@@ -429,27 +429,27 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
         expect(cocina_props).to eq(
           {
             form: [
-              {
-                structuredValue: [
-                  {
-                    value: 'Other',
-                    type: 'type'
-                  },
-                  {
-                    value: 'Dance notation',
-                    type: 'subtype'
-                  }
-                ],
-                source: {
-                  value: 'Stanford self-deposit resource types'
-                },
-                type: 'resource type'
-              },
-              {
-                type: 'resource type',
-                value: 'Other',
-                source: { value: 'DataCite resource types' }
-              }
+              Cocina::Models::DescriptiveValue.new({
+                                                     structuredValue: [
+                                                       {
+                                                         value: 'Other',
+                                                         type: 'type'
+                                                       },
+                                                       {
+                                                         value: 'Dance notation',
+                                                         type: 'subtype'
+                                                       }
+                                                     ],
+                                                     source: {
+                                                       value: 'Stanford self-deposit resource types'
+                                                     },
+                                                     type: 'resource type'
+                                                   }).to_h,
+              Cocina::Models::DescriptiveValue.new({
+                                                     type: 'resource type',
+                                                     value: 'Other',
+                                                     source: { value: 'DataCite resource types' }
+                                                   }).to_h
             ]
           }
         )

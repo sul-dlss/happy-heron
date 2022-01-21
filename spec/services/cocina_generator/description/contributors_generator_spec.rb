@@ -64,26 +64,26 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         it 'returns Array of populated cocina model events, one for each publisher' do
           expect(cocina_props).to eq(
             [
-              {
-                type: 'publication',
-                contributor: [
-                  {
-                    name: [{ value: org_contrib1.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
-                  }
-                ]
-              },
-              {
-                type: 'publication',
-                contributor: [
-                  {
-                    name: [{ value: org_contrib2.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
-                  }
-                ]
-              }
+              Cocina::Models::Event.new({
+                                          type: 'publication',
+                                          contributor: [
+                                            {
+                                              name: [{ value: org_contrib1.full_name }],
+                                              role: publisher_roles,
+                                              type: 'organization'
+                                            }
+                                          ]
+                                        }).to_h,
+              Cocina::Models::Event.new({
+                                          type: 'publication',
+                                          contributor: [
+                                            {
+                                              name: [{ value: org_contrib2.full_name }],
+                                              role: publisher_roles,
+                                              type: 'organization'
+                                            }
+                                          ]
+                                        }).to_h
             ]
           )
         end
@@ -130,28 +130,28 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         it 'returns Array of populated cocina model events, one for each publisher' do
           expect(cocina_props).to eq(
             [
-              {
-                type: 'publication',
-                date: pub_date_value,
-                contributor: [
-                  {
-                    name: [{ value: org_contrib1.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
-                  }
-                ]
-              },
-              {
-                type: 'publication',
-                date: pub_date_value,
-                contributor: [
-                  {
-                    name: [{ value: org_contrib2.full_name }],
-                    role: publisher_roles,
-                    type: 'organization'
-                  }
-                ]
-              }
+              Cocina::Models::Event.new({
+                                          type: 'publication',
+                                          date: pub_date_value,
+                                          contributor: [
+                                            {
+                                              name: [{ value: org_contrib1.full_name }],
+                                              role: publisher_roles,
+                                              type: 'organization'
+                                            }
+                                          ]
+                                        }).to_h,
+              Cocina::Models::Event.new({
+                                          type: 'publication',
+                                          date: pub_date_value,
+                                          contributor: [
+                                            {
+                                              name: [{ value: org_contrib2.full_name }],
+                                              role: publisher_roles,
+                                              type: 'organization'
+                                            }
+                                          ]
+                                        }).to_h
             ]
           )
         end
@@ -166,17 +166,17 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
     it 'creates Cocina::Models::Contributor without marc relator role' do
       expect(cocina_props).to eq(
         [
-          {
-            name: [{ value: contributor.full_name }],
-            type: 'conference',
-            status: 'primary',
-            role: [
-              {
-                value: 'conference'
-              }
-            ],
-            note: citation_status_notes
-          }
+          Cocina::Models::Contributor.new({
+                                            name: [{ value: contributor.full_name }],
+                                            type: 'conference',
+                                            status: 'primary',
+                                            role: [
+                                              {
+                                                value: 'conference'
+                                              }
+                                            ],
+                                            note: citation_status_notes
+                                          }).to_h
         ]
       )
     end
@@ -189,26 +189,26 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
     it 'creates Cocina::Models::Contributor' do
       expect(cocina_props).to eq(
         [
-          {
-            name: [
-              {
-                structuredValue: [
-                  {
-                    value: contributor.first_name,
-                    type: 'forename'
-                  },
-                  {
-                    value: contributor.last_name,
-                    type: 'surname'
-                  }
-                ]
-              }
-            ],
-            type: 'person',
-            status: 'primary',
-            role: [contributing_author_role],
-            note: citation_status_notes
-          }
+          Cocina::Models::Contributor.new({
+                                            name: [
+                                              {
+                                                structuredValue: [
+                                                  {
+                                                    value: contributor.first_name,
+                                                    type: 'forename'
+                                                  },
+                                                  {
+                                                    value: contributor.last_name,
+                                                    type: 'surname'
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            type: 'person',
+                                            status: 'primary',
+                                            role: [contributing_author_role],
+                                            note: citation_status_notes
+                                          }).to_h
         ]
       )
     end
@@ -249,35 +249,35 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'author',
-                    code: 'aut',
-                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'author',
+                                                    code: 'aut',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -293,63 +293,63 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'author',
-                    code: 'aut',
-                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Leland',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                role: [
-                  {
-                    value: 'author',
-                    code: 'aut',
-                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'author',
+                                                    code: 'aut',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Leland',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                role: [
+                                                  {
+                                                    value: 'author',
+                                                    code: 'aut',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -365,54 +365,54 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'compiler',
-                    code: 'com',
-                    uri: 'http://id.loc.gov/vocabulary/relators/com',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                name: [
-                  {
-                    value: 'Stanford University'
-                  }
-                ],
-                type: 'organization',
-                role: [
-                  {
-                    value: 'sponsor',
-                    code: 'spn',
-                    uri: 'http://id.loc.gov/vocabulary/relators/spn',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'compiler',
+                                                    code: 'com',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/com',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                role: [
+                                                  {
+                                                    value: 'sponsor',
+                                                    code: 'spn',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/spn',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -427,26 +427,26 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    value: 'Stanford University'
-                  }
-                ],
-                type: 'organization',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'host institution',
-                    code: 'his',
-                    uri: 'http://id.loc.gov/vocabulary/relators/his',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'host institution',
+                                                    code: 'his',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/his',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -462,39 +462,39 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    value: 'Stanford University'
-                  }
-                ],
-                type: 'organization',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'host institution',
-                    code: 'his',
-                    uri: 'http://id.loc.gov/vocabulary/relators/his',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                name: [
-                  {
-                    value: 'Department of English'
-                  }
-                ],
-                type: 'organization',
-                role: [
-                  {
-                    value: 'department'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'host institution',
+                                                    code: 'his',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/his',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Department of English'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                role: [
+                                                  {
+                                                    value: 'department'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -510,69 +510,69 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'author',
-                    code: 'aut',
-                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Leland',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                role: [
-                  {
-                    value: 'contributor',
-                    code: 'ctb',
-                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ],
-                note: [
-                  {
-                    type: 'citation status',
-                    value: 'false'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'author',
+                                                    code: 'aut',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Leland',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                role: [
+                                                  {
+                                                    value: 'contributor',
+                                                    code: 'ctb',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ],
+                                                note: [
+                                                  {
+                                                    type: 'citation status',
+                                                    value: 'false'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -588,60 +588,60 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'compiler',
-                    code: 'com',
-                    uri: 'http://id.loc.gov/vocabulary/relators/com',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                name: [
-                  {
-                    value: 'Stanford University'
-                  }
-                ],
-                type: 'organization',
-                role: [
-                  {
-                    value: 'sponsor',
-                    code: 'spn',
-                    uri: 'http://id.loc.gov/vocabulary/relators/spn',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ],
-                note: [
-                  {
-                    type: 'citation status',
-                    value: 'false'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'compiler',
+                                                    code: 'com',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/com',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                role: [
+                                                  {
+                                                    value: 'sponsor',
+                                                    code: 'spn',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/spn',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ],
+                                                note: [
+                                                  {
+                                                    type: 'citation status',
+                                                    value: 'false'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -656,20 +656,20 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    value: 'San Francisco Symphony Concert'
-                  }
-                ],
-                type: 'event',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'event'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'San Francisco Symphony Concert'
+                                                  }
+                                                ],
+                                                type: 'event',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'event'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -685,54 +685,54 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'organizer',
-                    code: 'orm',
-                    uri: 'http://id.loc.gov/vocabulary/relators/orm',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                type: 'event',
-                name: [
-                  {
-                    value: 'San Francisco Symphony Concert'
-                  }
-                ],
-                role: [
-                  {
-                    value: 'event'
-                  }
-                ],
-                note: [
-                  {
-                    type: 'citation status',
-                    value: 'false'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'organizer',
+                                                    code: 'orm',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/orm',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                type: 'event',
+                                                name: [
+                                                  {
+                                                    value: 'San Francisco Symphony Concert'
+                                                  }
+                                                ],
+                                                role: [
+                                                  {
+                                                    value: 'event'
+                                                  }
+                                                ],
+                                                note: [
+                                                  {
+                                                    type: 'citation status',
+                                                    value: 'false'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -747,20 +747,20 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    value: 'LDCX'
-                  }
-                ],
-                type: 'conference',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'conference'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'LDCX'
+                                                  }
+                                                ],
+                                                type: 'conference',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'conference'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -776,54 +776,54 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'speaker',
-                    code: 'spk',
-                    uri: 'http://id.loc.gov/vocabulary/relators/spk',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                name: [
-                  {
-                    value: 'LDCX'
-                  }
-                ],
-                type: 'conference',
-                role: [
-                  {
-                    value: 'conference'
-                  }
-                ],
-                note: [
-                  {
-                    type: 'citation status',
-                    value: 'false'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'speaker',
+                                                    code: 'spk',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/spk',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'LDCX'
+                                                  }
+                                                ],
+                                                type: 'conference',
+                                                role: [
+                                                  {
+                                                    value: 'conference'
+                                                  }
+                                                ],
+                                                note: [
+                                                  {
+                                                    type: 'citation status',
+                                                    value: 'false'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -838,26 +838,26 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    value: 'Stanford University'
-                  }
-                ],
-                type: 'organization',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'funder',
-                    code: 'fnd',
-                    uri: 'http://id.loc.gov/vocabulary/relators/fnd',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'funder',
+                                                    code: 'fnd',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/fnd',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -873,60 +873,60 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'compiler',
-                    code: 'com',
-                    uri: 'http://id.loc.gov/vocabulary/relators/com',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              },
-              {
-                name: [
-                  {
-                    value: 'Stanford University'
-                  }
-                ],
-                type: 'organization',
-                role: [
-                  {
-                    value: 'funder',
-                    code: 'fnd',
-                    uri: 'http://id.loc.gov/vocabulary/relators/fnd',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ],
-                note: [
-                  {
-                    type: 'citation status',
-                    value: 'false'
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'compiler',
+                                                    code: 'com',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/com',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                role: [
+                                                  {
+                                                    value: 'funder',
+                                                    code: 'fnd',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/fnd',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ],
+                                                note: [
+                                                  {
+                                                    type: 'citation status',
+                                                    value: 'false'
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )
@@ -941,52 +941,52 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    value: 'Stanford University Press'
-                  }
-                ],
-                type: 'organization',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'publisher',
-                    code: 'pbl',
-                    uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University Press'
+                                                  }
+                                                ],
+                                                type: 'organization',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'publisher',
+                                                    code: 'pbl',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ],
             event: [
-              {
-                type: 'publication',
-                contributor: [
-                  {
-                    name: [
-                      {
-                        value: 'Stanford University Press'
-                      }
-                    ],
-                    type: 'organization',
-                    role: [
-                      {
-                        value: 'publisher',
-                        code: 'pbl',
-                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-                        source: {
-                          code: 'marcrelator',
-                          uri: 'http://id.loc.gov/vocabulary/relators/'
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
+              Cocina::Models::Event.new({
+                                          type: 'publication',
+                                          contributor: [
+                                            {
+                                              name: [
+                                                {
+                                                  value: 'Stanford University Press'
+                                                }
+                                              ],
+                                              type: 'organization',
+                                              role: [
+                                                {
+                                                  value: 'publisher',
+                                                  code: 'pbl',
+                                                  uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                                                  source: {
+                                                    code: 'marcrelator',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }).to_h
             ]
           }
         )
@@ -1002,61 +1002,61 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [
-                  {
-                    value: 'author',
-                    code: 'aut',
-                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
-                    source: {
-                      code: 'marcrelator',
-                      uri: 'http://id.loc.gov/vocabulary/relators/'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [
+                                                  {
+                                                    value: 'author',
+                                                    code: 'aut',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/aut',
+                                                    source: {
+                                                      code: 'marcrelator',
+                                                      uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ],
             event: [
-              {
-                type: 'publication',
-                contributor: [
-                  {
-                    name: [
-                      {
-                        value: 'Stanford University Press'
-                      }
-                    ],
-                    type: 'organization',
-                    role: [
-                      {
-                        value: 'publisher',
-                        code: 'pbl',
-                        uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-                        source: {
-                          code: 'marcrelator',
-                          uri: 'http://id.loc.gov/vocabulary/relators/'
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
+              Cocina::Models::Event.new({
+                                          type: 'publication',
+                                          contributor: [
+                                            {
+                                              name: [
+                                                {
+                                                  value: 'Stanford University Press'
+                                                }
+                                              ],
+                                              type: 'organization',
+                                              role: [
+                                                {
+                                                  value: 'publisher',
+                                                  code: 'pbl',
+                                                  uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                                                  source: {
+                                                    code: 'marcrelator',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }).to_h
             ]
           }
         )
@@ -1073,34 +1073,34 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         expect(cocina_props).to eq(
           {
             contributor: [
-              {
-                name: [
-                  {
-                    structuredValue: [
-                      {
-                        value: 'Jane',
-                        type: 'forename'
-                      },
-                      {
-                        value: 'Stanford',
-                        type: 'surname'
-                      }
-                    ]
-                  }
-                ],
-                type: 'person',
-                status: 'primary',
-                role: [contributing_author_role],
-                identifier: [
-                  {
-                    value: '0000-0000-0000-0000',
-                    type: 'ORCID',
-                    source: {
-                      uri: 'https://orcid.org'
-                    }
-                  }
-                ]
-              }
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    structuredValue: [
+                                                      {
+                                                        value: 'Jane',
+                                                        type: 'forename'
+                                                      },
+                                                      {
+                                                        value: 'Stanford',
+                                                        type: 'surname'
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                type: 'person',
+                                                status: 'primary',
+                                                role: [contributing_author_role],
+                                                identifier: [
+                                                  {
+                                                    value: '0000-0000-0000-0000',
+                                                    type: 'ORCID',
+                                                    source: {
+                                                      uri: 'https://orcid.org'
+                                                    }
+                                                  }
+                                                ]
+                                              }).to_h
             ]
           }
         )

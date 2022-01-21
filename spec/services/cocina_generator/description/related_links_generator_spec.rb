@@ -12,14 +12,22 @@ RSpec.describe CocinaGenerator::Description::RelatedLinksGenerator do
 
     it 'creates related links' do
       expect(model).to eq([
-                            {
-                              title: [{ value: 'My Awesome Research' }],
-                              access: { url: [{ value: 'http://my.awesome.research.io' }] }
-                            },
-                            {
-                              title: [{ value: 'My Awesome Research' }],
-                              access: { url: [{ value: 'http://my.awesome.research.io' }] }
-                            }
+                            Cocina::Models::RelatedResource.new({
+                                                                  title: [
+                                                                    { value: 'My Awesome Research' }
+                                                                  ],
+                                                                  access: { url: [
+                                                                    { value: 'http://my.awesome.research.io' }
+                                                                  ] }
+                                                                }).to_h,
+                            Cocina::Models::RelatedResource.new({
+                                                                  title: [
+                                                                    { value: 'My Awesome Research' }
+                                                                  ],
+                                                                  access: { url: [
+                                                                    { value: 'http://my.awesome.research.io' }
+                                                                  ] }
+                                                                }).to_h
                           ])
     end
   end
@@ -35,20 +43,26 @@ RSpec.describe CocinaGenerator::Description::RelatedLinksGenerator do
 
     it 'creates related links' do
       expect(model).to eq([
-                            {
-                              purl: 'https://purl.stanford.edu/tx853fp2857',
-                              title: [{ value: 'My Awesome Research' }],
-                              access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] }
-                            },
-                            {
-                              purl: 'https://purl.stanford.edu/xy933bc2222',
-                              title: [{ value: 'My Awesome Research' }],
-                              access: { digitalRepository: [{ value: 'Stanford Digital Repository' }] }
-                            },
-                            {
-                              title: [{ value: 'My Awesome Research' }],
-                              access: { url: [{ value: 'http://my.awesome.research.io' }] }
-                            }
+                            Cocina::Models::RelatedResource.new({
+                                                                  purl: 'https://purl.stanford.edu/tx853fp2857',
+                                                                  title: [{ value: 'My Awesome Research' }],
+                                                                  access: { digitalRepository: [
+                                                                    { value: 'Stanford Digital Repository' }
+                                                                  ] }
+                                                                }).to_h,
+                            Cocina::Models::RelatedResource.new({
+                                                                  purl: 'https://purl.stanford.edu/xy933bc2222',
+                                                                  title: [{ value: 'My Awesome Research' }],
+                                                                  access: { digitalRepository: [
+                                                                    { value: 'Stanford Digital Repository' }
+                                                                  ] }
+                                                                }).to_h,
+                            Cocina::Models::RelatedResource.new({
+                                                                  title: [{ value: 'My Awesome Research' }],
+                                                                  access: { url: [
+                                                                    { value: 'http://my.awesome.research.io' }
+                                                                  ] }
+                                                                }).to_h
                           ])
     end
   end

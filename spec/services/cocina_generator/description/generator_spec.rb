@@ -150,93 +150,95 @@ RSpec.describe CocinaGenerator::Description::Generator do
 
   it 'creates description cocina model' do
     expect(model).to eq(
-      event: [
-        {
-          date: [
-            {
-              encoding: { code: 'edtf' },
-              structuredValue: [
-                { value: '2020-03-04', type: 'start' },
-                { value: '2020-10-31', type: 'end' }
-              ],
-              type: 'creation'
-            }
-          ],
-          type: 'creation'
-        },
-        {
-          date: [
-            {
-              encoding: { code: 'edtf' },
-              value: '2020-02-14',
-              type: 'publication'
-            }
-          ],
-          type: 'publication'
-        }
-      ],
-      subject: [
-        { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
-        { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
-        { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source }
-      ],
-      note: [
-        { type: 'abstract', value: 'test abstract' },
-        { type: 'preferred citation', value: 'Test citation :link:' }
-      ],
-      title: [{ value: 'Test title' }],
-      contributor: [
-        {
-          name: [{ value: contributor.full_name }],
-          type: contributor.contributor_type,
-          status: 'primary',
-          role: [
-            {
-              value: 'sponsor',
-              code: 'spn',
-              uri: 'http://id.loc.gov/vocabulary/relators/spn',
-              source: {
-                code: 'marcrelator',
-                uri: 'http://id.loc.gov/vocabulary/relators/'
-              }
-            }
-          ],
-          note: citation_status_note
-        }
-      ],
-      relatedResource: [
-        {
-          title: [{ value: 'My Awesome Research' }],
-          access: { url: [{ value: 'http://my.awesome.research.io' }] }
-        },
-        {
-          title: [{ value: 'My Awesome Research' }],
-          access: { url: [{ value: 'http://my.awesome.research.io' }] }
-        },
-        {
-          access: { url: [{ value: 'https://your.awesome.research.ai' }] }
-        },
-        {
-          access: { url: [{ value: 'https://your.awesome.research.ai' }] }
-        },
-        {
-          note: [{ value: citation_value, type: 'preferred citation' }]
-        },
-        {
-          note: [{ value: citation_value, type: 'preferred citation' }]
-        }
-      ],
-      form: types_form,
-      access: {
-        accessContact: [
+      Cocina::Models::Description.new(
+        event: [
           {
-            value: 'io@io.io',
-            type: 'email',
-            displayLabel: 'Contact'
+            date: [
+              {
+                encoding: { code: 'edtf' },
+                structuredValue: [
+                  { value: '2020-03-04', type: 'start' },
+                  { value: '2020-10-31', type: 'end' }
+                ],
+                type: 'creation'
+              }
+            ],
+            type: 'creation'
+          },
+          {
+            date: [
+              {
+                encoding: { code: 'edtf' },
+                value: '2020-02-14',
+                type: 'publication'
+              }
+            ],
+            type: 'publication'
           }
-        ]
-      },
-      adminMetadata: admin_metadata
+        ],
+        subject: [
+          { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
+          { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
+          { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source }
+        ],
+        note: [
+          { type: 'abstract', value: 'test abstract' },
+          { type: 'preferred citation', value: 'Test citation :link:' }
+        ],
+        title: [{ value: 'Test title' }],
+        contributor: [
+          {
+            name: [{ value: contributor.full_name }],
+            type: contributor.contributor_type,
+            status: 'primary',
+            role: [
+              {
+                value: 'sponsor',
+                code: 'spn',
+                uri: 'http://id.loc.gov/vocabulary/relators/spn',
+                source: {
+                  code: 'marcrelator',
+                  uri: 'http://id.loc.gov/vocabulary/relators/'
+                }
+              }
+            ],
+            note: citation_status_note
+          }
+        ],
+        relatedResource: [
+          {
+            title: [{ value: 'My Awesome Research' }],
+            access: { url: [{ value: 'http://my.awesome.research.io' }] }
+          },
+          {
+            title: [{ value: 'My Awesome Research' }],
+            access: { url: [{ value: 'http://my.awesome.research.io' }] }
+          },
+          {
+            access: { url: [{ value: 'https://your.awesome.research.ai' }] }
+          },
+          {
+            access: { url: [{ value: 'https://your.awesome.research.ai' }] }
+          },
+          {
+            note: [{ value: citation_value, type: 'preferred citation' }]
+          },
+          {
+            note: [{ value: citation_value, type: 'preferred citation' }]
+          }
+        ],
+        form: types_form,
+        access: {
+          accessContact: [
+            {
+              value: 'io@io.io',
+              type: 'email',
+              displayLabel: 'Contact'
+            }
+          ]
+        },
+        adminMetadata: admin_metadata
+      ).to_h
     )
   end
 
@@ -253,7 +255,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates forms as well as contributors in description cocina model' do
-      expect(model).to eq(
+      expect(model).to eq(Cocina::Models::Description.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
@@ -312,7 +314,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
           ]
         },
         adminMetadata: admin_metadata
-      )
+      ).to_h)
     end
   end
 
@@ -327,7 +329,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates event of type publication with date' do
-      expect(model).to eq(
+      expect(model).to eq(Cocina::Models::Description.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
@@ -363,7 +365,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
           ]
         },
         adminMetadata: admin_metadata
-      )
+      ).to_h)
     end
   end
 
@@ -378,7 +380,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates event of type publication without date' do
-      expect(model).to eq(
+      expect(model).to eq(Cocina::Models::Description.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
@@ -407,7 +409,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
           ]
         },
         adminMetadata: admin_metadata
-      )
+      ).to_h)
     end
   end
 
@@ -422,7 +424,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates event of type publication with date' do
-      expect(model).to eq(
+      expect(model).to eq(Cocina::Models::Description.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
@@ -479,7 +481,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
           ]
         },
         adminMetadata: admin_metadata
-      )
+      ).to_h)
     end
 
     context 'when publication date of year only' do
@@ -490,16 +492,16 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type publication with year only date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'publication',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2021',
-                  type: 'publication'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'publication',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            value: '2021',
+                                            type: 'publication'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -513,16 +515,16 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type publication with year and month only date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'publication',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2021-04',
-                  type: 'publication'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'publication',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            value: '2021-04',
+                                            type: 'publication'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -536,16 +538,16 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type creation with year only date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'creation',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2020',
-                  type: 'creation'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'creation',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            value: '2020',
+                                            type: 'creation'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -559,16 +561,16 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type creation with year and month only date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'creation',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2020-06',
-                  type: 'creation'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'creation',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            value: '2020-06',
+                                            type: 'creation'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -582,17 +584,17 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type creation with approximate date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'creation',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2020-03-08',
-                  type: 'creation',
-                  qualifier: 'approximate'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'creation',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            value: '2020-03-08',
+                                            type: 'creation',
+                                            qualifier: 'approximate'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -606,17 +608,17 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type creation with approximate year only date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'creation',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2020',
-                  type: 'creation',
-                  qualifier: 'approximate'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'creation',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            value: '2020',
+                                            type: 'creation',
+                                            qualifier: 'approximate'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -630,17 +632,17 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type creation with approximate year and month only date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'creation',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  value: '2020-06',
-                  type: 'creation',
-                  qualifier: 'approximate'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'creation',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            value: '2020-06',
+                                            type: 'creation',
+                                            qualifier: 'approximate'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -654,20 +656,20 @@ RSpec.describe CocinaGenerator::Description::Generator do
       it 'creates event of type creation with approximate date' do
         expect(model[:event]).to eq(
           [
-            {
-              type: 'creation',
-              date: [
-                {
-                  encoding: { code: 'edtf' },
-                  structuredValue: [
-                    { value: '2020-03-04', type: 'start' },
-                    { value: '2020-10-31', type: 'end' }
-                  ],
-                  qualifier: 'approximate',
-                  type: 'creation'
-                }
-              ]
-            }
+            Cocina::Models::Event.new({
+                                        type: 'creation',
+                                        date: [
+                                          {
+                                            encoding: { code: 'edtf' },
+                                            structuredValue: [
+                                              { value: '2020-03-04', type: 'start' },
+                                              { value: '2020-10-31', type: 'end' }
+                                            ],
+                                            qualifier: 'approximate',
+                                            type: 'creation'
+                                          }
+                                        ]
+                                      }).to_h
           ]
         )
       end
@@ -680,7 +682,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'does not add to model' do
-      expect(model[:note]).to be nil
+      expect(model[:note]).to eq([])
     end
   end
 
@@ -692,7 +694,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'does not add URI to model' do
-      expect(model[:subject]).to eq [{ value: 'MyKeyword', type: 'topic' }]
+      expect(model[:subject]).to eq [Cocina::Models::DescriptiveValue.new({ value: 'MyKeyword', type: 'topic' }).to_h]
     end
   end
 end
