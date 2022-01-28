@@ -150,7 +150,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
 
   it 'creates description cocina model' do
     expect(model).to eq(
-      Cocina::Models::Description.new(
+      Cocina::Models::RequestDescription.new(
         event: [
           {
             date: [
@@ -255,7 +255,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates forms as well as contributors in description cocina model' do
-      expect(model).to eq(Cocina::Models::Description.new(
+      expect(model).to eq(Cocina::Models::RequestDescription.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
@@ -329,7 +329,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates event of type publication with date' do
-      expect(model).to eq(Cocina::Models::Description.new(
+      expect(model).to eq(Cocina::Models::RequestDescription.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
@@ -380,7 +380,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates event of type publication without date' do
-      expect(model).to eq(Cocina::Models::Description.new(
+      expect(model).to eq(Cocina::Models::RequestDescription.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }
@@ -424,7 +424,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'creates event of type publication with date' do
-      expect(model).to eq(Cocina::Models::Description.new(
+      expect(model).to eq(Cocina::Models::RequestDescription.new(
         note: [
           { type: 'abstract', value: 'test abstract' },
           { type: 'preferred citation', value: 'test citation' }

@@ -13,7 +13,7 @@ module CocinaGenerator
       end
 
       def generate
-        Cocina::Models::Description.new({
+        description_class.new({
           title: title,
           note: [abstract],
           relatedResource: related_resources.presence,
@@ -25,6 +25,10 @@ module CocinaGenerator
       private
 
       attr_reader :collection_version
+
+      def description_class
+        collection_version.collection.purl ? Cocina::Models::Description : Cocina::Models::RequestDescription
+      end
 
       def abstract
         Cocina::Models::DescriptiveValue.new(
