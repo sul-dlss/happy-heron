@@ -14,7 +14,7 @@ module CocinaGenerator
 
       # rubocop:disable Metrics/AbcSize
       def generate
-        Cocina::Models::Description.new({
+        description_class.new({
           title: title,
           contributor: ContributorsGenerator.generate(work_version: work_version).presence,
           subject: keywords.presence,
@@ -32,6 +32,10 @@ module CocinaGenerator
       private
 
       attr_reader :work_version
+
+      def description_class
+        work_version.work.purl ? Cocina::Models::Description : Cocina::Models::RequestDescription
+      end
 
       def title
         [
