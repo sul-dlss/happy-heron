@@ -39,7 +39,7 @@ REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 
 ## Testing
 
-Start up dependencies with `docker compose up db` (with `-d` to run in background), then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
+Start up dependencies with `docker compose up db` (with `-d` to run in background), create and migrate the database with `bundle exec rake db:create db:migrate` and then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
 
 ### Integration
 
