@@ -49,18 +49,11 @@ module CocinaGenerator
 
       def access
         args = {
-          accessContact: access_contacts,
-          digitalRepository: repository
+          accessContact: access_contacts
         }.compact
         return if args.empty?
 
         Cocina::Models::DescriptiveAccessMetadata.new(args)
-      end
-
-      def repository
-        return unless collection_version.collection.purl
-
-        [{ value: 'Stanford Digital Repository' }]
       end
 
       def access_contacts

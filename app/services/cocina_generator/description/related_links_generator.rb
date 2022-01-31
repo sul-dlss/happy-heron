@@ -38,10 +38,7 @@ module CocinaGenerator
       # This normalizes the PURL link to https (as it is currently the canonincal PURL)
       def purl_link(rel_link)
         resource_attrs = {
-          purl: rel_link.url.sub(/^https?/, 'https'),
-          access: Cocina::Models::DescriptiveAccessMetadata.new(
-            digitalRepository: [Cocina::Models::DescriptiveValue.new(value: 'Stanford Digital Repository')]
-          )
+          purl: rel_link.url.sub(/^https?/, 'https')
         }
         resource_attrs[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
         Cocina::Models::RelatedResource.new(resource_attrs)
