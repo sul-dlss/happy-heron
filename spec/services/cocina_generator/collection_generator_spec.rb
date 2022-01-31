@@ -114,11 +114,6 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
                   type: 'email',
                   displayLabel: 'Contact'
                 }
-              ],
-              digitalRepository: [
-                {
-                  value: 'Stanford Digital Repository'
-                }
               ]
             }
           },

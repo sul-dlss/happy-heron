@@ -45,17 +45,11 @@ RSpec.describe CocinaGenerator::Description::RelatedLinksGenerator do
       expect(model).to eq([
                             Cocina::Models::RelatedResource.new({
                                                                   purl: 'https://purl.stanford.edu/tx853fp2857',
-                                                                  title: [{ value: 'My Awesome Research' }],
-                                                                  access: { digitalRepository: [
-                                                                    { value: 'Stanford Digital Repository' }
-                                                                  ] }
+                                                                  title: [{ value: 'My Awesome Research' }]
                                                                 }).to_h,
                             Cocina::Models::RelatedResource.new({
                                                                   purl: 'https://purl.stanford.edu/xy933bc2222',
-                                                                  title: [{ value: 'My Awesome Research' }],
-                                                                  access: { digitalRepository: [
-                                                                    { value: 'Stanford Digital Repository' }
-                                                                  ] }
+                                                                  title: [{ value: 'My Awesome Research' }]
                                                                 }).to_h,
                             Cocina::Models::RelatedResource.new({
                                                                   title: [{ value: 'My Awesome Research' }],
