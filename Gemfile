@@ -40,7 +40,7 @@ group :deployment do
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
-  gem 'dlss-capistrano', '~> 3.11', require: false
+  gem 'dlss-capistrano', require: false
 end
 
 gem 'action_policy', '~> 0.5.3'
