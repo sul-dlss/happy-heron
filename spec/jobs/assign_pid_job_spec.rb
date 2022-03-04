@@ -12,6 +12,10 @@ RSpec.describe AssignPidJob do
                               type: Cocina::Models::Vocab.object,
                               label: 'my repository object',
                               version: 1,
+                              description: {
+                                title: [{ value: 'my repository object' }],
+                                purl: "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
+                              },
                               access: {},
                               administrative: { hasAdminPolicy: 'druid:xx999xx9999' },
                               identification: {
@@ -37,6 +41,10 @@ RSpec.describe AssignPidJob do
                               type: Cocina::Models::Vocab.object,
                               label: 'my repository object',
                               version: 1,
+                              description: {
+                                title: [{ value: 'my repository object' }],
+                                purl: "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
+                              },
                               access: {},
                               administrative: { hasAdminPolicy: 'druid:xx999xx9999' },
                               identification: {
@@ -62,6 +70,10 @@ RSpec.describe AssignPidJob do
                               type: Cocina::Models::Vocab.object,
                               label: 'my repository object',
                               version: 1,
+                              description: {
+                                title: [{ value: 'my repository object' }],
+                                purl: "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
+                              },
                               access: {},
                               administrative: { hasAdminPolicy: 'druid:xx999xx9999' },
                               identification: {
@@ -88,6 +100,10 @@ RSpec.describe AssignPidJob do
                                      type: Cocina::Models::Vocab.collection,
                                      label: 'my repository object',
                                      version: 1,
+                                     description: {
+                                       title: [{ value: 'my repository object' }],
+                                       purl: "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
+                                     },
                                      access: {},
                                      administrative: { hasAdminPolicy: 'druid:xx999xx9999' },
                                      identification: {
