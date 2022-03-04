@@ -119,15 +119,15 @@ GEM
       launchy
     chronic (0.10.2)
     cliver (0.3.2)
-    cocina-models (0.66.0)
+    cocina-models (0.67.1)
       activesupport
       dry-struct (~> 1.0)
       dry-types (~> 1.1)
       openapi3_parser
-      openapi_parser
+      openapi_parser (>= 0.11.1, < 1.0)
       thor
       zeitwerk (~> 2.1)
-    commonmarker (0.23.2)
+    commonmarker (0.23.4)
     concurrent-ruby (1.1.9)
     config (2.2.3)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -281,7 +281,7 @@ GEM
     openapi3_parser (0.9.1)
       commonmarker (~> 0.17)
       psych (~> 3.1)
-    openapi_parser (1.0.0)
+    openapi_parser (0.15.0)
     optimist (3.0.1)
     orm_adapter (0.5.0)
     parallel (1.21.0)
@@ -397,9 +397,9 @@ GEM
     ruby-next-core (0.14.1)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sdr-client (0.68.0)
+    sdr-client (0.69.1)
       activesupport
-      cocina-models (~> 0.66.0)
+      cocina-models (~> 0.67.1)
       dry-monads
       faraday (>= 0.16)
     serverengine (2.1.1)
