@@ -38,6 +38,9 @@ class DraftWorkForm < Reform::Form
   validates_with CreatedDateParts,
                  if: proc { |form| form.created_type == 'range' }
 
+  validates :subtype, work_subtype: true
+  validates :work_type, presence: true, work_type: true
+
   delegate :user_can_set_availability?, to: :collection
 
   def deserialize!(params)

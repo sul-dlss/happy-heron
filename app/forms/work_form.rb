@@ -9,8 +9,6 @@ class WorkForm < DraftWorkForm
   validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' }
   validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates :license, presence: true, inclusion: { in: License.license_list }
-  validates :subtype, work_subtype: true
-  validates :work_type, presence: true, work_type: true
   validates :authors, length: { minimum: 1, message: 'Please add at least one author.' }
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true
