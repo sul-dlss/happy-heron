@@ -6,7 +6,7 @@
   </td>
   <td><%= work.depositor.sunetid %></td>
   <td><%= render Works::StateDisplayComponent.new(work_version: work_version) %></td>
-  <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
+  <td><%= render LocalTimeComponent.new(datetime: work.updated_at, show_time: false) %></td>
   <td><%= attached_files.count %></td>
   <td><%= size %></td>
   <td><%= link_to work.purl, work.purl if work.purl %></td>

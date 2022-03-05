@@ -6,7 +6,7 @@
   </td>
   <td><%= render Works::StateDisplayComponent.new(work_version: work.head) %></td>
   <td class="visible-to-reviewer-<%= work.collection.id %>"><%= work.depositor.sunetid %></td>
-  <td><%= I18n.l(work.updated_at.to_date, format: :abbr_month) %></td>
+  <td><%= render LocalTimeComponent.new(datetime: work.updated_at, show_time: false) %></td>
   <td>
     <% if work.purl %>
       <%= link_to work.purl, work.purl %>
