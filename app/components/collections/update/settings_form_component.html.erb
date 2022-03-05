@@ -7,8 +7,8 @@
     html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
 
   <% if collection_form.errors.present? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(collection_form.errors.count, "error") %> prohibited this item from being saved:</h2>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4><%= pluralize(collection_form.errors.count, "error") %> prohibited this item from being saved:</h4>
 
       <ul>
         <% collection_form.errors.each do |error| %>

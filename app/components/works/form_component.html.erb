@@ -7,8 +7,8 @@
     },
     html: { class: "needs-validation work-editor", novalidate: true, multipart: true } do |f| %>
   <% if work_form.errors.present? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(work_form.errors.count, "error") %> prohibited this item from being saved:</h2>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4><%= pluralize(work_form.errors.count, "error") %> prohibited this item from being saved:</h4>
 
       <ul>
         <% work_form.errors.each do |error| %>
