@@ -44,8 +44,6 @@ module HappyHeron
     # Currently 90 minutes is based on most 10G uploads on slow connections taking just under 1.5 hours
     config.active_storage.service_urls_expire_in = 90.minutes
 
-    config.time_zone = 'Pacific Time (US & Canada)'
-
     console do
       Honeybadger.configure do |config|
         config.report_data = false
