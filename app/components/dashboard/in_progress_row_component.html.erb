@@ -6,5 +6,5 @@
   </td>
   <td><%= show_collection_link %></td>
   <td><%= render Works::StateDisplayComponent.new(work_version: work_version) %></td>
-  <td><%= I18n.l(work_version.updated_at.to_date, format: :abbr_month) %></td>
+  <td><%= render LocalTimeComponent.new(datetime: work_version.updated_at, show_time: false) %></td>
 </tr>

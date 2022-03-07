@@ -7,5 +7,5 @@
   <td><%= state_count('pending_approval') %></td>
   <td><%= state_count('rejected') %></td>
   <td><%= state_count('purl_reserved') %></td>
-  <td><%= I18n.l(collection.updated_at.to_date, format: :abbr_month) %></td>
+  <td><%= render LocalTimeComponent.new(datetime: collection.updated_at, show_time: false) %></td>
 </tr>
