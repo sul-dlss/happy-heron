@@ -21,7 +21,7 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
     let(:expected_model) do
       Cocina::Models::RequestCollection.new(
         {
-          type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
+          type: Cocina::Models::Vocab.collection,
           label: 'Test title',
           version: 1,
           access: { access: 'world' },
@@ -86,7 +86,7 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
       Cocina::Models::Collection.new(
         {
           externalIdentifier: 'druid:bk123gh4567',
-          type: 'http://cocina.sul.stanford.edu/models/collection.jsonld',
+          type: Cocina::Models::Vocab.collection,
           label: 'Test title',
           version: 1,
           access: { access: 'world' },

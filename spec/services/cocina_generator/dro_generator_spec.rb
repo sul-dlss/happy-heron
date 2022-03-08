@@ -96,7 +96,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
       let(:expected_model) do
         Cocina::Models::RequestDRO.new(
           {
-            type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+            type: Cocina::Models::Vocab.object,
             label: 'Test title',
             version: 1,
             access: {
@@ -154,7 +154,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
       Cocina::Models::DRO.new(
         {
           externalIdentifier: 'druid:bk123gh4567',
-          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+          type: Cocina::Models::Vocab.object,
           label: 'Test title',
           version: 1,
           access: {
@@ -216,7 +216,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
       Cocina::Models::DRO.new(
         {
           externalIdentifier: 'druid:bk123gh4567',
-          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+          type: Cocina::Models::Vocab.object,
           label: 'Test title',
           version: 1,
           access: {
@@ -274,7 +274,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
     let(:expected_model) do
       Cocina::Models::RequestDRO.new(
         {
-          type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+          type: Cocina::Models::Vocab.object,
           label: 'Test title',
           version: 1,
           access: {
@@ -352,7 +352,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
       let(:expected_model) do
         Cocina::Models::RequestDRO.new(
           {
-            type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+            type: Cocina::Models::Vocab.object,
             label: 'Test title',
             version: 1,
             access: {
@@ -403,11 +403,11 @@ RSpec.describe CocinaGenerator::DROGenerator do
                       hasMimeType: 'image/svg+xml',
                       label: 'MyString',
                       size: 17_675,
-                      type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
+                      type: Cocina::Models::Vocab.file,
                       version: 1
                     }
                   ] },
-                  type: 'http://cocina.sul.stanford.edu/models/resources/file.jsonld',
+                  type: Cocina::Models::Vocab::Resources.file,
                   version: 1
                 }
               ],
@@ -431,7 +431,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
       let(:expected_model) do
         Cocina::Models::DRO.new(
           {
-            type: 'http://cocina.sul.stanford.edu/models/object.jsonld',
+            type: Cocina::Models::Vocab.object,
             label: 'Test title',
             version: 1,
             externalIdentifier: 'druid:bk123gh4567',
@@ -485,13 +485,13 @@ RSpec.describe CocinaGenerator::DROGenerator do
                         hasMimeType: 'image/svg+xml',
                         label: 'MyString',
                         size: 17_675,
-                        type: 'http://cocina.sul.stanford.edu/models/file.jsonld',
+                        type: Cocina::Models::Vocab.file,
                         externalIdentifier: 'druid:bk123gh4567/sul.svg',
                         version: 1
                       }
                     ]
                   },
-                  type: 'http://cocina.sul.stanford.edu/models/resources/file.jsonld',
+                  type: Cocina::Models::Vocab::Resources.file,
                   externalIdentifier: 'bk123gh4567_1',
                   version: 1
                 }

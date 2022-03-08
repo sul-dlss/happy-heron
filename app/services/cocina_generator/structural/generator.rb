@@ -28,7 +28,7 @@ module CocinaGenerator
 
       def build_fileset(attached_file, offset)
         {
-          type: 'http://cocina.sul.stanford.edu/models/resources/file.jsonld',
+          type: Cocina::Models::Vocab::Resources.file,
           version: work_version.version,
           label: attached_file.label,
           structural: {
