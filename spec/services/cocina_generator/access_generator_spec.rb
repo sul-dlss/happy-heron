@@ -10,7 +10,7 @@ RSpec.describe CocinaGenerator::AccessGenerator do
     let(:work_version) { build(:work_version, license: 'none') }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'world',
+      expect(model).to eq(view: 'world',
                           download: 'world',
                           useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
     end
@@ -20,7 +20,7 @@ RSpec.describe CocinaGenerator::AccessGenerator do
     let(:work_version) { build(:work_version) }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'world',
+      expect(model).to eq(view: 'world',
                           download: 'world',
                           license: license_uri,
                           useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
@@ -31,7 +31,7 @@ RSpec.describe CocinaGenerator::AccessGenerator do
     let(:work_version) { build(:work_version, access: 'stanford') }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'stanford',
+      expect(model).to eq(view: 'stanford',
                           download: 'stanford',
                           license: license_uri,
                           useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
@@ -42,9 +42,9 @@ RSpec.describe CocinaGenerator::AccessGenerator do
     let(:work_version) { build(:work_version, :embargoed, access: 'world') }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'citation-only',
+      expect(model).to eq(view: 'citation-only',
                           download: 'none',
-                          embargo: { releaseDate: work_version.embargo_date.to_s, access: 'world', download: 'world' },
+                          embargo: { releaseDate: work_version.embargo_date.to_s, view: 'world', download: 'world' },
                           license: license_uri,
                           useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
     end
@@ -54,10 +54,10 @@ RSpec.describe CocinaGenerator::AccessGenerator do
     let(:work_version) { build(:work_version, :embargoed, access: 'stanford') }
 
     it 'generates the model' do
-      expect(model).to eq(access: 'citation-only',
+      expect(model).to eq(view: 'citation-only',
                           download: 'none',
                           embargo: { releaseDate: work_version.embargo_date.to_s,
-                                     access: 'stanford',
+                                     view: 'stanford',
                                      download: 'stanford' },
                           license: license_uri,
                           useAndReproductionStatement: Settings.access.use_and_reproduction_statement)

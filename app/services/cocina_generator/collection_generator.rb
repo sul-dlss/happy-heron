@@ -24,27 +24,28 @@ module CocinaGenerator
 
     attr_reader :collection_version
 
-    def model_attributes
+    def model_attributes # rubocop:disable Metrics/AbcSize
       {
         access: access,
         administrative: {
-          hasAdminPolicy: Settings.h2.hydrus_apo,
-          partOfProject: Settings.h2.project_tag
+          hasAdminPolicy: Settings.h2.hydrus_apo
         },
         identification: {
           sourceId: "hydrus:collection-#{collection_version.collection_id}"
         },
         label: collection_version.name,
-        type: Cocina::Models::Vocab.collection,
+        type: Cocina::Models::ObjectType.collection,
         description: Description::CollectionDescriptionGenerator.generate(collection_version: collection_version),
         version: collection_version.version
-      }
+      }.tap do |h|
+        h[:administrative][:partOfProject] = Settings.h2.project_tag unless collection_version.collection.druid
+      end
     end
 
     # TODO: This varies based on what the user selected
     def access
       {
-        access: 'world'
+        view: 'world'
       }
     end
   end

@@ -28,7 +28,7 @@ module CocinaGenerator
 
       def build_fileset(attached_file, offset)
         {
-          type: Cocina::Models::Vocab::Resources.file,
+          type: Cocina::Models::FileSetType.file,
           version: work_version.version,
           label: attached_file.label,
           structural: {

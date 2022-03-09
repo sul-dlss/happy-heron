@@ -9,7 +9,7 @@ RSpec.describe RecordEmbargoReleaseJob do
   let(:message) { { model: model }.to_json }
   let(:model) do
     Cocina::Models::DRO.new(externalIdentifier: work.druid,
-                            type: Cocina::Models::Vocab.object,
+                            type: Cocina::Models::ObjectType.object,
                             label: 'my repository object',
                             version: 1,
                             description: {

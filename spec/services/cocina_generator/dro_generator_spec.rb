@@ -96,11 +96,11 @@ RSpec.describe CocinaGenerator::DROGenerator do
       let(:expected_model) do
         Cocina::Models::RequestDRO.new(
           {
-            type: Cocina::Models::Vocab.object,
+            type: Cocina::Models::ObjectType.object,
             label: 'Test title',
             version: 1,
             access: {
-              access: 'world',
+              view: 'world',
               download: 'world',
               license: license_uri,
               useAndReproductionStatement: Settings.access.use_and_reproduction_statement
@@ -154,18 +154,17 @@ RSpec.describe CocinaGenerator::DROGenerator do
       Cocina::Models::DRO.new(
         {
           externalIdentifier: 'druid:bk123gh4567',
-          type: Cocina::Models::Vocab.object,
+          type: Cocina::Models::ObjectType.object,
           label: 'Test title',
           version: 1,
           access: {
-            access: 'world',
+            view: 'world',
             download: 'world',
             license: license_uri,
             useAndReproductionStatement: Settings.access.use_and_reproduction_statement
           },
           administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348',
-            partOfProject: project_tag
+            hasAdminPolicy: 'druid:zx485kb6348'
           },
           description: {
             title: [
@@ -216,18 +215,17 @@ RSpec.describe CocinaGenerator::DROGenerator do
       Cocina::Models::DRO.new(
         {
           externalIdentifier: 'druid:bk123gh4567',
-          type: Cocina::Models::Vocab.object,
+          type: Cocina::Models::ObjectType.object,
           label: 'Test title',
           version: 1,
           access: {
-            access: 'world',
+            view: 'world',
             download: 'world',
             license: license_uri,
             useAndReproductionStatement: Settings.access.use_and_reproduction_statement
           },
           administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348',
-            partOfProject: project_tag
+            hasAdminPolicy: 'druid:zx485kb6348'
           },
           description: {
             title: [
@@ -274,11 +272,11 @@ RSpec.describe CocinaGenerator::DROGenerator do
     let(:expected_model) do
       Cocina::Models::RequestDRO.new(
         {
-          type: Cocina::Models::Vocab.object,
+          type: Cocina::Models::ObjectType.object,
           label: 'Test title',
           version: 1,
           access: {
-            access: 'world',
+            view: 'world',
             download: 'world',
             license: license_uri,
             useAndReproductionStatement: Settings.access.use_and_reproduction_statement
@@ -352,11 +350,11 @@ RSpec.describe CocinaGenerator::DROGenerator do
       let(:expected_model) do
         Cocina::Models::RequestDRO.new(
           {
-            type: Cocina::Models::Vocab.object,
+            type: Cocina::Models::ObjectType.object,
             label: 'Test title',
             version: 1,
             access: {
-              access: 'world',
+              view: 'world',
               download: 'world',
               license: license_uri,
               useAndReproductionStatement: Settings.access.use_and_reproduction_statement
@@ -393,7 +391,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
                   label: 'MyString',
                   structural: { contains: [
                     {
-                      access: { access: 'world', download: 'world' },
+                      access: { view: 'world', download: 'world' },
                       administrative: { publish: true, sdrPreserve: true, shelve: true },
                       filename: 'sul.svg',
                       hasMessageDigests: [
@@ -403,11 +401,11 @@ RSpec.describe CocinaGenerator::DROGenerator do
                       hasMimeType: 'image/svg+xml',
                       label: 'MyString',
                       size: 17_675,
-                      type: Cocina::Models::Vocab.file,
+                      type: Cocina::Models::ObjectType.file,
                       version: 1
                     }
                   ] },
-                  type: Cocina::Models::Vocab::Resources.file,
+                  type: Cocina::Models::FileSetType.file,
                   version: 1
                 }
               ],
@@ -431,19 +429,18 @@ RSpec.describe CocinaGenerator::DROGenerator do
       let(:expected_model) do
         Cocina::Models::DRO.new(
           {
-            type: Cocina::Models::Vocab.object,
+            type: Cocina::Models::ObjectType.object,
             label: 'Test title',
             version: 1,
             externalIdentifier: 'druid:bk123gh4567',
             access: {
-              access: 'world',
+              view: 'world',
               download: 'world',
               license: license_uri,
               useAndReproductionStatement: Settings.access.use_and_reproduction_statement
             },
             administrative: {
-              hasAdminPolicy: 'druid:zx485kb6348',
-              partOfProject: project_tag
+              hasAdminPolicy: 'druid:zx485kb6348'
             },
             description: {
               title: [
@@ -475,7 +472,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
                   structural: {
                     contains: [
                       {
-                        access: { access: 'world', download: 'world' },
+                        access: { view: 'world', download: 'world' },
                         administrative: { publish: true, sdrPreserve: true, shelve: true },
                         filename: 'sul.svg',
                         hasMessageDigests: [
@@ -485,13 +482,13 @@ RSpec.describe CocinaGenerator::DROGenerator do
                         hasMimeType: 'image/svg+xml',
                         label: 'MyString',
                         size: 17_675,
-                        type: Cocina::Models::Vocab.file,
+                        type: Cocina::Models::ObjectType.file,
                         externalIdentifier: 'druid:bk123gh4567/sul.svg',
                         version: 1
                       }
                     ]
                   },
-                  type: Cocina::Models::Vocab::Resources.file,
+                  type: Cocina::Models::FileSetType.file,
                   externalIdentifier: 'bk123gh4567_1',
                   version: 1
                 }

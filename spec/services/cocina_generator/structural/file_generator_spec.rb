@@ -14,13 +14,13 @@ RSpec.describe CocinaGenerator::Structural::FileGenerator do
       context 'when work is public' do
         let(:work_version) { build(:work_version) }
 
-        it { is_expected.to eq Cocina::Models::FileAccess.new(access: 'world', download: 'world') }
+        it { is_expected.to eq Cocina::Models::FileAccess.new(view: 'world', download: 'world') }
       end
 
       context 'when work is stanford-only' do
         let(:work_version) { build(:work_version, access: 'stanford') }
 
-        it { is_expected.to eq Cocina::Models::FileAccess.new(access: 'stanford', download: 'stanford') }
+        it { is_expected.to eq Cocina::Models::FileAccess.new(view: 'stanford', download: 'stanford') }
       end
     end
 
@@ -28,14 +28,14 @@ RSpec.describe CocinaGenerator::Structural::FileGenerator do
       let(:work_version) { build(:work_version) }
       let(:attached_file) { create(:attached_file, :with_file, work_version: work_version, hide: true) }
 
-      it { is_expected.to eq Cocina::Models::FileAccess.new(access: 'world', download: 'world') }
+      it { is_expected.to eq Cocina::Models::FileAccess.new(view: 'world', download: 'world') }
     end
 
     context 'when object is embargoed' do
       let(:work_version) { build(:work_version, :embargoed) }
       let(:attached_file) { create(:attached_file, :with_file, work_version: work_version, hide: true) }
 
-      it { is_expected.to eq Cocina::Models::FileAccess.new(access: 'dark', download: 'none') }
+      it { is_expected.to eq Cocina::Models::FileAccess.new(view: 'dark', download: 'none') }
     end
   end
 end
