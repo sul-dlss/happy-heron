@@ -26,12 +26,11 @@ module CocinaGenerator
     delegate :work, to: :work_version
     delegate :druid, to: :work
 
-    def model_attributes
+    def model_attributes # rubocop:disable Metrics/AbcSize
       {
         access: AccessGenerator.generate(work_version: work_version),
         administrative: {
-          hasAdminPolicy: Settings.h2.hydrus_apo,
-          partOfProject: Settings.h2.project_tag
+          hasAdminPolicy: Settings.h2.hydrus_apo
         },
         identification: identification,
         structural: structural,
@@ -39,7 +38,9 @@ module CocinaGenerator
         type: cocina_type,
         description: Description::Generator.generate(work_version: work_version),
         version: work_version.version
-      }
+      }.tap do |h|
+        h[:administrative][:partOfProject] = Settings.h2.project_tag unless druid
+      end
     end
 
     def identification

@@ -86,7 +86,7 @@ class WorkType
 
   def self.purl_reservation_type
     new(id: 'purl_reservation', label: 'PURL reservation', html_label: 'PURL reservation', icon: '', subtypes: [],
-        cocina_type: Cocina::Models::Vocab.object)
+        cocina_type: Cocina::Models::ObjectType.object)
   end
 
   def self.find(id)
@@ -100,23 +100,23 @@ class WorkType
   def self.all
     [
       new(id: 'text', label: 'Text', html_label: 'Text', icon: 'book-open',
-          subtypes: TEXT_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: TEXT_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'data', label: 'Data', html_label: 'Data', icon: 'chart-bar',
-          subtypes: DATA_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: DATA_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'software, multimedia', label: 'Software/Code', html_label: 'Software/<wbr>Code'.html_safe, icon: 'mouse',
-          subtypes: SOFTWARE_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: SOFTWARE_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'image', label: 'Image', html_label: 'Image', icon: 'images',
-          subtypes: IMAGE_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: IMAGE_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'sound', label: 'Sound', html_label: 'Sound', icon: 'microphone-alt',
-          subtypes: SOUND_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: SOUND_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'video', label: 'Video', html_label: 'Video', icon: 'film',
-          subtypes: VIDEO_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: VIDEO_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'music', label: 'Music', html_label: 'Music', icon: 'music',
-          subtypes: MUSIC_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: MUSIC_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'mixed material', label: 'Mixed Materials', html_label: 'Mixed Materials', icon: 'play',
-          subtypes: MIXED_TYPES, cocina_type: Cocina::Models::Vocab.object),
+          subtypes: MIXED_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'other', label: 'Other', html_label: 'Other', icon: 'archive',
-          subtypes: [], cocina_type: Cocina::Models::Vocab.object)
+          subtypes: [], cocina_type: Cocina::Models::ObjectType.object)
     ]
   end
   # rubocop:enable Metrics/MethodLength

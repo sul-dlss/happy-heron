@@ -21,10 +21,10 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
     let(:expected_model) do
       Cocina::Models::RequestCollection.new(
         {
-          type: Cocina::Models::Vocab.collection,
+          type: Cocina::Models::ObjectType.collection,
           label: 'Test title',
           version: 1,
-          access: { access: 'world' },
+          access: { view: 'world' },
           administrative: {
             hasAdminPolicy: 'druid:zx485kb6348',
             partOfProject: project_tag
@@ -86,13 +86,12 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
       Cocina::Models::Collection.new(
         {
           externalIdentifier: 'druid:bk123gh4567',
-          type: Cocina::Models::Vocab.collection,
+          type: Cocina::Models::ObjectType.collection,
           label: 'Test title',
           version: 1,
-          access: { access: 'world' },
+          access: { view: 'world' },
           administrative: {
-            hasAdminPolicy: 'druid:zx485kb6348',
-            partOfProject: project_tag
+            hasAdminPolicy: 'druid:zx485kb6348'
           },
           description: {
             title: [

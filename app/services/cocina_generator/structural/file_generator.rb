@@ -27,7 +27,7 @@ module CocinaGenerator
 
       def request_file_attributes
         {
-          type: Cocina::Models::Vocab.file,
+          type: Cocina::Models::ObjectType.file,
           version: work_version.version,
           label: attached_file.label,
           filename: filename,
@@ -80,9 +80,9 @@ module CocinaGenerator
 
       def access
         if embargoed?
-          { access: 'dark', download: 'none' }
+          { view: 'dark', download: 'none' }
         else
-          { access: work_version.access, download: work_version.access }
+          { view: work_version.access, download: work_version.access }
         end
       end
 

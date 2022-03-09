@@ -9,7 +9,7 @@ RSpec.describe AssignPidJob do
   context "with a work that doesn't have a doi (and hasn't requested one)" do
     let(:model) do
       Cocina::Models::DRO.new(externalIdentifier: druid,
-                              type: Cocina::Models::Vocab.object,
+                              type: Cocina::Models::ObjectType.object,
                               label: 'my repository object',
                               version: 1,
                               description: {
@@ -38,7 +38,7 @@ RSpec.describe AssignPidJob do
   context "with a registered purl that doesn't have a doi (and has requested one)" do
     let(:model) do
       Cocina::Models::DRO.new(externalIdentifier: druid,
-                              type: Cocina::Models::Vocab.object,
+                              type: Cocina::Models::ObjectType.object,
                               label: 'my repository object',
                               version: 1,
                               description: {
@@ -67,7 +67,7 @@ RSpec.describe AssignPidJob do
   context 'with a work that has a doi' do
     let(:model) do
       Cocina::Models::DRO.new(externalIdentifier: druid,
-                              type: Cocina::Models::Vocab.object,
+                              type: Cocina::Models::ObjectType.object,
                               label: 'my repository object',
                               version: 1,
                               description: {
@@ -97,7 +97,7 @@ RSpec.describe AssignPidJob do
   context 'with a collection' do
     let(:model) do
       Cocina::Models::Collection.new(externalIdentifier: druid,
-                                     type: Cocina::Models::Vocab.collection,
+                                     type: Cocina::Models::ObjectType.collection,
                                      label: 'my repository object',
                                      version: 1,
                                      description: {

@@ -23,14 +23,14 @@ module CocinaGenerator
 
     def regular_access
       {
-        access: work_version.access,
+        view: work_version.access,
         download: work_version.access
       }
     end
 
     def embargoed_access
       {
-        access: 'citation-only',
+        view: 'citation-only',
         download: 'none',
         embargo: regular_access.merge({ releaseDate: work_version.embargo_date.iso8601 })
       }
