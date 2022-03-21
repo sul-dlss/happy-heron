@@ -25,7 +25,7 @@ RSpec.describe 'Delete a draft collection', js: true do
             click_link "Delete #{collection_version.name}"
           end
         end
-        expect(Collection.find_by(id: collection.id)).to be(nil)
+        expect(Collection.find_by(id: collection.id)).to be_nil
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe 'Delete a draft collection', js: true do
         accept_confirm do
           click_link 'Discard draft'
         end
-        expect(Collection.find_by(id: collection.id)).to be(nil)
+        expect(Collection.find_by(id: collection.id)).to be_nil
       end
     end
   end

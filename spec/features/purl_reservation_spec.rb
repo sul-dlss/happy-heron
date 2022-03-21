@@ -134,6 +134,6 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
     visit dashboard_path
     expect(page).not_to have_content title
-    expect(WorkVersion.find_by(title: title)).to be nil
+    expect(WorkVersion.find_by(title: title)).to be_nil
   end
 end

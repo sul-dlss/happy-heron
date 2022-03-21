@@ -153,8 +153,8 @@ RSpec.describe 'Create a collection' do
           expect(collection.depositors).to all(be_kind_of(User))
           expect(collection.depositors).to include(User.find_by!(email: 'maya.aguirre@stanford.edu'))
           expect(collection.managed_by).to eq [user]
-          expect(collection.email_when_participants_changed).to eq true
-          expect(collection.email_depositors_status_changed).to eq true
+          expect(collection.email_when_participants_changed).to be true
+          expect(collection.email_depositors_status_changed).to be true
           expect(collection.release_option).to eq 'delay'
           expect(collection.release_date).to eq next_year
           expect(collection.doi_option).to eq 'depositor-selects'

@@ -211,8 +211,8 @@ class WorksController < ObjectsController
     end
 
     unless WorkSubtypeValidator.valid?(params[:work_type], params[:subtype])
-      errors << "Invalid subtype value for work of type '#{params[:work_type]}': " +
-                (Array(params[:subtype]).join.presence || 'missing')
+      errors << ("Invalid subtype value for work of type '#{params[:work_type]}': " +
+                (Array(params[:subtype]).join.presence || 'missing'))
     end
 
     return if errors.empty?
