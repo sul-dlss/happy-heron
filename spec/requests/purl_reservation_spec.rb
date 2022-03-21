@@ -27,7 +27,7 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
           end.to change(WorkVersion, :count).by(1)
 
           work_version = WorkVersion.find_by!(title: work_title)
-          expect(work_version.purl_reservation?).to eq true
+          expect(work_version.purl_reservation?).to be true
           expect(work_version.work.depositor).to eq user
           expect(work_version.license).to eq 'CC-BY-4.0'
           expect(response).to redirect_to(dashboard_path)
@@ -58,7 +58,7 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
         it 'sets the type and subtype, then redirects to the work edit page' do
           patch "/reservations/#{work.id}", params: { work_type: 'text', subtype: ['Other spoken word'] }
 
-          expect(work_version.reload.purl_reservation?).to eq false
+          expect(work_version.reload.purl_reservation?).to be false
           expect(work_version.work_type).to eq 'text'
           expect(work_version.subtype).to eq ['Other spoken word']
           expect(work_version.work.events.pluck(:event_type)).to include('type_selected')

@@ -138,7 +138,7 @@ class WorkType
   end
 
   def self.to_h
-    all.map { |type| [type.id, type.subtypes] }.to_h
+    all.to_h { |type| [type.id, type.subtypes] }
   end
 
   def self.to_json

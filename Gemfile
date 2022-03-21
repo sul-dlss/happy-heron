@@ -63,6 +63,7 @@ gem 'okcomputer'
 gem 'pg'
 gem 'rails', '~> 6.1'
 gem 'redis', '~> 4.0'
+# TODO: Deal with this
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
 gem 'reform', '~> 2.5.0'
 gem 'reform-rails', '~> 0.2.0'
@@ -71,6 +72,7 @@ gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
 gem 'turbo-rails', '~> 1.0'
-gem 'view_component', '~> 2.18'
+# TODO: Figure out why the 2.51.0 ViewComponent update broke the collections show detail header component spec
+gem 'view_component', '~> 2.50.0' # Previously pinned to '~> 2.18'
 gem 'whenever'
 gem 'zipline', '~> 1.3'
