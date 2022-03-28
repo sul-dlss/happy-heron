@@ -72,7 +72,6 @@ gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
 gem 'turbo-rails', '~> 1.0'
-# TODO: Figure out why the 2.51.0 ViewComponent update broke the collections show detail header component spec
-gem 'view_component', '~> 2.50.0' # Previously pinned to '~> 2.18'
+gem 'view_component', '~> 2.52'
 gem 'whenever'
 gem 'zipline', '~> 1.3'
