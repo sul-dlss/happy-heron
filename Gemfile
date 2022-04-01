@@ -22,7 +22,7 @@ group :development do
   gem 'faker'
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false # needed to update RBIs after adding reform-rails
-  gem 'puma', '~> 5.5'
+  gem 'puma', '~> 5.6', '>= 5.6.4'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'state_machines-graphviz'
