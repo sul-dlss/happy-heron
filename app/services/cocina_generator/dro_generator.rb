@@ -36,7 +36,7 @@ module CocinaGenerator
         structural: structural,
         label: work_version.title,
         type: cocina_type,
-        description: Description::Generator.generate(work_version: work_version),
+        description: Description::Generator.generate(work_version: work_version).to_h,
         version: work_version.version
       }.tap do |h|
         h[:administrative][:partOfProject] = Settings.h2.project_tag unless druid
