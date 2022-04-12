@@ -397,7 +397,7 @@ GEM
     ruby-next-core (0.15.1)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sdr-client (0.77.0)
+    sdr-client (0.77.1)
       activesupport
       cocina-models (~> 0.72.0)
       dry-monads
