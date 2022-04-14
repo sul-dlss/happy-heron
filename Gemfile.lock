@@ -119,7 +119,7 @@ GEM
       launchy
     chronic (0.10.2)
     cliver (0.3.2)
-    cocina-models (0.73.3)
+    cocina-models (0.73.4)
       activesupport
       deprecation
       dry-struct (~> 1.0)
