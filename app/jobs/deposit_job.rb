@@ -4,7 +4,11 @@
 class DepositJob < BaseDepositJob
   queue_as :default
 
+  # rubocop:disable Metrics/AbcSize:
   def perform(work_version)
+    Honeybadger.context({ work_version_id: work_version.id, druid: work_version.work.druid,
+                          work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
+
     request_dro = CocinaGenerator::DROGenerator.generate_model(work_version: work_version)
     blobs = work_version.attached_files.map { |af| af.file.attachment.blob }
 
@@ -21,6 +25,7 @@ class DepositJob < BaseDepositJob
       update(new_request_dro)
     end
   end
+  # rubocop:enable Metrics/AbcSize:
 
   private
 

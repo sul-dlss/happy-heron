@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   def groups_from_request_env
     session['groups'] = begin
       raw_header = request.env[Settings.authorization_group_header]
-      raw_header = ENV['ROLES'] if Rails.env.development? # rubocop:disable Rails/EnvironmentVariableAccess
+      raw_header = ENV.fetch('ROLES', nil) if Rails.env.development? # rubocop:disable Rails/EnvironmentVariableAccess
       logger.debug("Roles are #{raw_header}")
       raw_header&.split(';') || []
     end
