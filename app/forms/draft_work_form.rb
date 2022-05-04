@@ -21,7 +21,6 @@ class DraftWorkForm < Reform::Form
   property :access, on: :work_version
   property :license, on: :work_version
   property :agree_to_terms, on: :work_version
-  property :date_last_agreed, on: :work_version
   property :created_type, virtual: true, prepopulator: (proc do |*|
     self.created_type = created_edtf.is_a?(EDTF::Interval) ? 'range' : 'single' unless created_type
   end)
@@ -158,6 +157,10 @@ class DraftWorkForm < Reform::Form
 
   def work
     model[:work]
+  end
+
+  def date_last_agreed
+    model[:work].depositor.last_work_terms_agreement
   end
 
   def description
