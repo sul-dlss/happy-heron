@@ -42,6 +42,7 @@ class DraftWorkForm < Reform::Form
   validates :work_type, presence: true, work_type: true
 
   delegate :user_can_set_availability?, to: :collection
+  delegate :date_last_agreed, to: :work_version
 
   def deserialize!(params)
     # Choose between using the user provided citation and the auto-generated citation

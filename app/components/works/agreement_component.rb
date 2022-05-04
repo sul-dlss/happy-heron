@@ -11,6 +11,10 @@ module Works
       form.object.agree_to_terms
     end
 
+    def date_last_agreed
+      form.object.date_last_agreed
+    end
+
     attr_reader :form
   end
 end

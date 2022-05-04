@@ -116,6 +116,11 @@ class WorkVersion < ApplicationRecord
     update!(citation: citation.gsub(LINK_TEXT, work.purl))
   end
 
+  # the date the user last agreed to the terms (could be nil)
+  def date_last_agreed
+    work.depositor.last_work_terms_agreement
+  end
+
   # the terms agreement checkbox value is not persisted in the database with the work and the value is instead:
   #  false if (a) never previously accepted or (b) not accepted in the last year; it is true otherwise
   def agree_to_terms
