@@ -99,7 +99,7 @@ export default class extends Controller {
     const year = this.yearTarget.value
 
     if (isNaN(new Date(`${year}-${month}-${day}`))) {
-      this.errors.day = 'this day not in selected month'
+      this.errors.day = 'day must exist in selected month'
     }
   }
 }

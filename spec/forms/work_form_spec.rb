@@ -211,7 +211,7 @@ RSpec.describe WorkForm do
       context 'when release is embargo and a date is not provided' do
         it 'has an error' do
           form.validate(release: 'embargo', 'embargo_date(1i)' => '2040', 'embargo_date(2i)' => '2')
-          expect(messages).to eq ['must provide all parts']
+          expect(messages).to eq ['must provide all date parts and must be a valid date']
         end
       end
     end
