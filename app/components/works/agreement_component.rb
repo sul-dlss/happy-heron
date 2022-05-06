@@ -7,10 +7,6 @@ module Works
       @form = form
     end
 
-    def agree_to_terms?
-      work_form.agree_to_terms
-    end
-
     def work_form
       form.object
     end
@@ -20,7 +16,7 @@ module Works
     end
 
     delegate :depositor, to: :work
-    delegate :last_work_terms_agreement, to: :depositor
+    delegate :agreed_to_terms_recently?, :last_work_terms_agreement, to: :depositor
 
     attr_reader :form
   end
