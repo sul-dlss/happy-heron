@@ -39,6 +39,20 @@ REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 
 ## Testing
 
+To enable interactive debugging, invoke `bin/dev` as follows:
+
+```
+REMOTE_DEBUGGER=byebug REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
+```
+
+And then start up the debugger in another window (only byebug is supported at this time):
+
+```
+bundle exec byebug -R localhost:8989
+```
+
+Note that, by default, the debugger will run on `localhost` on port `8989`. To change these values, add the `DEBUGGER_HOST` and `DEBUGGER_PORT` environment variables when invoking `bin/dev` above and make sure to poing `byebug -R` at those same values when starting up the debugger.
+
 Start up dependencies with `docker compose up db` (with `-d` to run in background), create and migrate the database with `bundle exec rake db:create db:migrate` and then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
 
 ### Integration
