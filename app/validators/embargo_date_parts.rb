@@ -6,7 +6,7 @@ class EmbargoDateParts < ActiveModel::Validator
     # If we've already successfully deserialized the date, there's no point to continuing
     return if record.embargo_date.instance_of?(Date)
 
-    # Adds error because embargo date is nil (may be missing month and day values in form)
+    # Adds error because embargo date is nil or invalid (may be missing month and day values in form)
     record.errors.add(:embargo_date, 'must provide all date parts and must be a valid date')
   end
 end
