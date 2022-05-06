@@ -7,6 +7,7 @@ export default class extends Controller {
     this.errors = {}
     this.dateInFuture()
     this.allPartsPresent()
+    this.validDate()
     this.displayErrors()
   }
 
@@ -88,6 +89,17 @@ export default class extends Controller {
       this.errors.month = 'all parts must be provided'
     } else if (!day) {
       this.errors.day = 'all parts must be provided'
+    }
+  }
+
+  // Validate that the day selected is in the month
+  validDate() {
+    const day = this.dayTarget.value
+    const month = this.monthTarget.value
+    const year = this.yearTarget.value
+
+    if (isNaN(new Date(`${year}-${month}-${day}`))) {
+      this.errors.day = 'day must exist in selected month'
     }
   }
 }

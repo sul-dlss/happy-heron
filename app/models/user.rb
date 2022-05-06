@@ -42,7 +42,7 @@ class User < ApplicationRecord
   end
 
   def agreed_to_terms_recently?
-    return false unless last_work_terms_agreement
+    return false if last_work_terms_agreement.nil?
 
     terms_agreement_renewal_timeframe < last_work_terms_agreement
   end
