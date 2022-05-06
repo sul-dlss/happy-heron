@@ -4,7 +4,7 @@
     <div class="form-check col-auto">
       <% if agree_to_terms? %>
         You agreed to the <%= link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'} %>
-        <%= time_ago_in_words form.object.model.fetch(:work).depositor.last_work_terms_agreement %> ago.
+        <%= time_ago_in_words last_work_terms_agreement %> ago.
       <% else %>
         <%= form.check_box :agree_to_terms, required: true, class: 'form-check-input' %>
         <%= form.label :agree_to_terms,
