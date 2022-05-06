@@ -2,9 +2,7 @@
   <header>Terms of Deposit *</header>
   <div class="row">
     <div class="form-check col-auto">
-      <%# TODO: create a method for form.object.model.fetch(:work).depositor.last_work_terms_agreement
-      and/or determine why we have to check it separately to avoid potential nil error if embargo release date is invalid (e.g. June 31) %>
-      <% if agree_to_terms? && form.object.model.fetch(:work).depositor.last_work_terms_agreement %>
+      <% if agreed_to_terms_recently?  %>
         You agreed to the <%= link_to 'SDR Terms of Deposit', '#termsOfDepositModal', data: { bs_toggle: 'modal', bs_target: '#termsOfDepositModal'} %>
         <%= time_ago_in_words last_work_terms_agreement %> ago.
       <% else %>
