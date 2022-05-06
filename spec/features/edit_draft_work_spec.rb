@@ -9,7 +9,12 @@ RSpec.describe 'Edit a draft work', js: true do
            work_type: 'other', subtype: ['Graphic novel'],
            state: 'version_draft', work: work)
   end
-  let(:collection) { create(:collection_version_with_collection).collection }
+  # create a collection that allows embargo access selection
+  let(:collection) do
+    create(:collection, :depositor_selects_access, :depositor_selects_release_date, managed_by: [depositor],
+                                                                                    head: collection_version)
+  end
+  let(:collection_version) { create(:collection_version, :deposited) }
   let(:work) { create(:work, depositor: depositor, collection: collection) }
 
   context 'when a user has previously accepted the terms of agreement less than 1 year ago' do
@@ -129,6 +134,30 @@ RSpec.describe 'Edit a draft work', js: true do
       create(:attached_file, :with_file, work_version: work_version)
       work.collection.depositors = [depositor]
       sign_in depositor
+    end
+
+    context 'when saving draft with invalid embargo date' do
+      it 're-renders the page with an error message' do
+        visit dashboard_path
+
+        click_link 'Yes!'
+
+        expect(page).to have_content work_version.title
+
+        # ensure we do not agree to the terms!
+        uncheck 'I agree to the SDR Terms of Deposit'
+
+        # add bogus embargo date
+        choose 'On this date'
+        select (Time.zone.today.year + 1).to_s, from: 'work_embargo_year' # select next year (so always in the future)
+        select '31', from: 'work_embargo_day' # and a bogus month and day combo
+        select 'February', from: 'work_embargo_month'
+
+        click_button 'Save as draft'
+
+        # the page re-renders with the error message
+        expect(page).to have_content('Embargo date must provide all date parts and must be a valid date')
+      end
     end
 
     context 'when successful deposit of "other" type work' do
