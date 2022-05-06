@@ -7,6 +7,6 @@ class EmbargoDateParts < ActiveModel::Validator
     return if record.embargo_date.instance_of?(Date)
 
     # Adds error because embargo date is nil (may be missing month and day values in form)
-    record.errors.add(:embargo_date, 'must provide all parts')
+    record.errors.add(:embargo_date, 'must provide all date parts and must be a valid date')
   end
 end
