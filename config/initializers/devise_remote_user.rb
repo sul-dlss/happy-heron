@@ -3,7 +3,7 @@
 DeviseRemoteUser.configure do |config|
   config.env_key = lambda do |env|
     if Rails.env.development? && ENV.fetch('REMOTE_USER', nil)
-      ENV['REMOTE_USER']
+      ENV.fetch('REMOTE_USER')
     else
       # Return the first non-blank value of a remote user header, or return nil (unauthenticated)
       env.to_h.values_at(*Settings.remote_user_headers).find(&:present?).presence
