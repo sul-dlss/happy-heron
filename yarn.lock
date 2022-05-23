@@ -13,9 +13,9 @@
   integrity sha512-YVtZVLBikP6I7na22kfB9PKIseISwX41MFJ7lPuNz1VVH2IR5cpRRU6F1X6kcchPChljuvMUR4OiwMWHOJQ8kQ==
 
 "@hotwired/turbo-rails@^7.0.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.1.1.tgz#35c03b92b5c86f0137ed08bef843d955ec9bbe83"
-  integrity sha512-ZXpxUjCfkdbuXfoGrsFK80qsVzACs8xCfie9rt2jMTSN6o1olXVA0Nrk8u02yNEwSiVJm/4QSOa8cUcMj6VQjg==
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.1.2.tgz#018ff65fdee4561e0c3ae407aa3f8eb0db7f6b88"
+  integrity sha512-rGz5RRkZu2vW5v3GnsgGRqkfhTxnX2b0IMbsX5VRX3b03ynt+Xn5yRsDVuEes1PXlnjgkkOPadf7NEEl7OdR3Q==
   dependencies:
     "@hotwired/turbo" "^7.1.0"
     "@rails/actioncable" "^7.0"
@@ -310,9 +310,9 @@ readdirp@~3.6.0:
     picomatch "^2.2.1"
 
 sass@^1.43.2:
-  version "1.51.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.51.0.tgz#25ea36cf819581fe1fe8329e8c3a4eaaf70d2845"
-  integrity sha512-haGdpTgywJTvHC2b91GSq+clTKGbtkkZmVAb82jZQN/wTy6qs8DdFm2lhEQbEwrY0QDRgSQ3xDurqM977C3noA==
+  version "1.52.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.52.1.tgz#554693da808543031f9423911d62c60a1acf7889"
+  integrity sha512-fSzYTbr7z8oQnVJ3Acp9hV80dM1fkMN7mSD/25mpcct9F7FPBMOI8krEYALgU1aZoqGhQNhTPsuSmxjnIvAm4Q==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
