@@ -3,6 +3,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users, skip: %i[registrations passwords sessions]
   devise_scope :user do
     get 'webauth/login' => 'login#login', as: :new_user_session

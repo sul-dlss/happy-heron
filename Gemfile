@@ -44,6 +44,7 @@ group :deployment do
 end
 
 gem 'action_policy', '~> 0.5.3'
+gem 'activeadmin'
 gem 'addressable', '~> 2.8.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bunny', '~> 2.17' # RabbitMQ library
