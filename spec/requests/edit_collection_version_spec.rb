@@ -18,13 +18,28 @@ RSpec.describe 'Updating an existing collection version' do
       sign_in user
     end
 
-    describe 'show the form for an existing object' do
+    describe 'show the form for an existing object in first draft' do
       let(:collection_version) do
-        create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+        create(:collection_version_with_collection, :version_draft, :with_contact_emails, :with_version_description,
+               collection: collection)
       end
 
-      it 'allows GETs to /collection_versions/{id}/edit' do
+      it 'allows GETs to /collection_versions/{id}/edit and shows saved version description' do
         get "/collection_versions/#{collection_version.id}/edit"
+        expect(response.body).to include('really important changes')
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    describe 'show the form for an existing already deposited object' do
+      let(:collection_version) do
+        create(:collection_version_with_collection, :with_contact_emails, :with_version_description,
+               collection: collection)
+      end
+
+      it 'allows GETs to /collection_versions/{id}/edit and shows blank version description' do
+        get "/collection_versions/#{collection_version.id}/edit"
+        expect(response.body).not_to include('really important changes')
         expect(response).to have_http_status(:ok)
       end
     end
