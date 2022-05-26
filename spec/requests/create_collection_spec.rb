@@ -288,7 +288,7 @@ RSpec.describe 'Create a collection' do
             expect do
               post first_draft_collections_path,
                    params: { collection: draft_collection_params, commit: save_draft_button }
-            end.to change { ActionMailer::Base.deliveries.count }.by(0) # NO depositor emails sent
+            end.not_to(change { ActionMailer::Base.deliveries.count }) # NO depositor emails sent
           end
         end
 
