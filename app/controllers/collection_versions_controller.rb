@@ -69,9 +69,9 @@ class CollectionVersionsController < ObjectsController
 
   # Create the next CollectionVersion for this Collection
   def create_new_version(previous_version)
-    previous_version.dup.tap do |work_version|
-      work_version.state = 'version_draft'
-      work_version.version = previous_version.version + 1
+    previous_version.dup.tap do |collection_version|
+      collection_version.state = 'version_draft'
+      collection_version.version = previous_version.version + 1
     end
   end
 

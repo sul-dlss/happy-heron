@@ -7,6 +7,10 @@ FactoryBot.define do
     state { 'first_draft' }
     collection
 
+    trait :with_version_description do
+      version_description { 'really important changes' }
+    end
+
     factory :collection_version_with_collection do
       transient do
         depositors { [] }

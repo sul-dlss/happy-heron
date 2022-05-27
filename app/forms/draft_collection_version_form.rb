@@ -6,7 +6,8 @@ class DraftCollectionVersionForm < Reform::Form
 
   property :name, on: :collection_version
   property :description, on: :collection_version
-  property :version_description, on: :collection_version
+  property :version_description, on: :collection_version,
+                                 prepopulator: ->(*) { self.version_description = '' if deposited? }
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
@@ -34,5 +35,5 @@ class DraftCollectionVersionForm < Reform::Form
   end
 
   # Required so that rails knows this is an update and uses the PATCH method for the form.
-  delegate :persisted?, to: :model
+  delegate :persisted?, :deposited?, to: :model
 end
