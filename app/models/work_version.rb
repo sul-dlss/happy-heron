@@ -14,6 +14,8 @@ class WorkVersion < ApplicationRecord
     # So this seems to take care of it.
     AbstractContributor.where(work_version_id: id).destroy_all
   end
+  before_save :clean_abstract
+
   has_many :related_links, as: :linkable, dependent: :destroy
   has_many :contact_emails, as: :emailable, dependent: :destroy
   has_many :related_works, dependent: :destroy
@@ -96,6 +98,16 @@ class WorkVersion < ApplicationRecord
       transition %i[first_draft version_draft pending_approval rejected] => same
       transition purl_reserved: :first_draft
     end
+  end
+
+  # 6/3/2022 : Added to prevent https://app.honeybadger.io/projects/77112/faults/85827019
+  # Postgres does not like this particular unicode character and will reject the query if it is present.
+  # This likely occurs when a user copy and pastes text into the abstract text box from PDF/Word/etc.
+  def clean_abstract
+    return unless abstract&.include?("\u0000")
+
+    abstract.delete!("\u0000")
+    Rails.logger.info { "Null character stripped from abstract for work_version id #{id}." }
   end
 
   def updatable?

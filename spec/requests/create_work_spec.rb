@@ -460,7 +460,7 @@ RSpec.describe 'Create a new work' do
           {
             title: 'Test title',
             work_type: 'text',
-            abstract: 'test abstract',
+            abstract: "test abstract\u0000", # bad unicode character will be stripped
             authors_attributes: authors,
             contact_emails_attributes: contact_emails,
             attached_files_attributes: files,
