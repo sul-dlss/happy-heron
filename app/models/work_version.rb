@@ -103,6 +103,8 @@ class WorkVersion < ApplicationRecord
   # 6/3/2022 : Added to prevent https://app.honeybadger.io/projects/77112/faults/85827019
   # Postgres does not like this particular unicode character and will reject the query if it is present.
   # This likely occurs when a user copy and pastes text into the abstract text box from PDF/Word/etc.
+  # see for example https://stackoverflow.com/questions/29320369/coping-with-string-contains-null-byte-sent-from-users
+  # and https://stackoverflow.com/questions/31671634/handling-unicode-sequences-in-postgresql
   def clean_abstract
     return unless abstract&.include?("\u0000")
 
