@@ -39,6 +39,8 @@ Data:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -158,6 +160,8 @@ Data:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       - type: resource type
         value: still image
@@ -305,6 +309,8 @@ Image:
       # no value
     CAD:
       # no value
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -431,6 +437,8 @@ Image:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       # no value
     Preprint:
@@ -589,6 +597,8 @@ Mixed Materials:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -721,6 +731,8 @@ Mixed Materials:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       - type: resource type
         value: still image
@@ -881,6 +893,8 @@ Music:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -1013,6 +1027,8 @@ Music:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       - type: resource type
         value: still image
@@ -1173,6 +1189,8 @@ Other:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -1305,6 +1323,8 @@ Other:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       - type: resource type
         value: still image
@@ -1470,6 +1490,8 @@ Software/Code:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -1599,6 +1621,8 @@ Software/Code:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       - type: resource type
         value: still image
@@ -1761,6 +1785,8 @@ Sound:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -1893,6 +1919,8 @@ Sound:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       - type: resource type
         value: still image
@@ -2046,6 +2074,8 @@ Text:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       # no value
     Conference session:
@@ -2159,6 +2189,8 @@ Text:
     Poetry reading:
       # no value
     Policy brief:
+      # no value
+    Portfolio:
       # no value
     Poster:
       - type: resource type
@@ -2278,6 +2310,8 @@ Video:
         value: still image
         source:
           value: MODS resource types
+    Capstone:
+      # no value
     Code:
       - type: resource type
         value: text
@@ -2407,6 +2441,8 @@ Video:
         value: text
         source:
           value: MODS resource types
+    Portfolio:
+      # no value
     Poster:
       - type: resource type
         value: still image
