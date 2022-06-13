@@ -320,7 +320,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.2)
+    rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
     railties (6.1.6)
       actionpack (= 6.1.6)
@@ -387,7 +387,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.18.0)
       parser (>= 3.1.1.0)
-    rubocop-performance (1.14.1)
+    rubocop-performance (1.14.2)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rails (2.14.2)
@@ -409,7 +409,7 @@ GEM
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.0.2)
-    sidekiq (6.4.2)
+    sidekiq (6.5.0)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
@@ -554,7 +554,7 @@ DEPENDENCIES
   state_machines-graphviz
   super_diff
   turbo-rails (~> 1.0)
-  view_component (~> 2.52)
+  view_component (~> 2.56.2)
   web-console (>= 3.3.0)
   webmock
   whenever
