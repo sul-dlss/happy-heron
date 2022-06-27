@@ -1,4 +1,11 @@
 en:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              invalid: must be a valid email address
   date:
     formats:
       abbr_month: '%b %d, %Y'
