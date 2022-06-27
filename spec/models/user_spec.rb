@@ -14,6 +14,15 @@ RSpec.describe User do
     end
   end
 
+  context 'when email is invalid' do
+    let(:invalid_user) { described_class.new(email: 'jcoyne85@stanford.edu@stanford.edu') }
+
+    it 'validates email is correct' do
+      expect(invalid_user).not_to be_valid
+      expect(invalid_user.errors.messages.to_h).to include(email: ['must be a valid email address'])
+    end
+  end
+
   context 'when email is already used' do
     before { user.save! }
 
