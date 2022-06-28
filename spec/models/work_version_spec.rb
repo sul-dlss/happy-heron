@@ -340,10 +340,10 @@ RSpec.describe WorkVersion do
                                       .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                              'CollectionsMailer', 'first_draft_created', 'deliver_now',
                                              { params: {
-                                               user: collection.managed_by.last,
-                                               depositor: work.depositor,
-                                               collection_version: collection_version
-                                             }, args: [] }
+                                                 user: collection.managed_by.last,
+                                                 depositor: work.depositor,
+                                                 collection_version: collection_version
+                                               }, args: [] }
                                            ))
         end
       end
