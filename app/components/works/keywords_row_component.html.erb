@@ -14,8 +14,7 @@
   </div>
   <div class="col-sm-1">
     <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Remove' },
-    data: { action: "click->nested-form#removeAssociation",
-            plain: true } do %>
+    data: { action: "click->nested-form#removeAssociation" } do %>
       <span class="far fa-trash-alt"></span>
     <% end %>
     <%= form.hidden_field :_destroy %>
