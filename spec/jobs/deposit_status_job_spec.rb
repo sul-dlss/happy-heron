@@ -25,10 +25,10 @@ RSpec.describe DepositStatusJob do
       expect { run }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
         'CollectionsMailer', 'item_deposited', 'deliver_now',
         { params: {
-            user: collection.managed_by.last,
-            depositor: work.depositor,
-            collection_version: collection_version
-          }, args: [] }
+          user: collection.managed_by.last,
+          depositor: work.depositor,
+          collection_version: collection_version
+        }, args: [] }
       )
 
       expect(work_version.reload).to be_deposited
