@@ -65,7 +65,7 @@ module Works
     end
 
     def created_at
-      render LocalTimeComponent.new(datetime: work_version.created_at)
+      render LocalTimeComponent.new(datetime: work_version.work.created_at)
     end
 
     def updated_at
