@@ -61,7 +61,7 @@ gem 'jsbundling-rails', '~> 0.1.9'
 gem 'lograge', '~> 0.11.2'
 gem 'okcomputer'
 gem 'pg'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0.1'
 gem 'redis', '~> 4.0'
 # TODO: Deal with this
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
@@ -70,8 +70,9 @@ gem 'reform-rails', '~> 0.2.0'
 gem 'sdr-client', '~> 0.63'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
+gem 'sprockets-rails'
 gem 'state_machines-activerecord'
 gem 'turbo-rails', '~> 1.0'
 gem 'view_component', '~> 2.56.2' # https://github.com/github/view_component/issues/1390
 gem 'whenever'
-gem 'zipline', '~> 1.3'
+gem 'zipline', '~> 1.4'
