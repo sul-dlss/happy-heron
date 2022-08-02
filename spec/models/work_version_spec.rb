@@ -174,8 +174,8 @@ RSpec.describe WorkVersion do
     context 'with a nil license' do
       let(:work_version) { build(:work_version, license: nil) }
 
-      it 'validates' do
-        expect(work_version).to be_valid
+      it 'does not validate' do
+        expect(work_version).not_to be_valid
       end
     end
 
