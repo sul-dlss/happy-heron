@@ -73,7 +73,7 @@ module Works
     end
 
     def embargo_date
-      work_version.embargo_date ? work_version.embargo_date.to_formatted_s(:long) : 'Immediately'
+      work_version.embargo_date ? work_version.embargo_date.to_fs(:long) : 'Immediately'
     end
 
     def access

@@ -16,7 +16,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
   end
 
   let(:citation_value) do
-    'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. '\
+    'Giarlo, M.J. (2013). Academic Libraries as Data Quality Hubs. ' \
       'Journal of Librarianship and Scholarly Communication, 1(3).'
   end
   let(:types_form) do

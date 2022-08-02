@@ -128,7 +128,7 @@ RSpec.describe 'Autocomplete Controller' do
 
     it 'returns status 200 and html with suggestions' do
       get '/autocomplete', params: { q: 'tea' }
-      expect(response.status).to eq 200
+      expect(response).to have_http_status :ok
 
       match_suggestions(suggestions, response)
     end
@@ -283,7 +283,7 @@ RSpec.describe 'Autocomplete Controller' do
 
     it 'returns status 200 and html with suggestions' do
       get '/autocomplete', params: { q: 'tesl' }
-      expect(response.status).to eq 200
+      expect(response).to have_http_status :ok
 
       match_suggestions(suggestions, response)
     end
@@ -311,7 +311,7 @@ RSpec.describe 'Autocomplete Controller' do
 
     it 'returns status 500 and an empty body' do
       get '/autocomplete', params: { q: 'tea' }
-      expect(response.status).to eq 500
+      expect(response).to have_http_status :internal_server_error
       expect(response.body).to eq ''
       expect(Rails.logger).to have_received(:warn).with('Autocomplete results for tea returned 404')
     end

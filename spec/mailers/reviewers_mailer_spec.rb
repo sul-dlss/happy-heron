@@ -23,8 +23,8 @@ RSpec.describe ReviewersMailer, type: :mailer do
     end
 
     it 'renders the reason' do
-      expect(mail.body.encoded).to match "The Depositor Al Dente has submitted the deposit \"Test title\" for\r\n" \
-                                         '  review in the small batch organic collection.'
+      expect(mail.body.encoded).to match "The Depositor Al Dente has submitted the deposit \"Test title\" for\r\n  " \
+                                         'review in the small batch organic collection.'
     end
   end
 end

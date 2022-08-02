@@ -61,7 +61,7 @@ RSpec.describe Works::EmbargoComponent do
 
   context 'when the collection is configured for a specific date' do
     let(:collection) { build(:collection, release_option: 'delay', release_duration: '1 year') }
-    let(:release_date) { (Time.zone.today + 1.year).to_formatted_s(:long) }
+    let(:release_date) { (Time.zone.today + 1.year).to_fs(:long) }
 
     it 'renders the component' do
       expect(rendered.to_html).to include "Starting on #{release_date}"

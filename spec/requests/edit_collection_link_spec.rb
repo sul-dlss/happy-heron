@@ -30,7 +30,7 @@ RSpec.describe 'Link to edit a collection' do
       get "/collections/#{collection.id}/edit_link"
       expect(response).to have_http_status(:ok)
       expect(rendered).to have_selector('turbo-frame')
-      expect(rendered).not_to have_selector('a')
+      expect(rendered).not_to have_link
     end
   end
 end

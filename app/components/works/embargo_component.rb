@@ -36,7 +36,7 @@ module Works
       elsif collection.release_option == 'immediate'
         'Immediately upon deposit.'
       else
-        "Starting on #{collection.release_date.to_formatted_s(:long)}."
+        "Starting on #{collection.release_date.to_fs(:long)}."
       end
     end
 
