@@ -37,6 +37,8 @@ You can change user or roles by setting environment variables:
 REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 ```
 
+See https://github.com/sul-dlss/happy-heron/wiki/Complete-deposits-locally for some other useful info for local development.
+
 ## Testing
 
 To enable interactive debugging, invoke `bin/dev` as follows:
