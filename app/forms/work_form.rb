@@ -18,6 +18,8 @@ class WorkForm < DraftWorkForm
   validates :embargo_date, embargo_date: true, if: :availability_component_present?
   validates :agree_to_terms, presence: true
 
+  has_contributors(validate: true)
+
   # Copies form properties to the model. Called internally by reform prior to save.
   def sync(*)
     maybe_assign_doi

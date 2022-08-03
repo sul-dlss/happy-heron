@@ -54,10 +54,6 @@ class AbstractContributor < ApplicationRecord
 
   belongs_to :work_version
 
-  validates :first_name, presence: true, if: :person?
-  validates :last_name, presence: true, if: :person?
-  validates :full_name, presence: true, unless: :person?
-
   validates :contributor_type, presence: true, inclusion: { in: %w[person organization] }
 
   validates :orcid, format: { with: Orcid::REGEX }, allow_nil: true, if: :person?

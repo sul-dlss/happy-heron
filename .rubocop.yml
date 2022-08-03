@@ -26,6 +26,7 @@ Metrics/BlockLength:
     - config/routes.rb
   IgnoredMethods:
     - state_machine
+    - class_methods
 
 Metrics/ClassLength:
   Max: 150
@@ -36,7 +37,10 @@ Metrics/MethodLength:
   Max: 15
 
 Naming/PredicateName:
-  ForbiddenPrefixes: is_
+  NamePrefix:
+    - is_
+  ForbiddenPrefixes:
+    - is_
 
 RSpec/DescribeClass:
   Exclude:
