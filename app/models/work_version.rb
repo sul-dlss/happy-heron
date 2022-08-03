@@ -23,7 +23,7 @@ class WorkVersion < ApplicationRecord
   has_many :keywords, dependent: :destroy
 
   validates :state, presence: true
-  validates :license, inclusion: { in: License.license_list(include_displayable: true) }, allow_nil: true
+  validates :license, inclusion: { in: License.license_list(include_displayable: true) }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
 
