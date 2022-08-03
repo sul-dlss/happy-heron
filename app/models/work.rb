@@ -43,7 +43,7 @@ class Work < ApplicationRecord
   end
 
   def already_embargo_released?
-    head&.deposited? && head.embargo_date.present? && head.embargo_date < Time.zone.today
+    head&.deposited? && head.embargo_date.present? && head.embargo_date <= Time.zone.today
   end
 
   delegate :name, to: :depositor, prefix: true

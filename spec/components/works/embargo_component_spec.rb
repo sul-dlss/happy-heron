@@ -84,6 +84,14 @@ RSpec.describe Works::EmbargoComponent do
     end
   end
 
+  context 'when the collection has been deposited and embargo date is today' do
+    let(:work_version) { build(:work_version, work: work, state: 'deposited', embargo_date: Time.zone.today) }
+
+    it 'renders the component' do
+      expect(rendered.to_html).to include 'This item has been released from embargo.'
+    end
+  end
+
   context 'when the collection has been deposited and embargo has not elapsed' do
     let(:collection) { build(:collection, :depositor_selects_access, release_option: 'depositor-selects') }
     let(:work_version) { build(:work_version, work: work, state: 'deposited', embargo_date: Time.zone.today + 1.month) }
