@@ -7,6 +7,7 @@ class DraftWorkForm < Reform::Form
   feature Edtf
   feature EmbargoDate
   include Composition
+  include ContributorForm
   feature Coercion # Casts properties to a specific type
 
   property :work_type, on: :work_version
@@ -82,28 +83,7 @@ class DraftWorkForm < Reform::Form
     params['license'] = collection.required_license
   end
 
-  contributor = lambda { |*|
-    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
-    property :first_name
-    property :last_name
-    property :full_name
-    property :orcid
-    property :role_term
-    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
-    property :weight, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
-  }
-
-  collection :contributors,
-             populator: ContributorPopulator.new(:contributors, Contributor),
-             prepopulator: ->(*) { contributors << Contributor.new if contributors.blank? },
-             on: :work_version,
-             &contributor
-
-  collection :authors,
-             populator: ContributorPopulator.new(:authors, Author),
-             prepopulator: ->(*) { authors << Author.new if authors.blank? },
-             on: :work_version,
-             &contributor
+  has_contributors(validate: false)
 
   collection :attached_files,
              populator: AttachedFilesPopulator.new(:attached_files, AttachedFile),

@@ -231,6 +231,84 @@ RSpec.describe 'Create a new work' do
         end
       end
 
+      context 'when saving a draft that has an incomplete author' do
+        let(:collection) do
+          create(:collection, :depositor_selects_access, depositors: [user])
+        end
+        let(:params) do
+          {
+            'work' => {
+              'work_type' => 'text',
+              'title' => 'Test publication',
+              'contact_emails_attributes' => { '0' => {
+                'email' => 'foo@hotmail.com',
+                '_destroy' => ''
+              } },
+              'authors_attributes' => { '0' => {
+                'role_term' => 'person|Author',
+                'with_orcid' => 'false',
+                'first_name' => 'Camille ',
+                'last_name' => '',
+                'orcid' => '',
+                'full_name' => '',
+                '_destroy' => '',
+                'weight' => '0'
+              } },
+              'contributors_attributes' => { '0' => {
+                'role_term' => 'person|Author',
+                'with_orcid' => 'false',
+                'first_name' => '',
+                'last_name' => '',
+                'orcid' => '',
+                'full_name' => '',
+                '_destroy' => ''
+              } },
+              'published(1i)' => '',
+              'published(2i)' => '',
+              'published(3i)' => '',
+              'created_type' => 'single',
+              'created(1i)' => '',
+              'created(2i)' => '',
+              'created(3i)' => '',
+              'abstract' => '',
+              'keywords_attributes' => { '0' => {
+                'label' => '',
+                'uri' => '',
+                'cocina_type' => '',
+                '_destroy' => ''
+              } },
+              'default_citation' => 'true',
+              'citation' => '',
+              'citation_auto' => 'Zappa, F. (2020). Test publication yy/mm date in past. ' \
+                                 'Stanford Digital Repository. Available at :link:',
+              'related_works_attributes' => { '0' => {
+                'citation' => '',
+                '_destroy' => ''
+              } },
+              'related_links_attributes' => { '0' => {
+                'link_title' => '',
+                '_destroy' => '',
+                'url' => ''
+              } },
+              'license' => 'CC-BY-NC-4.0'
+            },
+            'commit' => 'Save as draft',
+            'controller' => 'works',
+            'action' => 'create',
+            'collection_id' => collection.id
+          }
+        end
+
+        before { create(:collection_version_with_collection, collection: collection) }
+
+        it 'saves the draft' do
+          post "/collections/#{collection.id}/works", params: params
+          expect(response).to have_http_status(:found)
+          work_version = Work.last.head
+          expect(work_version.authors.size).to eq 1
+        end
+      end
+
       context 'with a minimal set' do
         let(:collection) do
           create(:collection, :depositor_selects_access, depositors: [user])
