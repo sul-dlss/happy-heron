@@ -33,7 +33,7 @@ RSpec.describe 'Link to edit a collection version' do
       get "/collection_versions/#{collection_version.id}/edit_link"
       expect(response).to have_http_status(:ok)
       expect(rendered).to have_selector('turbo-frame')
-      expect(rendered).not_to have_selector('a')
+      expect(rendered).not_to have_link
     end
   end
 end

@@ -96,7 +96,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload1) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -255,7 +255,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -415,7 +415,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -492,7 +492,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -559,7 +559,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -624,7 +624,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('public/apple-touch-icon.png')),
+            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
