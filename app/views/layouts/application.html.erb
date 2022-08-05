@@ -22,41 +22,52 @@
       </div>
     </div>
 
-    <div id="su-wrap">
+    <div id="su-wrap"><%# required to push the footer to the bottom of the page, rather than the viewport %>
       <div id="su-content">
-        <header class="navbar navbar-expand navbar-dark stanford-navbar">
-          <nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
-            <a class="navbar-brand p-0 me-auto" href="/" aria-label="Stanford Digital Repository">
+        <nav class="navbar navbar-expand-md navbar-dark stanford-navbar">
+          <div class="container">
+            <a class="navbar-brand me-auto" href="/" aria-label="Stanford Digital Repository">
               <%= image_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
             </a>
 
             <div id="notifications"></div>
-
-            <%= link_to('Help', '#contactUsModal',
-                        class: 'nav-link',
-                        data: {
-                          bs_toggle: 'modal',
-                          bs_target: '#contactUsModal',
-                          controller: 'contact-us'
-                        }) %> &#8226;
-            <%= link_to('SDR Services', Settings.sdr_url,
-                        class: 'nav-link') %> &#8226;
-            <%= link_to('Terms of Deposit', '#termsOfDepositModal',
-                        class: 'nav-link',
-                        data: {
-                          bs_toggle: 'modal',
-                          bs_target: '#termsOfDepositModal'
-                        }) %> &#8226;
-            <div id="login">
-              <% if current_user %>
-                <%= link_to('Logout', destroy_user_session_path, class: 'nav-link') %>
-              <% else %>
-                <%= link_to('Login', new_user_session_path, class: 'nav-link') %>
-              <% end %>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                  <%= link_to('Help', '#contactUsModal',
+                            class: 'nav-link',
+                            data: {
+                              bs_toggle: 'modal',
+                              bs_target: '#contactUsModal',
+                              controller: 'contact-us'
+                            }) %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to('SDR Services', Settings.sdr_url,
+                              class: 'nav-link') %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to('Terms of Deposit', '#termsOfDepositModal',
+                              class: 'nav-link',
+                              data: {
+                                bs_toggle: 'modal',
+                                bs_target: '#termsOfDepositModal'
+                              }) %>
+                </li>
+                <li class="nav-item">
+                  <% if current_user %>
+                    <%= link_to('Logout', destroy_user_session_path, class: 'nav-link') %>
+                  <% else %>
+                    <%= link_to('Login', new_user_session_path, class: 'nav-link') %>
+                  <% end %>
+                </li>
+              </ul>
             </div>
-
-          </nav>
-        </header>
+          </div>
+        </nav>
         <% if controller_name != 'welcome' %>
           <div class="background-holder">
             <div class="sdr-header">
