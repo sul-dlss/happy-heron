@@ -34,16 +34,6 @@ RSpec.describe User do
     end
   end
 
-  context 'with notifications' do
-    subject(:user) { build(:user, notifications: [notification]) }
-
-    let(:notification) { build(:notification) }
-
-    it 'has notifications' do
-      expect(user.notifications).to include(notification)
-    end
-  end
-
   it 'uses email as string representation' do
     expect(user.to_s).to eq(user.email)
   end
