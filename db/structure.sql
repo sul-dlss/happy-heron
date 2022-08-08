@@ -406,39 +406,6 @@ CREATE TABLE public.managers (
 
 
 --
--- Name: notifications; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.notifications (
-    id bigint NOT NULL,
-    user_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    opened_at timestamp without time zone,
-    text character varying NOT NULL
-);
-
-
---
--- Name: notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.notifications_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.notifications_id_seq OWNED BY public.notifications.id;
-
-
---
 -- Name: related_links; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -712,13 +679,6 @@ ALTER TABLE ONLY public.keywords ALTER COLUMN id SET DEFAULT nextval('public.key
 
 
 --
--- Name: notifications id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.notifications ALTER COLUMN id SET DEFAULT nextval('public.notifications_id_seq'::regclass);
-
-
---
 -- Name: related_links id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -839,14 +799,6 @@ ALTER TABLE ONLY public.events
 
 ALTER TABLE ONLY public.keywords
     ADD CONSTRAINT keywords_pkey PRIMARY KEY (id);
-
-
---
--- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.notifications
-    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
 
 
 --
@@ -1007,20 +959,6 @@ CREATE INDEX index_keywords_on_work_version_id ON public.keywords USING btree (w
 --
 
 CREATE UNIQUE INDEX index_managers_on_collection_id_and_user_id ON public.managers USING btree (collection_id, user_id);
-
-
---
--- Name: index_notifications_on_opened_at; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_notifications_on_opened_at ON public.notifications USING btree (opened_at);
-
-
---
--- Name: index_notifications_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_notifications_on_user_id ON public.notifications USING btree (user_id);
 
 
 --
@@ -1187,14 +1125,6 @@ ALTER TABLE ONLY public.collections
 
 
 --
--- Name: notifications fk_rails_b080fb4855; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.notifications
-    ADD CONSTRAINT fk_rails_b080fb4855 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
 -- Name: active_storage_attachments fk_rails_c3b3935057; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1302,6 +1232,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210802203252'),
 ('20210816133101'),
 ('20210827165420'),
-('20220113144801');
+('20220113144801'),
+('20220808145502');
 
 
