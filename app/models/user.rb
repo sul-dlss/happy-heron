@@ -17,10 +17,10 @@ class User < ApplicationRecord
             }
 
   has_many :notifications, dependent: :destroy
-  has_many :deposits, class_name: 'Work',
-                      foreign_key: 'depositor_id',
-                      inverse_of: :depositor,
-                      dependent: :destroy
+  has_many :owned_works, class_name: 'Work',
+                         foreign_key: 'owner_id',
+                         inverse_of: :owner,
+                         dependent: :destroy
 
   has_and_belongs_to_many :reviews_collections, class_name: 'Collection', join_table: 'reviewers'
   has_and_belongs_to_many :manages_collections, class_name: 'Collection', join_table: 'managers'

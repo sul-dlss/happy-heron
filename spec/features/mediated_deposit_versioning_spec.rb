@@ -15,7 +15,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
   # Work, WorkVersion, and Collection need to exist before user hits dashboard
   let!(:work_version) { create(:valid_deposited_work_version, work: work) }
   let(:work) do
-    create(:work, druid: 'druid:bc123df4567', depositor: depositor, collection: collection_version.collection)
+    create(:work, druid: 'druid:bc123df4567', owner: depositor, collection: collection_version.collection)
   end
 
   before do
@@ -40,6 +40,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       click_link 'Return to dashboard'
       sleep(2)
       click_link new_work_title
+
       expect(page).to have_text 'Your deposit has been sent for approval.'
 
       # A work submitted for approval should not be editable.

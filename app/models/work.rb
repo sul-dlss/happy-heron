@@ -6,6 +6,8 @@ class Work < ApplicationRecord
 
   belongs_to :collection
   belongs_to :depositor, class_name: 'User'
+  # When created the owner is the depositor, but this can be changed so that someone else can manage the work.
+  belongs_to :owner, class_name: 'User'
   belongs_to :head, class_name: 'WorkVersion', optional: true
 
   has_many :events, as: :eventable, dependent: :destroy

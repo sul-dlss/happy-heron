@@ -10,7 +10,7 @@ class WorksController < ObjectsController
   def new
     validate_work_types!
     collection = Collection.find(params[:collection_id])
-    work = Work.new(collection: collection, depositor: current_user)
+    work = Work.new(collection: collection, owner: current_user)
     work_version = WorkVersion.new(work_type: params[:work_type], subtype: params[:subtype], work: work)
     authorize! work_version
 
@@ -19,7 +19,7 @@ class WorksController < ObjectsController
   end
 
   def create
-    work = Work.new(collection_id: params[:collection_id], depositor: current_user)
+    work = Work.new(collection_id: params[:collection_id], depositor: current_user, owner: current_user)
     work_version = WorkVersion.new(work: work)
 
     authorize! work_version

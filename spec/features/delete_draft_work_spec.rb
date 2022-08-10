@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe 'Delete a draft work', js: true do
   let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
-  let(:work) { create(:work, collection: collection, depositor: user) }
+  let(:work) { create(:work, collection: collection, owner: user) }
   let(:work_version) { create(:work_version, title: 'Delete me', work: work) }
-  let(:work_pending_approval) { create(:work, collection: collection, depositor: user) }
+  let(:work_pending_approval) { create(:work, collection: collection, owner: user) }
   let(:work_version_pending_approval) do
     create(:work_version, :pending_approval, title: 'Pending Approval - Delete me', work: work_pending_approval)
   end
-  let(:work_rejected) { create(:work, collection: collection, depositor: user) }
+  let(:work_rejected) { create(:work, collection: collection, owner: user) }
   let(:work_version_rejected) { create(:work_version, :rejected, title: 'Rejected - Delete me', work: work_rejected) }
   let(:user) { collection.depositors.first }
 

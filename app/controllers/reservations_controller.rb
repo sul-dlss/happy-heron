@@ -7,7 +7,7 @@ class ReservationsController < ObjectsController
   verify_authorized except: %i[delete_button edit_button]
 
   def create
-    work = Work.new(collection_id: params[:collection_id], depositor: current_user)
+    work = Work.new(collection_id: params[:collection_id], depositor: current_user, owner: current_user)
     work_version = WorkVersion.new(work: work)
 
     authorize! work_version

@@ -45,20 +45,20 @@ RSpec.describe WorkVersionPolicy do
   end
 
   describe_rule :update? do
-    failed 'when user is not the depositor'
+    failed 'when user is not the owner'
 
-    succeed 'when user is the depositor and status is not pending_approval' do
-      let(:work) { build_stubbed :work, collection: collection, depositor: user }
+    succeed 'when user is the owner and status is not pending_approval' do
+      let(:work) { build_stubbed :work, collection: collection, owner: user }
       let(:record) { build_stubbed :work_version, work: work }
     end
 
-    failed 'when user is a depositor and status is pending_approval' do
-      let(:work) { build_stubbed :work, collection: collection, depositor: user }
+    failed 'when user is the owner and status is pending_approval' do
+      let(:work) { build_stubbed :work, collection: collection, owner: user }
       let(:record) { build_stubbed :work_version, :pending_approval, work: work }
     end
 
-    failed 'when user is a depositor and status is depositing' do
-      let(:work) { build_stubbed :work, collection: collection, depositor: user }
+    failed 'when user is the owner and status is depositing' do
+      let(:work) { build_stubbed :work, collection: collection, owner: user }
       let(:record) { build_stubbed :work_version, :depositing, work: work }
     end
 
@@ -102,10 +102,10 @@ RSpec.describe WorkVersionPolicy do
   end
 
   describe_rule :show? do
-    failed 'when user is not the depositor'
+    failed 'when user is not the owner'
 
-    succeed 'when user is the depositor' do
-      let(:work) { build_stubbed :work, depositor: user }
+    succeed 'when user is the owner' do
+      let(:work) { build_stubbed :work, owner: user }
       let(:record) { build_stubbed :work_version, work: work }
     end
 
@@ -155,12 +155,12 @@ RSpec.describe WorkVersionPolicy do
     context 'when persisted and version_draft' do
       before { record.state = 'version_draft' }
 
-      failed 'when user is not a depositor, reviewer or manager for the collection'
+      failed 'when user is not an owner, reviewer or manager for the collection'
 
       # `succeed` is `context` + `specify`, which checks
       # that the result of application wasn't successful
-      succeed 'when user is a depositor' do
-        let(:work) { build_stubbed :work, depositor: user }
+      succeed 'when user is an owner' do
+        let(:work) { build_stubbed :work, owner: user }
       end
 
       succeed 'when user is a collection manager' do
@@ -179,12 +179,12 @@ RSpec.describe WorkVersionPolicy do
     context 'when persisted and first_draft' do
       before { record.state = 'first_draft' }
 
-      failed 'when user is not a depositor, reviewer or manager for the collection'
+      failed 'when user is not an owner, reviewer or manager for the collection'
 
       # `succeed` is `context` + `specify`, which checks
       # that the result of application wasn't successful
-      succeed 'when user is a depositor' do
-        let(:work) { build_stubbed :work, depositor: user }
+      succeed 'when user is an owner' do
+        let(:work) { build_stubbed :work, owner: user }
       end
 
       succeed 'when user is a collection manager' do
@@ -203,10 +203,10 @@ RSpec.describe WorkVersionPolicy do
     context 'when deposited (and thus not deletable)' do
       before { record.state = 'deposited' }
 
-      failed 'when user is neither a depositor, reviewer or manager for the collection'
+      failed 'when user is neither the owner, reviewer or manager for the collection'
 
-      failed 'when user is a depositor' do
-        let(:work) { build_stubbed :work, depositor: user }
+      failed 'when user is the owner' do
+        let(:work) { build_stubbed :work, owner: user }
       end
 
       failed 'when user is a collection manager' do
@@ -225,10 +225,10 @@ RSpec.describe WorkVersionPolicy do
     context 'when not persisted' do
       let(:record) { WorkVersion.new(attributes_for(:work_version).merge(work: work)) }
 
-      failed 'when user is not a depositor, reviewer or manager for the collection'
+      failed 'when user is not the owner, reviewer or manager for the collection'
 
-      failed 'when user is a depositor' do
-        let(:work) { build_stubbed :work, depositor: user }
+      failed 'when user is the owner' do
+        let(:work) { build_stubbed :work, owner: user }
       end
 
       failed 'when user is a collection manager' do
@@ -256,9 +256,9 @@ RSpec.describe WorkVersionPolicy do
       it { is_expected.to be_empty }
     end
 
-    context 'when the user is the depositor' do
+    context 'when the user is the owner' do
       let(:user) { create(:user) }
-      let(:work) { create(:work, collection: collection, depositor: user) }
+      let(:work) { create(:work, collection: collection, owner: user) }
 
       it { is_expected.to include(work) }
     end

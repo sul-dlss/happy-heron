@@ -77,7 +77,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
   describe 'setting the type for a reserved purl' do
     let!(:work_version) do
-      create(:work_version_with_work, :purl_reserved, collection: collection, depositor: user)
+      create(:work_version_with_work, :purl_reserved, collection: collection, owner: user)
     end
 
     it 'from the dashboard' do
