@@ -9,7 +9,7 @@ class WorkVersionPolicy < ApplicationPolicy
     if administrator?
       scope
     else
-      scope.where(depositor: user)
+      scope.where(owner: user)
            .or(scope.where(collection_id: [user.manages_collection_ids + user.reviews_collection_ids]))
     end
   end
@@ -39,7 +39,7 @@ class WorkVersionPolicy < ApplicationPolicy
     return false unless record.updatable?
     return true if allowed_to?(:review?, collection)
 
-    depositor_of_the_work? && !record.pending_approval?
+    owner_of_the_work? && !record.pending_approval?
   end
 
   # Can show a work iff any one of the following is true:
@@ -48,7 +48,7 @@ class WorkVersionPolicy < ApplicationPolicy
   #   3. The user is a manager of the collection the work is in
   #   4. The user is a reviewer of the collection the work is in
   def show?
-    depositor_of_the_work? || allowed_to?(:review?, collection)
+    owner_of_the_work? || allowed_to?(:review?, collection)
   end
 
   # The collection reviewers can review a work
@@ -58,7 +58,7 @@ class WorkVersionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (allowed_to?(:review?, collection) || depositor_of_the_work?) && record.persisted? && record.draft?
+    (allowed_to?(:review?, collection) || owner_of_the_work?) && record.persisted? && record.draft?
   end
 
   private
@@ -69,7 +69,7 @@ class WorkVersionPolicy < ApplicationPolicy
     record.work.collection
   end
 
-  def depositor_of_the_work?
-    record.work.depositor == user
+  def owner_of_the_work?
+    record.work.owner == user
   end
 end

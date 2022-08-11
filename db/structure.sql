@@ -585,7 +585,8 @@ CREATE TABLE public.works (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     assign_doi boolean DEFAULT true NOT NULL,
-    doi character varying
+    doi character varying,
+    owner_id bigint NOT NULL
 );
 
 
@@ -1053,6 +1054,13 @@ CREATE INDEX index_works_on_head_id ON public.works USING btree (head_id);
 
 
 --
+-- Name: index_works_on_owner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_owner_id ON public.works USING btree (owner_id);
+
+
+--
 -- Name: events fk_rails_0cb5590091; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1074,6 +1082,14 @@ ALTER TABLE ONLY public.related_works
 
 ALTER TABLE ONLY public.works
     ADD CONSTRAINT fk_rails_3aa29f8d19 FOREIGN KEY (head_id) REFERENCES public.work_versions(id);
+
+
+--
+-- Name: works fk_rails_6d81a5f2b3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.works
+    ADD CONSTRAINT fk_rails_6d81a5f2b3 FOREIGN KEY (owner_id) REFERENCES public.users(id);
 
 
 --
@@ -1233,6 +1249,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210816133101'),
 ('20210827165420'),
 ('20220113144801'),
-('20220808145502');
+('20220808145502'),
+('20220808221011'),
+('20220808222722');
 
 

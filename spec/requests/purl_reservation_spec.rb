@@ -47,7 +47,7 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
     end
 
     describe 'choose a type for the reserved PURL' do
-      let(:work) { create(:work, depositor: user, collection: collection) }
+      let(:work) { create(:work, owner: user, collection: collection) }
 
       # have to set this here (?), artifact of the circular relationship between works and work_versions
       before { work.update(head: work_version) }

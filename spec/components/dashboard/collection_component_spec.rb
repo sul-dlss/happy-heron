@@ -8,7 +8,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   let(:collection_version) { build_stubbed(:collection_version) }
   let(:user_with_groups) { UserWithGroups.new(user: user, groups: []) }
   let(:user) { create(:user) }
-  let(:work_path) { Rails.application.routes.url_helpers.work_path(user.deposits.first) }
+  let(:work_path) { Rails.application.routes.url_helpers.work_path(user.owned_works.first) }
 
   before do
     allow(controller).to receive_messages(
@@ -53,7 +53,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     let(:collection_version) { create(:collection_version_with_collection) }
 
     before do
-      create(:work_version_with_work, collection: collection, depositor: user, title: 'my work')
+      create(:work_version_with_work, collection: collection, owner: user, title: 'my work')
       create(:work_version_with_work, collection: collection, title: 'not mine')
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
     before do
       4.times do
-        work = create(:work, collection: collection, depositor: user)
+        work = create(:work, collection: collection, owner: user)
         version = create(:work_version, work: work)
         work.update(head: version)
       end
@@ -98,7 +98,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
     before do
       5.times do
-        work = create(:work, collection: collection, depositor: user)
+        work = create(:work, collection: collection, owner: user)
         version = create(:work_version, work: work)
         work.update(head: version)
       end
@@ -112,7 +112,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   context 'with a work that has a druid' do
     let(:collection) { collection_version.collection }
     let(:collection_version) { create(:collection_version_with_collection) }
-    let(:work) { create(:work, collection: collection, depositor: user, druid: 'druid:yq268qt4607') }
+    let(:work) { create(:work, collection: collection, owner: user, druid: 'druid:yq268qt4607') }
 
     before do
       version = create(:work_version, work: work)

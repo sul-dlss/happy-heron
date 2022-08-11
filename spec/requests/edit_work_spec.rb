@@ -11,7 +11,7 @@ RSpec.describe 'Updating an existing work' do
   end
 
   context 'with an authenticated user' do
-    let(:user) { work.depositor }
+    let(:user) { work.owner }
 
     before do
       sign_in user, groups: ['dlss:hydrus-app-collection-creators']
@@ -34,7 +34,6 @@ RSpec.describe 'Updating an existing work' do
         let(:collection) { create(:collection_version_with_collection).collection }
         let(:work) { create(:work, collection: collection) }
         let(:work_version) { create(:work_version, :deposited, :with_required_associations, work: work) }
-        let(:user) { work.depositor }
         let(:work_params) do
           {
             title: 'New title',
@@ -145,7 +144,6 @@ RSpec.describe 'Updating an existing work' do
         let(:collection) { create(:collection_version_with_collection).collection }
         let(:work) { create(:work, collection: collection) }
         let(:work_version) { create(:work_version, work: work) }
-        let(:user) { work.depositor }
         let(:work_params) do
           {
             title: '',

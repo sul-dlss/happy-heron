@@ -6,7 +6,7 @@ RSpec.describe 'Download a zip file of all attached files', type: :request do
   let(:rendered) { render_inline(described_class.new(work_version: work_version)) }
   let(:work_version) { create(:work_version, work: work) }
   let(:user) { create(:user) }
-  let(:work) { create(:work, depositor: user) }
+  let(:work) { create(:work, owner: user) }
   let(:work_id) { work.id }
 
   context 'with unauthenticated user' do

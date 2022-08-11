@@ -6,7 +6,7 @@
 
 <% cache [current_user, @work] do %>
   <style>
-    <% if current_user != @work.depositor %>
+    <% if current_user != @work.owner %>
       .visible-to-depositor {
         display: none;
       }

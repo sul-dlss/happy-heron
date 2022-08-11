@@ -27,7 +27,7 @@ class DashboardsController < ApplicationController
       approvals: WorkVersion.awaiting_review_by(current_user),
       in_progress: WorkVersion.with_state(:first_draft, :version_draft, :rejected, :purl_reserved)
                      .joins(:work)
-                     .where('works.depositor' => current_user),
+                     .where('works.owner' => current_user),
       collection_managers_in_progress: CollectionVersion.with_state(:first_draft, :version_draft)
                                          .joins(:collection).left_outer_joins(collection: :managed_by)
                                          .where('managers.user_id' => current_user)

@@ -8,7 +8,7 @@ RSpec.describe 'Dashboard requests' do
   context 'when user has deposits' do
     let(:user) { collection.depositors.first }
     let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
-    let(:work1) { create(:work, depositor: user, collection: collection) }
+    let(:work1) { create(:work, owner: user, collection: collection) }
     let(:work_version1) { create(:work_version, title: 'Happy little title', work: work1) }
     let(:work_version2) { create(:work_version, title: 'Secret') }
 
@@ -31,7 +31,7 @@ RSpec.describe 'Dashboard requests' do
   context 'when user has a draft deposit with no title' do
     let(:user) { collection.depositors.first }
     let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
-    let(:work1) { create(:work, depositor: user, collection: collection) }
+    let(:work1) { create(:work, owner: user, collection: collection) }
     let(:work_version1) { create(:work_version, title: '', work: work1) }
     let(:work_version2) { create(:work_version, title: 'Secret') }
 
@@ -74,21 +74,21 @@ RSpec.describe 'Dashboard requests' do
   context 'when user has in progress deposits in different states' do
     let(:user) { collection.depositors.first }
     let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
-    let(:work1) { create(:work, depositor: user, collection: collection) }
+    let(:work1) { create(:work, owner: user, collection: collection) }
     let(:work_version1) { create(:work_version, state: 'first_draft', title: 'I am a first draft', work: work1) }
-    let(:work2) { create(:work, depositor: user, collection: collection) }
+    let(:work2) { create(:work, owner: user, collection: collection) }
     let(:work_version2) { create(:work_version, state: 'version_draft', title: 'I am a version draft', work: work2) }
-    let(:work3) { create(:work, depositor: user, collection: collection) }
+    let(:work3) { create(:work, owner: user, collection: collection) }
     let(:work_version3) { create(:work_version, state: 'rejected', title: 'I am rejected', work: work3) }
-    let(:work4) { create(:work, depositor: user, collection: collection) }
+    let(:work4) { create(:work, owner: user, collection: collection) }
     let(:work_version4) { create(:work_version, state: 'deposited', title: 'I am deposited', work: work4) }
-    let(:work5) { create(:work, depositor: user, collection: collection) }
+    let(:work5) { create(:work, owner: user, collection: collection) }
     let(:work_version5) { create(:work_version, state: 'depositing', title: 'I am depositing', work: work5) }
-    let(:work6) { create(:work, depositor: user, collection: collection) }
+    let(:work6) { create(:work, owner: user, collection: collection) }
     let(:work_version6) do
       create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6)
     end
-    let(:work7) { create(:work, depositor: user, collection: collection) }
+    let(:work7) { create(:work, owner: user, collection: collection) }
     let(:work_version7) { create(:work_version, state: 'purl_reserved', title: 'I am reserved purl', work: work6) }
 
     before do
@@ -131,17 +131,17 @@ RSpec.describe 'Dashboard requests' do
   context 'when user is an application admin' do
     let(:workful_collection) { create(:collection, creator: user) }
     let(:workless_collection) { create(:collection, creator: user) }
-    let(:work1) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work1) { create(:work, owner: user, collection: workful_collection) }
     let(:work_version1) { create(:work_version, state: 'deposited', work: work1) }
-    let(:work2) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work2) { create(:work, owner: user, collection: workful_collection) }
     let(:work_version2) { create(:work_version, state: 'first_draft', work: work2) }
-    let(:work3) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work3) { create(:work, owner: user, collection: workful_collection) }
     let(:work_version3) { create(:work_version, state: 'version_draft', work: work3) }
-    let(:work4) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work4) { create(:work, owner: user, collection: workful_collection) }
     let(:work_version4) { create(:work_version, state: 'pending_approval', work: work4) }
-    let(:work5) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work5) { create(:work, owner: user, collection: workful_collection) }
     let(:work_version5) { create(:work_version, state: 'rejected', work: work5) }
-    let(:work6) { create(:work, depositor: user, collection: workful_collection) }
+    let(:work6) { create(:work, owner: user, collection: workful_collection) }
     let(:work_version6) { create(:work_version, state: 'purl_reserved', work: work6) }
 
     before do
@@ -193,7 +193,7 @@ RSpec.describe 'Dashboard requests' do
   context 'when user is a depositor in a collection without reviewers' do
     let(:collection) { create(:collection, :with_depositors) }
     let(:user) { collection.depositors.first }
-    let(:work) { create(:work, depositor: user) }
+    let(:work) { create(:work, owner: user) }
 
     before do
       create(:collection_version_with_collection, collection: collection)
@@ -214,11 +214,11 @@ RSpec.describe 'Dashboard requests' do
     let(:collection) { create(:collection, :with_reviewers, :with_depositors) }
     let(:user) { collection.depositors.first }
 
-    let(:work1) { create(:work, depositor: user, collection: collection) }
+    let(:work1) { create(:work, owner: user, collection: collection) }
     let(:work_version1) { create(:work_version, :pending_approval, title: 'To Review', work: work1) }
-    let(:work2) { create(:work, depositor: user, collection: collection) }
+    let(:work2) { create(:work, owner: user, collection: collection) }
     let(:work_version2) { create(:work_version, :first_draft, title: 'No Review', work: work2) }
-    let(:work3) { create(:work, depositor: user, collection: collection) }
+    let(:work3) { create(:work, owner: user, collection: collection) }
     let(:work_version3) { create(:work_version, :rejected, title: 'Rejected Upon Review', work: work3) }
 
     before do

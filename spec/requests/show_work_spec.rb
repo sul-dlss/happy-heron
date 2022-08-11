@@ -38,7 +38,7 @@ RSpec.describe 'Show a work detail' do
   end
 
   context 'with an authorized user' do
-    let(:user) { work.depositor }
+    let(:user) { work.owner }
 
     before do
       sign_in user

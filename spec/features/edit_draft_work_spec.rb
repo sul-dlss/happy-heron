@@ -15,7 +15,7 @@ RSpec.describe 'Edit a draft work', js: true do
                                                                                     head: collection_version)
   end
   let(:collection_version) { create(:collection_version, :deposited) }
-  let(:work) { create(:work, depositor: depositor, collection: collection) }
+  let(:work) { create(:work, owner: depositor, collection: collection) }
 
   context 'when a user has previously accepted the terms of agreement less than 1 year ago' do
     before do

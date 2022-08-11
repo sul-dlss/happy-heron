@@ -7,18 +7,18 @@ class WorkPolicy < ApplicationPolicy
   # Return the relation defining the collections you can view.
   scope_for :relation do |relation|
     relation.where(collection_id: user.manages_collection_ids + user.reviews_collection_ids).or(
-      relation.where(depositor: user)
+      relation.where(owner: user)
     )
   end
 
   def destroy?
-    (allowed_to?(:review?, collection) || depositor_of_the_work?) && record.persisted? && record.head.deleteable?
+    (allowed_to?(:review?, collection) || owner_of_the_work?) && record.persisted? && record.head.deleteable?
   end
 
   delegate :administrator?, to: :user_with_groups
   delegate :collection, to: :record
 
-  def depositor_of_the_work?
-    record.depositor == user
+  def owner_of_the_work?
+    record.owner == user
   end
 end

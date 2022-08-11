@@ -15,8 +15,8 @@ module Works
       work_form.model.fetch(:work)
     end
 
-    delegate :depositor, to: :work
-    delegate :agreed_to_terms_recently?, :last_work_terms_agreement, to: :depositor
+    delegate :owner, to: :work
+    delegate :agreed_to_terms_recently?, :last_work_terms_agreement, to: :owner
 
     attr_reader :form
   end

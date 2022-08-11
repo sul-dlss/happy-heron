@@ -25,12 +25,12 @@ RSpec.describe WorkPolicy do
 
   describe_rule :destroy? do
     context 'when persisted and deletable' do
-      failed 'when user is not a depositor, reviewer or manager for the collection'
+      failed 'when user is not the owner, reviewer or manager for the collection'
 
       # `succeed` is `context` + `specify`, which checks
       # that the result of application wasn't successful
-      succeed 'when user is a depositor' do
-        before { record.depositor = user }
+      succeed 'when user is the owner' do
+        before { record.owner = user }
       end
 
       succeed 'when user is a collection manager' do
@@ -49,10 +49,10 @@ RSpec.describe WorkPolicy do
     context 'when deposited (and thus not deletable)' do
       before { work_version.state = 'deposited' }
 
-      failed 'when user is neither a depositor, reviewer or manager for the collection'
+      failed 'when user is neither the owner, reviewer or manager for the collection'
 
-      failed 'when user is a depositor' do
-        before { record.depositor = user }
+      failed 'when user is the owner' do
+        before { record.owner = user }
       end
 
       failed 'when user is a collection manager' do
@@ -71,10 +71,10 @@ RSpec.describe WorkPolicy do
     context 'when not persisted' do
       let(:work) { Work.new(attributes_for(:work).merge(collection: collection)) }
 
-      failed 'when user is not a depositor, reviewer or manager for the collection'
+      failed 'when user is not the owner, reviewer or manager for the collection'
 
-      failed 'when user is a depositor' do
-        before { record.depositor = user }
+      failed 'when user is the owner' do
+        before { record.owner = user }
       end
 
       failed 'when user is a collection manager' do
