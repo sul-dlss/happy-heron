@@ -39,7 +39,7 @@ services:
       - db
       - redis
   db:
-    image: postgres:11
+    image: postgres:12
     environment:
       POSTGRES_DB: h2
       POSTGRES_PASSWORD: postgres
