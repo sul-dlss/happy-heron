@@ -549,7 +549,8 @@ CREATE TABLE public.work_versions (
     published_edtf character varying,
     subtype text[] DEFAULT '{}'::text[],
     work_id bigint NOT NULL,
-    description character varying
+    description character varying,
+    published_at timestamp(6) without time zone
 );
 
 
@@ -1251,6 +1252,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220113144801'),
 ('20220808145502'),
 ('20220808221011'),
-('20220808222722');
+('20220808222722'),
+('20220812205204');
 
 
