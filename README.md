@@ -67,10 +67,6 @@ $ docker compose up # use -d to run in background
 
 This will spin up the H2 web application, its background workers, and all service dependencies declared in docker-compose.yml.
 
-#### Note: Requires Postgres
-
-Before running `rake rails_rbi:all`, make sure the `db` docker compose service is running, else the type definitions for the app's models will be deleted.
-
 ## Deployment
 
 H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module).
