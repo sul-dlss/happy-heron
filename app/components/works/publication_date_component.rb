@@ -56,7 +56,8 @@ module Works
       number_field_tag "#{prefix}[published(1i)]", published_year,
                        data: {
                          date_validation_target: 'year',
-                         action: 'date-validation#change'
+                         action: 'date-validation#change year-field#change',
+                         controller: 'year-field'
                        },
                        id: "#{prefix}_published_year",
                        placeholder: 'year',
