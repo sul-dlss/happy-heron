@@ -21,6 +21,11 @@ Data:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -123,6 +128,16 @@ Data:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -208,6 +223,11 @@ Image:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -324,6 +344,16 @@ Image:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -421,6 +451,11 @@ Mixed Materials:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -537,6 +572,16 @@ Mixed Materials:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -634,6 +679,11 @@ Music:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -750,6 +800,16 @@ Music:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -847,6 +907,11 @@ Other:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -963,6 +1028,16 @@ Other:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -1060,6 +1135,11 @@ Software/Code:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -1176,6 +1256,16 @@ Software/Code:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -1273,6 +1363,11 @@ Sound:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -1389,6 +1484,16 @@ Sound:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -1486,6 +1591,11 @@ Text:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -1602,6 +1712,16 @@ Text:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
@@ -1699,6 +1819,11 @@ Video:
         uri: http://id.loc.gov/vocabulary/graphicMaterials/tgm002405
         source:
           code: lctgm
+    Capstone:
+      - type: genre
+        value: student project report
+        source:
+          code: local
     Code:
       - type: genre
         value: computer program
@@ -1839,6 +1964,16 @@ Video:
         uri: http://id.loc.gov/authorities/genreForms/gf2014026481
         source:
           code: lcgft
+    Portfolio:
+      - type: genre
+        value: student project report
+        source:
+          code: local
+      - type: genre
+        value: portfolios
+        uri: http://vocab.getty.edu/aat/300179434
+        source:
+          code: aat
     Poster:
       - type: genre
         value: posters
