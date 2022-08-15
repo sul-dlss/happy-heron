@@ -1,8 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-//   static targets = ["year", "month", "day", "error"]
-
+  
   connect() {
     this.hasChanged = false
   }
