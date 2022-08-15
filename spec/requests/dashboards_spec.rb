@@ -25,6 +25,7 @@ RSpec.describe 'Dashboard requests' do
       expect(response.body).to include 'Happy little title'
       expect(response.body).not_to include 'Secret'
       expect(response.body).to include '<title>SDR | Dashboard</title>'
+      expect(response.body).not_to include 'Admin'
     end
   end
 
@@ -161,12 +162,13 @@ RSpec.describe 'Dashboard requests' do
       sign_in user, groups: ['dlss:hydrus-app-administrators']
     end
 
-    it 'shows a link to create collections and the all collections table' do
+    it 'shows a link to create collections, all collections table, and admin' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Your collections'
       expect(response.body).to include '+ Create a new collection'
       expect(response.body).to include 'collectionsTable'
+      expect(response.body).to include 'Admin'
     end
   end
 
