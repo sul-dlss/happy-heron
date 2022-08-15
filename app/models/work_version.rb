@@ -49,7 +49,10 @@ class WorkVersion < ApplicationRecord
     before_transition WorkObserver.method(:before_transition)
 
     after_transition WorkObserver.method(:after_transition)
-    after_transition on: :begin_deposit, do: WorkObserver.method(:after_begin_deposit)
+    after_transition on: :begin_deposit do |work_version, transition|
+      work_version.published_at = DateTime.now.utc
+      WorkObserver.after_begin_deposit(work_version, transition)
+    end
     after_transition on: :reserve_purl, do: WorkObserver.method(:after_begin_reserve)
     after_transition on: :pid_assigned, do: WorkObserver.method(:after_druid_assigned)
     after_transition on: :reject, do: WorkObserver.method(:after_rejected)
