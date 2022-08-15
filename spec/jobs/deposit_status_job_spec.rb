@@ -32,6 +32,8 @@ RSpec.describe DepositStatusJob do
       )
 
       expect(work_version.reload).to be_deposited
+      # Event is recorded for SDR, not work creator.
+      expect(work_version.work.events.first.user.name).to eq('SDR')
     end
   end
 
@@ -81,6 +83,8 @@ RSpec.describe DepositStatusJob do
     it 'transitions to deposited state' do
       run
       expect(collection_version.reload).to be_deposited
+      # Event is recorded for SDR, not collection creator.
+      expect(collection_version.collection.events.first.user.name).to eq('SDR')
     end
   end
 end

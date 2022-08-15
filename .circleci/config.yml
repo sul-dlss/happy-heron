@@ -9,3 +9,7 @@ workflows:
       - ruby-rails/test-rails:
           name: test
           install-chrome: true
+          before-test:
+            - run:
+                  name: install seeds
+                  command: bundle exec rails db:seed

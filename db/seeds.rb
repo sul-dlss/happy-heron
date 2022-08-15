@@ -7,3 +7,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# The SDR user is used in Events performed by SDR.
+User.create!(name: 'SDR', email: 'no-reply@sdr.stanford.edu')
