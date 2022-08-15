@@ -50,7 +50,7 @@ class WorkVersion < ApplicationRecord
 
     after_transition WorkObserver.method(:after_transition)
     after_transition on: :begin_deposit do |work_version, transition|
-      work_version.published_at = DateTime.now.utc
+      work_version.update_attribute(:published_at, DateTime.now.utc) # rubocop:disable Rails/SkipsModelValidations
       WorkObserver.after_begin_deposit(work_version, transition)
     end
     after_transition on: :reserve_purl, do: WorkObserver.method(:after_begin_reserve)
