@@ -6,6 +6,8 @@ class User < ApplicationRecord
     record.just_signed_in = true if warden.authenticated?(options[:scope])
   end
 
+  EMAIL_SUFFIX = '@stanford.edu'
+
   attr_accessor :just_signed_in
 
   validates :email,
@@ -21,6 +23,11 @@ class User < ApplicationRecord
                          foreign_key: 'owner_id',
                          inverse_of: :owner,
                          dependent: :destroy
+
+  has_many :created_collections, class_name: 'Collection',
+                                 foreign_key: 'creator_id',
+                                 inverse_of: :creator,
+                                 dependent: :destroy
 
   has_and_belongs_to_many :reviews_collections, class_name: 'Collection', join_table: 'reviewers'
   has_and_belongs_to_many :manages_collections, class_name: 'Collection', join_table: 'managers'
@@ -38,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def sunetid
-    email.delete_suffix('@stanford.edu')
+    email.delete_suffix(EMAIL_SUFFIX)
   end
 
   def to_honeybadger_context
@@ -49,5 +56,15 @@ class User < ApplicationRecord
     return false if last_work_terms_agreement.nil?
 
     terms_agreement_renewal_timeframe < last_work_terms_agreement
+  end
+
+  def collections_with_access
+    Collection.where('id in (SELECT collection_id FROM reviewers WHERE user_id = :user_id ' \
+                     'UNION SELECT collection_id FROM managers WHERE user_id = :user_id ' \
+                     'UNION SELECT collection_id FROM depositors WHERE user_id = :user_id)', user_id: id)
+  end
+
+  def works_created_or_owned
+    Work.where(depositor: self).or(Work.where(owner: self))
   end
 end

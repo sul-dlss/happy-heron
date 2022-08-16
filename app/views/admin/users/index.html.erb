@@ -1,0 +1,110 @@
+<main id="content">
+  <div class="container" id="dashboard">
+    <h1>Search for user</h1>
+
+    <%= render Admin::NavigationComponent.new %>
+
+    <%= form_with url: admin_users_path, method: :get, class: 'col-md-4 mt-3' do |form| %>
+        <%= form.label :query, "Enter SUNet ID" %>
+        <%= form.text_field :query, class: 'form-control' %>
+        <%= form.submit "Search", class: 'btn btn-primary my-3' %>
+    <% end %>
+
+    <% if @result %>
+      <% if @result.failure? %>
+        <span class="text-danger">SUNet ID not found. Please try searching for another SUNet ID or try again if you think this is an error.</span>
+      <% else %>
+        <% presenter = @result.value! %>
+        <h2><%= presenter.name %> (<%= presenter.sunetid %>)</h2>
+
+        <table class="table table-striped">
+          <caption>Collections this user can access</caption>
+          <thead class="table-light">
+            <tr>
+              <th>Title</th>
+              <th>Druid</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% presenter.collections.each do |collection| %>
+              <tr>
+                <td><%= link_to collection.head.name, collection %></td>
+                <td><%= collection.druid %></td>
+                <td>
+                  <% if collection.managed_by.include?(presenter.user) %>
+                    Manager
+                  <% elsif collection.reviewed_by.include?(presenter.user) %>
+                    Reviewer
+                  <% else %>
+                    Depositor
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <table class="table table-striped">
+          <caption>Collections created by user</caption>
+          <thead class="table-light">
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Druid</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% presenter.collections_created_by_user.each do |collection| %>
+              <tr>
+                <td><%= link_to collection.head.name, collection %></td>
+                <td><%= collection.head.state.humanize %></td>
+                <td><%= collection.druid %></td>
+                <td>
+                  <% if collection.managed_by.include?(presenter.user) %>
+                    Manager
+                  <% elsif collection.reviewed_by.include?(presenter.user) %>
+                    Reviewer
+                  <% else %>
+                    Depositor
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <table class="table table-striped">
+          <caption>Items created or owned by user</caption>
+          <thead class="table-light">
+            <tr>
+              <th>Title</th>
+              <th>Collection</th>
+              <th>Status</th>
+              <th>Druid</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% presenter.works.each do |work| %>
+              <tr>
+                <td><%= link_to work.head.title, work %></td>
+                <td><%= link_to work.collection.head.name, work.collection %></td>
+                <td><%= work.head.state.humanize %></td>
+                <td><%= work.druid %></td>
+                <td>
+                  <% if work.owner_id == presenter.user %>
+                    Current owner
+                  <% else %>
+                    Depositor
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+  </div>
+</main>
