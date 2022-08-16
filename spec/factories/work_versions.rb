@@ -13,6 +13,7 @@ FactoryBot.define do
     access { 'world' }
     state { 'first_draft' }
     description { 'initial version' }
+    published_at { Time.zone.parse('2019-01-01') }
     work
 
     factory :valid_work_version do
@@ -158,5 +159,17 @@ FactoryBot.define do
     citation { nil }
     license { 'none' }
     state { 'reserving_purl' }
+  end
+
+  trait :with_work do
+    transient do
+      collection { nil }
+      owner { association(:user) }
+    end
+    work { association :work, collection: collection, owner: owner, work_versions: [instance] }
+
+    after(:create) do |work_version, _evaluator|
+      work_version.work.update(head: work_version)
+    end
   end
 end

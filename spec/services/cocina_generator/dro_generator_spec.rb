@@ -70,7 +70,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
             {
               value: '2007-02-10',
               encoding: {
-                code: 'w3cdtf'
+                code: 'edtf'
               }
             }
           ]
