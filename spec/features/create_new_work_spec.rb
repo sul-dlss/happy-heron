@@ -117,14 +117,25 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           fill_in 'Abstract', with: 'User provided abstract'
           check 'Oral history'
 
-          click_button 'Deposit'
-
-          expect(page).to have_content('Keyword must be filled in')
-
-          fill_in 'Keyword', with: 'Springs'
-
           find('label.switch').click # Use auto-generated citation
           fill_in 'Provided citation', with: 'Citation from user input'
+
+          click_button 'Deposit'
+
+          # Check keyword validation: at least one and no duplicates
+          expect(page).to have_content('Keyword must be filled in')
+
+          # add the same keyword twice
+          all('#keyword-input-field')[0].set 'Springs'
+          click_button '+ Add another keyword'
+          all('#keyword-input-field')[1].set 'Springs'
+
+          click_button 'Deposit'
+
+          expect(page).to have_content('Please ensure all keywords are unique')
+
+          # now remove one of the duplicate keywords
+          all('#keyword-remove-button')[1].click
 
           click_button 'Deposit'
 
@@ -191,7 +202,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           fill_in 'Abstract', with: 'User provided abstract'
 
-          fill_in 'Keyword', with: 'Springs'
+          fill_in 'keyword-input-field', with: 'Springs'
 
           click_button 'Deposit'
 
@@ -320,7 +331,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           expect(page).to have_content('Keyword must be filled in')
 
-          fill_in 'Keyword', with: 'Springs'
+          fill_in 'keyword-input-field', with: 'Springs'
 
           find('label.switch').click # Use auto-generated citation
           fill_in 'Provided citation', with: 'Citation from user input'

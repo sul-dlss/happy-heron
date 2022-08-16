@@ -6,6 +6,7 @@ require 'reform/form/coercion'
 class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true, allow_nil: false
   validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
+  validate :keywords_unique
   validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' }
   validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates :license, presence: true, inclusion: { in: License.license_list }
@@ -31,6 +32,12 @@ class WorkForm < DraftWorkForm
     super
   end
 
+  def keywords_unique
+    return if keywords.size.zero? || keywords.map(&:label).uniq.size == keywords.size
+
+    errors.add(:base, 'Please ensure all keywords are unique.')
+  end
+
   # Force assign_doi to match what the collection enforces
   def deserialize_doi(params)
     case collection.doi_option
@@ -45,7 +52,7 @@ class WorkForm < DraftWorkForm
 
   delegate :already_immediately_released?, :already_embargo_released?, to: :work
 
-  # This is responsible for setting the DOI if the request one on a new version.
+  # This is responsible for setting the DOI if the user requests one on a new version.
   def maybe_assign_doi
     work.doi = Doi.for(work.druid) if assign_doi?
   end
