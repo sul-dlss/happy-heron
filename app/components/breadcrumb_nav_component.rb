@@ -2,8 +2,9 @@
 
 # Displays the top bread crumb navigation
 class BreadcrumbNavComponent < ApplicationComponent
-  def initialize(breadcrumbs: [])
+  def initialize(breadcrumbs: [], admin: false)
     @orig_breadcrumbs = breadcrumbs
+    @admin = admin
   end
 
   def full_title(breadcrumb)
@@ -26,10 +27,12 @@ class BreadcrumbNavComponent < ApplicationComponent
   end
 
   def breadcrumbs
-    [{ title: 'Dashboard', link: '/dashboard' }] + orig_breadcrumbs
+    dashboard = [{ title: 'Dashboard', link: '/dashboard' }]
+    dashboard << { title: 'Admin Dashboard', link: '/admin' } if admin
+    dashboard + orig_breadcrumbs
   end
 
   private
 
-  attr_accessor :orig_breadcrumbs
+  attr_accessor :orig_breadcrumbs, :admin
 end
