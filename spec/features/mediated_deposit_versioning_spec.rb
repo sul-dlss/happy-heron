@@ -45,6 +45,9 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
 
       # A work submitted for approval should not be editable.
       expect(page).not_to have_css("a[aria-label='Edit #{new_work_title}']", wait: 0)
+      sign_out
+      # To address flakiness. Without sleep, sometimes the following are performed by the depositor, not the reviewer.
+      sleep(1)
 
       # Now acting as the collection reviewer
       sign_in reviewer
