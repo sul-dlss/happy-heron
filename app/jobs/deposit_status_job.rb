@@ -13,6 +13,7 @@ class DepositStatusJob
   # these messages in addition to those that result from depositing in h2.
   from_queue 'h2.deposit_complete', env: nil
 
+  # rubocop:disable Metrics/AbcSize
   def work(msg)
     druid = parse_message(msg)
     Honeybadger.context(druid: druid)
@@ -28,10 +29,13 @@ class DepositStatusJob
       end
 
       Honeybadger.context(object: object.to_global_id.to_s)
+      parent(object).event_context = { user: sdr_user }
+
       object.head.deposit_complete!
     end
     ack!
   end
+  # rubocop:enable Metrics/AbcSize
 
   def parse_message(msg)
     json = JSON.parse(msg)
@@ -39,5 +43,15 @@ class DepositStatusJob
     return druid if druid.present?
 
     raise "Unable to find required field 'druid' in payload:\n\t#{json}"
+  end
+
+  def parent(object)
+    # Though object and object.head.collection/object.head.work are the same in DB, they are not the same in memory.
+    # Thus, need to set event_context on the traversed parent object.
+    object.head.try(:collection) || object.head.work
+  end
+
+  def sdr_user
+    User.find_by!(name: 'SDR')
   end
 end
