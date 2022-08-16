@@ -16,7 +16,7 @@ RSpec.describe DepositJob do
   let(:attached_file) { build(:attached_file) }
   let(:work) { build(:work, collection: collection, assign_doi: false) }
   let(:work_version) do
-    build(:work_version, id: 8, work: work, attached_files: [attached_file])
+    build(:work_version, id: 8, work: work, attached_files: [attached_file], description: 'Updated metadata')
   end
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
 
@@ -27,6 +27,8 @@ RSpec.describe DepositJob do
     # rubocop:disable RSpec/MessageChain
     allow(attached_file).to receive_message_chain(:file, :attachment, :blob).and_return(blob)
     # rubocop:enable RSpec/MessageChain
+    allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+      .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
   end
 
   after do
@@ -35,8 +37,6 @@ RSpec.describe DepositJob do
 
   context 'when the deposit request is successful' do
     before do
-      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
       allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
     end
 
@@ -56,10 +56,22 @@ RSpec.describe DepositJob do
     end
   end
 
+  context 'when updating the deposit' do
+    let(:work) { build(:work, collection: collection, assign_doi: false, druid: 'druid:bf024yb8975') }
+
+    before do
+      allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)
+    end
+
+    it 'calls UpdateResource.run' do
+      described_class.perform_now(work_version)
+      expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+        .with(a_hash_including(version_description: 'Updated metadata'))
+    end
+  end
+
   context 'when the deposit request is not successful' do
     before do
-      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
       allow(SdrClient::Deposit::CreateResource).to receive(:run).and_raise('Deposit failed.')
     end
 
