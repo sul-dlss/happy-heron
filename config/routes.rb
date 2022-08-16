@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   root to: 'welcome#show'
   resources :accounts, only: :show
   resource :dashboard, only: :show
-  resource :search, only: :show
   resources :collections, only: %i[show edit update destroy] do
     member do
       get :deposit_button
@@ -52,6 +51,7 @@ Rails.application.routes.draw do
 
   resource :admin, only: :show
   namespace :admin do
+    resources :druid_searches, only: :index
     resources :users, only: :index
     resources :collection_reports, only: %i[new create]
   end

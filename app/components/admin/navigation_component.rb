@@ -5,6 +5,7 @@ module Admin
   class NavigationComponent < ApplicationComponent
     def dropdown
       options = options_for_select([['Admin page', admin_path],
+                                    ['Search for DRUID', admin_druid_searches_path],
                                     ['Search for user', admin_users_path],
                                     ['Generate collections report', new_admin_collection_report_path]],
                                    request.env['PATH_INFO'])
