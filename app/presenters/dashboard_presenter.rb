@@ -19,8 +19,6 @@ class DashboardPresenter
 
   attr_reader :collections
 
-  attr_accessor :work_stats
-
   def show_popup?
     @just_signed_in && @in_progress.any? { |deposit| !deposit.purl_reserved? }
   end

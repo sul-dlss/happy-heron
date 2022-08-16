@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dashboard
+module Admin
   # Renders a list of all collections
   class AllCollectionsComponent < ApplicationComponent
     def initialize(stats:)

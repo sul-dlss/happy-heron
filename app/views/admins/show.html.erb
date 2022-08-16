@@ -6,5 +6,6 @@
     <h1>Admin dashboard</h1>
 
     <%= render Admin::NavigationComponent.new %>
+    <%= render Admin::AllCollectionsComponent.new(stats: @presenter.work_stats) %>
   </div>
 </main>

@@ -30,7 +30,7 @@
     </thead>
     <tbody>
       <% stats.each do |collection, counts| %>
-        <%= render Dashboard::AllCollectionsRowComponent.new(collection: collection, counts: counts) %>
+        <%= render Admin::AllCollectionsRowComponent.new(collection: collection, counts: counts) %>
       <% end %>
     </tbody>
   </table>

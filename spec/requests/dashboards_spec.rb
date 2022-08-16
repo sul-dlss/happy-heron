@@ -130,44 +130,15 @@ RSpec.describe 'Dashboard requests' do
   end
 
   context 'when user is an application admin' do
-    let(:workful_collection) { create(:collection, creator: user) }
-    let(:workless_collection) { create(:collection, creator: user) }
-    let(:work1) { create(:work, owner: user, collection: workful_collection) }
-    let(:work_version1) { create(:work_version, state: 'deposited', work: work1) }
-    let(:work2) { create(:work, owner: user, collection: workful_collection) }
-    let(:work_version2) { create(:work_version, state: 'first_draft', work: work2) }
-    let(:work3) { create(:work, owner: user, collection: workful_collection) }
-    let(:work_version3) { create(:work_version, state: 'version_draft', work: work3) }
-    let(:work4) { create(:work, owner: user, collection: workful_collection) }
-    let(:work_version4) { create(:work_version, state: 'pending_approval', work: work4) }
-    let(:work5) { create(:work, owner: user, collection: workful_collection) }
-    let(:work_version5) { create(:work_version, state: 'rejected', work: work5) }
-    let(:work6) { create(:work, owner: user, collection: workful_collection) }
-    let(:work_version6) { create(:work_version, state: 'purl_reserved', work: work6) }
-
     before do
-      create(:collection_version_with_collection, collection: workful_collection)
-      create(:collection_version_with_collection, collection: workless_collection)
-
-      workful_collection.update(updated_at: '2020-12-02')
-      workless_collection.update(updated_at: '2020-12-03')
-
-      work1.update(head: work_version1)
-      work2.update(head: work_version2)
-      work3.update(head: work_version3)
-      work4.update(head: work_version4)
-      work5.update(head: work_version5)
-      work6.update(head: work_version6)
-
       sign_in user, groups: ['dlss:hydrus-app-administrators']
     end
 
-    it 'shows a link to create collections, all collections table, and admin' do
+    it 'shows a link to create collections and admin' do
       get '/dashboard'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Your collections'
       expect(response.body).to include '+ Create a new collection'
-      expect(response.body).to include 'collectionsTable'
       expect(response.body).to include 'Admin'
     end
   end

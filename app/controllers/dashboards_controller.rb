@@ -10,8 +10,6 @@ class DashboardsController < ApplicationController
 
     authorize! :dashboard
     @presenter = build_presenter
-
-    @presenter.work_stats = StatBuilder.build_stats if user_with_groups.administrator?
   end
 
   private
