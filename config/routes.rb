@@ -51,6 +51,9 @@ Rails.application.routes.draw do
   resources :work_versions, only: :destroy
 
   resource :admin, only: :show
+  namespace :admin do
+    resources :users, only: :index
+  end
 
   # This route is used by the emails for the contact the SDR team link.
   direct :contact_form do
