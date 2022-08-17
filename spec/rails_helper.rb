@@ -41,6 +41,9 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+# load required seed in test database
+Rails.application.load_seed
+
 WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|
