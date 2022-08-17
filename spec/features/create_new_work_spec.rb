@@ -121,7 +121,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           expect(page).to have_content('Keyword must be filled in')
 
-          fill_in 'keyword-input-field', with: 'Springs'
+          fill_in 'Keyword', with: 'Springs'
 
           find('label.switch').click # Use auto-generated citation
           fill_in 'Provided citation', with: 'Citation from user input'
@@ -191,7 +191,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           fill_in 'Abstract', with: 'User provided abstract'
 
-          fill_in 'keyword-input-field', with: 'Springs'
+          fill_in 'Keyword', with: 'Springs'
 
           click_button 'Deposit'
 
@@ -320,7 +320,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           expect(page).to have_content('Keyword must be filled in')
 
-          fill_in 'keyword-input-field', with: 'Springs'
+          fill_in 'Keyword', with: 'Springs'
 
           find('label.switch').click # Use auto-generated citation
           fill_in 'Provided citation', with: 'Citation from user input'
