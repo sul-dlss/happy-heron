@@ -53,6 +53,12 @@
         <th class="col-3" scope="row">Depositor</th>
         <td><%= depositor %></td>
       </tr>
+      <% if show_owner? %>
+        <tr>
+          <th class="col-3" scope="row">Owner</th>
+          <td><%= owner %></td>
+        </tr>
+      <% end %>
       <tr>
         <th class="col-3" scope="row">Version details</th>
         <td><%= version %></td>

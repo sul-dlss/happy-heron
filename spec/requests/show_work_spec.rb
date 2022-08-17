@@ -48,6 +48,9 @@ RSpec.describe 'Show a work detail' do
     it 'displays the work' do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include work_version.title
+      # Owner is different than depositor, so displayed.
+      # Matching on "Owner" but not "Ownership".
+      expect(response.body).to match(/Owner(?!ship)/)
     end
 
     context 'when the work has a blank title' do
@@ -56,6 +59,17 @@ RSpec.describe 'Show a work detail' do
       it 'displays a default title for a work when it is blank' do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include 'No title'
+      end
+    end
+
+    context 'when work opener is same as depositor' do
+      let(:user) { create(:user) }
+
+      let(:work) { create(:work, collection: collection, owner: user, depositor: user) }
+
+      it 'does not display the owner' do
+        expect(response).to have_http_status(:ok)
+        expect(response.body).not_to match(/Owner(?!ship)/)
       end
     end
   end
