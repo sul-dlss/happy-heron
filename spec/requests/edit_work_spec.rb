@@ -144,24 +144,50 @@ RSpec.describe 'Updating an existing work' do
         let(:collection) { create(:collection_version_with_collection).collection }
         let(:work) { create(:work, collection: collection) }
         let(:work_version) { create(:work_version, work: work) }
-        let(:work_params) do
-          {
-            title: '',
-            work_type: 'text',
-            abstract: 'test abstract',
-            keywords_attributes: {
-              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
-            },
-            license: 'CC0-1.0',
-            release: 'immediate'
-          }
+
+        context 'when missing title' do
+          let(:work_params) do
+            {
+              title: '',
+              work_type: 'text',
+              abstract: 'test abstract',
+              keywords_attributes: {
+                '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+              },
+              license: 'CC0-1.0',
+              release: 'immediate'
+            }
+          end
+
+          it 'returns a validation error' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+            expect(response).to have_http_status :unprocessable_entity
+            expect(response.body).to include 'Title can&#39;t be blank'
+            expect(response.body).to include 'Please add at least one file.'
+          end
         end
 
-        it 'returns a validation error' do
-          patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
-          expect(response).to have_http_status :unprocessable_entity
-          expect(response.body).to include 'Title can&#39;t be blank'
-          expect(response.body).to include 'Please add at least one file.'
+        context 'when duplicate keywords' do
+          let(:keyword) { { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' } }
+          let(:work_params) do
+            {
+              title: 'This is a title',
+              work_type: 'text',
+              abstract: 'test abstract',
+              keywords_attributes: {
+                '0' => keyword,
+                '1' => keyword
+              },
+              license: 'CC0-1.0',
+              release: 'immediate'
+            }
+          end
+
+          it 'returns a validation error' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+            expect(response).to have_http_status :unprocessable_entity
+            expect(response.body).to include 'Please ensure all keywords are unique'
+          end
         end
       end
     end
