@@ -1,3 +1,6 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Search for user' } ])%>
+<% end %>
 <main id="content">
   <div class="container" id="dashboard">
     <h1>Search for user</h1>
