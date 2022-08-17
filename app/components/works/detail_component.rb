@@ -44,6 +44,14 @@ module Works
       "#{work.depositor.sunetid} (#{work.depositor.name})"
     end
 
+    def owner
+      "#{work.owner.sunetid} (#{work.owner.name})"
+    end
+
+    def show_owner?
+      work.owner != work.depositor
+    end
+
     def collection_name
       collection.head.name
     end
