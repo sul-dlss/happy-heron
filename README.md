@@ -55,7 +55,11 @@ bundle exec byebug -R localhost:8989
 
 Note that, by default, the debugger will run on `localhost` on port `8989`. To change these values, add the `DEBUGGER_HOST` and `DEBUGGER_PORT` environment variables when invoking `bin/dev` above and make sure to poing `byebug -R` at those same values when starting up the debugger.
 
-Start up dependencies with `docker compose up db` (with `-d` to run in background), create and migrate the database with `bundle exec rake db:prepare` and then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
+Start up dependencies with `docker compose up db` (with `-d` to run in background)
+
+Create and migrate the database with `bundle exec rake db:prepare` and seed the test database with `RAILS_ENV=test bin/rails db:seed`
+
+Then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
 
 ### Integration
 
