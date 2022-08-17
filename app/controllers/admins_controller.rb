@@ -7,5 +7,6 @@ class AdminsController < ApplicationController
 
   def show
     authorize! :admin_dashboard
+    @presenter = AdminPresenter.new
   end
 end
