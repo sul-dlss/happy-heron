@@ -22,7 +22,7 @@ class DepositJob < BaseDepositJob
     when Cocina::Models::RequestDRO
       create(new_request_dro, work_version)
     when Cocina::Models::DRO
-      update(new_request_dro)
+      update(new_request_dro, work_version)
     end
   end
   # rubocop:enable Metrics/AbcSize:
@@ -47,10 +47,11 @@ class DepositJob < BaseDepositJob
                                            connection: connection)
   end
 
-  def update(new_request_dro)
+  def update(new_request_dro, work_version)
     SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
                                            logger: Rails.logger,
-                                           connection: connection)
+                                           connection: connection,
+                                           version_description: work_version.description.presence)
   end
 
   def upload_responses(blobs)
