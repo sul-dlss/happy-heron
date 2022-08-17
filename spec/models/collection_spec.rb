@@ -11,8 +11,11 @@ RSpec.describe Collection do
 
   describe '#purl' do
     context 'with a druid' do
+      before do
+        collection.druid = 'druid:hb093rg5848'
+      end
+
       it 'constructs purl' do
-        collection.update(druid: 'druid:hb093rg5848')
         expect(collection.purl).to eq 'https://purl.stanford.edu/hb093rg5848'
       end
     end
@@ -35,6 +38,22 @@ RSpec.describe Collection do
 
     context 'when the required license is not set' do
       it { is_expected.to be true }
+    end
+  end
+
+  describe '#druid_without_namespace' do
+    subject { collection.druid_without_namespace }
+
+    context 'with a druid' do
+      before do
+        collection.druid = 'druid:hb093rg5848'
+      end
+
+      it { is_expected.to eq 'hb093rg5848' }
+    end
+
+    context 'with no druid' do
+      it { is_expected.to be_nil }
     end
   end
 end

@@ -21,7 +21,11 @@ class Work < ApplicationRecord
   def purl
     return nil unless druid
 
-    File.join(Settings.purl_url, druid.delete_prefix('druid:'))
+    File.join(Settings.purl_url, druid_without_namespace)
+  end
+
+  def druid_without_namespace
+    druid&.delete_prefix('druid:')
   end
 
   # This ensures that action-policy doesn't think that every 'Work.new' is the same.

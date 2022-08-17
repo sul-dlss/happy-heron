@@ -59,7 +59,11 @@ class Collection < ApplicationRecord
   def purl
     return nil unless druid
 
-    File.join(Settings.purl_url, druid.delete_prefix('druid:'))
+    File.join(Settings.purl_url, druid_without_namespace)
+  end
+
+  def druid_without_namespace
+    druid&.delete_prefix('druid:')
   end
 
   private
