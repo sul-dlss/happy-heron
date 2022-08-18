@@ -40,6 +40,13 @@ class CollectionVersion < ApplicationRecord
       DepositCollectionJob.perform_later(collection_version)
     end
 
+    after_transition new: :first_draft do |collection_version|
+      if Settings.notify_admin_list
+        FirstDraftCollectionsMailer.with(collection_version: collection_version)
+                                   .first_draft_created.deliver_later
+      end
+    end
+
     event :begin_deposit do
       transition %i[first_draft version_draft] => :depositing
     end

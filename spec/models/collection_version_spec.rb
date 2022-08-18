@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+RSpec::Matchers.define_negated_matcher :not_have_enqueued_job, :have_enqueued_job
 
 RSpec.describe CollectionVersion do
   subject(:collection_version) { build(:collection_version) }
@@ -74,17 +75,64 @@ RSpec.describe CollectionVersion do
     end
 
     describe 'an update_metadata event' do
-      let(:collection_version) { create(:collection_version, :new) }
-
       before do
         collection.event_context = { user: collection.creator }
       end
 
-      it 'transitions to version draft' do
-        expect { collection_version.update_metadata! }
-          .to change(collection_version, :state)
-          .from('new').to('first_draft')
-          .and change(Event, :count).by(1)
+      context 'when starting state is :new' do
+        let(:creator) { create(:user) }
+        let(:collection_version) { create(:collection_version, :new) }
+
+        before do
+          collection.creator = creator
+        end
+
+        context 'when Settings.notify_admin_list is true' do
+          before do
+            allow(Settings).to receive(:notify_admin_list).and_return true
+          end
+
+          it 'transitions to first_draft and sends FirstDraftCollectionsMailer.first_draft_created' do
+            expect { collection_version.update_metadata! }
+              .to change(collection_version, :state)
+              .from('new').to('first_draft')
+              .and change(Event, :count).by(1)
+                                        .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                                               'FirstDraftCollectionsMailer', 'first_draft_created', 'deliver_now',
+                                               { params: {
+                                                 collection_version: collection_version
+                                               }, args: [] }
+                                             ))
+          end
+        end
+
+        context 'when Settings.notify_admin_list is false' do
+          it 'transitions to first_draft and does not send email' do
+            expect { collection_version.update_metadata! }
+              .to change(collection_version, :state)
+              .from('new').to('first_draft')
+              .and change(Event, :count).by(1)
+                                        .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob))
+          end
+        end
+      end
+
+      context 'when starting state is first_draft' do
+        let(:collection_version) { create(:collection_version, :first_draft) }
+
+        it 'stays first_draft' do
+          expect { collection_version.update_metadata! }
+            .not_to change(collection_version, :state)
+        end
+      end
+
+      context 'when starting state is version_draft' do
+        let(:collection_version) { create(:collection_version, :version_draft) }
+
+        it 'stays version_draft' do
+          expect { collection_version.update_metadata! }
+            .not_to change(collection_version, :state)
+        end
       end
     end
 
