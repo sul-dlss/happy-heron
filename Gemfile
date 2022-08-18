@@ -37,7 +37,8 @@ end
 group :test do
   gem 'capybara', '~> 3.34'
   gem 'capybara-screenshot'
-  gem 'cuprite'
+  gem 'selenium-webdriver' # for js testing
+  gem 'webdrivers' # installs the chrome for selenium tests
 end
 
 group :deployment do

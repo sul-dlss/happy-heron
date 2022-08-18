@@ -44,7 +44,8 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!(allow_localhost: true,
+                             allow: ['https://chromedriver.storage.googleapis.com'])
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
