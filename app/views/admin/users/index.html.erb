@@ -33,7 +33,7 @@
             <% presenter.collections.each do |collection| %>
               <tr>
                 <td><%= link_to collection.head.name, collection %></td>
-                <td><%= collection.druid %></td>
+                <td><%= collection.druid_without_namespace %></td>
                 <td>
                   <% if collection.managed_by.include?(presenter.user) %>
                     Manager
@@ -63,7 +63,7 @@
               <tr>
                 <td><%= link_to collection.head.name, collection %></td>
                 <td><%= collection.head.state.humanize %></td>
-                <td><%= collection.druid %></td>
+                <td><%= collection.druid_without_namespace %></td>
                 <td>
                   <% if collection.managed_by.include?(presenter.user) %>
                     Manager
@@ -95,7 +95,7 @@
                 <td><%= link_to work.head.title, work %></td>
                 <td><%= link_to work.collection.head.name, work.collection %></td>
                 <td><%= work.head.state.humanize %></td>
-                <td><%= work.druid %></td>
+                <td><%= work.druid_without_namespace %></td>
                 <td>
                   <% if work.owner_id == presenter.user %>
                     Current owner
