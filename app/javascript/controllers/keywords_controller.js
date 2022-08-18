@@ -23,10 +23,16 @@ export default class extends Controller {
     this.containerTarget.classList.remove('is-invalid')
   }
 
-  checkForEnter(event) {
-    if (event.key === 'Enter') {
-      event.preventDefault() // prevent form submission
-      this.add(event);
+  checkForDuplicates(event) {
+    const input = event.target.closest('input[type="text"]')
+    const keywords = Array.from(document.querySelectorAll('.keyword-row:not([style*="display: none"]) input[type="text"]'), input => input.value)
+    const hasDuplicates = (new Set(keywords)).size !== keywords.length // a set cannot have duplicates, so this checks for dupes
+    if (hasDuplicates) {
+      input.classList.add('is-invalid')
+    }
+    else
+    {
+      input.classList.remove('is-invalid')
     }
   }
 
@@ -34,5 +40,6 @@ export default class extends Controller {
     const item = event.target.closest(".selection-choice")
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
+    this.checkForDuplicates() // clear out the invalid selection class if there are no duplicates anymore
   }
 }
