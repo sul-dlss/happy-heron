@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
   # Does a lookup from the account service in production mode, otherwise returns a stub value
   def lookup
     return AccountService.new.fetch(params[:id]) if Rails.env.production?
-    return {} if params[:id].size < 6
+    return {} unless params[:id].start_with?('jcoyne85')
 
     {
       'name' => 'Coyne, Justin Michael',

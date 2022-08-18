@@ -19,18 +19,18 @@
 
       <div data-collection-participant-form-target="control" style="position: relative">
         <input aria-label="lookup SunetID" class="form-control" style="width:40%"
-          data-action="collection-participant-form#search"
+          data-action="input->collection-participant-form#search keypress->collection-participant-form#preventEnter blur->collection-participant-form#clear"
           data-collection-participant-form-target="lookup">
         <div data-collection-participant-form-target="result" class="participant-overlay">
           <div data-collection-participant-form-target="resultOne">
             <div class="mb-2"><strong>Search results for "<span data-collection-participant-form-target="queryValue"></span>"</strong></div>
 
-            <span data-collection-participant-form-target="resultName"></span>
+            <span data-collection-participant-form-target="resultName"></span> -
             <span data-collection-participant-form-target="resultDescription"></span>
             <%= button_tag 'Add', type: 'button', class: "btn btn-outline-primary", data: { action: "collection-participant-form#addAssociation" } %>
           </div>
           <div data-collection-participant-form-target="resultNone">
-            <strong>No search results found for "<span data-collection-participant-form-target="queryValue"></span>"</strong>
+            <strong>No search results found for "<span data-collection-participant-form-target="queryValue"></span>" - enter an exact SUNetID only and try again</strong>
           </div>
         </div>
       </div>
