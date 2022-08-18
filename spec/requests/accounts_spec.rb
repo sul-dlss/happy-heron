@@ -37,7 +37,7 @@ RSpec.describe 'Accounts', type: :request do
       end
 
       it 'displays the data' do
-        get '/accounts/fred12345'
+        get '/accounts/jcoyne85'
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq '{"name":"Coyne, Justin Michael",' \
                                     '"description":"Digital Library Systems and Services, ' \

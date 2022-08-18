@@ -12,7 +12,7 @@ export default class extends Controller {
 
   addAssociation(event) {
     if(event) event.preventDefault()
-    const sunetid = this.lookupTarget.value
+    const sunetid = this.sunet
     const name = this.resultNameTarget.innerHTML
     const elemtn =  this.buildNewRowFromTemplate(sunetid, name)
     this.controlTarget.insertAdjacentElement('beforebegin', elemtn)
@@ -60,14 +60,17 @@ export default class extends Controller {
     this.lookupTarget.value = ''
   }
 
-
   search(e) {
-    if(e.target.value === '') {
+    // only execute a search if the user has entered at least 3 characters that doesn't start with a number
+    if(e.target.value.length < 3 || /^\d/.test(e.target.value)) {
       this.resultTarget.hidden = true
       return
     }
 
     this.resultTarget.hidden = false
+
+    // remove non-letters/numbers, and truncate after 8 characters
+    e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '').substring(0,8)
     fetch('/accounts/' + e.target.value)
       .then(response => response.json())
       .then(data => {
@@ -78,10 +81,19 @@ export default class extends Controller {
       })
   }
 
+  clear(e) {
+    this.sunet = e.target.value
+    if (!this.hasResults) { this.closeLookup() }
+  }
+
+  preventEnter(e) {
+    if (e.keyCode == 13) { e.preventDefault() }
+  }
   noResults(query) {
     this.resultOneTarget.hidden = true
     this.resultNoneTarget.hidden = false
     this.queryValueTargets.forEach(target => target.innerHTML = query)
+    this.hasResults = false
   }
 
   showResult(query, data) {
@@ -90,5 +102,6 @@ export default class extends Controller {
     this.queryValueTargets.forEach(target => target.innerHTML = query)
     this.resultNameTarget.innerHTML = data.name
     this.resultDescriptionTarget.innerHTML = data.description
+    this.hasResults = true
   }
 }
