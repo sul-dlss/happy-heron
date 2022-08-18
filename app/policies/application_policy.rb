@@ -9,4 +9,6 @@ class ApplicationPolicy < ActionPolicy::Base
   def manages_collection?(collection)
     collection.managed_by.include?(user)
   end
+
+  delegate :administrator?, to: :user_with_groups
 end
