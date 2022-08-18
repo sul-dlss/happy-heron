@@ -1,0 +1,75 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Generate collections report' } ])%>
+<% end %>
+<main id="content">
+  <div class="container" id="dashboard">
+    <h1>Generate collections report</h1>
+
+    <%= render Admin::NavigationComponent.new %>
+
+    <div class="row">
+      <%= form_with model: @collections_report, url: new_admin_collection_report_path, method: :get, class: 'mt-3' do |form| %>
+          <h2>Limit your search with one or more of the options below</h2>
+          <div class="row g-3 mb-3" data-controller="admin-date-range">
+            <div class="col-sm-2">
+              <%= form.label :date_created_start, "Date created range", class: 'col-form-label' %>
+            </div>
+            <div class="col-sm-3">
+              <%= form.date_field :date_created_start, class: 'form-control', max: Date.today, data: {'admin-date-range-target': "start", action: "admin-date-range#change"} %>
+            </div>
+            <div class="col-sm-1 text-center">
+              <%= form.label :date_created_end, "to", class: 'col-form-label' %>
+            </div>
+            <div class="col-sm-3">
+              <%= form.date_field :date_created_end, class: 'form-control', max: Date.today, data: {'admin-date-range-target': "end", action: "admin-date-range#change"} %>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3" data-controller="admin-date-range">
+            <div class="col-sm-2">
+              <%= form.label :date_modified_start, "Date modified range", class: 'col-form-label' %>
+            </div>
+            <div class="col-sm-3">
+              <%= form.date_field :date_modified_start, class: 'form-control', max: Date.today, data: {'admin-date-range-target': "start", action: "admin-date-range#change"} %>
+            </div>
+            <div class="col-sm-1 text-center">
+              <%= form.label :date_modified_end, "to", class: 'col-form-label' %>
+            </div>
+            <div class="col-sm-3">
+              <%= form.date_field :date_modified_end, class: 'form-control', max: Date.today, data: {'admin-date-range-target': "end", action: "admin-date-range#change"} %>
+            </div>
+          </div>
+
+          <h4>H2 state for collections</h4>
+          <div class="form-check">
+            <%= form.check_box :status_first_draft, class: 'form-check-input' %>
+            <%= form.label :status_first_draft, "First draft", class: 'form-check-label' %>
+          </div>
+          <div class="form-check">
+            <%= form.check_box :status_version_draft, class: 'form-check-input' %>
+            <%= form.label :status_version_draft, "Version draft", class: 'form-check-label' %>
+          </div>
+          <div class="form-check">
+            <%= form.check_box :status_deposited, class: 'form-check-input' %>
+            <%= form.label :status_deposited, "Deposited", class: 'form-check-label' %>
+          </div>                
+          <%= form.submit "Submit", class: 'btn btn-primary my-3' %>
+      <% end %>
+
+      <% if @collection_results&.empty? %>
+        <h4 class="text-danger">No results</h4>
+      <% elsif @collection_results&.any? %>
+        <%= form_with model: @collections_report, url: admin_collection_reports_path, data: {turbo: false} do |form| %>
+          <%= form.hidden_field :date_created_start %>
+          <%= form.hidden_field :date_created_end %>
+          <%= form.hidden_field :date_modified_start %>
+          <%= form.hidden_field :date_modified_end %>
+          <%= form.hidden_field :status_first_draft %>
+          <%= form.hidden_field :status_version_draft %>
+          <%= form.hidden_field :status_deposited %>
+          <%= form.submit "Download", class: 'btn btn-success my-3' %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</main>
