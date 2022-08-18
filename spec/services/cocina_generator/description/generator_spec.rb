@@ -147,6 +147,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
       uri: 'http://id.worldcat.org/fast/'
     }
   end
+  let(:keywords) { work_version.keywords }
 
   it 'creates description cocina model' do
     expect(model).to eq(
@@ -177,9 +178,9 @@ RSpec.describe CocinaGenerator::Description::Generator do
           }
         ],
         subject: [
-          { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
-          { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source },
-          { type: 'place', value: 'MyKeyword', uri: 'http://example.org/uri', source: fast_source }
+          { type: 'place', value: keywords[0].label, uri: keywords[0].uri, source: fast_source },
+          { type: 'place', value: keywords[1].label, uri: keywords[1].uri, source: fast_source },
+          { type: 'place', value: keywords[2].label, uri: keywords[2].uri, source: fast_source }
         ],
         note: [
           { type: 'abstract', value: 'test abstract' },
@@ -694,7 +695,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
 
     it 'does not add URI to model' do
-      expect(model[:subject]).to eq [Cocina::Models::DescriptiveValue.new({ value: 'MyKeyword', type: 'topic' }).to_h]
+      expect(model[:subject]).to eq [Cocina::Models::DescriptiveValue.new({ value: keyword.label, type: 'topic' }).to_h]
     end
   end
 end
