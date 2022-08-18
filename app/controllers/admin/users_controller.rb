@@ -9,7 +9,7 @@ module Admin
     verify_authorized
 
     def index
-      authorize! :admin_dashboard
+      authorize!
       @result = build_presenter(User.find_by(email: params[:query] + User::EMAIL_SUFFIX)) if params[:query]
     end
 
