@@ -49,7 +49,12 @@ Rails.application.routes.draw do
   end
   resources :work_versions, only: :destroy
 
-  resource :admin, only: :show
+  resource :admin, only: :show do
+    collection do
+      get :items_recent_activity
+    end
+  end
+
   namespace :admin do
     resources :druid_searches, only: :index
     resources :users, only: :index

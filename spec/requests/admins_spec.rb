@@ -21,11 +21,29 @@ RSpec.describe 'Admin dashboard' do
       sign_in user, groups: ['dlss:hydrus-app-administrators']
     end
 
-    it 'shows a link to create collections and admin' do
+    it 'shows admin dashboard' do
       get '/admin'
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Admin dashboard'
       expect(response.body).to include 'collectionsTable'
+      expect(response.body).to include 'Items recent activity'
+    end
+
+    context 'when user is viewing recent activity' do
+      before do
+        create(:embargo_lifted_event, eventable: work1, created_at: 3.days.ago)
+        create(:event, eventable: work2)
+      end
+
+      it 'shows recent activity' do
+        get '/admin/items_recent_activity?days=1'
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include 'itemsActivityFrame'
+        expect(response.body).to include work_version2.title
+        expect(response.body).to include 'MyString'
+        expect(response.body).to include 'Updated by user'
+        expect(response.body).not_to include 'Embargo lifted'
+      end
     end
   end
 
@@ -34,8 +52,13 @@ RSpec.describe 'Admin dashboard' do
       sign_in user
     end
 
-    it 'is forbidden' do
+    it 'is forbidden to view admin dashboard' do
       get '/admin'
+      expect(response).to redirect_to(root_url)
+    end
+
+    it 'is forbidden to view items_activity' do
+      get '/admin/items_recent_activity'
       expect(response).to redirect_to(root_url)
     end
   end
