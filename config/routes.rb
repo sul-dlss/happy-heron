@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: :index
     resources :collection_reports, only: %i[new create]
+    resources :work_reports, only: %i[new create]
   end
 
   # This route is used by the emails for the contact the SDR team link.

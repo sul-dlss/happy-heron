@@ -35,6 +35,7 @@ en:
       rejected: Returned
       depositing: Deposit in progress
       deposited: Deposited
+      decommissioned: Decommisssioned
     edit_links:
       title: 'Edit title and contact'
       author: 'Edit authors and contributors'

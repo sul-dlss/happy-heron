@@ -6,7 +6,8 @@ module Admin
     def dropdown
       options = options_for_select([['Admin page', admin_path],
                                     ['Search for user', admin_users_path],
-                                    ['Generate collections report', new_admin_collection_report_path]],
+                                    ['Generate collection report', new_admin_collection_report_path],
+                                    ['Generate item report', new_admin_work_report_path]],
                                    request.env['PATH_INFO'])
       select_tag 'path', options, class: 'form-select', onchange: 'window.location.href = this.value'
     end
