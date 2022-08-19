@@ -75,4 +75,8 @@ FactoryBot.define do
     release_option { 'depositor-selects' }
     release_duration { '3 years' }
   end
+
+  trait :with_collection_druid do
+    druid { 'druid:dc224fz4940' }
+  end
 end
