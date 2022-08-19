@@ -3,7 +3,7 @@
     <%= form.label :label, 'Keyword', class: 'col-form-label sr-only' %>
     <div data-controller="keywords autocomplete autocomplete-edit" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3" class="dropdown">
       <%= form.text_field :label, { class: "form-control#{ 'is-invalid' if error?}", required: true, 'data-autocomplete-target': 'input', 'data-autocomplete-edit-target': 'input',
-                'data-action': 'blur->keywords#checkForDuplicates' } %>
+                'data-keywords-target': 'input', 'data-action': 'blur->keywords#checkForDuplicates' } %>
       <!-- This input is populated by autocomplete controller.-->
       <!-- That triggers the autocomplete-edit controller, which populates the uri and cocina type inputs. -->
       <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-edit-target="value" data-action="autocomplete-edit#change" />
