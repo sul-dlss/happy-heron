@@ -57,4 +57,12 @@
   .edit {
     margin-left: 10px;
   }
+
+  .admin-section {
+    background-color: $silver-sand;
+
+    label.admin-functions {
+      @extend h5;
+    }
+  }
 }

@@ -79,6 +79,11 @@ class WorksController < ObjectsController
     authorize! @work.head
   end
 
+  def details
+    @work = Work.find(params[:id])
+    authorize! @work.head
+  end
+
   def destroy
     work = Work.find(params[:id])
     collection = work.collection

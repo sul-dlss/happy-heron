@@ -29,6 +29,8 @@ Rails.application.routes.draw do
         get :edit_button
         get :next_step
         get :next_step_review
+        get :details
+        resource :owners, only: %i[edit update], controller: 'work_owners'
       end
 
       resource :review, only: :create
