@@ -2,11 +2,9 @@
 
 # Defines who is authorized to see the collection reports (admin page)
 class CollectionReportPolicy < ApplicationPolicy
-  def create?
-    administrator?
-  end
+  alias_rule :new?, to: :create?
 
-  def new?
+  def create?
     administrator?
   end
 end

@@ -3,11 +3,9 @@
 module Admin
   # Defines who is authorized to see the item reports (admin page)
   class WorkReportPolicy < ApplicationPolicy
-    def create?
-      administrator?
-    end
+    alias_rule :new?, to: :create?
 
-    def new?
+    def create?
       administrator?
     end
   end
