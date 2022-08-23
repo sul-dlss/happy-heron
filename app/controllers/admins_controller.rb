@@ -15,4 +15,10 @@ class AdminsController < ApplicationController
     @days_limit = params.fetch(:days, 7).to_i
     @events = Event.work_events.includes(:eventable).where('created_at > ?', @days_limit.days.ago)
   end
+
+  def collections_recent_activity
+    authorize! :admin_dashboard
+    @days_limit = params.fetch(:days, 7).to_i
+    @events = Event.collection_events.includes(:eventable).where('created_at > ?', @days_limit.days.ago)
+  end
 end
