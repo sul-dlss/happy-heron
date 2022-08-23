@@ -50,10 +50,16 @@ export default class extends Controller {
       if (month > currentMonth) {
         this.monthTarget.classList.add('is-invalid')
         this.monthTarget.setCustomValidity('invalid')
+        this.yearTarget.classList.add('is-invalid')
+        this.yearTarget.setCustomValidity('invalid')
         this.errorTarget.textContent = 'must be in the past'
       } else if (month == currentMonth && day > currentDay) {
         this.dayTarget.classList.add('is-invalid')
         this.dayTarget.setCustomValidity('invalid')
+        this.monthTarget.classList.add('is-invalid')
+        this.monthTarget.setCustomValidity('invalid')
+        this.yearTarget.classList.add('is-invalid')
+        this.yearTarget.setCustomValidity('invalid')
         this.errorTarget.textContent = 'must be in the past'
       }
     }
