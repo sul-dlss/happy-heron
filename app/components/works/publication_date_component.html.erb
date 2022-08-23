@@ -3,7 +3,7 @@
     Publication date
     <%= render PopoverComponent.new key: 'work.publication_date' %>
   </div>
-  <div data-controller="date-validation" class="col-sm-10<%= ' is-invalid' if error? %>">
+  <div data-controller="date-validation" class="col-sm-10 date <%= ' is-invalid' if error? %>">
     <div class="year">
       <label for="work_published_year" class="visually-hidden">Publication year</label>
       <%= year_field %>
