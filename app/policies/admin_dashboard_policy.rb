@@ -9,4 +9,8 @@ class AdminDashboardPolicy < ApplicationPolicy
   def items_recent_activity?
     administrator?
   end
+
+  def collections_recent_activity?
+    administrator?
+  end
 end

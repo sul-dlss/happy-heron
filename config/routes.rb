@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   resource :admin, only: :show do
     collection do
       get :items_recent_activity
+      get :collections_recent_activity
     end
   end
 

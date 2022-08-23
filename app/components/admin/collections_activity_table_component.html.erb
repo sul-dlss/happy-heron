@@ -1,0 +1,12 @@
+<table class="table table-sm table-striped">
+  <thead class="table-light">
+    <tr>
+      <th>Collection Title</th>
+      <th>Activity</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render(Admin::CollectionActivityRowComponent.with_collection(@events)) %>
+  </tbody>
+</table>

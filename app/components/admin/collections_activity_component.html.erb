@@ -1,0 +1,10 @@
+<section class="mb-5">
+  <button class="btn collapse-header" data-bs-toggle="collapse" data-bs-target="#collectionsActivity" role="button" aria-expanded="false" aria-controls="collectionsActivity">
+    Collections recent activity
+  </button>
+  <div class="collapse" id="collectionsActivity">
+    <turbo-frame id="collectionsActivityFrame" src="<%= collections_recent_activity_admin_path %>">
+      Loading ...
+    </turbo-frame>
+  </div>
+</section>
