@@ -53,7 +53,7 @@ module Admin
       [
         collection_version.name,
         collection.id,
-        collection.druid,
+        collection.druid_without_namespace,
         collection_version.state,
         collection_version.version,
         collection.creator.sunetid,

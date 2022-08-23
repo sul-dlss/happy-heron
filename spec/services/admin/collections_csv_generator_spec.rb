@@ -43,7 +43,7 @@ RSpec.describe Admin::CollectionsCsvGenerator do
   it 'generates a CSV' do
     expect(csv).to eq <<~CSV
       collection title,collection id,collection druid,state,version number,creator,managers,date created,date last modified,release setting,release duration,visibility setting,license setting,required license,default license,DOI yes/no,review workflow
-      Collection 1,1,druid:cn748wq9511,deposited,1,user1,user1; user2,2018-01-01 00:00:00 UTC,2019-01-01 00:00:00 UTC,depositor-selects,6 months,world,required,CC-BY-4.0,CC-BY-4.1,yes,true
+      Collection 1,1,cn748wq9511,deposited,1,user1,user1; user2,2018-01-01 00:00:00 UTC,2019-01-01 00:00:00 UTC,depositor-selects,6 months,world,required,CC-BY-4.0,CC-BY-4.1,yes,true
     CSV
   end
 end
