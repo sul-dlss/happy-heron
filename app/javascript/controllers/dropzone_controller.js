@@ -115,8 +115,8 @@ export default class extends Controller {
       file.previewElement.querySelector('.dz-upload').classList.add('dz-upload-error')
       file.previewElement.querySelector('.dz-error-mark').style.display = 'block'
       file.previewElement.querySelector('.dz-success-mark').style.display = 'none'
-
-      this.containerTarget.classList.add("is-invalid")
+      // is-invalid needs to be on the hidden-file input for validation
+      file.previewElement.querySelector('.hidden-file').classList.add('is-invalid')
     })
 
     this.dropZone.on("complete", () => {

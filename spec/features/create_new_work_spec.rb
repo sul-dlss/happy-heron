@@ -81,7 +81,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           end
 
           expect(page).to have_content('Duplicate file')
-          click_button('Remove file', match: :first)
+          # remove the file which has the 'duplicate' error
+          within('div.dz-error', visible: true) do
+            find('.remove-file').click
+          end
+          expect(page).not_to have_content('Duplicate file')
           # End of client-side validation testing
 
           fill_in 'Title of deposit', with: 'My Title'
@@ -286,7 +290,14 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
             click_button('Choose files')
           end
 
+          click_button 'Deposit'
+          # should not deposit but continue to show duplicate file error
           expect(page).to have_content('Duplicate file')
+          # remove the file which has the 'duplicate' error
+          within('div.dz-error', visible: true) do
+            find('.remove-file').click
+          end
+          expect(page).not_to have_content('Duplicate file')
           # End of client-side validation testing
 
           fill_in 'Title of deposit', with: 'My Title'
