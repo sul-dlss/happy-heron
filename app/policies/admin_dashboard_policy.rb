@@ -5,4 +5,8 @@ class AdminDashboardPolicy < ApplicationPolicy
   def show?
     administrator?
   end
+
+  def items_recent_activity?
+    administrator?
+  end
 end
