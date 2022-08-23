@@ -4,6 +4,7 @@
 class WorkVersionPolicy < ApplicationPolicy
   alias_rule :edit?, to: :update?
   alias_rule :delete?, to: :destroy?
+  alias_rule :details?, to: :show?
 
   relation_scope :edits do |scope|
     if administrator?

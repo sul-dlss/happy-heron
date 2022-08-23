@@ -1,0 +1,20 @@
+<turbo-frame id='workAdminSection'>
+  <%= form_with url: owners_path(params[:id]), method: :put, data: {turbo: false} do |form| %>
+    <div data-controller="sunet-input">
+      <%= form.label :sunetid, 'Enter a valid SUNet ID to change to a new owner' %>
+      <%= form.text_field :sunetid, class: "form-control mb-1",  style: "width:40%", data: {action: "input->sunet-input#search"}%>
+      <div data-sunet-input-target="result">
+        <div data-sunet-input-target="resultOne">
+          <span data-sunet-input-target="resultName"></span> -
+          <span data-sunet-input-target="resultDescription"></span>
+        </div>
+        <div data-sunet-input-target="resultNone">
+          <strong>No search results found for "<span data-sunet-input-target="queryValue"></span>" - enter an exact SUNetID only and try again</strong>
+        </div>
+      </div>
+      <fieldset data-sunet-input-target="submit">
+        <%= form.submit "Change owner", class: 'btn btn-primary mt-3' %>
+      </fieldset>
+    </div>
+  <% end %>
+</turbo-frame>

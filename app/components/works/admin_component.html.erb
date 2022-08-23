@@ -1,0 +1,14 @@
+<section class="admin-section p-3 mb-5">
+  <div class="row">
+    <div class="col">
+      <label for="adminFunctionsSelect" class="form-label admin-functions">Admin functions</label>
+    </div>
+    <div class="col">
+      <select id="adminFunctionsSelect" class="form-select" onchange="this.value !== 'select' ? document.querySelector('#workAdminSection').src = this.value : document.querySelector('#workAdminSection').innerHTML = ''">
+        <option value='select' selected>Select...</option>
+        <option value='<%= edit_owners_path(work) %>'>Change owner</option>
+      </select>
+    </div>
+  </div>
+  <turbo-frame id="workAdminSection"></turbo-frame>
+</section>

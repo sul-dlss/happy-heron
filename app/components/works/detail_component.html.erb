@@ -21,6 +21,8 @@
     <%= render Works::EditButtonComponent.new(work_version: work_version) %>
   </header>
 
+  <%= render Works::AdminComponent.new(work: work) %>
+
   <table class="table table-sm mb-5 caption-header">
     <caption>Details</caption>
     <tbody>

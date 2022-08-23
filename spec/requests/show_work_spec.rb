@@ -42,7 +42,7 @@ RSpec.describe 'Show a work detail' do
 
     before do
       sign_in user
-      get "/works/#{work.id}"
+      get "/works/#{work.id}/details"
     end
 
     it 'displays the work' do
@@ -51,6 +51,8 @@ RSpec.describe 'Show a work detail' do
       # Owner is different than depositor, so displayed.
       # Matching on "Owner" but not "Ownership".
       expect(response.body).to match(/Owner(?!ship)/)
+      # Not an admin, so no admin functions
+      expect(response.body).not_to include 'Admin functions'
     end
 
     context 'when the work has a blank title' do

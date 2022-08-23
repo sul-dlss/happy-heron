@@ -1,1 +1,2 @@
-<%= render Works::DetailComponent.new(work_version: work.head) %>
+<turbo-frame id="workDetailsFrame" src="<%= details_work_path(work) %>">
+</turbo-frame>

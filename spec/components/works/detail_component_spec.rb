@@ -5,14 +5,19 @@ require 'rails_helper'
 RSpec.describe Works::DetailComponent, type: :component do
   let(:instance) { described_class.new(work_version: work_version) }
   let(:rendered) { render_inline(instance) }
+  let(:user) { build(:user, name: 'Pyotr Kropotkin', email: 'kropot00@stanford.edu') }
+  let(:user_with_groups) { UserWithGroups.new(user: user, groups: []) }
 
   before do
+    allow(controller).to receive_messages(
+      current_user: user,
+      user_with_groups: user_with_groups
+    )
     allow(work_version.work.collection).to receive(:head).and_return(build_stubbed(:collection_version))
   end
 
   context 'when a first draft' do
     let(:work_version) { build_stubbed(:work_version) }
-    let(:user) { build(:user, name: 'Pyotr Kropotkin', email: 'kropot00@stanford.edu') }
 
     before do
       work_version.work.depositor = user
