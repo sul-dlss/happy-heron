@@ -51,7 +51,7 @@ en:
   collection:
     actions: Actions
     citation: Citation
-    depositor: Depositor
+    owner: Owner
     deposits: Deposits in collection
     deposit_status: Status
     deposit_size: Size
