@@ -101,6 +101,10 @@ class WorkVersion < ApplicationRecord
       transition %i[first_draft version_draft pending_approval rejected] => same
       transition purl_reserved: :first_draft
     end
+
+    event :no_review_workflow do
+      transition %i[pending_approval rejected] => :version_draft
+    end
   end
 
   # 6/3/2022 : Added to prevent https://app.honeybadger.io/projects/77112/faults/85827019

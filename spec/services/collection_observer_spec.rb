@@ -155,5 +155,42 @@ RSpec.describe CollectionObserver do
         )
       end
     end
+
+    context 'when review not enabled' do
+      let(:collection) { create(:collection) }
+      let!(:work_version1) { create(:work_version_with_work, collection: collection, state: 'pending_approval') }
+      let!(:work_version2) { create(:work_version_with_work, collection: collection, state: 'rejected') }
+      let!(:work_version3) { create(:work_version_with_work, collection: collection, state: 'deposited') }
+      let(:collection_after) { collection }
+
+      before do
+        collection.reload
+      end
+
+      it 'updates states of works from pending_approval and rejected to version_draft' do
+        action
+        expect(work_version1.reload.state).to eq 'version_draft'
+        expect(work_version2.reload.state).to eq 'version_draft'
+        expect(work_version3.reload.state).to eq 'deposited'
+      end
+    end
+
+    context 'when review is enabled' do
+      let(:collection) { create(:collection) }
+      let!(:work_version1) { create(:work_version_with_work, collection: collection, state: 'pending_approval') }
+      let!(:work_version2) { create(:work_version_with_work, collection: collection, state: 'rejected') }
+      let(:collection_after) { collection }
+
+      before do
+        collection.update(review_enabled: true)
+        collection.reload
+      end
+
+      it 'does not update states of works from pending_approval and rejected to version_draft' do
+        action
+        expect(work_version1.reload.state).to eq 'pending_approval'
+        expect(work_version2.reload.state).to eq 'rejected'
+      end
+    end
   end
 end
