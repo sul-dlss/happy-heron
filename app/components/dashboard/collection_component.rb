@@ -21,7 +21,7 @@ module Dashboard
       # that would double the number of queries run for each instance of this
       # component.
       scope = work_policy.apply_scope collection.works, type: :relation
-      scope.order('updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
+      scope.order('works.updated_at desc').limit(MAX_DEPOSITS_TO_SHOW + 1)
     end
 
     def reviewer?

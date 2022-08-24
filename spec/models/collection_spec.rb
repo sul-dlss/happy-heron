@@ -7,6 +7,7 @@ RSpec.describe Collection do
 
   it 'has many works' do
     expect(collection.works).to all(be_a(Work))
+    expect(collection.works.size).to eq 2
   end
 
   describe '#purl' do
@@ -54,6 +55,25 @@ RSpec.describe Collection do
 
     context 'with no druid' do
       it { is_expected.to be_nil }
+    end
+  end
+
+  describe '#works_without_decommissioned' do
+    let(:works) { collection.works_without_decommissioned }
+
+    before do
+      # Set states on the collection's works.
+      work1 = collection.works[0]
+      work1.head = build(:work_version, state: 'deposited', work: work1)
+      work1.save!
+      work2 = collection.works[1]
+      work2.head = build(:work_version, state: 'decommissioned', work: work2)
+      work2.save!
+    end
+
+    it 'excludes decommissioned works' do
+      expect(works).to all(be_a(Work))
+      expect(works.size).to eq 1
     end
   end
 end

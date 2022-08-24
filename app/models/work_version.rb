@@ -105,6 +105,10 @@ class WorkVersion < ApplicationRecord
     event :no_review_workflow do
       transition %i[pending_approval rejected] => :version_draft
     end
+
+    event :decommission do
+      transition all => :decommissioned
+    end
   end
 
   # 6/3/2022 : Added to prevent https://app.honeybadger.io/projects/77112/faults/85827019

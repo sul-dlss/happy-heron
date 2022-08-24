@@ -12,5 +12,15 @@ module Works
     def render?
       helpers.user_with_groups.administrator?
     end
+
+    def options
+      opts = [
+        ['Select...', 'select'],
+        ['Change owner', edit_owners_path(work)],
+        ['Lock', edit_locks_path(work)]
+      ]
+      opts << ['Decommission', edit_decommission_path(work)] unless work.head.decommissioned?
+      options_for_select(opts, 'select')
+    end
   end
 end

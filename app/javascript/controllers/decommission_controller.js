@@ -1,13 +1,13 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["start", "end"]
+  static targets = ["confirm", "submit"]
 
   connect() {
     this.change()
   }
 
   change() {
-    this.endTarget.setCustomValidity('')
+    this.submitTarget.disabled = !this.confirmTarget.checked
   }
 }
