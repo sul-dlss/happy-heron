@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe FirstDraftCollectionsMailer, type: :mailer do
-  let(:creator) { build_stubbed(:user, name: 'Peter Lorre', first_name: 'Snaaaaakes') }
+  let(:creator) { build_stubbed(:user, name: 'Peter Lorre', email: 'psl@example.org') }
   let(:collection) { build_stubbed(:collection, creator: creator) }
   let(:collection_version) { build_stubbed(:collection_version, collection: collection) }
   let(:collection_name) { collection_version.name }
@@ -25,9 +25,8 @@ RSpec.describe FirstDraftCollectionsMailer, type: :mailer do
       expect(mail.body.encoded).to match "collections/#{collection_version.collection_id}\">#{collection_name}</a>"
     end
 
-    it 'body uses creator.first_name' do
-      expect(mail.body.encoded).to match "Created by #{creator.first_name}"
-      expect(mail.body.encoded).not_to match "Created by #{creator.name}"
+    it 'body uses creator.name and email' do
+      expect(mail.body.encoded).to match 'Created by Peter Lorre psl@example.org'
     end
   end
 end
