@@ -69,4 +69,27 @@ RSpec.describe Works::Show::DoiComponent, type: :component do
       end
     end
   end
+
+  context 'with a collection set to not permit DOI' do
+    let(:collection) { build_stubbed(:collection, doi_option: 'no') }
+
+    context 'when the work does not have a doi' do
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection) }
+
+      it 'renders the DOI setting' do
+        expect(details.to_html).to include 'A DOI will not be assigned.'
+      end
+    end
+
+    context 'when the work has a DOI' do
+      let(:work_version) { build_stubbed(:work_version, :deposited, work: work) }
+      let(:work) { build_stubbed(:work, collection: collection, doi: '10.25740/bc123df4567') }
+
+      it 'renders the doi_link' do
+        expect(details.css('a[href="https://doi.org/10.25740/bc123df4567"]').to_html)
+          .to include 'https://doi.org/10.25740/bc123df4567'
+      end
+    end
+  end
 end
