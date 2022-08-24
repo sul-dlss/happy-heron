@@ -8,19 +8,19 @@ RSpec.describe Admin::CollectionsReportQuery do
   let!(:collection1) { create(:collection_version_with_collection, state: 'deposited').collection }
   let!(:collection2) { create(:collection_version_with_collection, state: 'first_draft').collection }
   let!(:collection3) do
-    collection = create(:collection_version_with_collection, state: 'version_draft',
-                                                             updated_at: Time.zone.parse('2018-06-01')).collection
-    collection.creator = user
+    collection_version = create(:collection_version_with_collection, state: 'version_draft',
+                                                                     updated_at: Time.zone.parse('2018-06-01'),
+                                                                     name: 'aaaaCollection')
+    collection = collection_version.collection
     collection.created_at = Time.zone.parse('2018-01-01')
     collection.save!
     collection
   end
-  let(:user) { create(:user, email: 'aaaa@stanford.edu') }
 
   context 'without filters' do
     let(:report) { Admin::CollectionsReport.new }
 
-    it 'returns all collections sorted by email' do
+    it 'returns all collections sorted by name' do
       expect(request).to eq [collection3, collection1, collection2]
     end
   end

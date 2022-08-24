@@ -20,7 +20,7 @@ module Admin
       add_date_created_end_filter
       add_date_modified_start_filter
       add_date_modified_end_filter
-      query.order('users.email ASC')
+      query.order('collection_versions.name ASC')
     end
 
     private
@@ -31,7 +31,7 @@ module Admin
     def add_status_filter
       return if collections_report.statuses.empty?
 
-      self.query = query.where(head: { state: collections_report.statuses })
+      self.query = query.where(collection_versions: { state: collections_report.statuses })
     end
 
     def add_date_created_start_filter
