@@ -22,7 +22,7 @@
         <%= form.radio_button :created_type, 'single', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label :created_type_single, 'Single date' %>
       </div>
-      <div data-controller="date-validation" class="col-sm-10">
+      <div data-controller="date-validation date-approximate" data-date-approximate-enabled-value="<%= form.object.created_type == 'single' %>" class="col-sm-10">
         <div class="year">
           <label for="<%= prefix %>_created_year" class="visually-hidden">Created year</label>
           <%= number_field_tag "#{prefix}[created(1i)]", created_year,
@@ -46,12 +46,16 @@
         <div class="day">
           <label for="<%= prefix %>_created_day" class="visually-hidden">Created day</label>
           <%= select_day created_day, { prefix: prefix, field_name: 'created(3i)', prompt: 'day'},
-                        data: { date_validation_target: 'day', action: 'date-validation#change' },
+                        data: { date_validation_target: 'day',
+                          date_approximate_target: 'day', 
+                          action: 'date-validation#change date-approximate#change' },
                         id: "#{prefix}_created_day", class: "form-control" %>
         </div>
         <div>
-        <%= check_box_tag "#{prefix}[created(approx0)]", true, created_approximate?, class: 'form-check-input' %>
-        <%= form.label 'created(approx0)', 'Approximate' %>
+        <%= check_box_tag "#{prefix}[created(approx0)]", true, created_approximate?,
+          data: { date_approximate_target: 'approximate', action: 'date-approximate#change' },
+          class: 'form-check-input' %>
+        <%= form.label 'created(approx0)', 'Approximate (can\'t be selected if \'day\' is entered)' %>
         </div>
       </div>
     </div>
@@ -64,7 +68,7 @@
       </div>
 
       <div class="col-md-10 date-range" data-controller="date-range">
-        <div class="start-date" data-controller="date-validation">
+        <div class="start-date" data-controller="date-validation date-approximate" data-date-approximate-enabled-value="<%= form.object.created_type == 'range' %>">
           <div class="year">
             <label for="<%= prefix %>_created_range_start_year" class="visually-hidden">Created range start year</label>
             <%= date_range_start_year %>
@@ -83,13 +87,18 @@
             <label for="<%= prefix %>_created_range_start_day" class="visually-hidden">Created range start day</label>
             <%= select_day created_range_start_day,
                 { prefix: prefix, field_name: 'created_range(3i)', prompt: 'day'},
-                data: { date_validation_target: 'day', date_range_target: 'startDay', action: 'date-range#change' },
+                data: { date_validation_target: 'day', 
+                  date_range_target: 'startDay',
+                  date_approximate_target: 'day', 
+                  action: 'date-range#change date-approximate#change' },
                 id: "#{prefix}_created_range_start_day",
                 class: "form-control" %>
           </div>
           <div>
-          <%= check_box_tag "#{prefix}[created_range(approx0)]", true, created_range_start_approximate?, class: 'form-check-input' %>
-          <label for="<%= prefix %>_created_range_start_approx">Approximate</label>
+          <%= check_box_tag "#{prefix}[created_range(approx0)]", true, created_range_start_approximate?, 
+            data: { date_approximate_target: 'approximate', action: 'date-approximate#change' },
+            class: 'form-check-input' %>
+          <label for="<%= prefix %>_created_range_start_approx">Approximate (can't be selected if 'day' is entered)</label>
           </div>
         </div>
 
@@ -97,7 +106,7 @@
           to
         </div>
 
-        <div class="end-date" data-controller="date-validation">
+        <div class="end-date" data-controller="date-validation date-approximate" data-date-approximate-enabled-value="<%= form.object.created_type == 'range' %>">
           <div class="year">
             <label for="<%= prefix %>_created_range_end_year" class="visually-hidden">Created range end year</label>
             <%= date_range_end_year %>
@@ -116,12 +125,17 @@
             <label for="<%= prefix %>_created_range_end_day" class="visually-hidden">Created range end day</label>
             <%= select_day created_range_end_day,
                 { prefix: prefix, field_name: 'created_range(6i)', prompt: 'day' },
-                data: { date_validation_target: 'day', date_range_target: 'endDay', action: 'date-range#change' },
+                data: { date_validation_target: 'day', 
+                  date_range_target: 'endDay',
+                  date_approximate_target: 'day',
+                  action: 'date-range#change date-approximate#change' },
                 id: "#{prefix}_created_range_end_day", class: "form-control" %>
           </div>
           <div>
-          <%= check_box_tag "#{prefix}[created_range(approx3)]", true, created_range_end_approximate?, class: 'form-check-input' %>
-          <label for="<%= prefix %>_created_range_end_approx">Approximate</label>
+          <%= check_box_tag "#{prefix}[created_range(approx3)]", true, created_range_end_approximate?, 
+            data: { date_approximate_target: 'approximate', action: 'date-approximate#change' },
+            class: 'form-check-input' %>
+          <label for="<%= prefix %>_created_range_end_approx">Approximate (can't be selected if 'day' is entered)</label>
           </div>
         </div>
       </div>
