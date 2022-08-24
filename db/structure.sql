@@ -589,7 +589,8 @@ CREATE TABLE public.works (
     updated_at timestamp(6) without time zone NOT NULL,
     assign_doi boolean DEFAULT true NOT NULL,
     doi character varying,
-    owner_id bigint NOT NULL
+    owner_id bigint NOT NULL,
+    locked boolean DEFAULT false NOT NULL
 );
 
 
@@ -1255,6 +1256,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220808145502'),
 ('20220808221011'),
 ('20220808222722'),
-('20220812205204');
+('20220812205204'),
+('20220824225302');
 
 
