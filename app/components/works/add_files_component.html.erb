@@ -6,7 +6,7 @@
                               bs_toggle: 'modal',
                               bs_target: '#contactUsModal' }) %>
   </p>
-  <div class="dropzone dropzone-default<%= ' is-invalid' if error? %>" data-dropzone-target="container">
+  <div class="dropzone dropzone-default" data-dropzone-target="container">
     <%= form.file_field :files, multiple: true, direct_upload: true,
                         data: { dropzone_target: 'input' } %>
     <div class="dz-message needsclick text-secondary">
