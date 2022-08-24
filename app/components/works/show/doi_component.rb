@@ -14,17 +14,18 @@ module Works
       delegate :doi_option, to: :collection, prefix: true
       delegate :first_draft?, :work, to: :work_version
 
-      # Nothing is returned if collection_doi_option is 'no'
-      def render?
-        collection_doi_option != 'no'
-      end
-
       def call
         # If there is a DOI, return a link to it.
         return doi_link if doi
-        return doi_later if collection_doi_option == 'yes'
 
-        assign_doi ? doi_later : doi_opt_out
+        case collection_doi_option
+        when 'yes'
+          doi_later
+        when 'no'
+          'A DOI will not be assigned.'
+        when 'depositor-selects'
+          assign_doi ? doi_later : doi_opt_out
+        end
       end
 
       private
