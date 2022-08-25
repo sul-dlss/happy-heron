@@ -69,8 +69,17 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           )
           expect(page).to have_content('You must provide an abstract')
 
+          fill_in 'Created year', with: '2000'
+          select 'February', from: 'Created month'
+          select '31', from: 'Created day'
+          expect(page).to have_content(
+            'must be a valid day'
+          )
+
           fill_in 'Created year', with: ''
           fill_in 'Publication year', with: ''
+          select 'month', from: 'Created month'
+          select 'day', from: 'Created day'
 
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')

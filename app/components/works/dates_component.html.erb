@@ -22,7 +22,9 @@
         <%= form.radio_button :created_type, 'single', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label :created_type_single, 'Single date' %>
       </div>
-      <div data-controller="date-validation date-approximate" data-date-approximate-enabled-value="<%= form.object.created_type == 'single' %>" class="col-sm-10">
+      <div data-controller="date-validation date-approximate" 
+        data-date-approximate-enabled-value="<%= form.object.created_type == 'single' %>" 
+        class="col-sm-10 date">
         <div class="year">
           <label for="<%= prefix %>_created_year" class="visually-hidden">Created year</label>
           <%= number_field_tag "#{prefix}[created(1i)]", created_year,

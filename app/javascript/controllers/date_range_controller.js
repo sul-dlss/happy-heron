@@ -22,7 +22,9 @@ export default class extends Controller {
 
     clearValidationMessages() {
         this.startYearTarget.dispatchEvent(new Event('clear'))
+        this.startErrorTarget.textContent = ''
         this.endYearTarget.dispatchEvent(new Event('clear'))
+        this.endErrorTarget.textContent = ''
     }
 
     // If any of the years are filled in, then make both required.
