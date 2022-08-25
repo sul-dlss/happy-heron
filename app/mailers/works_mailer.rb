@@ -59,4 +59,10 @@ class WorksMailer < ApplicationMailer
     @user = UserPresenter.new(user: @work.owner)
     mail(to: @user.email, subject: 'You now have access to an item in the SDR')
   end
+
+  def changed_owner_collection_manager_email
+    @work = params[:work]
+    @user = UserPresenter.new(user: params[:user])
+    mail(to: @user.email, subject: 'The ownership of an item in your collection has changed')
+  end
 end
