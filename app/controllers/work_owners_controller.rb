@@ -16,6 +16,7 @@ class WorkOwnersController < ApplicationController
     new_owner = User.find_or_create_by(email: "#{params['sunetid']}@stanford.edu")
     move_work_to_new_owner(work, new_owner)
     send_participant_change_emails(work.collection)
+    send_changed_owner_email(work)
 
     flash[:success] = I18n.t('work.flash.owner_updated')
     redirect_to work_path(work)
@@ -28,6 +29,10 @@ class WorkOwnersController < ApplicationController
       CollectionsMailer.with(collection_version: collection.head, user: user)
                        .participants_changed_email.deliver_later
     end
+  end
+
+  def send_changed_owner_email(work)
+    WorksMailer.with(work: work).changed_owner_email.deliver_later
   end
 
   def move_work_to_new_owner(work, new_owner)

@@ -22,7 +22,7 @@ RSpec.describe 'Change owner of a work' do
 
   it 'allows owner to be changed' do
     expect { put owners_path(work), params: { sunetid: new_owner.sunetid } }
-      .to have_enqueued_job(ActionMailer::MailDeliveryJob).exactly(:twice)
+      .to have_enqueued_job(ActionMailer::MailDeliveryJob).exactly(3).times
 
     follow_redirect!
     # Flash message
