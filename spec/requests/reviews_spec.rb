@@ -36,6 +36,8 @@ RSpec.describe 'Works requests' do
         post "/works/#{work.id}/review", params: { state: 'approve' }
         expect(response).to redirect_to(dashboard_path)
         expect(DepositJob).to have_received(:perform_later)
+
+        expect(work.reload.events.last.user).to eq user
       end
     end
 
