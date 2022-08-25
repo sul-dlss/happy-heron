@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-# a controller for the admins for a work.
-class WorkAdminsController < ApplicationController
+# a controller for the admins to lock/unlock a work.
+class WorkLocksController < ApplicationController
   before_action :authenticate_user!
   verify_authorized
 
-  def edit_lock
-    authorize! :work_admin
+  def edit
+    authorize! :work_lock
     @work = Work.find(params[:id])
   end
 
-  def update_lock
-    authorize! :work_admin
+  def update
+    authorize! :work_lock
 
     change_lock_status = ActiveModel::Type::Boolean.new.cast(params[:change_lock_status])
     work = Work.find(params[:id])

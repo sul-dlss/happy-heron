@@ -1,5 +1,5 @@
 <turbo-frame id='workAdminSection'>
-  <%= form_with url: update_lock_work_path(params[:id]), method: :put, data: {turbo: false} do |form| %>
+  <%= form_with url: locks_path(params[:id]), method: :put, data: {turbo: false} do |form| %>
     <% if @work.locked %>
         Unlocking this item will allow the depositor to make changes to this item. You may relock this item in the future.
         <fieldset>

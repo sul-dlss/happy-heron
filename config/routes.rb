@@ -31,8 +31,7 @@ Rails.application.routes.draw do
         get :next_step_review
         get :details
         resource :owners, only: %i[edit update], controller: 'work_owners'
-        get :edit_lock, to: 'work_admins#edit_lock'
-        put :update_lock, to: 'work_admins#update_lock'
+        resource :locks, only: %i[edit update], controller: 'work_locks'
       end
 
       resource :review, only: :create
