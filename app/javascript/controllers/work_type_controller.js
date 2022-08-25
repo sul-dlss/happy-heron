@@ -7,7 +7,7 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = [
     "form", "template", "otherTemplate", "subtype", "area", "templateHeader",
-    "otherTemplateHeader", "moreTypesLink", "moreTypes", "continueButton",
+    "moreTypesLink", "moreTypes", "continueButton",
     "musicTemplateSubheader", "mixedMaterialTemplateSubheader"
   ]
 
@@ -63,6 +63,7 @@ export default class extends Controller {
   displaySubtypeOptions(type) {
     // Show the more options link
     this.moreTypesLinkTarget.hidden = false
+    this.subtypeTarget.hidden = false
     this.subtypeTarget.innerHTML = this.subtypesFor(type).join('')
     this.moreTypesTarget.innerHTML = this.moreTypesFor(type).join('')
     this.areaTarget.innerHTML = this.templateHeaderTarget.innerHTML
@@ -80,8 +81,8 @@ export default class extends Controller {
     // Hide the more options link
     this.moreTypesLinkTarget.hidden = true
     this.hideMoreTypes()
-    this.subtypeTarget.innerHTML = this.otherTemplateTarget.innerHTML
-    this.areaTarget.innerHTML = this.otherTemplateHeaderTarget.innerHTML
+    this.subtypeTarget.hidden = true
+    this.areaTarget.innerHTML = this.otherTemplateTarget.innerHTML
   }
 
   subtypesFor(type) {
