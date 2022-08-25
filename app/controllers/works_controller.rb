@@ -122,9 +122,9 @@ class WorksController < ObjectsController
     work = Work.find(params[:id])
 
     default_label = if work.purl_reservation?
-                      "Choose Type and Edit #{WorkTitlePresenter.show(work.head)}"
+                      "Choose Type and Edit #{DepositTitlePresenter.show(work.head)}"
                     else
-                      "Edit #{WorkTitlePresenter.show(work.head)}"
+                      "Edit #{DepositTitlePresenter.show(work.head)}"
                     end
     edit_label = I18n.t params[:tag], scope: %i[work edit_links], default: default_label
 

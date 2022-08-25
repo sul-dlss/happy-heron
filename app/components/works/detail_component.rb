@@ -69,7 +69,7 @@ module Works
     end
 
     def title
-      WorkTitlePresenter.show(work_version)
+      DepositTitlePresenter.show(work_version)
     end
 
     def created_at

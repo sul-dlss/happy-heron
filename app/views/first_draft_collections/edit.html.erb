@@ -5,7 +5,7 @@
 <% end %>
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="collection">
-    <h1><%= @form.collection.head.name.presence || 'No Title' %></h1>
+    <h1><%= DepositTitlePresenter.show(@form.collection.head) %></h1>
     <%= render FirstDraftCollections::Update::FormComponent.new(collection_form: @form) %>
   </div>
 </main>

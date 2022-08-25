@@ -17,6 +17,8 @@ RSpec.describe 'Delete a draft collection', js: true do
       it 'allow users to delete the collection and destroys the model' do
         visit dashboard_path
 
+        click_button 'No' # do not continue editing the draft collection, go to the dashboard
+
         # There is an occasional problem where the confirmation modal isn't triggered without a delay.
         sleep(0.5)
 

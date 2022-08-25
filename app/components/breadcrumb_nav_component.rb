@@ -8,7 +8,7 @@ class BreadcrumbNavComponent < ApplicationComponent
   end
 
   def full_title(breadcrumb)
-    breadcrumb.presence || 'No title'
+    breadcrumb.presence || Settings.h2.no_title
   end
 
   def truncated_title(breadcrumb)

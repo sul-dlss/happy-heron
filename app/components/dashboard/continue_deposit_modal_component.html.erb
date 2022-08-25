@@ -6,11 +6,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">
-        <p>Would you like to continue working on your draft of</p>
+        <p>Would you like to continue working on your draft <%= deposit.class.to_s.downcase %></p>
         <p>&quot;<%= title %>&quot;</p>
       </div>
       <div class="modal-footer">
-        <%= link_to 'Yes!', [:edit, work], class: "btn btn-primary" %>
+        <%= link_to 'Yes!', [:edit, deposit], class: "btn btn-primary" %>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
       </div>
     </div>

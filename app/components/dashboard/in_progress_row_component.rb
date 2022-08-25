@@ -18,7 +18,7 @@ module Dashboard
     end
 
     def title
-      @title ||= WorkTitlePresenter.show(work_version)
+      @title ||= DepositTitlePresenter.show(work_version)
     end
 
     def work_link
