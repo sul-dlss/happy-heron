@@ -7,8 +7,11 @@
       <select id="adminFunctionsSelect" class="form-select" onchange="this.value !== 'select' ? document.querySelector('#workAdminSection').src = this.value : document.querySelector('#workAdminSection').innerHTML = ''">
         <option value='select' selected>Select...</option>
         <option value='<%= edit_owners_path(work) %>'>Change owner</option>
+        <option value='<%= edit_locks_path(work) %>'>Lock</option>
       </select>
     </div>
   </div>
-  <turbo-frame id="workAdminSection"></turbo-frame>
+  <div class="row pt-3">
+    <turbo-frame id="workAdminSection"></turbo-frame>
+  </div>
 </section>
