@@ -12,7 +12,8 @@ class WorkPolicy < ApplicationPolicy
   end
 
   def destroy?
-    (allowed_to?(:review?, collection) || owner_of_the_work?) && record.persisted? && record.head.deleteable?
+    (allowed_to?(:review?,
+                 collection) || owner_of_the_work?) && record.persisted? && record.head.deleteable? && !record.locked?
   end
 
   delegate :administrator?, to: :user_with_groups

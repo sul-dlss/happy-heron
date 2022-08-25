@@ -30,13 +30,15 @@ class WorkVersionPolicy < ApplicationPolicy
   end
 
   # Can edit a work iff:
-  #   The work is in a state where it can be updated (e.g. not depositing, not an in-progress purl reservation)
+  #   The work is in a state where it can be updated
+  #     (e.g. not depositing, not an in-progress purl reservation, not locked)
   #   AND if any one of the following is true:
   #     1. The user is an administrator
   #     2. The user is the depositor of the work and it is not currently pending approval (review workflow)
   #     3. The user is a manager of the collection the work is in
   #     4. The user is a reviewer of the collection the work is in
   def update?
+    return false if record.work.locked?
     return false unless record.updatable?
     return true if allowed_to?(:review?, collection)
 
@@ -55,11 +57,12 @@ class WorkVersionPolicy < ApplicationPolicy
   # The collection reviewers can review a work
 
   def review?
-    record.pending_approval? && allowed_to?(:review?, collection)
+    record.pending_approval? && allowed_to?(:review?, collection) && !record.work.locked?
   end
 
   def destroy?
-    (allowed_to?(:review?, collection) || owner_of_the_work?) && record.persisted? && record.draft?
+    (allowed_to?(:review?, collection) || owner_of_the_work?) &&
+      record.persisted? && record.draft? && !record.work.locked?
   end
 
   private

@@ -65,6 +65,10 @@ RSpec.describe WorkVersionPolicy do
     context 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
 
+      failed 'when locked' do
+        let(:work) { build_stubbed :work, :locked, collection: collection }
+      end
+
       failed 'when status is depositing' do
         let(:work) { build_stubbed :work, collection: collection }
         let(:record) { build_stubbed :work_version, :depositing, work: work }
@@ -82,22 +86,33 @@ RSpec.describe WorkVersionPolicy do
       end
     end
 
-    succeed 'when user is a collection manager and status is not pending_approval' do
+    context 'when user is a collection manager' do
       let(:collection) { build_stubbed :collection, managed_by: [user] }
+
+      failed 'when locked' do
+        let(:work) { build_stubbed :work, :locked, collection: collection }
+      end
+
+      succeed 'when status is not pending_approval'
+
+      succeed 'when status is pending_approval' do
+        let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      end
     end
 
-    succeed 'when user is collection manager and status is pending_approval' do
-      let(:collection) { build_stubbed :collection, managed_by: [user] }
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
-    end
-
-    succeed 'when user is a collection reviewer and status is not pending_approval' do
+    context 'when user is a collection reviewer' do
       let(:collection) { build_stubbed :collection, reviewed_by: [user] }
-    end
 
-    succeed 'when user is a collection reviewer and status is pending_approval' do
-      let(:collection) { build_stubbed :collection, reviewed_by: [user] }
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      failed 'when locked' do
+        let(:work) { build_stubbed :work, :locked, collection: collection }
+      end
+
+      succeed 'when status is not pending_approval'
+
+      succeed 'when status is pending_approval' do
+        let(:collection) { build_stubbed :collection, reviewed_by: [user] }
+        let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      end
     end
   end
 
