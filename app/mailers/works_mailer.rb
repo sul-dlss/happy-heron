@@ -53,4 +53,10 @@ class WorksMailer < ApplicationMailer
     @work = @work_version.work
     mail(to: @user.email, subject: 'Your deposit is submitted and waiting for approval')
   end
+
+  def changed_owner_email
+    @work = params[:work]
+    @user = UserPresenter.new(user: @work.owner)
+    mail(to: @user.email, subject: 'You now have access to an item in the SDR')
+  end
 end
