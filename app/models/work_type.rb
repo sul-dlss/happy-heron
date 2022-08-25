@@ -19,12 +19,12 @@ class WorkType
     'Conference session', 'Documentary', 'Event', 'Oral history', 'Performance'
   ].freeze
 
-  MIXED_TYPES = %w[Data Image Software/Code Sound Text Video].freeze
+  MIXED_TYPES = %w[Data Image Portfolio Music Software/Code Sound Text Video].freeze
 
   SOUND_TYPES = ['Interview', 'Oral history', 'Podcast', 'Speech'].freeze
 
   TEXT_TYPES = [
-    'Article', 'Government document', 'Policy brief', 'Preprint', 'Report',
+    'Article', 'Capstone', 'Government document', 'Policy brief', 'Preprint', 'Report',
     'Technical report', 'Thesis', 'Working paper'
   ].freeze
 
@@ -47,7 +47,7 @@ class WorkType
 
   # These types appear below the fold and may be expanded
   MORE_TYPES = [
-    '3D model', 'Animation', 'Article', 'Book', 'Book chapter', 'Broadcast', 'CAD',
+    '3D model', 'Animation', 'Article', 'Book', 'Book chapter', 'Broadcast', 'CAD', 'Capstone',
     'Code', 'Conference session', 'Correspondence', 'Course/instructional materials',
     'Data', 'Database', 'Documentary', 'Documentation', 'Dramatic performance',
     'Essay', 'Ethnography', 'Event', 'Experimental audio/video', 'Field recording',
@@ -55,7 +55,7 @@ class WorkType
     'Journal/periodical issue', 'Manuscript', 'Map', 'MIDI', 'Musical transcription',
     'Narrative film', 'Notated music', 'Oral history', 'Other spoken word',
     'Performance', 'Photograph', 'Piano roll', 'Podcast', 'Poetry reading',
-    'Policy brief', 'Poster', 'Preprint', 'Presentation recording',
+    'Policy brief', 'Poster', 'Portfolio', 'Preprint', 'Presentation recording',
     'Presentation slides', 'Questionnaire', 'Remote sensing imagery', 'Report',
     'Software', 'Sound recording', 'Speaker notes', 'Speech', 'Story', 'Syllabus',
     'Tabular data', 'Technical report', 'Text', 'Text corpus', 'Thesis',
