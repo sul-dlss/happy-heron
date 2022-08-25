@@ -2,9 +2,7 @@
 
 # Authorization policy for Work owners
 class WorkOwnerPolicy < ApplicationPolicy
-  def edit?
-    administrator?
-  end
+  alias_rule :edit?, to: :update?
 
   def update?
     administrator?

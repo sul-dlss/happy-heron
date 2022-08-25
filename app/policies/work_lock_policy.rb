@@ -2,9 +2,7 @@
 
 # Authorization policy for Work admins to lock/unlock
 class WorkLockPolicy < ApplicationPolicy
-  def edit?
-    administrator?
-  end
+  alias_rule :edit?, to: :update?
 
   def update?
     administrator?
