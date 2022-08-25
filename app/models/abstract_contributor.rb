@@ -7,6 +7,7 @@ class AbstractContributor < ApplicationRecord
   SEPARATOR = '|'
 
   PERSON_ROLES = [
+    'Advisor',
     'Author',
     'Composer',
     'Contributing author',

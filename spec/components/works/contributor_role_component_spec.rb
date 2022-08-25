@@ -9,6 +9,7 @@ RSpec.describe Works::ContributorRoleComponent do
   it 'makes groups with headings including Department' do
     expected = <<~HTML
       <select class="form-select" data-contributors-target="role" name="role_term" id="role_term"><optgroup label="Individual">
+      <option value="person|Advisor">Advisor</option>
       <option value="person|Author">Author</option>
       <option value="person|Composer">Composer</option>
       <option value="person|Contributing author">Contributing author</option>
