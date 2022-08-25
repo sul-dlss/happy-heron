@@ -19,8 +19,6 @@ class WorkType
     'Conference session', 'Documentary', 'Event', 'Oral history', 'Performance'
   ].freeze
 
-  MIXED_TYPES = %w[Data Image Portfolio Music Software/Code Sound Text Video].freeze
-
   SOUND_TYPES = ['Interview', 'Oral history', 'Podcast', 'Speech'].freeze
 
   TEXT_TYPES = [
@@ -62,6 +60,8 @@ class WorkType
     'Transcript', 'Unedited recording', 'Video recording', 'Video art',
     'White paper', 'Working paper'
   ].freeze
+
+  MIXED_TYPES = (%w[Music Software/Code Sound Video] + MORE_TYPES).sort.freeze
 
   attr_reader :id
 
