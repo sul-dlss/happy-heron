@@ -1,6 +1,6 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: @form.collection.head.name, link: collection_path(@form.collection) },
+    breadcrumbs: [ { title: DepositTitlePresenter.show(@form.collection.head), link: collection_path(@form.collection) },
                    { title: @form.title, link: work_path(@form) },
                    { title: 'Edit', omit_title: true } ])
   %>
