@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Works
-  # Renders a button that links to the collection edit page
+  # Renders a button that links to the work edit page
   class EditButtonComponent < ApplicationComponent
     def initialize(work_version:)
       @work_version = work_version
@@ -15,7 +15,7 @@ module Works
     end
 
     def call
-      link_to 'Edit or Deposit', edit_work_path(work), class: 'btn btn-outline-primary float-end'
+      link_to 'Edit or Deposit', edit_work_path(work), class: 'btn btn-outline-primary float-end', target: '_top'
     end
   end
 end
