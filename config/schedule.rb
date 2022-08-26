@@ -7,7 +7,7 @@ every :day, at: '1:00am' do
   runner 'WorkReminderGenerator.send_draft_reminders'
 end
 
-every :day, at: '1:05am' do
+every :day, at: '1:13am' do
   runner 'CollectionReminderGenerator.send_draft_reminders'
 end
 

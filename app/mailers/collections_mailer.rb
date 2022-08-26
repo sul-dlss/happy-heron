@@ -55,13 +55,22 @@ class CollectionsMailer < ApplicationMailer
     mail(to: @user.email, subject: "New activity in the #{@collection_version.name} collection")
   end
 
-  def draft_reminder_email
+  def first_draft_reminder_email
     @collection_version = params[:collection_version]
-    @collection_version.collection.managed_by.each do |manager|
-      @user = UserPresenter.new(user: manager)
-      mail(to: @user.email,
-           subject: "Reminder: Your #{@collection_version.name} collection in the SDR is still in progress")
-    end
+    @user = UserPresenter.new(user: params[:user])
+
+    subject = "Reminder: Your #{@collection_version.name} collection in the SDR is still in progress"
+
+    mail(to: @user.email, subject: subject)
+  end
+
+  def new_version_reminder_email
+    @collection_version = params[:collection_version]
+    @user = UserPresenter.new(user: params[:user])
+
+    subject = "Reminder: New version of your #{@collection_version.name} collection in the SDR is still in progress"
+
+    mail(to: @user.email, subject: subject)
   end
 
   def item_deposited

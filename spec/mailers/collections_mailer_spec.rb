@@ -182,6 +182,40 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
   end
 
+  describe '#first_draft_reminder_email' do
+    let(:mail) { described_class.with(collection_version: collection_version, user: a_user).first_draft_reminder_email }
+    let(:collection) { build_stubbed(:collection, head: collection_version) }
+    let(:collection_version) { build_stubbed(:collection_version, state: 'first_draft') }
+
+    it 'renders the mail' do
+      exp_subj = "Reminder: Your #{collection_version.name} " \
+                 'collection in the SDR is still in progress'
+      expect(mail.subject).to eq exp_subj
+      expect(mail.to).to eq [a_user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+
+      expect(mail.body).to include("Dear #{a_user.first_name},")
+      expect(mail.body).to match("http://#{Socket.gethostname}/collection_versions/#{collection_version.id}")
+    end
+  end
+
+  describe '#new_version_reminder_email' do
+    let(:mail) { described_class.with(collection_version: collection_version, user: a_user).new_version_reminder_email }
+    let(:collection) { build_stubbed(:collection, head: collection_version) }
+    let(:collection_version) { build_stubbed(:collection_version) }
+
+    it 'renders the mail' do
+      exp_subj = "Reminder: New version of your #{collection_version.name} " \
+                 'collection in the SDR is still in progress'
+      expect(mail.subject).to eq exp_subj
+      expect(mail.to).to eq [a_user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+
+      expect(mail.body).to include("Dear #{a_user.first_name},")
+      expect(mail.body).to match("http://#{Socket.gethostname}/collection_versions/#{collection_version.id}/edit")
+    end
+  end
+
   describe '#item_deposited' do
     let(:user) { a_user }
     let(:depositor) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
