@@ -21,7 +21,7 @@ RSpec.describe Admin::WorkReportQuery do
   end
 
   context 'without filters' do
-    let(:report) { WorkReport.new(state: ['']) }
+    let(:report) { WorkReport.new }
 
     it 'returns all works sorted by email' do
       expect(request.to_a).to eq [work3, work1, work2]
@@ -31,7 +31,7 @@ RSpec.describe Admin::WorkReportQuery do
   context 'with collection' do
     let(:collection2) { create(:collection) } # necessary so that we don't have to create one collection per work
     let!(:work1) { create(:work_version_with_work, collection: collection2, owner: user1).work }
-    let(:report) { WorkReport.new(state: [''], collection_id: collection2.id) }
+    let(:report) { WorkReport.new(collection_id: collection2.id) }
 
     it 'returns the works in the collection' do
       expect(request.to_a).to eq [work1]

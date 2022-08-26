@@ -5,7 +5,7 @@ class WorkReport
   include ActiveModel::API
   include ActiveModel::Attributes
 
-  attribute :state
+  attribute :state, default: -> { [] }
   attribute :collection_id, :integer
   attribute :date_created_start, :date
   attribute :date_created_end, :date

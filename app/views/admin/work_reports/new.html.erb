@@ -71,7 +71,7 @@
                                   deposited
                                   version_draft
                                   decommissioned ]%>
-          <%= form.collection_check_boxes(:state, states_in_order.map { |state| [state.to_s, I18n.t(state, scope: 'work.state')] }, :first, :last) do |b| %>
+          <%= form.collection_check_boxes(:state, states_in_order.map { |state| [state.to_s, I18n.t(state, scope: 'work.state')] }, :first, :last, include_hidden: false) do |b| %>
             <div class="form-check">
               <%= b.check_box class: 'form-check-input' %>
               <%= b.label class: 'form-check-label' %> 
@@ -89,7 +89,9 @@
           <%= form.hidden_field :date_created_end %>
           <%= form.hidden_field :date_modified_start %>
           <%= form.hidden_field :date_modified_end %>
-          <%= form.hidden_field :state, multiple: true %>
+          <% @report.state.each do |state|%>
+            <%= form.hidden_field :state, multiple: true, value: state %>
+          <% end %>          
           <%= form.hidden_field :collection_id %>
           <%= form.submit "Download", class: 'btn btn-success my-3' %>
         <% end %>

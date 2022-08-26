@@ -32,10 +32,9 @@ module Admin
     attr_accessor :query
 
     def add_status_filter
-      state = report.state.compact_blank
-      return if state.empty?
+      return if report.state.empty?
 
-      self.query = query.where(head: { state: state })
+      self.query = query.where(head: { state: report.state })
     end
 
     def add_collection_filter
