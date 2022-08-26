@@ -17,7 +17,7 @@
         <span class="fa-solid fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% end %>
-  <% elsif work.locked? %>
+  <% elsif work.locked? && !anchor %> <%# Don't display for every section on work show page %>
     <%= render PopoverComponent.new key: 'work.locked', icon: 'fa-solid fa-lock' %>
   <% end %>
 <% end %>
