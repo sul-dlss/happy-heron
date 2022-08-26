@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     resources :users, only: :index
     resources :collection_reports, only: %i[new create]
     resources :work_reports, only: %i[new create]
+    resources :locked_items, only: :index
   end
 
   # This route is used by the emails for the contact the SDR team link.

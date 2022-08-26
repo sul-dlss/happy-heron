@@ -1,0 +1,15 @@
+<turbo-frame id="lockedItemsFrame">
+  <table class="table table-sm table-striped">
+    <thead class="table-light">
+        <tr>
+        <th>Item Title</th>
+        <th>Collection Title</th>
+        <th>Druid</th>
+        <th>Item owner</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%= render(Admin::LockedItemRowComponent.with_collection(@items)) %>
+    </tbody>
+  </table>
+</turbo-frame>

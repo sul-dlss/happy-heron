@@ -1,0 +1,10 @@
+<section class="mb-5">
+  <button class="btn collapse-header" data-bs-toggle="collapse" data-bs-target="#lockedItems" role="button" aria-expanded="false" aria-controls="lockedItems">
+    Locked items
+  </button>
+  <div class="collapse" id="lockedItems">
+    <turbo-frame id="lockedItemsFrame" src="<%= admin_locked_items_path %>">
+      Loading ...
+    </turbo-frame>
+  </div>
+</section>
