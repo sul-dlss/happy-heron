@@ -24,6 +24,7 @@ en:
       update_owner: Owner changed
       lock_work: Work locked
       unlock_work: Work unlocked
+      decommission: Decommissioned
   contributor:
     roles:
       person: Individual
@@ -38,7 +39,7 @@ en:
       rejected: Returned
       depositing: Deposit in progress
       deposited: Deposited
-      decommissioned: Decommisssioned
+      decommissioned: Decommissioned
     edit_links:
       title: 'Edit title and contact'
       author: 'Edit authors and contributors'
@@ -51,6 +52,7 @@ en:
       owner_updated: "Owner updated"
       work_locked: "The work was locked"
       work_unlocked: "The work was unlocked"
+      decommissioned: "Decommissioned"
   terms_of_use: User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the depositor.
   collection:
     actions: Actions

@@ -66,6 +66,10 @@ class Collection < ApplicationRecord
     druid&.delete_prefix('druid:')
   end
 
+  def works_without_decommissioned
+    works.joins(:head).where.not(head: { state: 'decommissioned' })
+  end
+
   private
 
   def default_event_context

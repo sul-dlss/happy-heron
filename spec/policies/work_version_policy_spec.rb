@@ -266,6 +266,11 @@ RSpec.describe WorkVersionPolicy do
     let(:policy) { described_class.new(**context) }
     let(:collection) { create(:collection) }
     let(:work) { create(:work, collection: collection) }
+    let(:work_version) { create(:work_version, work: work) }
+
+    before do
+      work.update(head: work_version)
+    end
 
     context 'when the user is not affiliated' do
       it { is_expected.to be_empty }

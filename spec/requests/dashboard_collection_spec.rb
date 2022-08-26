@@ -22,6 +22,10 @@ RSpec.describe 'Dashboard collection requests' do
     let(:work_version6) do
       create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6)
     end
+    let(:work7) { create(:work, owner: user, collection: collection) }
+    let(:work_version7) do
+      create(:work_version, state: 'decommissioned', title: 'I am decommissioned', work: work6)
+    end
 
     before do
       create(:collection_version_with_collection, collection: collection)
@@ -32,19 +36,39 @@ RSpec.describe 'Dashboard collection requests' do
       work4.update(head: work_version4)
       work5.update(head: work_version5)
       work6.update(head: work_version6)
-
-      sign_in user
+      work7.update(head: work_version7)
     end
 
-    it 'shows draft and rejected deposits as being in progress' do
-      get "/collections/#{collection.id}/dashboard"
+    context 'when not admin' do
+      before do
+        sign_in user
+      end
 
-      expect(response).to be_successful
+      it 'shows draft and rejected deposits as being in progress' do
+        get "/collections/#{collection.id}/dashboard"
 
-      expect(response.body).to include('I am deposited')
-      expect(response.body).to include('I am depositing')
-      expect(response.body).to include('See all deposits')
-      expect(response.body).not_to include('I am pending approval')
+        expect(response).to be_successful
+
+        expect(response.body).to include('I am deposited')
+        expect(response.body).to include('I am depositing')
+        expect(response.body).to include('See all deposits')
+        expect(response.body).not_to include('I am pending approval')
+        expect(response.body).not_to include('I am decommissioned')
+      end
+    end
+
+    context 'when admin' do
+      before do
+        sign_in user, groups: ['dlss:hydrus-app-administrators']
+      end
+
+      it 'shows decommissioned deposits' do
+        get "/collections/#{collection.id}/dashboard"
+
+        expect(response).to be_successful
+
+        expect(response.body).to include('I am decommissioned')
+      end
     end
   end
 end

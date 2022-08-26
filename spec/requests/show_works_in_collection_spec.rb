@@ -7,6 +7,11 @@ RSpec.describe 'Show the collection work list page' do
   let(:collection_version) { create(:collection_version_with_collection) }
   let(:user) { create(:user) }
   let!(:work_version1) { create(:work_version_with_work, collection: collection) }
+  let!(:work_version2) { create(:work_version_with_work, collection: collection, state: 'decommissioned') }
+  # let(:work7) { create(:work, owner: user, collection: collection) }
+  # let(:work_version7) do
+  #   create(:work_version, state: 'decommissioned', title: 'I am decommissioned', work: work6)
+  # end
 
   before { create(:work_version_with_work, collection: collection) }
 
@@ -23,9 +28,8 @@ RSpec.describe 'Show the collection work list page' do
     it 'displays all of the works in the collection' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |_work|
-        expect(response.body).to include work_version1.title
-      end
+      expect(response.body).to include work_version1.title
+      expect(response.body).to include work_version2.title
       expect(response.body).to include '17.3 KB'
     end
   end
@@ -36,12 +40,11 @@ RSpec.describe 'Show the collection work list page' do
       sign_in user
     end
 
-    it 'displays all of the works in the collection' do
+    it 'displays all of the works in the collection except decommissioned' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |_work|
-        expect(response.body).to include work_version1.title
-      end
+      expect(response.body).to include work_version1.title
+      expect(response.body).not_to include work_version2.title
     end
   end
 
@@ -51,12 +54,11 @@ RSpec.describe 'Show the collection work list page' do
       sign_in user
     end
 
-    it 'displays all of the works in the collection' do
+    it 'displays all of the works in the collection except decommissioned' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |_work|
-        expect(response.body).to include work_version1.title
-      end
+      expect(response.body).to include work_version1.title
+      expect(response.body).not_to include work_version2.title
     end
   end
 
@@ -69,9 +71,8 @@ RSpec.describe 'Show the collection work list page' do
     it 'displays none of the works in the collection' do
       get "/collections/#{collection.id}/works"
       expect(response).to have_http_status(:ok)
-      collection.works.each do |_work|
-        expect(response.body).not_to include work_version1.title
-      end
+      expect(response.body).not_to include work_version1.title
+      expect(response.body).not_to include work_version2.title
     end
   end
 
