@@ -40,7 +40,10 @@ class ApplicationController < ActionController::Base
   def groups_from_request_env
     session['groups'] = begin
       raw_header = request.env[Settings.authorization_group_header]
-      raw_header = ENV.fetch('ROLES', nil) if Rails.env.development? # rubocop:disable Rails/EnvironmentVariableAccess
+      roles = ENV.fetch('ROLES', nil) # rubocop:disable Rails/EnvironmentVariableAccess
+      raw_header = roles if Rails.env.development?
+      # This test setting is for cypress.
+      raw_header = roles if Rails.env.test? && roles
       logger.debug("Roles are #{raw_header}")
       raw_header&.split(';') || []
     end

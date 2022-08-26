@@ -156,6 +156,11 @@ GEM
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
+    cypress-on-rails (1.13.1)
+      rack
+    cypress-rails (0.5.4)
+      puma (>= 3.8.0)
+      railties (>= 5.2.0)
     declarative (0.0.20)
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
@@ -543,6 +548,8 @@ DEPENDENCIES
   config (~> 2.2)
   cssbundling-rails (~> 0.2.4)
   cuprite
+  cypress-on-rails (~> 1.0)
+  cypress-rails
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
   dlss-capistrano
