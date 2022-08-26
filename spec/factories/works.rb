@@ -12,4 +12,8 @@ FactoryBot.define do
   trait :with_druid do
     druid { 'druid:bc123df4567' }
   end
+
+  trait :locked do
+    locked { true }
+  end
 end
