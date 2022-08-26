@@ -76,4 +76,13 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     mail(to: @user.email, subject: "Participant changes for the #{@collection_version.name} collection in the SDR")
   end
+
+  def new_version_reminder_email
+    @collection_version = params[:collection_version]
+    @user = UserPresenter.new(user: params[:user])
+
+    subject = "Reminder: New version of your #{@collection_version.name} collection in the SDR is still in progress"
+
+    mail(to: @user.email, subject: subject)
+  end
 end
