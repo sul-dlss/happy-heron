@@ -13,6 +13,7 @@ class Work < ApplicationRecord
   has_many :events, as: :eventable, dependent: :destroy
   has_many :work_versions, -> { order version: :asc }, dependent: :destroy, inverse_of: 'work'
 
+  scope :locked, -> { where(locked: true) }
   def broadcast_update
     broadcast_replace_to self
     broadcast_replace_to :summary_rows, partial: 'dashboards/collection_summary_row'

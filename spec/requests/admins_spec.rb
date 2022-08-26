@@ -8,7 +8,7 @@ RSpec.describe 'Admin dashboard' do
   context 'when user is an application admin' do
     let(:collection) { create(:collection, creator: user) }
     let(:collection_version) { create(:collection_version_with_collection, collection: collection) }
-    let(:work1) { create(:work, owner: user, collection: collection) }
+    let(:work1) { create(:work, :with_druid, owner: user, collection: collection) }
     let(:work_version1) { create(:work_version, state: 'deposited', work: work1) }
     let(:work2) { create(:work, owner: user, collection: collection) }
     let(:work_version2) { create(:work_version, state: 'first_draft', work: work2) }
@@ -29,6 +29,7 @@ RSpec.describe 'Admin dashboard' do
       expect(response.body).to include 'collectionsTable'
       expect(response.body).to include 'Items recent activity'
       expect(response.body).to include 'Collections recent activity'
+      expect(response.body).to include 'Locked items'
     end
 
     context 'when user is viewing recent items activity' do
@@ -62,6 +63,21 @@ RSpec.describe 'Admin dashboard' do
         expect(response.body).to include 'MyString'
         expect(response.body).to include 'Updated by user'
         expect(response.body).not_to include 'Embargo lifted'
+      end
+    end
+
+    context 'when user is viewing locked items' do
+      before do
+        work1.update(locked: true)
+      end
+
+      it 'shows locked items' do
+        get '/admin/locked_items'
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include 'lockedItemsFrame'
+        expect(response.body).to include collection_version.name
+        expect(response.body).to include work1.druid_without_namespace
+        expect(response.body).to include user.sunetid
       end
     end
   end
