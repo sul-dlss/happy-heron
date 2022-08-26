@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["search", "container", "error", "selectedTemplate", "addItem"]
+  static targets = ["search", "container", "error", "selectedTemplate", "addItem", "input"]
 
   open(event) {
     this.searchTarget.focus()
@@ -23,10 +23,13 @@ export default class extends Controller {
     this.containerTarget.classList.remove('is-invalid')
   }
 
-  checkForEnter(event) {
-    if (event.key === 'Enter') {
-      event.preventDefault() // prevent form submission
-      this.add(event);
+  checkForDuplicates(event) {
+    if (this.hasDuplicateKeywords()) {
+      this.inputTarget.classList.add('is-invalid')
+    }
+    else
+    {
+      this.inputTarget.classList.remove('is-invalid')
     }
   }
 
@@ -34,5 +37,14 @@ export default class extends Controller {
     const item = event.target.closest(".selection-choice")
     item.querySelector("input[name*='_destroy']").value = 1
     item.style.display = 'none'
+    this.checkForDuplicates() // clear out the invalid selection class if there are no duplicates anymore
+  }
+
+  hasDuplicateKeywords() {
+    // determine if the user has entered duplicate keywords
+    const nodes = document.querySelectorAll('.keyword-row:not([style*="display: none"]) input[type="text"]')
+    const keywords = Array.from(nodes, target => target.value)
+    // a set cannot have duplicates but an array can, so if the set and array are different in size, we have dupes
+    return (new Set(keywords)).size !== keywords.length
   }
 }
