@@ -17,5 +17,7 @@
         <span class="fas fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% end %>
+  <% elsif work.locked? %>
+    <%= render PopoverComponent.new key: 'work.locked', icon: 'fas fa-lock' %>
   <% end %>
 <% end %>
