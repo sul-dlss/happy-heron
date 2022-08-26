@@ -7,6 +7,10 @@ every :day, at: '1:00am' do
   runner 'WorkReminderGenerator.send_draft_reminders'
 end
 
+every :day, at: '1:05am' do
+  runner 'CollectionReminderGenerator.send_draft_reminders'
+end
+
 # Remove any files that did not get attached to objects after 7 days
 every :day, at: '12:00am' do
   rake 'cleanup:uploads'
