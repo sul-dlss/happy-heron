@@ -2,7 +2,7 @@
 
 # Draws a bootstrap popover icon.
 class PopoverComponent < ApplicationComponent
-  def initialize(key:, icon: 'fas fa-info-circle')
+  def initialize(key:, icon: 'fa-solid fa-info-circle')
     @key = key
     @icon = icon
   end
