@@ -6,4 +6,5 @@
                               src: edit_link_collection_path(collection),
                               target: '_top' %>
   <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if first_draft? %>
+  <%= render Collections::DraftComponent.new(collection_version: collection_version) %>
 <% end %>
