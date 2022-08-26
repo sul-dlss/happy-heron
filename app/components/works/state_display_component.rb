@@ -17,7 +17,7 @@ module Works
     end
 
     def spinner
-      tag.span class: 'fas fa-spinner fa-pulse'
+      tag.span class: 'fa-solid fa-spinner fa-pulse'
     end
   end
 end

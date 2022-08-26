@@ -24,7 +24,7 @@ RSpec.describe Collections::Show::DetailsHeaderComponent, type: :component do
 
     it 'renders the spinner' do
       expect(rendered.to_html).to include 'Depositing'
-      expect(rendered.to_html).to include 'fas fa-spinner fa-pulse'
+      expect(rendered.to_html).to include 'fa-solid fa-spinner fa-pulse'
     end
   end
 end

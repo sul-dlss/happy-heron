@@ -10,7 +10,7 @@
   <td>
     <% if work.purl %>
       <%= link_to work.purl, work.purl %>
-      <a class="copy-button" data-controller="copy" data-copy-clip-value="<%= work.purl %>" data-action="copy#copy" aria-label="Copy persistent link" href=""><span class="fas fa-copy"></span></a>
+      <a class="copy-button" data-controller="copy" data-copy-clip-value="<%= work.purl %>" data-action="copy#copy" aria-label="Copy persistent link" href=""><span class="fa-solid fa-copy"></span></a>
     <% end %>
   </td>
   <td><%= render CitationComponent.new(work_version: work.head) %></td>

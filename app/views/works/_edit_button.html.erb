@@ -10,14 +10,14 @@
               action: "work-type#setCollection"
             },
             aria: { label: edit_label } do %>
-        <span class="fas fa-pencil-alt" aria-hidden="true"></span>
+        <span class="fa-solid fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% else %>
       <%= link_to edit_work_path(work, anchor: anchor), aria: { label: edit_label } do %>
-        <span class="fas fa-pencil-alt" aria-hidden="true"></span>
+        <span class="fa-solid fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
     <% end %>
   <% elsif work.locked? %>
-    <%= render PopoverComponent.new key: 'work.locked', icon: 'fas fa-lock' %>
+    <%= render PopoverComponent.new key: 'work.locked', icon: 'fa-solid fa-lock' %>
   <% end %>
 <% end %>

@@ -15,7 +15,7 @@ class CitationComponent < ApplicationComponent
 
     tag.button(**attrs) do
       # It's a SafeBuffer, not a String
-      tag.span(class: 'fas fa-quote-left') + ' Cite' # rubocop:disable Style/StringConcatenation
+      tag.span(class: 'fa-solid fa-quote-left') + ' Cite' # rubocop:disable Style/StringConcatenation
     end
   end
 

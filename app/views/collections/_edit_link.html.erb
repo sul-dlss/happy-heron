@@ -1,6 +1,6 @@
 <%= turbo_frame_tag dom_id(collection, ['edit', anchor].compact.join('_')) do %>
   <% if allowed_to?(:update?, collection.head) %>
-    <%= link_to tag.span(class: 'fas fa-pencil-alt edit'),
+    <%= link_to tag.span(class: 'fa-solid fa-pencil-alt edit'),
                 edit_collection_path(collection, anchor: anchor),
                 aria: { label: label } %>
   <% end %>

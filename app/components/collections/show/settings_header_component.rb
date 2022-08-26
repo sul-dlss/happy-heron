@@ -20,7 +20,7 @@ module Collections
       end
 
       def spinner
-        tag.span class: 'fas fa-spinner fa-pulse'
+        tag.span class: 'fa-solid fa-spinner fa-pulse'
       end
 
       def edit_button
