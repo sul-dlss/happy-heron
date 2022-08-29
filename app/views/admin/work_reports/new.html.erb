@@ -89,7 +89,11 @@
           <%= form.hidden_field :date_created_end %>
           <%= form.hidden_field :date_modified_start %>
           <%= form.hidden_field :date_modified_end %>
-          <%= form.hidden_field :state, multiple: true %>
+          <%= form.hidden_field :date_deposited_start %>
+          <%= form.hidden_field :date_deposited_end %>
+          <% @report.state.each do |state|%>
+            <%= form.hidden_field :state, multiple: true, value: state %>
+          <% end %>
           <%= form.hidden_field :collection_id %>
           <%= form.submit "Download", class: 'btn btn-success my-3' %>
         <% end %>

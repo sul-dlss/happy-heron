@@ -32,6 +32,7 @@ module Admin
     attr_accessor :query
 
     def add_status_filter
+      # This removes "" that are an artifact of the form.
       state = report.state.compact_blank
       return if state.empty?
 
