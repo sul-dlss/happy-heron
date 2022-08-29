@@ -22,9 +22,11 @@ class WorkDecommissionController < ApplicationController
   private
 
   def decommission(work)
-    work.update!(owner: current_user)
-    delete_files(work)
-    work.head.decommission!
+    Work.transaction do
+      work.update!(owner: current_user)
+      delete_files(work)
+      work.head.decommission!
+    end
   end
 
   def delete_files(work)
