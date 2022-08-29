@@ -16,6 +16,10 @@ module Dashboard
       collection_version&.collection || work_version&.work
     end
 
+    def deposit_version
+      collection_version || work_version
+    end
+
     # the last edited draft collection (if any)
     def collection_version
       @presenter.collection_managers_in_progress.first
@@ -27,10 +31,10 @@ module Dashboard
     end
 
     def title
-      @title ||= if deposit.instance_of?(Work)
-                   WorkTitlePresenter.show(deposit.head)
+      @title ||= if deposit_version.instance_of?(WorkVersion)
+                   WorkTitlePresenter.show(deposit_version)
                  else
-                   CollectionTitlePresenter.show(deposit.head)
+                   CollectionTitlePresenter.show(deposit_version)
                  end
     end
   end
