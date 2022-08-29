@@ -13,7 +13,7 @@ module Dashboard
     delegate :collection, to: :collection_version
 
     def name
-      DepositTitlePresenter.show(collection_version)
+      CollectionTitlePresenter.show(collection_version)
     end
 
     def spinner

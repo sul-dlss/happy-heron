@@ -27,7 +27,11 @@ module Dashboard
     end
 
     def title
-      @title ||= DepositTitlePresenter.show(collection_version || work_version)
+      @title ||= if deposit.instance_of?(Work)
+                   WorkTitlePresenter.show(deposit.head)
+                 else
+                   CollectionTitlePresenter.show(deposit.head)
+                 end
     end
   end
 end

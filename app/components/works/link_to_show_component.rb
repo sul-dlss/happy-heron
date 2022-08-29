@@ -12,7 +12,7 @@ module Works
     end
 
     def title
-      @title ||= DepositTitlePresenter.show(work_version)
+      @title ||= WorkTitlePresenter.show(work_version)
     end
 
     attr_reader :work_version
