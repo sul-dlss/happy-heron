@@ -1,13 +1,15 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["addItem", "template", "control", "result", "lookup",
-                    "resultNone", "queryValue",
-                    "resultOne", "resultName", "resultDescription"]
+  static targets = ["addItem", "template", "control", "lookup",
+                    "resultNone", "queryValue", "result",
+                    "resultOne", "resultName", "resultDescription",
+                    "resultError", "errorValue"]
   static values = { selector: String }
 
   connect() {
     this.controlTarget.hidden = true
+    this.hideResult()
   }
 
   addAssociation(event) {
@@ -50,35 +52,50 @@ export default class extends Controller {
   }
 
   openLookup() {
-    this.resultTarget.hidden = true
     this.controlTarget.hidden = false
   }
 
   closeLookup() {
-    this.resultTarget.hidden = true
+    this.hideResult()
     this.controlTarget.hidden = true
     this.lookupTarget.value = ''
+  }
+
+  hideResult() {
+    this.showResult(false, false, false)
+  }
+
+  showResult(one, none, error) {
+    this.resultOneTarget.hidden = !one
+    this.resultNoneTarget.hidden = !none
+    this.resultErrorTarget.hidden = !error
+    this.resultTarget.hidden = !one && !none && !error
   }
 
   search(e) {
     // only execute a search if the user has entered at least 3 characters that doesn't start with a number
     if(e.target.value.length < 3 || /^\d/.test(e.target.value)) {
-      this.resultTarget.hidden = true
+      this.hideResult()
       return
     }
-
-    this.resultTarget.hidden = false
 
     // remove non-letters/numbers, and truncate after 8 characters
     e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '').substring(0,8)
     fetch('/accounts/' + e.target.value)
-      .then(response => response.json())
+      .then((response) => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.statusText)
+        }
+      })
       .then(data => {
         if (Object.keys(data).length === 0)
           this.noResults(e.target.value)
         else
-          this.showResult(e.target.value, data)
+          this.showOneResult(e.target.value, data)
       })
+      .catch(error => this.showError(error))
   }
 
   clear(e) {
@@ -89,19 +106,24 @@ export default class extends Controller {
   preventEnter(e) {
     if (e.keyCode == 13) { e.preventDefault() }
   }
+
   noResults(query) {
-    this.resultOneTarget.hidden = true
-    this.resultNoneTarget.hidden = false
+    this.showResult(false, true, false)
     this.queryValueTargets.forEach(target => target.innerHTML = query)
     this.hasResults = false
   }
 
-  showResult(query, data) {
-    this.resultOneTarget.hidden = false
-    this.resultNoneTarget.hidden = true
+  showOneResult(query, data) {
+    this.showResult(true, false, false)
     this.queryValueTargets.forEach(target => target.innerHTML = query)
     this.resultNameTarget.innerHTML = data.name
     this.resultDescriptionTarget.innerHTML = data.description
     this.hasResults = true
+  }
+
+  showError(error) {
+    this.showResult(false, false, true)
+    this.errorValueTarget.innerHTML = error.toString()
+    this.hasResults = false
   }
 }
