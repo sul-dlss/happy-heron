@@ -193,9 +193,10 @@ RSpec.describe 'Create a collection' do
             collection = Collection.last
             expect(response).to have_http_status(:found)
             expect(response).to redirect_to(collection_path(collection))
-            expect(collection.managed_by.map(&:sunetid)).to eq ['maya.aguirre', 'jcairns']
-            expect(collection.reviewed_by.map(&:email)).to eq %w[maya.aguirre@stanford.edu
-                                                                 jcairns@stanford.edu faridz@stanford.edu]
+            expect(collection.managed_by.map(&:sunetid)).to contain_exactly('maya.aguirre', 'jcairns')
+            expect(collection.reviewed_by.map(&:email)).to contain_exactly('maya.aguirre@stanford.edu',
+                                                                           'jcairns@stanford.edu',
+                                                                           'faridz@stanford.edu')
           end
         end
 
