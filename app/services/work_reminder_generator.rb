@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# This creates and queues reminder emails for in-progress drafts
+# This creates and queues reminder emails for in-progress work drafts
 class WorkReminderGenerator
-  # Sends the day's reminders about open drafts, using default values for the notification
+  # Sends the day's reminders about open work drafts, using default values for the notification
   # interval unless the caller overrides the defaults with custom values. Intended to be run daily
   # by a cron job, but the optional manual override for notification interval is useful in case a
   # human has to manually call the method to send dropped notifications, e.g. in the event that
