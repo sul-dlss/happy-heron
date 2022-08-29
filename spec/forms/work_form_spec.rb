@@ -322,4 +322,42 @@ RSpec.describe WorkForm do
       end
     end
   end
+
+  describe 'file validation' do
+    let!(:blob) do
+      ActiveStorage::Blob.create_and_upload!(
+        io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
+        filename: 'sul.svg',
+        content_type: 'image/svg+xml'
+      )
+    end
+    let(:errors) { form.errors.where(:attached_files) }
+    let(:messages) { errors.map(&:message) }
+
+    after do
+      blob.destroy
+    end
+
+    it 'does not validate when no files and globus is false' do
+      form.validate(attached_files: [], globus: false)
+      expect(form).not_to be_valid
+      expect(messages).to eq ['Please add at least one file.']
+    end
+
+    it 'does not validate when has files and globus is true' do
+      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }], globus: true)
+      expect(form).not_to be_valid
+      expect(messages).to eq ['Please remove all files.']
+    end
+
+    it 'validates when no files and globus is true' do
+      form.validate(attached_files: [], globus: true)
+      expect(messages).to be_empty
+    end
+
+    it 'validate when has files and globus is false' do
+      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }], globus: false)
+      expect(messages).to be_empty
+    end
+  end
 end

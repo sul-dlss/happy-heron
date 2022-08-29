@@ -7,7 +7,14 @@ class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true, allow_nil: false
   validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
   validate :keywords_unique
-  validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' }
+  validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' },
+                             unless: lambda {
+                                       ::ActiveRecord::Type::Boolean.new.cast(globus)
+                                     }
+  validates :attached_files, length: { maximum: 0, message: 'Please remove all files.' },
+                             if: lambda {
+                                   ::ActiveRecord::Type::Boolean.new.cast(globus)
+                                 }
   validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :authors, length: { minimum: 1, message: 'Please add at least one author.' }

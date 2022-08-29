@@ -196,7 +196,7 @@ class WorksController < ObjectsController
                      :abstract, :citation_auto, :citation, :default_citation,
                      :access, :license, :description,
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
-                     :agree_to_terms, :assign_doi,
+                     :agree_to_terms, :assign_doi, :globus,
                      subtype: [],
                      attached_files_attributes: %i[_destroy id label hide file],
                      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
