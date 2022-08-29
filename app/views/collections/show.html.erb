@@ -1,6 +1,6 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: @collection.head.name }]) %>
+    breadcrumbs: [ { title: CollectionTitlePresenter.show(@collection.head) }]) %>
 <% end %>
 <main id="content" class="mb-3 mb-md-5">
   <div class="container px-4 px-md-3" id="collection">

@@ -1,11 +1,11 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: @form.collection.head.name, link: collection_path(@form) },
+    breadcrumbs: [ { title: CollectionTitlePresenter.show(@form.collection.head), link: collection_path(@form) },
                    { title: 'Edit First Draft', omit_title: true } ]) %>
 <% end %>
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="collection">
-    <h1><%= @form.collection.head.name.presence || 'No Title' %></h1>
+    <h1><%= CollectionTitlePresenter.show(@form.collection.head) %></h1>
     <%= render FirstDraftCollections::Update::FormComponent.new(collection_form: @form) %>
   </div>
 </main>

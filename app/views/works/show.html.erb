@@ -1,7 +1,7 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: @work.collection.head.name, link: collection_path(@work.collection) },
-                   { title: @work.head.title } ]) %>
+    breadcrumbs: [ { title: CollectionTitlePresenter.show(@work.collection.head), link: collection_path(@work.collection) },
+                   { title: WorkTitlePresenter.show(@work.head) } ]) %>
 <% end %>
 
 <% cache [current_user, @work] do %>

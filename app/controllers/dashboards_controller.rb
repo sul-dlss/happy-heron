@@ -29,6 +29,7 @@ class DashboardsController < ApplicationController
       collection_managers_in_progress: CollectionVersion.with_state(:first_draft, :version_draft)
                                          .joins(:collection).left_outer_joins(collection: :managed_by)
                                          .where('managers.user_id' => current_user)
+                                         .order('collection_versions.updated_at desc')
     )
   end
   # rubocop:enable Metrics/AbcSize

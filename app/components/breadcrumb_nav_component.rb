@@ -8,7 +8,7 @@ class BreadcrumbNavComponent < ApplicationComponent
   end
 
   def full_title(breadcrumb)
-    breadcrumb.presence || 'No title'
+    breadcrumb.presence || I18n.t('deposit.no_title')
   end
 
   def truncated_title(breadcrumb)

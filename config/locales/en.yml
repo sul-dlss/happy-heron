@@ -29,6 +29,8 @@ en:
     roles:
       person: Individual
       organization: Organization
+  deposit:
+    no_title: 'No title'
   work:
     state:
       reserving_purl: Reserving PURL

@@ -20,6 +20,14 @@ class DashboardPresenter
   attr_reader :collections
 
   def show_popup?
-    @just_signed_in && @in_progress.any? { |deposit| !deposit.purl_reserved? }
+    @just_signed_in && (in_progress_works? || in_progress_collections?)
+  end
+
+  def in_progress_works?
+    @in_progress.any? { |deposit| !deposit.purl_reserved? }
+  end
+
+  def in_progress_collections?
+    !@collection_managers_in_progress.size.zero?
   end
 end
