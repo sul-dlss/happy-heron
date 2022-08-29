@@ -211,4 +211,28 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
     end
   end
+
+  describe 'changed_owner_collection_manager_email' do
+    let(:work) { build_stubbed(:work, collection: collection, head: work_version) }
+    let(:work_version) { build_stubbed(:work_version) }
+    let(:mail) { described_class.with(work: work, user: a_user).changed_owner_collection_manager_email }
+    let(:collection) { build_stubbed(:collection, head: collection_version) }
+    let(:collection_version) { build_stubbed(:collection_version) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'The ownership of an item in your collection has changed'
+      expect(mail.to).to eq [a_user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'salutation uses user.first_name' do
+      expect(mail.body).to include("Dear #{a_user.first_name},")
+      expect(mail.body).not_to include("Dear #{a_user.name},")
+    end
+
+    it 'renders body' do
+      expect(mail.body).to include "Ownership of the item \"#{work_version.title}\""
+      expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
+    end
+  end
 end
