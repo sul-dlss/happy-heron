@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import debounce from 'lodash.debounce'
 
 export default class extends Controller {
   static targets = ["addItem", "template", "control", "lookup",
@@ -8,6 +9,7 @@ export default class extends Controller {
   static values = { selector: String }
 
   connect() {
+    this.search = debounce(this.search, 700)
     this.controlTarget.hidden = true
     this.hideResult()
   }

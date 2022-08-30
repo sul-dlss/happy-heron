@@ -1,10 +1,12 @@
 import { Controller } from "stimulus"
+import debounce from 'lodash.debounce'
 
 export default class extends Controller {
-  static targets = ["result", "resultNone", "resultOne", "resultName", "resultDescription", "queryValue", 
+  static targets = ["result", "resultNone", "resultOne", "resultName", "resultDescription", "queryValue",
   "resultError", "errorValue", "submit"]
-  
+
   connect() {
+    this.search = debounce(this.search, 700)
     this.submitTarget.disabled = true
     this.hideResult()
   }
