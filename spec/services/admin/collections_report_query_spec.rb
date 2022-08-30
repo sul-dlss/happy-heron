@@ -5,12 +5,14 @@ require 'rails_helper'
 RSpec.describe Admin::CollectionsReportQuery do
   let(:request) { described_class.generate(report) }
 
-  let!(:collection1) { create(:collection_version_with_collection, state: 'deposited').collection }
-  let!(:collection2) { create(:collection_version_with_collection, state: 'first_draft').collection }
+  let!(:collection1) { create(:collection_version_with_collection, state: 'deposited', name: 'bCollection').collection }
+  let!(:collection2) do
+    create(:collection_version_with_collection, state: 'first_draft', name: 'cCollection').collection
+  end
   let!(:collection3) do
     collection_version = create(:collection_version_with_collection, state: 'version_draft',
                                                                      updated_at: Time.zone.parse('2018-06-01'),
-                                                                     name: 'aaaaCollection')
+                                                                     name: 'aCollection')
     collection = collection_version.collection
     collection.created_at = Time.zone.parse('2018-01-01')
     collection.save!
