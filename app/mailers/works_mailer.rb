@@ -65,4 +65,11 @@ class WorksMailer < ApplicationMailer
     @user = UserPresenter.new(user: params[:user])
     mail(to: @user.email, subject: 'The ownership of an item in your collection has changed')
   end
+
+  def globus_deposited_email
+    @work_version = params[:work_version]
+    @work = @work_version.work
+    @user = UserPresenter.new(user: @work.depositor)
+    mail(to: Settings.notifications.admin_email, subject: 'User has deposited an item with files on Globus')
+  end
 end

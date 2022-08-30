@@ -1,0 +1,11 @@
+Dear Administrator,
+
+<p>The following item has been deposited with the "Files have been uploaded to Globus" option checked.</p>
+
+<p>
+  Item: <%= link_to @work_version.title, work_url(@work) %>
+  Collection: <%= link_to @work.collection.head.name, collection_url(@work.collection) %>
+  Deposited by: <%= @user.name %>
+</p>
+
+<p>The Stanford Digital Repository Team</p>
