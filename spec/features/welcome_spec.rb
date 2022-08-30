@@ -36,7 +36,7 @@ RSpec.describe 'Welcome page' do
       visit '/'
       expect(page).to have_link('Login')
       expect(page).not_to have_selector '#breadcrumbs'
-      expect(page).to have_text 'Make a deposit today!'
+      expect(page).to have_text 'Go to the SDR Dashboard'
     end
   end
 end
