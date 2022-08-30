@@ -108,26 +108,8 @@
     </tbody>
   </table>
 
-  <table id="contributors" class="table table-sm caption-header">
-    <caption>Authors and contributors
-      <%= helpers.turbo_frame_tag dom_id(work, 'edit_author'), src: edit_button_work_path(work, tag: 'author'), target: '_top' %>
-    </caption>
-    <tbody>
-    <% contributors.each do |contributor| %>
-      <tr>
-        <% if contributor.person? %>
-          <td>
-            <%= contributor.first_name %> <%= contributor.last_name %>
-          </td>
-        <% else %>
-          <td><%= contributor.full_name %></td>
-        <% end %>
-        <td><%= render Works::Show::OrcidComponent.new(orcid: contributor.orcid) %></td>
-        <td><%= contributor.role %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: authors, participant_type: 'author') %>
+<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: contributors, participant_type: 'contributor') %>
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Dates
