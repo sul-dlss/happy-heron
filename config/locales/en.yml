@@ -25,6 +25,7 @@ en:
       lock_work: Work locked
       unlock_work: Work unlocked
       decommission: Decommissioned
+      no_review_workflow: Review no longer required
   contributor:
     roles:
       person: Individual
