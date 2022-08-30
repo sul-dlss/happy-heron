@@ -72,4 +72,10 @@ class WorksMailer < ApplicationMailer
     @user = UserPresenter.new(user: @work.depositor)
     mail(to: Settings.notifications.admin_email, subject: 'User has deposited an item with files on Globus')
   end
+
+  def decommission_email
+    @work = params[:work]
+    @user = UserPresenter.new(user: @work.owner)
+    mail(to: @user.email, subject: 'Your item has been removed from the Stanford Digital Repository')
+  end
 end

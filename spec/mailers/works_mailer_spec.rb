@@ -256,4 +256,28 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.body).to include a_user.name
     end
   end
+
+  describe 'decommission_email' do
+    let(:work) { build_stubbed(:work, collection: collection, owner: a_user, head: work_version) }
+    let(:work_version) { build_stubbed(:work_version) }
+    let(:mail) { described_class.with(work: work).decommission_email }
+    let(:collection) { build_stubbed(:collection, head: collection_version) }
+    let(:collection_version) { build_stubbed(:collection_version) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Your item has been removed from the Stanford Digital Repository'
+      expect(mail.to).to eq [work.owner.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'salutation uses work.owner.first_name' do
+      expect(mail.body).to include("Dear #{work.owner.first_name},")
+      expect(mail.body).not_to include("Dear #{work.owner.name},")
+    end
+
+    it 'renders body' do
+      expect(mail.body).to include
+      "Your item \"#{work_version.title}\" has been removed from the Stanford Digital Repository."
+    end
+  end
 end

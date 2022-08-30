@@ -495,5 +495,20 @@ RSpec.describe WorkVersion do
                ))
       end
     end
+
+    describe 'a decommission event' do
+      let(:work) { create(:work) }
+      let(:work_version) { create(:work_version, work: work) }
+
+      it 'transitions to decommissioned' do
+        expect { work_version.decommission! }
+          .to change(work_version, :state)
+          .to('decommissioned')
+          .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                 'WorksMailer', 'decommission_email', 'deliver_now',
+                 { params: { work: work }, args: [] }
+               ))
+      end
+    end
   end
 end

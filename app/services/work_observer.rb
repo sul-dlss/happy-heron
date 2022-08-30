@@ -5,7 +5,7 @@ class WorkObserver
   def self.before_transition(work_version, transition)
     attributes = work_version.work.event_context.merge(event_type: transition.event)
 
-    # an begin_deposit event is always preceded by a update_metadata event.
+    # a begin_deposit event is always preceded by a update_metadata event.
     # We don't want to log the description for that event twice, so clear it out.
     attributes = attributes.except(:description) if transition.event == :begin_deposit
 
@@ -53,6 +53,10 @@ class WorkObserver
       ReviewersMailer.with(user: recipient, work_version: work_version).submitted_email.deliver_later
     end
     work_mailer(work_version).submitted_email.deliver_later
+  end
+
+  def self.after_decommission(work_version, _transition)
+    WorksMailer.with(work: work_version.work).decommission_email.deliver_later
   end
 
   def self.work_mailer(work_version)

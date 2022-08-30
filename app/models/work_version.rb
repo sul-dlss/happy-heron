@@ -59,6 +59,7 @@ class WorkVersion < ApplicationRecord
     after_transition on: :submit_for_review, do: WorkObserver.method(:after_submit_for_review)
     after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
     after_transition on: :deposit_complete, do: CollectionObserver.method(:item_deposited)
+    after_transition on: :decommission, do: WorkObserver.method(:after_decommission)
 
     # Trigger the collection observer when starting a new draft,
     # except when the previous state was draft.
