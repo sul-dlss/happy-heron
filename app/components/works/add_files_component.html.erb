@@ -1,29 +1,47 @@
-<section data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="1000" id="file">
+<section data-controller="complex-radio" id="file">
   <header>Add your files *</header>
-  <p>All file types are accepted. If you have a deposit that is over 10GB, or
-    have any trouble with adding your files,
-    <%= link_to('contact us.', '#contactUsModal', data: {
-                              bs_toggle: 'modal',
-                              bs_target: '#contactUsModal' }) %>
-  </p>
-  <div class="dropzone dropzone-default" data-dropzone-target="container">
-    <%= form.file_field :files, multiple: true, direct_upload: true,
-                        data: { dropzone_target: 'input' } %>
-    <div class="dz-message needsclick text-secondary">
-      <p>Drop files here</p>
+
+  <div class="form-check" data-complex-radio-target="selection">
+    <%= form.radio_button :globus, false, class: 'form-check-input',
+      data: { action: 'complex-radio#disableUnselectedInputs' }    
+    %>
+    <%= form.label :globus, 'Upload files', class: 'form-check-label' %>
+    <p>All file types are accepted. If you have a deposit that is over 10GB, or
+      have any trouble with adding your files,
+      <%= link_to('contact us.', '#contactUsModal', data: {
+                                bs_toggle: 'modal',
+                                bs_target: '#contactUsModal' }) %>
+    </p>
+      <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="1000">
+      <fieldset>
+        <div class="dropzone dropzone-default" data-dropzone-target="container">
+          <%= form.file_field :files, multiple: true, direct_upload: true,
+                              data: { dropzone_target: 'input' } %>
+          <div class="dz-message needsclick text-secondary">
+            <p>Drop files here</p>
+          </div>
+        </div>
+        <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
+        <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
+        <div class="dropzone-previews" data-dropzone-target="previewsContainer">
+          <%= form.fields_for :attached_files do |file_form| %>
+            <%= render Works::FileRowComponent.new(form: file_form) %>
+          <% end %>
+        </div>
+      </fieldset>
+
+      <template data-dropzone-target='template'>
+        <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
+          <%= render Works::FileRowComponent.new(form: file_form) %>
+        <% end %>
+      </template>
     </div>
   </div>
-  <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
-  <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
-  <div class="dropzone-previews" data-dropzone-target="previewsContainer">
-    <%= form.fields_for :attached_files do |file_form| %>
-      <%= render Works::FileRowComponent.new(form: file_form) %>
-    <% end %>
+  <div class="form-check" data-complex-radio-target="selection">
+    <%= form.radio_button :globus, true, class: 'form-check-input',
+      data: { action: 'complex-radio#disableUnselectedInputs' }
+    %>
+    <%= form.label :globus, 'I have uploaded my files to a Globus endpoint provided to me by SDR staff.', class: 'form-check-label' %>
+    <p>Do not check this box unless you have already discussed this with SDR staff.</p>
   </div>
-
-  <template data-dropzone-target='template'>
-    <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
-      <%= render Works::FileRowComponent.new(form: file_form) %>
-    <% end %>
-  </template>
 </section>

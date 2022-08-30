@@ -754,6 +754,56 @@ RSpec.describe 'Create a new work' do
           expect(response.body).to include 'end must be provided'
         end
       end
+
+      context 'with globus' do
+        let(:collection) do
+          create(:collection, :depositor_selects_access, depositors: [user])
+        end
+
+        let(:work_params) do
+          {
+            title: 'Test title',
+            work_type: 'text',
+            contact_emails_attributes: contact_emails,
+            abstract: 'test abstract',
+            attached_files_attributes: {},
+            globus: 'true',
+            authors_attributes: authors,
+            keywords_attributes: {
+              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+            },
+            license: 'CC0-1.0',
+            release: 'immediate',
+            access: 'stanford'
+          }
+        end
+
+        let(:authors) do
+          { '999' =>
+            { '_destroy' => 'false', 'first_name' => '', 'last_name' => '',
+              'full_name' => 'Stanford', 'role_term' => 'organization|Host institution' } }
+        end
+
+        let(:contact_emails) do
+          {
+            '0' => {
+              '_destroy' => false,
+              'email' => 'test@example.com'
+            }
+          }
+        end
+
+        before { create(:collection_version_with_collection, collection: collection) }
+
+        it 'displays the work' do
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          expect(response).to have_http_status(:found)
+          work_version = Work.last.head
+          expect(work_version.attached_files).to be_empty
+          expect(work_version.globus).to be true
+          expect(work_version.state).to eq 'depositing'
+        end
+      end
     end
   end
 end

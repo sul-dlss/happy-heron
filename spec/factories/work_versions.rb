@@ -14,6 +14,7 @@ FactoryBot.define do
     state { 'first_draft' }
     description { 'initial version' }
     published_at { Time.zone.parse('2019-01-01') }
+    globus { false }
     work
 
     factory :valid_work_version do
