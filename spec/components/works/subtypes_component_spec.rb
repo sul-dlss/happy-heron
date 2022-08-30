@@ -46,6 +46,48 @@ RSpec.describe Works::SubtypesComponent do
     end
   end
 
+  context 'when work type is "data"' do
+    # Text, Data, and Image are present in Work::MORE_TYPES, but Data should be filtered out
+    let(:work_version) { build_stubbed(:work_version, work_type: 'data') }
+
+    it 'does not include "Data" in more_types' do
+      expect(rendered.css('#work_subtype_data')).not_to be_present
+    end
+
+    it 'includes "Text" and "Image" in more_types' do
+      expect(rendered.css('#work_subtype_text')).to be_present
+      expect(rendered.css('#work_subtype_image')).to be_present
+    end
+  end
+
+  context 'when work type is "text"' do
+    # Text, Data, and Image are present in Work::MORE_TYPES but Text should be filtered out
+    let(:work_version) { build_stubbed(:work_version, work_type: 'text') }
+
+    it 'does not include "Text" in more_types' do
+      expect(rendered.css('#work_subtype_text')).not_to be_present
+    end
+
+    it 'includes "Data" and "Image" in more_types' do
+      expect(rendered.css('#work_subtype_data')).to be_present
+      expect(rendered.css('#work_subtype_image')).to be_present
+    end
+  end
+
+  context 'when work type is "image"' do
+    # Text, Data, and Image are present in Work::MORE_TYPES but Image should be filtered out
+    let(:work_version) { build_stubbed(:work_version, work_type: 'image') }
+
+    it 'does not include "Text" in more_types' do
+      expect(rendered.css('#work_subtype_image')).not_to be_present
+    end
+
+    it 'includes "Data" and "Text" in more_types' do
+      expect(rendered.css('#work_subtype_data')).to be_present
+      expect(rendered.css('#work_subtype_text')).to be_present
+    end
+  end
+
   context 'when work type is anything else' do
     it 'does not label subtypes as required' do
       expect(rendered.to_html).to include('Work subtypes')
