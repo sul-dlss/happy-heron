@@ -235,4 +235,25 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
     end
   end
+
+  describe 'globus_deposited_email' do
+    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user) }
+    let(:work_version) { build_stubbed(:work_version, work: work) }
+    let(:mail) { described_class.with(work_version: work_version).globus_deposited_email }
+    let(:collection) { build_stubbed(:collection, head: collection_version) }
+    let(:collection_version) { build_stubbed(:collection_version) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'User has deposited an item with files on Globus'
+      expect(mail.to).to eq ['h2-administrators@lists.stanford.edu']
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders body' do
+      expect(mail.body).to include 'The following item has been deposited'
+      expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}")
+      expect(mail.body).to match("http://#{Socket.gethostname}/collections/#{collection.id}")
+      expect(mail.body).to include a_user.name
+    end
+  end
 end

@@ -15,7 +15,7 @@ RSpec.describe FirstDraftCollectionsMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq 'A new collection has been created'
-      expect(mail.to).to eq [described_class::ADMIN_LIST]
+      expect(mail.to).to eq ['h2-administrators@lists.stanford.edu']
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 

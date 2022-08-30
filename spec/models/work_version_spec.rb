@@ -378,6 +378,30 @@ RSpec.describe WorkVersion do
         end
       end
 
+      context 'when a deposit with globus' do
+        let(:work_version) { build(:work_version, :depositing, work: work, globus: true) }
+        let(:collection) { create(:collection) }
+
+        before do
+          allow(Settings).to receive(:notify_admin_list).and_return(true)
+        end
+
+        it 'transitions to deposited' do
+          expect { work_version.deposit_complete! }
+            .to change(work_version, :state)
+            .to('deposited')
+            .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                   'WorksMailer', 'deposited_email', 'deliver_now',
+                   { params: { user: work.depositor, work_version: work_version }, args: [] }
+                 ))
+            .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                   'WorksMailer', 'globus_deposited_email', 'deliver_now',
+                   { params: { user: work.depositor, work_version: work_version }, args: [] }
+                 ))
+            .and change(Event, :count).by(1)
+        end
+      end
+
       context 'when an subsequent version deposit into a non-reviewed collection' do
         let(:collection) { create(:collection) }
         let(:work_version) { build(:work_version, :depositing, version: 2, work: work) }
