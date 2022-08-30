@@ -132,7 +132,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           click_button 'Deposit'
 
-          expect(page).to have_content('Keyword must be filled in')
+          expect(page).to have_content('At least one keyword is required. Each keyword must be unique.')
 
           fill_in 'Keyword', with: 'Springs'
 
@@ -338,7 +338,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           click_button 'Deposit'
 
-          expect(page).to have_content('Keyword must be filled in')
+          expect(page).to have_content('At least one keyword is required. Each keyword must be unique.')
 
           fill_in 'Keyword', with: 'Springs'
 
