@@ -19,7 +19,7 @@ RSpec.describe 'Lock and unlock a work', js: true do
       visit work_path(work)
 
       expect(work.locked).to be false
-      select 'Lock', from: 'Admin functions'
+      select 'Lock/Unlock', from: 'Admin functions'
       expect(page).to have_content 'Locking this item will prevent anyone from making changes to this item.'
       click_button 'Lock'
 
@@ -41,7 +41,7 @@ RSpec.describe 'Lock and unlock a work', js: true do
       visit work_path(work)
 
       expect(work.locked).to be true
-      select 'Lock', from: 'Admin functions'
+      select 'Lock/Unlock', from: 'Admin functions'
       expect(page).to have_content 'Unlocking this item will allow the depositor to make changes to this item.'
       click_button 'Unlock'
 
