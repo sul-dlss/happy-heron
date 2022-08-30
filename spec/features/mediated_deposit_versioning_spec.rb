@@ -52,7 +52,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       # Now acting as the collection reviewer
       sign_in reviewer
       visit dashboard_path
-      within_table('Approvals') do
+      within_table('Items that are waiting to be reviewed') do
         click_link(new_work_title)
       end
       expect(page).to have_content('Review all details below, then approve or return this deposit')
@@ -73,7 +73,7 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
       expect(page).to have_content 'You have successfully submitted your deposit'
       click_link 'Return to dashboard'
 
-      within_table('Approvals') do
+      within_table('Items that are waiting to be reviewed') do
         click_link(newest_work_title)
       end
       expect(page).to have_content('Review all details below, then approve or return this deposit')
