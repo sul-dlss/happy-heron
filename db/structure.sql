@@ -553,7 +553,7 @@ CREATE TABLE public.work_versions (
     work_id bigint NOT NULL,
     description character varying,
     published_at timestamp(6) without time zone,
-    globus boolean DEFAULT false
+    globus boolean DEFAULT false NOT NULL
 );
 
 
