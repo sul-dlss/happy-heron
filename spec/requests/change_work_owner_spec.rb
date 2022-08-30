@@ -20,13 +20,27 @@ RSpec.describe 'Change owner of a work' do
     sign_in user, groups: ['dlss:hydrus-app-administrators']
   end
 
-  it 'allows owner to be changed' do
-    expect { put owners_path(work), params: { sunetid: new_owner.sunetid } }
-      .to have_enqueued_job(ActionMailer::MailDeliveryJob).exactly(4).times
+  context 'when new owner is different than original owner' do
+    it 'allows owner to be changed' do
+      expect { put owners_path(work), params: { sunetid: new_owner.sunetid } }
+        .to have_enqueued_job(ActionMailer::MailDeliveryJob).exactly(4).times
 
-    follow_redirect!
-    # Flash message
-    expect(response.body).to include 'Owner updated'
-    expect(work.collection.reload.depositors).to include new_owner
+      follow_redirect!
+      # Flash message
+      expect(response.body).to include 'Owner updated'
+      expect(work.collection.reload.depositors).to include new_owner
+    end
+  end
+
+  context 'when new owner is same as original owner' do
+    it 'prevents owner from being changed' do
+      expect { put owners_path(work), params: { sunetid: orig_owner.sunetid } }
+        .not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
+
+      follow_redirect!
+      # Flash message
+      expect(response.body).to include 'Cannot change owner to the same user'
+      expect(work.collection.reload.depositors).not_to include new_owner
+    end
   end
 end

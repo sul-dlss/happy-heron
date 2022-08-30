@@ -52,6 +52,7 @@ en:
       file: 'Edit files'
     flash:
       owner_updated: "Owner updated"
+      owner_not_updated: "Cannot change owner to the same user"
       work_locked: "The work was locked"
       work_unlocked: "The work was unlocked"
       decommissioned: "Decommissioned"

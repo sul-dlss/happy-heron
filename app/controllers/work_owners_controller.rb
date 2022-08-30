@@ -14,14 +14,22 @@ class WorkOwnersController < ApplicationController
 
     work = Work.find(params[:id])
     new_owner = User.find_or_create_by(email: "#{params['sunetid']}@stanford.edu")
-    move_work_to_new_owner(work, new_owner)
-    send_emails(work)
 
-    flash[:success] = I18n.t('work.flash.owner_updated')
+    if work.owner == new_owner
+      flash[:error] = I18n.t('work.flash.owner_not_updated')
+    else
+      update_owner(work, new_owner)
+    end
     redirect_to work_path(work)
   end
 
   private
+
+  def update_owner(work, new_owner)
+    move_work_to_new_owner(work, new_owner)
+    send_emails(work)
+    flash[:success] = I18n.t('work.flash.owner_updated')
+  end
 
   def send_emails(work)
     send_participant_change_emails(work.collection)
