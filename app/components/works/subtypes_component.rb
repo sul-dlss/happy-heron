@@ -34,7 +34,7 @@ module Works
     end
 
     def more_types
-      WorkType.more_types - subtypes
+      WorkType.more_types - subtypes - [work_type.titlecase]
     end
 
     def tooltip

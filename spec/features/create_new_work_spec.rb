@@ -176,7 +176,10 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           expect(page).to have_content 'What type of content will you deposit?'
 
-          find('label', text: 'Sound').click
+          find('label', text: 'Data').click
+          # check that modal doesn't display subtype that exactly matches the type
+          click_link 'See more options'
+          expect(page).not_to have_css('#subtype_Data')
 
           click_button 'Continue'
 
