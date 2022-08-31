@@ -14,7 +14,7 @@ RSpec.describe Dashboard::CollectionHeaderComponent, type: :component do
     end
 
     it 'has an edit button' do
-      expect(rendered.css('turbo-frame').first['src']).to eq "/collections/#{collection_id}/edit_link"
+      expect(rendered.css('turbo-frame').first['src']).to eq "/collection_versions/#{collection_version.id}/edit_link"
     end
   end
 
