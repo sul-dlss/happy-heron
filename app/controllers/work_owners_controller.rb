@@ -65,7 +65,7 @@ class WorkOwnersController < ApplicationController
   end
 
   def add_depositor_to_collection(collection, depositor)
-    collection.depositors << depositor
+    collection.depositors << depositor unless collection.depositors.include?(depositor)
     collection.save!
   end
 
