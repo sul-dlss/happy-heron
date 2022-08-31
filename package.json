@@ -13,6 +13,7 @@
     "dropzone": "^5.7.2",
     "esbuild": "^0.13.6",
     "esbuild-plugin-stimulus": "^0.1.2",
+    "lodash.debounce": "^4.0.8",
     "sass": "^1.43.2",
     "simple-datatables": "^3.0.0",
     "stimulus": "2.0.0",
