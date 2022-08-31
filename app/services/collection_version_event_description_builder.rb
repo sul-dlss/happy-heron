@@ -37,14 +37,22 @@ class CollectionVersionEventDescriptionBuilder
   # The has many relationships are showing as changed and that their "id" has changed. I don't know why.
   # So we check for changes in the sub-properties instead
   def contact_emails_changed?
+    return true if destroyed?('contact_emails_attributes')
+
     form.contact_emails.any? { |email| email.changed?(:email) }
   end
 
   # The has many relationships are showing as changed and that their "id" has changed. I don't know why.
   # So we check for changes in the sub-properties instead
   def related_links_changed?
+    return true if destroyed?('related_links_attributes')
+
     form.related_links.any? do |link|
       link.changed?(:link_title) || link.changed?(:url)
     end
+  end
+
+  def destroyed?(attrs_key)
+    form.input_params.fetch(attrs_key, {}).values.any? { |params| params['_destroy'] == '1' }
   end
 end
