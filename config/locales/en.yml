@@ -135,3 +135,43 @@ en:
         'yes': Yes, a DOI will be assigned to each deposit in this collection.
         'no': No, DOIs will not be assigned to any deposits in this collection.
         depositor_selects: 'Depositor selects: all deposits will be assigned a DOI by default unless the depositor chooses not to have a DOI assigned.'
+  help:
+    collections:
+      faculty_student_staff_publications:
+        label: Faculty, Student, and Staff Publications
+        description: >
+          An open collection for assembling publications by Stanford faculty, graduate students, 
+          post-docs, and staff from the full range of disciplines.
+      stanford_research_data:
+        label: Stanford Research Data
+        description: >
+          This collection includes research data from Stanford-associated researchers and scientists on the 
+          wide variety of topics and fields under investigation at Stanford University, including biology, 
+          chemistry, engineering, environmental sciences, geosciences, history, languages, mathematics, 
+          medicine, music, physics, public policy, social sciences, and statistics. Data sets in this 
+          collection are in many different formats, and each is presented with descriptive information that 
+          identifies the people and organizations responsible for its creation, related publications, and 
+          other relevant information. The collection was created to support the preservation of the research 
+          output of the University and to enable data sharing and re-use.
+      stanford_theses_dissertations:
+        label: Stanford Theses and Dissertations
+        description: >
+          This collection includes theses and dissertations authored by Stanford graduate and undergraduate 
+          students from a variety of schools and representing a broad range of scholarly disciplines. Established 
+          in 2014, the collection supports the preservation, sharing, and re-use of the research output of the 
+          University, particularly for those programs for which there is no formal or mandatory requirement for 
+          thesis deposit.
+      sul_staff_publications_research:
+        label: Stanford University Libraries staff publications and research
+        description: >
+          Publications and research produced and contributed by staff of Stanford University Libraries on a 
+          broad range of topics relevant to academic and research libraries.
+      stanford_open_access_articles:
+        label: Stanford University Open Access Articles
+        description: >
+          A collection of open access articles published by faculty, students, and other researchers at Stanford 
+          University.
+      marc:
+        label: I am a library employee, and I need a MARC record.
+      no_collection:
+        label: I do not see an appropriate collection.

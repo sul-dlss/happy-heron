@@ -8,15 +8,18 @@ class HelpsController < ApplicationController
   end
 
   # You can pass an id parameter to this route to define which turbo-frame gets updated
+  # rubocop:disable Metrics/AbcSize
   def create
     HelpsMailer.with(name: params[:name],
                      email: params[:email],
                      affiliation: params[:affiliation],
                      help_how: params[:help_how],
-                     why_contact: params[:why_contact])
+                     why_contact: params[:why_contact],
+                     collections: params[:collections])
                .jira_email.deliver_later
     respond_to do |format|
       format.turbo_stream
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end
