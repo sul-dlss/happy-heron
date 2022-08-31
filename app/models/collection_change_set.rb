@@ -44,6 +44,22 @@ class CollectionChangeSet
       removed_reviewers).uniq
   end
 
+  def email_depositors_status_changed_changed?
+    point1.email_depositors_status_changed != point2.email_depositors_status_changed
+  end
+
+  def email_when_participants_changed_changed?
+    point1.email_when_participants_changed != point2.email_when_participants_changed
+  end
+
+  def review_enabled_changed?
+    point1.review_enabled != point2.review_enabled
+  end
+
+  def reviewers_changed?
+    removed_reviewers.present? || added_reviewers.present?
+  end
+
   def participant_change_description
     %i[added_managers added_depositors added_reviewers
        removed_managers removed_depositors removed_reviewers].filter_map do |field_name|
@@ -64,9 +80,13 @@ class CollectionChangeSet
       @depositors = collection.depositors.to_a
       @reviewers = collection.reviewed_by.to_a
       @managers =  collection.managed_by.to_a
+      @email_when_participants_changed = collection.email_when_participants_changed
+      @email_depositors_status_changed = collection.email_depositors_status_changed
+      @review_enabled = collection.review_enabled
     end
 
-    attr_reader :depositors, :reviewers, :managers
+    attr_reader :depositors, :reviewers, :managers, :email_when_participants_changed, :email_depositors_status_changed,
+                :review_enabled
 
     def diff(collection)
       CollectionChangeSet.new(self, PointInTime.new(collection))

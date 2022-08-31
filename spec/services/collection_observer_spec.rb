@@ -4,11 +4,12 @@ require 'rails_helper'
 
 RSpec.describe CollectionObserver do
   let(:collection) { create(:collection) }
-  let!(:collection_version) { create(:collection_version_with_collection, collection: collection) }
+  let(:collection_version) { create(:collection_version_with_collection, collection: collection) }
+  let(:form) { DraftCollectionForm.new(collection_version: collection_version, collection: collection) }
 
   describe '.settings_updated' do
     subject(:action) do
-      described_class.settings_updated(collection, user: collection.creator, change_set: change_set)
+      described_class.settings_updated(collection, user: collection.creator, change_set: change_set, form: form)
     end
 
     let(:change_set) { CollectionChangeSet::PointInTime.new(collection).diff(collection_after) }

@@ -21,10 +21,9 @@ class CollectionObserver
   end
 
   # When an already published collection is updated
-  def self.settings_updated(collection, change_set:, user:)
-    event_params = { user: user, event_type: 'settings_updated' }
-    event_params[:description] = change_set.participant_change_description if change_set.participants_changed?
-    collection.events.create(event_params)
+  def self.settings_updated(collection, change_set:, user:, form:)
+    create_settings_updated_event(collection: collection, change_set: change_set, form: form, user: user)
+
     collection_version = collection.head
     managers_added(collection_version, change_set)
     managers_removed(collection_version, change_set)
@@ -35,6 +34,15 @@ class CollectionObserver
     send_participant_change_emails(collection, change_set)
     fix_state(collection) unless collection.review_enabled
   end
+
+  def self.create_settings_updated_event(collection:, change_set:, form:, user:)
+    event_params = { user: user, event_type: 'settings_updated' }.tap do |params|
+      description = CollectionEventDescriptionBuilder.build(change_set: change_set, form: form)
+      params[:description] = description if description.present?
+    end
+    collection.events.create(event_params)
+  end
+  private_class_method :create_settings_updated_event
 
   def self.collection_managers_excluding_depositor(work_version)
     depositor = work_version.work.depositor

@@ -24,7 +24,8 @@ class CollectionsController < ObjectsController
     point1 = CollectionChangeSet::PointInTime.new(collection)
     @form = CollectionSettingsForm.new(collection)
     if @form.validate(update_params) && @form.save
-      CollectionObserver.settings_updated(collection, change_set: point1.diff(collection), user: current_user)
+      CollectionObserver.settings_updated(collection, change_set: point1.diff(collection), user: current_user,
+                                                      form: @form)
 
       redirect_to collection_path(collection)
     else
