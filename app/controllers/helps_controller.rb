@@ -4,7 +4,11 @@
 class HelpsController < ApplicationController
   def new
     @email = current_user&.email
-    @help_how_value = 'I want to become an SDR depositor' unless current_user
+    @help_how_value = if params[:show_collections] == 'true'
+                        'Request access to another collection'
+                      elsif !current_user
+                        'I want to become an SDR depositor'
+                      end
   end
 
   # You can pass an id parameter to this route to define which turbo-frame gets updated
