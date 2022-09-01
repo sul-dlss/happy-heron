@@ -12,7 +12,7 @@ FactoryBot.define do
     license { 'CC0-1.0' }
     access { 'world' }
     state { 'first_draft' }
-    description { 'initial version' }
+    version_description { 'initial version' }
     published_at { Time.zone.parse('2019-01-01') }
     globus { false }
     work

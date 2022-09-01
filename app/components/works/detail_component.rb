@@ -15,12 +15,12 @@ module Works
 
     delegate :work_type, :contact_emails, :abstract, :citation, :first_draft?,
              :attached_files, :related_works, :related_links, :contributors, :authors,
-             :created_edtf, :published_edtf, :rejected?, :work, :description, to: :work_version
+             :created_edtf, :published_edtf, :rejected?, :work, :version_description, to: :work_version
 
     def version
       return '1 - initial version' if first_draft?
 
-      "#{work_version.version} - #{description}"
+      "#{work_version.version} - #{version_description}"
     end
 
     def doi_setting

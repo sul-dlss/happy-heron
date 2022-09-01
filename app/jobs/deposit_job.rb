@@ -51,7 +51,7 @@ class DepositJob < BaseDepositJob
     SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
                                            logger: Rails.logger,
                                            connection: connection,
-                                           version_description: work_version.description.presence)
+                                           version_description: work_version.version_description.presence)
   end
 
   def upload_responses(blobs)

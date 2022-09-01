@@ -16,7 +16,7 @@ RSpec.describe DepositJob do
   let(:attached_file) { build(:attached_file) }
   let(:work) { build(:work, collection: collection, assign_doi: false) }
   let(:work_version) do
-    build(:work_version, id: 8, work: work, attached_files: [attached_file], description: 'Updated metadata')
+    build(:work_version, id: 8, work: work, attached_files: [attached_file], version_description: 'Updated metadata')
   end
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
 
