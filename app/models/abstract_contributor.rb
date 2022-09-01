@@ -6,9 +6,10 @@
 class AbstractContributor < ApplicationRecord
   SEPARATOR = '|'
 
+  # NOTE: "Author" is deliberately set to first (out of alpha order), as it should be the default
   PERSON_ROLES = [
-    'Advisor',
     'Author',
+    'Advisor',
     'Composer',
     'Contributing author',
     'Copyright holder',
