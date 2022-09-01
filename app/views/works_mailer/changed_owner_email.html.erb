@@ -1,7 +1,7 @@
 <p>Dear <%= @user.first_name %>,</p>
 
 <p>You are now the owner of the item "<%= @work.head.title %>" in the Stanford Digital Repository 
-  and have access to manage its metadata and files. Click <%= link_to edit_work_url(@work), edit_work_url(@work) %> 
+  and have access to manage its metadata and files. Click <%= link_to work_url(@work), work_url(@work) %> 
   to view or edit this item.</p>
 
 <p>You now also have permission to deposit items into the <%= @work.collection_name %> collection.</p>

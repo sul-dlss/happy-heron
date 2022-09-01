@@ -208,7 +208,7 @@ RSpec.describe WorksMailer, type: :mailer do
 
     it 'renders body' do
       expect(mail.body).to include "You are now the owner of the item \"#{work_version.title}\""
-      expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
+      expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}")
     end
   end
 
@@ -232,7 +232,7 @@ RSpec.describe WorksMailer, type: :mailer do
 
     it 'renders body' do
       expect(mail.body).to include "Ownership of the item \"#{work_version.title}\""
-      expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
+      expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}")
     end
   end
 
