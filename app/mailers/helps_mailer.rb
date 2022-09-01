@@ -9,6 +9,7 @@ class HelpsMailer < ApplicationMailer
     @name = params[:name]
     @affiliation = params[:affiliation]
     @why_contact = params[:why_contact]
+    @collections = params[:collections]
 
     mail(to: 'sdr-support@jirasul.stanford.edu',
          from: email,

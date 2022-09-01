@@ -9,7 +9,8 @@ RSpec.describe HelpsMailer, type: :mailer do
                            email: 'razor@haircuts.it',
                            affiliation: 'Music School',
                            help_how: 'who should marry Rosina?',
-                           why_contact: 'Don Basilio! – Cosa veggo!').jira_email
+                           why_contact: 'Don Basilio! – Cosa veggo!',
+                           collections: ['Stanford University Open Access Articles']).jira_email
     end
 
     it 'renders the headers' do
@@ -21,6 +22,7 @@ RSpec.describe HelpsMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to include 'Barbara Seville Music School'
       expect(mail.body.encoded).to include 'Don Basilio! – Cosa veggo!'
+      expect(mail.body.encoded).to include 'Stanford University Open Access Articles'
     end
   end
 end
