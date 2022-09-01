@@ -188,4 +188,16 @@ RSpec.describe Works::DetailComponent, type: :component do
       expect(instance.published).to eq '1982-09'
     end
   end
+
+  describe '#work_type_label' do
+    let(:work_version) { build_stubbed(:work_version, work_type: 'software, multimedia') }
+
+    it 'returns the work type label' do
+      expect(instance.work_type_label).to eq('Software/<wbr>Code')
+    end
+
+    it 'renders the expected label' do
+      expect(rendered.to_html).to include('Software/Code')
+    end
+  end
 end

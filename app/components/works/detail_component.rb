@@ -92,6 +92,10 @@ module Works
       Array(work_version.subtype).join(', ')
     end
 
+    def work_type_label
+      WorkType.find(work_type).html_label
+    end
+
     def keywords
       work_version.keywords.map(&:label)
     end
