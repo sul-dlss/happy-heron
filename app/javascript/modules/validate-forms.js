@@ -10,7 +10,6 @@
     Array.prototype.slice.call(forms)
       .forEach(function (form) {
         form.addEventListener('submit', function (event) {
-          console.log('submit')
           // Note that checkValidity and :invalid do not work in hidden inputs such as dropzone files.
           const invalidFileElem = form.querySelector('.hidden-file.is-invalid')
           if (event.submitter.id === 'save-draft-button') {            

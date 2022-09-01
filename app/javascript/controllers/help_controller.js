@@ -1,10 +1,10 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = [ "collections" ]
+  static targets = [ "collections", "helpHow" ]
 
   connect() {
-    this.hideCollections()
+    this.changeHelpHow({ target: this.helpHowTarget })
   }
 
   changeHelpHow(event) {

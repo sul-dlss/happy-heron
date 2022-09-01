@@ -26,7 +26,12 @@
       <%= render Works::PurlReservationModalComponent.new %>
       <%= render CitationModalComponent.new %>
     </section>
-
+    <%= link_to('Don\'t see an appropriate collection?', '#contactUsModal',
+                            data: {
+                              bs_toggle: 'modal',
+                              bs_target: '#contactUsModal',
+                              bs_showCollections: 'true'
+                            }) %>
     <%= render Works::WorkTypeModalComponent.new %>
   </div>
 </main>
