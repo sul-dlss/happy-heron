@@ -6,6 +6,8 @@ FactoryBot.define do
     access { 'world' }
     license_option { 'depositor-selects' }
     email_when_participants_changed { false }
+    email_depositors_status_changed { false }
+    review_enabled { false }
     creator
   end
 
