@@ -11,7 +11,7 @@ class DraftWorkForm < Reform::Form
   feature Coercion # Casts properties to a specific type
 
   property :work_type, on: :work_version
-  property :description, on: :work_version
+  property :version_description, on: :work_version
   property :subtype, on: :work_version
   property :title, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
   property :abstract, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
@@ -140,7 +140,7 @@ class DraftWorkForm < Reform::Form
     model[:work]
   end
 
-  def description
+  def version_description
     return if model.fetch(:work_version).deposited?
 
     super
