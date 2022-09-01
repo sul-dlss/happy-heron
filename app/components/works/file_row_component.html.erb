@@ -1,12 +1,12 @@
-<div class="dz-preview dz-file-preview row <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
+<div class="dz-preview dz-file-preview row pb-2 <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
   <div class="thumb" class="col-md-1">
     <img data-dz-thumbnail />
   </div>
-  <div class="col-md-2">
-    <% if filename %>
-      <div class="dz-filename" data-dropzone-target="fileName">
-        <span class="fa-solid fa-check file-uploaded" aria-hidden="true"></span>
-        <span><%= filename %></span>
+  <div class="col-4">
+    <% if uploaded? %>
+      <div data-dropzone-target="fileName">
+        <span class="fa-regular fa-file" aria-hidden="true"></span>
+        <span><%= filename %>: <%= number_to_human_size(filesize) %>, <%= render LocalTimeComponent.new(datetime: date_uploaded, show_time: false) %></span>
       </div>
     <% else %>
       <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
@@ -21,9 +21,9 @@
     <% end %>
   </div>
 
-  <div class="upload-description col row">
+  <div class="upload-description col-5 row">
     <div class="col-md-3">
-      <%= form.label :label, 'Description', class: 'col-form-label' %>
+      <%= form.label :label, 'Description (optional)', class: 'col-form-label' %>
       <%= render PopoverComponent.new key: 'work.description' %>
     </div>
     <div class="col-md-9">
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="dz-details col-md-2">
+  <div class="dz-details col-2">
     <%= form.hidden_field :_destroy %>
     <%= form.hidden_field :file %>
     <%= form.check_box :hide, class: 'form-check-input' %>
@@ -41,7 +41,7 @@
 
   <div class="invalid-feedback col">We were unable to upload your file due to size or other issues. Delete this file and try again.</div>
 
-  <div class="col-md-1">
+  <div class="col-1">
     <%= button_tag type: 'button',
                    class: "dz-remove pull-right btn remove-file",
                    "aria-label": "Remove file",
