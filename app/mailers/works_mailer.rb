@@ -73,9 +73,17 @@ class WorksMailer < ApplicationMailer
     mail(to: Settings.notifications.admin_email, subject: 'User has deposited an item with files on Globus')
   end
 
-  def decommission_email
-    @work = params[:work]
-    @user = UserPresenter.new(user: @work.owner)
+  def decommission_owner_email
+    @work_version = params[:work_version]
+    @user = UserPresenter.new(user: @work_version.work.owner)
     mail(to: @user.email, subject: 'Your item has been removed from the Stanford Digital Repository')
+  end
+
+  def decommission_manager_email
+    work_version = params[:work_version]
+    @work_title = work_version.title
+    @collection_name = work_version.work.collection_name
+    @user = UserPresenter.new(user: params[:user])
+    mail(to: @user.email, subject: 'An item in your collection has been removed from the Stanford Digital Repository')
   end
 end
