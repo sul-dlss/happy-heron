@@ -4,19 +4,15 @@
 class DepositJob < BaseDepositJob
   queue_as :default
 
-  # rubocop:disable Metrics/AbcSize:
   def perform(work_version)
     Honeybadger.context({ work_version_id: work_version.id, druid: work_version.work.druid,
                           work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
 
     request_dro = CocinaGenerator::DROGenerator.generate_model(work_version: work_version)
-    blobs = work_version.attached_files.map { |af| af.file.attachment.blob }
 
-    login_result = login
-    raise login_result.failure unless login_result.success?
+    perform_login
 
-    new_request_dro = SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,
-                                                                              upload_responses: upload_responses(blobs))
+    new_request_dro = update_dro_with_file_identifiers(request_dro, work_version)
 
     case new_request_dro
     when Cocina::Models::RequestDRO
@@ -25,18 +21,22 @@ class DepositJob < BaseDepositJob
       update(new_request_dro, work_version)
     end
   end
-  # rubocop:enable Metrics/AbcSize:
 
   private
 
-  def deposit(request_dro:, blobs:)
+  def perform_login
     login_result = login
     raise login_result.failure unless login_result.success?
+  end
 
-    new_request_dro = SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,
-                                                                              upload_responses: upload_responses(blobs))
-
-    create_or_update(new_request_dro)
+  def update_dro_with_file_identifiers(request_dro, work_version)
+    if metadata_only?(work_version)
+      update_dro_with_existing_file_identifiers(request_dro, work_version.work.druid)
+    else
+      blobs = work_version.attached_files.map { |af| af.file.attachment.blob }
+      SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: request_dro,
+                                                              upload_responses: upload_responses(blobs))
+    end
   end
 
   def create(new_request_dro, work_version)
@@ -75,5 +75,29 @@ class DepositJob < BaseDepositJob
 
   def filename(key)
     ActiveStorage::Blob.service.path_for(key)
+  end
+
+  def update_dro_with_existing_file_identifiers(request_dro, druid)
+    request_dro.new(structural: request_dro.structural.new(contains: existing_structural_for(druid)))
+  end
+
+  def metadata_only?(work_version)
+    previous_version = work_version.previous_version
+    return false unless previous_version
+
+    blob_map_for(work_version) == blob_map_for(previous_version)
+  end
+
+  def blob_map_for(work_version)
+    work_version.attached_files.to_h do |af|
+      [af.file.attachment.blob.filename.to_s, af.file.attachment.blob.checksum]
+    end
+  end
+
+  def existing_structural_for(druid)
+    cocina_str = SdrClient::Find.run(druid, url: Settings.sdr_api.url, logger: Rails.logger)
+    cocina_json = JSON.parse(cocina_str)
+    cocina = Cocina::Models.build(cocina_json)
+    cocina.structural.contains
   end
 end
