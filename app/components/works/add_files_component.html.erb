@@ -3,7 +3,7 @@
 
   <div class="form-check" data-complex-radio-target="selection">
     <%= form.radio_button :globus, false, class: 'form-check-input',
-      data: { action: 'complex-radio#disableUnselectedInputs' }    
+      data: { action: 'complex-radio#disableUnselectedInputs' }
     %>
     <%= form.label :globus, 'Upload files', class: 'form-check-label' %>
     <p>All file types are accepted. If you have a deposit that is over 10GB, or
@@ -37,7 +37,7 @@
       </template>
     </div>
   </div>
-  <div class="form-check" data-complex-radio-target="selection">
+  <div class="form-check pt-3" data-complex-radio-target="selection">
     <%= form.radio_button :globus, true, class: 'form-check-input',
       data: { action: 'complex-radio#disableUnselectedInputs' }
     %>

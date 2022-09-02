@@ -1,12 +1,12 @@
-<div class="dz-preview dz-file-preview row pb-2 <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
-  <div class="thumb" class="col-md-1">
+<div class="dz-preview dz-file-preview row pb-3 pt-3 <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
+  <div class="thumb col-1">
     <img data-dz-thumbnail />
   </div>
-  <div class="col-4">
+  <div class="col-5 pt-2">
     <% if uploaded? %>
       <div data-dropzone-target="fileName">
         <span class="fa-regular fa-file" aria-hidden="true"></span>
-        <span><%= filename %>: <%= number_to_human_size(filesize) %>, <%= render LocalTimeComponent.new(datetime: date_uploaded, show_time: false) %></span>
+        <span><%= filename %>: <wbr><%= number_to_human_size(filesize) %>, <wbr><%= render LocalTimeComponent.new(datetime: date_uploaded, show_time: false) %></span>
       </div>
     <% else %>
       <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
@@ -19,29 +19,28 @@
         <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
       </div>
     <% end %>
+    <div class="invalid-feedback">We were unable to upload your file due to size or other issues. Delete this file and try again.</div>
   </div>
 
-  <div class="upload-description col-5 row">
-    <div class="col-md-3">
-      <%= form.label :label, 'Description (optional)', class: 'col-form-label' %>
-      <%= render PopoverComponent.new key: 'work.description' %>
-    </div>
-    <div class="col-md-9">
-    <%= form.text_field :label, class: 'form-control' %>
-    </div>
+  <div class="upload-description col-4">
+      <div>
+        <%= form.label :label, 'Description (optional)' %>
+        <%= render PopoverComponent.new key: 'work.description' %>
+      </div>
+      <%= form.text_field :label, class: 'form-control' %>
   </div>
 
-  <div class="dz-details col-2">
+  <div class="dz-details col-1 d-flex align-items-center">
+    <div class="form-check">
     <%= form.hidden_field :_destroy %>
     <%= form.hidden_field :file %>
     <%= form.check_box :hide, class: 'form-check-input' %>
     <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
     <%= render PopoverComponent.new key: 'work.hide_file' %>
+    </div>
   </div>
 
-  <div class="invalid-feedback col">We were unable to upload your file due to size or other issues. Delete this file and try again.</div>
-
-  <div class="col-1">
+  <div class="col-1 d-flex align-items-center">
     <%= button_tag type: 'button',
                    class: "dz-remove pull-right btn remove-file",
                    "aria-label": "Remove file",
