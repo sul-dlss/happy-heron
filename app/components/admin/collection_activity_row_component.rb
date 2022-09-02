@@ -3,28 +3,16 @@
 module Admin
   # Renders a list of all collection events
   class CollectionActivityRowComponent < ApplicationComponent
-    with_collection_parameter :event
+    with_collection_parameter :collection
 
-    def initialize(event:)
-      @event = event
+    def initialize(collection:)
+      @collection = collection
     end
 
-    attr_reader :event
-
-    def collection
-      event.eventable
-    end
+    attr_reader :collection
 
     def collection_title
-      collection.head.name
-    end
-
-    def action
-      I18n.t(event.event_type, scope: 'event.type')
-    end
-
-    def event_date
-      event.created_at
+      CollectionTitlePresenter.show(collection.head)
     end
   end
 end

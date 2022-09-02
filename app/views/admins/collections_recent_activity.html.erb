@@ -1,4 +1,4 @@
 <turbo-frame id="collectionsActivityFrame">
   <%= render Admin::ActivityTimeSelectorComponent.new(path: collections_recent_activity_admin_path, frame_id: 'collectionsActivityFrame', default_days: @days_limit) %>
-  <%= render Admin::CollectionsActivityTableComponent.new(events: @events) %>
+  <%= render Admin::CollectionsActivityTableComponent.new(collections: @collections) %>
 </turbo-frame>

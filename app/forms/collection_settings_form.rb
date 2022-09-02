@@ -62,6 +62,13 @@ class CollectionSettingsForm < Reform::Form
     Work.joins(:head).where(collection: @model).exists?(['work_versions.embargo_date > ?', Time.zone.now])
   end
 
+  # rubocop:disable Rails/SkipsModelValidations
+  def save(*)
+    model.touch # ensure we set the updated_at column for collection when any participants are changed (e.g. depositor)
+    super
+  end
+  # rubocop:enable Rails/SkipsModelValidations
+
   def deserialize!(params)
     case params['license_option']
     when 'required'
