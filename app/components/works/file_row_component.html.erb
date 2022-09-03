@@ -1,8 +1,8 @@
-<div class="dz-preview dz-file-preview row pb-3 pt-3 <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
+<div class="dz-preview dz-file-preview row py-3 <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
   <div class="thumb col-1">
     <img data-dz-thumbnail />
   </div>
-  <div class="col-5 pt-2">
+  <div class="col-5">
     <% if uploaded? %>
       <div data-dropzone-target="fileName">
         <span class="fa-regular fa-file" aria-hidden="true"></span>
