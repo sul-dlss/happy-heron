@@ -44,7 +44,7 @@ See https://github.com/sul-dlss/happy-heron/wiki/Complete-deposits-locally for s
 To enable interactive debugging, invoke `bin/dev` as follows:
 
 ```
-REMOTE_DEBUGGER=byebug REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
+REMOTE_DEBUGGER=byebug bin/dev
 ```
 
 And then start up the debugger in another window (only byebug is supported at this time):
