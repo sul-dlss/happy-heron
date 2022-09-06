@@ -29,7 +29,9 @@ class DepositStatusJob
       end
 
       Honeybadger.context(object: object.to_global_id.to_s)
-      parent(object).event_context = { user: sdr_user }
+
+      what_changed = object.head.version_description.presence || 'not specified'
+      parent(object).event_context = { user: sdr_user, description: "What changed: #{what_changed}" }
 
       object.head.deposit_complete!
     end

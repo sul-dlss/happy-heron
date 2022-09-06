@@ -9,7 +9,7 @@ RSpec.describe DepositStatusJob do
 
   context 'with a work that is depositing' do
     let(:work_version) do
-      build(:work_version, :depositing, work: work)
+      build(:work_version, :depositing, work: work, version_description: 'A new version description')
     end
     let(:work) { create(:work, :with_druid, collection: collection, depositor: collection.managed_by.first) }
     let(:collection) { build(:collection, :with_managers) }
@@ -34,6 +34,7 @@ RSpec.describe DepositStatusJob do
       expect(work_version.reload).to be_deposited
       # Event is recorded for SDR, not work creator.
       expect(work_version.work.events.first.user.name).to eq('SDR')
+      expect(work_version.work.events.first.description).to eq('What changed: A new version description')
     end
   end
 
