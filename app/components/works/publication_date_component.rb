@@ -56,6 +56,7 @@ module Works
       number_field_tag "#{prefix}[published(1i)]", published_year,
                        data: {
                          date_validation_target: 'year',
+                         date_clear_target: 'year',
                          action: 'date-validation#change year-field#change',
                          controller: 'year-field'
                        },
@@ -71,6 +72,7 @@ module Works
                    { prefix: prefix, field_name: 'published(2i)', prompt: 'month' },
                    data: {
                      date_validation_target: 'month',
+                     date_clear_target: 'month',
                      action: 'date-validation#change'
                    },
                    id: "#{prefix}_published_month",
@@ -82,6 +84,7 @@ module Works
                  { prefix: prefix, field_name: 'published(3i)', prompt: 'day' },
                  data: {
                    date_validation_target: 'day',
+                   date_clear_target: 'day',
                    action: 'date-validation#change'
                  },
                  id: "#{prefix}_published_day",

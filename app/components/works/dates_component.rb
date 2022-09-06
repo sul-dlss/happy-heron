@@ -16,6 +16,7 @@ module Works
                        data: {
                          date_validation_target: 'year',
                          date_range_target: 'startYear',
+                         date_clear_target: 'year',
                          action: 'date-range#change clear->date-validation#clearValidations ' \
                                  'validate->date-validation#validate year-field#change',
                          controller: 'year-field'
@@ -29,6 +30,7 @@ module Works
       number_field_tag "#{prefix}[created_range(4i)]", created_range_end_year,
                        data: {
                          date_validation_target: 'year',
+                         date_clear_target: 'year',
                          date_range_target: 'endYear',
                          action: 'date-range#change clear->date-validation#clearValidations ' \
                                  'validate->date-validation#validate year-field#change',
