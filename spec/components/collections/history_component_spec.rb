@@ -7,9 +7,13 @@ RSpec.describe Collections::HistoryComponent, type: :component do
 
   context 'when viewing a collection' do
     let(:collection) { build_stubbed(:collection) }
+    let(:table) { rendered.css('table').to_html }
 
-    it 'renders the history component' do
-      expect(rendered.css('table').to_html).to include('History')
+    it 'renders the history component w/ expected event table header labels' do
+      expect(table).to include('History')
+      expect(table).to include('Modified by')
+      expect(table).to include('Last modified')
+      expect(table).to include('Description of changes')
     end
   end
 end
