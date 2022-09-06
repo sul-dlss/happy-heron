@@ -191,4 +191,8 @@ class WorkVersion < ApplicationRecord
   def purl_reservation?
     work_type == WorkType.purl_reservation_type.id
   end
+
+  def previous_version
+    work.work_versions.find { |check_work_version| check_work_version.version = version - 1 }
+  end
 end
