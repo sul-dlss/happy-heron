@@ -12,7 +12,7 @@ RSpec.describe ReviewersMailer, type: :mailer do
     let(:collection_version) { build(:collection_version, name: 'small batch organic') }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq 'New deposit activity in the small batch organic collection'
+      expect(mail.subject).to eq 'Item ready for review in the small batch organic collection'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
