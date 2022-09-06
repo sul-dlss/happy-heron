@@ -6,55 +6,57 @@
         <%= render PopoverComponent.new key: 'work.role_term' %>
         <%= select_role %>
       </div>
-      <div class="col-md-1 role-prefix">
-        is
+      <div class="col-md-1">
       </div>
       <div class="col" data-contributors-target="person">
-        <div class="row person-name-row" data-contributors-target="personName">
-          <div class="col-md-1">
-            <%= form.radio_button :with_orcid, 'false', html_options_for_radio(true, !orcid?) %>
-          </div>
+        <fieldset>
+          <legend>Details</legend>
+          <div class="row person-name-row" data-contributors-target="personName">
+            <div class="col-md-1">
+              <%= form.radio_button :with_orcid, 'false', html_options_for_radio(true, !orcid?) %>
+            </div>
 
-          <div class="col-md-5">
-            <%= form.label :first_name, first_name_label, class: 'form-label' %>
-            <%= render PopoverComponent.new key: 'work.first_name' %>
-            <%= form.text_field :first_name, html_options('contributorFirst', disabled: orcid?) %>
-            <div class="invalid-feedback">You must provide a first name</div>
+            <div class="col-md-5">
+              <%= form.label :first_name, first_name_label, class: 'form-label' %>
+              <%= render PopoverComponent.new key: 'work.first_name' %>
+              <%= form.text_field :first_name, html_options('contributorFirst', disabled: orcid?) %>
+              <div class="invalid-feedback">You must provide a first name</div>
+            </div>
+            <div class="col-md-6">
+              <%= form.label :last_name, last_name_label, class: 'form-label' %>
+              <%= form.text_field :last_name, html_options('contributorLast', disabled: orcid?) %>
+              <div class="invalid-feedback">You must provide a last name</div>
+            </div>
+            <%= form.hidden_field :orcid %>
           </div>
-          <div class="col-md-6">
-            <%= form.label :last_name, last_name_label, class: 'form-label' %>
-            <%= form.text_field :last_name, html_options('contributorLast', disabled: orcid?) %>
-            <div class="invalid-feedback">You must provide a last name</div>
-          </div>
-          <%= form.hidden_field :orcid %>
-        </div>
-        <div class="row" data-contributors-target="personOrcid">
-          <div class="col-md-1">
-            <%= form.radio_button :with_orcid, 'true', html_options_for_radio(false, orcid?) %>
-          </div>
-          <div class="col">
-            <%= form.label :orcid, orcid_label, class: 'form-label' %>
-            <%= render PopoverComponent.new key: 'work.orcid' %>
-            <%= form.text_field :orcid, class: 'form-control', required: author?, data: { contributors_target: 'orcid', action: 'contributors#lookupOrcid' } %>
-            <div class="invalid-feedback" data-contributors-target="orcidFeedback">You must provide an ORCID iD</div>
-            <div data-contributors-target="personOrcidName">
-              <div class="form-text" data-contributors-target="orcidDisplayName"></div>
-              <div class="row">
-                <div class="col-md-5">
-                  <%= form.label :first_name, first_name_label, class: 'form-label' %>
-                  <%= render PopoverComponent.new key: 'work.orcid_name' %>
-                  <%= form.text_field :first_name, html_options('contributorFirst', contributors_target: 'orcidFirstName', disabled: !orcid?)  %>
-                  <div class="invalid-feedback">You must provide a first name</div>
-                </div>
-                <div class="col-md-6">
-                  <%= form.label :last_name, last_name_label, class: 'form-label' %>
-                  <%= form.text_field :last_name, html_options('contributorLast', contributors_target: 'orcidLastName', disabled: !orcid?) %>
-                  <div class="invalid-feedback">You must provide a last name</div>
+          <div class="row" data-contributors-target="personOrcid">
+            <div class="col-md-1">
+              <%= form.radio_button :with_orcid, 'true', html_options_for_radio(false, orcid?) %>
+            </div>
+            <div class="col">
+              <%= form.label :orcid, orcid_label, class: 'form-label' %>
+              <%= render PopoverComponent.new key: 'work.orcid' %>
+              <%= form.text_field :orcid, class: 'form-control', required: author?, data: { contributors_target: 'orcid', action: 'contributors#lookupOrcid' } %>
+              <div class="invalid-feedback" data-contributors-target="orcidFeedback">You must provide an ORCID iD</div>
+              <div data-contributors-target="personOrcidName">
+                <div class="form-text" data-contributors-target="orcidDisplayName"></div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <%= form.label :first_name, first_name_label, class: 'form-label' %>
+                    <%= render PopoverComponent.new key: 'work.orcid_name' %>
+                    <%= form.text_field :first_name, html_options('contributorFirst', contributors_target: 'orcidFirstName', disabled: !orcid?)  %>
+                    <div class="invalid-feedback">You must provide a first name</div>
+                  </div>
+                  <div class="col-md-6">
+                    <%= form.label :last_name, last_name_label, class: 'form-label' %>
+                    <%= form.text_field :last_name, html_options('contributorLast', contributors_target: 'orcidLastName', disabled: !orcid?) %>
+                    <div class="invalid-feedback">You must provide a last name</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </fieldset>
       </div>
       <div class="col" data-contributors-target="organization">
         <%= form.label :full_name, organization_label, class: 'form-label' %>
