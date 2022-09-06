@@ -54,6 +54,10 @@ FactoryBot.define do
     embargo_date { 30.months.from_now }
   end
 
+  trait :expired_embargo do
+    embargo_date { 3.months.ago }
+  end
+
   trait :with_required_associations do
     with_keywords
     with_authors
