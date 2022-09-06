@@ -52,7 +52,7 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @depositor = params[:depositor]
 
-    mail(to: @user.email, subject: "New activity in the #{@collection_version.name} collection")
+    mail(to: @user.email, subject: "Draft item created in the #{@collection_version.name} collection")
   end
 
   def first_draft_reminder_email
@@ -78,7 +78,7 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @depositor = params[:depositor]
 
-    mail(to: @user.email, subject: "New activity in the #{@collection_version.name} collection")
+    mail(to: @user.email, subject: "Item deposit completed in the #{@collection_version.name} collection")
   end
 
   def version_draft_created
@@ -86,7 +86,7 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @depositor = params[:depositor]
 
-    mail(to: @user.email, subject: "New activity in the #{@collection_version.name} collection")
+    mail(to: @user.email, subject: "New version created in the #{@collection_version.name} collection")
   end
 
   def participants_changed_email

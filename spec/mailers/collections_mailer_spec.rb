@@ -166,7 +166,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq "New activity in the #{collection_name} collection"
+      expect(mail.subject).to eq "Draft item created in the #{collection_name} collection"
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
@@ -226,7 +226,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq "New activity in the #{collection_name} collection"
+      expect(mail.subject).to eq "Item deposit completed in the #{collection_name} collection"
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
@@ -253,7 +253,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq "New activity in the #{collection_name} collection"
+      expect(mail.subject).to eq "New version created in the #{collection_name} collection"
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
