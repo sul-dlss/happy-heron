@@ -15,6 +15,18 @@ module Works
       form.object.model.filename
     end
 
+    def filesize
+      return unless uploaded?
+
+      form.object.model.byte_size
+    end
+
+    def date_uploaded
+      return unless uploaded?
+
+      form.object.model.created_at
+    end
+
     def uploaded?
       form.object.persisted?
     end
