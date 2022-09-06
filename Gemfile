@@ -64,6 +64,7 @@ gem 'lograge', '~> 0.11.2'
 gem 'okcomputer'
 gem 'pg'
 gem 'propshaft'
+gem 'pry'
 gem 'redis', '~> 4.0'
 # TODO: Deal with this
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
