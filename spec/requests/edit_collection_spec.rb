@@ -180,6 +180,50 @@ RSpec.describe 'Updating an existing collection' do
             end
           end
         end
+
+        context 'when setting release option to immediate' do
+          let(:collection) { create(:collection, managed_by: [user], release_option: 'delay') }
+          let(:work) { create(:work, collection: collection) }
+
+          let(:collection_params) do
+            {
+              release_option: 'immediate',
+              access: 'world',
+              required_license: 'CC0-1.0',
+              email_depositors_status_changed: true,
+              review_enabled: 'false'
+            }
+          end
+
+          before do
+            create(:collection_version_with_collection, collection: collection)
+            create(:work_version_with_work, :embargoed, collection: collection, work: work)
+          end
+
+          context 'when works with embargoes would be orphaned' do
+            before do
+              create(:work_version_with_work, :embargoed, collection: collection, work: work)
+            end
+
+            it 'does not allow the change' do
+              patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
+              expect(response).to have_http_status :unprocessable_entity
+              expect(response.body).to include 'Release option cannot be set to immediate'
+            end
+          end
+
+          context 'when works with embargoes would not be orphaned' do
+            before do
+              create(:work_version_with_work, :expired_embargo, collection: collection, work: work)
+            end
+
+            it 'allows the change' do
+              patch "/collections/#{collection.id}", params: { collection: collection_params, commit: deposit_button }
+              expect(response).to have_http_status(:found)
+              expect(response).to redirect_to(collection)
+            end
+          end
+        end
       end
 
       context 'when collection fails to save' do

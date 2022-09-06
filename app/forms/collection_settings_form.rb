@@ -42,11 +42,25 @@ class CollectionSettingsForm < Reform::Form
   property :review_enabled
 
   validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
+  validate :no_orphaned_embargoes
   validates :release_duration, inclusion: { in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values },
+
                                allow_blank: true
   validates :access, presence: true
   validates :managed_by, length: { minimum: 1, message: 'Please add at least one manager.' }
   validates_with CollectionLicenseValidator
+
+  def no_orphaned_embargoes
+    return unless release_option == 'immediate' && @model.release_option != 'immediate' && orphaned_embargoes?
+
+    errors.add(:release_option,
+               'cannot be set to immediate because some items are embargoed. Please choose another option or contact ' \
+               'us via the Help link if you have questions.')
+  end
+
+  def orphaned_embargoes?
+    Work.joins(:head).where(collection: @model).exists?(['work_versions.embargo_date > ?', Time.zone.now])
+  end
 
   def deserialize!(params)
     case params['license_option']

@@ -4,12 +4,12 @@
 
     <fieldset class="mb-5 release-option" data-controller="complex-radio">
       <legend class="h5">When will files on deposits to this collection be downloadable? * <%= render PopoverComponent.new key: 'collection.release' %></legend>
-      <div class="form-check" data-complex-radio-target="selection">
+      <div class="form-check<%= ' is-invalid' if release_option_errors? %>" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'immediate', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_immediate', t('options.collection.release.immediate'), class: "form-check-label" %>
       </div>
 
-      <div class="form-check" data-complex-radio-target="selection">
+      <div class="form-check<%= ' is-invalid' if release_option_errors? %>" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'delay', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_delay', t('options.collection.release.delay'), class: "form-check-label" %>
         <%= form.label :delay_release_duration, 'until', class: "form-check-label" %>
@@ -20,7 +20,7 @@
                               class: 'form-select' %>
       </div>
 
-      <div class="form-check" data-complex-radio-target="selection">
+      <div class="form-check<%= ' is-invalid' if release_option_errors? %>" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, 'depositor-selects', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
         <%= form.label 'release_option_depositor-selects', t('options.collection.release.depositor_selects'), class: "form-check-label" %>
         <%= form.label :depositor_selects_release_duration, 'between date of deposit and', class: "form-check-label" %>
@@ -30,6 +30,8 @@
                               id: 'collection_depositor_selects_release_duration',
                               class: 'form-select' %>
       </div>
+
+      <div class="invalid-feedback"><%= release_option_error_message %></div>
     </fieldset>
 
     <fieldset class="mb-5" >

@@ -18,5 +18,17 @@ module Collections
     def collection_form
       form.object
     end
+
+    def release_option_errors?
+      release_option_errors.present?
+    end
+
+    def release_option_errors
+      collection_form.errors.where(:release_option)
+    end
+
+    def release_option_error_message
+      safe_join(release_option_errors.map { |error| "Release option #{error.message}" }, tag.br)
+    end
   end
 end
