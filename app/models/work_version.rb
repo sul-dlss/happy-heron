@@ -193,6 +193,8 @@ class WorkVersion < ApplicationRecord
   end
 
   def previous_version
-    work.work_versions.find { |check_work_version| check_work_version.version = version - 1 }
+    return nil if version == 1 # shortcut any query checks if we are on the first version
+
+    work.work_versions.find { |check_work_version| check_work_version.version == version - 1 }
   end
 end
