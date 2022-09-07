@@ -56,7 +56,11 @@ class WorkObserver
   end
 
   def self.after_decommission(work_version, _transition)
-    WorksMailer.with(work: work_version.work).decommission_email.deliver_later
+    WorksMailer.with(work_version: work_version).decommission_owner_email.deliver_later
+    collection = work_version.work.collection
+    collection.managed_by.each do |recipient|
+      WorksMailer.with(user: recipient, work_version: work_version).decommission_manager_email.deliver_later
+    end
   end
 
   def self.work_mailer(work_version)

@@ -497,7 +497,8 @@ RSpec.describe WorkVersion do
     end
 
     describe 'a decommission event' do
-      let(:work) { create(:work) }
+      let(:collection) { create(:collection, :with_managers) }
+      let(:work) { create(:work, collection: collection) }
       let(:work_version) { create(:work_version, work: work) }
 
       it 'transitions to decommissioned' do
@@ -505,8 +506,12 @@ RSpec.describe WorkVersion do
           .to change(work_version, :state)
           .to('decommissioned')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-                 'WorksMailer', 'decommission_email', 'deliver_now',
-                 { params: { work: work }, args: [] }
+                 'WorksMailer', 'decommission_owner_email', 'deliver_now',
+                 { params: { work_version: work_version }, args: [] }
+               ))
+          .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                 'WorksMailer', 'decommission_manager_email', 'deliver_now',
+                 { params: { work_version: work_version, user: collection.managed_by.first }, args: [] }
                ))
       end
     end
