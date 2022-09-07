@@ -29,6 +29,9 @@
             </div>
             <%= form.hidden_field :orcid %>
           </div>
+          <div class="row">
+            <div class="col-md-1 pb-2"><strong>OR</strong></div>
+          </div>
           <div class="row" data-contributors-target="personOrcid">
             <div class="col-md-1">
               <%= form.radio_button :with_orcid, 'true', html_options_for_radio(false, orcid?) %>
