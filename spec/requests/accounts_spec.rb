@@ -44,5 +44,21 @@ RSpec.describe 'Accounts', type: :request do
                                     'Digital Library Software Engineer - Web \\u0026 Infrastructure"}'
       end
     end
+
+    context 'with an authenticated collection manager' do
+      let(:user) { create(:collection, :with_managers, manager_count: 1).managed_by.first }
+
+      before do
+        sign_in user, groups: []
+      end
+
+      it 'displays the data' do
+        get '/accounts/jcoyne85'
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq '{"name":"Coyne, Justin Michael",' \
+                                    '"description":"Digital Library Systems and Services, ' \
+                                    'Digital Library Software Engineer - Web \\u0026 Infrastructure"}'
+      end
+    end
   end
 end
