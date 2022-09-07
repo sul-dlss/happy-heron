@@ -3,8 +3,8 @@
 module Admin
   # Renders a table for item activity
   class ItemsActivityTableComponent < ApplicationComponent
-    def initialize(events:)
-      @events = events
+    def initialize(items:)
+      @items = items
     end
   end
 end

@@ -6,7 +6,7 @@ class CollectionVersion < ApplicationRecord
 
   has_many :related_links, as: :linkable, dependent: :destroy
   has_many :contact_emails, as: :emailable, dependent: :destroy
-  belongs_to :collection
+  belongs_to :collection, touch: true
 
   after_update_commit -> { collection.broadcast_update }
 
@@ -19,6 +19,12 @@ class CollectionVersion < ApplicationRecord
       event_params = collection_version.collection.event_context
       collection_version.collection.events.create(event_params.merge(event_type: transition.event))
     end
+
+    # rubocop:disable Rails/SkipsModelValidations
+    before_transition on: :update_metadata do |collection_version, _transition|
+      collection_version.touch # ensure we set the updated_at column for collection when anything changes
+    end
+    # rubocop:enable Rails/SkipsModelValidations
 
     after_transition on: :begin_deposit do |collection_version, transition|
       if transition.from == 'first_draft'

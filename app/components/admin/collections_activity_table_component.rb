@@ -3,8 +3,8 @@
 module Admin
   # Renders a table for collection activity
   class CollectionsActivityTableComponent < ApplicationComponent
-    def initialize(events:)
-      @events = events
+    def initialize(collections:)
+      @collections = collections
     end
   end
 end

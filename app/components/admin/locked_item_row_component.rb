@@ -12,15 +12,18 @@ module Admin
     attr_reader :work
 
     delegate :collection, :druid_without_namespace, :owner, to: :work
-    delegate :title, to: :work_version
     delegate :sunetid, to: :owner
 
     def work_version
       work.head
     end
 
+    def title
+      WorkTitlePresenter.show(work_version)
+    end
+
     def collection_title
-      collection.head.name
+      CollectionTitlePresenter.show(collection.head)
     end
   end
 end

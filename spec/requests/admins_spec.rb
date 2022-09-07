@@ -44,8 +44,6 @@ RSpec.describe 'Admin dashboard' do
         expect(response.body).to include 'itemsActivityFrame'
         expect(response.body).to include work_version2.title
         expect(response.body).to include 'MyString'
-        expect(response.body).to include 'Updated by user'
-        expect(response.body).not_to include 'Embargo lifted'
       end
     end
 
@@ -61,8 +59,6 @@ RSpec.describe 'Admin dashboard' do
         expect(response.body).to include 'collectionsActivityFrame'
         expect(response.body).to include collection_version.name
         expect(response.body).to include 'MyString'
-        expect(response.body).to include 'Updated by user'
-        expect(response.body).not_to include 'Embargo lifted'
       end
     end
 
