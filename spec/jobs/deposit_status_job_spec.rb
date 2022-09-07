@@ -7,6 +7,15 @@ RSpec.describe DepositStatusJob do
 
   let(:instance) { described_class.new }
 
+  context 'with a not found druid' do
+    # An intentionally invalid druid so it does not collide with any test objects
+    let(:message) { '{"druid":"druid:aa11ii1111"}' }
+
+    it 'acks the message (and does not raise)' do
+      expect(run).to eq(:ack)
+    end
+  end
+
   context 'with a work that is depositing' do
     let(:work_version) do
       build(:work_version, :depositing, work: work, version_description: 'A new version description')
@@ -55,7 +64,7 @@ RSpec.describe DepositStatusJob do
     end
   end
 
-  context 'with a work that is in a verison_draft state (embargo was released by DSA)' do
+  context 'with a work that is in a version_draft state (embargo was released by DSA)' do
     let(:work_version) do
       build(:work_version, :version_draft, work: work)
     end

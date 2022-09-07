@@ -21,6 +21,8 @@ class DepositStatusJob
     ActiveRecord::Base.connection_pool.with_connection do
       object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
 
+      return ack! unless object
+
       Honeybadger.context(object: object.to_global_id.to_s)
 
       DepositCompleter.complete(object_version: object.head)
