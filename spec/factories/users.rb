@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user, aliases: [:creator] do
     sequence :email do |n|
-      "user#{n}@stanford.edu"
+      "user#{n}-#{Time.zone.now.to_i}@stanford.edu"
     end
 
     # this ensures all new works created in tests will have the terms accepted by default

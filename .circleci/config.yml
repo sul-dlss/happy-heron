@@ -1,9 +1,34 @@
 version: 2.1
 orbs:
   ruby-rails: sul-dlss/ruby-rails@3.1.2
+  browser-tools: circleci/browser-tools@1.2.4
+  node: circleci/node@5.0.0
+  ruby: circleci/ruby@1.4.1
+  cypress: cypress-io/cypress@2.2.0
+jobs:
+  cypress:
+    executor: ruby-rails/ruby-postgres
+    steps:
+      - checkout
+      - ruby/install-deps
+      - cypress/install:
+          yarn: true
+          post-install:
+            - run: sudo apt-get update
+            - run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+      - browser-tools/install-firefox
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
+          name: Wait for DB
+      - run:
+          command: 'bundle exec bin/cypress run'
+          name: Test
 workflows:
   build:
     jobs:
+      - cypress
       - ruby-rails/lint:
           name: lint
       - ruby-rails/test-rails:

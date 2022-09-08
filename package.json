@@ -20,7 +20,9 @@
     "stimulus-autocomplete": "^2.0.1-phylor-6095f2a9"
   },
   "version": "0.1.0",
-  "devDependencies": {},
+  "devDependencies": {
+    "cypress": "^10.6.0"
+  },
   "browserslist": [
     "defaults"
   ],

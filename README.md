@@ -71,6 +71,19 @@ $ docker compose up # use -d to run in background
 
 This will spin up the H2 web application, its background workers, and all service dependencies declared in docker-compose.yml.
 
+### Cypress
+Cypress is primarily used to test features implemented with JS/Stimulus. Cypress tests are located in `cypress/spec`.
+
+To run cypress UI:
+```shell
+bin/cypress open
+```
+
+TO run cypress tests headlessly:
+```shell
+bin/cypress run
+```
+
 ## Deployment
 
 H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module).

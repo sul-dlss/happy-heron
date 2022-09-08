@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+ENV["RAILS_ENV"] ||= "test"
+ENV["REMOTE_USER"] ||= "auser@stanford.edu"
+ENV["ROLES"] ||= "dlss:hydrus-app-administrators"
+ENV["CYPRESS_RAILS_CYPRESS_OPTS"] ||= '--browser firefox'
+require "pathname"
+require "cypress-rails"
+require Pathname.new(CypressRails::Config.new.dir).join("config/environment")
+
+command = ARGV[0]
+case command
+when "open"
+  CypressRails::Open.new.call
+when "run"
+  passed = CypressRails::Run.new.call
+  exit 1 unless passed
+end

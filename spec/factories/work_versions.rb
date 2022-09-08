@@ -35,6 +35,21 @@ FactoryBot.define do
           work_version.work.update(head: work_version)
         end
       end
+
+      factory :work_version_with_work_and_collection do
+        transient do
+          collection { association(:collection) }
+          collection_version do
+            association(:collection_version_with_collection, state: 'first_draft', collection: collection)
+          end
+          owner { association(:user) }
+        end
+        work { association :work, collection: collection_version.collection, owner: owner }
+
+        after(:create) do |work_version, _evaluator|
+          work_version.work.update(head: work_version)
+        end
+      end
     end
   end
 

@@ -31,8 +31,7 @@ RSpec.describe 'Create a work report', js: true do
 
   context 'when results are found' do
     before do
-      create(:work_version_with_work, state: 'deposited',
-                                      collection: create(:collection_version_with_collection).collection)
+      create(:work_version_with_work_and_collection, state: 'deposited')
 
       sign_in user, groups: ['dlss:hydrus-app-administrators']
     end
