@@ -4,6 +4,7 @@
 class DepositJob < BaseDepositJob
   queue_as :default
 
+  # @raise [SdrClient::Find::Failed] if the (non-nil) druid cannot be found in SDR
   def perform(work_version)
     Honeybadger.context({ work_version_id: work_version.id, druid: work_version.work.druid,
                           work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
@@ -95,6 +96,8 @@ class DepositJob < BaseDepositJob
   end
 
   def existing_structural_for(druid)
+    return [] unless druid # If there's no druid, don't bother trying to run the SDR find operation
+
     cocina_str = SdrClient::Find.run(druid, url: Settings.sdr_api.url, logger: Rails.logger)
     cocina_json = JSON.parse(cocina_str)
     cocina = Cocina::Models.build(cocina_json)

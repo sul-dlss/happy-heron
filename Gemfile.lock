@@ -439,7 +439,7 @@ GEM
     ruby-next-core (0.15.2)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sdr-client (0.92.0)
+    sdr-client (0.93.0)
       activesupport
       cocina-models (~> 0.84.0)
       dry-monads
@@ -598,4 +598,4 @@ DEPENDENCIES
   zipline (~> 1.4)
 
 BUNDLED WITH
-   2.3.17
+   2.3.22
