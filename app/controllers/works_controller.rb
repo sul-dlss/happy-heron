@@ -25,8 +25,9 @@ class WorksController < ObjectsController
     authorize! work_version
 
     @form = work_form(work_version)
+    event_context = build_event_context(@form)
     if @form.validate(work_params) && @form.save
-      after_save(form: @form)
+      after_save(form: @form, event_context: event_context)
     else
       @form.prepopulate!
       render :new, status: :unprocessable_entity
@@ -58,8 +59,9 @@ class WorksController < ObjectsController
     authorize! work_version
 
     @form = work_form(work_version)
+    event_context = build_event_context(context_form(orig_work_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save
-      after_save(form: @form, context_form: context_form(orig_work_version, orig_clean_params))
+      after_save(form: @form, event_context: event_context)
     else
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
@@ -150,10 +152,10 @@ class WorksController < ObjectsController
     end
   end
 
-  def after_save(form:, context_form: nil)
+  def after_save(form:, event_context:)
     work_version = form.model[:work_version]
     work = form.model[:work]
-    work.event_context = event_context(context_form || form)
+    work.event_context = event_context
     work_version.update_metadata!
 
     return redirect_to work unless deposit_button_pushed?
@@ -167,7 +169,7 @@ class WorksController < ObjectsController
     end
   end
 
-  def event_context(form)
+  def build_event_context(form)
     {
       user: current_user,
       description: WorkVersionEventDescriptionBuilder.build(form)

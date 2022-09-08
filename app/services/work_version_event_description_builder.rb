@@ -80,6 +80,8 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def files
+    return unless form.input_params
+
     attributes = form.input_params[:attached_files_attributes]
     return unless attributes
 
@@ -99,7 +101,7 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def file_description
-    'file description changed' if form.attached_files.any? { |af| af.changed?('label') }
+    'file description changed' if form.attached_files.any? { |af| af.changed?('label') && af.label.present? }
   end
 
   def related_works
