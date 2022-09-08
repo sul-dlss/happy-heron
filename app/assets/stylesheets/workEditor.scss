@@ -13,9 +13,6 @@
     @include embargo;
     align-items: center;
 
-    input[type="radio"]:not(:checked) + label {
-      color: $btn-link-disabled-color;
-    }
     input[type="radio"]:checked + label {
       font-weight: bold;
     }
