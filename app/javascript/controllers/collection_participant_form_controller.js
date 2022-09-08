@@ -83,7 +83,7 @@ export default class extends Controller {
 
     // remove non-letters/numbers, and truncate after 8 characters
     e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '').substring(0,8)
-    fetch('/accounts/' + e.target.value)
+    fetch('/accounts/' + e.target.value, { redirect: 'error' })
       .then((response) => {
         if(response.ok) {
           return response.json()
@@ -124,6 +124,7 @@ export default class extends Controller {
   }
 
   showError(error) {
+    console.error(error)
     this.showResult(false, false, true)
     this.errorValueTarget.innerHTML = error.toString()
     this.hasResults = false
