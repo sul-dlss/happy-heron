@@ -60,6 +60,27 @@ RSpec.describe WorkVersion do
     end
   end
 
+  describe '#previous_version' do
+    let(:work_version) { build(:work_version, :with_work) }
+
+    context 'when no previous version' do
+      it 'returns nil' do
+        expect(work_version.previous_version).to be_nil
+      end
+    end
+
+    context 'with previous version' do
+      let(:work_version_v2) { build(:work_version, :deposited, :with_work, version: 2) }
+      let(:work) { work_version.work }
+
+      before { work.work_versions << work_version_v2 }
+
+      it 'returns the previous version' do
+        expect(work_version_v2.previous_version).to eq work_version
+      end
+    end
+  end
+
   describe '#attached_files' do
     before do
       create(:attached_file, :with_file, work_version: work_version)
