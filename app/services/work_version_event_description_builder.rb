@@ -22,7 +22,7 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def title
-    'title of deposit modified' if form.changed?(:title)
+    'title of deposit modified' if form.changed?('title')
   end
 
   def abstract
@@ -109,6 +109,6 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def assign_doi
-    'assign DOI modified' if form.changed?(:assign_doi)
+    'assign DOI modified' if form.changed?('assign_doi')
   end
 end

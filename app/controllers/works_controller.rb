@@ -25,8 +25,9 @@ class WorksController < ObjectsController
     authorize! work_version
 
     @form = work_form(work_version)
-    event_context = build_event_context(@form)
     if @form.validate(work_params) && @form.save
+      # `changed?(field)` on a reform form object needs to be asked after persistence on new records
+      event_context = build_event_context(@form)
       after_save(form: @form, event_context: event_context)
     else
       @form.prepopulate!
@@ -59,6 +60,7 @@ class WorksController < ObjectsController
     authorize! work_version
 
     @form = work_form(work_version)
+    # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
     event_context = build_event_context(context_form(orig_work_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save
       after_save(form: @form, event_context: event_context)
