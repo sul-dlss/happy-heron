@@ -9,7 +9,7 @@
 
     <%= form_with url: admin_druid_searches_path, method: :get, class: 'col-md-4 mt-3' do |form| %>
         <%= form.label :query, "Enter DRUID" %>
-        <%= form.text_field :query, class: 'form-control' %>
+        <%= form.search_field :query, class: 'form-control' %>
         <%= form.submit "Search", class: 'btn btn-primary my-3' %>
     <% end %>
  
