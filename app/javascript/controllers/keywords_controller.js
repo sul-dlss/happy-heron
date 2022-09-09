@@ -3,6 +3,12 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = ["search", "container", "error", "selectedTemplate", "addItem", "input"]
 
+  connect() {
+    // Prevent invalid keywords entered on the draft form from being submitted as a deposit
+    // by marking them invalid
+    this.checkForDuplicates()
+  }
+
   open(event) {
     this.searchTarget.focus()
     this.containerTargets.forEach((container) => container.classList.add('keywords-container-open') )
@@ -21,15 +27,17 @@ export default class extends Controller {
     this.addItemTarget.insertAdjacentHTML('beforeend', content)
     // Remove error indications when keyword(s) added
     this.containerTarget.classList.remove('is-invalid')
+    this.checkForDuplicates()
   }
 
-  checkForDuplicates(event) {
+  checkForDuplicates() {
     if (this.hasDuplicateKeywords()) {
       this.inputTarget.classList.add('is-invalid')
-    }
-    else
-    {
+      // Adding this custom validation to prevent the a deposit from being submitted. See validate-forms.js
+      this.inputTarget.setCustomValidity('has a duplicate')
+    } else {
       this.inputTarget.classList.remove('is-invalid')
+      this.inputTarget.setCustomValidity('')
     }
   }
 
