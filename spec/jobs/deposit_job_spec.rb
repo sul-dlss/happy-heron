@@ -149,27 +149,6 @@ RSpec.describe DepositJob do
       end
     end
 
-    context 'when files have not changed and druid is nil' do
-      # The attached files for this version are the same as the previous version.
-      let(:second_work_version_metadata_only) do
-        build(:work_version, work: work, attached_files: [attached_file], version: 1,
-                             version_description: 'Updated metadata')
-      end
-      let(:work) { build(:work, collection: collection, assign_doi: false) } # NOTE: no druid provided
-
-      before do
-        allow(SdrClient::Find).to receive(:run).and_raise(SdrClient::Find::Failed, 'druid not found!')
-        allow(SdrClient::Deposit::CreateResource).to receive(:run)
-        work.work_versions = [first_work_version, second_work_version_metadata_only]
-      end
-
-      it 'does not run an SDR find operation' do
-        described_class.perform_now(second_work_version_metadata_only)
-
-        expect(SdrClient::Find).not_to have_received(:run)
-      end
-    end
-
     context 'when files have changed' do
       before do
         allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
