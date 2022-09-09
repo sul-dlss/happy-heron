@@ -581,7 +581,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sdr-client (~> 0.91)
+  sdr-client (~> 0.94)
   sidekiq (~> 6.1)
   simplecov
   sneakers (~> 2.11)
