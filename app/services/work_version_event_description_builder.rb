@@ -21,6 +21,10 @@ class WorkVersionEventDescriptionBuilder
     ].compact.join(', ')
   end
 
+  def collection
+    @collection ||= form.model[:work].collection
+  end
+
   def title
     'title of deposit modified' if form.changed?(:title)
   end
@@ -64,19 +68,43 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def access
-    'visibility modified' if form.changed?('access')
+    'visibility modified' if access_changed?
+  end
+
+  def access_changed?
+    return false unless collection.access == 'depositor-selects'
+
+    form.changed?('access')
   end
 
   def citation
-    'citation modified' if form.changed?('citation')
+    'citation modified' if citation_changed?
+  end
+
+  def citation_changed?
+    return false if form.input_params['default_citation'] == 'true'
+
+    form.changed?('citation')
   end
 
   def embargo
-    'embargo modified' if form.changed?('embargo_date')
+    'embargo modified' if embargo_changed?
+  end
+
+  def embargo_changed?
+    return false if %w[delay immediate].include?(collection.release_option)
+
+    form.changed?('embargo_date')
   end
 
   def license
-    'license modified' if form.changed?('license')
+    'license modified' if license_changed?
+  end
+
+  def license_changed?
+    return false if collection.required_license
+
+    form.changed?('license')
   end
 
   def files
