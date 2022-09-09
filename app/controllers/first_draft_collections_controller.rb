@@ -25,9 +25,12 @@ class FirstDraftCollectionsController < ObjectsController
     @form = collection_form(collection_version)
 
     if @form.validate(create_params) && @form.save
-      collection_version.collection.event_context = { user: current_user }
+      collection_version.collection.event_context = { user: current_user, description: 'Created' }
       collection_version.update_metadata!
-      collection_version.begin_deposit! if deposit_button_pushed?
+      if deposit_button_pushed?
+        collection_version.collection.event_context = { user: current_user }
+        collection_version.begin_deposit!
+      end
       redirect_to collection_path(collection)
     else
       render :new, status: :unprocessable_entity

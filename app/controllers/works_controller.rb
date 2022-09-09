@@ -26,9 +26,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
-      # `changed?(field)` on a reform form object needs to be asked after persistence on new records
-      event_context = build_event_context(@form)
-      after_save(form: @form, event_context: event_context)
+      after_save(form: @form, event_context: { user: current_user, description: 'Created' })
     else
       @form.prepopulate!
       render :new, status: :unprocessable_entity
