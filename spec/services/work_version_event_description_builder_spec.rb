@@ -207,4 +207,85 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
                            'files added/removed, file description changed, assign DOI modified'
     end
   end
+
+  context 'when a new work version and nothing has changed' do
+    let(:user) { build(:user) }
+    let(:collection) { build(:collection, required_license: 'CC0-1.0', release_option: 'immediate', access: 'world') }
+    let(:work) { Work.new(collection: collection, depositor: user, owner: user) }
+    let(:work_version) { WorkVersion.new(work: work) }
+
+    context 'when nothing has changed' do
+      before do
+        form.validate(
+          {
+            'title' => '',
+            'work_type' => 'text',
+            'published(1i)' => '',
+            'published(2i)' => '',
+            'published(3i)' => '',
+            'created_type' => 'single',
+            'created(1i)' => '',
+            'created(2i)' => '',
+            'created(3i)' => '',
+            'abstract' => '',
+            'citation_auto' => ', . (2022). . Stanford Digital Repository. Available at :link will be ' \
+                               'inserted here automatically when available:',
+            'citation' => '',
+            'default_citation' => 'true',
+            'agree_to_terms' => '0',
+            'globus' => 'false',
+            'authors_attributes' => {
+              '0' => {
+                '_destroy' => '',
+                'full_name' => '',
+                'first_name' => '',
+                'last_name' => '',
+                'role_term' => 'person|Author',
+                'weight' => '0',
+                'orcid' => ''
+              }
+            },
+            'contributors_attributes' => {
+              '0' => {
+                '_destroy' => '',
+                'full_name' => '',
+                'first_name' => '',
+                'last_name' => '',
+                'role_term' => 'person|Author', 'orcid' => ''
+              }
+            },
+            'contact_emails_attributes' => {
+              '0' => {
+                '_destroy' => '',
+                'email' => ''
+              }
+            },
+            'keywords_attributes' => {
+              '0' => {
+                '_destroy' => '',
+                'label' => '',
+                'uri' => '',
+                'cocina_type' => ''
+              }
+            },
+            'related_works_attributes' => {
+              '0' => {
+                '_destroy' => '',
+                'citation' => ''
+              }
+            },
+            'related_links_attributes' => {
+              '0' => {
+                '_destroy' => '',
+                'link_title' => '',
+                'url' => ''
+              }
+            }
+          }
+        )
+      end
+
+      it { is_expected.to be_blank }
+    end
+  end
 end
