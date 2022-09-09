@@ -128,6 +128,34 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
     it { is_expected.to include 'file visibility changed' }
   end
 
+  context 'when file label has changed' do
+    before do
+      allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
+
+      form.validate(
+        attached_files: [
+          { 'label' => 'a new label!', 'hide' => false, 'file' => '123782312abcdef' }
+        ]
+      )
+    end
+
+    it { is_expected.to include 'file description changed' }
+  end
+
+  context 'when file label has not changed' do
+    before do
+      allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
+
+      form.validate(
+        attached_files: [
+          { 'label' => '', 'hide' => false, 'file' => '123782312abcdef' }
+        ]
+      )
+    end
+
+    it { is_expected.not_to include 'file description changed' }
+  end
+
   context 'when title has changed' do
     before do
       form.validate(title: 'new title')
@@ -157,7 +185,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         subtype: %w[foo bar],
         assign_doi: 'false',
         attached_files_attributes: { '0' =>
-                      { 'label' => '', '_destroy' => 'false', 'hide' => '0',
+                      { 'label' => 'a label', '_destroy' => 'false', 'hide' => '0',
                         'file' => 'eyJfcmFpbHMiOnsibWVzc2FnZS...' } }
       )
     end
