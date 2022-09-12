@@ -1,0 +1,47 @@
+version: '3.6'
+
+services:
+  app:
+    build: &build
+      context: .
+      dockerfile: docker/app-prod/Dockerfile
+      args:
+        - GID=${H2_GID-1000}
+        - UID=${H2_UID-1000}
+    environment: &environment
+      - DATABASE_NAME=h2
+      - DATABASE_USERNAME
+      - DATABASE_PASSWORD
+      - DATABASE_HOSTNAME=host.docker.internal
+      # for ActionCable
+      - REDIS_URL=redis://host.docker.internal:6379/
+      - SMTP_HOST=host.docker.internal
+      - HOST
+      - SETTINGS__RABBITMQ__QUEUES__DEPOSIT_COMPLETE
+      - SETTINGS__RABBITMQ__QUEUES__DRUID_ASSIGNED
+      - SETTINGS__RABBITMQ__QUEUES__EMBARGO_LIFTED
+    volumes: &volumes
+      - /opt/app/h2/happy-heron/shared/log:/app/log
+      - /data/h2-files:/data/h2-files
+    ports:
+      - 3000:3000
+    extra_hosts: &extra-hosts
+     - host.docker.internal:host-gateway
+    # restart: on-failure
+  sneakers:
+    build: *build
+    environment: *environment
+    volumes: *volumes
+    extra_hosts: *extra-hosts
+    command: bin/bundle exec rake sneakers:run 2>&1 | tee -a log/sneakers.log
+    # restart: on-failure
+  sidekiq:
+    build: *build
+    environment: *environment
+    volumes: *volumes
+    extra_hosts: *extra-hosts
+    command: bin/bundle exec sidekiq 2>&1 | tee -a log/sidekiq.log
+    deploy:
+      replicas: ${SIDEKIQ_COUNT-1}
+    # restart: on-failure
+
