@@ -37,9 +37,14 @@ class CollectionVersionsController < ObjectsController
     @form.prepopulate!
   end
 
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def update
     collection_version = CollectionVersion.find(params[:id])
-    clean_params = collection_params
+    orig_collection_version = collection_version
+    orig_clean_params = collection_params
+    clean_params = orig_clean_params.deep_dup
+
     if collection_version.deposited?
       NewCollectionVersionParameterFilter.call(clean_params, collection_version)
       collection_version = create_new_version(collection_version)
@@ -47,13 +52,17 @@ class CollectionVersionsController < ObjectsController
 
     authorize! collection_version
     @form = collection_form(collection_version)
+    # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
+    event_context = build_event_context(context_form(orig_collection_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save
-      after_save(form: @form)
+      after_save(form: @form, event_context: event_context)
     else
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   # We render this link lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.
@@ -75,9 +84,9 @@ class CollectionVersionsController < ObjectsController
     end
   end
 
-  def after_save(form:)
+  def after_save(form:, event_context:)
     collection_version = form.model
-    collection_version.collection.event_context = event_context(form)
+    collection_version.collection.event_context = event_context
     collection_version.update_metadata!
     if deposit_button_pushed?
       collection_version.begin_deposit!
@@ -87,7 +96,7 @@ class CollectionVersionsController < ObjectsController
     end
   end
 
-  def event_context(form)
+  def build_event_context(form)
     {
       user: current_user,
       description: CollectionVersionEventDescriptionBuilder.build(form)
@@ -104,5 +113,13 @@ class CollectionVersionsController < ObjectsController
     return CollectionVersionForm.new(collection_version) if deposit_button_pushed?
 
     DraftCollectionVersionForm.new(collection_version)
+  end
+
+  def context_form(collection_version, params)
+    # NewCollectionVersionParameterFilter removes collection parameters, which makes it seem like they have changed.
+    # This form has the unfiltered parameters, which is used to determine what has changed.
+    context_form = collection_form(collection_version)
+    context_form.validate(params)
+    context_form
   end
 end
