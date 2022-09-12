@@ -43,7 +43,7 @@ RSpec.describe 'Link to edit a work' do
         get "/works/#{work.id}/edit_button?tag=details"
         expect(response).to have_http_status(:ok)
         expect(rendered).to have_selector('turbo-frame')
-        expect(rendered).not_to have_selector('a[data-controller="popover"]') # rubocop:disable RSpec/Capybara/SpecificMatcher
+        expect(rendered).not_to have_selector('a[data-controller="popover"]')
       end
     end
   end

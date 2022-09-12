@@ -31,9 +31,9 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           expect(page).to have_content 'What type of content will you deposit?'
 
-          expect(page).not_to have_css('input#subtype_other')
+          expect(page).not_to have_css('input#subtype_other') # rubocop:disable RSpec/Capybara/SpecificMatcher
           find('label', text: 'Other').click
-          expect(page).to have_css('input#subtype_other')
+          expect(page).to have_css('input#subtype_other') # rubocop:disable RSpec/Capybara/SpecificMatcher
           find('label', text: 'Sound').click
 
           check 'Podcast'
@@ -253,9 +253,9 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           expect(page).to have_content 'What type of content will you deposit?'
 
-          expect(page).not_to have_css('input#subtype_other')
+          expect(page).not_to have_css('input#subtype_other') # rubocop:disable RSpec/Capybara/SpecificMatcher
           find('label', text: 'Other').click
-          expect(page).to have_css('input#subtype_other')
+          expect(page).to have_css('input#subtype_other') # rubocop:disable RSpec/Capybara/SpecificMatcher
           find('label', text: 'Sound').click
 
           check 'Podcast'
