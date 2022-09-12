@@ -393,7 +393,7 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'deposited_email', 'deliver_now',
-                   { params: { user: work.depositor, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: work_version }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -413,11 +413,11 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'deposited_email', 'deliver_now',
-                   { params: { user: work.depositor, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: work_version }, args: [] }
                  ))
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'globus_deposited_email', 'deliver_now',
-                   { params: { user: work.depositor, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: work_version }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -434,7 +434,7 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'new_version_deposited_email', 'deliver_now',
-                   { params: { user: work.depositor, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: work_version }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -449,7 +449,7 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'approved_email', 'deliver_now',
-                   { params: { user: work.depositor, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: work_version }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -459,11 +459,12 @@ RSpec.describe WorkVersion do
     describe 'a submit_for_review event' do
       let(:collection) { build(:collection, reviewed_by: [depositor, reviewer]) }
       let(:depositor) { build(:user) }
+      let(:owner) { build(:user) }
       let(:reviewer) { build(:user) }
 
       context 'when work is first_draft' do
         let(:work_version) { create(:work_version, :first_draft, work: work) }
-        let(:work) { create(:work, collection: collection, depositor: depositor) }
+        let(:work) { create(:work, collection: collection, depositor: depositor, owner: owner) }
 
         it 'transitions to pending_approval' do
           expect { work_version.submit_for_review! }
@@ -475,7 +476,7 @@ RSpec.describe WorkVersion do
                  ))
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'submitted_email', 'deliver_now',
-                   { params: { user: depositor, work_version: work_version }, args: [] }
+                   { params: { user: owner, work_version: work_version }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -483,7 +484,7 @@ RSpec.describe WorkVersion do
 
       context 'when work was rejected' do
         let(:work_version) { create(:work_version, :rejected, work: work) }
-        let(:work) { create(:work, collection: collection, depositor: depositor) }
+        let(:work) { create(:work, collection: collection, depositor: depositor, owner: owner) }
 
         it 'transitions to pending_approval' do
           expect { work_version.submit_for_review! }
@@ -495,7 +496,7 @@ RSpec.describe WorkVersion do
                  ))
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'submitted_email', 'deliver_now',
-                   { params: { user: depositor, work_version: work_version }, args: [] }
+                   { params: { user: owner, work_version: work_version }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -512,7 +513,7 @@ RSpec.describe WorkVersion do
           .to('rejected')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                  'WorksMailer', 'reject_email', 'deliver_now',
-                 { params: { user: work.depositor, work_version: work_version }, args: [] }
+                 { params: { user: work.owner, work_version: work_version }, args: [] }
                ))
       end
     end

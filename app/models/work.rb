@@ -54,6 +54,7 @@ class Work < ApplicationRecord
   end
 
   delegate :name, to: :depositor, prefix: true
+  delegate :name, to: :owner, prefix: true
   delegate :purl_reservation?, to: :head
 
   private

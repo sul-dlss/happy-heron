@@ -1,6 +1,6 @@
 <p>Dear <%= @user.first_name %>,</p>
 
-<p>The Depositor <%= @work.depositor_name %> has submitted the deposit "<%= @work_version.title %>" for
+<p>The Depositor <%= @work.owner_name %> has submitted the deposit "<%= @work_version.title %>" for
   review in the <%= @work.collection_name %> collection. You can access this item directly at <%= link_to work_url(@work), work_url(@work) %></p>
 
 <p>Please see the list of pending approvals at the top of the dashboard page for this collection at <%= link_to dashboard_url, dashboard_url %>, where you will be able to select items to review and approve.</p>

@@ -18,15 +18,14 @@ class WorksMailer < ApplicationMailer
 
   def first_draft_reminder_email
     @work = params[:work_version].work
-    @user = UserPresenter.new(user: @work.depositor)
+    @user = UserPresenter.new(user: @work.owner)
     subject = "Reminder: Deposit to the #{@work.collection_name} collection in the SDR is in progress"
-
     mail(to: @user.email, subject: subject)
   end
 
   def new_version_reminder_email
     @work = params[:work_version].work
-    @user = UserPresenter.new(user: @work.depositor)
+    @user = UserPresenter.new(user: @work.owner)
 
     subject = "Reminder: New version of a deposit to the #{@work.collection_name} collection in the SDR is in progress"
 
@@ -69,7 +68,7 @@ class WorksMailer < ApplicationMailer
   def globus_deposited_email
     @work_version = params[:work_version]
     @work = @work_version.work
-    @user = UserPresenter.new(user: @work.depositor)
+    @user = UserPresenter.new(user: @work.owner)
     mail(to: Settings.notifications.admin_email, subject: 'User has deposited an item with files on Globus')
   end
 

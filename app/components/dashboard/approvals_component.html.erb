@@ -5,7 +5,7 @@
     <thead class="table-light">
       <tr>
         <th>Deposit</th>
-        <th>Depositor</th>
+        <th>Owner</th>
         <th>Collection</th>
         <th>Deposit status</th>
         <th>Last modified</th>
@@ -15,7 +15,7 @@
     <% approvals.each do |submission| %>
       <tr>
         <%= render Works::LinkToShowComponent.new(work_version: submission) %>
-        <td><%= submission.work.depositor.sunetid %></td>
+        <td><%= submission.work.owner.sunetid %></td>
         <td><%= render Collections::LinkToShowComponent.new(collection_version: submission.work.collection.head) %></td>
         <td><%= render Works::StateDisplayComponent.new(work_version: submission) %></td>
         <td><%= render LocalTimeComponent.new(datetime: submission.updated_at, show_time: false) %></td>

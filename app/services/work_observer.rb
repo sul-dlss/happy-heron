@@ -49,7 +49,7 @@ class WorkObserver
 
   def self.after_submit_for_review(work_version, _transition)
     collection = work_version.work.collection
-    (collection.reviewed_by + collection.managed_by - [work_version.work.depositor]).each do |recipient|
+    (collection.reviewed_by + collection.managed_by - [work_version.work.owner]).each do |recipient|
       ReviewersMailer.with(user: recipient, work_version: work_version).submitted_email.deliver_later
     end
     work_mailer(work_version).submitted_email.deliver_later
@@ -64,7 +64,7 @@ class WorkObserver
   end
 
   def self.work_mailer(work_version)
-    WorksMailer.with(user: work_version.work.depositor, work_version: work_version)
+    WorksMailer.with(user: work_version.work.owner, work_version: work_version)
   end
   private_class_method :work_mailer
 end
