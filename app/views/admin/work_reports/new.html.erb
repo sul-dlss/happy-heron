@@ -39,20 +39,6 @@
               <%= form.date_field :date_modified_end, class: 'form-control', max: Date.today, data: {'admin-date-range-target': "end", action: "admin-date-range#change"} %>
             </div>
           </div>
-
-          <div class="row g-3 mb-3" data-controller="admin-date-range">
-          <div class="col-sm-2">
-            <%= form.label :date_deposited_start, "Date last deposited range", class: 'col-form-label' %>
-          </div>
-          <div class="col-sm-3">
-            <%= form.date_field :date_deposited_start, class: 'form-control', max: Date.today, data: {'admin-date-range-target': "start", action: "admin-date-range#change"} %>
-          </div>
-          <div class="col-sm-1 text-center">
-            <%= form.label :date_deposited_end, "to", class: 'col-form-label' %>
-          </div>
-          <div class="col-sm-3">
-            <%= form.date_field :date_deposited_end, class: 'form-control', max: Date.today, data: {'admin-date-range-target': "end", action: "admin-date-range#change"} %>
-          </div>
         </div>
 
         <div class="mb-3">
@@ -74,10 +60,10 @@
           <%= form.collection_check_boxes(:state, states_in_order.map { |state| [state.to_s, I18n.t(state, scope: 'work.state')] }, :first, :last) do |b| %>
             <div class="form-check">
               <%= b.check_box class: 'form-check-input' %>
-              <%= b.label class: 'form-check-label' %> 
+              <%= b.label class: 'form-check-label' %>
             </div>
-          <% end %>  
-        </div>  
+          <% end %>
+        </div>
         <%= form.submit "Submit", class: 'btn btn-primary my-3' %>
       <% end %>
 
@@ -89,8 +75,6 @@
           <%= form.hidden_field :date_created_end %>
           <%= form.hidden_field :date_modified_start %>
           <%= form.hidden_field :date_modified_end %>
-          <%= form.hidden_field :date_deposited_start %>
-          <%= form.hidden_field :date_deposited_end %>
           <% @report.state.each do |state|%>
             <%= form.hidden_field :state, multiple: true, value: state %>
           <% end %>

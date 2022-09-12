@@ -39,7 +39,6 @@ module Admin
     def report_params
       params.require(:work_report).permit(:date_created_start, :date_created_end,
                                           :date_modified_start, :date_modified_end,
-                                          :date_deposited_start, :date_deposited_end,
                                           :collection_id, state: [])
     end
   end
