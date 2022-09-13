@@ -157,11 +157,11 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#first_draft_created' do
     let(:user) { a_user }
-    let(:depositor) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
+    let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
       described_class.with(user: user, collection_version: collection_version,
-                           depositor: depositor).first_draft_created
+                           owner: owner).first_draft_created
     end
     let(:collection) { build(:collection) }
 
@@ -172,7 +172,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has created a draft"
+      expect(mail.body.encoded).to match "The Depositor #{owner.name} has created a draft"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
 
@@ -218,10 +218,10 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#item_deposited' do
     let(:user) { a_user }
-    let(:depositor) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
+    let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
-      described_class.with(user: user, collection_version: collection_version, depositor: depositor).item_deposited
+      described_class.with(user: user, collection_version: collection_version, owner: owner).item_deposited
     end
     let(:collection) { build(:collection) }
 
@@ -232,7 +232,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has submitted a deposit"
+      expect(mail.body.encoded).to match "The Depositor #{owner.name} has submitted a deposit"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
 
@@ -244,11 +244,11 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#version_draft_created' do
     let(:user) { a_user }
-    let(:depositor) { build(:user, name: 'Audre Lorde') }
+    let(:owner) { build(:user, name: 'Audre Lorde') }
 
     let(:mail) do
       described_class.with(user: user, collection_version: collection_version,
-                           depositor: depositor).version_draft_created
+                           owner: owner).version_draft_created
     end
     let(:collection) { build(:collection) }
 
@@ -259,7 +259,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match "The Depositor #{depositor.name} has started a new version"
+      expect(mail.body.encoded).to match "The Depositor #{owner.name} has started a new version"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
 
