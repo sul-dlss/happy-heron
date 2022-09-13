@@ -157,6 +157,8 @@ class WorksController < ObjectsController
   def after_save(form:, event_context:)
     work_version = form.model[:work_version]
     work = form.model[:work]
+    # if the user selects globus uploads, we cannot have any attached files
+    work_version.attached_files.destroy_all if work_version.globus
     work.event_context = event_context
     work_version.update_metadata!
 

@@ -11,10 +11,6 @@ class WorkForm < DraftWorkForm
                              unless: lambda {
                                        ::ActiveRecord::Type::Boolean.new.cast(globus)
                                      }
-  validates :attached_files, length: { maximum: 0, message: 'Please remove all files.' },
-                             if: lambda {
-                                   ::ActiveRecord::Type::Boolean.new.cast(globus)
-                                 }
   validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :authors, length: { minimum: 1, message: 'Please add at least one author.' }
