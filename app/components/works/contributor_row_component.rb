@@ -82,6 +82,7 @@ module Works
     def html_options_for_radio(is_name, checked)
       {
         checked: checked,
+        class: 'form-check-input',
         data: {}.tap do |data|
           actions = ['contributors#personChanged']
           actions << 'auto-citation#updateDisplay' if author?
