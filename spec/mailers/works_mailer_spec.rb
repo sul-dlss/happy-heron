@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe WorksMailer, type: :mailer do
   let(:work_depositor) { build_stubbed(:user, email: work.depositor.email, name: 'Al Dente', first_name: 'Fred') }
   let(:a_user) { build(:user, name: 'Al Dente', first_name: 'Fred') }
+  let(:b_user) { build(:user, name: 'Overcooked', first_name: 'Fred') }
 
   describe 'reject_email' do
     let(:user) { work_depositor }
@@ -141,15 +142,15 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'first_draft_reminder_email' do
-    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user) }
+    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user, owner: b_user) }
     let(:work_version) { build_stubbed(:work_version, work: work) }
     let(:mail) { described_class.with(work_version: work_version).first_draft_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
-    it 'renders the headers' do
+    it 'renders the headers for the owner (not the depositor)' do
       expect(mail.subject).to eq "Reminder: Deposit to the #{work.collection_name} collection in the SDR is in progress"
-      expect(mail.to).to eq [work.depositor.email]
+      expect(mail.to).to eq [work.owner.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 
@@ -157,14 +158,14 @@ RSpec.describe WorksMailer, type: :mailer do
       expect(mail.body).to match("http://#{Socket.gethostname}/works/#{work.id}/edit")
     end
 
-    it 'salutation uses work.depositor.first_name' do
-      expect(mail.body).to include("Dear #{work.depositor.first_name},")
-      expect(mail.body).not_to include("Dear #{work.depositor.name},")
+    it 'salutation uses work.owner.first_name' do
+      expect(mail.body).to include("Dear #{work.owner.first_name},")
+      expect(mail.body).not_to include("Dear #{work.owner.name},")
     end
   end
 
   describe 'new_version_reminder_email' do
-    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user) }
+    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user, owner: a_user) }
     let(:work_version) { build_stubbed(:work_version, work: work) }
     let(:mail) { described_class.with(work_version: work_version).new_version_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
@@ -174,13 +175,13 @@ RSpec.describe WorksMailer, type: :mailer do
       exp_subj = "Reminder: New version of a deposit to the #{work.collection_name} " \
                  'collection in the SDR is in progress'
       expect(mail.subject).to eq exp_subj
-      expect(mail.to).to eq [work.depositor.email]
+      expect(mail.to).to eq [work.owner.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
 
-    it 'salutation uses work.depositor.first_name' do
-      expect(mail.body).to include("Dear #{work.depositor.first_name},")
-      expect(mail.body).not_to include("Dear #{work.depositor.name},")
+    it 'salutation uses work.owner.first_name' do
+      expect(mail.body).to include("Dear #{work.owner.first_name},")
+      expect(mail.body).not_to include("Dear #{work.owner.name},")
     end
 
     it 'renders a link to edit the draft in the body' do
@@ -237,7 +238,7 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'globus_deposited_email' do
-    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user) }
+    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user, owner: a_user) }
     let(:work_version) { build_stubbed(:work_version, work: work) }
     let(:mail) { described_class.with(work_version: work_version).globus_deposited_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
