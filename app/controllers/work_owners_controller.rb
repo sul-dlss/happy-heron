@@ -39,6 +39,8 @@ class WorkOwnersController < ApplicationController
 
   def send_participant_change_emails(collection)
     (collection.managed_by + collection.reviewed_by).uniq.each do |user|
+      next if collection.opted_out_of_email?(user, 'participant_changed')
+
       CollectionsMailer.with(collection_version: collection.head, user:)
                        .participants_changed_email.deliver_later
     end
@@ -50,6 +52,8 @@ class WorkOwnersController < ApplicationController
 
   def send_collection_managers_email(work)
     work.collection.managed_by.each do |user|
+      next if work.collection.opted_out_of_email?(user, 'assigned_new_owner')
+
       WorksMailer.with(work:, user:).changed_owner_collection_manager_email.deliver_later
     end
   end

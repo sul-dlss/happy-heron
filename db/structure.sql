@@ -398,6 +398,40 @@ ALTER SEQUENCE public.keywords_id_seq OWNED BY public.keywords.id;
 
 
 --
+-- Name: mail_preferences; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mail_preferences (
+    id bigint NOT NULL,
+    wanted boolean DEFAULT true NOT NULL,
+    email character varying NOT NULL,
+    user_id bigint NOT NULL,
+    collection_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: mail_preferences_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.mail_preferences_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mail_preferences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.mail_preferences_id_seq OWNED BY public.mail_preferences.id;
+
+
+--
 -- Name: managers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -685,6 +719,13 @@ ALTER TABLE ONLY public.keywords ALTER COLUMN id SET DEFAULT nextval('public.key
 
 
 --
+-- Name: mail_preferences id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mail_preferences ALTER COLUMN id SET DEFAULT nextval('public.mail_preferences_id_seq'::regclass);
+
+
+--
 -- Name: related_links id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -805,6 +846,14 @@ ALTER TABLE ONLY public.events
 
 ALTER TABLE ONLY public.keywords
     ADD CONSTRAINT keywords_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mail_preferences mail_preferences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mail_preferences
+    ADD CONSTRAINT mail_preferences_pkey PRIMARY KEY (id);
 
 
 --
@@ -961,6 +1010,27 @@ CREATE INDEX index_keywords_on_work_version_id ON public.keywords USING btree (w
 
 
 --
+-- Name: index_mail_preferences_on_collection_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mail_preferences_on_collection_id ON public.mail_preferences USING btree (collection_id);
+
+
+--
+-- Name: index_mail_preferences_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mail_preferences_on_user_id ON public.mail_preferences USING btree (user_id);
+
+
+--
+-- Name: index_mail_preferences_on_user_id_and_collection_id_and_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_mail_preferences_on_user_id_and_collection_id_and_email ON public.mail_preferences USING btree (user_id, collection_id, email);
+
+
+--
 -- Name: index_managers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1106,6 +1176,14 @@ ALTER TABLE ONLY public.abstract_contributors
 
 
 --
+-- Name: mail_preferences fk_rails_7af7ffa212; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mail_preferences
+    ADD CONSTRAINT fk_rails_7af7ffa212 FOREIGN KEY (collection_id) REFERENCES public.collections(id);
+
+
+--
 -- Name: works fk_rails_7ea9207fbe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1127,6 +1205,14 @@ ALTER TABLE ONLY public.attached_files
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
+-- Name: mail_preferences fk_rails_a29efdf4fd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mail_preferences
+    ADD CONSTRAINT fk_rails_a29efdf4fd FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -1260,6 +1346,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220812205204'),
 ('20220824225302'),
 ('20220829114247'),
-('20220901184555');
+('20220901184555'),
+('20220914211415');
 
 

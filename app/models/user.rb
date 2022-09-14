@@ -58,10 +58,12 @@ class User < ApplicationRecord
     terms_agreement_renewal_timeframe < last_work_terms_agreement
   end
 
-  def collections_with_access
-    Collection.where('id in (SELECT collection_id FROM reviewers WHERE user_id = :user_id ' \
-                     'UNION SELECT collection_id FROM managers WHERE user_id = :user_id ' \
-                     'UNION SELECT collection_id FROM depositors WHERE user_id = :user_id)', user_id: id)
+  def collections_with_access(deposit: true)
+    query = 'id in (SELECT collection_id FROM reviewers WHERE user_id = :user_id ' \
+            'UNION SELECT collection_id FROM managers WHERE user_id = :user_id '
+    query += 'UNION SELECT collection_id FROM depositors WHERE user_id = :user_id' if deposit
+    query += ')'
+    Collection.where(query, user_id: id)
   end
 
   def works_created_or_owned

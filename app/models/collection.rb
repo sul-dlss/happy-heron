@@ -7,6 +7,7 @@ class Collection < ApplicationRecord
   has_many :works, dependent: :destroy
   has_many :events, as: :eventable, dependent: :destroy
   has_many :collection_versions, dependent: :destroy
+  has_many :mail_preferences, dependent: :destroy
 
   validates :doi_option, inclusion: { in: %w[depositor-selects no yes] }
 
@@ -70,9 +71,43 @@ class Collection < ApplicationRecord
     works.joins(:head).where.not(head: { state: 'decommissioned' })
   end
 
+  def opted_out_of_email?(user, email)
+    mail_preferences.where(user:, email:, wanted: false).any?
+  end
+
+  # This builds any missing mail preference
+  def mail_preferences_for_user(user)
+    return manager_mail_preferences_for_user(user) if managed_by.include?(user)
+
+    reviewer_mail_preferences_for_user(user)
+  end
+
   private
 
   def default_event_context
     { user: creator }
+  end
+
+  def manager_mail_preferences_for_user(user)
+    preferences = mail_preferences.where(user:)
+    return preferences if MailPreference.complete_manager_set?(preferences) # all preferences accounted for
+
+    build_email_preferences(user, MailPreference::MANAGER_TYPES, preferences.map(&:email))
+  end
+
+  def reviewer_mail_preferences_for_user(user)
+    preferences = mail_preferences.where(user:)
+    return preferences if MailPreference.complete_reviewer_set?(preferences) # all preferences accounted for
+
+    build_email_preferences(user, MailPreference::REVIEWER_TYPES, preferences.map(&:email))
+  end
+
+  def build_email_preferences(user, emails_to_build, existing_emails)
+    MailPreference.transaction do
+      (emails_to_build - existing_emails).each do |email|
+        MailPreference.create!(user:, collection: self, email:)
+      end
+    end
+    mail_preferences.where(user:)
   end
 end

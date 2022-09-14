@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     end
 
     resources :reservations, shallow: true, only: %i[create update]
+    resource :mail_preferences
   end
 
   resource :terms, only: :show
@@ -59,6 +60,8 @@ Rails.application.routes.draw do
       get :collections_recent_activity
     end
   end
+
+  resource :profile, only: :show
 
   namespace :admin do
     resources :druid_searches, only: :index

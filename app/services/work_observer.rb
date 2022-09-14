@@ -50,6 +50,8 @@ class WorkObserver
   def self.after_submit_for_review(work_version, _transition)
     collection = work_version.work.collection
     (collection.reviewed_by + collection.managed_by - [work_version.work.owner]).each do |recipient|
+      next if collection.opted_out_of_email?(recipient, 'submit_for_review')
+
       ReviewersMailer.with(user: recipient, work_version:).submitted_email.deliver_later
     end
     work_mailer(work_version).submitted_email.deliver_later
@@ -59,6 +61,8 @@ class WorkObserver
     WorksMailer.with(work_version:).decommission_owner_email.deliver_later
     collection = work_version.work.collection
     collection.managed_by.each do |recipient|
+      next if collection.opted_out_of_email?(recipient, 'item_deleted')
+
       WorksMailer.with(user: recipient, work_version:).decommission_manager_email.deliver_later
     end
   end
