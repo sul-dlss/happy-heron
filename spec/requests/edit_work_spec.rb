@@ -138,6 +138,32 @@ RSpec.describe 'Updating an existing work' do
             expect(response).to redirect_to(next_step_work_path(work))
           end
         end
+
+        context 'with globus upload selected' do
+          before { work_params[:globus] = true }
+
+          context 'when deposited' do
+            it 'removes any attached files' do
+              expect(work.head.attached_files.count).to eq 1
+              patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+              expect(WorkVersion.where(work: work).count).to eq 2
+              work.reload
+              expect(work.head.state).to eq 'depositing'
+              expect(work.head.attached_files.count).to eq 0
+            end
+          end
+
+          context 'when saved as draft' do
+            it 'removes any attached files' do
+              expect(work.head.attached_files.count).to eq 1
+              patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
+              expect(WorkVersion.where(work: work).count).to eq 2
+              work.reload
+              expect(work.head.state).to eq 'version_draft'
+              expect(work.head.attached_files.count).to eq 0
+            end
+          end
+        end
       end
 
       context 'with a validation problem' do

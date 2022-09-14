@@ -344,10 +344,9 @@ RSpec.describe WorkForm do
       expect(messages).to eq ['Please add at least one file.']
     end
 
-    it 'does not validate when has files and globus is true' do
+    it 'validates when has files and globus is true' do
       form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }], globus: true)
-      expect(form).not_to be_valid
-      expect(messages).to eq ['Please remove all files.']
+      expect(messages).to be_empty
     end
 
     it 'validates when no files and globus is true' do

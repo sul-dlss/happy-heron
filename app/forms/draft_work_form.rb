@@ -140,8 +140,12 @@ class DraftWorkForm < Reform::Form
     model[:work]
   end
 
+  def work_version
+    model[:work_version]
+  end
+
   def version_description
-    return if model.fetch(:work_version).deposited?
+    return if work_version.deposited?
 
     super
   end
@@ -157,7 +161,9 @@ class DraftWorkForm < Reform::Form
   # Ensure that this work version is now the head of the work versions for this work
   def save_model
     super
-    work.update(head: model.fetch(:work_version))
+    # if the user selects globus uploads, we cannot have any attached files
+    work_version.attached_files.destroy_all if work_version.globus
+    work.update(head: work_version)
   end
 
   # Override reform so that this looks just like a Work
