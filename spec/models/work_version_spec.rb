@@ -363,7 +363,7 @@ RSpec.describe WorkVersion do
                                              'CollectionsMailer', 'first_draft_created', 'deliver_now',
                                              { params: {
                                                user: collection.managed_by.last,
-                                               depositor: work.depositor,
+                                               owner: work.owner,
                                                collection_version: collection_version
                                              }, args: [] }
                                            ))

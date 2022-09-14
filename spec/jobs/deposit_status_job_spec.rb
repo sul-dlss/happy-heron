@@ -35,7 +35,7 @@ RSpec.describe DepositStatusJob do
         'CollectionsMailer', 'item_deposited', 'deliver_now',
         { params: {
           user: collection.managed_by.last,
-          depositor: work.depositor,
+          owner: work.owner,
           collection_version: collection_version
         }, args: [] }
       )

@@ -3,20 +3,20 @@
 # Actions that happen when something happens to a collection
 class CollectionObserver
   def self.first_draft_created(work_version, _transition)
-    collection_managers_excluding_depositor(work_version).each do |user|
-      mailer_with_depositor(user: user, work_version: work_version).first_draft_created.deliver_later
+    collection_managers_excluding_owner(work_version).each do |user|
+      mailer_with_owner(user: user, work_version: work_version).first_draft_created.deliver_later
     end
   end
 
   def self.item_deposited(work_version, _transition)
-    collection_managers_excluding_depositor(work_version).each do |user|
-      mailer_with_depositor(user: user, work_version: work_version).item_deposited.deliver_later
+    collection_managers_excluding_owner(work_version).each do |user|
+      mailer_with_owner(user: user, work_version: work_version).item_deposited.deliver_later
     end
   end
 
   def self.version_draft_created(work_version, _transition)
-    collection_managers_excluding_depositor(work_version).each do |user|
-      mailer_with_depositor(user: user, work_version: work_version).version_draft_created.deliver_later
+    collection_managers_excluding_owner(work_version).each do |user|
+      mailer_with_owner(user: user, work_version: work_version).version_draft_created.deliver_later
     end
   end
 
@@ -44,19 +44,19 @@ class CollectionObserver
   end
   private_class_method :create_settings_updated_event
 
-  def self.collection_managers_excluding_depositor(work_version)
-    depositor = work_version.work.depositor
+  def self.collection_managers_excluding_owner(work_version)
+    owner = work_version.work.owner
     collection = work_version.work.collection
-    collection.managed_by.reject { |manager| manager == depositor }
+    collection.managed_by.reject { |manager| manager == owner }
   end
-  private_class_method :collection_managers_excluding_depositor
+  private_class_method :collection_managers_excluding_owner
 
-  def self.mailer_with_depositor(user:, work_version:)
-    depositor = work_version.work.depositor
+  def self.mailer_with_owner(user:, work_version:)
+    owner = work_version.work.owner
     collection = work_version.work.collection
-    CollectionsMailer.with(user: user, collection_version: collection.head, depositor: depositor)
+    CollectionsMailer.with(user: user, collection_version: collection.head, owner: owner)
   end
-  private_class_method :mailer_with_depositor
+  private_class_method :mailer_with_owner
 
   def self.depositors_added(collection_version, change_set)
     change_set.added_depositors.each do |depositor|

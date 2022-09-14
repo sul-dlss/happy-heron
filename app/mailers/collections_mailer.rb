@@ -50,7 +50,7 @@ class CollectionsMailer < ApplicationMailer
   def first_draft_created
     @user = UserPresenter.new(user: params[:user])
     @collection_version = params[:collection_version]
-    @depositor = params[:depositor]
+    @owner = params[:owner]
 
     mail(to: @user.email, subject: "Draft item created in the #{@collection_version.name} collection")
   end
@@ -76,7 +76,7 @@ class CollectionsMailer < ApplicationMailer
   def item_deposited
     @user = UserPresenter.new(user: params[:user])
     @collection_version = params[:collection_version]
-    @depositor = params[:depositor]
+    @owner = params[:owner]
 
     mail(to: @user.email, subject: "Item deposit completed in the #{@collection_version.name} collection")
   end
@@ -84,7 +84,7 @@ class CollectionsMailer < ApplicationMailer
   def version_draft_created
     @user = UserPresenter.new(user: params[:user])
     @collection_version = params[:collection_version]
-    @depositor = params[:depositor]
+    @owner = params[:owner]
 
     mail(to: @user.email, subject: "New version created in the #{@collection_version.name} collection")
   end
