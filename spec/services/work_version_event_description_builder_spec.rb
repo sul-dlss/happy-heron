@@ -6,9 +6,10 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
   subject(:result) { described_class.build(form) }
 
   let(:collection) { build(:collection, :depositor_selects_access, :depositor_selects_release_date) }
-  let(:work_version) { create(:work_version_with_work, :with_no_subtype, collection:) }
+  let(:work_version) { create(:work_version_with_work, :with_no_subtype, collection:, attached_files:) }
   let(:work) { work_version.work }
   let(:form) { DraftWorkForm.new(work_version:, work:) }
+  let(:attached_files) { [] }
 
   context 'when nothing has changed' do
     let(:params) do
@@ -21,6 +22,100 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         subtype: work_version.subtype
       )
     end
+
+    before do
+      form.validate(params)
+    end
+
+    it { is_expected.to be_blank }
+  end
+
+  # NOTE: there are other associations on the work_version that should behave identically to this
+  # and use the same code to detect changes, but are not being tested right now.
+  # These are: authors, contributors, related_links, related_works, contact_emails, subtype
+  context 'when keywords changed' do
+    let(:params) { ActionController::Parameters.new(keywords: keyword_params) }
+
+    before do
+      form.validate(params)
+    end
+
+    context 'when keyword added' do
+      let(:keyword_params) do
+        [
+          { '_destroy' => '', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'label' => 'This one added', 'uri' => 'http://example.org/uri', 'cocina_type' => 'test' }
+        ]
+      end
+
+      it { is_expected.to eq 'keywords modified' }
+    end
+
+    context 'when one keyword changed' do
+      let(:keyword_params) do
+        [
+          { '_destroy' => '', 'label' => 'This one changed', 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' }
+        ]
+      end
+
+      it { is_expected.to eq 'keywords modified' }
+    end
+
+    context 'when one keyword removed and one keyword added' do
+      let(:keyword_params) do
+        [
+          { '_destroy' => '1', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'label' => 'This one added', 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' }
+        ]
+      end
+
+      it { is_expected.to eq 'keywords modified' }
+    end
+
+    context 'when keyword removed' do
+      let(:keyword_params) do
+        [
+          { '_destroy' => '1', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[1].id, 'label' =>  form.keywords[1].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[2].id, 'label' =>  form.keywords[2].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' }
+        ]
+      end
+
+      it { is_expected.to eq 'keywords modified' }
+    end
+  end
+
+  context 'when keywords are the same' do
+    let(:keyword_params) do
+      [
+        { '_destroy' => '', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+          'cocina_type' => 'place' },
+        { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+          'cocina_type' => 'place' },
+        { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+          'cocina_type' => 'place' }
+      ]
+    end
+    let(:params) { ActionController::Parameters.new(keywords: keyword_params) }
 
     before do
       form.validate(params)
@@ -135,7 +230,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
     it { is_expected.to include 'file visibility changed' }
   end
 
-  context 'when file label has changed' do
+  context 'when new file label is not blank' do
     before do
       allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
 
@@ -149,7 +244,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
     it { is_expected.to include 'file description changed' }
   end
 
-  context 'when file label has not changed' do
+  context 'when new file label is blank' do
     before do
       allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
 
@@ -161,6 +256,37 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
     end
 
     it { is_expected.not_to include 'file description changed' }
+  end
+
+  context 'when existing file label remains blank' do
+    let(:attached_files) { [AttachedFile.new] }
+
+    before do
+      allow(AttachedFile).to receive(:new).and_return(AttachedFile.new(label: ''))
+
+      form.validate(
+        attached_files: [
+          { 'label' => '', 'hide' => false, 'file' => '123782312abcdef' }
+        ]
+      )
+    end
+
+    it { is_expected.not_to include 'file description changed' }
+  end
+
+  context 'when existing file label is removed' do
+    let(:attached_files) { [AttachedFile.new] }
+
+    before do
+      allow(AttachedFile).to receive(:new).and_return(AttachedFile.new(label: 'something', hide: false))
+      form.validate(
+        attached_files: [
+          { 'label' => '', 'hide' => false, 'file' => '123782312abcdef' }
+        ]
+      )
+    end
+
+    it { is_expected.to include 'file description changed' }
   end
 
   context 'when title has changed' do
