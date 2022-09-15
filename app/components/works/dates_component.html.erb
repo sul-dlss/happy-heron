@@ -61,7 +61,7 @@
         </div>
         <%= button_tag type: 'button', class: 'btn btn-sm ms-3', aria: { label: "Clear created date" },
                      data: { action: "date-clear#clear" } do %>
-          <span class="far fa-trash-alt"></span>
+          <span class="fa-regular fa-trash-alt"></span>
         <% end %>
         <div>
         <%= check_box_tag "#{prefix}[created(approx0)]", true, created_approximate?,
@@ -157,7 +157,7 @@
           </div>
           <%= button_tag type: 'button', class: 'btn btn-sm ms-3', aria: { label: "Clear created date range" },
                      data: { action: "date-clear#clear" } do %>
-            <span class="far fa-trash-alt"></span>
+            <span class="fa-regular fa-trash-alt"></span>
           <% end %>
           <div>
           <%= check_box_tag "#{prefix}[created_range(approx3)]", true, created_range_end_approximate?, 
