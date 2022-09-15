@@ -3,7 +3,8 @@
     data: {
       controller: 'auto-citation unsaved-changes',
       action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage',
-      auto_citation_purl: purl
+      auto_citation_purl: purl,
+      auto_citation_doi: doi_field
     },
     html: { class: "needs-validation work-editor", novalidate: true, multipart: true } do |f| %>
   <% if work_form.errors.present? %>

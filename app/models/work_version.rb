@@ -42,6 +42,7 @@ class WorkVersion < ApplicationRecord
   }
 
   LINK_TEXT = ':link will be inserted here automatically when available:'
+  DOI_TEXT = ':DOI will be inserted here automatically when available:'
 
   after_update_commit -> { work.broadcast_update }
 
@@ -140,6 +141,12 @@ class WorkVersion < ApplicationRecord
     return unless citation
 
     update!(citation: citation.gsub(LINK_TEXT, work.purl))
+  end
+
+  def add_doi_to_citation
+    return unless citation
+
+    update!(citation: citation.gsub(DOI_TEXT, "https://doi.org/#{work.doi}."))
   end
 
   # the terms agreement checkbox value is not persisted in the database with the work and the value is instead:

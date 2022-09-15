@@ -7,6 +7,7 @@ export default class extends Controller {
 
   connect() {
     this.purl = this.data.get("purl") || ":link will be inserted here automatically when available:" // Use a real purl on a persisted item or a placeholder
+    this.doi = this.data.get("doi") || ""
 
     this.updateDisplay()
 
@@ -22,7 +23,7 @@ export default class extends Controller {
   }
 
   get citation() {
-    return `${this.authorAsSentence} (${this.date}). ${this.title}. Stanford Digital Repository. Available at ${this.purl}`
+    return `${this.authorAsSentence} (${this.date}). ${this.title}. Stanford Digital Repository. Available at ${this.purl}. ${this.doi}`
   }
 
   get authorAsSentence() {

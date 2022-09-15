@@ -72,9 +72,10 @@ module CocinaGenerator
       def citation
         return if work_version.citation.blank?
 
-        # :link: is a special placeholder in dor-services-app.
+        # :link: and :doi: are special placeholders in dor-services-app.
         # See https://github.com/sul-dlss/dor-services-app/pull/1566/files#diff-30396654f0ad00ad1daa7292fd8327759d7ff7f3b92f98f40a2e25b6839807e2R13
-        exportable_citation = work_version.citation.gsub(WorkVersion::LINK_TEXT, ':link:')
+        exportable_citation = work_version.citation.gsub(WorkVersion::LINK_TEXT, ':link:').gsub(WorkVersion::DOI_TEXT,
+                                                                                                ':doi:')
 
         Cocina::Models::DescriptiveValue.new(
           value: exportable_citation,
