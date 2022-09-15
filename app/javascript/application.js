@@ -8,7 +8,10 @@ window.bootstrap = require("bootstrap") // Required for contact_us_controller
 import './controllers'
 
 import '@hotwired/turbo-rails'
-import '@fortawesome/fontawesome-free/js/all.js'
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/regular'
+import '@fortawesome/fontawesome-free/js/solid'
+
 import 'simple-datatables'
 
 require('./modules/validate-forms')
