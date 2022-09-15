@@ -6,7 +6,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
   subject(:result) { described_class.build(form) }
 
   let(:collection) { build(:collection, :depositor_selects_access, :depositor_selects_release_date) }
-  let(:work_version) { create(:work_version_with_work, collection: collection) }
+  let(:work_version) { create(:work_version_with_work, :with_no_subtype, collection: collection) }
   let(:work) { work_version.work }
   let(:form) { DraftWorkForm.new(work_version: work_version, work: work) }
 
@@ -17,7 +17,8 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         work_type: work_version.work_type,
         title: work_version.title,
         abstract: work_version.abstract,
-        citation: work_version.citation
+        citation: work_version.citation,
+        subtype: work_version.subtype
       )
     end
 
@@ -30,7 +31,9 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
   context 'when embargoed, then edited with no changes to embargo' do
     let(:embargo_date) { 11.months.from_now }
-    let(:work_version) { create(:work_version_with_work, embargo_date: embargo_date, collection: collection) }
+    let(:work_version) do
+      create(:work_version_with_work, :with_no_subtype, embargo_date: embargo_date, collection: collection)
+    end
     let(:params) do
       ActionController::Parameters.new(
         title: 'new title',
@@ -53,7 +56,9 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
   context 'when embargoed, then changes to embargo date' do
     let(:embargo_date) { 10.months.from_now }
     let(:new_embargo_date) { 11.months.from_now }
-    let(:work_version) { create(:work_version_with_work, embargo_date: embargo_date, collection: collection) }
+    let(:work_version) do
+      create(:work_version_with_work, :with_no_subtype, embargo_date: embargo_date, collection: collection)
+    end
     let(:params) do
       ActionController::Parameters.new(
         title: 'new title',
@@ -75,7 +80,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
   context 'when not embargoed, then embargo set' do
     let(:new_embargo_date) { 11.months.from_now }
-    let(:work_version) { create(:work_version_with_work, collection: collection) }
+    let(:work_version) { create(:work_version_with_work, :with_no_subtype, collection: collection) }
     let(:params) do
       ActionController::Parameters.new(
         title: 'new title',
@@ -97,7 +102,9 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
   context 'when embargoed, then embargo removed' do
     let(:embargo_date) { 10.months.from_now }
-    let(:work_version) { create(:work_version_with_work, embargo_date: embargo_date, collection: collection) }
+    let(:work_version) do
+      create(:work_version_with_work, :with_no_subtype, embargo_date: embargo_date, collection: collection)
+    end
     let(:params) do
       ActionController::Parameters.new(
         title: 'new title',

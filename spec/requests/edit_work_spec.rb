@@ -79,9 +79,11 @@ RSpec.describe 'Updating an existing work' do
             expect(CollectionObserver).to have_received(:version_draft_created)
             expect(WorkVersion.where(work: work).count).to eq 2
             expect(work.reload.head).to be_version_draft
+            expect(work.head.subtype).to eq []
             # Only changed fields are recorded in event.
             expect(work.events.first.description).to eq('title of deposit modified, contact email modified, ' \
-                                                        'authors modified, file description changed')
+                                                        'authors modified, work subtypes modified, ' \
+                                                        'file description changed')
             expect(response).to redirect_to(work)
           end
         end

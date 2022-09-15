@@ -47,6 +47,7 @@ class DraftWorkForm < Reform::Form
   def deserialize!(params)
     # Choose between using the user provided citation and the auto-generated citation
     params['citation'] = params.delete('citation_auto') if params['default_citation'] == 'true'
+    params['subtype'] = [] unless params['subtype']
     deserialize_embargo(params)
     access_from_collection(params)
     deserialize_license(params)
