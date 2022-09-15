@@ -5,7 +5,7 @@
     <%= form.radio_button :globus, false, class: 'form-check-input',
       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility' }
     %>
-    <%= form.label :globus, 'Upload files', class: 'form-check-label', style: 'font-weight: bold' %>
+    <%= form.label :globus, 'Upload files', class: 'form-check-label fw-semibold' %>
     <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
       <p>All file types are accepted. If you have a deposit that is over 10GB, or
         have any trouble with adding your files,
@@ -43,7 +43,7 @@
     <%= form.radio_button :globus, true, class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton',
       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility' }
     %>
-    <%= form.label :globus, 'I have uploaded my files to a Globus endpoint provided to me by SDR staff.', class: 'form-check-label', style: 'font-weight: bold' %>
+    <%= form.label :globus, 'I have uploaded my files to a Globus endpoint provided to me by SDR staff.', class: 'form-check-label fw-semibold' %>
     <p><em>Only select this option if you have already discussed Globus with SDR staff.</em></p>
   </div>
 </section>
