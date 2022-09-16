@@ -119,7 +119,7 @@ class DepositJob < BaseDepositJob
   end
 
   def existing_file_identifier_map_for(druid)
-    cocina_obj = find_cocina_object(druid)
+    cocina_obj = Repository.find(druid)
 
     {}.tap do |map|
       cocina_obj.structural.contains.each do |file_set|
@@ -128,12 +128,6 @@ class DepositJob < BaseDepositJob
         end
       end
     end
-  end
-
-  def find_cocina_object(druid)
-    cocina_str = SdrClient::Find.run(druid, url: Settings.sdr_api.url, logger: Rails.logger)
-    cocina_json = JSON.parse(cocina_str)
-    Cocina::Models.build(cocina_json)
   end
 
   # This will take either a Cocina::Models::File or a hash of a Cocina::Models::File
