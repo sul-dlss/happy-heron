@@ -175,3 +175,10 @@ en:
         label: I am a library employee, and I need a MARC record.
       no_collection:
         label: I do not see an appropriate collection.
+  mail_preference:
+    participant_changed: A depositor, manager, or reviewer is added or removed. 
+    new_item: A depositor creates a new item, deposits an item, or creates a new draft of an item
+    submit_for_review: A depositor submits an item for review
+    version_started_but_not_finished: A new version of this collection is started and not finished
+    assigned_new_owner: An item is assigned a new owner
+    item_deleted: An item is deleted

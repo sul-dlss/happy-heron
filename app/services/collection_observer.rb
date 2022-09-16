@@ -4,18 +4,24 @@
 class CollectionObserver
   def self.first_draft_created(work_version, _transition)
     collection_managers_excluding_owner(work_version).each do |user|
+      next if work_version.work.collection.opted_out_of_email?(user, 'new_item')
+
       mailer_with_owner(user:, work_version:).first_draft_created.deliver_later
     end
   end
 
   def self.item_deposited(work_version, _transition)
     collection_managers_excluding_owner(work_version).each do |user|
+      next if work_version.work.collection.opted_out_of_email?(user, 'new_item')
+
       mailer_with_owner(user:, work_version:).item_deposited.deliver_later
     end
   end
 
   def self.version_draft_created(work_version, _transition)
     collection_managers_excluding_owner(work_version).each do |user|
+      next if work_version.work.collection.opted_out_of_email?(user, 'new_item')
+
       mailer_with_owner(user:, work_version:).version_draft_created.deliver_later
     end
   end
@@ -110,6 +116,8 @@ class CollectionObserver
     return unless collection.email_when_participants_changed? && change_set.participants_changed?
 
     (collection.managed_by + collection.reviewed_by).uniq.each do |user|
+      next if collection.opted_out_of_email?(user, 'participant_changed')
+
       # Don't send if the user is the only changed participant.
       unless change_set.changed_participants == [user]
         CollectionsMailer.with(collection_version: collection.head, user:)

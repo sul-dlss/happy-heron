@@ -1,0 +1,25 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(
+    breadcrumbs: [ { title: 'Communication preferences' } ]) %>
+<% end %>
+<main id="content">
+  <div class="container">
+    <h1>Communication preferences</h1>
+    <h2><%= CollectionTitlePresenter.show(@collection.head) %></h2>
+    <%= form_with url: collection_mail_preferences_path(@collection), method: :patch, class: 'col-xl-6' do |form| %>
+        <fieldset>
+        <legend>Receive an email when...</legend>
+            <% @preferences.each do |result| %>
+                <div class="form-check">
+                    <%= check_box_tag result.email, true, result.wanted, class: 'form-check-input' %> 
+                    <%= label_tag result.email, t(result.email, scope: :mail_preference), class: 'form-check-label' %>
+                </div>
+            <% end %>
+        </fieldset>
+        <div class="d-flex justify-content-end">
+            <%= link_to 'Cancel', profile_path(@collection), class: 'btn btn-link' %>
+            <%= form.submit 'Save', class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+  </div>
+</main>

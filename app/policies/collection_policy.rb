@@ -4,6 +4,7 @@
 class CollectionPolicy < ApplicationPolicy
   alias_rule :edit?, to: :update?
   alias_rule :delete?, to: :destroy?
+  alias_rule :manage_email_preferences?, to: :review?
 
   # Return the relation defining the collections you can deposit into, manage or review.
   relation_scope :deposit do |relation|
