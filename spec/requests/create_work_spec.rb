@@ -96,7 +96,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload1) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
+            io: Rails.public_path.join('apple-touch-icon.png').open,
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -104,7 +104,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload2) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('spec/fixtures/files/favicon.ico')),
+            io: Rails.root.join('spec/fixtures/files/favicon.ico').open,
             filename: 'favicon.ico',
             content_type: 'image/vnd.microsoft.icon'
           )
@@ -112,7 +112,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload3) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
+            io: Rails.root.join('spec/fixtures/files/sul.svg').open,
             filename: 'sul.svg',
             content_type: 'image/svg+xml'
           )
@@ -333,7 +333,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
+            io: Rails.public_path.join('apple-touch-icon.png').open,
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -493,7 +493,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
+            io: Rails.public_path.join('apple-touch-icon.png').open,
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -570,7 +570,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
+            io: Rails.public_path.join('apple-touch-icon.png').open,
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -637,7 +637,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
+            io: Rails.public_path.join('apple-touch-icon.png').open,
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
@@ -702,7 +702,7 @@ RSpec.describe 'Create a new work' do
 
         let(:upload) do
           ActiveStorage::Blob.create_and_upload!(
-            io: File.open(Rails.public_path.join('apple-touch-icon.png')),
+            io: Rails.public_path.join('apple-touch-icon.png').open,
             filename: 'apple-touch-icon.png',
             content_type: 'image/png'
           )
