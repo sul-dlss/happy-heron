@@ -13,7 +13,7 @@
           <legend>Details</legend>
           <div class="form-check">
             <%= form.radio_button :with_orcid, 'false', html_options_for_radio(true, !orcid?) %>
-            <%= form.label :with_orcid, 'Enter author name', value: 'false', class: 'form-check-label' %>
+            <%= form.label :with_orcid, 'Enter author name', value: 'false', class: 'form-check-label fw-semibold' %>
           </div>
           <div class="row person-identifier-row" data-contributors-target="personName">
             <div class="col-md-5">
@@ -36,7 +36,7 @@
           
           <div class="form-check">
             <%= form.radio_button :with_orcid, 'true', html_options_for_radio(false, orcid?) %>
-            <%= form.label :with_orcid, 'Enter ORCID iD', value: 'true', class: 'form-check-label' %>
+            <%= form.label :with_orcid, 'Enter ORCID iD', value: 'true', class: 'form-check-label fw-semibold' %>
           </div>
           <div class="row person-identifier-row" data-contributors-target="personOrcid">
             <div class="col">

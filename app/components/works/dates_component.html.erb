@@ -20,7 +20,7 @@
     <div class="mb-3 row" data-complex-radio-target="selection">
       <div class="col-sm-2">
         <%= form.radio_button :created_type, 'single', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
-        <%= form.label :created_type_single, 'Single date' %>
+        <%= form.label :created_type_single, 'Single date', class: 'form-check-label fw-semibold' %>
       </div>
       <div data-controller="date-validation date-approximate date-clear" 
         data-date-approximate-enabled-value="<%= form.object.created_type == 'single' %>" 
@@ -78,7 +78,7 @@
     <div class="mb-3 row" data-complex-radio-target="selection">
       <div class="col-md-2">
         <%= form.radio_button :created_type, 'range', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
-        <%= form.label :created_type_range, 'Date range' %>
+        <%= form.label :created_type_range, 'Date range', class: 'form-check-label fw-semibold' %>
       </div>
 
       <div class="col-md-10 date-range" data-controller="date-range date-clear">
