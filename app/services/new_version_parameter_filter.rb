@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-# Filters the passed in parameters so they create new objects rather than point at objects for a past version
+# Updates the passed in parameters so they create new related objects rather than point at objects for a past version
 class NewVersionParameterFilter
+  # @param [ActionController::Parameters] clean_params these parameters will be mutated by this filter
+  # @param [WorkVersion] old_version
   def self.call(clean_params, old_version)
     filter_attached_files(clean_params, old_version)
 
