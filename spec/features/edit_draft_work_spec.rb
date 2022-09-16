@@ -46,11 +46,11 @@ RSpec.describe 'Edit a draft work', js: true do
         # End of validation testing
 
         # breadcrumbs showing
-        find('#breadcrumbs') do |nav|
-          expect(nav).to have_content('Dashboard')
-          expect(nav).to have_content(work.collection.head.name)
-          expect(nav).to have_content(work_version.title)
-          expect(nav).to have_content('Edit')
+        within '#breadcrumbs' do
+          expect(page).to have_content('Dashboard')
+          expect(page).to have_content(work.collection.head.name)
+          expect(page).to have_content(work_version.title)
+          expect(page).to have_content('Edit')
         end
 
         expect(page).to have_content('Work subtypes')
@@ -183,11 +183,11 @@ RSpec.describe 'Edit a draft work', js: true do
         # End of validation testing
 
         # breadcrumbs showing
-        find('#breadcrumbs') do |nav|
-          expect(nav).to have_content('Dashboard')
-          expect(nav).to have_content(work.collection.head.name)
-          expect(nav).to have_content(work_version.title)
-          expect(nav).to have_content('Edit')
+        within '#breadcrumbs' do
+          expect(page).to have_content('Dashboard')
+          expect(page).to have_content(work.collection.head.name)
+          expect(page).to have_content(work_version.title)
+          expect(page).to have_content('Edit')
         end
 
         expect(page).to have_content('Work subtypes')
@@ -237,11 +237,11 @@ RSpec.describe 'Edit a draft work', js: true do
         # End of validation testing
 
         # breadcrumbs showing
-        find('#breadcrumbs') do |nav|
-          expect(nav).to have_content('Dashboard')
-          expect(nav).to have_content(work.collection.head.name)
-          expect(nav).to have_content(work_version.title)
-          expect(nav).to have_content('Edit')
+        within '#breadcrumbs' do
+          expect(page).to have_content('Dashboard')
+          expect(page).to have_content(work.collection.head.name)
+          expect(page).to have_content(work_version.title)
+          expect(page).to have_content('Edit')
         end
 
         expect(page).to have_content('Work subtypes')

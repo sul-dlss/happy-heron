@@ -29,9 +29,9 @@ RSpec.describe 'Update an existing collection', js: true do
     click_link 'Edit details'
 
     # breadcrumbs showing
-    find('#breadcrumbs') do |nav|
-      expect(nav).to have_content('Dashboard')
-      expect(nav).to have_content(original_name)
+    within '#breadcrumbs' do
+      expect(page).to have_content('Dashboard')
+      expect(page).to have_content(original_name)
     end
 
     # update the version description, name, and collection description

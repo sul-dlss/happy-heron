@@ -32,9 +32,9 @@ RSpec.describe 'Create a new collection', js: true do
       find_field 'lookup SunetID'
 
       # breadcrumbs showing
-      find('#breadcrumbs') do |nav|
-        expect(nav).to have_content('Dashboard')
-        expect(nav).to have_content('New collection')
+      within '#breadcrumbs' do
+        expect(page).to have_content('Dashboard')
+        expect(page).to have_content('New collection')
       end
 
       click_button 'Deposit'

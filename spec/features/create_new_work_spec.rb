@@ -52,9 +52,9 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           expect(page).not_to have_content "What's changing?"
 
           # breadcrumbs showing
-          find('#breadcrumbs') do |nav|
-            expect(nav).to have_content('Dashboard')
-            expect(nav).to have_content('New deposit')
+          within '#breadcrumbs' do
+            expect(page).to have_content('Dashboard')
+            expect(page).to have_content('New deposit')
           end
 
           # Test client-side validation messages

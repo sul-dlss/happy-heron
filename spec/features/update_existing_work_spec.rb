@@ -27,10 +27,10 @@ RSpec.describe 'Update an existing work in a deposited collection', js: true do
     click_link "Edit #{original_title}"
 
     # breadcrumbs showing
-    find('#breadcrumbs') do |nav|
-      expect(nav).to have_content('Dashboard')
-      expect(nav).to have_content(collection_version.name)
-      expect(nav).to have_content(original_title)
+    within '#breadcrumbs' do
+      expect(page).to have_content('Dashboard')
+      expect(page).to have_content(collection_version.name)
+      expect(page).to have_content(original_title)
     end
 
     # update the title and abstract
