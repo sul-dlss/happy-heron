@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CocinaGenerator::Description::EventsGenerator do
-  subject(:events) { normalize_events(described_class.generate(work_version: work_version)) }
+  subject(:events) { normalize_events(described_class.generate(work_version:)) }
 
   let(:publisher_roles) do
     [
@@ -48,13 +48,13 @@ RSpec.describe CocinaGenerator::Description::EventsGenerator do
       build(:work)
     end
     let(:work_version2) do
-      build(:valid_deposited_work_version, published_at: Time.zone.parse('2017-01-01'), work: work)
+      build(:valid_deposited_work_version, published_at: Time.zone.parse('2017-01-01'), work:)
     end
     let!(:work_version3) do
-      build(:valid_deposited_work_version, published_at: Time.zone.parse('2018-01-01'), work: work)
+      build(:valid_deposited_work_version, published_at: Time.zone.parse('2018-01-01'), work:)
     end
     let(:work_version) do
-      build(:valid_deposited_work_version, work: work)
+      build(:valid_deposited_work_version, work:)
     end
 
     before do

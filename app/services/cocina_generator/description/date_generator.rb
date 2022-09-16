@@ -9,7 +9,7 @@ module CocinaGenerator
       # @param [boolean] primary - whether status is primary
       # @return [Hash] the props for the date
       def self.generate(date:, type: nil, primary: false)
-        new(date: date, type: type, primary: primary).generate
+        new(date:, type:, primary:).generate
       end
 
       def initialize(date:, type:, primary:)
@@ -21,7 +21,7 @@ module CocinaGenerator
       def generate
         {
           encoding: { code: 'edtf' },
-          type: type,
+          type:,
           status: primary ? 'primary' : nil
         }.compact.merge(date_props)
       end
@@ -63,7 +63,7 @@ module CocinaGenerator
         {
           qualifier: edtf_date.uncertain? ? 'approximate' : nil,
           value: edtf_date.edtf.chomp('?'),
-          type: type
+          type:
         }.compact
       end
 

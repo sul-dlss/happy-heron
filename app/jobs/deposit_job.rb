@@ -9,7 +9,7 @@ class DepositJob < BaseDepositJob
     Honeybadger.context({ work_version_id: work_version.id, druid: work_version.work.druid,
                           work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
 
-    request_dro = CocinaGenerator::DROGenerator.generate_model(work_version: work_version)
+    request_dro = CocinaGenerator::DROGenerator.generate_model(work_version:)
 
     perform_login
 
@@ -39,7 +39,7 @@ class DepositJob < BaseDepositJob
     new_request_dro = update_dro_with_existing_file_identifiers(request_dro, work_version.work.druid)
     # Update with any new externalIdentifiers assigned by SDR API during upload.
     SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro: new_request_dro,
-                                                            upload_responses: upload_responses)
+                                                            upload_responses:)
   end
 
   def update_dro_with_existing_file_identifiers(request_dro, druid)
@@ -62,20 +62,20 @@ class DepositJob < BaseDepositJob
                                            assign_doi: work_version.work.assign_doi?,
                                            metadata: new_request_dro,
                                            logger: Rails.logger,
-                                           connection: connection)
+                                           connection:)
   end
 
   def update(new_request_dro, work_version)
     SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
                                            logger: Rails.logger,
-                                           connection: connection,
+                                           connection:,
                                            version_description: work_version.version_description.presence)
   end
 
   def perform_upload(blobs)
     SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs),
                                            logger: Rails.logger,
-                                           connection: connection)
+                                           connection:)
   end
 
   def connection

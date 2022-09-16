@@ -8,7 +8,7 @@ class ContributorPopulator < ApplicationPopulator
   # rubocop:disable Metrics/MethodLength
   def call(form, args)
     fragment = args.fetch(:fragment)
-    item = existing_record(form: form, id: fragment['id'])
+    item = existing_record(form:, id: fragment['id'])
 
     if fragment['_destroy'] == '1'
       value(form).delete(item)

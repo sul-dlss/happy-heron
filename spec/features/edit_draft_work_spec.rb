@@ -7,7 +7,7 @@ RSpec.describe 'Edit a draft work', js: true do
   let!(:work_version) do
     create(:work_version, :with_keywords,
            work_type: 'other', subtype: ['Graphic novel'],
-           state: 'version_draft', work: work)
+           state: 'version_draft', work:)
   end
   # create a collection that allows embargo access selection
   let(:collection) do
@@ -15,13 +15,13 @@ RSpec.describe 'Edit a draft work', js: true do
                                                                                     head: collection_version)
   end
   let(:collection_version) { create(:collection_version, :deposited) }
-  let(:work) { create(:work, owner: depositor, collection: collection) }
+  let(:work) { create(:work, owner: depositor, collection:) }
 
   context 'when a user has previously accepted the terms of agreement less than 1 year ago' do
     before do
       depositor.update(last_work_terms_agreement: Time.zone.now.days_ago(2))
       work.update(head: work_version)
-      create(:attached_file, :with_file, work_version: work_version)
+      create(:attached_file, :with_file, work_version:)
       work.collection.depositors = [depositor]
       sign_in depositor
     end
@@ -96,7 +96,7 @@ RSpec.describe 'Edit a draft work', js: true do
     context 'when successful deposit of "music" type work' do
       let(:work_version) do
         create(:valid_work_version, title: 'My Preprint/Data',
-                                    work: work,
+                                    work:,
                                     work_type: 'music',
                                     subtype: %w[Data Preprint])
       end
@@ -131,7 +131,7 @@ RSpec.describe 'Edit a draft work', js: true do
     before do
       depositor.update(last_work_terms_agreement: nil)
       work.update(head: work_version)
-      create(:attached_file, :with_file, work_version: work_version)
+      create(:attached_file, :with_file, work_version:)
       work.collection.depositors = [depositor]
       sign_in depositor
     end
@@ -209,7 +209,7 @@ RSpec.describe 'Edit a draft work', js: true do
     before do
       depositor.update(last_work_terms_agreement: Time.zone.now.years_ago(2))
       work.update(head: work_version)
-      create(:attached_file, :with_file, work_version: work_version)
+      create(:attached_file, :with_file, work_version:)
       work.collection.depositors = [depositor]
       sign_in depositor
     end

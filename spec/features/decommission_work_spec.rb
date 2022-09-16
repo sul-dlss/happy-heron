@@ -5,13 +5,13 @@ require 'rails_helper'
 RSpec.describe 'Decommission a work', js: true do
   let(:user) { create(:user) }
   let(:orig_owner) { create(:user) }
-  let(:work_version) { create(:work_version, work: work) }
+  let(:work_version) { create(:work_version, work:) }
   let(:collection_version) { create(:collection_version_with_collection) }
   let(:work) { create(:work, owner: orig_owner, collection: collection_version.collection) }
 
   before do
     work.update(head: work_version)
-    create(:attached_file, :with_file, work_version: work_version)
+    create(:attached_file, :with_file, work_version:)
     sign_in user, groups: ['dlss:hydrus-app-administrators']
   end
 

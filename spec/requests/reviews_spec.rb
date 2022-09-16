@@ -20,12 +20,12 @@ RSpec.describe 'Works requests' do
   context 'with an authenticated user' do
     let(:user) { collection.reviewed_by.first }
     let(:collection) { create(:collection, :with_reviewers) }
-    let(:work) { create(:work, collection: collection) }
-    let(:work_version) { create(:work_version, :pending_approval, work: work) }
+    let(:work) { create(:work, collection:) }
+    let(:work_version) { create(:work_version, :pending_approval, work:) }
 
     before do
       work.update(head: work_version)
-      create(:collection_version_with_collection, collection: collection)
+      create(:collection_version_with_collection, collection:)
 
       sign_in user
       allow(DepositJob).to receive(:perform_later)

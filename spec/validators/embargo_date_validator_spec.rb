@@ -6,10 +6,10 @@ RSpec.describe EmbargoDateValidator do
   let(:options) { { attributes: ['hi'] } }
   let(:validator) { described_class.new(options) }
   let(:collection) { create(:collection, release_option: 'depositor-selects', release_duration: '3 years') }
-  let(:work) { create(:work, collection: collection) }
+  let(:work) { create(:work, collection:) }
   let(:current_date) { Time.now.in_time_zone('Pacific Time (US & Canada)').to_date }
-  let(:work_version) { create(:work_version, work: work) }
-  let(:record) { WorkForm.new(work_version: work_version, work: work) }
+  let(:work_version) { create(:work_version, work:) }
+  let(:record) { WorkForm.new(work_version:, work:) }
 
   before do
     validator.validate_each(record, attribute, value)

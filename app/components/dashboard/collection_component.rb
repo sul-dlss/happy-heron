@@ -31,11 +31,11 @@ module Dashboard
     private
 
     def work_policy
-      WorkPolicy.new(user: current_user, user_with_groups: user_with_groups)
+      WorkPolicy.new(user: current_user, user_with_groups:)
     end
 
     def policy
-      CollectionPolicy.new(collection, user: current_user, user_with_groups: user_with_groups)
+      CollectionPolicy.new(collection, user: current_user, user_with_groups:)
     end
   end
 end

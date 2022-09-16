@@ -8,7 +8,7 @@ class ReviewersPopulator < CollectionContributorPopulator
     return super if doc['review_enabled'] != 'false'
 
     fragment = args.fetch(:fragment)
-    item = existing_record(form: form, id: fragment['id'])
+    item = existing_record(form:, id: fragment['id'])
     # Remove reviewer
     as = args.fetch(:as)
     form.public_send(as).delete(item) if item

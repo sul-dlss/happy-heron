@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::EditButtonComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(work_version: work_version)) }
+  let(:rendered) { render_inline(described_class.new(work_version:)) }
 
   context 'when the work is a draft' do
     let(:work_version) { build_stubbed(:work_version, :first_draft) }

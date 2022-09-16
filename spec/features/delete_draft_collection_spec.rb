@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Delete a draft collection', js: true do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, managed_by: [user]) }
-  let(:collection_version) { create(:collection_version, collection: collection) }
+  let(:collection_version) { create(:collection_version, collection:) }
 
   before do
     collection.update(head: collection_version)

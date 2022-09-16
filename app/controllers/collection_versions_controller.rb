@@ -55,7 +55,7 @@ class CollectionVersionsController < ObjectsController
     # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
     event_context = build_event_context(context_form(orig_collection_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save
-      after_save(form: @form, event_context: event_context)
+      after_save(form: @form, event_context:)
     else
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
@@ -69,7 +69,7 @@ class CollectionVersionsController < ObjectsController
   def edit_link
     collection_version = CollectionVersion.find(params[:id])
     render partial: 'edit_link', locals: {
-      collection_version: collection_version,
+      collection_version:,
       name: collection_version.name
     }
   end

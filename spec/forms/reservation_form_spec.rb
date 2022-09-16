@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe ReservationForm do
-  subject(:form) { described_class.new(work_version: work_version, work: work) }
+  subject(:form) { described_class.new(work_version:, work:) }
 
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }
 
   describe 'title validation' do
     before do
-      form.validate(title: title)
+      form.validate(title:)
     end
 
     context 'with an blank title' do

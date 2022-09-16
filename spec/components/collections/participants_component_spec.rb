@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collections::ParticipantsComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection)) }
+  let(:rendered) { render_inline(described_class.new(collection:)) }
 
   context 'when displaying a collection' do
     let(:depositors) { collection.depositors.map(&:sunetid).join(', ') }

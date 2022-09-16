@@ -14,7 +14,7 @@ module Dashboard
     delegate :collection, to: :collection_version
 
     def collection_name
-      Dashboard::CollectionHeaderComponent.new(collection_version: collection_version).name
+      Dashboard::CollectionHeaderComponent.new(collection_version:).name
     end
 
     def show_collection_link

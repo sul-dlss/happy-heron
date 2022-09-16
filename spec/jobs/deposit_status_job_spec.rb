@@ -18,11 +18,11 @@ RSpec.describe DepositStatusJob do
 
   context 'with a work that is depositing' do
     let(:work_version) do
-      build(:work_version, :depositing, work: work, version_description: 'A new version description')
+      build(:work_version, :depositing, work:, version_description: 'A new version description')
     end
-    let(:work) { create(:work, :with_druid, collection: collection, depositor: collection.managed_by.first) }
+    let(:work) { create(:work, :with_druid, collection:, depositor: collection.managed_by.first) }
     let(:collection) { build(:collection, :with_managers) }
-    let(:collection_version) { create(:collection_version, collection: collection) }
+    let(:collection_version) { create(:collection_version, collection:) }
     let(:message) { "{\"druid\":\"#{work.druid}\"}" }
 
     before do
@@ -36,7 +36,7 @@ RSpec.describe DepositStatusJob do
         { params: {
           user: collection.managed_by.last,
           owner: work.owner,
-          collection_version: collection_version
+          collection_version:
         }, args: [] }
       )
 
@@ -49,7 +49,7 @@ RSpec.describe DepositStatusJob do
 
   context 'with a work that is already deposited (embargo was released by DSA)' do
     let(:work_version) do
-      build(:work_version, :deposited, work: work)
+      build(:work_version, :deposited, work:)
     end
     let(:work) { create(:work, :with_druid) }
     let(:message) { "{\"druid\":\"#{work.druid}\"}" }
@@ -66,7 +66,7 @@ RSpec.describe DepositStatusJob do
 
   context 'with a work that is in a version_draft state (embargo was released by DSA)' do
     let(:work_version) do
-      build(:work_version, :version_draft, work: work)
+      build(:work_version, :version_draft, work:)
     end
     let(:work) { create(:work, :with_druid) }
     let(:message) { "{\"druid\":\"#{work.druid}\"}" }
@@ -83,7 +83,7 @@ RSpec.describe DepositStatusJob do
 
   context 'with a collection' do
     let(:collection) { create(:collection, :with_druid) }
-    let(:collection_version) { build(:collection_version, :depositing, collection: collection) }
+    let(:collection_version) { build(:collection_version, :depositing, collection:) }
     let(:message) { "{\"druid\":\"#{collection.druid}\"}" }
 
     before do

@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Dashboard::CollectionComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection)) }
+  let(:rendered) { render_inline(described_class.new(collection:)) }
   let(:collection) { build_stubbed(:collection, head: collection_version) }
   let(:collection_version) { build_stubbed(:collection_version) }
-  let(:user_with_groups) { UserWithGroups.new(user: user, groups: []) }
+  let(:user_with_groups) { UserWithGroups.new(user:, groups: []) }
   let(:user) { create(:user) }
   let(:work_path) { Rails.application.routes.url_helpers.work_path(user.owned_works.first) }
 
@@ -14,7 +14,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     allow(controller).to receive_messages(
       allowed_to?: false,
       current_user: user,
-      user_with_groups: user_with_groups
+      user_with_groups:
     )
   end
 
@@ -53,8 +53,8 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     let(:collection_version) { create(:collection_version_with_collection) }
 
     before do
-      create(:work_version_with_work, collection: collection, owner: user, title: 'my work')
-      create(:work_version_with_work, collection: collection, title: 'not mine')
+      create(:work_version_with_work, collection:, owner: user, title: 'my work')
+      create(:work_version_with_work, collection:, title: 'not mine')
     end
 
     context 'when the user is a depositor' do
@@ -80,8 +80,8 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
     before do
       4.times do
-        work = create(:work, collection: collection, owner: user)
-        version = create(:work_version, work: work)
+        work = create(:work, collection:, owner: user)
+        version = create(:work_version, work:)
         work.update(head: version)
       end
     end
@@ -98,8 +98,8 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
     before do
       5.times do
-        work = create(:work, collection: collection, owner: user)
-        version = create(:work_version, work: work)
+        work = create(:work, collection:, owner: user)
+        version = create(:work_version, work:)
         work.update(head: version)
       end
     end
@@ -112,10 +112,10 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   context 'with a work that has a druid' do
     let(:collection) { collection_version.collection }
     let(:collection_version) { create(:collection_version_with_collection) }
-    let(:work) { create(:work, collection: collection, owner: user, druid: 'druid:yq268qt4607') }
+    let(:work) { create(:work, collection:, owner: user, druid: 'druid:yq268qt4607') }
 
     before do
-      version = create(:work_version, work: work)
+      version = create(:work_version, work:)
       work.update(head: version)
     end
 

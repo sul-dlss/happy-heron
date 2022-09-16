@@ -6,8 +6,8 @@ RSpec.describe CollectionVersionEventDescriptionBuilder do
   subject(:result) { described_class.build(form) }
 
   let(:collection) { create(:collection) }
-  let(:collection_version) { create(:collection_version_with_collection, collection: collection) }
-  let(:form) { DraftCollectionForm.new(collection_version: collection_version, collection: collection) }
+  let(:collection_version) { create(:collection_version_with_collection, collection:) }
+  let(:form) { DraftCollectionForm.new(collection_version:, collection:) }
 
   context 'when nothing has changed' do
     before do

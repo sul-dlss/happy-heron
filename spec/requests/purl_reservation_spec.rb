@@ -47,13 +47,13 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
     end
 
     describe 'choose a type for the reserved PURL' do
-      let(:work) { create(:work, owner: user, collection: collection) }
+      let(:work) { create(:work, owner: user, collection:) }
 
       # have to set this here (?), artifact of the circular relationship between works and work_versions
       before { work.update(head: work_version) }
 
       context 'when the work version still has no type info specified' do
-        let!(:work_version) { create(:work_version, :purl_reserved, work: work) }
+        let!(:work_version) { create(:work_version, :purl_reserved, work:) }
 
         it 'sets the type and subtype, then redirects to the work edit page' do
           patch "/reservations/#{work.id}", params: { work_type: 'text', subtype: ['Other spoken word'] }
@@ -67,7 +67,7 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
       end
 
       context 'when the work version has no type and is then given an invalid type' do
-        let(:work_version) { create(:work_version, :purl_reserved, work: work) }
+        let(:work_version) { create(:work_version, :purl_reserved, work:) }
 
         it 'returns the user to the dashboard with an explanatory error message' do
           patch "/reservations/#{work.id}", params: { work_type: 'other', subtype: [] }
@@ -80,7 +80,7 @@ RSpec.describe 'Reserve a PURL and flesh it out into a work (version)' do
       end
 
       context 'when the work version has already had a type chosen' do
-        let(:work_version) { create(:work_version, work: work) }
+        let(:work_version) { create(:work_version, work:) }
 
         it 'redirects the user to the homepage with an explanatory error message' do
           patch "/reservations/#{work.id}", params: { work_type: 'text', subtype: ['Other spoken word'] }

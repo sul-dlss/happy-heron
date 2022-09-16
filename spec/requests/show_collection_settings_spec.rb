@@ -9,7 +9,7 @@ RSpec.describe 'Show the collection settings page' do
     let(:managers) { collection.managed_by.map(&:sunetid).join(', ') }
 
     before do
-      create(:collection_version_with_collection, collection: collection)
+      create(:collection_version_with_collection, collection:)
       sign_in user, groups: [Settings.authorization_workgroup_names.administrators]
     end
 

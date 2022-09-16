@@ -6,8 +6,8 @@ module ContributorForm
 
   class_methods do
     def has_contributors(validate:)
-      has_generic_contributors(validate: validate)
-      has_authors(validate: validate)
+      has_generic_contributors(validate:)
+      has_authors(validate:)
     end
 
     def has_generic_contributors(validate:)
@@ -15,7 +15,7 @@ module ContributorForm
                  populator: ContributorPopulator.new(:contributors, Contributor),
                  prepopulator: ->(*) { contributors << Contributor.new if contributors.blank? },
                  on: :work_version,
-                 &form_properties(validate: validate)
+                 &form_properties(validate:)
     end
 
     def has_authors(validate:)
@@ -23,7 +23,7 @@ module ContributorForm
                  populator: ContributorPopulator.new(:authors, Author),
                  prepopulator: ->(*) { authors << Author.new if authors.blank? },
                  on: :work_version,
-                 &form_properties(validate: validate)
+                 &form_properties(validate:)
     end
 
     # rubocop:disable Metrics/AbcSize

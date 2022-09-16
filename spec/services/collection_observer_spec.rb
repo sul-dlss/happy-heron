@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.describe CollectionObserver do
   let(:collection) { create(:collection) }
-  let(:collection_version) { create(:collection_version_with_collection, collection: collection) }
-  let(:form) { DraftCollectionForm.new(collection_version: collection_version, collection: collection) }
+  let(:collection_version) { create(:collection_version_with_collection, collection:) }
+  let(:form) { DraftCollectionForm.new(collection_version:, collection:) }
 
   describe '.settings_updated' do
     subject(:action) do
-      described_class.settings_updated(collection, user: collection.creator, change_set: change_set, form: form)
+      described_class.settings_updated(collection, user: collection.creator, change_set:, form:)
     end
 
     let(:change_set) { CollectionChangeSet::PointInTime.new(collection).diff(collection_after) }
@@ -25,7 +25,7 @@ RSpec.describe CollectionObserver do
         it 'sends emails to those removed' do
           expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'deposit_access_removed_email', 'deliver_now',
-            { params: { user: collection.depositors.last, collection_version: collection_version }, args: [] }
+            { params: { user: collection.depositors.last, collection_version: }, args: [] }
           )
         end
       end
@@ -43,17 +43,17 @@ RSpec.describe CollectionObserver do
         it 'sends emails to the managers about the participants change' do
           expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-            { params: { user: manager, collection_version: collection_version }, args: [] }
+            { params: { user: manager, collection_version: }, args: [] }
           )
         end
 
         it 'sends emails to the reviewers about the participants change' do
           expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-            { params: { user: reviewer, collection_version: collection_version }, args: [] }
+            { params: { user: reviewer, collection_version: }, args: [] }
           ).and have_enqueued_job(ActionMailer::MailDeliveryJob).with(
             'CollectionsMailer', 'participants_changed_email', 'deliver_now',
-            { params: { user: reviewer2, collection_version: collection_version }, args: [] }
+            { params: { user: reviewer2, collection_version: }, args: [] }
           )
         end
       end
@@ -91,7 +91,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those added' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'manage_access_granted_email', 'deliver_now',
-          { params: { user: manager, collection_version: collection_version }, args: [] }
+          { params: { user: manager, collection_version: }, args: [] }
         )
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'manage_access_removed_email', 'deliver_now',
-          { params: { user: collection.managed_by.last, collection_version: collection_version }, args: [] }
+          { params: { user: collection.managed_by.last, collection_version: }, args: [] }
         )
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those added' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
-          { params: { user: reviewer, collection_version: collection_version }, args: [] }
+          { params: { user: reviewer, collection_version: }, args: [] }
         )
       end
     end
@@ -136,7 +136,7 @@ RSpec.describe CollectionObserver do
       it 'sends access granted email but not participant change notification to manager' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
-          { params: { user: manager, collection_version: collection_version }, args: [] }
+          { params: { user: manager, collection_version: }, args: [] }
         ).and not_to_have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'participants_changed_email', anything, anything
         )
@@ -152,16 +152,16 @@ RSpec.describe CollectionObserver do
       it 'sends emails to those removed' do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_removed_email', 'deliver_now',
-          { params: { user: collection.reviewed_by.last, collection_version: collection_version }, args: [] }
+          { params: { user: collection.reviewed_by.last, collection_version: }, args: [] }
         )
       end
     end
 
     context 'when review not enabled' do
       let(:collection) { create(:collection) }
-      let!(:work_version1) { create(:work_version_with_work, collection: collection, state: 'pending_approval') }
-      let!(:work_version2) { create(:work_version_with_work, collection: collection, state: 'rejected') }
-      let!(:work_version3) { create(:work_version_with_work, collection: collection, state: 'deposited') }
+      let!(:work_version1) { create(:work_version_with_work, collection:, state: 'pending_approval') }
+      let!(:work_version2) { create(:work_version_with_work, collection:, state: 'rejected') }
+      let!(:work_version3) { create(:work_version_with_work, collection:, state: 'deposited') }
       let(:collection_after) { collection }
 
       before do
@@ -178,8 +178,8 @@ RSpec.describe CollectionObserver do
 
     context 'when review is enabled' do
       let(:collection) { create(:collection) }
-      let!(:work_version1) { create(:work_version_with_work, collection: collection, state: 'pending_approval') }
-      let!(:work_version2) { create(:work_version_with_work, collection: collection, state: 'rejected') }
+      let!(:work_version1) { create(:work_version_with_work, collection:, state: 'pending_approval') }
+      let!(:work_version2) { create(:work_version_with_work, collection:, state: 'rejected') }
       let(:collection_after) { collection }
 
       before do

@@ -21,7 +21,7 @@ RSpec.describe WorkVersion do
 
   describe 'authors' do
     let(:work) { create(:work) }
-    let(:work_version) { create(:work_version, work: work) }
+    let(:work_version) { create(:work_version, work:) }
 
     before do
       allow(work_version.work).to receive(:broadcast_update)
@@ -83,7 +83,7 @@ RSpec.describe WorkVersion do
 
   describe '#attached_files' do
     before do
-      create(:attached_file, :with_file, work_version: work_version)
+      create(:attached_file, :with_file, work_version:)
     end
 
     it 'has attached files' do
@@ -98,9 +98,9 @@ RSpec.describe WorkVersion do
   describe '.awaiting_review_by' do
     subject { described_class.awaiting_review_by(user) }
 
-    let(:work1) { create(:work, collection: collection) }
+    let(:work1) { create(:work, collection:) }
     let!(:work_version1) { create(:work_version, :pending_approval, work: work1) }
-    let(:work2) { create(:work, collection: collection) }
+    let(:work2) { create(:work, collection:) }
 
     before do
       # We should not see this draft work in the query results
@@ -347,9 +347,9 @@ RSpec.describe WorkVersion do
 
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :with_managers) }
-      let(:collection_version) { create(:collection_version_with_collection, collection: collection) }
-      let(:work_version) { create(:work_version, state: state, work: work) }
-      let(:work) { create(:work, collection: collection, depositor: collection.managed_by.first) }
+      let(:collection_version) { create(:collection_version_with_collection, collection:) }
+      let(:work_version) { create(:work_version, state:, work:) }
+      let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
 
       context 'when the state was new' do
         let(:state) { 'new' }
@@ -364,7 +364,7 @@ RSpec.describe WorkVersion do
                                              { params: {
                                                user: collection.managed_by.last,
                                                owner: work.owner,
-                                               collection_version: collection_version
+                                               collection_version:
                                              }, args: [] }
                                            ))
         end
@@ -381,8 +381,8 @@ RSpec.describe WorkVersion do
     end
 
     describe 'a deposit_complete event' do
-      let(:work_version) { build(:work_version, :depositing, work: work) }
-      let(:work) { create(:work, collection: collection, druid: 'druid:foo') }
+      let(:work_version) { build(:work_version, :depositing, work:) }
+      let(:work) { create(:work, collection:, druid: 'druid:foo') }
 
       context 'when an initial deposit into a non-reviewed collection' do
         let(:collection) { create(:collection) }
@@ -393,14 +393,14 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'deposited_email', 'deliver_now',
-                   { params: { user: work.owner, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
       end
 
       context 'when a deposit with globus' do
-        let(:work_version) { build(:work_version, :depositing, work: work, globus: true) }
+        let(:work_version) { build(:work_version, :depositing, work:, globus: true) }
         let(:collection) { create(:collection) }
 
         before do
@@ -413,11 +413,11 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'deposited_email', 'deliver_now',
-                   { params: { user: work.owner, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: }, args: [] }
                  ))
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'globus_deposited_email', 'deliver_now',
-                   { params: { user: work.owner, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -425,8 +425,8 @@ RSpec.describe WorkVersion do
 
       context 'when an subsequent version deposit into a non-reviewed collection' do
         let(:collection) { create(:collection) }
-        let(:work_version) { build(:work_version, :depositing, version: 2, work: work) }
-        let(:work) { create(:work, collection: collection, druid: 'druid:foo') }
+        let(:work_version) { build(:work_version, :depositing, version: 2, work:) }
+        let(:work) { create(:work, collection:, druid: 'druid:foo') }
 
         it 'transitions to deposited' do
           expect { work_version.deposit_complete! }
@@ -434,7 +434,7 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'new_version_deposited_email', 'deliver_now',
-                   { params: { user: work.owner, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -449,7 +449,7 @@ RSpec.describe WorkVersion do
             .to('deposited')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'approved_email', 'deliver_now',
-                   { params: { user: work.owner, work_version: work_version }, args: [] }
+                   { params: { user: work.owner, work_version: }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -463,8 +463,8 @@ RSpec.describe WorkVersion do
       let(:reviewer) { build(:user) }
 
       context 'when work is first_draft' do
-        let(:work_version) { create(:work_version, :first_draft, work: work) }
-        let(:work) { create(:work, collection: collection, depositor: depositor, owner: owner) }
+        let(:work_version) { create(:work_version, :first_draft, work:) }
+        let(:work) { create(:work, collection:, depositor:, owner:) }
 
         it 'transitions to pending_approval' do
           expect { work_version.submit_for_review! }
@@ -472,19 +472,19 @@ RSpec.describe WorkVersion do
             .to('pending_approval')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'ReviewersMailer', 'submitted_email', 'deliver_now',
-                   { params: { user: reviewer, work_version: work_version }, args: [] }
+                   { params: { user: reviewer, work_version: }, args: [] }
                  ))
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'submitted_email', 'deliver_now',
-                   { params: { user: owner, work_version: work_version }, args: [] }
+                   { params: { user: owner, work_version: }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
       end
 
       context 'when work was rejected' do
-        let(:work_version) { create(:work_version, :rejected, work: work) }
-        let(:work) { create(:work, collection: collection, depositor: depositor, owner: owner) }
+        let(:work_version) { create(:work_version, :rejected, work:) }
+        let(:work) { create(:work, collection:, depositor:, owner:) }
 
         it 'transitions to pending_approval' do
           expect { work_version.submit_for_review! }
@@ -492,11 +492,11 @@ RSpec.describe WorkVersion do
             .to('pending_approval')
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'ReviewersMailer', 'submitted_email', 'deliver_now',
-                   { params: { user: reviewer, work_version: work_version }, args: [] }
+                   { params: { user: reviewer, work_version: }, args: [] }
                  ))
             .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                    'WorksMailer', 'submitted_email', 'deliver_now',
-                   { params: { user: owner, work_version: work_version }, args: [] }
+                   { params: { user: owner, work_version: }, args: [] }
                  ))
             .and change(Event, :count).by(1)
         end
@@ -504,7 +504,7 @@ RSpec.describe WorkVersion do
     end
 
     describe 'a reject event' do
-      let(:work_version) { create(:work_version, :pending_approval, work: work) }
+      let(:work_version) { create(:work_version, :pending_approval, work:) }
       let(:work) { create(:work) }
 
       it 'transitions to rejected' do
@@ -513,15 +513,15 @@ RSpec.describe WorkVersion do
           .to('rejected')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                  'WorksMailer', 'reject_email', 'deliver_now',
-                 { params: { user: work.owner, work_version: work_version }, args: [] }
+                 { params: { user: work.owner, work_version: }, args: [] }
                ))
       end
     end
 
     describe 'a decommission event' do
       let(:collection) { create(:collection, :with_managers) }
-      let(:work) { create(:work, collection: collection) }
-      let(:work_version) { create(:work_version, work: work) }
+      let(:work) { create(:work, collection:) }
+      let(:work_version) { create(:work_version, work:) }
 
       it 'transitions to decommissioned' do
         expect { work_version.decommission! }
@@ -529,11 +529,11 @@ RSpec.describe WorkVersion do
           .to('decommissioned')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                  'WorksMailer', 'decommission_owner_email', 'deliver_now',
-                 { params: { work_version: work_version }, args: [] }
+                 { params: { work_version: }, args: [] }
                ))
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                  'WorksMailer', 'decommission_manager_email', 'deliver_now',
-                 { params: { work_version: work_version, user: collection.managed_by.first }, args: [] }
+                 { params: { work_version:, user: collection.managed_by.first }, args: [] }
                ))
       end
     end

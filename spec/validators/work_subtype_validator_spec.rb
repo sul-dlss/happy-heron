@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe WorkSubtypeValidator do
   let(:error_message) { "Subtype is not a valid subtype for work type #{work_type_id}" }
-  let(:record) { WorkForm.new(work: build(:work), work_version: work_version) }
+  let(:record) { WorkForm.new(work: build(:work), work_version:) }
   let(:validator) { described_class.new({ attributes: ['stub'] }) }
   let(:work_version) { build(:work_version, work_type: work_type_id) }
 

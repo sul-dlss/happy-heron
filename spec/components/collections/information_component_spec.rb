@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collections::InformationComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection_version: collection_version)) }
+  let(:rendered) { render_inline(described_class.new(collection_version:)) }
 
   context 'when a first version collection' do
     let(:collection_version) { build_stubbed(:collection_version) }

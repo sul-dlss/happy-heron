@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Works::DetailComponent, type: :component do
-  let(:instance) { described_class.new(work_version: work_version) }
+  let(:instance) { described_class.new(work_version:) }
   let(:rendered) { render_inline(instance) }
   let(:user) { build(:user, name: 'Pyotr Kropotkin', email: 'kropot00@stanford.edu') }
-  let(:user_with_groups) { UserWithGroups.new(user: user, groups: []) }
+  let(:user_with_groups) { UserWithGroups.new(user:, groups: []) }
 
   before do
     allow(controller).to receive_messages(
       current_user: user,
-      user_with_groups: user_with_groups
+      user_with_groups:
     )
     allow(work_version.work.collection).to receive(:head).and_return(build_stubbed(:collection_version))
   end
@@ -54,7 +54,7 @@ RSpec.describe Works::DetailComponent, type: :component do
   context 'when rejected' do
     let(:rejection_reason) { 'Why did you dye your hair chartreuse?' }
     let(:work) { build_stubbed(:work) }
-    let(:work_version) { build_stubbed(:work_version, :rejected, work: work) }
+    let(:work_version) { build_stubbed(:work_version, :rejected, work:) }
 
     before do
       create(:event, description: rejection_reason, event_type: 'reject', eventable: work)
@@ -66,14 +66,14 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   describe 'events' do
-    let(:work) { build_stubbed(:work, events: events) }
+    let(:work) { build_stubbed(:work, events:) }
     let(:events) do
       [
         build_stubbed(:event, description: 'Add more keywords'),
         build_stubbed(:embargo_lifted_event)
       ]
     end
-    let(:work_version) { build_stubbed(:work_version, work: work) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
 
     it 'renders the event' do
       expect(rendered.css('#events').to_html).to include('Add more keywords', 'Embargo lifted')
@@ -97,7 +97,7 @@ RSpec.describe Works::DetailComponent, type: :component do
 
   describe 'DOI settings' do
     context 'with a DOI' do
-      let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, work: work) }
+      let(:work_version) { build_stubbed(:work_version, :deposited, version: 2, work:) }
       let(:work) { build_stubbed(:work, doi: '10.25740/bc123df4567') }
 
       it 'renders the doi_link' do
@@ -106,7 +106,7 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
 
     context 'when DOI was requested' do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work:) }
       let(:work) { build_stubbed(:work, assign_doi: true) }
 
       it 'renders the doi setting' do
@@ -115,8 +115,8 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
 
     context 'when DOI was refused' do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, assign_doi: false, collection: collection) }
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work:) }
+      let(:work) { build_stubbed(:work, assign_doi: false, collection:) }
       let(:collection) { build_stubbed(:collection, doi_option: 'depositor-selects') }
 
       it 'renders the doi setting' do
@@ -125,8 +125,8 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
 
     context "when collection doesn't permit DOIs" do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, collection: collection, assign_doi: true) }
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work:) }
+      let(:work) { build_stubbed(:work, collection:, assign_doi: true) }
       let(:collection) { build_stubbed(:collection, doi_option: 'no') }
 
       it 'renders the doi setting' do
@@ -135,8 +135,8 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
 
     context 'when collection automatically assigns DOI' do
-      let(:work_version) { build_stubbed(:work_version, :first_draft, work: work) }
-      let(:work) { build_stubbed(:work, collection: collection, assign_doi: false) }
+      let(:work_version) { build_stubbed(:work_version, :first_draft, work:) }
+      let(:work) { build_stubbed(:work, collection:, assign_doi: false) }
       let(:collection) { build_stubbed(:collection, doi_option: 'yes') }
 
       it 'renders the doi setting' do

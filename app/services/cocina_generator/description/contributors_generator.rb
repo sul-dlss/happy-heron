@@ -7,11 +7,11 @@ module CocinaGenerator
     # rubocop:disable Metrics/ClassLength
     class ContributorsGenerator
       def self.generate(work_version:)
-        new(work_version: work_version).generate
+        new(work_version:).generate
       end
 
       def self.events_from_publisher_contributors(work_version:, pub_date: nil)
-        new(work_version: work_version).publication_event_values(pub_date)
+        new(work_version:).publication_event_values(pub_date)
       end
 
       def initialize(work_version:)
@@ -194,7 +194,7 @@ module CocinaGenerator
         source, value = Orcid.split(contributor.orcid)
 
         [
-          Cocina::Models::DescriptiveValue.new(type: 'ORCID', value: value, source: { uri: source })
+          Cocina::Models::DescriptiveValue.new(type: 'ORCID', value:, source: { uri: source })
         ]
       end
       # rubocop:enable Metrics/ClassLength

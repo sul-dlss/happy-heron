@@ -10,7 +10,7 @@ class HelpCollectionComponent < ApplicationComponent
   end
 
   def label
-    I18n.t("#{key}.label", scope: scope)
+    I18n.t("#{key}.label", scope:)
   end
 
   def description_key

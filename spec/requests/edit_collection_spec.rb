@@ -20,7 +20,7 @@ RSpec.describe 'Updating an existing collection' do
 
     describe 'show the form for an existing object' do
       before do
-        create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+        create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection:)
       end
 
       it 'allows GETs to /collections/{id}/edit' do
@@ -59,7 +59,7 @@ RSpec.describe 'Updating an existing collection' do
 
         context 'when an existing collection is updated' do
           let(:collection_version) do
-            create(:collection_version_with_collection, :deposited, :with_contact_emails, collection: collection)
+            create(:collection_version_with_collection, :deposited, :with_contact_emails, collection:)
           end
 
           it 'updates the collection' do
@@ -85,12 +85,12 @@ RSpec.describe 'Updating an existing collection' do
               required_license: 'CC0-1.0',
               email_depositors_status_changed: true,
               review_enabled: 'false',
-              reviewed_by_attributes: reviewed_by_attributes
+              reviewed_by_attributes:
             }
           end
 
           before do
-            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection:)
           end
 
           it 'removes the reviewers' do
@@ -115,7 +115,7 @@ RSpec.describe 'Updating an existing collection' do
           end
 
           before do
-            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection:)
             allow(CollectionObserver).to receive(:settings_updated)
           end
 
@@ -157,7 +157,7 @@ RSpec.describe 'Updating an existing collection' do
           end
 
           before do
-            create(:collection_version_with_collection, :version_draft, collection: collection)
+            create(:collection_version_with_collection, :version_draft, collection:)
           end
 
           it 'logs the changes in the event description' do
@@ -183,7 +183,7 @@ RSpec.describe 'Updating an existing collection' do
 
         context 'when setting release option to immediate' do
           let(:collection) { create(:collection, managed_by: [user], release_option: 'delay') }
-          let(:work) { create(:work, collection: collection) }
+          let(:work) { create(:work, collection:) }
 
           let(:collection_params) do
             {
@@ -196,13 +196,13 @@ RSpec.describe 'Updating an existing collection' do
           end
 
           before do
-            create(:collection_version_with_collection, collection: collection)
-            create(:work_version_with_work, :embargoed, collection: collection, work: work)
+            create(:collection_version_with_collection, collection:)
+            create(:work_version_with_work, :embargoed, collection:, work:)
           end
 
           context 'when works with embargoes would be orphaned' do
             before do
-              create(:work_version_with_work, :embargoed, collection: collection, work: work)
+              create(:work_version_with_work, :embargoed, collection:, work:)
             end
 
             it 'does not allow the change' do
@@ -214,7 +214,7 @@ RSpec.describe 'Updating an existing collection' do
 
           context 'when works with embargoes would not be orphaned' do
             before do
-              create(:work_version_with_work, :expired_embargo, collection: collection, work: work)
+              create(:work_version_with_work, :expired_embargo, collection:, work:)
             end
 
             it 'allows the change' do
@@ -234,7 +234,7 @@ RSpec.describe 'Updating an existing collection' do
         end
 
         before do
-          create(:collection_version_with_collection, :version_draft, collection: collection)
+          create(:collection_version_with_collection, :version_draft, collection:)
         end
 
         it 'renders the page again' do

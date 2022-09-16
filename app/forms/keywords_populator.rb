@@ -6,7 +6,7 @@ class KeywordsPopulator < ApplicationPopulator
     # The fragment represents one row of the attached file data from the HTML form
     # find out if incoming file is already added.
     fragment = args.fetch(:fragment)
-    item = existing_record(form: form, id: fragment['id'])
+    item = existing_record(form:, id: fragment['id'])
 
     if fragment['_destroy'] == '1'
       form.keywords.delete(item)

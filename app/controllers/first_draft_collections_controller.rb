@@ -11,8 +11,8 @@ class FirstDraftCollectionsController < ObjectsController
     collection = Collection.new(creator: current_user)
     authorize! collection
 
-    collection_version = CollectionVersion.new(collection: collection)
-    @form = CreateCollectionForm.new(collection_version: collection_version, collection: collection)
+    collection_version = CollectionVersion.new(collection:)
+    @form = CreateCollectionForm.new(collection_version:, collection:)
     @form.prepopulate!
   end
 
@@ -21,7 +21,7 @@ class FirstDraftCollectionsController < ObjectsController
     collection = Collection.new(creator: current_user)
     authorize! collection
 
-    collection_version = CollectionVersion.new(collection: collection)
+    collection_version = CollectionVersion.new(collection:)
     @form = collection_form(collection_version)
 
     if @form.validate(create_params) && @form.save
@@ -46,7 +46,7 @@ class FirstDraftCollectionsController < ObjectsController
     redirect_to edit_collection_path(collection) unless collection.head.first_draft?
 
     collection_version = collection.collection_versions.first # this is a first draft and should only have one version
-    @form = CreateCollectionForm.new(collection_version: collection_version, collection: collection)
+    @form = CreateCollectionForm.new(collection_version:, collection:)
     # @form = CollectionSettingsForm.new(collection)
     @form.prepopulate!
   end
@@ -76,11 +76,11 @@ class FirstDraftCollectionsController < ObjectsController
 
   def collection_form(collection_version)
     if deposit_button_pushed?
-      return CreateCollectionForm.new(collection_version: collection_version,
+      return CreateCollectionForm.new(collection_version:,
                                       collection: collection_version.collection)
     end
 
-    DraftCollectionForm.new(collection_version: collection_version, collection: collection_version.collection)
+    DraftCollectionForm.new(collection_version:, collection: collection_version.collection)
   end
 
   def create_params

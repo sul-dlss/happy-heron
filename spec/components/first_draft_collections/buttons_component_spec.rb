@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe FirstDraftCollections::ButtonsComponent do
-  let(:component) { described_class.new(form: form) }
+  let(:component) { described_class.new(form:) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:collection) { build(:collection) }
   let(:collection_version) { build(:collection_version) }
-  let(:work_form) { CreateCollectionForm.new(collection: collection, collection_version: collection_version) }
+  let(:work_form) { CreateCollectionForm.new(collection:, collection_version:) }
   let(:rendered) { render_inline(component) }
 
   before do

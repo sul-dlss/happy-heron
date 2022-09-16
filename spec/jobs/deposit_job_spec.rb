@@ -22,12 +22,12 @@ RSpec.describe DepositJob do
   end
   let(:attached_file) { build(:attached_file) }
   let(:attached_file2) { build(:attached_file) }
-  let(:work) { build(:work, collection: collection, assign_doi: false) }
+  let(:work) { build(:work, collection:, assign_doi: false) }
   let(:first_work_version) do
-    build(:work_version, work: work, attached_files: [attached_file], version: 1)
+    build(:work_version, work:, attached_files: [attached_file], version: 1)
   end
   let(:second_work_version) do
-    build(:work_version, work: work, attached_files: [attached_file2], version: 2, version_description: 'Changed files')
+    build(:work_version, work:, attached_files: [attached_file2], version: 2, version_description: 'Changed files')
   end
 
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
@@ -61,7 +61,7 @@ RSpec.describe DepositJob do
     end
 
     context 'when the deposit wants a doi' do
-      let(:work) { build(:work, collection: collection, assign_doi: true) }
+      let(:work) { build(:work, collection:, assign_doi: true) }
 
       it 'calls CreateResource.run with true for the assign_doi param' do
         described_class.perform_now(first_work_version)
@@ -72,7 +72,7 @@ RSpec.describe DepositJob do
   end
 
   context 'when updating the deposit' do
-    let(:work) { build(:work, collection: collection, assign_doi: false, druid: druid) }
+    let(:work) { build(:work, collection:, assign_doi: false, druid:) }
     let(:druid) { 'druid:bf024yb8975' }
 
     # The job fetches the existing cocina model from the SDR API to copy structural > contains.
@@ -130,7 +130,7 @@ RSpec.describe DepositJob do
     context 'when files have not changed' do
       # The attached files for this version are the same as the previous version.
       let(:second_work_version_metadata_only) do
-        build(:work_version, work: work, attached_files: [attached_file], version: 2,
+        build(:work_version, work:, attached_files: [attached_file], version: 2,
                              version_description: 'Updated metadata')
       end
 

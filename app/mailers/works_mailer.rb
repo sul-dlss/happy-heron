@@ -20,7 +20,7 @@ class WorksMailer < ApplicationMailer
     @work = params[:work_version].work
     @user = UserPresenter.new(user: @work.owner)
     subject = "Reminder: Deposit to the #{@work.collection_name} collection in the SDR is in progress"
-    mail(to: @user.email, subject: subject)
+    mail(to: @user.email, subject:)
   end
 
   def new_version_reminder_email
@@ -29,7 +29,7 @@ class WorksMailer < ApplicationMailer
 
     subject = "Reminder: New version of a deposit to the #{@work.collection_name} collection in the SDR is in progress"
 
-    mail(to: @user.email, subject: subject)
+    mail(to: @user.email, subject:)
   end
 
   def new_version_deposited_email

@@ -69,7 +69,7 @@ module Works
 
     def month_field
       select_month published_month,
-                   { prefix: prefix, field_name: 'published(2i)', prompt: 'month' },
+                   { prefix:, field_name: 'published(2i)', prompt: 'month' },
                    data: {
                      date_validation_target: 'month',
                      date_clear_target: 'month',
@@ -81,7 +81,7 @@ module Works
 
     def day_field
       select_day published_day,
-                 { prefix: prefix, field_name: 'published(3i)', prompt: 'day' },
+                 { prefix:, field_name: 'published(3i)', prompt: 'day' },
                  data: {
                    date_validation_target: 'day',
                    date_clear_target: 'day',

@@ -49,7 +49,7 @@ module Works
              else
                'default'
              end
-      render PopoverComponent.new key: key
+      render PopoverComponent.new key:
     end
 
     def sanitized_value(value)

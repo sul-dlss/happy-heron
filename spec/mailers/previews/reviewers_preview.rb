@@ -4,6 +4,6 @@
 class ReviewersPreview < ActionMailer::Preview
   def submitted_email
     work = Work.first
-    ReviewersMailer.with(user: work.depositor, work: work).submitted_email
+    ReviewersMailer.with(user: work.depositor, work:).submitted_email
   end
 end

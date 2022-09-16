@@ -6,8 +6,8 @@ module CapybaraActions
     field.native.send_keys :tab
   end
 
-  def within_section(title, &block)
-    within :xpath, "//section[contains(header/text(),'#{title}')]", &block
+  def within_section(title, &)
+    within(:xpath, "//section[contains(header/text(),'#{title}')]", &)
   end
 end
 

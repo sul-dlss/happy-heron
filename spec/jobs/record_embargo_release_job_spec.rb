@@ -6,7 +6,7 @@ RSpec.describe RecordEmbargoReleaseJob do
   subject(:run) { described_class.new.work(message) }
 
   let(:work) { create(:work, :with_druid) }
-  let(:message) { { model: model }.to_json }
+  let(:message) { { model: }.to_json }
   let(:model) do
     Cocina::Models::DRO.new(externalIdentifier: work.druid,
                             type: Cocina::Models::ObjectType.object,

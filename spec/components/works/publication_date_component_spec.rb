@@ -6,8 +6,8 @@ RSpec.describe Works::PublicationDateComponent, type: :component do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }
-  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
-  let(:rendered) { render_inline(described_class.new(form: form, min_year: 999, max_year: 2040)) }
+  let(:work_form) { WorkForm.new(work_version:, work:) }
+  let(:rendered) { render_inline(described_class.new(form:, min_year: 999, max_year: 2040)) }
 
   context 'when there is an error' do
     before do

@@ -123,7 +123,7 @@ RSpec.describe 'Autocomplete Controller' do
 
     before do
       url = "#{Settings.autocomplete_lookup.url}?q=keywords:(tea)#{other_params}"
-      stub_request(:get, url).with(headers: headers).to_return(status: 200, body: lookup_resp_body, headers: {})
+      stub_request(:get, url).with(headers:).to_return(status: 200, body: lookup_resp_body, headers: {})
     end
 
     it 'returns status 200 and html with suggestions' do
@@ -276,9 +276,9 @@ RSpec.describe 'Autocomplete Controller' do
 
     before do
       url1 = "#{Settings.autocomplete_lookup.url}?q=keywords:(tesl)#{other_params}"
-      stub_request(:get, url1).with(headers: headers).to_return(status: 200, body: lookup_resp_body1, headers: {})
+      stub_request(:get, url1).with(headers:).to_return(status: 200, body: lookup_resp_body1, headers: {})
       url2 = "#{Settings.autocomplete_lookup.url}?q=keywords:(tesl*)#{other_params}"
-      stub_request(:get, url2).with(headers: headers).to_return(status: 200, body: lookup_resp_body2, headers: {})
+      stub_request(:get, url2).with(headers:).to_return(status: 200, body: lookup_resp_body2, headers: {})
     end
 
     it 'returns status 200 and html with suggestions' do
@@ -304,7 +304,7 @@ RSpec.describe 'Autocomplete Controller' do
     before do
       url = "#{Settings.autocomplete_lookup.url}?q=keywords:(tea)#{other_params}"
       stub_request(:get, url)
-        .with(headers: headers)
+        .with(headers:)
         .to_return(status: [404, 'some error message'], body: '', headers: {})
       allow(Rails.logger).to receive(:warn)
     end

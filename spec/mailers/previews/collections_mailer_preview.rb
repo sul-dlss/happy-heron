@@ -11,6 +11,6 @@ class CollectionsMailerPreview < ActionMailer::Preview
 
   def mailer_with_collection
     collection = Collection.first
-    CollectionsMailer.with(user: collection.creator, collection: collection)
+    CollectionsMailer.with(user: collection.creator, collection:)
   end
 end

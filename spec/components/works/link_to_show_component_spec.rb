@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Works::LinkToShowComponent, type: :component do
-  let(:render) { render_inline(described_class.new(work_version: work_version)) }
-  let(:work_version) { build_stubbed(:work_version, title: title) }
+  let(:render) { render_inline(described_class.new(work_version:)) }
+  let(:work_version) { build_stubbed(:work_version, title:) }
   let(:title) do
     "Marfa gochujang 90's, normcore lomo chartreuse ethical man bun fashion axe " \
       'palo santo asymmetrical post-ironic. Kitsch sriracha affogato wayfarers woke neutra.'

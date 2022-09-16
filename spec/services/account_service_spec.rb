@@ -29,7 +29,7 @@ RSpec.describe AccountService do
 
       before do
         stub_request(:get, 'https://accountws-uat.stanford.edu/accounts/jcoyne85')
-          .to_return(status: 200, body: body, headers: { 'Content-Type' => 'application/json' })
+          .to_return(status: 200, body:, headers: { 'Content-Type' => 'application/json' })
       end
 
       it 'returns data' do

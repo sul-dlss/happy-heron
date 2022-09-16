@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Update an existing collection', js: true do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, managed_by: [user]) }
-  let(:collection_version) { create(:collection_version, :deposited, collection: collection, name: original_name) }
+  let(:collection_version) { create(:collection_version, :deposited, collection:, name: original_name) }
   let(:original_name) { 'Not an interesting name' }
   let(:new_name) { 'A much better name' }
   let(:new_version_description) { 'Editing the name and description' }

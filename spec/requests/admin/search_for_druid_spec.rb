@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'Search for a DRUID' do
   let(:user) { create(:user) }
-  let(:work) { create(:work, :with_druid, collection: collection) }
-  let(:work_version) { create(:work_version, work: work) }
+  let(:work) { create(:work, :with_druid, collection:) }
+  let(:work_version) { create(:work_version, work:) }
   let(:work_druid) { work.druid }
   let(:collection) { create(:collection, :with_collection_druid) }
-  let(:collection_version) { create(:collection_version, collection: collection) }
+  let(:collection_version) { create(:collection_version, collection:) }
 
   before do
     work.update(head: work_version)

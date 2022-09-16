@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Automatically generate a citation', js: true do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, release_option: 'depositor-selects', depositors: [user]) }
-  let(:collection_version) { create(:collection_version, :deposited, collection: collection) }
+  let(:collection_version) { create(:collection_version, :deposited, collection:) }
 
   before do
     collection.update(head: collection_version)

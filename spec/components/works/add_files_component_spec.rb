@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Works::AddFilesComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:rendered) { render_inline(described_class.new(form:)) }
   let(:work) { build(:work) }
-  let(:work_version) { build(:work_version, work: work) }
-  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
+  let(:work_version) { build(:work_version, work:) }
+  let(:work_form) { WorkForm.new(work_version:, work:) }
 
   context 'with an unpersisted file component' do
     it 'renders the component' do

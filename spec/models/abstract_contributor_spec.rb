@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe AbstractContributor, type: :model do
   describe '.valid?' do
     context 'when a person' do
-      let(:contributor) { build(:person_contributor, orcid: orcid) }
+      let(:contributor) { build(:person_contributor, orcid:) }
 
       context 'when valid ORCID' do
         let(:orcid) { 'https://orcid.org/0000-0003-1527-0030' }
@@ -33,7 +33,7 @@ RSpec.describe AbstractContributor, type: :model do
     end
 
     context 'when an organization' do
-      let(:contributor) { build(:org_contributor, orcid: orcid) }
+      let(:contributor) { build(:org_contributor, orcid:) }
 
       context 'when ORCID' do
         let(:orcid) { 'https://orcid.org/0000-0003-1527-0030' }

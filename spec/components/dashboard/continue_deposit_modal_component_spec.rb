@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Dashboard::ContinueDepositModalComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(presenter: presenter)) }
+  let(:rendered) { render_inline(described_class.new(presenter:)) }
 
   context 'when show_popup is true' do
     let(:show_popup) { true }

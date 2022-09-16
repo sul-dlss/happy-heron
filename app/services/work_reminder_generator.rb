@@ -16,7 +16,7 @@ class WorkReminderGenerator
 
     eligible_works(first_interval, subsequent_interval).each do |state, scope|
       scope.find_each do |work_version|
-        mailer = WorksMailer.with(work_version: work_version)
+        mailer = WorksMailer.with(work_version:)
         case state
         when :first_draft
           mailer.first_draft_reminder_email.deliver_later
@@ -31,7 +31,7 @@ class WorkReminderGenerator
     %i[first_draft version_draft].index_with do |state|
       WorkVersion.with_state(state)
                  .where('(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0',
-                        first_interval: first_interval, subsequent_interval: subsequent_interval)
+                        first_interval:, subsequent_interval:)
     end
   end
 end

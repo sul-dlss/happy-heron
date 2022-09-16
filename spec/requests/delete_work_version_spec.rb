@@ -27,7 +27,7 @@ RSpec.describe 'Deleting a version' do
 
   context 'when a subsequent version' do
     let(:head_version) { 2 }
-    let!(:first_version) { create(:work_version, version: 1, work: work) }
+    let!(:first_version) { create(:work_version, version: 1, work:) }
 
     before do
       sign_in user, groups: ['dlss:hydrus-app-collection-creators']

@@ -7,7 +7,7 @@ RSpec.describe Works::KeywordsRowComponent do
 
   let(:work) { work_version.work }
   let(:work_version) { build_stubbed(:work_version) }
-  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
+  let(:work_form) { WorkForm.new(work_version:, work:) }
   let(:keyword_form) do
     work_form.prepopulate!
     work_form.keywords.first

@@ -5,7 +5,7 @@ module CocinaGenerator
     # This generates a Collection Description
     class CollectionDescriptionGenerator
       def self.generate(collection_version:)
-        new(collection_version: collection_version).generate
+        new(collection_version:).generate
       end
 
       def initialize(collection_version:)
@@ -14,10 +14,10 @@ module CocinaGenerator
 
       def generate
         description_class.new({
-          title: title,
+          title:,
           note: [abstract],
           relatedResource: related_resources.presence,
-          access: access,
+          access:,
           purl: collection_version.collection.purl
         }.compact)
       end

@@ -5,7 +5,7 @@ module CocinaGenerator
     # This generates a description from RelatedLinks
     class RelatedLinksGenerator
       def self.generate(object:)
-        new(object: object).generate
+        new(object:).generate
       end
 
       def initialize(object:)

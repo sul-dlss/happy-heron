@@ -6,9 +6,9 @@ RSpec.describe ReserveJob do
   include Dry::Monads[:result]
 
   let(:conn) { instance_double(SdrClient::Connection) }
-  let(:work) { build(:work, collection: collection, assign_doi: false) }
+  let(:work) { build(:work, collection:, assign_doi: false) }
   let(:work_version) do
-    build(:work_version, :reserving_purl, work: work)
+    build(:work_version, :reserving_purl, work:)
   end
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
 

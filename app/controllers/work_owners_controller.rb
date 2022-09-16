@@ -39,18 +39,18 @@ class WorkOwnersController < ApplicationController
 
   def send_participant_change_emails(collection)
     (collection.managed_by + collection.reviewed_by).uniq.each do |user|
-      CollectionsMailer.with(collection_version: collection.head, user: user)
+      CollectionsMailer.with(collection_version: collection.head, user:)
                        .participants_changed_email.deliver_later
     end
   end
 
   def send_changed_owner_email(work)
-    WorksMailer.with(work: work).changed_owner_email.deliver_later
+    WorksMailer.with(work:).changed_owner_email.deliver_later
   end
 
   def send_collection_managers_email(work)
     work.collection.managed_by.each do |user|
-      WorksMailer.with(work: work, user: user).changed_owner_collection_manager_email.deliver_later
+      WorksMailer.with(work:, user:).changed_owner_collection_manager_email.deliver_later
     end
   end
 

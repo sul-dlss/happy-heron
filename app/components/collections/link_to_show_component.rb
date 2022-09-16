@@ -8,11 +8,11 @@ module Collections
     end
 
     def link
-      link_to name, collection, name: name
+      link_to name, collection, name:
     end
 
     def name
-      @name ||= Collections::DetailComponent.new(collection_version: collection_version).name
+      @name ||= Collections::DetailComponent.new(collection_version:).name
     end
 
     attr_reader :collection_version

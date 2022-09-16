@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Lock and unlock a work', js: true do
   let(:user) { create(:user) }
-  let(:work_version) { create(:work_version, work: work) }
+  let(:work_version) { create(:work_version, work:) }
   let(:collection_version) { create(:collection_version_with_collection) }
 
   before do

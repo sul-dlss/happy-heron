@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ApplicationCable::Connection do
   let(:env) { { 'warden' => warden } }
   let(:mount_path) { Rails.application.config.action_cable.mount_path }
-  let(:warden) { instance_double(Warden::Proxy, user: user) }
+  let(:warden) { instance_double(Warden::Proxy, user:) }
 
   before do
     allow_any_instance_of(described_class).to receive(:env).and_return(env)

@@ -6,7 +6,7 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
   let(:presenter) do
     instance_double(DashboardPresenter, in_progress: work_versions)
   end
-  let(:rendered) { render_inline(described_class.new(presenter: presenter)) }
+  let(:rendered) { render_inline(described_class.new(presenter:)) }
 
   before do
     allow(controller).to receive(:allowed_to?).and_return(true)
@@ -26,9 +26,9 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
 
     before do
       collection = create(:collection_version_with_collection).collection
-      create(:work_version, work: create(:work, collection: collection))
-      create(:work_version, work: create(:work, collection: collection))
-      create(:work_version, work: create(:work, collection: collection))
+      create(:work_version, work: create(:work, collection:))
+      create(:work_version, work: create(:work, collection:))
+      create(:work_version, work: create(:work, collection:))
     end
 
     it 'renders the component with works' do

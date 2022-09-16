@@ -14,7 +14,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
       let(:collection) { create(:collection, managed_by: [user], release_option: 'depositor-selects') }
 
       before do
-        create(:collection_version_with_collection, :version_draft, collection: collection)
+        create(:collection_version_with_collection, :version_draft, collection:)
         visit edit_collection_path(collection)
       end
 
@@ -51,7 +51,7 @@ RSpec.describe 'Selecting a radio button causes other radio button inputs to be 
       let(:collection) { create(:collection, managed_by: [user], license_option: 'required') }
 
       before do
-        create(:collection_version_with_collection, :version_draft, collection: collection)
+        create(:collection_version_with_collection, :version_draft, collection:)
         visit edit_collection_path(collection)
       end
 

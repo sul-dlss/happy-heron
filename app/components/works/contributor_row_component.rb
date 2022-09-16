@@ -19,14 +19,14 @@ module Works
     end
 
     def select_role
-      render ContributorRoleComponent.new(form: form, data_options: data_options_for_select)
+      render ContributorRoleComponent.new(form:, data_options: data_options_for_select)
     end
 
     def html_options(auto_citation_target, contributors_target: nil, disabled: false)
       {
         class: 'form-control',
         data: {
-          contributors_target: contributors_target
+          contributors_target:
         }.tap do |data|
           if author?
             data[:action] = 'change->auto-citation#updateDisplay'
@@ -34,7 +34,7 @@ module Works
           end
         end.compact,
         required: author?,
-        disabled: disabled
+        disabled:
       }
     end
 
@@ -81,7 +81,7 @@ module Works
 
     def html_options_for_radio(is_name, checked)
       {
-        checked: checked,
+        checked:,
         class: 'form-check-input',
         data: {}.tap do |data|
           actions = ['contributors#personChanged']

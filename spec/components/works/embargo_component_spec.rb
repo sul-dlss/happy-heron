@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe Works::EmbargoComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
   let(:collection) { build(:collection, :depositor_selects_access, release_option: 'immediate') }
-  let(:work) { build(:work, collection: collection) }
-  let(:work_version) { build(:work_version, work: work) }
-  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:work) { build(:work, collection:) }
+  let(:work_version) { build(:work_version, work:) }
+  let(:work_form) { WorkForm.new(work_version:, work:) }
+  let(:rendered) { render_inline(described_class.new(form:)) }
 
   before do
     work.head = work_version
@@ -39,7 +39,7 @@ RSpec.describe Works::EmbargoComponent do
 
   context 'when the collection allows depositor to select release timing' do
     let(:collection) do
-      build(:collection, :depositor_selects_access, release_option: 'depositor-selects', review_enabled: review_enabled)
+      build(:collection, :depositor_selects_access, release_option: 'depositor-selects', review_enabled:)
     end
 
     context 'when collection does not require review' do
@@ -69,7 +69,7 @@ RSpec.describe Works::EmbargoComponent do
   end
 
   context 'when the collection has been deposited and release is immediate' do
-    let(:work_version) { build(:work_version, work: work, state: 'deposited') }
+    let(:work_version) { build(:work_version, work:, state: 'deposited') }
 
     it 'renders the component' do
       expect(rendered.to_html).to include 'This item was released immediately upon deposit.'
@@ -77,7 +77,7 @@ RSpec.describe Works::EmbargoComponent do
   end
 
   context 'when the collection has been deposited and embargo has elapsed' do
-    let(:work_version) { build(:work_version, work: work, state: 'deposited', embargo_date: Time.zone.today - 1.month) }
+    let(:work_version) { build(:work_version, work:, state: 'deposited', embargo_date: Time.zone.today - 1.month) }
 
     it 'renders the component' do
       expect(rendered.to_html).to include 'This item has been released from embargo.'
@@ -85,7 +85,7 @@ RSpec.describe Works::EmbargoComponent do
   end
 
   context 'when the collection has been deposited and embargo date is today' do
-    let(:work_version) { build(:work_version, work: work, state: 'deposited', embargo_date: Time.zone.today) }
+    let(:work_version) { build(:work_version, work:, state: 'deposited', embargo_date: Time.zone.today) }
 
     it 'renders the component' do
       expect(rendered.to_html).to include 'This item has been released from embargo.'
@@ -94,7 +94,7 @@ RSpec.describe Works::EmbargoComponent do
 
   context 'when the collection has been deposited and embargo has not elapsed' do
     let(:collection) { build(:collection, :depositor_selects_access, release_option: 'depositor-selects') }
-    let(:work_version) { build(:work_version, work: work, state: 'deposited', embargo_date: Time.zone.today + 1.month) }
+    let(:work_version) { build(:work_version, work:, state: 'deposited', embargo_date: Time.zone.today + 1.month) }
 
     it 'renders the component' do
       expect(rendered.to_html)

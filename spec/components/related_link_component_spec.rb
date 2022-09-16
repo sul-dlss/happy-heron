@@ -10,12 +10,12 @@ RSpec.describe RelatedLinkComponent, type: :component do
       build_stubbed(:related_link, link_title: 'Second Link')
     ]
   end
-  let(:rendered) { render_inline(described_class.new(form: form, key: 'foo')) }
+  let(:rendered) { render_inline(described_class.new(form:, key: 'foo')) }
 
   context 'with a work' do
     let(:work) { work_version.work }
-    let(:work_version) { build_stubbed(:work_version, related_links: related_links) }
-    let(:model_form) { WorkForm.new(work_version: work_version, work: work) }
+    let(:work_version) { build_stubbed(:work_version, related_links:) }
+    let(:model_form) { WorkForm.new(work_version:, work:) }
 
     it 'renders a delete button for all links' do
       expect(rendered.css('button[@aria-label="Remove Second Link"]')).to be_present
@@ -24,9 +24,9 @@ RSpec.describe RelatedLinkComponent, type: :component do
   end
 
   context 'with a collection' do
-    let(:model_form) { CreateCollectionForm.new(collection: collection, collection_version: collection_version) }
+    let(:model_form) { CreateCollectionForm.new(collection:, collection_version:) }
     let(:collection) { collection_version.collection }
-    let(:collection_version) { build_stubbed(:collection_version, related_links: related_links) }
+    let(:collection_version) { build_stubbed(:collection_version, related_links:) }
 
     it 'renders a delete button for all links' do
       expect(rendered.css('button[@aria-label="Remove Second Link"]')).to be_present

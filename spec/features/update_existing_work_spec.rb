@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'Update an existing work in a deposited collection', js: true do
   let(:user) { create(:user) }
-  let(:collection_version) { create(:collection_version, :deposited, collection: collection) }
+  let(:collection_version) { create(:collection_version, :deposited, collection:) }
   let(:collection) { create(:collection, :depositor_selects_access, creator: user, depositors: [user]) }
-  let(:work_version) { create(:work_version_with_work, collection: collection, owner: user, title: original_title) }
+  let(:work_version) { create(:work_version_with_work, collection:, owner: user, title: original_title) }
   let(:original_title) { 'Not an interesting title' }
   let(:new_title) { 'A much better title' }
 

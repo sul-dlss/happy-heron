@@ -5,7 +5,7 @@ module CocinaGenerator
     # This generates a DROStructural for a work
     class Generator
       def self.generate(work_version:)
-        new(work_version: work_version).generate
+        new(work_version:).generate
       end
 
       def initialize(work_version:)
@@ -32,7 +32,7 @@ module CocinaGenerator
           version: work_version.version,
           label: attached_file.label,
           structural: {
-            contains: [FileGenerator.generate(work_version: work_version, attached_file: attached_file)]
+            contains: [FileGenerator.generate(work_version:, attached_file:)]
           }
         }.tap do |fileset|
           if work_version.work.druid

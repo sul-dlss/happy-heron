@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collections::WorkflowReviewComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection)) }
+  let(:rendered) { render_inline(described_class.new(collection:)) }
 
   context 'when displaying a collection' do
     let(:reviewers) { collection.reviewed_by.map(&:sunetid).join(', ') }

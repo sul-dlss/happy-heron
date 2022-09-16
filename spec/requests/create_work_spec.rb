@@ -205,7 +205,7 @@ RSpec.describe 'Create a new work' do
                    access: 'stanford') # an access selection that will be overwritten
         end
 
-        before { create(:collection_version_with_collection, collection: collection) }
+        before { create(:collection_version_with_collection, collection:) }
 
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
@@ -299,7 +299,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        before { create(:collection_version_with_collection, collection: collection) }
+        before { create(:collection_version_with_collection, collection:) }
 
         it 'saves the draft' do
           post "/collections/#{collection.id}/works", params: params
@@ -365,7 +365,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        before { create(:collection_version_with_collection, collection: collection) }
+        before { create(:collection_version_with_collection, collection:) }
 
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
@@ -510,7 +510,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        before { create(:collection_version_with_collection, collection: collection) }
+        before { create(:collection_version_with_collection, collection:) }
 
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
@@ -587,7 +587,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        before { create(:collection_version_with_collection, :with_contact_emails, collection: collection) }
+        before { create(:collection_version_with_collection, :with_contact_emails, collection:) }
 
         it 'releases it immediately' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
@@ -654,7 +654,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        before { create(:collection_version_with_collection, :with_contact_emails, collection: collection) }
+        before { create(:collection_version_with_collection, :with_contact_emails, collection:) }
 
         it 'sets embargo to the date specified in the collection' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
@@ -719,7 +719,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        before { create(:collection_version_with_collection, :with_contact_emails, collection: collection) }
+        before { create(:collection_version_with_collection, :with_contact_emails, collection:) }
 
         it 'sets the license indicated by the collection' do
           post "/collections/#{collection.id}/works", params: { work: work_params,
@@ -793,7 +793,7 @@ RSpec.describe 'Create a new work' do
           }
         end
 
-        before { create(:collection_version_with_collection, collection: collection) }
+        before { create(:collection_version_with_collection, collection:) }
 
         it 'displays the work' do
           post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }

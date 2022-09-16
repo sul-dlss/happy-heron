@@ -3,7 +3,7 @@
 # Completes the deposit of an object
 class DepositCompleter
   def self.complete(object_version:)
-    new(object_version: object_version).complete
+    new(object_version:).complete
   end
 
   attr_reader :object_version

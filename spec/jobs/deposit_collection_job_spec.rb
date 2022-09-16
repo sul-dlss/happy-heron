@@ -27,7 +27,7 @@ RSpec.describe DepositCollectionJob do
 
   context 'when the deposit update request is successful' do
     let(:collection) { build_stubbed(:collection, :with_collection_druid) }
-    let(:collection_version) { build_stubbed(:collection_version, :with_version_description, collection: collection) }
+    let(:collection_version) { build_stubbed(:collection_version, :with_version_description, collection:) }
 
     before do
       allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)

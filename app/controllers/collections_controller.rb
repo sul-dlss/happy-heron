@@ -54,21 +54,21 @@ class CollectionsController < ObjectsController
   # The access can vary depending on the user and the state of the collection.
   def dashboard
     collection = Collection.find(params[:id])
-    render partial: 'collections/dashboard', locals: { collection: collection }
+    render partial: 'collections/dashboard', locals: { collection: }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.
   def deposit_button
     collection = Collection.find(params[:id])
-    render partial: 'collections/deposit_button', locals: { collection: collection }
+    render partial: 'collections/deposit_button', locals: { collection: }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.
   def delete_button
     collection = Collection.find(params[:id])
-    render partial: 'collections/delete_button', locals: { collection: collection }
+    render partial: 'collections/delete_button', locals: { collection: }
   end
 
   # We render this link lazily because it requires doing a query to see if the user has access.
@@ -79,8 +79,8 @@ class CollectionsController < ObjectsController
     collection = Collection.find(params[:id])
     label = params.fetch(:label) { "Edit #{collection.head.name}" }
     render partial: 'edit_link', locals: {
-      collection: collection,
-      label: label,
+      collection:,
+      label:,
       anchor: params[:ref]
     }
   end

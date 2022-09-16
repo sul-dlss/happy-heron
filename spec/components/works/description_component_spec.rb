@@ -6,11 +6,11 @@ RSpec.describe Works::DescriptionComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new('work', work_form, controller.view_context, {}) }
   let(:work) { work_version.work }
   let(:work_version) { build_stubbed(:work_version) }
-  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:work_form) { WorkForm.new(work_version:, work:) }
+  let(:rendered) { render_inline(described_class.new(form:)) }
 
   it 'renders the component' do
-    expect(render_inline(described_class.new(form: form)).to_html)
+    expect(render_inline(described_class.new(form:)).to_html)
       .to include('Describe your deposit')
   end
 

@@ -8,11 +8,11 @@ RSpec.describe Admin::WorkReportQuery do
   let!(:user1) { create(:user) }
   let!(:user2) { create(:user) }
   let(:user3) { create(:user, email: 'aaaa@stanford.edu') }
-  let!(:work1) { create(:work_version_with_work, state: 'deposited', collection: collection, owner: user1).work }
-  let!(:work2) { create(:work_version_with_work, state: 'first_draft', collection: collection, owner: user2).work }
+  let!(:work1) { create(:work_version_with_work, state: 'deposited', collection:, owner: user1).work }
+  let!(:work2) { create(:work_version_with_work, state: 'first_draft', collection:, owner: user2).work }
   let!(:work3) do
     work = create(:work_version_with_work, state: 'version_draft',
-                                           collection: collection,
+                                           collection:,
                                            owner: user3,
                                            updated_at: Time.zone.parse('2018-06-01')).work
     work.created_at = Time.zone.parse('2005-01-01')

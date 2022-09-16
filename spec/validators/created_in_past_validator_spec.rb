@@ -7,7 +7,7 @@ RSpec.describe CreatedInPastValidator do
   let(:validator) { described_class.new(options) }
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }
-  let(:record) { WorkForm.new(work_version: work_version, work: work) }
+  let(:record) { WorkForm.new(work_version:, work:) }
 
   before do
     validator.validate_each(record, attribute, value)
@@ -48,7 +48,7 @@ RSpec.describe CreatedInPastValidator do
         let(:year) { next_month.year }
         let(:month) { next_month.month }
 
-        let(:value) { EDTF.parse(format('%<year>d-%<month>02d', year: year, month: month)) }
+        let(:value) { EDTF.parse(format('%<year>d-%<month>02d', year:, month:)) }
 
         it 'has errors' do
           expect(record.errors.full_messages).to eq ['Created edtf must be in the past']
@@ -61,7 +61,7 @@ RSpec.describe CreatedInPastValidator do
         let(:month) { tomorrow.month }
         let(:day) { tomorrow.day }
 
-        let(:value) { EDTF.parse(format('%<year>d-%<month>02d-%<day>02d', year: year, month: month, day: day)) }
+        let(:value) { EDTF.parse(format('%<year>d-%<month>02d-%<day>02d', year:, month:, day:)) }
 
         it 'has errors' do
           expect(record.errors.full_messages).to eq ['Created edtf must be in the past']

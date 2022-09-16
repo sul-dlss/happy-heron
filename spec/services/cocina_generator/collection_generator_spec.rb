@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CocinaGenerator::CollectionGenerator do
-  let(:model) { described_class.generate_model(collection_version: collection_version) }
+  let(:model) { described_class.generate_model(collection_version:) }
   let(:project_tag) { Settings.h2.project_tag }
   let(:description) do
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' \
@@ -15,8 +15,8 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
     let(:collection_version) do
       build(:collection_version, :with_related_links, :with_contact_emails,
             name: 'Test title',
-            description: description,
-            collection: collection)
+            description:,
+            collection:)
     end
     let(:expected_model) do
       Cocina::Models::RequestCollection.new(
@@ -78,8 +78,8 @@ RSpec.describe CocinaGenerator::CollectionGenerator do
     let(:collection_version) do
       build(:collection_version, :with_contact_emails,
             name: 'Test title',
-            description: description,
-            collection: collection)
+            description:,
+            collection:)
     end
 
     let(:expected_model) do

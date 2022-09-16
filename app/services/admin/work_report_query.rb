@@ -36,7 +36,7 @@ module Admin
       state = report.state.compact_blank
       return if state.empty?
 
-      self.query = query.where(head: { state: state })
+      self.query = query.where(head: { state: })
     end
 
     def add_collection_filter
