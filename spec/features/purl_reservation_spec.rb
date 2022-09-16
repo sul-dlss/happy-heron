@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true do
   let(:user) { create(:user) }
   let!(:collection) do
-    create(:collection, :depositor_selects_access, managed_by: [user], head: collection_version, doi_option: doi_option)
+    create(:collection, :depositor_selects_access, managed_by: [user], head: collection_version, doi_option:)
   end
   let(:collection_version) { create(:collection_version, :deposited) }
   let(:druid) { 'druid:bc123df4567' }
@@ -28,7 +28,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
     expect(page).to have_content title
     expect(page).to have_content 'Reserving PURL'
 
-    work_version = WorkVersion.find_by!(title: title)
+    work_version = WorkVersion.find_by!(title:)
     expect(work_version.work.collection).to eq collection
     expect(work_version.work.depositor).to eq user
     expect(work_version.work_type).to eq WorkType.purl_reservation_type.id
@@ -38,7 +38,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
     # for processing by AssignPidJob, so we'll just fake that by running the job manually
     source_id = "hydrus:object-#{work_version.work.id}"
     identification = instance_double(Cocina::Models::Identification, sourceId: source_id)
-    model = instance_double(Cocina::Models::DRO, identification: identification, externalIdentifier: druid)
+    model = instance_double(Cocina::Models::DRO, identification:, externalIdentifier: druid)
     assign_pid_job = AssignPidJob.new
     allow(assign_pid_job).to receive(:build_cocina_model_from_json_str).and_return(model)
     assign_pid_job.work('{}') # don't need to fake JSON for fully valid Cocina model, just mock resulting DRO
@@ -70,14 +70,14 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
       expect(page).to have_content title
       expect(page).to have_content 'Reserving PURL'
 
-      work_version = WorkVersion.find_by!(title: title)
+      work_version = WorkVersion.find_by!(title:)
       expect(work_version.work.assign_doi?).to be false
     end
   end
 
   describe 'setting the type for a reserved purl' do
     let!(:work_version) do
-      create(:work_version_with_work, :purl_reserved, collection: collection, owner: user)
+      create(:work_version_with_work, :purl_reserved, collection:, owner: user)
     end
 
     it 'from the dashboard' do
@@ -134,6 +134,6 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
     visit dashboard_path
     expect(page).not_to have_content title
-    expect(WorkVersion.find_by(title: title)).to be_nil
+    expect(WorkVersion.find_by(title:)).to be_nil
   end
 end

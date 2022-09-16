@@ -4,7 +4,7 @@ module CocinaGenerator
   # This generates a the Access cocina model for a work
   class AccessGenerator
     def self.generate(work_version:)
-      new(work_version: work_version).generate
+      new(work_version:).generate
     end
 
     def initialize(work_version:)

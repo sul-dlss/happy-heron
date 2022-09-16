@@ -15,11 +15,11 @@ class DepositStatusJob
 
   def work(msg)
     druid = parse_message(msg)
-    Honeybadger.context(druid: druid)
+    Honeybadger.context(druid:)
 
     # Without this, the database connection pool gets exhausted
     ActiveRecord::Base.connection_pool.with_connection do
-      object = Work.find_by(druid: druid) || Collection.find_by(druid: druid)
+      object = Work.find_by(druid:) || Collection.find_by(druid:)
 
       return ack! unless object
 

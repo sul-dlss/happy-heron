@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Works::LicenseComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:rendered) { render_inline(described_class.new(form:)) }
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }
-  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
+  let(:work_form) { WorkForm.new(work_version:, work:) }
 
   context 'when the collection permits selecting a license' do
     context 'with no license selected' do
@@ -29,8 +29,8 @@ RSpec.describe Works::LicenseComponent do
 
     context 'when collection has a default license' do
       let(:collection) { build(:collection, default_license: 'PDDL-1.0') }
-      let(:work) { build(:work, collection: collection) }
-      let(:work_version) { build(:work_version, work: work, license: nil) }
+      let(:work) { build(:work, collection:) }
+      let(:work_version) { build(:work_version, work:, license: nil) }
 
       it 'renders the component with the collection default' do
         expect(rendered.css('option[selected]')).not_to be_empty

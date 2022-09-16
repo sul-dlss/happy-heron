@@ -8,7 +8,7 @@ RSpec.describe Works::ContactEmailRowComponent, type: :component do
   let(:collection) { build(:collection) }
   let(:collection_version) { build(:collection_version) }
 
-  let(:parent_form) { CreateCollectionForm.new(collection: collection, collection_version: collection_version) }
+  let(:parent_form) { CreateCollectionForm.new(collection:, collection_version:) }
   let(:email_form) do
     parent_form.prepopulate!
     parent_form.contact_emails.first

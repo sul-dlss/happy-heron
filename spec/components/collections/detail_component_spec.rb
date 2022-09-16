@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collections::DetailComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection_version: collection_version)) }
+  let(:rendered) { render_inline(described_class.new(collection_version:)) }
 
   context 'when a first draft' do
     let(:collection_version) { build_stubbed(:collection_version, :with_contact_emails) }

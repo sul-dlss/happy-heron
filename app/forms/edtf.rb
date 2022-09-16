@@ -4,7 +4,7 @@
 module Edtf
   # Adds a property method that can handle the :edtf and :range options
   module ClassMethods
-    def property(name, options = {}, &block)
+    def property(name, options = {}, &)
       if options[:edtf]
         prop_name = name.to_s.delete_suffix('_edtf')
         property "#{prop_name}(1i)", virtual: true
@@ -14,7 +14,7 @@ module Edtf
 
         create_range(prop_name) if options[:range]
       end
-      super(name, options, &block)
+      super(name, options, &)
     end
 
     def create_range(prop_name)

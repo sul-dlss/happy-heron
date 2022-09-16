@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Works::ContributorRowComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, author, controller.view_context, {}) }
-  let(:component) { described_class.new(form: form, is_author: is_author) }
+  let(:component) { described_class.new(form:, is_author:) }
   let(:rendered) { render_inline(component) }
-  let(:author) { build_stubbed(:person_author, orcid: orcid) }
+  let(:author) { build_stubbed(:person_author, orcid:) }
   let(:is_author) { true }
   let(:orcid) { nil }
 

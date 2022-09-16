@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe BreadcrumbNavComponent, type: :component do
-  let(:nav) { described_class.new(breadcrumbs: breadcrumbs) }
+  let(:nav) { described_class.new(breadcrumbs:) }
   let(:rendered) { render_inline(nav) }
 
   context 'when no breadcrumbs' do

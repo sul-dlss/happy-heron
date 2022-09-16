@@ -8,7 +8,7 @@ class CollectionContributorPopulator < ApplicationPopulator
     fragment = args.fetch(:fragment)
     as = args.fetch(:as)
 
-    item = existing_record(form: form, id: fragment['id'])
+    item = existing_record(form:, id: fragment['id'])
     if fragment['_destroy'] == '1'
       # Remove contributor
       form.public_send(as).delete(item) if item

@@ -7,10 +7,10 @@ RSpec.describe 'Admin dashboard' do
 
   context 'when user is an application admin' do
     let(:collection) { create(:collection, creator: user) }
-    let(:collection_version) { create(:collection_version_with_collection, collection: collection) }
-    let(:work1) { create(:work, :with_druid, owner: user, collection: collection) }
+    let(:collection_version) { create(:collection_version_with_collection, collection:) }
+    let(:work1) { create(:work, :with_druid, owner: user, collection:) }
     let(:work_version1) { create(:work_version, state: 'deposited', work: work1) }
-    let(:work2) { create(:work, owner: user, collection: collection) }
+    let(:work2) { create(:work, owner: user, collection:) }
     let(:work_version2) { create(:work_version, state: 'first_draft', work: work2) }
 
     before do

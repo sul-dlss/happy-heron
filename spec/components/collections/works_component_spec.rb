@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Collections::WorksComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection)) }
+  let(:rendered) { render_inline(described_class.new(collection:)) }
 
   context 'when displaying a collections works' do
     let(:collection) { create(:collection) }
-    let(:user_with_groups) { UserWithGroups.new(user: user, groups: groups) }
+    let(:user_with_groups) { UserWithGroups.new(user:, groups:) }
     let(:user) { create(:user) }
-    let(:work1) { create(:work, collection: collection, depositor: user) }
-    let(:work2) { create(:work, collection: collection) }
+    let(:work1) { create(:work, collection:, depositor: user) }
+    let(:work2) { create(:work, collection:) }
     let(:work_version1) { create(:work_version, work: work1) }
     let(:work_version2) { create(:work_version, work: work2) }
 
@@ -20,7 +20,7 @@ RSpec.describe Collections::WorksComponent, type: :component do
 
       allow(controller).to receive_messages(
         current_user: user,
-        user_with_groups: user_with_groups
+        user_with_groups:
       )
     end
 

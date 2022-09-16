@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe WorkPolicy do
   let(:user) { build_stubbed :user }
   # `record` must be defined - it is the authorization target
-  let(:work_version) { build_stubbed :work_version, work: work }
-  let(:work) { build_stubbed :work, collection: collection }
+  let(:work_version) { build_stubbed :work_version, work: }
+  let(:work) { build_stubbed :work, collection: }
   let(:collection) { build_stubbed :collection, head: collection_version }
   let(:collection_version) { build_stubbed :collection_version, :deposited }
   let(:record) { work }
@@ -14,8 +14,8 @@ RSpec.describe WorkPolicy do
   # `context` is the authorization context
   let(:context) do
     {
-      user: user,
-      user_with_groups: UserWithGroups.new(user: user, groups: groups)
+      user:,
+      user_with_groups: UserWithGroups.new(user:, groups:)
     }
   end
 
@@ -69,7 +69,7 @@ RSpec.describe WorkPolicy do
     end
 
     context 'when not persisted' do
-      let(:work) { Work.new(attributes_for(:work).merge(collection: collection)) }
+      let(:work) { Work.new(attributes_for(:work).merge(collection:)) }
 
       failed 'when user is not the owner, reviewer or manager for the collection'
 

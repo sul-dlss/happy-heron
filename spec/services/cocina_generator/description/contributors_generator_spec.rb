@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
-  subject(:cocina_model) { described_class.generate(work_version: work_version) }
+  subject(:cocina_model) { described_class.generate(work_version:) }
 
   let(:cocina_props) { cocina_model.map(&:to_h) }
 
@@ -48,7 +48,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       context 'with no publisher' do
         let(:contributor) { build(:person_contributor) }
         let(:work_version) { build(:work_version, contributors: [contributor]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version: work_version) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version:) }
 
         it 'returns empty Array' do
           expect(cocina_model).to eq []
@@ -59,7 +59,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
         let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
         let(:work_version) { build(:work_version, contributors: [org_contrib1, org_contrib2]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version: work_version) }
+        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version:) }
 
         it 'returns Array of populated cocina model events, one for each publisher' do
           expect(cocina_props).to eq(
@@ -111,7 +111,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         let(:contributor) { build(:person_contributor) }
         let(:work_version) { build(:work_version, contributors: [contributor]) }
         let(:cocina_model) do
-          described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date)
+          described_class.events_from_publisher_contributors(work_version:, pub_date:)
         end
 
         it 'returns empty Array' do
@@ -124,7 +124,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
         let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
         let(:work_version) { build(:work_version, contributors: [org_contrib1, org_contrib2]) }
         let(:cocina_model) do
-          described_class.events_from_publisher_contributors(work_version: work_version, pub_date: pub_date)
+          described_class.events_from_publisher_contributors(work_version:, pub_date:)
         end
 
         it 'returns Array of populated cocina model events, one for each publisher' do
@@ -220,8 +220,8 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
     let(:cocina_props) do
       {
         contributor: cocina_model.map(&:to_h),
-        event: described_class.events_from_publisher_contributors(work_version: work_version,
-                                                                  pub_date: pub_date).map(&:to_h)
+        event: described_class.events_from_publisher_contributors(work_version:,
+                                                                  pub_date:).map(&:to_h)
       }.compact_blank
     end
 

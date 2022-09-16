@@ -8,11 +8,11 @@ class ReservationsController < ObjectsController
 
   def create
     work = Work.new(collection_id: params[:collection_id], depositor: current_user, owner: current_user)
-    work_version = WorkVersion.new(work: work)
+    work_version = WorkVersion.new(work:)
 
     authorize! work_version
 
-    @form = ReservationForm.new(work_version: work_version, work: work)
+    @form = ReservationForm.new(work_version:, work:)
     if @form.validate(work_params) && @form.save
       work_version.reserve_purl!
       redirect_to dashboard_path

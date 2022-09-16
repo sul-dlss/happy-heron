@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Show a work detail' do
   let(:collection) { create(:collection_version_with_collection).collection }
-  let(:work) { create(:work, collection: collection) }
-  let(:work_version) { create(:work_version, work: work) }
+  let(:work) { create(:work, collection:) }
+  let(:work_version) { create(:work_version, work:) }
 
   before do
     work.update(head: work_version)
@@ -56,7 +56,7 @@ RSpec.describe 'Show a work detail' do
     end
 
     context 'when the work has a blank title' do
-      let(:work_version) { create(:work_version, title: '', work: work) }
+      let(:work_version) { create(:work_version, title: '', work:) }
 
       it 'displays a default title for a work when it is blank' do
         expect(response).to have_http_status(:ok)
@@ -67,7 +67,7 @@ RSpec.describe 'Show a work detail' do
     context 'when work opener is same as depositor' do
       let(:user) { create(:user) }
 
-      let(:work) { create(:work, collection: collection, owner: user, depositor: user) }
+      let(:work) { create(:work, collection:, owner: user, depositor: user) }
 
       it 'does not display the owner' do
         expect(response).to have_http_status(:ok)

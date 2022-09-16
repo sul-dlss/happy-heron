@@ -10,8 +10,8 @@ RSpec.describe CollectionPolicy do
   # `context` is the authorization context
   let(:context) do
     {
-      user: user,
-      user_with_groups: UserWithGroups.new(user: user, groups: groups)
+      user:,
+      user_with_groups: UserWithGroups.new(user:, groups:)
     }
   end
   let(:groups) { [] }

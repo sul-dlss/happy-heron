@@ -29,7 +29,7 @@ FactoryBot.define do
           collection { nil }
           owner { association(:user) }
         end
-        work { association :work, collection: collection, owner: owner }
+        work { association :work, collection:, owner: }
 
         after(:create) do |work_version, _evaluator|
           work_version.work.update(head: work_version)
@@ -40,11 +40,11 @@ FactoryBot.define do
         transient do
           collection { association(:collection) }
           collection_version do
-            association(:collection_version_with_collection, state: 'first_draft', collection: collection)
+            association(:collection_version_with_collection, state: 'first_draft', collection:)
           end
           owner { association(:user) }
         end
-        work { association :work, collection: collection_version.collection, owner: owner }
+        work { association :work, collection: collection_version.collection, owner: }
 
         after(:create) do |work_version, _evaluator|
           work_version.work.update(head: work_version)
@@ -186,7 +186,7 @@ FactoryBot.define do
       collection { nil }
       owner { association(:user) }
     end
-    work { association :work, collection: collection, owner: owner, work_versions: [instance] }
+    work { association :work, collection:, owner:, work_versions: [instance] }
 
     after(:create) do |work_version, _evaluator|
       work_version.work.update(head: work_version)

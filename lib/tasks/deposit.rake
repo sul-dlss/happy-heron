@@ -5,9 +5,9 @@ task complete_deposits: :environment do
   abort 'ERROR: This task only runs in the development environment!' unless Rails.env.development?
 
   objects_awaiting_deposit.each do |object_version|
-    deposit_completer = DepositCompleter.new(object_version: object_version)
+    deposit_completer = DepositCompleter.new(object_version:)
     druid = deposit_completer.parent.druid.presence || random_druid
-    deposit_completer.parent.update(druid: druid)
+    deposit_completer.parent.update(druid:)
     deposit_completer.complete
     puts "Marked #{object_version.class} id=#{object_version.id} as deposited with #{druid}"
   end
@@ -19,7 +19,7 @@ task assign_pids: :environment do
 
   WorkVersion.with_state('reserving_purl').each do |object|
     druid = random_druid
-    object.work.update(druid: druid)
+    object.work.update(druid:)
     object.pid_assigned!
     puts "Assigned #{druid} to #{object.title} (id=#{object.id})"
   end

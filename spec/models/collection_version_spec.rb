@@ -60,14 +60,14 @@ RSpec.describe CollectionVersion do
                                            'CollectionsMailer', 'manage_access_granted_email', 'deliver_now',
                                            { params: {
                                              user: manager1,
-                                             collection_version: collection_version
+                                             collection_version:
                                            }, args: [] }
                                          ))
                                     .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                            'CollectionsMailer', 'manage_access_granted_email', 'deliver_now',
                                            { params: {
                                              user: manager2,
-                                             collection_version: collection_version
+                                             collection_version:
                                            }, args: [] }
                                          ))
         expect(DepositCollectionJob).to have_received(:perform_later).with(collection_version)
@@ -100,7 +100,7 @@ RSpec.describe CollectionVersion do
                                         .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
                                                'FirstDraftCollectionsMailer', 'first_draft_created', 'deliver_now',
                                                { params: {
-                                                 collection_version: collection_version
+                                                 collection_version:
                                                }, args: [] }
                                              ))
           end

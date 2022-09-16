@@ -7,7 +7,9 @@ orbs:
   cypress: cypress-io/cypress@2.2.0
 jobs:
   cypress:
-    executor: ruby-rails/ruby-postgres
+    executor:
+      name: ruby-rails/ruby-postgres
+      ruby-tag: '3.1.2'
     steps:
       - checkout
       - ruby/install-deps

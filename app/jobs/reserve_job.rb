@@ -8,11 +8,11 @@ class ReserveJob < BaseDepositJob
     login_result = login
     raise login_result.failure unless login_result.success?
 
-    request_dro = CocinaGenerator::DROGenerator.generate_model(work_version: work_version)
+    request_dro = CocinaGenerator::DROGenerator.generate_model(work_version:)
     SdrClient::Deposit::CreateResource.run(accession: false,
                                            metadata: request_dro,
                                            logger: Rails.logger,
-                                           connection: connection)
+                                           connection:)
   end
 
   def connection

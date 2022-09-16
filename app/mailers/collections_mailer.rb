@@ -61,7 +61,7 @@ class CollectionsMailer < ApplicationMailer
 
     subject = "Reminder: Your #{@collection_version.name} collection in the SDR is still in progress"
 
-    mail(to: @user.email, subject: subject)
+    mail(to: @user.email, subject:)
   end
 
   def new_version_reminder_email
@@ -70,7 +70,7 @@ class CollectionsMailer < ApplicationMailer
 
     subject = "Reminder: New version of your #{@collection_version.name} collection in the SDR is still in progress"
 
-    mail(to: @user.email, subject: subject)
+    mail(to: @user.email, subject:)
   end
 
   def item_deposited

@@ -5,7 +5,7 @@ module CocinaGenerator
     # This generates a File for a work
     class FileGenerator
       def self.generate(work_version:, attached_file:)
-        new(work_version: work_version, attached_file: attached_file).generate
+        new(work_version:, attached_file:).generate
       end
 
       def initialize(work_version:, attached_file:)
@@ -30,9 +30,9 @@ module CocinaGenerator
           type: Cocina::Models::ObjectType.file,
           version: work_version.version,
           label: attached_file.label,
-          filename: filename,
-          access: access,
-          administrative: administrative,
+          filename:,
+          access:,
+          administrative:,
           hasMimeType: blob.content_type,
           hasMessageDigests: message_digests,
           size: blob.byte_size

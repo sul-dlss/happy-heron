@@ -11,7 +11,7 @@ class ApplicationPopulator
   attr_reader :klass
 
   def existing_record(form:, id:)
-    value(form).find_by(id: id) if id.present?
+    value(form).find_by(id:) if id.present?
   end
 
   def value(form)

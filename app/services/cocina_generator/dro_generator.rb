@@ -4,7 +4,7 @@ module CocinaGenerator
   # This generates a RequestDRO for a work
   class DROGenerator
     def self.generate_model(work_version:)
-      new(work_version: work_version).generate_model
+      new(work_version:).generate_model
     end
 
     def initialize(work_version:)
@@ -28,15 +28,15 @@ module CocinaGenerator
 
     def model_attributes # rubocop:disable Metrics/AbcSize
       {
-        access: AccessGenerator.generate(work_version: work_version),
+        access: AccessGenerator.generate(work_version:),
         administrative: {
           hasAdminPolicy: Settings.h2.hydrus_apo
         },
-        identification: identification,
-        structural: structural,
+        identification:,
+        structural:,
         label: work_version.title,
         type: cocina_type,
-        description: Description::Generator.generate(work_version: work_version).to_h,
+        description: Description::Generator.generate(work_version:).to_h,
         version: work_version.version
       }.tap do |h|
         h[:administrative][:partOfProject] = Settings.h2.project_tag unless druid
@@ -46,7 +46,7 @@ module CocinaGenerator
     def identification
       {
         sourceId: "hydrus:object-#{work.id}",
-        doi: doi
+        doi:
       }.compact
     end
 
@@ -57,7 +57,7 @@ module CocinaGenerator
     end
 
     def structural
-      Structural::Generator.generate(work_version: work_version)
+      Structural::Generator.generate(work_version:)
     end
   end
 end

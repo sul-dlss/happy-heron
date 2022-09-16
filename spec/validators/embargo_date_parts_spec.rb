@@ -6,7 +6,7 @@ RSpec.describe EmbargoDateParts do
   let(:validator) { described_class.new }
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }
-  let(:record) { WorkForm.new(work_version: work_version, work: work) }
+  let(:record) { WorkForm.new(work_version:, work:) }
 
   context 'when a valid date is provided' do
     before do

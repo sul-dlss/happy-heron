@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe CitationComponent, type: :component do
   subject(:button) { rendered.css('button').first }
 
-  let(:rendered) { render_inline(described_class.new(work_version: work_version)) }
+  let(:rendered) { render_inline(described_class.new(work_version:)) }
 
   context 'when the state is deposited' do
     let(:work_version) { build(:work_version, :deposited) }

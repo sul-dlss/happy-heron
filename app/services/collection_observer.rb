@@ -4,25 +4,25 @@
 class CollectionObserver
   def self.first_draft_created(work_version, _transition)
     collection_managers_excluding_owner(work_version).each do |user|
-      mailer_with_owner(user: user, work_version: work_version).first_draft_created.deliver_later
+      mailer_with_owner(user:, work_version:).first_draft_created.deliver_later
     end
   end
 
   def self.item_deposited(work_version, _transition)
     collection_managers_excluding_owner(work_version).each do |user|
-      mailer_with_owner(user: user, work_version: work_version).item_deposited.deliver_later
+      mailer_with_owner(user:, work_version:).item_deposited.deliver_later
     end
   end
 
   def self.version_draft_created(work_version, _transition)
     collection_managers_excluding_owner(work_version).each do |user|
-      mailer_with_owner(user: user, work_version: work_version).version_draft_created.deliver_later
+      mailer_with_owner(user:, work_version:).version_draft_created.deliver_later
     end
   end
 
   # When an already published collection is updated
   def self.settings_updated(collection, change_set:, user:, form:)
-    create_settings_updated_event(collection: collection, change_set: change_set, form: form, user: user)
+    create_settings_updated_event(collection:, change_set:, form:, user:)
 
     collection_version = collection.head
     managers_added(collection_version, change_set)
@@ -36,8 +36,8 @@ class CollectionObserver
   end
 
   def self.create_settings_updated_event(collection:, change_set:, form:, user:)
-    event_params = { user: user, event_type: 'settings_updated' }.tap do |params|
-      description = CollectionEventDescriptionBuilder.build(change_set: change_set, form: form)
+    event_params = { user:, event_type: 'settings_updated' }.tap do |params|
+      description = CollectionEventDescriptionBuilder.build(change_set:, form:)
       params[:description] = description if description.present?
     end
     collection.events.create(event_params)
@@ -54,13 +54,13 @@ class CollectionObserver
   def self.mailer_with_owner(user:, work_version:)
     owner = work_version.work.owner
     collection = work_version.work.collection
-    CollectionsMailer.with(user: user, collection_version: collection.head, owner: owner)
+    CollectionsMailer.with(user:, collection_version: collection.head, owner:)
   end
   private_class_method :mailer_with_owner
 
   def self.depositors_added(collection_version, change_set)
     change_set.added_depositors.each do |depositor|
-      CollectionsMailer.with(collection_version: collection_version, user: depositor)
+      CollectionsMailer.with(collection_version:, user: depositor)
                        .invitation_to_deposit_email.deliver_later
     end
   end
@@ -68,7 +68,7 @@ class CollectionObserver
 
   def self.managers_added(collection_version, change_set)
     change_set.added_managers.each do |manager|
-      CollectionsMailer.with(collection_version: collection_version, user: manager)
+      CollectionsMailer.with(collection_version:, user: manager)
                        .manage_access_granted_email.deliver_later
     end
   end
@@ -76,7 +76,7 @@ class CollectionObserver
 
   def self.managers_removed(collection_version, change_set)
     change_set.removed_managers.each do |manager|
-      CollectionsMailer.with(collection_version: collection_version, user: manager)
+      CollectionsMailer.with(collection_version:, user: manager)
                        .manage_access_removed_email.deliver_later
     end
   end
@@ -84,7 +84,7 @@ class CollectionObserver
 
   def self.depositors_removed(collection_version, change_set)
     change_set.removed_depositors.each do |depositor|
-      CollectionsMailer.with(collection_version: collection_version, user: depositor)
+      CollectionsMailer.with(collection_version:, user: depositor)
                        .deposit_access_removed_email.deliver_later
     end
   end
@@ -92,7 +92,7 @@ class CollectionObserver
 
   def self.reviewers_added(collection_version, change_set)
     change_set.added_reviewers.each do |reviewer|
-      CollectionsMailer.with(collection_version: collection_version, user: reviewer)
+      CollectionsMailer.with(collection_version:, user: reviewer)
                        .review_access_granted_email.deliver_later
     end
   end
@@ -100,7 +100,7 @@ class CollectionObserver
 
   def self.reviewers_removed(collection_version, change_set)
     change_set.removed_reviewers.each do |reviewer|
-      CollectionsMailer.with(collection_version: collection_version, user: reviewer)
+      CollectionsMailer.with(collection_version:, user: reviewer)
                        .review_access_removed_email.deliver_later
     end
   end
@@ -112,7 +112,7 @@ class CollectionObserver
     (collection.managed_by + collection.reviewed_by).uniq.each do |user|
       # Don't send if the user is the only changed participant.
       unless change_set.changed_participants == [user]
-        CollectionsMailer.with(collection_version: collection.head, user: user)
+        CollectionsMailer.with(collection_version: collection.head, user:)
                          .participants_changed_email.deliver_later
       end
     end

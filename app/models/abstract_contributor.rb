@@ -86,6 +86,6 @@ class AbstractContributor < ApplicationRecord
 
   def role_term=(val)
     contributor_type, role = val.split(SEPARATOR)
-    self.attributes = { contributor_type: contributor_type, role: role }
+    self.attributes = { contributor_type:, role: }
   end
 end

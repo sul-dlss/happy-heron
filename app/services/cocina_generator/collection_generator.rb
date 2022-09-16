@@ -4,7 +4,7 @@ module CocinaGenerator
   # This generates a RequestCollection or Collection for a Collection
   class CollectionGenerator
     def self.generate_model(collection_version:)
-      new(collection_version: collection_version).generate_model
+      new(collection_version:).generate_model
     end
 
     def initialize(collection_version:)
@@ -26,7 +26,7 @@ module CocinaGenerator
 
     def model_attributes # rubocop:disable Metrics/AbcSize
       {
-        access: access,
+        access:,
         administrative: {
           hasAdminPolicy: Settings.h2.hydrus_apo
         },
@@ -35,7 +35,7 @@ module CocinaGenerator
         },
         label: collection_version.name,
         type: Cocina::Models::ObjectType.collection,
-        description: Description::CollectionDescriptionGenerator.generate(collection_version: collection_version).to_h,
+        description: Description::CollectionDescriptionGenerator.generate(collection_version:).to_h,
         version: collection_version.version
       }.tap do |h|
         h[:administrative][:partOfProject] = Settings.h2.project_tag unless collection_version.collection.druid

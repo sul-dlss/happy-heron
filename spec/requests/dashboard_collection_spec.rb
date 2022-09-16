@@ -8,27 +8,27 @@ RSpec.describe 'Dashboard collection requests' do
   context 'when user has in progress deposits in different states' do
     let(:user) { collection.depositors.first }
     let(:collection) { create(:collection, :with_depositors, depositor_count: 1) }
-    let(:work1) { create(:work, owner: user, collection: collection) }
+    let(:work1) { create(:work, owner: user, collection:) }
     let(:work_version1) { create(:work_version, state: 'first_draft', title: 'I am a first draft', work: work1) }
-    let(:work2) { create(:work, owner: user, collection: collection) }
+    let(:work2) { create(:work, owner: user, collection:) }
     let(:work_version2) { create(:work_version, state: 'version_draft', title: 'I am a version draft', work: work2) }
-    let(:work3) { create(:work, owner: user, collection: collection) }
+    let(:work3) { create(:work, owner: user, collection:) }
     let(:work_version3) { create(:work_version, state: 'rejected', title: 'I am rejected', work: work3) }
-    let(:work4) { create(:work, owner: user, collection: collection) }
+    let(:work4) { create(:work, owner: user, collection:) }
     let(:work_version4) { create(:work_version, state: 'deposited', title: 'I am deposited', work: work4) }
-    let(:work5) { create(:work, owner: user, collection: collection) }
+    let(:work5) { create(:work, owner: user, collection:) }
     let(:work_version5) { create(:work_version, state: 'depositing', title: 'I am depositing', work: work5) }
-    let(:work6) { create(:work, owner: user, collection: collection) }
+    let(:work6) { create(:work, owner: user, collection:) }
     let(:work_version6) do
       create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6)
     end
-    let(:work7) { create(:work, owner: user, collection: collection) }
+    let(:work7) { create(:work, owner: user, collection:) }
     let(:work_version7) do
       create(:work_version, state: 'decommissioned', title: 'I am decommissioned', work: work6)
     end
 
     before do
-      create(:collection_version_with_collection, collection: collection)
+      create(:collection_version_with_collection, collection:)
 
       work1.update(head: work_version1)
       work2.update(head: work_version2)

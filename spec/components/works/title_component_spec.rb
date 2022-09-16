@@ -11,7 +11,7 @@ RSpec.describe Works::TitleComponent do
   end
 
   it 'renders the component' do
-    expect(render_inline(described_class.new(form: form)).to_html)
+    expect(render_inline(described_class.new(form:)).to_html)
       .to include('Title of deposit and contact information')
   end
 end

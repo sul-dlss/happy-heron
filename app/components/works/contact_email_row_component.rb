@@ -11,7 +11,7 @@ module Works
     attr_reader :form, :key
 
     def tooltip
-      render PopoverComponent.new key: key
+      render PopoverComponent.new key:
     end
 
     def bootstrap_classes

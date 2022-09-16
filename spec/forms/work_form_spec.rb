@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe WorkForm do
-  subject(:form) { described_class.new(work_version: work_version, work: work) }
+  subject(:form) { described_class.new(work_version:, work:) }
 
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }
@@ -45,7 +45,7 @@ RSpec.describe WorkForm do
     end
 
     it 'filters out name values for the wrong type' do
-      form.validate(contributors: contributors)
+      form.validate(contributors:)
       expect(form.contributors.size).to eq 2
       expect(form.contributors.first.full_name).to be_nil
       expect(form.contributors.last.first_name).to be_nil
@@ -57,7 +57,7 @@ RSpec.describe WorkForm do
     let(:author_error) { 'Please add at least one author.' }
 
     before do
-      form.validate(authors: authors)
+      form.validate(authors:)
     end
 
     context 'with no authors' do
@@ -224,7 +224,7 @@ RSpec.describe WorkForm do
 
       context 'when release has already been set to immediate' do
         let(:collection) { build(:collection, release_option: 'depositor-selects') }
-        let(:work_version) { create(:work_version_with_work, :deposited, collection: collection) }
+        let(:work_version) { create(:work_version_with_work, :deposited, collection:) }
 
         context 'when release is nil' do
           it 'validates' do
@@ -244,7 +244,7 @@ RSpec.describe WorkForm do
       context 'when release has already been set to embargo and it elapsed' do
         let(:collection) { build(:collection, release_option: 'depositor-selects') }
         let(:work_version) do
-          create(:work_version_with_work, :deposited, embargo_date: 2.weeks.ago, collection: collection)
+          create(:work_version_with_work, :deposited, embargo_date: 2.weeks.ago, collection:)
         end
 
         context 'when release is nil' do

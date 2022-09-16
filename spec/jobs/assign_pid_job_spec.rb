@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AssignPidJob do
-  let(:message) { { model: model }.to_json }
+  let(:message) { { model: }.to_json }
   let(:druid) { 'druid:bc123df4567' }
 
   context "with a work that doesn't have a doi (and hasn't requested one)" do
@@ -25,7 +25,7 @@ RSpec.describe AssignPidJob do
                                 contains: []
                               })
     end
-    let(:work) { create(:work_version_with_work, :depositing, collection: collection).work }
+    let(:work) { create(:work_version_with_work, :depositing, collection:).work }
     let(:collection) { create(:collection_version_with_collection).collection }
 
     it 'updates the druid' do
@@ -54,7 +54,7 @@ RSpec.describe AssignPidJob do
                                 contains: []
                               })
     end
-    let(:work) { create(:work_version_with_work, :reserving_purl, collection: collection).work }
+    let(:work) { create(:work_version_with_work, :reserving_purl, collection:).work }
     let(:collection) { create(:collection_version_with_collection).collection }
 
     it 'updates the druid' do
@@ -84,7 +84,7 @@ RSpec.describe AssignPidJob do
                                 contains: []
                               })
     end
-    let(:work) { create(:work_version_with_work, collection: collection, state: 'depositing').work }
+    let(:work) { create(:work_version_with_work, collection:, state: 'depositing').work }
     let(:collection) { create(:collection_version_with_collection).collection }
 
     it 'updates the druid' do

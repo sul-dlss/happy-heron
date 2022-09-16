@@ -31,8 +31,8 @@ module Works
       end
 
       def roles
-        AbstractContributor.grouped_roles(citable: citable)
-                           .fetch(key).map { |label| Role.new(contributor_type: key, label: label) }
+        AbstractContributor.grouped_roles(citable:)
+                           .fetch(key).map { |label| Role.new(contributor_type: key, label:) }
       end
     end
 
@@ -54,7 +54,7 @@ module Works
 
     def grouped_options
       %w[person organization].map do |key|
-        ContributorType.new(key: key, citable: false)
+        ContributorType.new(key:, citable: false)
       end
     end
   end

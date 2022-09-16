@@ -6,14 +6,14 @@ RSpec.describe Dashboard::InProgressCollectionComponent, type: :component do
   let(:presenter) do
     instance_double(DashboardPresenter, collection_managers_in_progress: collection_versions)
   end
-  let(:user_with_groups) { UserWithGroups.new(user: user, groups: []) }
+  let(:user_with_groups) { UserWithGroups.new(user:, groups: []) }
   let(:user) { create(:user) }
-  let(:rendered) { render_inline(described_class.new(presenter: presenter)) }
+  let(:rendered) { render_inline(described_class.new(presenter:)) }
 
   before do
     allow(controller).to receive_messages(
       current_user: user,
-      user_with_groups: user_with_groups
+      user_with_groups:
     )
   end
 

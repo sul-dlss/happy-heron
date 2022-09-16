@@ -6,7 +6,7 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
   let(:work_version) { build(:work_version) }
 
   describe '.generate' do
-    subject(:generated) { described_class.generate(work_version: work_version) }
+    subject(:generated) { described_class.generate(work_version:) }
 
     context 'with a work containing multiple subtypes' do
       it 'generates a flat array of structured values for the work type and subtypes' do
@@ -202,7 +202,7 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
   describe 'cocina mapping' do
     work_types = WorkType.all
 
-    let(:generator) { described_class.new(work_version: work_version) }
+    let(:generator) { described_class.new(work_version:) }
     let(:types_to_genres) { generator.send(:types_to_genres) }
     let(:types_to_resource_types) { generator.send(:types_to_resource_types) }
 
@@ -260,9 +260,9 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
   # from https://github.com/sul-dlss/dor-services-app/blob/main/spec/services/cocina/mapping/descriptive/h2/form_h2_spec.rb
   # The contexts below match the spec names from above. The expected cocina props are copied directly.
   describe 'h2 mapping specification examples' do
-    subject(:cocina_props) { { form: described_class.generate(work_version: work_version).map(&:to_h) } }
+    subject(:cocina_props) { { form: described_class.generate(work_version:).map(&:to_h) } }
 
-    let(:work_version) { build(:work_version, work_type: work_type, subtype: work_subtypes) }
+    let(:work_version) { build(:work_version, work_type:, subtype: work_subtypes) }
 
     context 'with type only, resource type with URI' do
       let(:work_type) { 'data' }

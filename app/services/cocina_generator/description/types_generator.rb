@@ -8,7 +8,7 @@ module CocinaGenerator
       DATACITE_SOURCE_LABEL = 'DataCite resource types'
 
       def self.generate(work_version:)
-        new(work_version: work_version).generate
+        new(work_version:).generate
       end
 
       def initialize(work_version:)
@@ -51,7 +51,7 @@ module CocinaGenerator
 
         [
           Cocina::Models::DescriptiveValue.new(
-            value: value,
+            value:,
             source: { value: DATACITE_SOURCE_LABEL },
             type: 'resource type'
           )

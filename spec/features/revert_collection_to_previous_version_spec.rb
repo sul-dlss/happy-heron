@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Delete a draft collection', js: true do
   let(:collection) { create(:collection, :with_managers, manager_count: 1) }
-  let!(:version1) { create(:collection_version, :deposited, version: 1, collection: collection) }
-  let(:version2) { create(:collection_version, :version_draft, version: 2, collection: collection) }
+  let!(:version1) { create(:collection_version, :deposited, version: 1, collection:) }
+  let(:version2) { create(:collection_version, :version_draft, version: 2, collection:) }
   let(:user) { collection.managed_by.first }
 
   before do

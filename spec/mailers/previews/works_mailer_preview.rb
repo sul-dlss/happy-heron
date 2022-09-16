@@ -17,11 +17,11 @@ class WorksMailerPreview < ActionMailer::Preview
 
   def mailer_with_work
     work = Work.first
-    WorksMailer.with(user: work.depositor, work: work)
+    WorksMailer.with(user: work.depositor, work:)
   end
 
   def first_draft_reminder_email
     work = Work.first
-    WorksMailer.with(work: work).first_draft_reminder_email
+    WorksMailer.with(work:).first_draft_reminder_email
   end
 end

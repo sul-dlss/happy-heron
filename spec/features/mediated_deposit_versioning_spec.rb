@@ -13,14 +13,14 @@ RSpec.describe 'Edit a new version of a work in a collection using mediated depo
   let(:reviewer) { create(:user) }
 
   # Work, WorkVersion, and Collection need to exist before user hits dashboard
-  let!(:work_version) { create(:valid_deposited_work_version, work: work) }
+  let!(:work_version) { create(:valid_deposited_work_version, work:) }
   let(:work) do
     create(:work, druid: 'druid:bc123df4567', owner: depositor, collection: collection_version.collection)
   end
 
   before do
     work.update(head: work_version)
-    create(:attached_file, :with_file, work_version: work_version)
+    create(:attached_file, :with_file, work_version:)
   end
 
   context 'when reviewer rejects, then approves work' do

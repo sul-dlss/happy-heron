@@ -3,7 +3,7 @@
 # This looks up a name from ORCID.org
 class OrcidService
   def self.lookup(orcid:)
-    new(orcid: orcid).lookup
+    new(orcid:).lookup
   end
 
   def initialize(orcid:)

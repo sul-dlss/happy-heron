@@ -11,7 +11,7 @@ module Works
     attr_reader :form, :key
 
     def row(email_form)
-      render Works::ContactEmailRowComponent.new(form: email_form, key: key)
+      render Works::ContactEmailRowComponent.new(form: email_form, key:)
     end
   end
 end

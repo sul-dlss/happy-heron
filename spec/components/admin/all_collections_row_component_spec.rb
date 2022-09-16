@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::AllCollectionsRowComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection, counts: counts)) }
+  let(:rendered) { render_inline(described_class.new(collection:, counts:)) }
   let(:collection) { build_stubbed(:collection, head: collection_version) }
   let(:collection_version) { build_stubbed(:collection_version) }
   let(:counts) { {} }

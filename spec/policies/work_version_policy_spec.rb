@@ -5,16 +5,16 @@ require 'rails_helper'
 RSpec.describe WorkVersionPolicy do
   let(:user) { build_stubbed :user }
   # `record` must be defined - it is the authorization target
-  let(:record) { build_stubbed :work_version, work: work }
-  let(:work) { build_stubbed :work, collection: collection }
+  let(:record) { build_stubbed :work_version, work: }
+  let(:work) { build_stubbed :work, collection: }
   let(:collection) { build_stubbed :collection, head: collection_version }
   let(:collection_version) { build_stubbed :collection_version, :deposited }
 
   # `context` is the authorization context
   let(:context) do
     {
-      user: user,
-      user_with_groups: UserWithGroups.new(user: user, groups: groups)
+      user:,
+      user_with_groups: UserWithGroups.new(user:, groups:)
     }
   end
 
@@ -48,41 +48,41 @@ RSpec.describe WorkVersionPolicy do
     failed 'when user is not the owner'
 
     succeed 'when user is the owner and status is not pending_approval' do
-      let(:work) { build_stubbed :work, collection: collection, owner: user }
-      let(:record) { build_stubbed :work_version, work: work }
+      let(:work) { build_stubbed :work, collection:, owner: user }
+      let(:record) { build_stubbed :work_version, work: }
     end
 
     failed 'when user is the owner and status is pending_approval' do
-      let(:work) { build_stubbed :work, collection: collection, owner: user }
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      let(:work) { build_stubbed :work, collection:, owner: user }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: }
     end
 
     failed 'when user is the owner and status is depositing' do
-      let(:work) { build_stubbed :work, collection: collection, owner: user }
-      let(:record) { build_stubbed :work_version, :depositing, work: work }
+      let(:work) { build_stubbed :work, collection:, owner: user }
+      let(:record) { build_stubbed :work_version, :depositing, work: }
     end
 
     context 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
 
       failed 'when locked' do
-        let(:work) { build_stubbed :work, :locked, collection: collection }
+        let(:work) { build_stubbed :work, :locked, collection: }
       end
 
       failed 'when status is depositing' do
-        let(:work) { build_stubbed :work, collection: collection }
-        let(:record) { build_stubbed :work_version, :depositing, work: work }
+        let(:work) { build_stubbed :work, collection: }
+        let(:record) { build_stubbed :work_version, :depositing, work: }
       end
 
       failed 'when status is reserving_purl' do
-        let(:work) { build_stubbed :work, collection: collection }
-        let(:record) { build_stubbed :work_version, :reserving_purl, work: work }
+        let(:work) { build_stubbed :work, collection: }
+        let(:record) { build_stubbed :work_version, :reserving_purl, work: }
       end
 
       succeed 'when status is not pending_approval'
 
       succeed 'when status is pending_approval' do
-        let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+        let(:record) { build_stubbed :work_version, :pending_approval, work: }
       end
     end
 
@@ -90,13 +90,13 @@ RSpec.describe WorkVersionPolicy do
       let(:collection) { build_stubbed :collection, managed_by: [user] }
 
       failed 'when locked' do
-        let(:work) { build_stubbed :work, :locked, collection: collection }
+        let(:work) { build_stubbed :work, :locked, collection: }
       end
 
       succeed 'when status is not pending_approval'
 
       succeed 'when status is pending_approval' do
-        let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+        let(:record) { build_stubbed :work_version, :pending_approval, work: }
       end
     end
 
@@ -104,14 +104,14 @@ RSpec.describe WorkVersionPolicy do
       let(:collection) { build_stubbed :collection, reviewed_by: [user] }
 
       failed 'when locked' do
-        let(:work) { build_stubbed :work, :locked, collection: collection }
+        let(:work) { build_stubbed :work, :locked, collection: }
       end
 
       succeed 'when status is not pending_approval'
 
       succeed 'when status is pending_approval' do
         let(:collection) { build_stubbed :collection, reviewed_by: [user] }
-        let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+        let(:record) { build_stubbed :work_version, :pending_approval, work: }
       end
     end
   end
@@ -121,7 +121,7 @@ RSpec.describe WorkVersionPolicy do
 
     succeed 'when user is the owner' do
       let(:work) { build_stubbed :work, owner: user }
-      let(:record) { build_stubbed :work_version, work: work }
+      let(:record) { build_stubbed :work_version, work: }
     end
 
     succeed 'when user is an admin' do
@@ -139,16 +139,16 @@ RSpec.describe WorkVersionPolicy do
 
   describe_rule :review? do
     failed 'when user is not a reviewer the collection' do
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: }
     end
 
     succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: }
     end
 
     succeed 'when user is a reviewer and status is pending_approval' do
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: }
       before { collection.reviewed_by = [user] }
     end
 
@@ -161,7 +161,7 @@ RSpec.describe WorkVersionPolicy do
     end
 
     succeed 'when user is a collection manager' do
-      let(:record) { build_stubbed :work_version, :pending_approval, work: work }
+      let(:record) { build_stubbed :work_version, :pending_approval, work: }
       let(:collection) { build_stubbed :collection, managed_by: [user] }
     end
   end
@@ -238,7 +238,7 @@ RSpec.describe WorkVersionPolicy do
     end
 
     context 'when not persisted' do
-      let(:record) { WorkVersion.new(attributes_for(:work_version).merge(work: work)) }
+      let(:record) { WorkVersion.new(attributes_for(:work_version).merge(work:)) }
 
       failed 'when user is not the owner, reviewer or manager for the collection'
 
@@ -265,8 +265,8 @@ RSpec.describe WorkVersionPolicy do
 
     let(:policy) { described_class.new(**context) }
     let(:collection) { create(:collection) }
-    let(:work) { create(:work, collection: collection) }
-    let(:work_version) { create(:work_version, work: work) }
+    let(:work) { create(:work, collection:) }
+    let(:work_version) { create(:work_version, work:) }
 
     before do
       work.update(head: work_version)
@@ -278,7 +278,7 @@ RSpec.describe WorkVersionPolicy do
 
     context 'when the user is the owner' do
       let(:user) { create(:user) }
-      let(:work) { create(:work, collection: collection, owner: user) }
+      let(:work) { create(:work, collection:, owner: user) }
 
       it { is_expected.to include(work) }
     end

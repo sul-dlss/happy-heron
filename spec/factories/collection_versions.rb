@@ -20,10 +20,10 @@ FactoryBot.define do
       end
       state { 'deposited' }
       collection do
-        association(:collection, depositors: depositors,
-                                 managed_by: managed_by,
-                                 reviewed_by: reviewed_by,
-                                 review_enabled: review_enabled)
+        association(:collection, depositors:,
+                                 managed_by:,
+                                 reviewed_by:,
+                                 review_enabled:)
       end
 
       after(:create) do |collection_version, _evaluator|

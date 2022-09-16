@@ -20,7 +20,7 @@ RSpec.describe 'Updating a first draft (non-deposited) collection' do
 
     describe 'redirects and renders the full collection form with settings and details' do
       before do
-        create(:collection_version_with_collection, :first_draft, :with_contact_emails, collection: collection)
+        create(:collection_version_with_collection, :first_draft, :with_contact_emails, collection:)
       end
 
       it 'redirects GETs to /collections/{id}/edit to /first_draft_collections/{id}/edit' do
@@ -47,7 +47,7 @@ RSpec.describe 'Updating a first draft (non-deposited) collection' do
     describe 'submit the form' do
       context 'when a first draft collection is saved' do
         let(:collection_version) do
-          create(:collection_version_with_collection, :first_draft, :with_contact_emails, collection: collection)
+          create(:collection_version_with_collection, :first_draft, :with_contact_emails, collection:)
         end
 
         let(:collection_params) do

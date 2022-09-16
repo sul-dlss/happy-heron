@@ -5,9 +5,9 @@ require 'rails_helper'
 RSpec.describe ReviewersMailer, type: :mailer do
   describe 'submitted_email' do
     let(:user) { build(:user, name: 'Al Dente', first_name: 'Fred') }
-    let(:mail) { described_class.with(user: user, work_version: work_version).submitted_email }
-    let(:work) { build_stubbed(:work, collection: collection, depositor: user, owner: user) }
-    let(:work_version) { build_stubbed(:work_version, :pending_approval, work: work, title: 'Test title') }
+    let(:mail) { described_class.with(user:, work_version:).submitted_email }
+    let(:work) { build_stubbed(:work, collection:, depositor: user, owner: user) }
+    let(:work_version) { build_stubbed(:work_version, :pending_approval, work:, title: 'Test title') }
     let(:collection) { build(:collection, :with_reviewers, head: collection_version) }
     let(:collection_version) { build(:collection_version, name: 'small batch organic') }
 

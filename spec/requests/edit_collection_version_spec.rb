@@ -21,7 +21,7 @@ RSpec.describe 'Updating an existing collection version' do
     describe 'show the form for an existing object in first draft' do
       let(:collection_version) do
         create(:collection_version_with_collection, :version_draft, :with_contact_emails, :with_version_description,
-               collection: collection)
+               collection:)
       end
 
       it 'allows GETs to /collection_versions/{id}/edit and shows saved version description' do
@@ -34,7 +34,7 @@ RSpec.describe 'Updating an existing collection version' do
     describe 'show the form for an existing already deposited object' do
       let(:collection_version) do
         create(:collection_version_with_collection, :with_contact_emails, :with_version_description,
-               collection: collection)
+               collection:)
       end
 
       it 'allows GETs to /collection_versions/{id}/edit and shows blank version description' do
@@ -61,7 +61,7 @@ RSpec.describe 'Updating an existing collection version' do
 
         context 'when deposit button is pressed for a previously deposited version' do
           let(:collection_version) do
-            create(:collection_version_with_collection, :deposited, :with_contact_emails, collection: collection)
+            create(:collection_version_with_collection, :deposited, :with_contact_emails, collection:)
           end
 
           it 'updates the collection via deposit button' do
@@ -76,7 +76,7 @@ RSpec.describe 'Updating an existing collection version' do
 
         context 'when save draft button is pressed' do
           let(:collection_version) do
-            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection: collection)
+            create(:collection_version_with_collection, :version_draft, :with_contact_emails, collection:)
           end
 
           it 'updates the collection' do
@@ -98,7 +98,7 @@ RSpec.describe 'Updating an existing collection version' do
         end
 
         let(:collection_version) do
-          create(:collection_version_with_collection, :version_draft, collection: collection)
+          create(:collection_version_with_collection, :version_draft, collection:)
         end
 
         it 'renders the page again' do

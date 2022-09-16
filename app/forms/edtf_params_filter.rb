@@ -42,8 +42,8 @@ class EdtfParamsFilter
 
     date = year.dup
     if month.present?
-      date += "-#{format('%<month>02d', month: month)}"
-      date += "-#{format('%<day>02d', day: day)}" if day.present?
+      date += "-#{format('%<month>02d', month:)}"
+      date += "-#{format('%<day>02d', day:)}" if day.present?
     end
     date += '?' if uncertain
     date

@@ -9,7 +9,7 @@ RSpec.describe 'Change owner of a work' do
   let(:manager) { create(:user) }
   let(:reviewer) { create(:user) }
 
-  let(:work_version) { create(:work_version, work: work) }
+  let(:work_version) { create(:work_version, work:) }
   let(:collection_version) do
     create(:collection_version_with_collection, managed_by: [manager], reviewed_by: [reviewer])
   end

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe CocinaGenerator::DROGenerator do
   let(:collection) { build(:collection, druid: 'druid:bc123df4567') }
-  let(:model) { described_class.generate_model(work_version: work_version) }
+  let(:model) { described_class.generate_model(work_version:) }
   let(:project_tag) { Settings.h2.project_tag }
   let(:types_form) do
     [
@@ -90,9 +90,9 @@ RSpec.describe CocinaGenerator::DROGenerator do
   context 'when files are not present' do
     context 'without a druid' do
       let(:work_version) do
-        build(:work_version, work_type: 'text', work: work, title: 'Test title')
+        build(:work_version, work_type: 'text', work:, title: 'Test title')
       end
-      let(:work) { build(:work, id: 7, collection: collection) }
+      let(:work) { build(:work, id: 7, collection:) }
       let(:expected_model) do
         Cocina::Models::RequestDRO.new(
           {
@@ -147,9 +147,9 @@ RSpec.describe CocinaGenerator::DROGenerator do
 
   context 'with a druid, assign_doi is false' do
     let(:work_version) do
-      build(:work_version, work_type: 'text', title: 'Test title', work: work)
+      build(:work_version, work_type: 'text', title: 'Test title', work:)
     end
-    let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection: collection) }
+    let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection:) }
     let(:expected_model) do
       Cocina::Models::DRO.new(
         {
@@ -208,9 +208,9 @@ RSpec.describe CocinaGenerator::DROGenerator do
 
   context 'with a doi' do
     let(:work_version) do
-      build(:work_version, work_type: 'text', title: 'Test title', work: work)
+      build(:work_version, work_type: 'text', title: 'Test title', work:)
     end
-    let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', doi: '10.80343/bk123gh4567', collection: collection) }
+    let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', doi: '10.80343/bk123gh4567', collection:) }
     let(:expected_model) do
       Cocina::Models::DRO.new(
         {
@@ -266,9 +266,9 @@ RSpec.describe CocinaGenerator::DROGenerator do
 
   context 'when a doi is requested and there is no druid' do
     let(:work_version) do
-      build(:work_version, :version_draft, work_type: 'text', title: 'Test title', work: work)
+      build(:work_version, :version_draft, work_type: 'text', title: 'Test title', work:)
     end
-    let(:work) { build(:work, id: 7, druid: nil, collection: collection) }
+    let(:work) { build(:work, id: 7, druid: nil, collection:) }
     let(:expected_model) do
       Cocina::Models::RequestDRO.new(
         {
@@ -343,9 +343,9 @@ RSpec.describe CocinaGenerator::DROGenerator do
 
     context 'without a druid' do
       let(:work_version) do
-        build(:work_version, version: 1, attached_files: [attached_file], title: 'Test title', work: work)
+        build(:work_version, version: 1, attached_files: [attached_file], title: 'Test title', work:)
       end
-      let(:work) { build(:work, id: 7, collection: collection) }
+      let(:work) { build(:work, id: 7, collection:) }
 
       let(:expected_model) do
         Cocina::Models::RequestDRO.new(
@@ -422,9 +422,9 @@ RSpec.describe CocinaGenerator::DROGenerator do
 
     context 'with a druid' do
       let(:work_version) do
-        build(:work_version, version: 1, attached_files: [attached_file], title: 'Test title', work: work)
+        build(:work_version, version: 1, attached_files: [attached_file], title: 'Test title', work:)
       end
-      let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection: collection) }
+      let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection:) }
 
       let(:expected_model) do
         Cocina::Models::DRO.new(

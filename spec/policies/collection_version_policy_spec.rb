@@ -5,14 +5,14 @@ require 'rails_helper'
 RSpec.describe CollectionVersionPolicy do
   let(:user) { build_stubbed :user }
   # # `record` must be defined - it is the authorization target
-  let(:record) { build_stubbed :collection_version, collection: collection }
+  let(:record) { build_stubbed :collection_version, collection: }
   let(:collection) { build_stubbed :collection }
 
   # `context` is the authorization context
   let(:context) do
     {
-      user: user,
-      user_with_groups: UserWithGroups.new(user: user, groups: groups)
+      user:,
+      user_with_groups: UserWithGroups.new(user:, groups:)
     }
   end
   let(:groups) { [] }
@@ -30,12 +30,12 @@ RSpec.describe CollectionVersionPolicy do
 
     failed 'when user is a collection manager and status is depositing' do
       let(:collection) { build_stubbed :collection, managed_by: [user] }
-      let(:record) { build_stubbed :collection_version, :depositing, collection: collection }
+      let(:record) { build_stubbed :collection_version, :depositing, collection: }
     end
 
     failed 'when the collection version is not the head version' do
       let(:collection) { build_stubbed :collection, managed_by: [user], head: build_stubbed(:collection_version) }
-      let(:record) { build_stubbed :collection_version, :deposited, collection: collection }
+      let(:record) { build_stubbed :collection_version, :deposited, collection: }
     end
 
     succeed 'when user is an admin' do

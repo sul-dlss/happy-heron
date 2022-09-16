@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Download a zip file of all attached files', type: :request do
-  let(:rendered) { render_inline(described_class.new(work_version: work_version)) }
-  let(:work_version) { create(:work_version, work: work) }
+  let(:rendered) { render_inline(described_class.new(work_version:)) }
+  let(:work_version) { create(:work_version, work:) }
   let(:user) { create(:user) }
   let(:work) { create(:work, owner: user) }
   let(:work_id) { work.id }
@@ -24,7 +24,7 @@ RSpec.describe 'Download a zip file of all attached files', type: :request do
     before do
       sign_in user
       work.update(head: work_version)
-      create(:attached_file, :with_file, work_version: work_version)
+      create(:attached_file, :with_file, work_version:)
     end
 
     it 'shows a download link' do

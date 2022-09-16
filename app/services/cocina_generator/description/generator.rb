@@ -5,7 +5,7 @@ module CocinaGenerator
     # This generates a RequestDRO Description for a work
     class Generator
       def self.generate(work_version:)
-        new(work_version: work_version).generate
+        new(work_version:).generate
       end
 
       def initialize(work_version:)
@@ -15,14 +15,14 @@ module CocinaGenerator
       # rubocop:disable Metrics/AbcSize
       def generate
         description_class.new({
-          title: title,
-          contributor: ContributorsGenerator.generate(work_version: work_version).presence,
+          title:,
+          contributor: ContributorsGenerator.generate(work_version:).presence,
           subject: keywords.presence,
           note: [abstract, citation].compact.presence,
-          event: EventsGenerator.generate(work_version: work_version).presence,
+          event: EventsGenerator.generate(work_version:).presence,
           relatedResource: related_resources.presence,
-          form: TypesGenerator.generate(work_version: work_version).presence,
-          access: access,
+          form: TypesGenerator.generate(work_version:).presence,
+          access:,
           purl: work_version.work.purl,
           adminMetadata: admin_metadata
         }.compact)

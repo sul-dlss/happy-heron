@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe CollectionEventDescriptionBuilder do
-  subject(:result) { described_class.build(form: form, change_set: change_set) }
+  subject(:result) { described_class.build(form:, change_set:) }
 
   let(:collection) { create(:collection) }
   let(:form) { CollectionSettingsForm.new(collection) }
   let(:change_set) do
     instance_double(CollectionChangeSet,
                     participants_changed?: participants_changed,
-                    participant_change_description: participant_change_description,
+                    participant_change_description:,
                     email_when_participants_changed_changed?: email_when_participants_changed_changed,
                     email_depositors_status_changed_changed?: email_depositors_status_changed_changed,
                     review_enabled_changed?: review_enabled_changed,

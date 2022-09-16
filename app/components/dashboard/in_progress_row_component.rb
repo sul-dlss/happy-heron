@@ -22,7 +22,7 @@ module Dashboard
     end
 
     def work_link
-      link_to truncate(title, length: 100, separator: ' '), work_path(work), title: title
+      link_to truncate(title, length: 100, separator: ' '), work_path(work), title:
     end
 
     def show_collection_link

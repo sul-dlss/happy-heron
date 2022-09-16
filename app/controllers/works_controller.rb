@@ -10,17 +10,17 @@ class WorksController < ObjectsController
   def new
     validate_work_types!
     collection = Collection.find(params[:collection_id])
-    work = Work.new(collection: collection, owner: current_user)
-    work_version = WorkVersion.new(work_type: params[:work_type], subtype: params[:subtype], work: work)
+    work = Work.new(collection:, owner: current_user)
+    work_version = WorkVersion.new(work_type: params[:work_type], subtype: params[:subtype], work:)
     authorize! work_version
 
-    @form = WorkForm.new(work_version: work_version, work: work)
+    @form = WorkForm.new(work_version:, work:)
     @form.prepopulate!
   end
 
   def create
     work = Work.new(collection_id: params[:collection_id], depositor: current_user, owner: current_user)
-    work_version = WorkVersion.new(work: work)
+    work_version = WorkVersion.new(work:)
 
     authorize! work_version
 
@@ -38,7 +38,7 @@ class WorksController < ObjectsController
     work_version = work.head
     authorize! work_version
 
-    @form = WorkForm.new(work_version: work_version, work: work_version.work)
+    @form = WorkForm.new(work_version:, work: work_version.work)
     @form.prepopulate!
   end
 
@@ -61,7 +61,7 @@ class WorksController < ObjectsController
     # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
     event_context = build_event_context(context_form(orig_work_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save
-      after_save(form: @form, event_context: event_context)
+      after_save(form: @form, event_context:)
     else
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
@@ -114,7 +114,7 @@ class WorksController < ObjectsController
   # The access can vary depending on the user and the state of the work.
   def delete_button
     work = Work.find(params[:id])
-    render partial: 'works/delete_button', locals: { work: work }
+    render partial: 'works/delete_button', locals: { work: }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
@@ -130,7 +130,7 @@ class WorksController < ObjectsController
                     end
     edit_label = I18n.t params[:tag], scope: %i[work edit_links], default: default_label
 
-    render partial: 'works/edit_button', locals: { work: work, anchor: params[:tag], edit_label: edit_label }
+    render partial: 'works/edit_button', locals: { work:, anchor: params[:tag], edit_label: }
   end
 
   private
@@ -146,9 +146,9 @@ class WorksController < ObjectsController
 
   def work_form(work_version)
     if deposit_button_pushed?
-      WorkForm.new(work_version: work_version, work: work_version.work)
+      WorkForm.new(work_version:, work: work_version.work)
     else
-      DraftWorkForm.new(work_version: work_version, work: work_version.work)
+      DraftWorkForm.new(work_version:, work: work_version.work)
     end
   end
 

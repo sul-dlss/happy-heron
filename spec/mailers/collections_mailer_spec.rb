@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe CollectionsMailer, type: :mailer do
-  let(:collection_version) { build_stubbed(:collection_version, collection: collection) }
+  let(:collection_version) { build_stubbed(:collection_version, collection:) }
   let(:collection_name) { collection_version.name }
   let(:collection) { build_stubbed(:collection) }
   let(:a_user) { build_stubbed(:user, name: 'Al Dente', first_name: 'Fred') }
 
   describe '#invitation_to_deposit_email for new user with no name' do
     let(:user) { collection.depositors.first }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).invitation_to_deposit_email }
+    let(:mail) { described_class.with(user:, collection_version:).invitation_to_deposit_email }
     let(:collection) { build_stubbed(:collection, :with_depositors) }
 
     it 'renders the headers' do
@@ -27,7 +27,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#invitation_to_deposit_email for user with a name' do
     let(:user) { collection.depositors.first }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).invitation_to_deposit_email }
+    let(:mail) { described_class.with(user:, collection_version:).invitation_to_deposit_email }
     let(:collection) { build_stubbed(:collection, :with_depositors) }
 
     before { user.update(name: 'Smart Person', first_name: 'Maxwell') }
@@ -46,7 +46,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#deposit_access_removed_email' do
     let(:user) { a_user }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).deposit_access_removed_email }
+    let(:mail) { described_class.with(user:, collection_version:).deposit_access_removed_email }
 
     it 'renders the headers' do
       expect(mail.subject).to eq "Your Depositor permissions for the #{collection_name} " \
@@ -67,7 +67,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#manage_access_granted_email' do
     let(:user) { a_user }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).manage_access_granted_email }
+    let(:mail) { described_class.with(user:, collection_version:).manage_access_granted_email }
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
@@ -90,7 +90,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#manage_access_removed_email' do
     let(:user) { a_user }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).manage_access_removed_email }
+    let(:mail) { described_class.with(user:, collection_version:).manage_access_removed_email }
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
@@ -112,7 +112,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#review_access_granted_email' do
     let(:user) { a_user }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).review_access_granted_email }
+    let(:mail) { described_class.with(user:, collection_version:).review_access_granted_email }
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
@@ -135,7 +135,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#review_access_removed_email' do
     let(:user) { a_user }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).review_access_removed_email }
+    let(:mail) { described_class.with(user:, collection_version:).review_access_removed_email }
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
@@ -160,8 +160,8 @@ RSpec.describe CollectionsMailer, type: :mailer do
     let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
-      described_class.with(user: user, collection_version: collection_version,
-                           owner: owner).first_draft_created
+      described_class.with(user:, collection_version:,
+                           owner:).first_draft_created
     end
     let(:collection) { build(:collection) }
 
@@ -183,7 +183,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
   end
 
   describe '#first_draft_reminder_email' do
-    let(:mail) { described_class.with(collection_version: collection_version, user: a_user).first_draft_reminder_email }
+    let(:mail) { described_class.with(collection_version:, user: a_user).first_draft_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version, state: 'first_draft') }
 
@@ -200,7 +200,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
   end
 
   describe '#new_version_reminder_email' do
-    let(:mail) { described_class.with(collection_version: collection_version, user: a_user).new_version_reminder_email }
+    let(:mail) { described_class.with(collection_version:, user: a_user).new_version_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
@@ -221,7 +221,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
     let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
-      described_class.with(user: user, collection_version: collection_version, owner: owner).item_deposited
+      described_class.with(user:, collection_version:, owner:).item_deposited
     end
     let(:collection) { build(:collection) }
 
@@ -247,8 +247,8 @@ RSpec.describe CollectionsMailer, type: :mailer do
     let(:owner) { build(:user, name: 'Audre Lorde') }
 
     let(:mail) do
-      described_class.with(user: user, collection_version: collection_version,
-                           owner: owner).version_draft_created
+      described_class.with(user:, collection_version:,
+                           owner:).version_draft_created
     end
     let(:collection) { build(:collection) }
 
@@ -271,7 +271,7 @@ RSpec.describe CollectionsMailer, type: :mailer do
 
   describe '#participants_changed_email' do
     let(:user) { a_user }
-    let(:mail) { described_class.with(user: user, collection_version: collection_version).participants_changed_email }
+    let(:mail) { described_class.with(user:, collection_version:).participants_changed_email }
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do

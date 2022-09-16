@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CocinaGenerator::Description::Generator do
-  subject(:model) { described_class.generate(work_version: work_version).to_h }
+  subject(:model) { described_class.generate(work_version:).to_h }
 
   let(:contributor) { build(:org_contributor) }
   let(:work_version) do

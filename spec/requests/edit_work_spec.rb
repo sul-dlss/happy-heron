@@ -19,8 +19,8 @@ RSpec.describe 'Updating an existing work' do
 
     describe 'display the form' do
       let(:collection) { create(:collection_version_with_collection).collection }
-      let(:work) { create(:work, collection: collection) }
-      let(:work_version) { create(:work_version, :published, :with_creation_date_range, work: work) }
+      let(:work) { create(:work, collection:) }
+      let(:work_version) { create(:work_version, :published, :with_creation_date_range, work:) }
 
       it 'shows the form' do
         get "/works/#{work.id}/edit"
@@ -32,8 +32,8 @@ RSpec.describe 'Updating an existing work' do
     describe 'submit the form' do
       context 'when the previous version was deposited' do
         let(:collection) { create(:collection_version_with_collection).collection }
-        let(:work) { create(:work, collection: collection) }
-        let(:work_version) { create(:work_version, :deposited, :with_required_associations, work: work) }
+        let(:work) { create(:work, collection:) }
+        let(:work_version) { create(:work_version, :deposited, :with_required_associations, work:) }
         let(:work_params) do
           {
             title: 'New title',
@@ -69,7 +69,7 @@ RSpec.describe 'Updating an existing work' do
         end
 
         before do
-          create(:attached_file, :with_file, work_version: work_version)
+          create(:attached_file, :with_file, work_version:)
           allow(CollectionObserver).to receive(:version_draft_created)
         end
 
@@ -77,7 +77,7 @@ RSpec.describe 'Updating an existing work' do
           it 'redirects to the work page' do
             patch "/works/#{work.id}", params: { work: work_params }
             expect(CollectionObserver).to have_received(:version_draft_created)
-            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(WorkVersion.where(work:).count).to eq 2
             expect(work.reload.head).to be_version_draft
             expect(work.head.subtype).to eq []
             # Only changed fields are recorded in event.
@@ -89,7 +89,7 @@ RSpec.describe 'Updating an existing work' do
         end
 
         context "when a doi is requested (but wasn't present before)" do
-          let(:work) { create(:work, :with_druid, collection: collection) }
+          let(:work) { create(:work, :with_druid, collection:) }
 
           before do
             work_params[:assign_doi] = 'true'
@@ -99,7 +99,7 @@ RSpec.describe 'Updating an existing work' do
           it 'sets the doi' do
             patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
             expect(CollectionObserver).to have_received(:version_draft_created)
-            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(WorkVersion.where(work:).count).to eq 2
             expect(work.reload.head).to be_depositing
             expect(work.doi).to eq '10.80343/bc123df4567'
             expect(response).to redirect_to(next_step_work_path(work))
@@ -107,7 +107,7 @@ RSpec.describe 'Updating an existing work' do
         end
 
         context "when a doi is not requested (and wasn't present before)" do
-          let(:work) { create(:work, :with_druid, collection: collection) }
+          let(:work) { create(:work, :with_druid, collection:) }
 
           before do
             work_params[:assign_doi] = 'false'
@@ -117,7 +117,7 @@ RSpec.describe 'Updating an existing work' do
           it 'sets the doi' do
             patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
             expect(CollectionObserver).to have_received(:version_draft_created)
-            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(WorkVersion.where(work:).count).to eq 2
             expect(work.reload.head).to be_depositing
             expect(work.doi).to be_nil
             expect(response).to redirect_to(next_step_work_path(work))
@@ -125,7 +125,7 @@ RSpec.describe 'Updating an existing work' do
         end
 
         context 'when a doi is not permitted' do
-          let(:work) { create(:work, :with_druid, collection: collection) }
+          let(:work) { create(:work, :with_druid, collection:) }
 
           before do
             collection.update!(doi_option: 'no')
@@ -134,7 +134,7 @@ RSpec.describe 'Updating an existing work' do
           it 'sets assign_doi to false' do
             patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
             expect(CollectionObserver).to have_received(:version_draft_created)
-            expect(WorkVersion.where(work: work).count).to eq 2
+            expect(WorkVersion.where(work:).count).to eq 2
             expect(work.reload.head).to be_depositing
             expect(work.assign_doi).to be false
             expect(response).to redirect_to(next_step_work_path(work))
@@ -148,7 +148,7 @@ RSpec.describe 'Updating an existing work' do
             it 'removes any attached files' do
               expect(work.head.attached_files.count).to eq 1
               patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
-              expect(WorkVersion.where(work: work).count).to eq 2
+              expect(WorkVersion.where(work:).count).to eq 2
               work.reload
               expect(work.head.state).to eq 'depositing'
               expect(work.head.attached_files.count).to eq 0
@@ -159,7 +159,7 @@ RSpec.describe 'Updating an existing work' do
             it 'removes any attached files' do
               expect(work.head.attached_files.count).to eq 1
               patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
-              expect(WorkVersion.where(work: work).count).to eq 2
+              expect(WorkVersion.where(work:).count).to eq 2
               work.reload
               expect(work.head.state).to eq 'version_draft'
               expect(work.head.attached_files.count).to eq 0
@@ -170,8 +170,8 @@ RSpec.describe 'Updating an existing work' do
 
       context 'with a validation problem' do
         let(:collection) { create(:collection_version_with_collection).collection }
-        let(:work) { create(:work, collection: collection) }
-        let(:work_version) { create(:work_version, work: work) }
+        let(:work) { create(:work, collection:) }
+        let(:work_version) { create(:work_version, work:) }
 
         context 'when missing title' do
           let(:work_params) do

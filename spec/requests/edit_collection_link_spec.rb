@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Link to edit a collection' do
   before do
     sign_in user
-    create(:collection_version_with_collection, :version_draft, collection: collection)
+    create(:collection_version_with_collection, :version_draft, collection:)
   end
 
   let(:rendered) do

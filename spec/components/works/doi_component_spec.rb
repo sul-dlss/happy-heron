@@ -5,13 +5,13 @@ require 'rails_helper'
 
 RSpec.describe Works::DoiComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
-  let(:collection) { build(:collection, doi_option: doi_option) }
+  let(:collection) { build(:collection, doi_option:) }
   let(:doi_option) { 'yes' }
-  let(:work) { build(:work, collection: collection, doi: doi) }
+  let(:work) { build(:work, collection:, doi:) }
   let(:doi) { nil }
-  let(:work_version) { build(:work_version, work: work) }
-  let(:work_form) { WorkForm.new(work_version: work_version, work: work) }
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:work_version) { build(:work_version, work:) }
+  let(:work_form) { WorkForm.new(work_version:, work:) }
+  let(:rendered) { render_inline(described_class.new(form:)) }
 
   before do
     work_form.prepopulate!

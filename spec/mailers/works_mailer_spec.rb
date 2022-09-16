@@ -9,12 +9,12 @@ RSpec.describe WorksMailer, type: :mailer do
 
   describe 'reject_email' do
     let(:user) { work_depositor }
-    let(:mail) { described_class.with(user: user, work_version: work_version).reject_email }
+    let(:mail) { described_class.with(user:, work_version:).reject_email }
     let(:work) do
-      create(:work, collection: collection,
+      create(:work, collection:,
                     events: [build(:event, event_type: 'reject', description: 'Add something to make it pop.')])
     end
-    let(:work_version) { build_stubbed(:work_version, :rejected, work: work) }
+    let(:work_version) { build_stubbed(:work_version, :rejected, work:) }
     let(:collection) { create(:collection, head: collection_version) }
     let(:collection_version) { create(:collection_version, name: 'gastropub humblebrag taiyaki') }
 
@@ -36,9 +36,9 @@ RSpec.describe WorksMailer, type: :mailer do
 
   describe 'deposited_email' do
     let(:user) { work_depositor }
-    let(:mail) { described_class.with(user: user, work_version: work_version).deposited_email }
-    let(:work) { build_stubbed(:work, collection: collection, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
-    let(:work_version) { build_stubbed(:work_version, :deposited, title: 'Photo booth activated charcoal', work: work) }
+    let(:mail) { described_class.with(user:, work_version:).deposited_email }
+    let(:work) { build_stubbed(:work, collection:, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
+    let(:work_version) { build_stubbed(:work_version, :deposited, title: 'Photo booth activated charcoal', work:) }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version, name: 'gastropub humblebrag taiyaki') }
 
@@ -62,9 +62,9 @@ RSpec.describe WorksMailer, type: :mailer do
 
   describe 'new_version_deposited_email' do
     let(:user) { work_depositor }
-    let(:mail) { described_class.with(user: user, work_version: work_version).new_version_deposited_email }
-    let(:work) { build_stubbed(:work, collection: collection, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
-    let(:work_version) { build_stubbed(:work_version, :deposited, title: 'twee retro man braid', work: work) }
+    let(:mail) { described_class.with(user:, work_version:).new_version_deposited_email }
+    let(:work) { build_stubbed(:work, collection:, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
+    let(:work_version) { build_stubbed(:work_version, :deposited, title: 'twee retro man braid', work:) }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version, name: 'listicle fam ramps flannel') }
 
@@ -88,9 +88,9 @@ RSpec.describe WorksMailer, type: :mailer do
 
   describe 'approved_email' do
     let(:user) { work_depositor }
-    let(:mail) { described_class.with(user: user, work_version: work_version).approved_email }
-    let(:work) { build_stubbed(:work, collection: collection, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
-    let(:work_version) { build_stubbed(:work_version, :deposited, title: 'Hammock kombucha mustache', work: work) }
+    let(:mail) { described_class.with(user:, work_version:).approved_email }
+    let(:work) { build_stubbed(:work, collection:, druid: 'druid:bc123df4567', doi: '10.001/bc123df4567') }
+    let(:work_version) { build_stubbed(:work_version, :deposited, title: 'Hammock kombucha mustache', work:) }
     let(:collection) { build_stubbed(:collection, :with_reviewers, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version, name: 'Farm-to-table beard aesthetic') }
 
@@ -114,10 +114,10 @@ RSpec.describe WorksMailer, type: :mailer do
 
   describe 'submitted_email' do
     let(:user) { a_user }
-    let(:mail) { described_class.with(user: user, work_version: work_version).submitted_email }
-    let(:work) { build_stubbed(:work, collection: collection, depositor: user) }
+    let(:mail) { described_class.with(user:, work_version:).submitted_email }
+    let(:work) { build_stubbed(:work, collection:, depositor: user) }
     let(:work_version) do
-      build_stubbed(:work_version, :pending_approval, title: 'Tiramisu lemon drops chocolate cake', work: work)
+      build_stubbed(:work_version, :pending_approval, title: 'Tiramisu lemon drops chocolate cake', work:)
     end
 
     let(:collection) { build_stubbed(:collection, :with_reviewers, head: collection_version) }
@@ -142,9 +142,9 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'first_draft_reminder_email' do
-    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user, owner: b_user) }
-    let(:work_version) { build_stubbed(:work_version, work: work) }
-    let(:mail) { described_class.with(work_version: work_version).first_draft_reminder_email }
+    let(:work) { build_stubbed(:work, collection:, depositor: a_user, owner: b_user) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
+    let(:mail) { described_class.with(work_version:).first_draft_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
@@ -165,9 +165,9 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'new_version_reminder_email' do
-    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user, owner: a_user) }
-    let(:work_version) { build_stubbed(:work_version, work: work) }
-    let(:mail) { described_class.with(work_version: work_version).new_version_reminder_email }
+    let(:work) { build_stubbed(:work, collection:, depositor: a_user, owner: a_user) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
+    let(:mail) { described_class.with(work_version:).new_version_reminder_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
@@ -190,9 +190,9 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'changed_owner_email' do
-    let(:work) { build_stubbed(:work, collection: collection, owner: a_user, head: work_version) }
+    let(:work) { build_stubbed(:work, collection:, owner: a_user, head: work_version) }
     let(:work_version) { build_stubbed(:work_version) }
-    let(:mail) { described_class.with(work: work).changed_owner_email }
+    let(:mail) { described_class.with(work:).changed_owner_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
@@ -214,9 +214,9 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'changed_owner_collection_manager_email' do
-    let(:work) { build_stubbed(:work, collection: collection, head: work_version) }
+    let(:work) { build_stubbed(:work, collection:, head: work_version) }
     let(:work_version) { build_stubbed(:work_version) }
-    let(:mail) { described_class.with(work: work, user: a_user).changed_owner_collection_manager_email }
+    let(:mail) { described_class.with(work:, user: a_user).changed_owner_collection_manager_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
@@ -238,9 +238,9 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'globus_deposited_email' do
-    let(:work) { build_stubbed(:work, collection: collection, depositor: a_user, owner: a_user) }
-    let(:work_version) { build_stubbed(:work_version, work: work) }
-    let(:mail) { described_class.with(work_version: work_version).globus_deposited_email }
+    let(:work) { build_stubbed(:work, collection:, depositor: a_user, owner: a_user) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
+    let(:mail) { described_class.with(work_version:).globus_deposited_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
@@ -259,9 +259,9 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'decommission_owner_email' do
-    let(:work) { build_stubbed(:work, collection: collection, owner: a_user) }
-    let(:work_version) { build_stubbed(:work_version, work: work) }
-    let(:mail) { described_class.with(work_version: work_version).decommission_owner_email }
+    let(:work) { build_stubbed(:work, collection:, owner: a_user) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
+    let(:mail) { described_class.with(work_version:).decommission_owner_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 
@@ -283,9 +283,9 @@ RSpec.describe WorksMailer, type: :mailer do
   end
 
   describe 'decommission_manager_email' do
-    let(:work) { build_stubbed(:work, collection: collection) }
-    let(:work_version) { build_stubbed(:work_version, work: work) }
-    let(:mail) { described_class.with(work_version: work_version, user: a_user).decommission_manager_email }
+    let(:work) { build_stubbed(:work, collection:) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
+    let(:mail) { described_class.with(work_version:, user: a_user).decommission_manager_email }
     let(:collection) { build_stubbed(:collection, head: collection_version) }
     let(:collection_version) { build_stubbed(:collection_version) }
 

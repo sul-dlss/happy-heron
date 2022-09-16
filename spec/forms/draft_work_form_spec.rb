@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe DraftWorkForm do
-  subject(:form) { described_class.new(work_version: work_version, work: work) }
+  subject(:form) { described_class.new(work_version:, work:) }
 
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }

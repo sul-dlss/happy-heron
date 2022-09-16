@@ -3,17 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe DepositCompleter do
-  subject(:deposit_completer) { described_class.new(object_version: object_version) }
+  subject(:deposit_completer) { described_class.new(object_version:) }
 
   let(:work) { create(:work, :with_druid) }
   let(:object_version) do
-    build(:work_version, state, work: work, version_description: version_description)
+    build(:work_version, state, work:, version_description:)
   end
   let(:state) { :depositing }
   let(:version_description) { 'Fixing the title' }
 
   describe '.complete' do
-    let(:instance) { described_class.new(object_version: object_version) }
+    let(:instance) { described_class.new(object_version:) }
 
     before do
       allow(described_class).to receive(:new).and_return(instance)
@@ -21,7 +21,7 @@ RSpec.describe DepositCompleter do
     end
 
     it 'invokes #complete on a new instance' do
-      described_class.complete(object_version: object_version)
+      described_class.complete(object_version:)
       expect(instance).to have_received(:complete).once
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe DepositCompleter do
 
     context 'with a collection version' do
       let(:object_version) do
-        build(:collection_version, state, version_description: version_description)
+        build(:collection_version, state, version_description:)
       end
 
       it 'returns a collection' do

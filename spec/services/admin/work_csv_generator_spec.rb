@@ -11,14 +11,14 @@ RSpec.describe Admin::WorkCsvGenerator do
   end
 
   let(:work) do
-    build(:work, id: 1, collection: collection,
+    build(:work, id: 1, collection:,
                  druid: 'druid:cn748wq9511',
                  doi: '10.25740/bc123df4567',
                  depositor: user1, owner: user2)
   end
 
   let(:version) do
-    build(:work_version, work: work,
+    build(:work_version, work:,
                          title: 'Test title 1',
                          state: 'deposited', updated_at: Time.zone.parse('2019-01-01'))
   end

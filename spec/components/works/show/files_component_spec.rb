@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Works::Show::FilesComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(work_version: work_version)) }
+  let(:rendered) { render_inline(described_class.new(work_version:)) }
   let(:work_version) { create(:work_version) }
 
   context 'with an attached file' do
     before do
-      create(:attached_file, :with_file, work_version: work_version)
+      create(:attached_file, :with_file, work_version:)
     end
 
     it 'shows a download link and the hide status' do

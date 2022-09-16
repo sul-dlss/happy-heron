@@ -31,7 +31,7 @@ class WorkLocksController < ApplicationController
 
   def create_event(work, lock_state)
     event_type = lock_state ? 'lock_work' : 'unlock_work'
-    work.events.create(work.event_context.merge(event_type: event_type))
+    work.events.create(work.event_context.merge(event_type:))
   end
 
   def update_lock_params

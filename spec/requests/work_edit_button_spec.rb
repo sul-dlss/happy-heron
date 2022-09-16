@@ -14,7 +14,7 @@ RSpec.describe 'Link to edit a work' do
   let(:user) { create(:user) }
 
   context 'with a user who may edit the object' do
-    let(:work) { create(:work_version_with_work, :version_draft, collection: collection, owner: user).work }
+    let(:work) { create(:work_version_with_work, :version_draft, collection:, owner: user).work }
 
     it 'draws a link' do
       get "/works/#{work.id}/edit_button"
@@ -49,7 +49,7 @@ RSpec.describe 'Link to edit a work' do
   end
 
   context 'with a user who may not edit the object' do
-    let(:work) { create(:work_version_with_work, :version_draft, collection: collection).work }
+    let(:work) { create(:work_version_with_work, :version_draft, collection:).work }
 
     it 'only draws the turbo-frame' do
       get "/works/#{work.id}/edit_button"

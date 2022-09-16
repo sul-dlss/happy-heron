@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collections::HistoryComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection)) }
+  let(:rendered) { render_inline(described_class.new(collection:)) }
 
   context 'when viewing a collection' do
     let(:collection) { build_stubbed(:collection) }

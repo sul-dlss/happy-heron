@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collections::ReleaseComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(collection: collection)) }
+  let(:rendered) { render_inline(described_class.new(collection:)) }
   let(:collection_version) { build_stubbed(:collection_version) }
 
   context 'when displaying a collection' do
@@ -21,7 +21,7 @@ RSpec.describe Collections::ReleaseComponent, type: :component do
       build_stubbed(:collection, release_option: 'depositor-selects', release_duration: '3 years',
                                  head: collection_version)
     end
-    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+    let(:rendered) { render_inline(described_class.new(collection:)) }
     let(:message) { 'depositor selects release date at no more than 3 years from date of deposit' }
 
     it 'renders the release component with more detail regarding the release' do
@@ -33,7 +33,7 @@ RSpec.describe Collections::ReleaseComponent, type: :component do
     let(:collection) do
       build_stubbed(:collection, release_option: 'delay', release_duration: '2 years', head: collection_version)
     end
-    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+    let(:rendered) { render_inline(described_class.new(collection:)) }
 
     it 'renders the release component with a delayed option' do
       expect(rendered.css('table').to_html).to include('2 years from date of deposit')
@@ -44,7 +44,7 @@ RSpec.describe Collections::ReleaseComponent, type: :component do
     let(:collection) do
       build_stubbed(:collection, doi_option: 'no', head: collection_version)
     end
-    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+    let(:rendered) { render_inline(described_class.new(collection:)) }
 
     it 'renders the release component with the DOI assignment message' do
       expect(rendered.css('table').to_html).to include('Not assigned')
@@ -55,7 +55,7 @@ RSpec.describe Collections::ReleaseComponent, type: :component do
     let(:collection) do
       build_stubbed(:collection, doi_option: 'yes', head: collection_version)
     end
-    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+    let(:rendered) { render_inline(described_class.new(collection:)) }
 
     it 'renders the release component with the DOI assignment message' do
       expect(rendered.css('table').to_html).to include('Automatically assigned')
@@ -66,7 +66,7 @@ RSpec.describe Collections::ReleaseComponent, type: :component do
     let(:collection) do
       build_stubbed(:collection, doi_option: 'depositor-selects', head: collection_version)
     end
-    let(:rendered) { render_inline(described_class.new(collection: collection)) }
+    let(:rendered) { render_inline(described_class.new(collection:)) }
 
     it 'renders the release component with the DOI assignment message' do
       expect(rendered.css('table').to_html).to include('Depositor selects')

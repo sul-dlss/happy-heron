@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe FirstDraftCollectionsMailer, type: :mailer do
   let(:creator) { build_stubbed(:user, name: 'Peter Lorre', email: 'psl@example.org') }
-  let(:collection) { build_stubbed(:collection, creator: creator) }
-  let(:collection_version) { build_stubbed(:collection_version, collection: collection) }
+  let(:collection) { build_stubbed(:collection, creator:) }
+  let(:collection_version) { build_stubbed(:collection_version, collection:) }
   let(:collection_name) { collection_version.name }
 
   describe '#first_draft_created' do
     let(:mail) do
-      described_class.with(collection_version: collection_version).first_draft_created
+      described_class.with(collection_version:).first_draft_created
     end
 
     it 'renders the headers' do

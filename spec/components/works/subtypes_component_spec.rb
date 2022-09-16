@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Works::SubtypesComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new('work', work_form, controller.view_context, {}) }
   let(:work_version) { build_stubbed(:work_version) }
-  let(:work_form) { WorkForm.new(work: work_version.work, work_version: work_version) }
-  let(:rendered) { render_inline(described_class.new(form: form)) }
+  let(:work_form) { WorkForm.new(work: work_version.work, work_version:) }
+  let(:rendered) { render_inline(described_class.new(form:)) }
 
   context 'when work type is "other"' do
     let(:work_version) { build_stubbed(:work_version, work_type: 'other', subtype: ['femur']) }

@@ -5,7 +5,7 @@ module CocinaGenerator
     # This generates Events for a work
     class EventsGenerator
       def self.generate(work_version:)
-        new(work_version: work_version).generate
+        new(work_version:).generate
       end
 
       def initialize(work_version:)
@@ -23,7 +23,7 @@ module CocinaGenerator
       attr_reader :work_version
 
       def publisher_events
-        @publisher_events ||= ContributorsGenerator.events_from_publisher_contributors(work_version: work_version,
+        @publisher_events ||= ContributorsGenerator.events_from_publisher_contributors(work_version:,
                                                                                        pub_date: published_date_event)
       end
 
@@ -73,13 +73,13 @@ module CocinaGenerator
 
         Cocina::Models::Event.new({
                                     type: event_type,
-                                    date: [DateGenerator.generate(date: date, type: date_type, primary: primary)]
+                                    date: [DateGenerator.generate(date:, type: date_type, primary:)]
                                   })
       end
 
       def event_for_work_version(work_version:, event_type:, date_type:)
         date = work_version.published_at || work_version.updated_at
-        event_for_date(date: date, event_type: event_type, date_type: date_type)
+        event_for_date(date:, event_type:, date_type:)
       end
     end
   end

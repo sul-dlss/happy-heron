@@ -29,7 +29,7 @@ RSpec.describe Admin::CollectionsCsvGenerator do
       state: 'deposited',
       version: 1,
       updated_at: Time.zone.parse('2019-01-01'),
-      collection: collection
+      collection:
     )
   end
 

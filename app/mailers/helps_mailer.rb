@@ -13,6 +13,6 @@ class HelpsMailer < ApplicationMailer
 
     mail(to: 'sdr-support@jirasul.stanford.edu',
          from: email,
-         subject: subject)
+         subject:)
   end
 end

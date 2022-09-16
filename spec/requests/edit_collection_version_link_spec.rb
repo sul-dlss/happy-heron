@@ -8,7 +8,7 @@ RSpec.describe 'Link to edit a collection version' do
   end
 
   let(:collection_version) do
-    create(:collection_version_with_collection, :version_draft, collection: collection)
+    create(:collection_version_with_collection, :version_draft, collection:)
   end
 
   let(:rendered) do

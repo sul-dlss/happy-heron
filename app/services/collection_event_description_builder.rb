@@ -3,7 +3,7 @@
 # This creates an appropriate description for an update event on a Collection
 class CollectionEventDescriptionBuilder
   def self.build(form:, change_set:)
-    new(form: form, change_set: change_set).build
+    new(form:, change_set:).build
   end
 
   def initialize(form:, change_set:)

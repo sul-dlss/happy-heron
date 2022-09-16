@@ -23,11 +23,11 @@ module Collections
     private
 
     def policy
-      WorkVersionPolicy.new(user: current_user, user_with_groups: user_with_groups)
+      WorkVersionPolicy.new(user: current_user, user_with_groups:)
     end
 
     def collection_policy
-      CollectionPolicy.new(collection, user: current_user, user_with_groups: user_with_groups)
+      CollectionPolicy.new(collection, user: current_user, user_with_groups:)
     end
   end
 end

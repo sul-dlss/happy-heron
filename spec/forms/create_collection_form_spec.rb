@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe CreateCollectionForm do
-  subject(:form) { described_class.new(collection: collection, collection_version: collection_version) }
+  subject(:form) { described_class.new(collection:, collection_version:) }
 
-  let(:collection) { build(:collection, required_license: required_license, default_license: default_license) }
+  let(:collection) { build(:collection, required_license:, default_license:) }
   let(:collection_version) { build(:collection_version) }
   let(:default_license) { nil }
   let(:required_license) { nil }

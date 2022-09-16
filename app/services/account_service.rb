@@ -10,7 +10,7 @@ class AccountService
 
   def fetch(sunetid)
     Rails.cache.fetch(sunetid, namespace: 'account', expires_in: 1.month) do
-      url = template.partial_expand(sunetid: sunetid).pattern
+      url = template.partial_expand(sunetid:).pattern
       response = connection.get(url)
       doc = response.body
       doc.slice('name', 'description')
