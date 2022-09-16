@@ -95,7 +95,7 @@ class WorksController < ObjectsController
       work.destroy
     end
 
-    redirect_to collection_works_path(collection)
+    request.referer.include?('dashboard') ? redirect_to(dashboard_path) : redirect_to(collection_works_path(collection))
   end
 
   def next_step
