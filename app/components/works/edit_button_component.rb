@@ -2,6 +2,7 @@
 
 module Works
   # Renders a button that links to the work edit page
+  # This should be within a container styled with .clearfix
   class EditButtonComponent < ApplicationComponent
     def initialize(work_version:)
       @work_version = work_version
