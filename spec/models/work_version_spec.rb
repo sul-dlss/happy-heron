@@ -329,7 +329,7 @@ RSpec.describe WorkVersion do
           .to('depositing')
           .and change(Event, :count).by(1)
         expect(DepositJob).to have_received(:perform_later).with(work_version)
-        expect(work_version.reload.published_at).to be_kind_of ActiveSupport::TimeWithZone
+        expect(work_version.reload.published_at).to be_a ActiveSupport::TimeWithZone
       end
 
       context 'with pending_approval on a work' do

@@ -11,7 +11,7 @@ RSpec.describe WorkForm do
   describe 'populator on files' do
     let!(:blob) do
       ActiveStorage::Blob.create_and_upload!(
-        io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
+        io: Rails.root.join('spec/fixtures/files/sul.svg').open,
         filename: 'sul.svg',
         content_type: 'image/svg+xml'
       )
@@ -326,7 +326,7 @@ RSpec.describe WorkForm do
   describe 'file validation' do
     let!(:blob) do
       ActiveStorage::Blob.create_and_upload!(
-        io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
+        io: Rails.root.join('spec/fixtures/files/sul.svg').open,
         filename: 'sul.svg',
         content_type: 'image/svg+xml'
       )

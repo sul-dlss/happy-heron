@@ -150,7 +150,7 @@ RSpec.describe 'Create a collection' do
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(collection_path(collection))
           expect(collection.depositors.size).to eq 6
-          expect(collection.depositors).to all(be_kind_of(User))
+          expect(collection.depositors).to all(be_a(User))
           expect(collection.depositors).to include(User.find_by!(email: 'maya.aguirre@stanford.edu'))
           expect(collection.managed_by).to eq [user]
           expect(collection.email_when_participants_changed).to be true
@@ -159,9 +159,9 @@ RSpec.describe 'Create a collection' do
           expect(collection.release_date).to eq next_year
           expect(collection.doi_option).to eq 'depositor-selects'
           expect(collection_version.contact_emails.size).to eq 2
-          expect(collection_version.contact_emails).to all(be_kind_of(ContactEmail))
+          expect(collection_version.contact_emails).to all(be_a(ContactEmail))
           expect(collection_version.related_links.size).to eq 2
-          expect(collection_version.related_links).to all(be_kind_of(RelatedLink))
+          expect(collection_version.related_links).to all(be_a(RelatedLink))
         end
 
         it 'sends emails to depositors when a new collection is created and deposited' do

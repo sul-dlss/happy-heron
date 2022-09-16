@@ -323,7 +323,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
   context 'when a file is present' do
     let!(:blob) do
       ActiveStorage::Blob.create_and_upload!(
-        io: File.open(Rails.root.join('spec/fixtures/files/sul.svg')),
+        io: Rails.root.join('spec/fixtures/files/sul.svg').open,
         filename: 'sul.svg',
         content_type: 'image/svg+xml'
       )
