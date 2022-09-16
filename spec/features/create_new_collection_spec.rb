@@ -42,6 +42,13 @@ RSpec.describe 'Create a new collection', js: true do
       expect(page).to have_content name
       expect(page).to have_content('Depositing')
 
+      within '#events' do
+        # New collection gets an updated event with a description of "Created" and then a deposited event
+        expect(page).to have_content 'Updated', count: 1
+        expect(page).to have_content 'Created', count: 1 # description of the updated event
+        expect(page).to have_content 'Submitted for deposit', count: 1
+      end
+
       # Simulate the deposit process
       CollectionVersion.last.tap do |version|
         version.collection.update!(druid: 'druid:dc224fz4940')
