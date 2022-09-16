@@ -192,4 +192,8 @@ FactoryBot.define do
       work_version.work.update(head: work_version)
     end
   end
+
+  trait :with_no_subtype do
+    subtype { [] }
+  end
 end
