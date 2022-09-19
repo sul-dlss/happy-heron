@@ -31,10 +31,7 @@ class WorkDecommissionController < ApplicationController
 
   def delete_files(work)
     work.work_versions.each do |work_version|
-      work_version.attached_files.each do |attached_file|
-        attached_file.file.purge
-        attached_file.destroy!
-      end
+      work_version.attached_files.destroy_all
     end
   end
 end
