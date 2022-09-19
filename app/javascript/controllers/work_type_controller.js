@@ -11,6 +11,10 @@ export default class extends Controller {
     "musicTemplateSubheader", "mixedMaterialTemplateSubheader"
   ]
 
+  connect() {
+    this.requiredSubtypeCount = 0
+  }
+
   // Sets the form in the popup to use the action in the data-destination attribute
   setCollection(event) {
     event.preventDefault()
@@ -37,6 +41,18 @@ export default class extends Controller {
 
     // Display the work type choices
     this.areaTarget.hidden = false
+
+    // Set the number of required subtypes
+    switch(type) {
+      case 'music':
+        this.requiredSubtypeCount = 1
+        break
+      case 'mixed material':
+        this.requiredSubtypeCount = 2
+        break
+      default:
+        this.requiredSubtypeCount = 0
+    }
   }
 
   toggleMoreTypes(event) {
@@ -109,5 +125,17 @@ export default class extends Controller {
         const id = moreType.replace(/\s/g, '_')
         return this.templateTarget.innerHTML.replace(/SUBTYPE_LABEL/g, moreType).replace(/SUBTYPE_ID/g, id)
       })
+  }
+
+  checkSubtypes() {    
+    const checked = this.formTarget.querySelectorAll('div.subtype-container input[type="checkbox"]:checked')
+    const firstInput = this.formTarget.querySelector('div.subtype-container input[type="checkbox"]:not(:checked)')
+    const inputs = this.formTarget.querySelectorAll('div.subtype-container input[type="checkbox"]')
+    inputs.forEach((input) => {      
+      input.setCustomValidity('')
+    })
+    if (checked.length < this.requiredSubtypeCount) {
+      firstInput.setCustomValidity(`Please select ${this.requiredSubtypeCount} or more subtype options.`)
+    }
   }
 }
