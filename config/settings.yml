@@ -3,6 +3,9 @@ sdr_api:
   email: testing@example.org
   password: notusedanywhere
 
+preservation_catalog:
+  url: 'https://preservation-catalog-stage-01.stanford.edu'
+  token: 'mint-token-with-target-preservation-catalog-rake-generate-token'
 
 accountws:
   pem_file: /etc/pki/tls/certs/sul-h2-qa.stanford.edu.pem

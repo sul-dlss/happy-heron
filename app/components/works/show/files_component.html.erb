@@ -5,7 +5,7 @@
       <span class="ms-3">
         <%= helpers.turbo_frame_tag dom_id(work, 'edit_file'), src: edit_button_work_path(work, tag: 'file'), target: '_top' %>
       </span>
-      <%= link_to work_zip_path(work), class: 'ms-4' do %>
+      <%= link_to work_zip_path(work), class: 'ms-4', data: { turbo: false } do %>
         <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download All Files</span>
       <% end %>
     </th>
@@ -14,16 +14,6 @@
   </tr>
   </thead>
   <tbody>
-    <% attached_files.each do |af| %>
-      <tr>
-        <td><%= af.filename %>
-          <%= link_to rails_blob_path(af.file, disposition: "attachment"), class: 'ms-2' do %>
-            <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download</span>
-          <% end %>
-        </td>
-        <td><%= af.label %></td>
-        <td><%= af.hide? ? 'Yes' : 'No' %></td>
-      </tr>
-    <% end %>
+    <%= render Works::Show::AttachedFileComponent.with_collection(attached_files, work_version: work_version) %>
   </tbody>
 </table>

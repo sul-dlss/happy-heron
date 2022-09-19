@@ -69,6 +69,7 @@ gem 'pry'
 gem 'redis', '~> 4.0'
 # TODO: Deal with this
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
+gem 'preservation-client', '~> 4.0'
 gem 'reform', '~> 2.5.0'
 gem 'reform-rails', '~> 0.2.0'
 gem 'sdr-client', '~> 0.94'

@@ -1,0 +1,9 @@
+<tr>
+    <td><%= filename %>
+        <%= link_to path, class: 'ms-2', data: { turbo: false } do %>
+        <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download</span>
+        <% end %>
+    </td>
+    <td><%= label %></td>
+    <td><%= hide? ? 'Yes' : 'No' %></td>
+</tr>

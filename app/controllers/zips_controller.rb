@@ -10,15 +10,22 @@ class ZipsController < ApplicationController
     work = Work.find(params[:work_id])
     work_version = work.head
     authorize! work_version
-    files = work_version.attached_files.map do |af|
+    files = collect_files(work_version)
+
+    raise ActionController::RoutingError, 'No downloadable files' if files.none?
+
+    zipline(files, "#{work.druid.presence || work.id}.zip")
+  end
+
+  private
+
+  def collect_files(work_version)
+    work_version.attached_files.map do |af|
+      af.transform_blob_to_preservation if af.in_preservation?
       [
         af.file,
         af.file.filename
       ]
     end
-
-    raise ActionController::RoutingError, 'No downloadable files' if files.none?
-
-    zipline(files, "#{work.druid.presence || work.id}.zip")
   end
 end

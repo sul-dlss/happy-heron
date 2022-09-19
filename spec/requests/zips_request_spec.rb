@@ -27,7 +27,7 @@ RSpec.describe 'Download a zip file of all attached files', type: :request do
       create(:attached_file, :with_file, work_version:)
     end
 
-    it 'shows a download link' do
+    it 'streams the attachment' do
       get "/works/#{work_id}/zip"
       expect(response.headers['Content-Length']).to eq '7892'
     end
