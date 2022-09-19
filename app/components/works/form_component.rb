@@ -21,6 +21,9 @@ module Works
 
     delegate :persisted?, to: :work_form
     delegate :purl, to: :work
+    delegate :druid, to: :work
+    delegate :doi, to: :work
+    delegate :will_assign_doi?, to: :work_form
 
     def work
       work_form.model.fetch(:work)
@@ -28,6 +31,17 @@ module Works
 
     def work_version
       work_form.model.fetch(:work_version)
+    end
+
+    def doi_field
+      return "https://doi.org/#{doi}." if doi
+
+      # create DOI URL or placeholder for works in collections that allow DOI assignment
+      return unless will_assign_doi?
+
+      return "https://doi.org/#{Doi.for(druid)}." if druid
+
+      WorkVersion::DOI_TEXT
     end
   end
 end

@@ -24,6 +24,7 @@ class WorkObserver
     work = work_version.work
     work.update(doi: Doi.for(work.druid)) if transition.to_name == :purl_reserved && work.assign_doi?
     work_version.add_purl_to_citation
+    work_version.add_doi_to_citation if work.doi
   end
 
   def self.after_begin_deposit(work_version, _transition)

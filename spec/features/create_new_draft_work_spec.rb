@@ -31,5 +31,32 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
     expect(page).to have_content 'My Draft'
     expect(page).to have_content 'Draft - Not deposited'
+    expect(page).to have_content WorkVersion::LINK_TEXT.to_s
+    expect(page).to have_content WorkVersion::DOI_TEXT.to_s
+  end
+
+  context 'when collection does not allow DOI assignment' do
+    let(:collection) { create(:collection, doi_option: 'no', depositors: [user]) }
+
+    it 'does not show DOI placeholder text' do
+      visit dashboard_path
+
+      click_button '+ Deposit to this collection'
+
+      expect(page).to have_content 'What type of content will you deposit?'
+
+      find('label', text: 'Sound').click
+
+      click_button 'Continue'
+
+      fill_in 'Title of deposit', with: 'My Draft'
+
+      click_button 'Save as draft'
+
+      expect(page).to have_content 'My Draft'
+      expect(page).to have_content 'Draft - Not deposited'
+      expect(page).to have_content WorkVersion::LINK_TEXT
+      expect(page).not_to have_content WorkVersion::DOI_TEXT
+    end
   end
 end

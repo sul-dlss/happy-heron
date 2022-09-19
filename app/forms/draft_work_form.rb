@@ -171,4 +171,8 @@ class DraftWorkForm < Reform::Form
   def model_name
     Work.model_name
   end
+
+  def will_assign_doi?
+    (collection.doi_option == 'depositor-selects' && assign_doi) || collection.doi_option == 'yes'
+  end
 end

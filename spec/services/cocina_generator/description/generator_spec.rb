@@ -11,7 +11,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
           :with_some_untitled_related_links, :with_related_works,
           :with_contact_emails,
           contributors: [contributor],
-          citation: "Test citation #{WorkVersion::LINK_TEXT}",
+          citation: "Test citation #{WorkVersion::LINK_TEXT}. #{WorkVersion::DOI_TEXT}",
           title: 'Test title')
   end
 
@@ -136,7 +136,7 @@ RSpec.describe CocinaGenerator::Description::Generator do
         ],
         note: [
           { type: 'abstract', value: 'test abstract' },
-          { type: 'preferred citation', value: 'Test citation :link:' }
+          { type: 'preferred citation', value: 'Test citation :link:. :doi:' }
         ],
         title: [{ value: 'Test title' }],
         contributor: [

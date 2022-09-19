@@ -63,8 +63,7 @@ class WorkForm < DraftWorkForm
   def assign_doi?
     return false unless work.druid
 
-    (collection.doi_option == 'depositor-selects' && assign_doi) ||
-      collection.doi_option == 'yes'
+    will_assign_doi?
   end
 
   def availability_component_present?

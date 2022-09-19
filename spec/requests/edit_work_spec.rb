@@ -114,7 +114,7 @@ RSpec.describe 'Updating an existing work' do
             collection.update!(doi_option: 'depositor-selects')
           end
 
-          it 'sets the doi' do
+          it 'does not set the doi' do
             patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
             expect(CollectionObserver).to have_received(:version_draft_created)
             expect(WorkVersion.where(work:).count).to eq 2

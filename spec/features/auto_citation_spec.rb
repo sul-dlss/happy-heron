@@ -28,7 +28,7 @@ RSpec.describe 'Automatically generate a citation', js: true do
       expect(page).to have_content 'Deposit your content'
 
       within_section 'Authors to include in citation' do
-        fill_in 'First name', with: 'Diana'
+        fill_in 'First name', with: 'Dana'
         fill_in 'Last name', with: 'Scully'
         blur_from 'Last name'
       end
