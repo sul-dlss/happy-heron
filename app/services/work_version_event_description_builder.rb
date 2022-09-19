@@ -21,6 +21,12 @@ class WorkVersionEventDescriptionBuilder
     ].compact.join(', ')
   end
 
+  # if the user removes a field from an association (e.g. keyword), reform does not indicate this as a change
+  # ... so instead we will count the number in the form and in the model, and if different, it has changed
+  def changed_amount?(field_name)
+    form.send(field_name).size != form.work_version.send(field_name).size
+  end
+
   def collection
     @collection ||= form.model[:work].collection
   end
@@ -34,21 +40,21 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def authors
-    'authors modified' if form.changed?('authors')
+    'authors modified' if form.changed?('authors') || changed_amount?('authors')
   end
 
   def contributors
-    'contributors modified' if form.changed?('contributors')
+    'contributors modified' if form.changed?('contributors') || changed_amount?('contributors')
   end
 
   # The has many relationships are showing as changed and that their "id" has changed. I don't know why.
   # So we check for changes in the sub-properties instead
   def contact_email
-    'contact email modified' if form.changed?('contact_emails')
+    'contact email modified' if form.changed?('contact_emails') || changed_amount?('contact_emails')
   end
 
   def related_links
-    'related links modified' if form.changed?('related_links')
+    'related links modified' if form.changed?('related_links') || changed_amount?('related_links')
   end
 
   def publication_date
@@ -60,11 +66,11 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def keywords
-    'keywords modified' if form.changed?('keywords')
+    'keywords modified' if form.changed?('keywords') || changed_amount?('keywords')
   end
 
   def subtype
-    'work subtypes modified' if form.changed?('subtype')
+    'work subtypes modified' if form.changed?('subtype') || changed_amount?('subtype')
   end
 
   def access
@@ -129,11 +135,14 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def file_description
-    'file description changed' if form.attached_files.any? { |af| af.changed?('label') && af.label.present? }
+    'file description changed' if form.attached_files.any? do |af|
+                                    (af.changed?('label') && af.label.present?) ||
+                                    (af.changed?('label') && af.id.present?)
+                                  end
   end
 
   def related_works
-    'related works modified' if form.changed?('related_works')
+    'related works modified' if form.changed?('related_works') || changed_amount?('related_works')
   end
 
   def assign_doi
