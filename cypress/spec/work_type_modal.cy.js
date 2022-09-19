@@ -1,5 +1,4 @@
-describe('Clear dates', () => {
-  // const now = new Date()
+describe('Work type modal', () => {
   let collection_id
 
   beforeEach(() => {
