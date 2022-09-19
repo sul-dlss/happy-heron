@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe 'Create a new work in a deposited collection', js: true do
   let(:user) { create(:user) }
   let(:collection_version) { create(:collection_version, :deposited, collection:) }
-  let(:collection) { create(:collection, :depositor_selects_access, depositors: [user]) }
+  let(:default_license) { 'CC0-1.0' }
+  let(:collection) { create(:collection, :depositor_selects_access, depositors: [user], default_license:) }
   let(:second_email) { 'second@example.com' }
 
   before do

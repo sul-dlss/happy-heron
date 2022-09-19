@@ -310,8 +310,9 @@ RSpec.describe 'Create a new work' do
       end
 
       context 'with a minimal set' do
+        let(:default_license) { 'CC0-1.0' }
         let(:collection) do
-          create(:collection, :depositor_selects_access, depositors: [user])
+          create(:collection, :depositor_selects_access, depositors: [user], default_license:)
         end
 
         let(:work_params) do
@@ -325,7 +326,7 @@ RSpec.describe 'Create a new work' do
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
-            license: 'CC0-1.0',
+            license:,
             release: 'immediate',
             access: 'stanford'
           }
@@ -367,20 +368,40 @@ RSpec.describe 'Create a new work' do
 
         before { create(:collection_version_with_collection, collection:) }
 
-        it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
-          expect(response).to have_http_status(:found)
-          work_version = Work.last.head
-          expect(work_version.authors.size).to eq 1
-          expect(work_version.attached_files.size).to eq 1
-          expect(work_version.keywords.size).to eq 1
-          expect(work_version.contact_emails.size).to eq 1
-          expect(work_version.published_edtf).to be_nil
-          expect(work_version.created_edtf).to be_nil
-          expect(work_version.embargo_date).to be_nil
-          expect(work_version.subtype).to be_empty
-          expect(work_version.state).to eq 'depositing'
-          expect(DepositJob).to have_received(:perform_later)
+        context 'with an unchanged default license' do
+          let(:license) { default_license }
+
+          it 'displays the work and indicates correct event type as created' do
+            post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+            expect(response).to have_http_status(:found)
+            work = Work.last
+            work_version = work.head
+            last_event = work.events.last
+            expect(work_version.authors.size).to eq 1
+            expect(work_version.attached_files.size).to eq 1
+            expect(work_version.keywords.size).to eq 1
+            expect(work_version.contact_emails.size).to eq 1
+            expect(work_version.published_edtf).to be_nil
+            expect(work_version.created_edtf).to be_nil
+            expect(work_version.embargo_date).to be_nil
+            expect(work_version.subtype).to be_empty
+            expect(work_version.state).to eq 'depositing'
+            expect(DepositJob).to have_received(:perform_later)
+            expect(last_event.event_type).to eq 'update_metadata'
+            expect(last_event.description).to eq 'Created'
+          end
+        end
+
+        context 'with a changed default license' do
+          let(:license) { 'Apache-2.0' }
+
+          it 'indicates correct event type as license modified' do
+            post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+            expect(response).to have_http_status(:found)
+            last_event = Work.last.events.last
+            expect(last_event.event_type).to eq 'update_metadata'
+            expect(last_event.description).to eq 'license modified'
+          end
         end
       end
 
