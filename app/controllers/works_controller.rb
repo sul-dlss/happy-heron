@@ -26,7 +26,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
-      after_save(form: @form, event_context: build_create_event_context(@form))
+      after_save(form: @form, event_context: build_event_context(form: @form, event_type: :create))
     else
       @form.prepopulate!
       render :new, status: :unprocessable_entity
@@ -59,7 +59,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
-    event_context = build_update_event_context(context_form(orig_work_version, orig_clean_params))
+    event_context = build_event_context(form: context_form(orig_work_version, orig_clean_params), event_type: :update)
     if @form.validate(clean_params) && @form.save
       after_save(form: @form, event_context:)
     else
@@ -169,27 +169,11 @@ class WorksController < ObjectsController
     end
   end
 
-  # used to build event context from creating a new work
-  def build_create_event_context(form)
-    # For create events, all we need to record is if the user changed the license from the default;
-    #  if not...we just record the work as being created (same as we do for a new collection)
-    description = if form.license == form.collection.default_license
-                    'Created'
-                  else
-                    'license modified'
-                  end
-
+  # used to build event context from creating or updating an existing work
+  def build_event_context(form:, event_type:)
     {
       user: current_user,
-      description:
-    }
-  end
-
-  # used to build event context from updating an existing work
-  def build_update_event_context(form)
-    {
-      user: current_user,
-      description: WorkVersionEventDescriptionBuilder.build(form)
+      description: WorkVersionEventDescriptionBuilder.build(form:, event_type:)
     }
   end
 

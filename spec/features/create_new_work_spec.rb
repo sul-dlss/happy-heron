@@ -163,8 +163,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           expect(page).to have_content 'CC0-1.0'
 
           within '#events' do
-            # New work gets a description of "Created"
-            expect(page).to have_content 'Created', count: 1
+            # New work gets a description of what's changed (except subtypes)
+            changed = ['title of deposit modified', 'abstract modified', 'contact email modified', 'authors modified',
+                       'publication date modified', 'creation date modified', 'keywords modified', 'citation modified',
+                       'files added/removed']
+            expect(page).to have_content changed.join(', '), count: 1
           end
         end
       end
@@ -383,8 +386,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           expect(page).to have_content 'CC0-1.0'
 
           within '#events' do
-            # New work gets a description of "Created"
-            expect(page).to have_content 'Created', count: 1
+            # New work gets a description of what's changed (except subtypes)
+            changed = ['title of deposit modified', 'abstract modified', 'contact email modified', 'authors modified',
+                       'publication date modified', 'creation date modified', 'keywords modified', 'citation modified',
+                       'files added/removed']
+            expect(page).to have_content changed.join(', '), count: 1
           end
         end
       end

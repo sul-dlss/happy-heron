@@ -3,13 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe WorkVersionEventDescriptionBuilder do
-  subject(:result) { described_class.build(form) }
+  subject(:result) { described_class.build(form:, event_type:) }
 
   let(:collection) { build(:collection, :depositor_selects_access, :depositor_selects_release_date) }
   let(:work_version) { create(:work_version_with_work, :with_no_subtype, collection:, attached_files:) }
   let(:work) { work_version.work }
   let(:form) { DraftWorkForm.new(work_version:, work:) }
   let(:attached_files) { [] }
+  let(:event_type) { 'update' }
 
   context 'when nothing has changed' do
     let(:params) do
