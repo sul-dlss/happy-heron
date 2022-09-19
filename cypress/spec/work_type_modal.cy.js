@@ -1,12 +1,10 @@
-describe('Clear dates', () => {
-  // const now = new Date()
+describe('Work type modal', () => {
   let collection_id
 
   beforeEach(() => {
     const results = cy.appFactories([
       ['create', 'collection_version_with_collection', {} ]
     ]).then((results) => {
-      console.log(results)
       collection_id = results[0].collection_id
 
       // This stubs out edit link calls.
