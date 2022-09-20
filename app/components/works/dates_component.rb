@@ -130,6 +130,10 @@ module Works
       reform.model_name.param_key
     end
 
+    def single?
+      reform.created_type == 'single'
+    end
+
     private
 
     def resolve_day(created_date)

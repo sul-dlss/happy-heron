@@ -38,7 +38,7 @@ describe('Clear dates', () => {
   })
 
   it('clears date ranges', () => {
-    cy.get('#work_created_type_range').click({force: true})
+    cy.get('#work_created_type').check({force: true})
 
     cy.get('#work_created_range_start_year').type('2021', {force: true}).should('have.value', '2021')
     cy.get('#work_created_range_start_month').select('February', {force: true}).should('have.value', '2')
