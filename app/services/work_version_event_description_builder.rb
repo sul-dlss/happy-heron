@@ -2,16 +2,15 @@
 
 # This creates an appropriate description for a create/update event on a WorkVersion
 class WorkVersionEventDescriptionBuilder
-  def self.build(form:, event_type:)
-    new(form:, event_type:).build
+  def self.build(form)
+    new(form).build
   end
 
-  def initialize(form:, event_type:)
+  def initialize(form)
     @form = form
-    @event_type = event_type
   end
 
-  attr_reader :form, :event_type
+  attr_reader :form
 
   def build # rubocop:disable Metrics/AbcSize
     changes = [
@@ -22,11 +21,18 @@ class WorkVersionEventDescriptionBuilder
     ].compact.join(', ')
 
     # if this is a new work and there are no changes, return "Created", else return changes
-    if event_type == :create && changes.blank?
+    if new_work? && changes.blank?
       'Created'
     else
       changes
     end
+  end
+
+  private
+
+  # indicates if this is a new work (work version is in the "new" state on v1)
+  def new_work?
+    form.model[:work_version].new? && form.model[:work_version].version == 1
   end
 
   # if the user removes a field from an association (e.g. keyword), reform does not indicate this as a change
@@ -83,7 +89,7 @@ class WorkVersionEventDescriptionBuilder
 
   def subtype_changed?
     # do not report subtype changes on a work creation, since they are required and always "change" on a new work
-    return false if event_type == :create
+    return false if new_work?
 
     form.changed?('subtype') || changed_amount?('subtype')
   end
@@ -126,7 +132,7 @@ class WorkVersionEventDescriptionBuilder
     return false if collection.required_license
 
     # do not report license changes on a work creation if they are the default license
-    return false if event_type == :create && collection.default_license == form.license
+    return false if new_work? && collection.default_license == form.license
 
     form.changed?('license')
   end

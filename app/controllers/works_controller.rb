@@ -26,7 +26,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
-      after_save(form: @form, event_context: build_event_context(form: @form, event_type: :create))
+      after_save(form: @form, event_context: build_event_context(@form))
     else
       @form.prepopulate!
       render :new, status: :unprocessable_entity
@@ -59,7 +59,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
-    event_context = build_event_context(form: context_form(orig_work_version, orig_clean_params), event_type: :update)
+    event_context = build_event_context(context_form(orig_work_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save
       after_save(form: @form, event_context:)
     else
@@ -170,10 +170,10 @@ class WorksController < ObjectsController
   end
 
   # used to build event context from creating or updating an existing work
-  def build_event_context(form:, event_type:)
+  def build_event_context(form)
     {
       user: current_user,
-      description: WorkVersionEventDescriptionBuilder.build(form:, event_type:)
+      description: WorkVersionEventDescriptionBuilder.build(form)
     }
   end
 
