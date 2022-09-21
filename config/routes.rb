@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   end
 
   resource :profile, only: :show
+  resources :preservation, only: :show
 
   namespace :admin do
     resources :druid_searches, only: :index

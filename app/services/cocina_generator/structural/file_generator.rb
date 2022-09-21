@@ -2,7 +2,7 @@
 
 module CocinaGenerator
   module Structural
-    # This generates a File for a work
+    # This generates a Cocina File for a work
     class FileGenerator
       def self.generate(work_version:, attached_file:)
         new(work_version:, attached_file:).generate
