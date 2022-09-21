@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-if defined?(DatabaseCleaner)
-  # cleaning the database using database_cleaner
-  DatabaseCleaner.strategy = :truncation
-  DatabaseCleaner.clean
-else
-  # Manual cleaning
-  true
-end
+# Manual cleaning
+# This removes the druid. Druid has a unique constraint that prevents the use of factorybot to create
+# collections with the same druid.
+Collection.update_all(druid: nil)
 
 CypressOnRails::SmartFactoryWrapper.reload
 

@@ -19,6 +19,7 @@ FactoryBot.define do
         review_enabled { false }
         access { 'world' }
         doi_option { 'no' }
+        collection_druid { nil }
       end
       state { 'deposited' }
       collection do
@@ -27,7 +28,8 @@ FactoryBot.define do
                                  reviewed_by:,
                                  review_enabled:,
                                  doi_option:,
-                                 access:)
+                                 access:,
+                                 druid: collection_druid)
       end
 
       after(:create) do |collection_version, _evaluator|

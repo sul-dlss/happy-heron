@@ -53,6 +53,10 @@ class Work < ApplicationRecord
     head&.deposited? && head.embargo_date.present? && head.embargo_date <= Time.zone.today
   end
 
+  def embargoed?
+    head.deposited? && head.embargo_date.present? && head.embargo_date > Time.zone.today
+  end
+
   delegate :name, to: :depositor, prefix: true
   delegate :name, to: :owner, prefix: true
   delegate :purl_reservation?, to: :head
