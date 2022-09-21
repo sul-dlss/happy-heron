@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This creates an appropriate description for an update event on a WorkVersion
+# This creates an appropriate description for a create/update event on a WorkVersion
 class WorkVersionEventDescriptionBuilder
   def self.build(form)
     new(form).build
@@ -13,12 +13,26 @@ class WorkVersionEventDescriptionBuilder
   attr_reader :form
 
   def build # rubocop:disable Metrics/AbcSize
-    [
+    changes = [
       title, abstract, contact_email, authors, contributors, related_links,
       related_works, publication_date, created_date, keywords, subtype,
       citation, embargo, access, license, files, file_visibility, file_description,
       assign_doi
     ].compact.join(', ')
+
+    # if this is a new work and there are no changes, return "Created", else return changes
+    if new_work? && changes.blank?
+      'Created'
+    else
+      changes
+    end
+  end
+
+  private
+
+  # indicates if this is a new work (work version is in the "new" state on v1)
+  def new_work?
+    form.model[:work_version].new? && form.model[:work_version].version == 1
   end
 
   # if the user removes a field from an association (e.g. keyword), reform does not indicate this as a change
@@ -70,7 +84,14 @@ class WorkVersionEventDescriptionBuilder
   end
 
   def subtype
-    'work subtypes modified' if form.changed?('subtype') || changed_amount?('subtype')
+    'work subtypes modified' if subtype_changed?
+  end
+
+  def subtype_changed?
+    # do not report subtype changes on a work creation, since they are required and always "change" on a new work
+    return false if new_work?
+
+    form.changed?('subtype') || changed_amount?('subtype')
   end
 
   def access
@@ -109,6 +130,9 @@ class WorkVersionEventDescriptionBuilder
 
   def license_changed?
     return false if collection.required_license
+
+    # do not report license changes on a work creation if they are the default license
+    return false if new_work? && collection.default_license == form.license
 
     form.changed?('license')
   end

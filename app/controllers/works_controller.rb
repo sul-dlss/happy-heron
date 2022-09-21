@@ -26,7 +26,7 @@ class WorksController < ObjectsController
 
     @form = work_form(work_version)
     if @form.validate(work_params) && @form.save
-      after_save(form: @form, event_context: { user: current_user, description: 'Created' })
+      after_save(form: @form, event_context: build_event_context(@form))
     else
       @form.prepopulate!
       render :new, status: :unprocessable_entity
@@ -169,6 +169,7 @@ class WorksController < ObjectsController
     end
   end
 
+  # used to build event context from creating or updating an existing work
   def build_event_context(form)
     {
       user: current_user,
