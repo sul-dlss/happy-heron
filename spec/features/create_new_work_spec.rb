@@ -118,7 +118,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           fill_in 'Publication year', with: '2020'
           select 'February', from: 'Publication month'
 
-          choose 'Date range'
+          check 'Enter a date range'
 
           fill_in 'Created range start year', with: '2020'
           select 'March', from: 'Created range start month'
@@ -331,7 +331,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           fill_in 'Publication year', with: '2020'
           select 'February', from: 'Publication month'
 
-          choose 'Date range'
+          check 'Enter a date range'
 
           fill_in 'Created range start year', with: '2020'
           select 'March', from: 'Created range start month'
