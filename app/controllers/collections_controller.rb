@@ -85,6 +85,11 @@ class CollectionsController < ObjectsController
     }
   end
 
+  def admin
+    @collection = Collection.find(params[:id])
+    authorize! @collection
+  end
+
   private
 
   def update_params

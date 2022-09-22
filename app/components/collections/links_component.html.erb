@@ -1,8 +1,13 @@
 <table class="table table-sm mb-5 caption-header">
   <caption>Links to related information
-    <%= link_to edit_collection_version_path(collection_version, anchor: 'links'), aria: { label: 'Edit links to related information' } do %>
-      <span class="fa-solid fa-pencil-alt edit" aria-hidden="true"></span>
-    <% end %>
+    <%= helpers.turbo_frame_tag dom_id(collection_version, :edit_links),
+                                src: edit_link_collection_version_path(
+                                  collection_version,
+                                  ref: 'links',
+                                  label: 'Edit links to related information'
+                                ),
+                                target: '_top' %>
+
   </caption>
   <tbody>
     <tr>

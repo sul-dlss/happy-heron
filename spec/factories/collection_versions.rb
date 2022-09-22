@@ -17,13 +17,17 @@ FactoryBot.define do
         reviewed_by { [] }
         managed_by { [] }
         review_enabled { false }
+        access { 'world' }
+        doi_option { 'no' }
       end
       state { 'deposited' }
       collection do
         association(:collection, depositors:,
                                  managed_by:,
                                  reviewed_by:,
-                                 review_enabled:)
+                                 review_enabled:,
+                                 doi_option:,
+                                 access:)
       end
 
       after(:create) do |collection_version, _evaluator|

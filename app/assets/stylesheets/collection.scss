@@ -30,7 +30,7 @@
       font-size: large;
     }
   }
-  
+
   // The pencil icon
   .edit {
     margin-left: 10px;
@@ -49,6 +49,14 @@
         color: $primary;
         font-weight: bold;
       }
+    }
+  }
+
+  .admin-section {
+    background-color: $silver-sand;
+
+    label.admin-functions {
+      @extend h5;
     }
   }
 }

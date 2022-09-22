@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       get :delete_button
       get :edit_link
       get :dashboard
+      get :admin
+      resource :decommission, only: %i[edit update], controller: 'collection_decommission', as: :collection_decommission
     end
 
     resources :works, shallow: true do
@@ -32,7 +34,7 @@ Rails.application.routes.draw do
         get :details
         resource :owners, only: %i[edit update], controller: 'work_owners'
         resource :locks, only: %i[edit update], controller: 'work_locks'
-        resource :decommission, only: %i[edit update], controller: 'work_decommission'
+        resource :decommission, only: %i[edit update], controller: 'work_decommission', as: :work_decommission
       end
 
       resource :review, only: :create

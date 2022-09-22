@@ -4,7 +4,7 @@
 class WorkPolicy < ApplicationPolicy
   alias_rule :delete?, to: :destroy?
 
-  # Return the relation defining the collections you can view and removing decommissioned works unless administrator.
+  # Return the relation defining the works you can view and removing decommissioned works unless administrator.
   scope_for :relation do |relation|
     new_relation = relation.where(collection_id: user.manages_collection_ids + user.reviews_collection_ids).or(
       relation.where(owner: user)

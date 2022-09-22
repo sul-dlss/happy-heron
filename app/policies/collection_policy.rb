@@ -5,10 +5,17 @@ class CollectionPolicy < ApplicationPolicy
   alias_rule :edit?, to: :update?
   alias_rule :delete?, to: :destroy?
   alias_rule :manage_email_preferences?, to: :review?
+  alias_rule :admin?, to: :update?
 
-  # Return the relation defining the collections you can deposit into, manage or review.
+  # Return the relation defining the collections you can deposit into, manage,
+  # or review, and removing decommissioned collections unless administrator.
   relation_scope :deposit do |relation|
-    relation.where(id: user.deposits_into_ids + user.manages_collection_ids + user.reviews_collection_ids)
+    new_relation = relation.where(
+      id: user.deposits_into_ids + user.manages_collection_ids + user.reviews_collection_ids
+    )
+    return new_relation if administrator?
+
+    relation.joins(:head).where.not(head: { state: 'decommissioned' }).and(new_relation)
   end
 
   def update?
