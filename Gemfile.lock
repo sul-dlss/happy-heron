@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/sul-dlss/dlss-capistrano-docker.git
+  revision: f180a5fc7329c506b0ad89bd0f8f821972a04fa6
+  branch: initial
+  specs:
+    dlss-capistrano-docker (0.0.1)
+      capistrano (~> 3.0)
+      capistrano-one_time_key
+      capistrano-shared_configs
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -80,9 +90,6 @@ GEM
     bootsnap (1.13.0)
       msgpack (~> 1.2)
     builder (3.2.4)
-    bundler-audit (0.9.1)
-      bundler (>= 1.2.0, < 3)
-      thor (~> 1.0)
     bunny (2.19.0)
       amq-protocol (~> 2.3, >= 2.3.1)
       sorted_set (~> 1, >= 1.0.2)
@@ -92,17 +99,11 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
-    capistrano-bundle_audit (0.4.0)
-      bundler-audit (~> 0.5)
-      capistrano (~> 3.0)
-      capistrano-bundler (>= 1.4)
     capistrano-bundler (2.1.0)
       capistrano (~> 3.1)
     capistrano-maintenance (1.2.1)
       capistrano (>= 3.0)
     capistrano-one_time_key (0.1.0)
-      capistrano (~> 3.0)
-    capistrano-passenger (0.2.1)
       capistrano (~> 3.0)
     capistrano-rails (1.6.2)
       capistrano (~> 3.1)
@@ -179,11 +180,6 @@ GEM
       declarative-option (< 0.2.0)
       representable (>= 2.4.0, <= 3.1.0)
       uber (< 0.2.0)
-    dlss-capistrano (4.3.1)
-      capistrano (~> 3.0)
-      capistrano-bundle_audit (>= 0.3.0)
-      capistrano-one_time_key
-      capistrano-shared_configs
     docile (1.4.0)
     druid-tools (3.0.0)
     dry-configurable (0.16.1)
@@ -548,7 +544,6 @@ DEPENDENCIES
   bunny (~> 2.17)
   byebug
   capistrano-maintenance (~> 1.2)
-  capistrano-passenger
   capistrano-rails
   capybara (~> 3.34)
   capybara-screenshot
@@ -559,7 +554,7 @@ DEPENDENCIES
   cypress-rails
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
-  dlss-capistrano
+  dlss-capistrano-docker!
   druid-tools
   dry-types
   edtf

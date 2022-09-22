@@ -1,0 +1,66 @@
+version: '3.6'
+
+services:
+  app:
+    build: &build
+      context: .
+      dockerfile: docker/app-prod/Dockerfile
+      args:
+        - GID=${H2_GID-1000}
+        - UID=${H2_UID-1000}
+        - SECRET_KEY_BASE
+    environment: &environment
+      - DATABASE_NAME=h2
+      - DATABASE_USERNAME
+      - DATABASE_PASSWORD
+      - DATABASE_HOSTNAME=host.docker.internal
+      # for ActionCable
+      - REDIS_URL=redis://host.docker.internal:6379/
+      - SMTP_HOST=host.docker.internal
+      - HOST
+      - HONEYBADGER_API_KEY
+      - SETTINGS__RABBITMQ__PASSWORD
+      - SETTINGS__RABBITMQ__QUEUES__DEPOSIT_COMPLETE
+      - SETTINGS__RABBITMQ__QUEUES__DRUID_ASSIGNED
+      - SETTINGS__RABBITMQ__QUEUES__EMBARGO_LIFTED
+      - SETTINGS__SDR_API__PASSWORD
+      - SETTINGS__PRESERVATION_CATALOG__TOKEN
+    volumes: &volumes
+      - /opt/app/h2/happy-heron/shared/log:/app/log
+      - /data/h2-files:/data/h2-files
+    ports:
+      - 3000:3000
+    extra_hosts: &extra-hosts
+      - host.docker.internal:host-gateway
+    profiles:
+      - web
+    # restart: on-failure
+  sneakers:
+    build: *build
+    environment: *environment
+    volumes: *volumes
+    extra_hosts: *extra-hosts
+    profiles:
+      - web
+    command: bin/bundle exec rake sneakers:run 2>&1 | tee -a log/sneakers.log
+    # restart: on-failure
+  sidekiq:
+    build: *build
+    environment: *environment
+    volumes: *volumes
+    extra_hosts: *extra-hosts
+    command: bin/bundle exec sidekiq 2>&1 | tee -a log/sidekiq.log
+    profiles:
+      - worker
+    deploy:
+      replicas: ${SIDEKIQ_COUNT-1}
+    # restart: on-failure
+  cron:
+    build: *build
+    environment: *environment
+    volumes: *volumes
+    extra_hosts: *extra-hosts
+    profiles:
+      - cron
+    command: supercronic /app/config/crontab 2>&1 | tee -a log/cron.log
+    # restart: on-failure

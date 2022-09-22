@@ -66,6 +66,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   config.action_mailer.asset_host = "https://#{Settings.host}"
+  config.action_mailer.smtp_settings = { address: ENV.fetch('SMTP_HOST', 'localhost') }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

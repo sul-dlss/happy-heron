@@ -22,14 +22,11 @@ set :log_level, :info
 # Default value for :pty is false
 # set :pty, true
 
-# Default value for :linked_files is []
-append :linked_files,
-       'config/database.yml', # in Puppet
-       'config/secrets.yml', # in shared_configs
-       'config/honeybadger.yml' # in shared_configs
+set :linked_files, %w[config/honeybadger.yml]
 
-# Default value for linked_dirs is []
-append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+set :linked_dirs, %w[log config/settings]
+
+set :dereference_dirs, %w[config/settings]
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -46,21 +43,9 @@ append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/cache', 'tmp/soc
 # honeybadger_env otherwise defaults to rails_env
 set :honeybadger_env, fetch(:stage)
 
-# Manage sidekiq via systemd (from dlss-capistrano gem)
-set :sidekiq_systemd_use_hooks, true
-
-# Manage sneakers via systemd (from dlss-capistrano gem)
-set :sneakers_systemd_use_hooks, true
-
 # Set Rails env to production in all Cap environments
 set :rails_env, 'production'
 
-# Deploy passenger-standalone via systemd service
-set :passenger_restart_command, 'sudo systemctl restart passenger'
-set :passenger_restart_options, -> { '' }
-
-set :whenever_environment, fetch(:rails_env)
-set :whenever_roles, [:cron]
-
-# update shared_configs before restarting app (from dlss-capistrano gem)
-before 'deploy:restart', 'shared_configs:update'
+set :docker_compose_file, 'docker-compose.prod.yml'
+set :docker_compose_seed_use_hooks, true
+set :docker_compose_rabbitmq_use_hooks, true

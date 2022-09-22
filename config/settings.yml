@@ -58,7 +58,7 @@ purl_url: https://purl.stanford.edu
 terms_url: https://library.stanford.edu/research/stanford-digital-repository/documentation/sdr-terms-deposit
 sdr_url: https://library.stanford.edu/research/stanford-digital-repository
 
-host: <%= Socket.gethostname %>
+host: <%= ENV.fetch('HOST', Socket.gethostname) %>
 
 rabbitmq:
   enabled: false
@@ -66,6 +66,10 @@ rabbitmq:
   vhost: /
   username: guest
   password: guest
+  queues:
+    deposit_complete: 'h2.deposit_complete'
+    druid_assigned: 'h2.druid_assigned'
+    embargo_lifted: 'h2.embargo_lifted'
 
 notifications:
   first_draft_reminder:

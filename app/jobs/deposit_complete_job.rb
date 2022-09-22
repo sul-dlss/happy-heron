@@ -11,7 +11,7 @@ class DepositCompleteJob
   # example, if the embargo was lifted, DSA would open and close a version. The
   # workflow message "end-accession" would end up here.  We must be able to handle
   # these messages in addition to those that result from depositing in h2.
-  from_queue 'h2.deposit_complete', env: nil
+  from_queue Settings.rabbitmq.queues.deposit_complete, env: nil
 
   def work(msg)
     druid = parse_message(msg)

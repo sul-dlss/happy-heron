@@ -26,7 +26,6 @@ group :development do
   gem 'faker'
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false # needed to update RBIs after adding reform-rails
-  gem 'puma', '~> 5.6', '>= 5.6.4'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'state_machines-graphviz'
@@ -41,9 +40,8 @@ end
 
 group :deployment do
   gem 'capistrano-maintenance', '~> 1.2', require: false
-  gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
-  gem 'dlss-capistrano', require: false
+  gem 'dlss-capistrano-docker', github: 'sul-dlss/dlss-capistrano-docker', branch: 'initial', require: false
 end
 
 gem 'action_policy', '~> 0.5.3'
@@ -67,6 +65,7 @@ gem 'pg'
 gem 'preservation-client', '~> 5.0'
 gem 'propshaft'
 gem 'pry'
+gem 'puma', '~> 5.6', '>= 5.6.4'
 gem 'redis', '~> 4.0'
 # TODO: Deal with this
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
