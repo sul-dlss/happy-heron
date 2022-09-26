@@ -82,6 +82,7 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true d
 
     it 'from the dashboard' do
       visit dashboard_path
+      sleep(1) # allow purl to be reserved or something
 
       within_table collection_version.name do
         click_link "Choose Type and Edit #{work_version.title}"
