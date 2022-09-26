@@ -194,27 +194,32 @@ RSpec.describe 'Updating an existing work' do
             expect(response.body).to include 'Please add at least one file.'
           end
         end
+      end
 
-        context 'when duplicate keywords' do
-          let(:keyword) { { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' } }
-          let(:work_params) do
-            {
-              title: 'This is a title',
-              work_type: 'text',
-              abstract: 'test abstract',
-              keywords_attributes: {
-                '0' => keyword,
-                '1' => keyword
-              },
-              license: 'CC0-1.0',
-              release: 'immediate'
-            }
-          end
+      context 'when duplicate keywords' do
+        let(:keyword) { { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' } }
+        let(:collection) { create(:collection_version_with_collection).collection }
+        let(:work) { create(:work, collection:) }
+        let(:work_version) { create(:work_version, work:) }
+        let(:work_params) do
+          {
+            title: 'This is a title',
+            work_type: 'text',
+            abstract: 'test abstract',
+            keywords_attributes: {
+              '0' => keyword,
+              '1' => keyword
+            },
+            license: 'CC0-1.0',
+            release: 'immediate'
+          }
+        end
 
-          it 'returns a validation error' do
-            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
-            expect(response).to have_http_status :unprocessable_entity
-            expect(response.body).to include 'Please ensure all keywords are unique'
+        context 'when saved as draft' do
+          it 'removes the duplicate keyword without error' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
+            expect(response).to have_http_status(:found)
+            expect(work_version.keywords.size).to eq 1
           end
         end
       end
