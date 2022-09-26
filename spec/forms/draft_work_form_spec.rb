@@ -51,4 +51,52 @@ RSpec.describe DraftWorkForm do
       expect(messages).to be_empty
     end
   end
+
+  describe '#dedupe_keywords' do
+    context 'when there are no duplicate keywords' do
+      let(:work_version) { create(:work_version, :with_keywords) }
+
+      it 'does not remove any keywords' do
+        expect(work_version.keywords.size).to eq 3
+        form.dedupe_keywords
+        expect(work_version.keywords.reload.size).to eq 3
+      end
+    end
+
+    context 'when there is one exact duplicate keyword' do
+      let(:work_version) { create(:work_version, :with_duped_keywords) }
+
+      it 'removes duplicate keyword' do
+        expect(work_version.keywords.size).to eq 2
+        form.dedupe_keywords
+        expect(work_version.keywords.reload.size).to eq 1
+      end
+    end
+
+    context 'when there are duplicate keywords with same label but one has a blank uri' do
+      let(:work_version) { create(:work_version, :with_duped_keywords, keywords_count: 3) }
+
+      before { work_version.keywords.first.update(uri: '') }
+
+      it 'removes duplicate keywords without uri' do
+        expect(work_version.keywords.size).to eq 3
+        form.dedupe_keywords
+        expect(work_version.keywords.reload.size).to eq 1
+        expect(work_version.keywords.first.uri).not_to be_empty # the keyword that is left is the one with the URI
+      end
+    end
+
+    context 'when there are some duplicate keywords and some unique keywords' do
+      let(:work_version) { create(:work_version, :with_keywords) }
+      let(:keyword) { create(:keyword, :fixed_value, work_version:) }
+
+      before { work_version.keywords << [keyword, keyword, keyword] }
+
+      it 'removes just the duplicate keywords' do
+        expect(work_version.keywords.size).to eq 6
+        form.dedupe_keywords
+        expect(work_version.keywords.reload.size).to eq 4
+      end
+    end
+  end
 end

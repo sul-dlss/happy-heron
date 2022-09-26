@@ -9,4 +9,9 @@ FactoryBot.define do
     uri { 'http://example.org/uri' }
     cocina_type { 'place' }
   end
+
+  trait :fixed_value do
+    label { 'Ability--Testing' }
+    uri { 'http://example.org/uri/testing' }
+  end
 end
