@@ -122,7 +122,7 @@ GEM
       launchy
     chronic (0.10.2)
     cliver (0.3.2)
-    cocina-models (0.84.5)
+    cocina-models (0.85.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -448,9 +448,9 @@ GEM
     ruby-next-core (0.15.2)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sdr-client (0.94.0)
+    sdr-client (0.95.0)
       activesupport
-      cocina-models (~> 0.84.0)
+      cocina-models (~> 0.85.0)
       dry-monads
       faraday (>= 0.16)
     serverengine (2.1.1)
