@@ -38,7 +38,8 @@ module Admin
 
     def collections_report_params
       params.require(:admin_collections_report).permit(:status_first_draft, :status_version_draft,
-                                                       :status_deposited, :date_created_start, :date_created_end,
+                                                       :status_deposited, :status_decommissioned,
+                                                       :date_created_start, :date_created_end,
                                                        :date_modified_start, :date_modified_end)
     end
   end
