@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/sul-dlss/dlss-capistrano-docker.git
-  revision: f180a5fc7329c506b0ad89bd0f8f821972a04fa6
-  branch: initial
+  revision: 6db0ad1335507359f32b6a40ce8cd56e8be42be9
+  branch: t2-rollback
   specs:
-    dlss-capistrano-docker (0.0.1)
+    dlss-capistrano-docker (1.0.0)
       capistrano (~> 3.0)
       capistrano-one_time_key
       capistrano-shared_configs

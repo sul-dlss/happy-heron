@@ -1,13 +1,15 @@
 FROM ruby:3.1-alpine
 
 # curl is to install supercronic
+# postgresql-client and redis is required for invoke.sh
 RUN apk add --update --no-cache \
   build-base \
   postgresql-dev \
+  postgresql-client \
   tzdata \
   yarn \
-  git \
-  curl
+  curl \
+  redis
 
 ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.1/supercronic-linux-amd64
 ENV SUPERCRONIC=supercronic-linux-amd64
@@ -43,6 +45,7 @@ ENV NODE_ENV=production
 RUN bundle install
 RUN yarn install
 
+RUN chown -R h2:h2 /app
 COPY --chown=h2:h2 . .
 USER h2:h2
 

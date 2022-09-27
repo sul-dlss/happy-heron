@@ -2,7 +2,7 @@
 
 desc 'Complete deposit of works and collections (only for development)'
 task complete_deposits: :environment do
-  abort 'ERROR: This task only runs in the development environment!' unless Rails.env.development?
+  abort 'ERROR: This task only runs in the development environment!' unless can_run?
 
   objects_awaiting_deposit.each do |object_version|
     deposit_completer = DepositCompleter.new(object_version:)
@@ -15,7 +15,7 @@ end
 
 desc 'Complete the assignment of a druid to purl reservation works that need one'
 task assign_pids: :environment do
-  abort 'ERROR: This task only runs in the development environment!' unless Rails.env.development?
+  abort 'ERROR: This task only runs in the development environment!' unless can_run?
 
   WorkVersion.with_state('reserving_purl').each do |object|
     druid = random_druid
@@ -38,4 +38,8 @@ def random_druid
   # > Faker::Base.regexify(DruidTools::Druid.strict_glob)
   # => "{druid:,}qj078cn5200"
   "druid:#{Faker::Base.regexify(DruidTools::Druid.strict_glob).last(11)}"
+end
+
+def can_run?
+  Rails.env.development? || ENV.fetch('LOCAL_DOCKER', false)
 end

@@ -4,7 +4,7 @@ services:
   app:
     build: &build
       context: .
-      dockerfile: docker/app-prod/Dockerfile
+      dockerfile: docker/Dockerfile
       args:
         - GID=${H2_GID-1000}
         - UID=${H2_UID-1000}

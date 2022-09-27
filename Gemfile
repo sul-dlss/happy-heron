@@ -23,7 +23,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'faker'
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false # needed to update RBIs after adding reform-rails
   gem 'spring'
@@ -41,7 +40,7 @@ end
 group :deployment do
   gem 'capistrano-maintenance', '~> 1.2', require: false
   gem 'capistrano-rails', require: false
-  gem 'dlss-capistrano-docker', github: 'sul-dlss/dlss-capistrano-docker', branch: 'initial', require: false
+  gem 'dlss-capistrano-docker', github: 'sul-dlss/dlss-capistrano-docker', branch: 't2-rollback', require: false
 end
 
 gem 'action_policy', '~> 0.5.3'
@@ -55,6 +54,7 @@ gem 'devise-remote-user', '~> 1.0'
 gem 'druid-tools'
 gem 'dry-types'
 gem 'edtf'
+gem 'faker'
 gem 'faraday', '~> 2.0'
 gem 'honeybadger', '~> 4.0'
 gem 'jbuilder'

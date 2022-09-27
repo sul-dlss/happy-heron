@@ -22,5 +22,8 @@ set -e
 echo "Migrating db"
 bin/rails db:migrate
 
+echo "Seeding db"
+bin/rails db:seed
+
 echo "Running server"
 exec bin/puma -C config/puma.rb config.ru
