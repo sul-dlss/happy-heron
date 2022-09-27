@@ -6,7 +6,6 @@ require 'reform/form/coercion'
 class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true, allow_nil: false
   validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
-  validate :keywords_unique
   validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' },
                              unless: lambda {
                                        ::ActiveRecord::Type::Boolean.new.cast(globus)
@@ -33,12 +32,6 @@ class WorkForm < DraftWorkForm
   def deserialize!(params)
     deserialize_doi(params)
     super
-  end
-
-  def keywords_unique
-    return if keywords.size.zero? || keywords.map(&:label).uniq.size == keywords.size
-
-    errors.add(:base, 'Please ensure all keywords are unique.')
   end
 
   # Force assign_doi to match what the collection enforces

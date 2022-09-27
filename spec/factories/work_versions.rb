@@ -119,6 +119,14 @@ FactoryBot.define do
     keywords { build_list(:keyword, keywords_count) }
   end
 
+  trait :with_duped_keywords do
+    transient do
+      keywords_count { 2 }
+    end
+
+    keywords { build_list(:keyword, keywords_count, :fixed_value) }
+  end
+
   trait :with_authors do
     transient do
       author_count { 3 }

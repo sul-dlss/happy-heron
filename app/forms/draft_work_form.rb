@@ -159,11 +159,12 @@ class DraftWorkForm < Reform::Form
     end
   end
 
-  # Ensure that this work version is now the head of the work versions for this work
+  # Ensure this work version is now head of the work versions for this work, and perform post save cleanup
   def save_model
     super
     # if the user selects globus uploads, we cannot have any attached files
     work_version.attached_files.destroy_all if work_version.globus
+    dedupe_keywords
     work.update(head: work_version)
   end
 
@@ -174,5 +175,19 @@ class DraftWorkForm < Reform::Form
 
   def will_assign_doi?
     (collection.doi_option == 'depositor-selects' && assign_doi) || collection.doi_option == 'yes'
+  end
+
+  # de-dupe keywords, prefer throwing away the free text entry duplicate(s) without a URI
+  def dedupe_keywords
+    return if work_version.keywords.size.zero?
+
+    grouped_keywords = Keyword.where(work_version:).group_by(&:label) # group keywords by label for determining dupes
+    grouped_keywords.each_value do |group|
+      next if group.size == 1 # skip this group if there is only one keyword (no dupes!)
+
+      duped_keywords = group.sort_by(&:uri) # this sorts the group, putting any with URIs at the end of the array
+      duped_keywords.pop # this gets rid of last entry in the group, which is any duped keyword that may have a URI
+      duped_keywords.each(&:destroy) # now destroy the rest of the dupes in the database
+    end
   end
 end
