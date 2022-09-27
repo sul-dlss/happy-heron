@@ -17,6 +17,71 @@ RSpec.describe CollectionVersionPolicy do
   end
   let(:groups) { [] }
 
+  describe 'scope' do
+    subject(:scope) { policy.apply_scope(collection_version.collection.collection_versions, type: :relation) }
+
+    let(:policy) { described_class.new(**context) }
+    let(:collection) { create(:collection) }
+    let(:collection_version) { create(:collection_version, collection:, state:) }
+    let(:state) { 'deposited' }
+
+    before do
+      collection.update(head: collection_version)
+    end
+
+    context 'when the user is not affiliated' do
+      it { is_expected.not_to include(collection) }
+    end
+
+    context 'when the user is an administrator' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+
+      it { is_expected.to include(collection_version) }
+
+      context 'when collection is decommissioned' do
+        let(:state) { 'decommissioned' }
+
+        it { is_expected.to include(collection_version) }
+      end
+    end
+
+    context 'when the user is a manager' do
+      let(:collection) { create(:collection, managed_by: [user]) }
+
+      it { is_expected.to include(collection_version) }
+
+      context 'when collection is decommissioned' do
+        let(:state) { 'decommissioned' }
+
+        it { is_expected.not_to include(collection_version) }
+      end
+    end
+
+    context 'when the user is a reviewer' do
+      let(:collection) { create(:collection, reviewed_by: [user]) }
+
+      it { is_expected.to include(collection_version) }
+
+      context 'when collection is decommissioned' do
+        let(:state) { 'decommissioned' }
+
+        it { is_expected.not_to include(collection_version) }
+      end
+    end
+
+    context 'when the user is a depositor' do
+      let(:collection) { create(:collection, depositors: [user]) }
+
+      it { is_expected.to include(collection_version) }
+
+      context 'when collection is decommissioned' do
+        let(:state) { 'decommissioned' }
+
+        it { is_expected.not_to include(collection_version) }
+      end
+    end
+  end
+
   describe_rule :update? do
     # `succeed` is `context` + `specify`, which checks
     # that the result of application wasn't successful

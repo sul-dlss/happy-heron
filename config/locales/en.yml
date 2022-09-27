@@ -71,6 +71,9 @@ en:
     access:
       world: anyone
       stanford: Stanford community members only
+    flash:
+      decommission_failed: "You must decommission the items in this collection before you can decommission the collection."
+      decommissioned: "Decommissioned"
   tooltip:
     what_type: Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
     further_types: You have the option to further describe the work you are depositing. If you have chosen "Mixed Materials", you must choose at least two of the additional terms. If you have chosen "Music", you must select at least one term from the shorter list of terms below, but you may enter others from the full list as well (choose "See more options"). If you have chosen "Other", you must enter a word or short phrase to describe the overall nature of the work you are depositing.
@@ -140,43 +143,43 @@ en:
       faculty_student_staff_publications:
         label: Faculty, Student, and Staff Publications
         description: >
-          An open collection for assembling publications by Stanford faculty, graduate students, 
+          An open collection for assembling publications by Stanford faculty, graduate students,
           post-docs, and staff from the full range of disciplines.
       stanford_research_data:
         label: Stanford Research Data
         description: >
-          This collection includes research data from Stanford-associated researchers and scientists on the 
-          wide variety of topics and fields under investigation at Stanford University, including biology, 
-          chemistry, engineering, environmental sciences, geosciences, history, languages, mathematics, 
-          medicine, music, physics, public policy, social sciences, and statistics. Data sets in this 
-          collection are in many different formats, and each is presented with descriptive information that 
-          identifies the people and organizations responsible for its creation, related publications, and 
-          other relevant information. The collection was created to support the preservation of the research 
+          This collection includes research data from Stanford-associated researchers and scientists on the
+          wide variety of topics and fields under investigation at Stanford University, including biology,
+          chemistry, engineering, environmental sciences, geosciences, history, languages, mathematics,
+          medicine, music, physics, public policy, social sciences, and statistics. Data sets in this
+          collection are in many different formats, and each is presented with descriptive information that
+          identifies the people and organizations responsible for its creation, related publications, and
+          other relevant information. The collection was created to support the preservation of the research
           output of the University and to enable data sharing and re-use.
       stanford_theses_dissertations:
         label: Stanford Theses and Dissertations
         description: >
-          This collection includes theses and dissertations authored by Stanford graduate and undergraduate 
-          students from a variety of schools and representing a broad range of scholarly disciplines. Established 
-          in 2014, the collection supports the preservation, sharing, and re-use of the research output of the 
-          University, particularly for those programs for which there is no formal or mandatory requirement for 
+          This collection includes theses and dissertations authored by Stanford graduate and undergraduate
+          students from a variety of schools and representing a broad range of scholarly disciplines. Established
+          in 2014, the collection supports the preservation, sharing, and re-use of the research output of the
+          University, particularly for those programs for which there is no formal or mandatory requirement for
           thesis deposit.
       sul_staff_publications_research:
         label: Stanford University Libraries staff publications and research
         description: >
-          Publications and research produced and contributed by staff of Stanford University Libraries on a 
+          Publications and research produced and contributed by staff of Stanford University Libraries on a
           broad range of topics relevant to academic and research libraries.
       stanford_open_access_articles:
         label: Stanford University Open Access Articles
         description: >
-          A collection of open access articles published by faculty, students, and other researchers at Stanford 
+          A collection of open access articles published by faculty, students, and other researchers at Stanford
           University.
       marc:
         label: I am a library employee, and I need a MARC record.
       no_collection:
         label: I do not see an appropriate collection.
   mail_preference:
-    participant_changed: A depositor, manager, or reviewer is added or removed. 
+    participant_changed: A depositor, manager, or reviewer is added or removed.
     new_item: A depositor creates a new item, deposits an item, or creates a new draft of an item
     submit_for_review: A depositor submits an item for review
     version_started_but_not_finished: A new version of this collection is started and not finished

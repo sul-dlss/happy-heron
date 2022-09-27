@@ -1,14 +1,14 @@
-<turbo-frame id='workAdminSection'>
-  <%= form_with url: work_decommission_path(params[:id]), method: :put, data: {turbo: false} do |form| %>
+<turbo-frame id='collectionAdminSection'>
+  <%= form_with url: collection_decommission_path(params[:id]), method: :put, data: { turbo: false } do |form| %>
     <div data-controller="decommission">
       <div class="form-check mt-3">
         <input class="form-check-input" type="checkbox" value="" id="confirmCheckbox" data-decommission-target="confirm" data-action="decommission#change">
         <label class="form-check-label" for="confirmCheckbox">
-          I confirm this item has been decommissioned in Argo and <span class="text-danger">understand this cannot be undone</span>.
+          I confirm this collection has been decommissioned in Argo and <span class="text-danger">understand this cannot be undone</span>.
         </label>
       </div>
       <fieldset data-decommission-target="submit">
-        <%= form.submit "Decommission from H2", class: 'btn btn-primary mt-3' %>
+        <%= form.submit "Decommission collection from H2", class: 'btn btn-primary mt-3' %>
       </fieldset>
     </div>
   <% end %>

@@ -2,6 +2,8 @@
 <section id="<%= dom_id(collection) %>" data-controller="work-type">
   <%= render Collections::Show::SettingsHeaderComponent.new(collection_version: collection.head) %>
   <%= render Works::WorkTypeModalComponent.new %>
+  <turbo-frame id="collectionAdminFrame" src="<%= admin_collection_path(collection) %>">
+  </turbo-frame>
   <%= render Collections::ReleaseComponent.new(collection: collection) %>
   <%= render Collections::TermsOfUseComponent.new(collection: collection) %>
   <%= render Collections::ParticipantsComponent.new(collection: collection) %>

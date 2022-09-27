@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Reserve a PURL for a work in a deposited collection', js: true do
   let(:user) { create(:user) }
-  let!(:collection) do
-    create(:collection, :depositor_selects_access, managed_by: [user], head: collection_version, doi_option:)
+  let(:collection_version) do
+    create(:collection_version_with_collection, access: 'depositor-selects', managed_by: [user], doi_option:)
   end
-  let(:collection_version) { create(:collection_version, :deposited) }
+  let!(:collection) { collection_version.collection }
   let(:druid) { 'druid:bc123df4567' }
   let(:title) { 'my PURL reservation test' }
   let(:doi_option) { 'depositor-selects' }

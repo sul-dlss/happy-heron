@@ -146,5 +146,13 @@ RSpec.describe CollectionVersion do
           .and change(Event, :count).by(1)
       end
     end
+
+    describe 'a decommission event' do
+      it 'transitions to decommissioned' do
+        expect { collection_version.decommission! }
+          .to change(collection_version, :state)
+          .to('decommissioned')
+      end
+    end
   end
 end

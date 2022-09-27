@@ -6,7 +6,6 @@ RSpec.describe CollectionPolicy do
   let(:user) { build_stubbed :user }
   # `record` must be defined - it is the authorization target
   let(:record) { build_stubbed :collection }
-
   # `context` is the authorization context
   let(:context) do
     {
@@ -32,7 +31,12 @@ RSpec.describe CollectionPolicy do
     subject(:scope) { policy.apply_scope(Collection, type: :active_record_relation, name: :deposit) }
 
     let(:policy) { described_class.new(**context) }
-    let!(:collection) { create(:collection) }
+    let(:collection) { create(:collection) }
+    let(:collection_version) { create(:collection_version, collection:) }
+
+    before do
+      collection.update(head: collection_version)
+    end
 
     context 'when the user is not affiliated' do
       it { is_expected.not_to include(collection) }

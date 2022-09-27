@@ -65,6 +65,10 @@ class CollectionVersion < ApplicationRecord
       transition new: :first_draft
       transition %i[first_draft version_draft] => same
     end
+
+    event :decommission do
+      transition all => :decommissioned
+    end
   end
 
   def updatable?
