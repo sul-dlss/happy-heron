@@ -28,6 +28,10 @@ FactoryBot.define do
     # events { [build(:event, event_type: 'reject', description: 'Add something to make it pop.')] }
   end
 
+  trait :decommissioned do
+    state { 'decommissioned' }
+  end
+
   trait :new do
     state { 'new' }
   end

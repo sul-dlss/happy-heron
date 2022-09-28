@@ -11,7 +11,7 @@ RSpec.describe Admin::AllCollectionsRowComponent, type: :component do
   context 'with a new, first draft collection' do
     let(:collection_version) { build_stubbed(:collection_version, :first_draft) }
 
-    it 'adds the Draft to the label' do
+    it 'adds Draft to the label' do
       expect(rendered.to_html).to include 'Draft'
       expect(rendered.to_html).not_to include 'Version Draft'
     end
@@ -20,8 +20,16 @@ RSpec.describe Admin::AllCollectionsRowComponent, type: :component do
   context 'with a version draft collection' do
     let(:collection_version) { build_stubbed(:collection_version, :version_draft) }
 
-    it 'adds the Version Draft to the label' do
+    it 'adds Version Draft to the label' do
       expect(rendered.to_html).to include 'Version Draft'
+    end
+  end
+
+  context 'with a decommissioned collection' do
+    let(:collection_version) { build_stubbed(:collection_version, :decommissioned) }
+
+    it 'adds Decommission to the label' do
+      expect(rendered.to_html).to include 'Decommissioned'
     end
   end
 
@@ -31,6 +39,7 @@ RSpec.describe Admin::AllCollectionsRowComponent, type: :component do
     it 'does not change the label' do
       expect(rendered.to_html).not_to include 'Version Draft'
       expect(rendered.to_html).not_to include 'Draft'
+      expect(rendered.to_html).not_to include 'Decommissioned'
     end
   end
 

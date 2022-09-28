@@ -18,9 +18,9 @@ RSpec.describe Admin::CollectionsReportQuery do
     collection.save!
     collection
   end
-  # rubocop:disable Metrics/LineLength
-  let!(:collection4) { create(:collection_version_with_collection, state: 'decommissioned', name: 'dCollection').collection }
-  # rubocop:enable Metrics/LineLength
+  let!(:collection4) do
+    create(:collection_version_with_collection, state: 'decommissioned', name: 'dCollection').collection }
+  end
 
   context 'without filters' do
     let(:report) { Admin::CollectionsReport.new }
