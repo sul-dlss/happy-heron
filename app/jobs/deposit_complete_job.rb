@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Wait for a deposit into SDR API.
-class DepositStatusJob
+class DepositCompleteJob
   include Sneakers::Worker
   # This worker will connect to "h2.deposit_complete" queue
   # env is set to nil since by default the actual queue name would be
