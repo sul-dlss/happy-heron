@@ -56,7 +56,8 @@ module Works
     def created_approximate?
       return false unless created_edtf
 
-      created_edtf.uncertain?
+      # Previously, approximate (~) was modeled as uncertain (?), so checking both here.
+      created_edtf.uncertain? || created_edtf.approximate?
     end
 
     delegate :published_edtf, to: :reform
@@ -79,7 +80,8 @@ module Works
     def created_range_start_approximate?
       return false unless created_range_start
 
-      created_range_start.uncertain?
+      # Previously, approximate (~) was modeled as uncertain (?), so checking both here.
+      created_range_start.uncertain? || created_range_start.approximate?
     end
 
     def created_range_end_year
@@ -97,7 +99,8 @@ module Works
     def created_range_end_approximate?
       return false unless created_range_end
 
-      created_range_end.uncertain?
+      # Previously, approximate (~) was modeled as uncertain (?), so checking both here.
+      created_range_end.uncertain? || created_range_end.approximate?
     end
 
     def created_range_start

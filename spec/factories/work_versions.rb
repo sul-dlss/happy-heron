@@ -83,8 +83,12 @@ FactoryBot.define do
     created_edtf { EDTF.parse('2020-03-04/2020-10-31') }
   end
 
-  trait :with_approximate_creation_date_range do
+  trait :with_legacy_approximate_creation_date_range do
     created_edtf { EDTF.parse('2020-03-04?/2020-10-31?') }
+  end
+
+  trait :with_approximate_creation_date_range do
+    created_edtf { EDTF.parse('2020-03-04~/2020-10-31~') }
   end
 
   trait :with_creation_date do
@@ -99,16 +103,28 @@ FactoryBot.define do
     created_edtf { EDTF.parse('2020-06') }
   end
 
-  trait :with_approximate_creation_date do
+  trait :with_legacy_approximate_creation_date do
     created_edtf { EDTF.parse('2020-03-08?') }
   end
 
-  trait :with_approximate_creation_date_year_only do
+  trait :with_approximate_creation_date do
+    created_edtf { EDTF.parse('2020-03-08~') }
+  end
+
+  trait :with_legacy_approximate_creation_date_year_only do
     created_edtf { EDTF.parse('2020?') }
   end
 
-  trait :with_approximate_creation_date_year_month_only do
+  trait :with_approximate_creation_date_year_only do
+    created_edtf { EDTF.parse('2020~') }
+  end
+
+  trait :with_legacy_approximate_creation_date_year_month_only do
     created_edtf { EDTF.parse('2020-06?') }
+  end
+
+  trait :with_approximate_creation_date_year_month_only do
+    created_edtf { EDTF.parse('2020-06~') }
   end
 
   trait :with_keywords do

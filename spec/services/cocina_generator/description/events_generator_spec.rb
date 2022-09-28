@@ -319,9 +319,59 @@ RSpec.describe CocinaGenerator::Description::EventsGenerator do
     end
   end
 
+  context 'when legacy approximate creation date' do
+    let(:work_version) do
+      build(:work_version, :with_work, :with_legacy_approximate_creation_date)
+    end
+
+    it 'creates event of type creation with approximate date' do
+      expect(events).to eq(normalize_events(
+                             [
+                               deposit_publication_event,
+                               {
+                                 type: 'creation',
+                                 date: [
+                                   {
+                                     encoding: { code: 'edtf' },
+                                     value: '2020-03-08',
+                                     type: 'creation',
+                                     qualifier: 'approximate'
+                                   }
+                                 ]
+                               }
+                             ]
+                           ))
+    end
+  end
+
   context 'when approximate creation date of year only' do
     let(:work_version) do
       build(:work_version, :with_work, :with_approximate_creation_date_year_only)
+    end
+
+    it 'creates event of type creation with approximate year only date' do
+      expect(events).to eq(normalize_events(
+                             [
+                               deposit_publication_event,
+                               {
+                                 type: 'creation',
+                                 date: [
+                                   {
+                                     encoding: { code: 'edtf' },
+                                     value: '2020',
+                                     type: 'creation',
+                                     qualifier: 'approximate'
+                                   }
+                                 ]
+                               }
+                             ]
+                           ))
+    end
+  end
+
+  context 'when legacy approximate creation date of year only' do
+    let(:work_version) do
+      build(:work_version, :with_work, :with_legacy_approximate_creation_date_year_only)
     end
 
     it 'creates event of type creation with approximate year only date' do
@@ -369,9 +419,62 @@ RSpec.describe CocinaGenerator::Description::EventsGenerator do
     end
   end
 
+  context 'when legacy approximate creation date of year and month only date' do
+    let(:work_version) do
+      build(:work_version, :with_work, :with_legacy_approximate_creation_date_year_month_only)
+    end
+
+    it 'creates event of type creation with approximate year and month only date' do
+      expect(events).to eq(normalize_events(
+                             [
+                               deposit_publication_event,
+                               {
+                                 type: 'creation',
+                                 date: [
+                                   {
+                                     encoding: { code: 'edtf' },
+                                     value: '2020-06',
+                                     type: 'creation',
+                                     qualifier: 'approximate'
+                                   }
+                                 ]
+                               }
+                             ]
+                           ))
+    end
+  end
+
   context 'when approximate creation date range' do
     let(:work_version) do
       build(:work_version, :with_work, :with_approximate_creation_date_range)
+    end
+
+    it 'creates event of type creation with approximate date' do
+      expect(events).to eq(normalize_events(
+                             [
+                               deposit_publication_event,
+                               {
+                                 type: 'creation',
+                                 date: [
+                                   {
+                                     encoding: { code: 'edtf' },
+                                     structuredValue: [
+                                       { value: '2020-03-04', type: 'start' },
+                                       { value: '2020-10-31', type: 'end' }
+                                     ],
+                                     qualifier: 'approximate',
+                                     type: 'creation'
+                                   }
+                                 ]
+                               }
+                             ]
+                           ))
+    end
+  end
+
+  context 'when legacy approximate creation date range' do
+    let(:work_version) do
+      build(:work_version, :with_work, :with_legacy_approximate_creation_date_range)
     end
 
     it 'creates event of type creation with approximate date' do
