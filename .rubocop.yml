@@ -13,6 +13,8 @@ AllCops:
     - db/**/*
     - node_modules/**/*
     - bin/**/*
+    - log/**/*
+    - tmp/**/*
     - vendor/**/*
 
 Lint/MissingSuper: # (new in 0.89)

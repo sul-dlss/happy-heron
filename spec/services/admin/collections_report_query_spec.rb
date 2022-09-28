@@ -19,7 +19,7 @@ RSpec.describe Admin::CollectionsReportQuery do
     collection
   end
   let!(:collection4) do
-    create(:collection_version_with_collection, state: 'decommissioned', name: 'dCollection').collection }
+    create(:collection_version_with_collection, state: 'decommissioned', name: 'dCollection').collection
   end
 
   context 'without filters' do

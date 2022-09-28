@@ -10,7 +10,7 @@ module Admin
 
     attr_reader :collection, :counts
 
-    def state_label # rubocop:disable Metric/CyclomaticComplexity
+    def state_label # rubocop:disable Metrics/CyclomaticComplexity
       state = @collection.head&.state
       return unless state&.include?('draft') || state == 'decommissioned'
 
