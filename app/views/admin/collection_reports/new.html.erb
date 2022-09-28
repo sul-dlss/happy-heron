@@ -52,7 +52,11 @@
           <div class="form-check">
             <%= form.check_box :status_deposited, class: 'form-check-input' %>
             <%= form.label :status_deposited, "Deposited", class: 'form-check-label' %>
-          </div>                
+          </div>
+          <div class="form-check">
+            <%= form.check_box :status_decommissioned, class: 'form-check-input' %>
+            <%= form.label :status_decommissioned, "Decommissioned", class: 'form-check-label' %>
+          </div>
           <%= form.submit "Submit", class: 'btn btn-primary my-3' %>
       <% end %>
 
@@ -67,6 +71,7 @@
           <%= form.hidden_field :status_first_draft %>
           <%= form.hidden_field :status_version_draft %>
           <%= form.hidden_field :status_deposited %>
+          <%= form.hidden_field :status_decommissioned %>
           <%= form.submit "Download", class: 'btn btn-success my-3' %>
         <% end %>
       <% end %>

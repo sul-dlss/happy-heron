@@ -10,14 +10,17 @@ module Admin
 
     attr_reader :collection, :counts
 
-    def draft_label
-      return unless @collection.head&.state&.include? 'draft'
+    def state_label # rubocop:disable Metrics/CyclomaticComplexity
+      state = @collection.head&.state
+      return unless state&.include?('draft') || state == 'decommissioned'
 
-      case @collection.head&.state
+      case state
       when 'first_draft'
         tag.span ' - Draft', class: 'draft-tag'
       when 'version_draft'
         tag.span ' - Version Draft', class: 'draft-tag'
+      when 'decommissioned'
+        tag.span ' - Decommissioned', class: 'draft-tag'
       end
     end
 

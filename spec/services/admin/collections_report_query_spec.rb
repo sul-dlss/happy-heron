@@ -18,12 +18,15 @@ RSpec.describe Admin::CollectionsReportQuery do
     collection.save!
     collection
   end
+  let!(:collection4) do
+    create(:collection_version_with_collection, state: 'decommissioned', name: 'dCollection').collection
+  end
 
   context 'without filters' do
     let(:report) { Admin::CollectionsReport.new }
 
     it 'returns all collections sorted by name' do
-      expect(request).to eq [collection3, collection1, collection2]
+      expect(request).to eq [collection3, collection1, collection2, collection4]
     end
   end
 
@@ -51,11 +54,19 @@ RSpec.describe Admin::CollectionsReportQuery do
     end
   end
 
+  context 'with decommissioned status' do
+    let(:report) { Admin::CollectionsReport.new(status_decommissioned: true) }
+
+    it 'returns decommissioned collections' do
+      expect(request).to eq [collection4]
+    end
+  end
+
   context 'with date created start' do
     let(:report) { Admin::CollectionsReport.new(date_created_start: '2019-01-01') }
 
     it 'returns collections created after the date' do
-      expect(request).to eq [collection1, collection2]
+      expect(request).to eq [collection1, collection2, collection4]
     end
   end
 
@@ -71,7 +82,7 @@ RSpec.describe Admin::CollectionsReportQuery do
     let(:report) { Admin::CollectionsReport.new(date_modified_start: '2019-06-01') }
 
     it 'returns collections modified after the date' do
-      expect(request).to eq [collection1, collection2]
+      expect(request).to eq [collection1, collection2, collection4]
     end
   end
 

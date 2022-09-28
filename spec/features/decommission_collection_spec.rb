@@ -23,6 +23,9 @@ RSpec.describe 'Decommission a collection', js: true do
       expect(page).to have_content 'Decommissioned'
     end
 
+    # State
+    expect(find('span.state').text).to eq 'Decommissioned'
+
     # Event added
     within '#events' do
       expect(page).to have_content 'Decommissioned'
