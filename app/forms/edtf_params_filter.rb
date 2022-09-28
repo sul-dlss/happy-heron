@@ -22,9 +22,9 @@ class EdtfParamsFilter
     year = params["#{date_attribute}(#{1 + offset}i)"]
     month = params["#{date_attribute}(#{2 + offset}i)"]
     day = params["#{date_attribute}(#{3 + offset}i)"]
-    uncertain = params["#{date_attribute}(approx#{offset})"]
+    approximate = params["#{date_attribute}(approx#{offset})"]
 
-    deserialize_edtf_date(year, month, day, uncertain)
+    deserialize_edtf_date(year, month, day, approximate)
   end
 
   def deserialize_edtf_range(params, name)
@@ -37,7 +37,7 @@ class EdtfParamsFilter
     [start, finish].join('/')
   end
 
-  def deserialize_edtf_date(year, month, day, uncertain)
+  def deserialize_edtf_date(year, month, day, approximate)
     return if year.blank?
 
     date = year.dup
@@ -45,7 +45,7 @@ class EdtfParamsFilter
       date += "-#{format('%<month>02d', month:)}"
       date += "-#{format('%<day>02d', day:)}" if day.present?
     end
-    date += '?' if uncertain
+    date += '~' if approximate
     date
   end
 end
