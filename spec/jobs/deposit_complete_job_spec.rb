@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe DepositStatusJob do
+RSpec.describe DepositCompleteJob do
   subject(:run) { instance.work(message) }
 
   let(:instance) { described_class.new }
