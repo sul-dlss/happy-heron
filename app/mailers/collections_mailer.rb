@@ -94,4 +94,10 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     mail(to: @user.email, subject: "Participant changes for the #{@collection_version.name} collection in the SDR")
   end
+
+  def decommission_manager_email
+    @collection_version = params[:collection_version]
+    @user = UserPresenter.new(user: params[:user])
+    mail(to: @user.email, subject: 'Your collection has been removed from the Stanford Digital Repository')
+  end
 end

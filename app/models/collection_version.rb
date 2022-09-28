@@ -53,6 +53,8 @@ class CollectionVersion < ApplicationRecord
       end
     end
 
+    after_transition on: :decommission, do: CollectionObserver.method(:after_decommission)
+
     event :begin_deposit do
       transition %i[first_draft version_draft] => :depositing
     end

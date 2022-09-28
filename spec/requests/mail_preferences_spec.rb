@@ -13,23 +13,23 @@ RSpec.describe 'MailPreferences', type: :request do
       sign_in user
     end
 
-    context 'when the user is a manager' do
+    context 'when the user is a reviewer' do
       let(:collection) { create(:collection_version_with_collection, reviewed_by: [user]).collection }
 
-      it 'shows the checkbox for the two preferences' do
+      it 'shows the checkbox for the reviewer preferences' do
         get edit_collection_mail_preferences_path(collection)
         expect(response).to have_http_status(:ok)
-        expect(rendered).to have_selector('input[type=checkbox]', count: 2) # rubocop:disable RSpec/Capybara/SpecificMatcher
+        expect(rendered).to have_selector('input[type=checkbox]', count: MailPreference::REVIEWER_TYPES.count) # rubocop:disable RSpec/Capybara/SpecificMatcher
       end
     end
 
-    context 'when the user is a reviewer' do
+    context 'when the user is a manager' do
       let(:collection) { create(:collection_version_with_collection, managed_by: [user]).collection }
 
-      it 'shows the checkbox for the six preferences' do
+      it 'shows the checkbox for the manager preferences' do
         get edit_collection_mail_preferences_path(collection)
         expect(response).to have_http_status(:ok)
-        expect(rendered).to have_selector('input[type=checkbox]', count: 6) # rubocop:disable RSpec/Capybara/SpecificMatcher
+        expect(rendered).to have_selector('input[type=checkbox]', count: MailPreference::MANAGER_TYPES.count) # rubocop:disable RSpec/Capybara/SpecificMatcher
       end
     end
   end

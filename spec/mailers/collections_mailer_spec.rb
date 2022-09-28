@@ -290,4 +290,22 @@ RSpec.describe CollectionsMailer, type: :mailer do
       expect(mail.body).not_to include("Dear #{user.name},")
     end
   end
+
+  describe 'decommission_manager_email' do
+    let(:mail) { described_class.with(user: a_user, collection_version:).decommission_manager_email }
+    let(:collection) { build_stubbed(:collection, managed_by: [a_user]) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Your collection has been removed from the Stanford Digital Repository'
+      expect(mail.to).to eq [a_user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders body' do
+      expect(mail.body).to include "Dear #{a_user.first_name},"
+      expect(mail.body).to include(
+        "Your collection \"#{collection_version.name}\" has been removed from the Stanford Digital Repository."
+      )
+    end
+  end
 end

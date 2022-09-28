@@ -7,6 +7,7 @@ class MailPreference < ApplicationRecord
     new_item
     submit_for_review
     version_started_but_not_finished
+    decommissioned
     assigned_new_owner
     item_deleted
   ].freeze

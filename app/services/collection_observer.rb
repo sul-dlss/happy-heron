@@ -41,6 +41,14 @@ class CollectionObserver
     fix_state(collection) unless collection.review_enabled
   end
 
+  def self.after_decommission(collection_version, _transition)
+    collection_version.collection.managed_by.each do |recipient|
+      next if collection_version.collection.opted_out_of_email?(recipient, 'decommissioned')
+
+      CollectionsMailer.with(user: recipient, collection_version:).decommission_manager_email.deliver_later
+    end
+  end
+
   def self.create_settings_updated_event(collection:, change_set:, form:, user:)
     event_params = { user:, event_type: 'settings_updated' }.tap do |params|
       description = CollectionEventDescriptionBuilder.build(change_set:, form:)
