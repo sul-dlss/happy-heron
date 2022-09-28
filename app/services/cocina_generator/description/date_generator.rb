@@ -45,7 +45,7 @@ module CocinaGenerator
         {
           structuredValue: interval_structured_values(interval_date)
         }.tap do |props|
-          if interval_date.from&.uncertain? || interval_date.to&.uncertain?
+          if interval_date.from&.approximate? || interval_date.to&.approximate?
             props[:qualifier] = 'approximate'
             props[:structuredValue].each { |struct_date_val| struct_date_val.delete(:qualifier) }
           end
@@ -61,8 +61,8 @@ module CocinaGenerator
 
       def edtf_date_props(edtf_date, type: nil)
         {
-          qualifier: edtf_date.uncertain? ? 'approximate' : nil,
-          value: edtf_date.edtf.chomp('?'),
+          qualifier: edtf_date.approximate? ? 'approximate' : nil,
+          value: edtf_date.edtf.chomp('~'),
           type:
         }.compact
       end

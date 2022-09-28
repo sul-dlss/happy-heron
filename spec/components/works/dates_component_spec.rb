@@ -38,7 +38,7 @@ RSpec.describe Works::DatesComponent do
   end
 
   context 'with a populated form with an approximate date range' do
-    let(:approx_date_range) { EDTF.parse('2019-05?/2020-07?') }
+    let(:approx_date_range) { EDTF.parse('2019-05~/2020-07~') }
     let(:work_version) { build(:work_version, created_edtf: approx_date_range) }
 
     it 'renders the component with both start and end approximate checkbox selected' do
@@ -53,7 +53,7 @@ RSpec.describe Works::DatesComponent do
 
   context 'with a populated form with an approximate backwards date range' do
     # Testing this due to how EDTF handles to < from
-    let(:approx_date_range) { EDTF.parse('2020-07?/2019-05?') }
+    let(:approx_date_range) { EDTF.parse('2020-07~/2019-05~') }
     let(:work_version) { build(:work_version, created_edtf: approx_date_range) }
 
     it 'renders the component with both start and end approximate checkbox selected' do
@@ -101,7 +101,7 @@ RSpec.describe Works::DatesComponent do
   end
 
   context 'with a populated form containing an approximate date' do
-    let(:creation_date) { EDTF.parse('2020-05-09?') }
+    let(:creation_date) { EDTF.parse('2020-05-09~') }
     let(:work_version) { build(:work_version, created_edtf: creation_date) }
 
     it 'renders the component with the approximate check-box selected' do
