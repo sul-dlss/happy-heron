@@ -204,4 +204,27 @@ FactoryBot.define do
   trait :with_no_subtype do
     subtype { [] }
   end
+
+  trait :with_files do
+    transient do
+      uploads do
+        [
+          ActiveStorage::Blob.create_and_upload!(
+            io: Rails.root.join('spec/fixtures/files/favicon.ico').open,
+            filename: 'favicon.ico',
+            content_type: 'image/vnd.microsoft.icon'
+          ),
+          ActiveStorage::Blob.create_and_upload!(
+            io: Rails.root.join('spec/fixtures/files/sul.svg').open,
+            filename: 'sul.svg',
+            content_type: 'image/svg+xml'
+          )
+        ]
+      end
+    end
+    attached_files do
+      [association(:attached_file, file: uploads[0].signed_id),
+       association(:attached_file, file: uploads[1].signed_id)]
+    end
+  end
 end

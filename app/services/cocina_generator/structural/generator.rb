@@ -4,15 +4,16 @@ module CocinaGenerator
   module Structural
     # This generates a DROStructural for a work
     class Generator
-      def self.generate(work_version:)
-        new(work_version:).generate
+      def self.generate(work_version:, cocina_obj:)
+        new(work_version:, cocina_obj:).generate
       end
 
-      def initialize(work_version:)
+      def initialize(work_version:, cocina_obj:)
         @work_version = work_version
+        @cocina_obj = cocina_obj
       end
 
-      attr_reader :work_version
+      attr_reader :work_version, :cocina_obj
 
       def generate
         klass = work_version.work.druid ? Cocina::Models::DROStructural : Cocina::Models::RequestDROStructural
@@ -22,8 +23,23 @@ module CocinaGenerator
         )
       end
 
+      # 1) Start with the existing filesets from SDR
+      # 1) Only keep the filesets that have attached_files that are preserved
+      # 2) Add new filesets that have attached_files in the local store.
       def build_filesets
-        work_version.attached_files.map.with_index(1) { |af, n| build_fileset(af, n) }
+        filesets = find_preserved_filesets
+        filesets + work_version.staged_files.map.with_index(filesets.size + 1) { |af, n| build_fileset(af, n) }
+      end
+
+      # @return [Array<Cocina::FileSet>] the list of items where all files are already preserved.
+      def find_preserved_filesets
+        return [] unless cocina_obj
+
+        cocina_obj.structural.contains.select do |fileset|
+          existing_file_names = Set.new(fileset.structural.contains.map(&:filename))
+          preserved_file_names = Set.new(work_version.preserved_files.map(&:filename).map(&:to_s))
+          preserved_file_names.superset?(existing_file_names)
+        end
       end
 
       def build_fileset(attached_file, offset)

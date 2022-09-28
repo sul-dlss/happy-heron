@@ -13,21 +13,10 @@ RSpec.describe DepositJob do
       content_type: 'image/svg+xml'
     )
   end
-  let!(:blob2) do
-    ActiveStorage::Blob.create_and_upload!(
-      io: Rails.root.join('spec/fixtures/files/sul.svg').open,
-      filename: 'sul2.svg',
-      content_type: 'image/svg+xml'
-    )
-  end
   let(:attached_file) { build(:attached_file) }
-  let(:attached_file2) { build(:attached_file) }
   let(:work) { build(:work, collection:, assign_doi: false) }
   let(:first_work_version) do
     build(:work_version, work:, attached_files: [attached_file], version: 1)
-  end
-  let(:second_work_version) do
-    build(:work_version, work:, attached_files: [attached_file2], version: 2, version_description: 'Changed files')
   end
 
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
@@ -37,8 +26,7 @@ RSpec.describe DepositJob do
     allow(SdrClient::Connection).to receive(:new).and_return(conn)
     allow(Honeybadger).to receive(:notify)
     # rubocop:disable RSpec/MessageChain
-    allow(attached_file).to receive_message_chain(:file, :attachment, :blob).and_return(blob)
-    allow(attached_file2).to receive_message_chain(:file, :attachment, :blob).and_return(blob2)
+    allow(attached_file).to receive_message_chain(:file, :blob).and_return(blob)
     # rubocop:enable RSpec/MessageChain
   end
 
@@ -74,7 +62,17 @@ RSpec.describe DepositJob do
   context 'when updating the deposit' do
     let(:work) { build(:work, collection:, assign_doi: false, druid:) }
     let(:druid) { 'druid:bf024yb8975' }
-
+    let(:second_work_version) do
+      build(:work_version, work:, attached_files: [attached_file2], version: 2, version_description: 'Changed files')
+    end
+    let(:attached_file2) { build(:attached_file) }
+    let!(:blob2) do
+      ActiveStorage::Blob.create_and_upload!(
+        io: Rails.root.join('spec/fixtures/files/sul.svg').open,
+        filename: 'sul2.svg',
+        content_type: 'image/svg+xml'
+      )
+    end
     # The job fetches the existing cocina model from the SDR API to copy structural > contains.
     let(:cocina) do
       {
@@ -99,8 +97,8 @@ RSpec.describe DepositJob do
                 {
                   type: Cocina::Models::ObjectType.file,
                   externalIdentifier: 'https://cocina.sul.stanford.edu/file/123-456-789',
-                  label: '00001.html',
-                  filename: '00001.html',
+                  label: 'An image',
+                  filename: 'sul.svg',
                   size: 0,
                   version: 1,
                   hasMimeType: 'text/html',
@@ -125,6 +123,13 @@ RSpec.describe DepositJob do
     before do
       allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)
       allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
+
+      # This emulates the behavior of the DepositCompleteJob:
+      blob.update!(service_name: ActiveStorage::Service::SdrService::SERVICE_NAME)
+
+      # rubocop:disable RSpec/MessageChain
+      allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2)
+      # rubocop:enable RSpec/MessageChain
     end
 
     context 'when files have not changed' do

@@ -5,6 +5,8 @@ module ActiveStorage
     # This is a little bit different in that most services store the file at the key and the key is opaque,
     # hoewever in this case the key is meaningful in that it stores the druid, version and filepath.
     class SdrService < Service
+      SERVICE_NAME = 'preservation'
+
       def download(key, &block)
         raise NotImplementedError unless block
 
@@ -15,6 +17,11 @@ module ActiveStorage
 
       def self.encode_key(druid, version, filepath)
         [druid, version, filepath].join('/')
+      end
+
+      # @return [Boolean] true if this blob is for the SdrService
+      def self.accessible?(blob)
+        blob.service_name == SERVICE_NAME
       end
 
       private
