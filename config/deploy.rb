@@ -24,7 +24,7 @@ set :log_level, :info
 
 set :linked_files, %w[config/honeybadger.yml]
 
-set :linked_dirs, %w[log config/settings]
+set :linked_dirs, %w[log config/settings public/system]
 
 set :dereference_dirs, %w[config/settings]
 
