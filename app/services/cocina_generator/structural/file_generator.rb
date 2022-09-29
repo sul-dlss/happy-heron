@@ -66,9 +66,7 @@ module CocinaGenerator
         ]
       end
 
-      def blob
-        @blob ||= attached_file.file&.attachment&.blob
-      end
+      delegate :blob, to: :attached_file
 
       def hidden_file?
         attached_file.hide?

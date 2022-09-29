@@ -5,19 +5,23 @@ class AttachedFile < ApplicationRecord
   belongs_to :work_version
   has_one_attached :file
 
-  def blob
-    file.attachment.blob
-  end
+  # def blob
+  #   file.blob
+  # end
 
+  delegate :blob, to: :file
   delegate :filename, :content_type, :byte_size, to: :blob
 
-  # This is a temporary method that makes the blobs appear to be from preservation,
-  # but it only changes the blob in memory. In the future we may permanently update the
-  # blob records after deposit.
+  # This is a temporary method that makes the blobs that haven't yet been updated
+  # appear to be from preservation, but it only changes the blob in memory.
+  # Currently we permanently update the blob records after deposit and in the future we will remediate
+  # all the deposited blobs, so this method will be unnecessary.
   def transform_blob_to_preservation
+    return if ActiveStorage::Service::SdrService.accessible?(file.blob)
+
     file.blob = file.blob.dup
     file.blob.key = create_active_storage_key
-    file.blob.service_name = 'preservation'
+    file.blob.service_name = ActiveStorage::Service::SdrService::SERVICE_NAME
   end
 
   def create_active_storage_key
@@ -26,8 +30,11 @@ class AttachedFile < ApplicationRecord
                                                   filename.to_s)
   end
 
+  # Is the most recently uploaded copy of this file in preservation?
   def in_preservation?
-    work_version.deposited? || !changed_in_this_version?
+    ActiveStorage::Service::SdrService.accessible?(file.blob) ||
+      work_version.deposited? ||
+      !changed_in_this_version?
   end
 
   private

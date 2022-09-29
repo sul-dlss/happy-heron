@@ -3,17 +3,18 @@
 module CocinaGenerator
   # This generates a RequestDRO for a work
   class DROGenerator
-    def self.generate_model(work_version:)
-      new(work_version:).generate_model
+    def self.generate_model(work_version:, cocina_obj: nil)
+      new(work_version:, cocina_obj:).generate_model
     end
 
-    def initialize(work_version:)
+    def initialize(work_version:, cocina_obj:)
       @work_version = work_version
+      @cocina_obj = cocina_obj # may be nil
     end
 
     def generate_model
-      if druid
-        Cocina::Models::DRO.new(model_attributes.merge(externalIdentifier: druid), false, false)
+      if cocina_obj
+        Cocina::Models::DRO.new(model_attributes.merge(externalIdentifier: cocina_obj.externalIdentifier), false, false)
       else
         Cocina::Models::RequestDRO.new(model_attributes, false, false)
       end
@@ -21,10 +22,9 @@ module CocinaGenerator
 
     private
 
-    attr_reader :work_version
+    attr_reader :work_version, :cocina_obj
 
     delegate :work, to: :work_version
-    delegate :druid, to: :work
 
     def model_attributes # rubocop:disable Metrics/AbcSize
       {
@@ -39,7 +39,7 @@ module CocinaGenerator
         description: Description::Generator.generate(work_version:).to_h,
         version: work_version.version
       }.tap do |h|
-        h[:administrative][:partOfProject] = Settings.h2.project_tag unless druid
+        h[:administrative][:partOfProject] = Settings.h2.project_tag unless cocina_obj
       end
     end
 
@@ -57,7 +57,7 @@ module CocinaGenerator
     end
 
     def structural
-      Structural::Generator.generate(work_version:)
+      Structural::Generator.generate(work_version:, cocina_obj:)
     end
   end
 end

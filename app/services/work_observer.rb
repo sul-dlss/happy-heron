@@ -32,6 +32,7 @@ class WorkObserver
   end
 
   def self.after_deposit_complete(work_version, _transition)
+    work_version.switch_to_preserved_items!
     mailer = work_mailer(work_version)
     job = if work_version.work.collection.review_enabled?
             mailer.approved_email

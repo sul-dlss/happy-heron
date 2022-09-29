@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Models the deposit of an single version of a digital repository object
-class WorkVersion < ApplicationRecord
+class WorkVersion < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include AggregateAssociations
 
   belongs_to :work
@@ -149,6 +149,18 @@ class WorkVersion < ApplicationRecord
     update!(citation: citation.gsub(DOI_TEXT, "https://doi.org/#{work.doi}."))
   end
 
+  # Points the blob records to the preservation store and removes the locally cached copies of the files
+  def switch_to_preserved_items!
+    staged_files.each do |af|
+      blob = af.file.blob
+      locally_cached_file = blob.service.path_for(blob.key)
+      blob.key = af.create_active_storage_key
+      blob.service_name = ActiveStorage::Service::SdrService::SERVICE_NAME
+      blob.save!
+      File.unlink(locally_cached_file)
+    end
+  end
+
   # the terms agreement checkbox value is not persisted in the database with the work and the value is instead:
   #  false if (a) never previously accepted or (b) not accepted in the last year; it is true otherwise
   def agree_to_terms
@@ -203,5 +215,15 @@ class WorkVersion < ApplicationRecord
     return nil if version == 1 # shortcut any query checks if we are on the first version
 
     work.work_versions.find { |check_work_version| check_work_version.version == version - 1 }
+  end
+
+  # @return [Array<AttachedFile>] a list of files not in preservation
+  def staged_files
+    @staged_files ||= attached_files.reject { |af| ActiveStorage::Service::SdrService.accessible?(af.file.blob) }
+  end
+
+  # @return [Array<AttachedFile>] a list of files in preservation
+  def preserved_files
+    @preserved_files ||= attached_files.select { |af| ActiveStorage::Service::SdrService.accessible?(af.file.blob) }
   end
 end
