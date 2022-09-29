@@ -152,6 +152,10 @@ RSpec.describe CollectionVersion do
         expect { collection_version.decommission! }
           .to change(collection_version, :state)
           .to('decommissioned')
+          .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+                 'CollectionsMailer', 'decommission_manager_email', 'deliver_now',
+                 { params: { collection_version:, user: collection.managed_by.first }, args: [] }
+               ))
       end
     end
   end

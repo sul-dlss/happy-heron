@@ -297,8 +297,9 @@ RSpec.describe WorksMailer, type: :mailer do
 
     it 'renders body' do
       expect(mail.body).to include "Dear #{a_user.first_name},"
-      expect(mail.body).to include
-      "Your item \"#{work_version.title}\" has been removed from the Stanford Digital Repository."
+      expect(mail.body).to include(
+        "The item \"#{work_version.title}\" in your collection MyString has been removed"
+      )
     end
   end
 end
