@@ -95,7 +95,8 @@ class WorksController < ObjectsController
       work.destroy
     end
 
-    request.referer.include?('dashboard') ? redirect_to(dashboard_path) : redirect_to(collection_works_path(collection))
+    redirect_path = request.referer.include?('dashboard') ? dashboard_path : collection_works_path(collection)
+    redirect_to redirect_path, status: :see_other
   end
 
   def next_step

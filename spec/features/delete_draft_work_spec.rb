@@ -31,7 +31,7 @@ RSpec.describe 'Delete a draft work', js: true do
           click_link "Delete #{work_version.title}"
         end
       end
-      sleep(1)
+      expect(page).to have_current_path(dashboard_path)
       expect(Work.exists?(work.id)).to be false
     end
 
