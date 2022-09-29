@@ -13,6 +13,10 @@ FactoryBot.define do
     druid { 'druid:bc123df4567' }
   end
 
+  trait :with_doi do
+    doi { '10.25740/hs561fr1234' }
+  end
+
   trait :locked do
     locked { true }
   end

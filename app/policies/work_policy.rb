@@ -25,4 +25,8 @@ class WorkPolicy < ApplicationPolicy
   def owner_of_the_work?
     record.owner == user
   end
+
+  def move_collection?
+    administrator?
+  end
 end

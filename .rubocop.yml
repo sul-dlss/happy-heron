@@ -44,6 +44,10 @@ Naming/PredicateName:
   ForbiddenPrefixes:
     - is_
 
+Rails/SkipsModelValidations:
+  Exclude:
+   - cypress/app_commands/clean.rb
+
 RSpec/DescribeClass:
   Exclude:
     - spec/features/**/*

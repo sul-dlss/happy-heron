@@ -17,7 +17,8 @@ module Works
       opts = [
         ['Select...', 'select'],
         ['Change owner', edit_owners_path(work)],
-        ['Lock/Unlock', edit_locks_path(work)]
+        ['Lock/Unlock', edit_locks_path(work)],
+        ['Move to another collection', edit_move_path(work)]
       ]
       opts << ['Decommission', edit_work_decommission_path(work)] unless work.head.decommissioned?
       options_for_select(opts, 'select')

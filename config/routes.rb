@@ -35,6 +35,9 @@ Rails.application.routes.draw do
         resource :owners, only: %i[edit update], controller: 'work_owners'
         resource :locks, only: %i[edit update], controller: 'work_locks'
         resource :decommission, only: %i[edit update], controller: 'work_decommission', as: :work_decommission
+        resource :move, only: %i[edit update], controller: 'work_move' do
+          get :search
+        end
       end
 
       resource :review, only: :create
