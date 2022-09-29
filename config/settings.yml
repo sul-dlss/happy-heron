@@ -91,3 +91,5 @@ datacite:
 
 # set to true in prod to send email to 'h2-administrators@lists.stanford.edu' when, e.g., a new collection is started
 notify_admin_list: false
+# set to false to stop sending all email
+perform_deliveries: true
