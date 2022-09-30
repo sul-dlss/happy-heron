@@ -69,6 +69,7 @@ RSpec.describe 'Change collection of a work' do
         expect(response.body).to include 'Moved'
 
         expect(work.reload.collection).to eq new_collection
+        expect(work.events.last.event_type).to eq 'collection_moved'
       end
     end
 
