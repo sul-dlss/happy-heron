@@ -26,6 +26,8 @@ en:
       unlock_work: Work unlocked
       decommission: Decommissioned
       no_review_workflow: Review no longer required
+      collection_moved: ''
+
   contributor:
     roles:
       person: Individual
