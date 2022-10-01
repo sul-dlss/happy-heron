@@ -29,7 +29,7 @@ Metrics/BlockLength:
   AllowedMethods:
     - state_machine
     - class_methods
-
+    - included
 Metrics/ClassLength:
   Max: 150
   Exclude:
