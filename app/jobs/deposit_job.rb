@@ -10,10 +10,10 @@ class DepositJob < BaseDepositJob
     Honeybadger.context({ work_version_id: work_version.id, druid:,
                           work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
 
+    perform_login
+
     cocina_obj = Repository.find(druid) if druid
     request_dro = CocinaGenerator::DROGenerator.generate_model(work_version:, cocina_obj:)
-
-    perform_login
 
     new_request_dro = update_dro_with_file_identifiers(request_dro, work_version)
 
