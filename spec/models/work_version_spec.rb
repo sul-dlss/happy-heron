@@ -320,6 +320,7 @@ RSpec.describe WorkVersion do
     describe 'a begin_deposit event' do
       before do
         allow(DepositJob).to receive(:perform_later)
+        allow(Repository).to receive(:valid_version?).and_return(true)
         work_version.save!
       end
 
@@ -330,6 +331,7 @@ RSpec.describe WorkVersion do
           .and change(Event, :count).by(1)
         expect(DepositJob).to have_received(:perform_later).with(work_version)
         expect(work_version.reload.published_at).to be_a ActiveSupport::TimeWithZone
+        expect(Repository).not_to have_received(:valid_version?)
       end
 
       context 'with pending_approval on a work' do
@@ -341,6 +343,41 @@ RSpec.describe WorkVersion do
             .to('depositing')
             .and change(Event, :count).by(1)
           expect(DepositJob).to have_received(:perform_later).with(work_version)
+        end
+      end
+
+      context 'when version_draft' do
+        let(:work_version) { create(:work_version, :version_draft) }
+
+        let(:druid) { 'druid:bb652bq1296' }
+
+        before do
+          work_version.work.druid = druid
+        end
+
+        context 'when valid version' do
+          it 'transitions from version_draft to depositing' do
+            expect { work_version.begin_deposit! }
+              .to change(work_version, :state)
+              .to('depositing')
+              .and change(Event, :count).by(1)
+            expect(DepositJob).to have_received(:perform_later).with(work_version)
+            expect(work_version.reload.published_at).to be_a ActiveSupport::TimeWithZone
+            expect(Repository).to have_received(:valid_version?).with(druid:, h2_version: 1)
+          end
+        end
+
+        context 'when invalid version' do
+          before do
+            allow(Repository).to receive(:valid_version?).and_return(false)
+          end
+
+          it 'does not transition' do
+            expect { work_version.begin_deposit! }
+              .to raise_error(StateMachines::InvalidTransition)
+            expect(DepositJob).not_to have_received(:perform_later).with(work_version)
+            expect(Repository).to have_received(:valid_version?)
+          end
         end
       end
     end

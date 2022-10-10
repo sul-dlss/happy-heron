@@ -6,6 +6,10 @@ RSpec.describe AssignPidJob do
   let(:message) { { model: }.to_json }
   let(:druid) { 'druid:bc123df4567' }
 
+  before do
+    allow(Repository).to receive(:valid_version?).and_return(true)
+  end
+
   context "with a work that doesn't have a doi (and hasn't requested one)" do
     let(:model) do
       Cocina::Models::DRO.new(externalIdentifier: druid,

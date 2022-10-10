@@ -8,4 +8,10 @@ class Repository
     cocina_json = JSON.parse(cocina_str)
     Cocina::Models.build(cocina_json)
   end
+
+  # @return [boolean] true if H2 version is one greater than SDR version.
+  def self.valid_version?(druid:, h2_version:)
+    cocina_obj = find(druid)
+    cocina_obj.version == h2_version - 1
+  end
 end
