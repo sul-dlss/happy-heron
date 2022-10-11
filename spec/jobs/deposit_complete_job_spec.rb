@@ -26,6 +26,7 @@ RSpec.describe DepositCompleteJob do
     let(:message) { "{\"druid\":\"#{work.druid}\"}" }
 
     before do
+      allow(Repository).to receive(:valid_version?).and_return(true)
       collection.update(head: collection_version)
       work.update(head: work_version)
     end

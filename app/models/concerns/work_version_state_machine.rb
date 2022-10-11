@@ -6,6 +6,10 @@ module WorkVersionStateMachine
 
   included do
     state_machine initial: :new do
+      state :depositing do
+        validate :correct_version
+      end
+
       before_transition WorkObserver.method(:before_transition)
 
       after_transition WorkObserver.method(:after_transition)
@@ -70,6 +74,14 @@ module WorkVersionStateMachine
       event :decommission do
         transition all => :decommissioned
       end
+    end
+
+    def correct_version
+      return unless work.druid
+
+      return if Repository.valid_version?(druid: work.druid, h2_version: version)
+
+      errors.add(:version, 'must be one greater than the version in SDR')
     end
   end
 end
