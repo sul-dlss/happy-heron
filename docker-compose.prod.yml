@@ -13,9 +13,8 @@ services:
       - DATABASE_NAME=h2
       - DATABASE_USERNAME
       - DATABASE_PASSWORD
-      - DATABASE_HOSTNAME=host.docker.internal
-      # for ActionCable
-      - REDIS_URL=redis://host.docker.internal:6379/
+      - DATABASE_HOSTNAME
+      - REDIS_URL
       - SMTP_HOST=host.docker.internal
       - HOST
       - HONEYBADGER_API_KEY
