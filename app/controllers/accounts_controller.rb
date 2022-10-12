@@ -12,13 +12,15 @@ class AccountsController < ApplicationController
 
   private
 
-  # Does a lookup from the account service in production mode, otherwise returns a stub value
+  # Does a lookup from the account service in production mode, otherwise examines local database for users
   def lookup
     return AccountService.new.fetch(params[:id]) if Rails.env.production?
-    return {} unless params[:id].start_with?('jcoyne85')
+
+    user = User.where('email like ?', "#{params[:id]}%").first
+    return {} unless user
 
     {
-      'name' => 'Coyne, Justin Michael',
+      'name' => user.name || user.sunetid,
       'description' => 'Digital Library Systems and Services, Digital Library Software Engineer - Web & Infrastructure'
     }
   end

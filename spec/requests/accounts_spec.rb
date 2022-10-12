@@ -37,9 +37,9 @@ RSpec.describe 'Accounts', type: :request do
       end
 
       it 'displays the data' do
-        get '/accounts/jcoyne85'
+        get "/accounts/#{user.sunetid}"
         expect(response).to have_http_status(:ok)
-        expect(response.body).to eq '{"name":"Coyne, Justin Michael",' \
+        expect(response.body).to eq "{\"name\":\"#{user.sunetid}\"," \
                                     '"description":"Digital Library Systems and Services, ' \
                                     'Digital Library Software Engineer - Web \\u0026 Infrastructure"}'
       end
@@ -53,9 +53,9 @@ RSpec.describe 'Accounts', type: :request do
       end
 
       it 'displays the data' do
-        get '/accounts/jcoyne85'
+        get "/accounts/#{user.sunetid}"
         expect(response).to have_http_status(:ok)
-        expect(response.body).to eq '{"name":"Coyne, Justin Michael",' \
+        expect(response.body).to eq "{\"name\":\"#{user.sunetid}\"," \
                                     '"description":"Digital Library Systems and Services, ' \
                                     'Digital Library Software Engineer - Web \\u0026 Infrastructure"}'
       end
