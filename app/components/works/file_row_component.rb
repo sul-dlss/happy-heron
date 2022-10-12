@@ -22,12 +22,18 @@ module Works
     end
 
     def date_uploaded
-      return unless uploaded?
+      return unless saved?
 
       form.object.model.created_at
     end
 
+    # file has been uploaded but may not yet have been saved to the database model (and may not validate)
     def uploaded?
+      !form.object.try(:model)&.blob.nil?
+    end
+
+    # file has been uploaded and saved to the model
+    def saved?
       form.object.persisted?
     end
   end

@@ -12,6 +12,9 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
   let(:work) { work_version.work }
   let(:form) { DraftWorkForm.new(work_version:, work:) }
   let(:attached_files) { [] }
+  let(:filename) { 'xml.svg' }
+  let(:blob) { ActiveStorage::Blob.new(filename:) }
+  let(:attached_file) { AttachedFile.new }
 
   context 'when work is created' do
     let(:state) { 'new' }
@@ -261,11 +264,12 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
     context 'when file visibility has changed' do
       before do
-        allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
+        allow(AttachedFile).to receive(:new).and_return(attached_file)
+        allow(attached_file).to receive(:blob).and_return(blob)
 
         form.validate(
           attached_files: [
-            { 'label' => 'xml.svg', 'hide' => true, 'file' => '123782312abcdef' }
+            { 'label' => filename, 'hide' => true, 'file' => '123782312abcdef' }
           ]
         )
       end
@@ -275,7 +279,8 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
     context 'when new file label is not blank' do
       before do
-        allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
+        allow(AttachedFile).to receive(:new).and_return(attached_file)
+        allow(attached_file).to receive(:blob).and_return(blob)
 
         form.validate(
           attached_files: [
@@ -289,7 +294,8 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
     context 'when new file label is blank' do
       before do
-        allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
+        allow(AttachedFile).to receive(:new).and_return(attached_file)
+        allow(attached_file).to receive(:blob).and_return(blob)
 
         form.validate(
           attached_files: [
@@ -302,10 +308,12 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
     end
 
     context 'when existing file label remains blank' do
+      let(:blank_label_attached_file) { AttachedFile.new(label: '') }
       let(:attached_files) { [AttachedFile.new] }
 
       before do
-        allow(AttachedFile).to receive(:new).and_return(AttachedFile.new(label: ''))
+        allow(AttachedFile).to receive(:new).and_return(blank_label_attached_file)
+        allow(blank_label_attached_file).to receive(:blob).and_return(blob)
 
         form.validate(
           attached_files: [
@@ -319,9 +327,12 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
     context 'when existing file label is removed' do
       let(:attached_files) { [AttachedFile.new] }
+      let(:existing_label_attached_file) { AttachedFile.new(label: 'something', hide: false) }
 
       before do
-        allow(AttachedFile).to receive(:new).and_return(AttachedFile.new(label: 'something', hide: false))
+        allow(AttachedFile).to receive(:new).and_return(existing_label_attached_file)
+        allow(existing_label_attached_file).to receive(:blob).and_return(blob)
+
         form.validate(
           attached_files: [
             { 'label' => '', 'hide' => false, 'file' => '123782312abcdef' }
@@ -367,7 +378,8 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
       end
 
       before do
-        allow(AttachedFile).to receive(:new).and_return(AttachedFile.new)
+        allow(AttachedFile).to receive(:new).and_return(attached_file)
+        allow(attached_file).to receive(:blob).and_return(blob)
 
         form.validate(params)
       end

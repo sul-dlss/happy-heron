@@ -36,6 +36,49 @@ describe('Create work', () => {
       cy.contains('You have successfully deposited your work')
     })
 
+    it('does not allow saving with a duplicate filename', () => {
+
+      // try to deposit
+      cy.get('input.btn[value="Deposit"]').click()
+
+      // there is a message telling us we need to upload a file
+      cy.get('div.invalid-feedback').should('contain', 'You must attach a file')
+
+      // upload a file
+      cy.get('div.dropzone').selectFile('cypress/fixtures/test2.txt', {
+        action: 'drag-drop'
+      })
+
+      // wait for the upload to finish
+      cy.wait(1000)
+
+      // save the deposit
+      cy.get('input.btn[value="Save as draft"]').click()
+
+      // successful save
+      cy.url().should('include', `/works/${work_id}`)
+
+      // edit the work again
+      cy.visit(`/works/${work_id}/edit`)
+
+      // upload the same file again
+      cy.get('div.dropzone').selectFile('cypress/fixtures/test2.txt', {
+        action: 'drag-drop'
+      })
+
+      // wait for the upload to finish
+      cy.wait(1000)
+
+      // try to save the deposit
+      cy.get('input.btn[value="Save as draft"]').click()
+
+      // there is a message telling us we cannot have duplicate filenames
+      cy.get('#error_explanation').should('contain', 'Attached files must all have a unique filename.')
+
+      // and we are still on the edit page
+      cy.url().should('include', `/works/${work_id}/edit`)
+    })
+
     it('deposits a work correctly if globus is selected (without the need to upload a file)', () => {
 
       // try to deposit
