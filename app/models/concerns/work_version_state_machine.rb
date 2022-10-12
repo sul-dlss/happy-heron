@@ -77,6 +77,9 @@ module WorkVersionStateMachine
     end
 
     def correct_version
+      # Skip this check since no SDR API in dev.
+      return if Rails.env.development?
+
       return unless work.druid
 
       return if Repository.valid_version?(druid: work.druid, h2_version: version)

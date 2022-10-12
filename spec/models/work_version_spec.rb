@@ -350,9 +350,11 @@ RSpec.describe WorkVersion do
         let(:work_version) { create(:work_version, :version_draft) }
 
         let(:druid) { 'druid:bb652bq1296' }
+        let(:cocina_obj) { instance_double(Cocina::Models::DRO, version: 1) }
 
         before do
           work_version.work.druid = druid
+          allow(SdrClient::Find).to receive(:run).and_return(cocina_obj)
         end
 
         context 'when valid version' do
