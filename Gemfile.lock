@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/sul-dlss/sdr-client.git
+  revision: 9c3fe56620b153497c11e8db4b62d3b396bb3c84
+  branch: hfs
+  specs:
+    sdr-client (0.96.0)
+      activesupport
+      cocina-models (~> 0.86.0)
+      dry-monads
+      faraday (>= 0.16)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -447,11 +458,6 @@ GEM
     ruby-next-core (0.15.3)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sdr-client (0.96.0)
-      activesupport
-      cocina-models (~> 0.86.0)
-      dry-monads
-      faraday (>= 0.16)
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.0.3)
@@ -589,7 +595,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sdr-client (~> 0.94)
+  sdr-client!
   sidekiq (~> 6.1)
   simplecov
   sneakers (~> 2.11)

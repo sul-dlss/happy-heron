@@ -31,13 +31,15 @@ export default class extends Controller {
     }
   }
 
-  checkForDuplicates(fileName) {
+  checkForDuplicates(file) {
+    const fileName = file.fullPath || file.name
     // Extract all filenames that are visible
-    const fileNames = this.fileNameTargets.map(target => { if (target.offsetParent !== null) return target.innerText.trim() })
+    const fileNames = this.fileNameTargets.map(target => {
+      if (target.offsetParent !== null) return target.innerText.trim().split(": ")[0]
+    })
 
     // Remove current fileName
     fileNames.splice(fileNames.indexOf(fileName), 1)
-
     return fileNames.indexOf(fileName) > -1
   }
 
@@ -86,7 +88,7 @@ export default class extends Controller {
         file.accepted && createDirectUploadController(this, file).start();
         this.fileCount++
         this.enableSubmission()
-        if (this.checkForDuplicates(file.name)) {
+        if (this.checkForDuplicates(file)) {
           this.dropZone.emit("error", file, 'Duplicate file');
         }
       }, 500);
@@ -175,7 +177,9 @@ class DirectUploadController {
 
   start() {
     this.file.controller = this;
-    this.hiddenInput = this.createHiddenInput();
+    this.hiddenInput = this.createHiddenFileInput();
+    this.createHiddenPathInput();
+    this.overrideDisplayedFileName();
     this.addDescription();
     this.addHideCheckbox();
     this.directUpload.create((error, attributes) => {
@@ -191,6 +195,15 @@ class DirectUploadController {
     });
   }
 
+  overrideDisplayedFileName() {
+    if (this.file.fullPath) {
+      findElement(
+        this.file.previewTemplate,
+        "[data-dz-name]"
+      ).innerText = this.file.fullPath
+    }
+  }
+
   addDescription() {
     const detail = this.file.previewElement.querySelector('.upload-description')
     detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
@@ -201,7 +214,15 @@ class DirectUploadController {
     detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
   }
 
-  createHiddenInput() {
+  createHiddenPathInput() {
+    const input = document.createElement("input")
+    input.type = "hidden"
+    input.name = `work[attached_files_attributes][${this.count}][path]`
+    input.value = this.file.fullPath
+    this.file.previewElement.appendChild(input)
+  }
+
+  createHiddenFileInput() {
     const input = document.createElement("input");
     input.type = "hidden";
     input.classList.add('hidden-file')

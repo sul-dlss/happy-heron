@@ -16,16 +16,20 @@ RSpec.describe WorkForm do
         content_type: 'image/svg+xml'
       )
     end
+    let(:file_path) { "my/directory/#{blob.signed_id}" }
 
     after do
       blob.destroy
     end
 
     it 'populates attached_files' do
-      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }])
+      form.validate(
+        attached_files: [{ 'label' => 'hello', 'path' => file_path, 'hide' => true, 'file' => blob.signed_id }]
+      )
 
       expect(form.attached_files.size).to eq 1
       expect(form.attached_files.first.label).to eq 'hello'
+      expect(form.attached_files.first.path).to eq(file_path)
       expect(form.attached_files.first.hide).to be true
       expect(form.attached_files.first.model.file.blob_id).to eq blob.id
     end

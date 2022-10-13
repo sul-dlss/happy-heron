@@ -44,7 +44,7 @@ module CocinaGenerator
       end
 
       def filename
-        blob.filename.to_s # File.basename(filename(blob.key))
+        attached_file.filename.to_s
       end
 
       def external_identifier

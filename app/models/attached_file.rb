@@ -10,7 +10,7 @@ class AttachedFile < ApplicationRecord
   # end
 
   delegate :blob, to: :file
-  delegate :filename, :content_type, :byte_size, to: :blob
+  delegate :content_type, :byte_size, to: :blob
 
   # This is a temporary method that makes the blobs that haven't yet been updated
   # appear to be from preservation, but it only changes the blob in memory.
@@ -35,6 +35,10 @@ class AttachedFile < ApplicationRecord
     ActiveStorage::Service::SdrService.accessible?(file.blob) ||
       work_version.deposited? ||
       !changed_in_this_version?
+  end
+
+  def filename
+    path.presence || blob.filename
   end
 
   private

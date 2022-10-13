@@ -183,7 +183,8 @@ CREATE TABLE public.attached_files (
     hide boolean DEFAULT false NOT NULL,
     work_version_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    path character varying
 );
 
 
@@ -1347,6 +1348,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220824225302'),
 ('20220829114247'),
 ('20220901184555'),
-('20220914211415');
+('20220914211415'),
+('20221013194032');
 
 

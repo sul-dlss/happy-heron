@@ -390,6 +390,73 @@ RSpec.describe 'Create a new work' do
         end
       end
 
+      context 'with a file that has path info' do
+        let(:collection) do
+          create(:collection, depositors: [user])
+        end
+
+        let(:work_params) do
+          {
+            title: 'Test title',
+            work_type: 'text',
+            contact_emails_attributes: contact_emails,
+            abstract: 'test abstract',
+            attached_files_attributes: files,
+            authors_attributes: authors,
+            keywords_attributes: {
+              '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
+            },
+            license: 'CC0-1.0',
+            release: 'immediate',
+            access: 'stanford'
+          }
+        end
+
+        let(:upload) do
+          ActiveStorage::Blob.create_and_upload!(
+            io: Rails.public_path.join('apple-touch-icon.png').open,
+            filename: 'apple-touch-icon.png',
+            content_type: 'image/png'
+          )
+        end
+
+        let(:authors) do
+          { '999' =>
+            { '_destroy' => 'false', 'first_name' => '', 'last_name' => '',
+              'full_name' => 'Stanford', 'role_term' => 'organization|Host institution' } }
+        end
+
+        let(:contact_emails) do
+          {
+            '0' => {
+              '_destroy' => false,
+              'email' => 'test@example.com'
+            }
+          }
+        end
+
+        let(:files) do
+          {
+            '0' => {
+              '_destroy' => 'false',
+              'label' => 'My ICO',
+              'hide' => false,
+              'path' => 'my_images/apple-touch-icon.png',
+              'file' => upload.signed_id
+            }
+          }
+        end
+
+        before { create(:collection_version_with_collection, collection:) }
+
+        it 'records path information for the attached file' do
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          expect(response).to have_http_status(:found)
+          work_version = Work.last.head
+          expect(work_version.attached_files.first.path).to eq('my_images/apple-touch-icon.png')
+        end
+      end
+
       context 'with empty draft' do
         let(:collection_version) { create(:collection_version_with_collection, depositors: [user]) }
 

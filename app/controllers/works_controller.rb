@@ -202,7 +202,7 @@ class WorksController < ObjectsController
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
                      :agree_to_terms, :assign_doi, :globus,
                      subtype: [],
-                     attached_files_attributes: %i[_destroy id label hide file],
+                     attached_files_attributes: %i[_destroy id label hide path file],
                      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
                      contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
                      contact_emails_attributes: %i[_destroy id email],
