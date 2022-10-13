@@ -202,6 +202,15 @@ class DirectUploadController {
   }
 
   createHiddenInput() {
+    if(this.file.fullPath) {
+      const labelInput = document.createElement("input");
+      labelInput.type = "hidden";
+      labelInput.classList.add('hidden-file')
+      labelInput.name = `work[attached_files_attributes][${this.count}][label]`
+      labelInput.value = this.file.fullPath
+      this.file.previewElement.appendChild(labelInput)
+    }
+
     const input = document.createElement("input");
     input.type = "hidden";
     input.classList.add('hidden-file')
