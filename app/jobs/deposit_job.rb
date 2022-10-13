@@ -10,6 +10,7 @@ class DepositJob < BaseDepositJob
     Honeybadger.context({ work_version_id: work_version.id, druid:,
                           work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
 
+    # NOTE: this login ensures `Repository.find` and various SdrClient::* calls below all have a valid token
     perform_login
 
     cocina_obj = Repository.find(druid) if druid
