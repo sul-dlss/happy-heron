@@ -29,6 +29,7 @@ services:
     volumes: &volumes
       - /opt/app/h2/happy-heron/shared/log:/app/log
       - /data/h2-files:/data/h2-files
+      - /etc/pki/tls/certs:/etc/pki/tls/certs
     ports:
       - 3000:3000
     extra_hosts: &extra-hosts
