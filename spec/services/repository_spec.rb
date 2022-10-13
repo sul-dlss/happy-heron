@@ -3,10 +3,44 @@
 require 'rails_helper'
 
 RSpec.describe Repository do
-  describe 'valid_version?' do
-    subject(:valid_version?) { described_class.valid_version?(druid:, h2_version:) }
+  let(:druid) { 'druid:bb652bq1296' }
 
-    let(:druid) { 'druid:bb652bq1296' }
+  describe '.find' do
+    let(:cocina) do
+      {
+        cocinaVersion: Cocina::Models::VERSION,
+        externalIdentifier: druid,
+        type: Cocina::Models::ObjectType.book,
+        label: 'Test DRO',
+        version: 1,
+        description: {
+          title: [{ value: 'Test DRO' }],
+          purl: "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
+        },
+        access: { view: 'world', download: 'world' },
+        administrative: { hasAdminPolicy: 'druid:hy787xj5878' },
+        identification: { sourceId: 'sul:abc123' },
+        structural: {}
+      }
+    end
+
+    before do
+      allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
+      allow(SdrClientAuthenticator).to receive(:login)
+    end
+
+    it 'ensures the SDR client is authenticated' do
+      described_class.find(druid)
+      expect(SdrClientAuthenticator).to have_received(:login).once
+    end
+
+    it 'returns a cocina object instance' do
+      expect(described_class.find(druid)).to be_a(Cocina::Models::DRO)
+    end
+  end
+
+  describe '.valid_version?' do
+    subject(:valid_version?) { described_class.valid_version?(druid:, h2_version:) }
 
     let(:cocina_obj) { instance_double(Cocina::Models::DRO, version: 1) }
 
