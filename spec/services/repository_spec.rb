@@ -58,10 +58,18 @@ RSpec.describe Repository do
     end
 
     context 'when the H2 version is not one greater than the SDR version' do
-      let(:h2_version) { 1 }
+      let(:h2_version) { 3 }
 
       it 'returns false' do
         expect(valid_version?).to be false
+      end
+    end
+
+    context 'when the H2 version and SDR version are 1' do
+      let(:h2_version) { 1 }
+
+      it 'returns true' do
+        expect(valid_version?).to be true
       end
     end
   end

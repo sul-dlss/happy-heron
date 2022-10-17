@@ -13,6 +13,10 @@ class Repository
   # @return [boolean] true if H2 version is one greater than SDR version.
   def self.valid_version?(druid:, h2_version:)
     cocina_obj = find(druid)
+
+    # This occurs when reserving a PURL.
+    return true if cocina_obj.version == 1 && h2_version == 1
+
     cocina_obj.version == h2_version - 1
   end
 
