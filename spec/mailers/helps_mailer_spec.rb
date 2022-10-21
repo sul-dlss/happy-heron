@@ -15,7 +15,7 @@ RSpec.describe HelpsMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq 'who should marry Rosina?'
-      expect(mail.to).to eq ['sdr-support@jirasul.stanford.edu']
+      expect(mail.to).to eq ['sdr-support@jirasul.stanford.edu', 'sdr-contact@lists.stanford.edu']
       expect(mail.from).to eq ['razor@haircuts.it']
     end
 
