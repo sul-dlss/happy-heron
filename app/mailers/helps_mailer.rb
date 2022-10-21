@@ -11,7 +11,7 @@ class HelpsMailer < ApplicationMailer
     @why_contact = params[:why_contact]
     @collections = params[:collections]
 
-    mail(to: 'sdr-support@jirasul.stanford.edu',
+    mail(to: ['sdr-support@jirasul.stanford.edu', 'sdr-contact@lists.stanford.edu'],
          from: email,
          subject:)
   end
