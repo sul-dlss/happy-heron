@@ -32,7 +32,9 @@ Then run the asset pipeline and webserver:
 bin/dev
 ```
 
-You can change user or roles by setting environment variables:
+You can change user or roles by setting environment variables.  Note that you may need to clear your browser
+session cookies to pick up the new roles set here, as they may be cached from a previous session.
+
 ```shell
 REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 ```
