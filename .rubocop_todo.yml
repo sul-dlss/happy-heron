@@ -12,6 +12,15 @@ Metrics/AbcSize:
   Exclude:
     - 'app/controllers/works_controller.rb'
 
+# Auto-correcting these breaks several tests.
+Rails/ActionControllerFlashBeforeRender:
+  Exclude:
+    - 'app/controllers/collection_decommission_controller.rb'
+    - 'app/controllers/collection_decommission_controller.rb'
+    - 'app/controllers/work_move_controller.rb'
+    - 'app/controllers/work_owners_controller.rb'
+    - 'spec/components/dashboard/collection_component_spec.rb'
+
 # Offense count: 1
 RSpec/AnyInstance:
   Exclude:
@@ -27,3 +36,8 @@ Rails/I18nLocaleTexts:
     - 'app/forms/work_form.rb'
     - 'app/mailers/collections_mailer.rb'
     - 'app/mailers/works_mailer.rb'
+
+# Auto-correcting these breaks several tests
+Rails/Pluck:
+  Exclude:
+    - 'spec/components/dashboard/collection_component_spec.rb'
