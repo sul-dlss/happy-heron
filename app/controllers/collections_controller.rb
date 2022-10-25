@@ -4,7 +4,7 @@
 class CollectionsController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  verify_authorized except: %i[deposit_button delete_button edit_link dashboard]
+  verify_authorized except: %i[admin dashboard delete_button deposit_button edit_link]
 
   def edit
     collection = Collection.find(params[:id])
@@ -87,7 +87,6 @@ class CollectionsController < ObjectsController
 
   def admin
     @collection = Collection.find(params[:id])
-    authorize! @collection
   end
 
   private
