@@ -18,6 +18,8 @@ class DepositJob < BaseDepositJob
 
     new_request_dro = update_dro_with_file_identifiers(request_dro, work_version)
 
+    Rails.logger.info(new_request_dro.to_json)
+
     case new_request_dro
     when Cocina::Models::RequestDRO
       create(new_request_dro, work_version)
@@ -37,6 +39,7 @@ class DepositJob < BaseDepositJob
     # Only uploading new or changed files
     blobs_to_upload = staged_blobs(work_version)
     upload_responses = perform_upload(blobs_to_upload)
+    Rails.logger.info("Upload responses: #{upload_responses}")
     # Update with any new externalIdentifiers assigned by SDR API during upload.
     SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro:,
                                                             upload_responses:)
