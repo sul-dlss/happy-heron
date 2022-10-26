@@ -9,17 +9,18 @@ RSpec.describe DepositJob do
   let!(:blob) do
     ActiveStorage::Blob.create_and_upload!(
       io: Rails.root.join('spec/fixtures/files/sul.svg').open,
-      filename: 'sul.svg',
+      filename: 'dir1/sul.svg',
       content_type: 'image/svg+xml;version=14'
     )
   end
-  let(:attached_file) { build(:attached_file) }
+  let(:attached_file) { build(:attached_file, path: 'dir1/sul.svg') }
   let(:work) { build(:work, collection:, assign_doi: false) }
   let(:first_work_version) do
     build(:work_version, work:, attached_files: [attached_file], version: 1)
   end
 
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
+  let(:blob_filename) { ActiveStorage::Blob.service.path_for(blob.key) }
 
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
@@ -38,21 +39,26 @@ RSpec.describe DepositJob do
     before do
       allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg',
+        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: blob_filename,
                                                                          signed_id: '9999999')])
     end
 
     let(:upload_request) do
       SdrClient::Deposit::Files::DirectUploadRequest.new(
-        checksum: '9e/54o8VT3n3oRJhvA1LMA==', byte_size: 17_675, content_type: 'image/svg+xml', filename: 'sul.svg'
+        checksum: '9e/54o8VT3n3oRJhvA1LMA==', byte_size: 17_675, content_type: 'image/svg+xml', filename: 'dir1-sul.svg'
       )
     end
 
     it 'uploads files and calls CreateResource.run' do
       described_class.perform_now(first_work_version)
       expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+        .with(a_hash_including(accession: true)) do |params|
+        file = params[:metadata].structural.contains.first.structural.contains.first
+        expect(file.externalIdentifier).to eq('9999999')
+        expect(file.filename).to eq('dir1/sul.svg')
+      end
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload) do |args|
-        expect(args[:file_metadata].values.first).to eq(upload_request)
+        expect(args[:file_metadata].values.first.to_h).to eq(upload_request.to_h)
       end
     end
 
@@ -73,7 +79,7 @@ RSpec.describe DepositJob do
     let(:second_work_version) do
       build(:work_version, work:, attached_files: [attached_file2], version: 2, version_description: 'Changed files')
     end
-    let(:attached_file2) { build(:attached_file) }
+    let(:attached_file2) { build(:attached_file, path: 'sul2.svg') }
     let!(:blob2) do
       ActiveStorage::Blob.create_and_upload!(
         io: Rails.root.join('spec/fixtures/files/sul.svg').open,
@@ -81,6 +87,7 @@ RSpec.describe DepositJob do
         content_type: 'image/svg+xml'
       )
     end
+    let(:blob2_filename) { ActiveStorage::Blob.service.path_for(blob2.key) }
     # The job fetches the existing cocina model from the SDR API to copy structural > contains.
     let(:cocina) do
       {
@@ -106,7 +113,7 @@ RSpec.describe DepositJob do
                   type: Cocina::Models::ObjectType.file,
                   externalIdentifier: 'https://cocina.sul.stanford.edu/file/123-456-789',
                   label: 'An image',
-                  filename: 'sul.svg',
+                  filename: 'dir1/sul.svg',
                   size: 0,
                   version: 1,
                   hasMimeType: 'text/html',
@@ -167,7 +174,7 @@ RSpec.describe DepositJob do
     context 'when files have changed' do
       before do
         allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul2.svg',
+          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: blob2_filename,
                                                                            signed_id: '9999999')])
       end
 
