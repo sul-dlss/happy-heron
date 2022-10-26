@@ -34,8 +34,8 @@ class DepositJob < BaseDepositJob
 
   def update_dro_with_file_identifiers(request_dro, work_version)
     # Only uploading new or changed files
-    blobs_to_upload = staged_blobs(work_version)
-    upload_responses = perform_upload(blobs_to_upload)
+    # blobs_to_upload = staged_blobs(work_version)
+    upload_responses = perform_upload(work_version)
     # Update with any new externalIdentifiers assigned by SDR API during upload.
     SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro:,
                                                             upload_responses:)
@@ -56,8 +56,8 @@ class DepositJob < BaseDepositJob
                                            version_description: work_version.version_description.presence)
   end
 
-  def perform_upload(blobs)
-    SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs),
+  def perform_upload(work_version)
+    SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(work_version),
                                            logger: Rails.logger,
                                            connection:)
   end
@@ -67,12 +67,15 @@ class DepositJob < BaseDepositJob
   end
 
   def build_file_metadata(blobs)
-    blobs.each_with_object({}) do |blob, obj|
-      obj[filename(blob.key)] = SdrClient::Deposit::Files::DirectUploadRequest.new(checksum: blob.checksum,
+    x = work_version.staged_files.each_with_object({}) do |stage_file, obj|
+      blob = stage_file.file.blob
+      obj[stage_file.path] = SdrClient::Deposit::Files::DirectUploadRequest.new(checksum: blob.checksum,
                                                                                    byte_size: blob.byte_size,
                                                                                    content_type: blob.content_type,
                                                                                    filename: blob.filename.to_s)
     end
+    Rails.logger.info("build_file_metadata: #{x}")
+    x
   end
 
   def filename(key)
