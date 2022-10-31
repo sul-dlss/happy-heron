@@ -10,7 +10,7 @@ RSpec.describe DepositJob do
     ActiveStorage::Blob.create_and_upload!(
       io: Rails.root.join('spec/fixtures/files/sul.svg').open,
       filename: 'sul.svg',
-      content_type: 'image/svg+xml'
+      content_type: 'image/svg+xml;version=14'
     )
   end
   let(:attached_file) { build(:attached_file) }
@@ -42,10 +42,18 @@ RSpec.describe DepositJob do
                                                                          signed_id: '9999999')])
     end
 
+    let(:upload_request) do
+      SdrClient::Deposit::Files::DirectUploadRequest.new(
+        checksum: '9e/54o8VT3n3oRJhvA1LMA==', byte_size: 17_675, content_type: 'image/svg+xml', filename: 'sul.svg'
+      )
+    end
+
     it 'uploads files and calls CreateResource.run' do
       described_class.perform_now(first_work_version)
       expect(SdrClient::Deposit::CreateResource).to have_received(:run)
-      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
+      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload) do |args|
+        expect(args[:file_metadata].values.first).to eq(upload_request)
+      end
     end
 
     context 'when the deposit wants a doi' do
