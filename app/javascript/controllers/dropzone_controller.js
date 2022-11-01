@@ -32,7 +32,7 @@ export default class extends Controller {
   }
 
   checkForDuplicates(file) {
-    const fileName = file.fullPath || file.name
+    const fileName = file.fullPath || file.webkitRelativePath || file.name
     // Extract all filenames that are visible
     const fileNames = this.fileNameTargets.map(target => {
       if (target.offsetParent !== null) return target.innerText.trim().split(": ")[0]
@@ -84,7 +84,12 @@ export default class extends Controller {
 
   bindEvents() {
     this.dropZone.on("addedfile", file => {
-      setTimeout(() => {
+      // No hidden files
+      if(file.name.startsWith('.')) {
+        this.dropZone.removeFile(file)
+        return
+      }
+      setTimeout(() => {        
         file.accepted && createDirectUploadController(this, file).start();
         this.fileCount++
         this.enableSubmission()
@@ -163,6 +168,10 @@ export default class extends Controller {
   get addRemoveLinks() {
     return this.data.get("addRemoveLinks") || false;
   }
+
+  get folders() {
+    return this.data.get("folders") || false;
+  }
 }
 
 class DirectUploadController {
@@ -196,11 +205,12 @@ class DirectUploadController {
   }
 
   overrideDisplayedFileName() {
-    if (this.file.fullPath) {
+    const fullpath = this.file.fullPath || this.file.webkitRelativePath
+    if (fullpath) {
       findElement(
         this.file.previewTemplate,
         "[data-dz-name]"
-      ).innerText = this.file.fullPath
+      ).innerText = fullpath
     }
   }
 
@@ -218,7 +228,7 @@ class DirectUploadController {
     const input = document.createElement("input")
     input.type = "hidden"
     input.name = `work[attached_files_attributes][${this.count}][path]`
-    input.value = this.file.fullPath
+    input.value = this.file.fullPath || this.file.webkitRelativePath 
     this.file.previewElement.appendChild(input)
   }
 
@@ -290,8 +300,10 @@ function createDropZone(controller, template) {
     previewsContainer: ".dropzone-previews",
     thumbnailHeight: 42,
     thumbnailWidth: 34,
-    clickable: '.dz-clickable',
-
-    autoQueue: false
+    clickable: controller.folders ? '.dz-clickable-folders' : '.dz-clickable',
+    autoQueue: false,
+    init: function() {
+      if(controller.folders) this.hiddenFileInput.setAttribute("webkitdirectory", true);
+    }
   });
 }

@@ -13,29 +13,32 @@
                                   bs_toggle: 'modal',
                                   bs_target: '#contactUsModal' }) %>
       </p>
-        <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="1000">
-        <fieldset>
-          <div class="dropzone dropzone-default" data-dropzone-target="container">
-            <%= form.file_field :files, multiple: true, direct_upload: true,
-                                data: { dropzone_target: 'input' } %>
-            <div class="dz-message needsclick text-secondary">
-              <p>Drop files here</p>
+      <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="1000">
+        <div data-controller="dropzone2" data-dropzone-max-file-size="10000" data-dropzone2-max-files="1000" data-dropzone2-folders=true>
+          <fieldset>
+            <div class="dropzone dropzone-default" data-dropzone-target="container" data-dropzone2-target="container">
+              <%= form.file_field :files, multiple: true, direct_upload: true,
+                                  data: { dropzone_target: 'input', dropzone2_target: 'input' } %>
+              <div class="dz-message needsclick text-secondary">
+                <p>Drop files here</p>
+              </div>
             </div>
-          </div>
-          <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
-          <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
-          <div class="dropzone-previews" data-dropzone-target="previewsContainer">
-            <%= form.fields_for :attached_files do |file_form| %>
+            <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
+            <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable-folders btn btn-outline-primary">Choose folders</button>
+            <div class="invalid-feedback" data-dropzone-target="feedback" data-dropzone2-target="feedback">You must attach a file<%= error_message %></div>
+            <div class="dropzone-previews" data-dropzone-target="previewsContainer" data-dropzone2-target="previewsContainer">
+              <%= form.fields_for :attached_files do |file_form| %>
+                <%= render Works::FileRowComponent.new(form: file_form) %>
+              <% end %>
+            </div>
+          </fieldset>
+
+          <template data-dropzone-target='template' data-dropzone2-target='template'>
+            <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
               <%= render Works::FileRowComponent.new(form: file_form) %>
             <% end %>
-          </div>
-        </fieldset>
-
-        <template data-dropzone-target='template'>
-          <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
-            <%= render Works::FileRowComponent.new(form: file_form) %>
-          <% end %>
-        </template>
+          </template>
+        </div>
       </div>
     </div>
   </div>

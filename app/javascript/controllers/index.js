@@ -6,3 +6,5 @@ const application = Application.start()
 application.load(definitions)
 
 application.register('autocomplete', Autocomplete)
+import DropzoneController from "./dropzone_controller"
+application.register("dropzone2", DropzoneController)
