@@ -26,6 +26,7 @@ services:
       - SETTINGS__RABBITMQ__QUEUES__EMBARGO_LIFTED
       - SETTINGS__SDR_API__PASSWORD
       - SETTINGS__PRESERVATION_CATALOG__TOKEN
+      - SETTINGS__ACCOUNTWS__PEM_FILE=/etc/pki/tls/certs/h2-docker-qa.stanford.edu.pem
     volumes: &volumes
       - /opt/app/h2/happy-heron/shared/log:/app/log
       - /data/h2-files:/data/h2-files
