@@ -6,7 +6,7 @@ class AssignPidJob
   # This worker will connect to "h2.druid_assigned" queue
   # env is set to nil since by default the actual queue name would be
   # "h2.druid_assigned_development"
-  from_queue 'h2.druid_assigned', env: nil
+  from_queue Settings.rabbitmq.queues.druid_assigned, env: nil
 
   def work(msg)
     model = build_cocina_model_from_json_str(msg)

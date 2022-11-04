@@ -3,6 +3,9 @@
 # Use this file to easily define all of your cron jobs.
 # Learn more: http://github.com/javan/whenever
 
+# Execute without bash.
+set :job_template, nil
+
 every :day, at: '1:00am' do
   runner 'WorkReminderGenerator.send_draft_reminders'
 end

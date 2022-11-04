@@ -9,13 +9,9 @@ require 'capistrano/deploy'
 require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 
-require 'capistrano/bundler'
-require 'capistrano/rails'
-require 'capistrano/honeybadger'
-require 'capistrano/passenger'
 require 'capistrano/maintenance'
-require 'whenever/capistrano'
-require 'dlss/capistrano'
+
+require 'dlss/docker/capistrano'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

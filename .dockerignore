@@ -9,3 +9,4 @@ postgres-data
 redis-data
 # Required for puma to have a place to put the pid file
 !tmp/pids/.keep
+public/assets

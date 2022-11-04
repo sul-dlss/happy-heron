@@ -65,13 +65,13 @@ Then run tests with `bundle exec rspec`. If you also want to do style checks & l
 
 ### Integration
 
-Spin up all docker compose services for local development and in-browser testing:
+Spin up all docker compose services for local testing:
 
 ```shell
 $ docker compose up # use -d to run in background
 ```
 
-This will spin up the H2 web application, its background workers, and all service dependencies declared in docker-compose.yml.
+This will spin up the H2 web application, its background workers, and all service dependencies declared in docker-compose.yml. H2 will be running in production mode.
 
 ### Cypress
 Cypress is primarily used to test features implemented with JS/Stimulus. Cypress tests are located in `cypress/spec`.

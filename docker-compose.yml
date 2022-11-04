@@ -2,42 +2,35 @@ version: '3.6'
 
 services:
   app:
-    build:
+    build: &build
       context: .
-      dockerfile: docker/app/Dockerfile
-    environment:
+      dockerfile: docker/Dockerfile
+      args:
+        SECRET_KEY_BASE: 2e4f669b6529a0bcec468d9b5329e2fe7e7f6a4d7915370862d6d4f2b6907f1fabc505a681aaa13b3858f02588602fd0b721ca783bdac37fe70ea83b8f123456
+    environment: &environment
       DATABASE_NAME: h2
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
       DATABASE_HOSTNAME: db
-      RAILS_LOG_TO_STDOUT: 'true'
+      RAILS_SERVE_STATIC_FILES: 'true'
       REDIS_URL: redis://redis:6379/ # for ActionCable
-      REMOTE_USER: sdr.user@stanford.edu
-    volumes:
-      - .:/app
-    working_dir: /app
+      REMOTE_USER: auser@stanford.edu
+      ROLES: dlss:hydrus-app-administrators
+      LOCAL_DOCKER: 'true'
     ports:
       - 3000:3000
     depends_on:
       - db
       - redis
       - workers
+    command: "./docker/invoke-app.sh"
   workers:
-    build:
-      context: .
-      dockerfile: docker/workers/Dockerfile
-    environment:
-      DATABASE_NAME: h2
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: postgres
-      DATABASE_HOSTNAME: db
-      REDIS_URL: redis://redis:6379/ # for Sidekiq
-    volumes:
-      - .:/app
-    working_dir: /app
+    build: *build
+    environment: *environment
     depends_on:
       - db
       - redis
+    command: "./docker/invoke-worker.sh"
   db:
     image: postgres:12
     environment:

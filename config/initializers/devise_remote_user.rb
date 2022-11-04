@@ -3,7 +3,7 @@
 DeviseRemoteUser.configure do |config|
   config.env_key = lambda do |env|
     remote_user = ENV.fetch('REMOTE_USER', nil)
-    if (Rails.env.development? || Rails.env.test?) && remote_user
+    if (Rails.env.development? || Rails.env.test? || ENV.fetch('LOCAL_DOCKER', false)) && remote_user
       remote_user
     else
       # Return the first non-blank value of a remote user header, or return nil (unauthenticated)

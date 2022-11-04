@@ -6,7 +6,7 @@ class RecordEmbargoReleaseJob
   # This worker will connect to "h2.embargo_lifted" queue
   # env is set to nil since by default the actual queue name would be
   # "h2.embargo_lifted_development"
-  from_queue 'h2.embargo_lifted', env: nil
+  from_queue Settings.rabbitmq.queues.embargo_lifted, env: nil
 
   def work(msg)
     model = build_cocina_model_from_json_str(msg)
