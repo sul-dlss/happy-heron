@@ -75,6 +75,7 @@ GEM
     amq-protocol (2.3.2)
     ast (2.4.2)
     attr_extras (6.2.5)
+    awesome_print (1.9.2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.13.0)
@@ -443,7 +444,7 @@ GEM
     ruby-next-core (0.15.3)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sdr-client (0.96.0)
+    sdr-client (0.97.0)
       activesupport
       cocina-models (~> 0.86.0)
       dry-monads
@@ -540,6 +541,7 @@ PLATFORMS
 DEPENDENCIES
   action_policy (~> 0.5.3)
   addressable (~> 2.8.0)
+  awesome_print
   bootsnap (>= 1.4.2)
   bunny (~> 2.17)
   byebug
@@ -585,7 +587,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sdr-client (~> 0.96.0)
+  sdr-client (~> 0.97)
   sidekiq (~> 6.1)
   simplecov
   sneakers (~> 2.11)

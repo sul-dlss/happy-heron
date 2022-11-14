@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'rails', '~> 7.0.1'
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'byebug'
   gem 'cypress-on-rails', '~> 1.0'
   gem 'cypress-rails'
@@ -72,7 +73,7 @@ gem 'redis', '~> 4.0'
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
 gem 'reform', '~> 2.5.0'
 gem 'reform-rails', '~> 0.2.0'
-gem 'sdr-client', '~> 0.96.0' # TODO: pin this back to minor level once HFS bug is found
+gem 'sdr-client', '~> 0.97'
 gem 'sidekiq', '~> 6.1'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'

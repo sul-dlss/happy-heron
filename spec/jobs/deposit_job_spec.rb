@@ -20,6 +20,7 @@ RSpec.describe DepositJob do
   end
 
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
+  let(:blob_filename) { ActiveStorage::Blob.service.path_for(blob.key) }
 
   before do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
@@ -38,7 +39,7 @@ RSpec.describe DepositJob do
     before do
       allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
       allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg',
+        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: blob_filename,
                                                                          signed_id: '9999999')])
     end
 
@@ -51,8 +52,13 @@ RSpec.describe DepositJob do
     it 'uploads files and calls CreateResource.run' do
       described_class.perform_now(first_work_version)
       expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+        .with(a_hash_including(accession: true)) do |params|
+        file = params[:metadata].structural.contains.first.structural.contains.first
+        expect(file.externalIdentifier).to eq('9999999')
+        expect(file.filename).to eq('sul.svg')
+      end
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload) do |args|
-        expect(args[:file_metadata].values.first).to eq(upload_request)
+        expect(args[:file_metadata].values.first.to_h).to eq(upload_request.to_h)
       end
     end
 
@@ -81,6 +87,7 @@ RSpec.describe DepositJob do
         content_type: 'image/svg+xml'
       )
     end
+    let(:blob2_filename) { ActiveStorage::Blob.service.path_for(blob2.key) }
     # The job fetches the existing cocina model from the SDR API to copy structural > contains.
     let(:cocina) do
       {
@@ -167,7 +174,7 @@ RSpec.describe DepositJob do
     context 'when files have changed' do
       before do
         allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul2.svg',
+          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: blob2_filename,
                                                                            signed_id: '9999999')])
       end
 

@@ -5,12 +5,13 @@ class AttachedFile < ApplicationRecord
   belongs_to :work_version
   has_one_attached :file
 
-  # def blob
-  #   file.blob
-  # end
-
   delegate :blob, to: :file
   delegate :filename, :content_type, :byte_size, to: :blob
+
+  def path
+    # Stubbing out for the future in which this may contain the path, not just the filename.
+    filename.to_s
+  end
 
   # This is a temporary method that makes the blobs that haven't yet been updated
   # appear to be from preservation, but it only changes the blob in memory.

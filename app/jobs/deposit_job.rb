@@ -37,9 +37,11 @@ class DepositJob < BaseDepositJob
     # Only uploading new or changed files
     blobs_to_upload = staged_blobs(work_version)
     upload_responses = perform_upload(blobs_to_upload)
+    # The upload response have the actual blob filepath, but need the cocina filename to update the DRO.
+    updated_upload_responses = update_upload_responses_with_cocina_filename(work_version, upload_responses)
     # Update with any new externalIdentifiers assigned by SDR API during upload.
     SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro:,
-                                                            upload_responses:)
+                                                            upload_responses: updated_upload_responses)
   end
 
   def create(new_request_dro, work_version)
@@ -57,6 +59,8 @@ class DepositJob < BaseDepositJob
                                            version_description: work_version.version_description.presence)
   end
 
+  # @return [Array<Files::DirectUploadResponse>] the responses from the server for the uploads
+  # The filename is the actual blob filepath
   def perform_upload(blobs)
     SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs),
                                            logger: Rails.logger,
@@ -67,9 +71,10 @@ class DepositJob < BaseDepositJob
     @connection ||= SdrClient::Connection.new(url: Settings.sdr_api.url)
   end
 
+  # @return [Hash<String, SdrClient::Deposit::Files::DirectUploadRequest] actual blob filepath, DirectUploadRequest
   def build_file_metadata(blobs)
     blobs.each_with_object({}) do |blob, obj|
-      obj[filename(blob.key)] = SdrClient::Deposit::Files::DirectUploadRequest.new(
+      obj[blob_filepath_for(blob)] = SdrClient::Deposit::Files::DirectUploadRequest.new(
         checksum: blob.checksum,
         byte_size: blob.byte_size,
         content_type: clean_content_type(blob.content_type),
@@ -83,11 +88,26 @@ class DepositJob < BaseDepositJob
     content_type&.split(';')&.first
   end
 
-  def filename(key)
-    ActiveStorage::Blob.service.path_for(key)
+  def blob_filepath_for(blob)
+    ActiveStorage::Blob.service.path_for(blob.key)
   end
 
+  # @return [Array<ActiveStorage::Blob>] the blobs that are not in SDR
   def staged_blobs(work_version)
-    work_version.staged_files.map { |af| af.file.blob }
+    work_version.staged_files.map { |attached_file| attached_file.file.blob }
+  end
+
+  def blob_filepath_to_cocina_filename(work_version)
+    # attached_file.path contains the cocina filename (e.g. 'dir1/file1.txt')
+    work_version.staged_files.to_h do |attached_file|
+      [blob_filepath_for(attached_file.file.blob), attached_file.path]
+    end
+  end
+
+  def update_upload_responses_with_cocina_filename(work_version, upload_responses)
+    blob_filepath_map = blob_filepath_to_cocina_filename(work_version)
+    upload_responses.each do |upload_response|
+      upload_response.filename = blob_filepath_map[upload_response.filename]
+    end
   end
 end
