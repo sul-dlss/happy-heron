@@ -45,9 +45,9 @@
   integrity sha512-CNR7qRIfCwWHNN7FnKUniva94edPdyQzil/zCwk3v6k4R6rR2Fr8i4s3PM7n/lyfPA6Zfko9z5WDzFxG9SW1uQ==
 
 "@github/time-elements@^3.1.2":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.2.0.tgz#763e44a354082e1f4e6301bf635f37b3c71dba22"
-  integrity sha512-YWhC5AqHhme1RYFcQCA5hrTfz0MsVk1z55YXKU7dCk2S8PVwSCEeRBiygtT38975wpzqK55uAfF9NnSgfaX97A==
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.2.4.tgz#f509fb9b4c48feaabe98365636809c365bf4b0a4"
+  integrity sha512-Kwy5gkbum7LRU9rWAZ4QFU2ZnYhH3mBAdzY/Cm52ENOzQLOgowaxTcq6aWfIDjLSym+7qJPW1W/os3KRdIFLvg==
 
 "@hotwired/turbo-rails@^7.0.1":
   version "7.2.4"
@@ -331,9 +331,9 @@ check-more-types@^2.24.0:
     fsevents "~2.3.2"
 
 ci-info@^3.2.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.5.0.tgz#bfac2a29263de4c829d806b1ab478e35091e171f"
-  integrity sha512-yH4RezKOGlOhxkmhbeNuC4eYZKAUsEaGtBuBzDDP1eFUKiccDWzBABxBfOx31IDwDIXMTxWuwAxUGModvkbuVw==
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.6.1.tgz#7594f1c95cb7fdfddee7af95a13af7dbc67afdcf"
+  integrity sha512-up5ggbaDqOqJ4UqLKZ2naVkyqSJQgJi5lwD6b6mM748ysrghDBX0bx/qJTUHzw7zu6Mq4gycviSF5hJnwceD8w==
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -1222,9 +1222,9 @@ safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
 sass@^1.43.2:
-  version "1.56.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.56.0.tgz#134032075a3223c8d49cb5c35e091e5ba1de8e0a"
-  integrity sha512-WFJ9XrpkcnqZcYuLRJh5qiV6ibQOR4AezleeEjTjMsCocYW59dEG19U3fwTTXxzi2Ed3yjPBp727hbbj53pHFw==
+  version "1.56.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.56.1.tgz#94d3910cd468fd075fa87f5bb17437a0b617d8a7"
+  integrity sha512-VpEyKpyBPCxE7qGDtOcdJ6fFbcpOM+Emu7uZLxVrkX8KVU/Dp5UF7WLvzqRuUhB6mqqQt1xffLoG+AndxTZrCQ==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
