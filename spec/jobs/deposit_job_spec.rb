@@ -51,8 +51,13 @@ RSpec.describe DepositJob do
     it 'uploads files and calls CreateResource.run' do
       described_class.perform_now(first_work_version)
       expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+        .with(a_hash_including(accession: true)) do |params|
+        file = params[:metadata].structural.contains.first.structural.contains.first
+        expect(file.externalIdentifier).to eq('9999999')
+        expect(file.filename).to eq('sul.svg')
+      end
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload) do |args|
-        expect(args[:file_metadata].values.first).to eq(upload_request)
+        expect(args[:file_metadata].values.first.to_h).to eq(upload_request.to_h)
       end
     end
 

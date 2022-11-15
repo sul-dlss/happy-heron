@@ -34,9 +34,11 @@ class DepositJob < BaseDepositJob
   end
 
   def update_dro_with_file_identifiers(request_dro, work_version)
-    # Only uploading new or changed files
-    blobs_to_upload = staged_blobs(work_version)
-    upload_responses = perform_upload(blobs_to_upload)
+    # Only uploading new or changed files.
+    # blobs_map is a map of relative filepath to blob
+    blobs_map = staged_blobs(work_version)
+    filepath_map = filepath_map_for(work_version)
+    upload_responses = perform_upload(blobs_map, filepath_map)
     # Update with any new externalIdentifiers assigned by SDR API during upload.
     SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro:,
                                                             upload_responses:)
@@ -57,8 +59,9 @@ class DepositJob < BaseDepositJob
                                            version_description: work_version.version_description.presence)
   end
 
-  def perform_upload(blobs)
-    SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs),
+  def perform_upload(blobs_map, filepath_map)
+    SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs_map),
+                                           filepath_map:,
                                            logger: Rails.logger,
                                            connection:)
   end
@@ -67,9 +70,9 @@ class DepositJob < BaseDepositJob
     @connection ||= SdrClient::Connection.new(url: Settings.sdr_api.url)
   end
 
-  def build_file_metadata(blobs)
-    blobs.each_with_object({}) do |blob, obj|
-      obj[filename(blob.key)] = SdrClient::Deposit::Files::DirectUploadRequest.new(
+  def build_file_metadata(blobs_map)
+    blobs_map.transform_values do |blob|
+      SdrClient::Deposit::Files::DirectUploadRequest.new(
         checksum: blob.checksum,
         byte_size: blob.byte_size,
         content_type: clean_content_type(blob.content_type),
@@ -83,11 +86,20 @@ class DepositJob < BaseDepositJob
     content_type&.split(';')&.first
   end
 
-  def filename(key)
-    ActiveStorage::Blob.service.path_for(key)
+  def blob_filepath_for(blob)
+    ActiveStorage::Blob.service.path_for(blob.key)
   end
 
   def staged_blobs(work_version)
-    work_version.staged_files.map { |af| af.file.blob }
+    work_version.staged_files.to_h do |attached_file|
+      [attached_file.path, attached_file.blob]
+    end
+  end
+
+  def filepath_map_for(work_version)
+    # attached_file.path contains the cocina filename (e.g. 'dir1/file1.txt')
+    work_version.staged_files.to_h do |attached_file|
+      [attached_file.path, blob_filepath_for(attached_file.file.blob)]
+    end
   end
 end
