@@ -409,7 +409,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
               'citation' => '',
               'default_citation' => 'true',
               'agree_to_terms' => '0',
-              'globus' => 'false',
+              'upload_type' => 'browser',
               'authors_attributes' => {
                 '0' => {
                   '_destroy' => '',

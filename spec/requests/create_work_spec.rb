@@ -852,7 +852,7 @@ RSpec.describe 'Create a new work' do
             contact_emails_attributes: contact_emails,
             abstract: 'test abstract',
             attached_files_attributes: {},
-            globus: 'true',
+            upload_type: 'globus',
             authors_attributes: authors,
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
@@ -885,7 +885,8 @@ RSpec.describe 'Create a new work' do
           expect(response).to have_http_status(:found)
           work_version = Work.last.head
           expect(work_version.attached_files).to be_empty
-          expect(work_version.globus).to be true
+          expect(work_version.globus?).to be true
+          expect(work_version.upload_type).to eq 'globus'
           expect(work_version.state).to eq 'depositing'
         end
       end

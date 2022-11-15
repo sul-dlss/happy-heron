@@ -439,7 +439,7 @@ RSpec.describe WorkVersion do
       end
 
       context 'when a deposit with globus' do
-        let(:work_version) { build(:work_version, :depositing, work:, globus: true) }
+        let(:work_version) { build(:work_version, :depositing, work:, upload_type: 'globus') }
         let(:collection) { create(:collection) }
 
         before do

@@ -338,24 +338,26 @@ RSpec.describe WorkForm do
       blob.destroy
     end
 
-    it 'does not validate when no files and globus is false' do
-      form.validate(attached_files: [], globus: false)
+    it 'does not validate when no files and upload is not globus' do
+      form.validate(attached_files: [], upload_type: 'browser')
       expect(form).not_to be_valid
       expect(messages).to eq ['Please add at least one file.']
     end
 
-    it 'validates when has files and globus is true' do
-      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }], globus: true)
+    it 'validates when has files and upload is globus' do
+      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }],
+                    upload_type: 'globus')
       expect(messages).to be_empty
     end
 
-    it 'validates when no files and globus is true' do
-      form.validate(attached_files: [], globus: true)
+    it 'validates when no files and upload is globus' do
+      form.validate(attached_files: [], upload_type: 'globus')
       expect(messages).to be_empty
     end
 
-    it 'validate when has files and globus is false' do
-      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }], globus: false)
+    it 'validate when has files and upload is not globus' do
+      form.validate(attached_files: [{ 'label' => 'hello', 'hide' => true, 'file' => blob.signed_id }],
+                    upload_type: 'browser')
       expect(messages).to be_empty
     end
   end

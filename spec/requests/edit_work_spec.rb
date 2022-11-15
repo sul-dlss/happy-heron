@@ -143,7 +143,7 @@ RSpec.describe 'Updating an existing work' do
         end
 
         context 'with globus upload selected' do
-          before { work_params[:globus] = true }
+          before { work_params[:upload_type] = 'globus' }
 
           context 'when deposited' do
             it 'removes any attached files' do

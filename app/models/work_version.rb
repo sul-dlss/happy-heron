@@ -41,6 +41,13 @@ class WorkVersion < ApplicationRecord
     world: 'world'
   }
 
+  # provides helper method to infer upload type... e.g. work_version.globus?
+  enum upload_type: {
+    browser: 'browser',
+    globus: 'globus',
+    zipfile: 'zipfile'
+  }
+
   LINK_TEXT = ':link will be inserted here automatically when available:'
   DOI_TEXT = ':DOI will be inserted here automatically when available:'
 
