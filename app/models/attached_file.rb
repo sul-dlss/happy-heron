@@ -5,9 +5,10 @@ class AttachedFile < ApplicationRecord
   belongs_to :work_version
   has_one_attached :file
 
-  # def blob
-  #   file.blob
-  # end
+  def path
+    # Stubbing out for the future in which this may contain the path, not just the filename.
+    filename.to_s
+  end
 
   delegate :blob, to: :file
   delegate :filename, :content_type, :byte_size, to: :blob

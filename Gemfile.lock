@@ -239,7 +239,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.0.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.6.0)
+    faraday (2.7.0)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
@@ -443,7 +443,7 @@ GEM
     ruby-next-core (0.15.3)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sdr-client (0.96.0)
+    sdr-client (1.0.0)
       activesupport
       cocina-models (~> 0.86.0)
       dry-monads
@@ -585,7 +585,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sdr-client (~> 0.96.0)
+  sdr-client (~> 1.0)
   sidekiq (~> 6.1)
   simplecov
   sneakers (~> 2.11)
