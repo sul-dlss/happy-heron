@@ -96,7 +96,7 @@ class DraftWorkForm < Reform::Form
     property :file, virtual: true
     property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
-  property :globus, on: :work_version
+  property :upload_type, on: :work_version
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
@@ -163,7 +163,7 @@ class DraftWorkForm < Reform::Form
   def save_model
     super
     # if the user selects globus uploads, we cannot have any attached files
-    work_version.attached_files.destroy_all if work_version.globus
+    work_version.attached_files.destroy_all if work_version.globus?
     dedupe_keywords
     work.update(head: work_version)
   end

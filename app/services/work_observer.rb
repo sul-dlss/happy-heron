@@ -42,7 +42,7 @@ class WorkObserver
             mailer.deposited_email
           end
     job.deliver_later
-    mailer.globus_deposited_email.deliver_later if work_version.globus && Settings.notify_admin_list
+    mailer.globus_deposited_email.deliver_later if work_version.globus? && Settings.notify_admin_list
   end
 
   def self.after_rejected(work_version, _transition)

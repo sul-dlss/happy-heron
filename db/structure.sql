@@ -587,7 +587,7 @@ CREATE TABLE public.work_versions (
     work_id bigint NOT NULL,
     version_description character varying,
     published_at timestamp(6) without time zone,
-    globus boolean DEFAULT false NOT NULL
+    upload_type character varying DEFAULT 'browser'::character varying NOT NULL
 );
 
 
@@ -1347,6 +1347,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220824225302'),
 ('20220829114247'),
 ('20220901184555'),
-('20220914211415');
+('20220914211415'),
+('20221115215744');
 
 

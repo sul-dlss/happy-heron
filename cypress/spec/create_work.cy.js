@@ -45,7 +45,7 @@ describe('Create work', () => {
       cy.get('div.invalid-feedback').should('contain', 'You must attach a file')
 
       // now select globus upload option
-      cy.get('#work_globus_true').check()
+      cy.get('#work_upload_type_globus').check()
 
       // now try to deposit again
       cy.get('input.btn[value="Deposit"]').click()

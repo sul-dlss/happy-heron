@@ -14,7 +14,7 @@ FactoryBot.define do
     state { 'first_draft' }
     version_description { 'initial version' }
     published_at { Time.zone.parse('2019-01-01') }
-    globus { false }
+    upload_type { 'browser' }
     work
 
     factory :valid_work_version do
