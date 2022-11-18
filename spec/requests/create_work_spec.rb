@@ -290,7 +290,8 @@ RSpec.describe 'Create a new work' do
                 '_destroy' => '',
                 'url' => ''
               } },
-              'license' => 'CC-BY-NC-4.0'
+              'license' => 'CC-BY-NC-4.0',
+              upload_type: 'browser'
             },
             'commit' => 'Save as draft',
             'controller' => 'works',
@@ -326,6 +327,7 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
+            upload_type: 'browser',
             release: 'immediate',
             access: 'stanford'
           }
@@ -399,6 +401,7 @@ RSpec.describe 'Create a new work' do
             abstract: '',
             license: License.license_list.first,
             work_type: 'text',
+            upload_type: 'browser',
             release: 'immediate'
           }
         end
@@ -438,6 +441,7 @@ RSpec.describe 'Create a new work' do
               abstract: '',
               license: default_license,
               work_type: 'text',
+              upload_type: 'browser',
               release: 'immediate'
             }
           end
@@ -462,6 +466,7 @@ RSpec.describe 'Create a new work' do
               abstract: '',
               license: default_license,
               work_type: 'text',
+              upload_type: 'browser',
               release: 'immediate'
             }
           end
@@ -485,6 +490,7 @@ RSpec.describe 'Create a new work' do
               title: '',
               abstract: '',
               license:,
+              upload_type: 'browser',
               work_type: 'text',
               release: 'immediate'
             }
@@ -511,6 +517,7 @@ RSpec.describe 'Create a new work' do
             title: '',
             abstract: '',
             license: License.license_list.first,
+            upload_type: 'browser',
             work_type: 'text',
             release: 'immediate',
             citation: 'manual one',
@@ -557,6 +564,7 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
+            upload_type: 'browser',
             release: 'immediate'
           }
         end
@@ -631,6 +639,7 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
+            upload_type: 'browser',
             release: 'embargo',
             'embargo(1i)': '2030',
             'embargo(2i)': '09',
@@ -701,6 +710,7 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
+            upload_type: 'browser',
             release: 'embargo'
           }
         end
@@ -766,7 +776,8 @@ RSpec.describe 'Create a new work' do
             keywords_attributes: {
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
-            license: 'CC0-1.0'
+            license: 'CC0-1.0',
+            upload_type: 'browser'
           }
         end
 

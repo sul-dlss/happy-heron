@@ -26,6 +26,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
     click_button 'Continue'
 
     fill_in 'Title of deposit', with: 'My Draft'
+    choose 'work_upload_type_browser'
 
     click_button 'Save as draft'
 
@@ -33,6 +34,27 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
     expect(page).to have_content 'Draft - Not deposited'
     expect(page).to have_content WorkVersion::LINK_TEXT.to_s
     expect(page).to have_content WorkVersion::DOI_TEXT.to_s
+  end
+
+  context 'when no upload type is selected' do
+    it 'does not allow user to save a draft' do
+      visit dashboard_path
+
+      click_button '+ Deposit to this collection'
+
+      expect(page).to have_content 'What type of content will you deposit?'
+
+      find('label', text: 'Sound').click
+
+      click_button 'Continue'
+
+      fill_in 'Title of deposit', with: 'My Draft'
+
+      click_button 'Save as draft'
+
+      expect(page).to have_content "Upload type can't be blank"
+      expect(current_url).to include "/collections/#{collection.id}/works/new?work_type=sound"
+    end
   end
 
   context 'when collection does not allow DOI assignment' do
@@ -50,6 +72,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       click_button 'Continue'
 
       fill_in 'Title of deposit', with: 'My Draft'
+      choose 'work_upload_type_browser'
 
       click_button 'Save as draft'
 

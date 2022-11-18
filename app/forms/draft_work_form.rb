@@ -36,11 +36,11 @@ class DraftWorkForm < Reform::Form
   validates_with EmbargoDateParts,
                  if: proc { |form| form.user_can_set_availability? && form.release == 'embargo' }
 
-  validates_with CreatedDateParts,
-                 if: proc { |form| form.created_type == 'range' }
+  validates_with CreatedDateParts, if: proc { |form| form.created_type == 'range' }
 
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
+  validates :upload_type, presence: true
   validate :unique_filenames
 
   delegate :user_can_set_availability?, to: :collection
