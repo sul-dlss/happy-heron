@@ -82,7 +82,7 @@ export default class extends Controller {
 
   bindEvents() {
     this.dropZone.on("addedfile", file => {
-      setTimeout(() => {
+      setTimeout(() => {        
         file.accepted && createDirectUploadController(this, file).start();
         this.fileCount++
         this.enableSubmission()
@@ -116,7 +116,7 @@ export default class extends Controller {
       file.previewElement.querySelector('.dz-error-mark').style.display = 'block'
       file.previewElement.querySelector('.dz-success-mark').style.display = 'none'
       // is-invalid needs to be on the hidden-file input for validation
-      file.previewElement.querySelector('.hidden-file').classList.add('is-invalid')
+      file.previewElement.querySelector('.hidden-file')?.classList?.add('is-invalid')
     })
 
     this.dropZone.on("complete", () => {
