@@ -46,7 +46,7 @@ Naming/PredicateName:
 
 Rails/SkipsModelValidations:
   Exclude:
-   - cypress/app_commands/clean.rb
+    - cypress/app_commands/clean.rb
 
 RSpec/DescribeClass:
   Exclude:
@@ -490,4 +490,29 @@ RSpec/ClassCheck: # new in 2.13
 RSpec/NoExpectationExample: # new in 2.13
   Enabled: true
 RSpec/Capybara/SpecificFinders: # new in 2.13
+  Enabled: true
+
+Lint/DuplicateMagicComment: # new in 1.37
+  Enabled: true
+Style/OperatorMethodCall: # new in 1.37
+  Enabled: true
+Style/RedundantEach: # new in 1.38
+  Enabled: true
+Style/RedundantStringEscape: # new in 1.37
+  Enabled: true
+Rails/ActionOrder: # new in 2.17
+  Enabled: true
+Rails/IgnoredColumnsAssignment: # new in 2.17
+  Enabled: true
+Rails/WhereNotWithMultipleConditions: # new in 2.17
+  Enabled: true
+RSpec/SortMetadata: # new in 2.14
+  Enabled: true
+RSpec/Capybara/NegationMatcher: # new in 2.14
+  Enabled: true
+RSpec/Capybara/SpecificActions: # new in 2.14
+  Enabled: true
+RSpec/FactoryBot/ConsistentParenthesesStyle: # new in 2.14
+  Enabled: true
+RSpec/Rails/InferredSpecType: # new in 2.14
   Enabled: true

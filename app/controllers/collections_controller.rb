@@ -6,6 +6,11 @@ class CollectionsController < ObjectsController
   before_action :ensure_sdr_updatable
   verify_authorized except: %i[admin dashboard delete_button deposit_button edit_link]
 
+  def show
+    @collection = Collection.find(params[:id])
+    authorize! @collection
+  end
+
   def edit
     collection = Collection.find(params[:id])
     authorize! collection
@@ -31,11 +36,6 @@ class CollectionsController < ObjectsController
     else
       render :edit, status: :unprocessable_entity
     end
-  end
-
-  def show
-    @collection = Collection.find(params[:id])
-    authorize! @collection
   end
 
   def destroy

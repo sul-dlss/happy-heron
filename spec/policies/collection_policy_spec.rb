@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe CollectionPolicy do
-  let(:user) { build_stubbed :user }
+  let(:user) { build_stubbed(:user) }
   # `record` must be defined - it is the authorization target
-  let(:record) { build_stubbed :collection }
+  let(:record) { build_stubbed(:collection) }
   # `context` is the authorization context
   let(:context) do
     {

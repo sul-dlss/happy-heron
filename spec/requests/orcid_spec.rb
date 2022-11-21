@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Orcid', type: :request do
+RSpec.describe 'Orcid' do
   describe 'GET /search' do
     context 'when search successful' do
       before do

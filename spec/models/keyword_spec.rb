@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Keyword, type: :model do
+RSpec.describe Keyword do
   subject(:keyword) { build(:keyword) }
 
   it 'has a label' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe WorksMailer, type: :mailer do
+RSpec.describe WorksMailer do
   let(:work_depositor) { build_stubbed(:user, email: work.depositor.email, name: 'Al Dente', first_name: 'Fred') }
   let(:a_user) { build(:user, name: 'Al Dente', first_name: 'Fred') }
   let(:b_user) { build(:user, name: 'Overcooked', first_name: 'Fred') }

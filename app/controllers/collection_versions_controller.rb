@@ -11,21 +11,6 @@ class CollectionVersionsController < ObjectsController
     authorize! @collection_version
   end
 
-  # Revert the work to the previously deposited version.
-  def destroy
-    version = CollectionVersion.find(params[:id])
-    collection = version.collection
-    authorize! version
-    version.transaction do
-      # delete the head version and revert to previous version
-      revert_to_version = version.version - 1
-      collection.update(head: collection.collection_versions.find_by(version: revert_to_version))
-      version.destroy
-    end
-
-    redirect_to dashboard_path
-  end
-
   def edit
     collection_version = CollectionVersion.find(params[:id])
     authorize! collection_version
@@ -37,9 +22,7 @@ class CollectionVersionsController < ObjectsController
     @form.prepopulate!
   end
 
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
-  def update
+  def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     collection_version = CollectionVersion.find(params[:id])
     orig_collection_version = collection_version
     orig_clean_params = collection_params
@@ -61,8 +44,21 @@ class CollectionVersionsController < ObjectsController
       render :edit, status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
+
+  # Revert the work to the previously deposited version.
+  def destroy
+    version = CollectionVersion.find(params[:id])
+    collection = version.collection
+    authorize! version
+    version.transaction do
+      # delete the head version and revert to previous version
+      revert_to_version = version.version - 1
+      collection.update(head: collection.collection_versions.find_by(version: revert_to_version))
+      version.destroy
+    end
+
+    redirect_to dashboard_path
+  end
 
   # We render this link lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.

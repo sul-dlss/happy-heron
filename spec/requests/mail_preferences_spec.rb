@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'MailPreferences', type: :request do
+RSpec.describe 'MailPreferences' do
   describe 'edit preferences' do
     let(:user) { create(:user) }
     let(:rendered) do

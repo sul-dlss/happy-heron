@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Retrieve a file from preservation', type: :request do
+RSpec.describe 'Retrieve a file from preservation' do
   describe 'GET' do
     let(:work_version) { create(:work_version) }
     let(:attached_file) { create(:attached_file, :with_file, work_version:) }

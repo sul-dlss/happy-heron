@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CollectionsMailer, type: :mailer do
+RSpec.describe CollectionsMailer do
   let(:collection_version) { build_stubbed(:collection_version, collection:) }
   let(:collection_name) { collection_version.name }
   let(:collection) { build_stubbed(:collection) }

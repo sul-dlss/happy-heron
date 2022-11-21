@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Download a zip file of all attached files', type: :request do
+RSpec.describe 'Download a zip file of all attached files' do
   let(:rendered) { render_inline(described_class.new(work_version:)) }
   let(:work_version) { create(:work_version, work:) }
   let(:user) { create(:user) }

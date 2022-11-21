@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AbstractContributor, type: :model do
+RSpec.describe AbstractContributor do
   describe '.valid?' do
     context 'when a person' do
       let(:contributor) { build(:person_contributor, orcid:) }

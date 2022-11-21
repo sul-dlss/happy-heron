@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Accounts', type: :request do
+RSpec.describe 'Accounts' do
   describe 'GET /accounts/:id' do
     let(:user) { create(:user) }
 

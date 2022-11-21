@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AttachedFile, type: :model do
+RSpec.describe AttachedFile do
   subject(:attached_file) { build(:attached_file, :with_file) }
 
   it 'has a label' do

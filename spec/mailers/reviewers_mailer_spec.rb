@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ReviewersMailer, type: :mailer do
+RSpec.describe ReviewersMailer do
   describe 'submitted_email' do
     let(:user) { build(:user, name: 'Al Dente', first_name: 'Fred') }
     let(:mail) { described_class.with(user:, work_version:).submitted_email }
