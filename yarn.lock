@@ -40,14 +40,14 @@
     lodash.once "^4.1.1"
 
 "@fortawesome/fontawesome-free@^6.1.2":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-6.2.0.tgz#ba3510825b332816fe7190f28827f8cb33a298b5"
-  integrity sha512-CNR7qRIfCwWHNN7FnKUniva94edPdyQzil/zCwk3v6k4R6rR2Fr8i4s3PM7n/lyfPA6Zfko9z5WDzFxG9SW1uQ==
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-6.2.1.tgz#344baf6ff9eaad7a73cff067d8c56bfc11ae5304"
+  integrity sha512-viouXhegu/TjkvYQoiRZK3aax69dGXxgEjpvZW81wIJdxm5Fnvp3VVIP4VHKqX4SvFw6qpmkILkD4RJWAdrt7A==
 
 "@github/time-elements@^3.1.2":
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.2.4.tgz#f509fb9b4c48feaabe98365636809c365bf4b0a4"
-  integrity sha512-Kwy5gkbum7LRU9rWAZ4QFU2ZnYhH3mBAdzY/Cm52ENOzQLOgowaxTcq6aWfIDjLSym+7qJPW1W/os3KRdIFLvg==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.3.0.tgz#134d69e359bc150938a5edfe6525e051e0b5ed35"
+  integrity sha512-ru9YsaRfikuljnLWv69Ao7FrQ8dyxf7gDcqQ+3peGOMYMKIQMb4VPpM2ULR9vzxuTDLsqvoEFJVQ7Teu1wdy4A==
 
 "@hotwired/turbo-rails@^7.0.1":
   version "7.2.4"
@@ -795,9 +795,9 @@ glob@^7.1.3:
     path-is-absolute "^1.0.0"
 
 global-dirs@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/global-dirs/-/global-dirs-3.0.0.tgz#70a76fe84ea315ab37b1f5576cbde7d48ef72686"
-  integrity sha512-v8ho2DS5RiCjftj1nD9NmnfaOzTdud7RRnVd9kFNOjqZbISlx5DQ+OrTkywgd0dIt7oFCvKetZSHoHcP3sDdiA==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/global-dirs/-/global-dirs-3.0.1.tgz#0c488971f066baceda21447aecb1a8b911d22485"
+  integrity sha512-NBcGGFbBA9s1VzD41QXDG+3++t9Mn5t1FpLdhESY6oKY4gYTFpX4wO3sqGUa0Srjtbfj3szX0RnemmrVRUdULA==
   dependencies:
     ini "2.0.0"
 
