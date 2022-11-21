@@ -41,6 +41,7 @@ class DraftWorkForm < Reform::Form
 
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
+  validate :unique_filenames
 
   delegate :user_can_set_availability?, to: :collection
 
@@ -70,6 +71,13 @@ class DraftWorkForm < Reform::Form
     end
   end
   # rubocop:enable Metrics/AbcSize
+
+  # ensure all attached files have a unique filename
+  def unique_filenames
+    filenames = attached_files.map { |file| file.model.filename.to_s }
+
+    errors.add(:attached_files, 'must all have a unique filename.') unless filenames.size == filenames.uniq.size
+  end
 
   def access_from_collection(params)
     return if collection.access == 'depositor-selects'

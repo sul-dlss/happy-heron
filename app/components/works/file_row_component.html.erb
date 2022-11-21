@@ -3,10 +3,15 @@
     <img data-dz-thumbnail />
   </div>
   <div class="col-5">
-    <% if uploaded? %>
+    <% if saved? %>
       <div data-dropzone-target="fileName">
         <span class="fa-regular fa-file" aria-hidden="true"></span>
         <span><%= filename %>: <wbr><%= number_to_human_size(filesize) %>, <wbr><%= render LocalTimeComponent.new(datetime: date_uploaded, show_time: false) %></span>
+      </div>
+    <% elsif uploaded? %>
+      <div data-dropzone-target="fileName">
+        <span class="fa-regular fa-file" aria-hidden="true"></span>
+        <span><%= filename %>: <wbr><%= number_to_human_size(filesize) %>, <wbr>Now</span>
       </div>
     <% else %>
       <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
