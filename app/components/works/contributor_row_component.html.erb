@@ -33,7 +33,7 @@
           <div class="row">
             <div class="col-md-1 pb-2"><strong>OR</strong></div>
           </div>
-          
+
           <div class="form-check">
             <%= form.radio_button :with_orcid, 'true', html_options_for_radio(false, orcid?) %>
             <%= form.label :with_orcid, 'Enter ORCID iD', value: 'true', class: 'form-check-label fw-semibold' %>
@@ -50,7 +50,7 @@
                   <div class="col-md-5">
                     <%= form.label :first_name, first_name_label, class: 'form-label' %>
                     <%= render PopoverComponent.new key: 'work.orcid_name' %>
-                    <%= form.text_field :first_name, html_options('contributorFirst', contributors_target: 'orcidFirstName', disabled: !orcid?)  %>
+                    <%= form.text_field :first_name, html_options('contributorFirst', contributors_target: 'orcidFirstName', disabled: !orcid?) %>
                     <div class="invalid-feedback">You must provide a first name</div>
                   </div>
                   <div class="col-md-6">
@@ -73,7 +73,7 @@
     </div>
   </div>
   <div class="col-md-1 text-end">
-    <%= button_tag html_options_for_delete() do %>
+    <%= button_tag html_options_for_delete do %>
       <span class="fa-regular fa-trash-alt"></span>
     <% end %>
     <%= form.hidden_field :_destroy %>
@@ -82,7 +82,7 @@
       <div>
         <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move up' },
                        data: {
-                         action: "click->ordered-nested-form#moveUp auto-citation#updateDisplay",
+                         action: 'click->ordered-nested-form#moveUp auto-citation#updateDisplay',
                          ordered_nested_form_target: 'upButton'
                        } do %>
           <span class="fa-solid fa-arrow-up"></span>
@@ -91,7 +91,7 @@
       <div>
         <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move down' },
                        data: {
-                         action: "click->ordered-nested-form#moveDown auto-citation#updateDisplay",
+                         action: 'click->ordered-nested-form#moveDown auto-citation#updateDisplay',
                          ordered_nested_form_target: 'downButton'
                        } do %>
           <span class="fa-solid fa-arrow-down"></span>

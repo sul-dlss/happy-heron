@@ -1,10 +1,10 @@
 <p>Dear <%= @user.first_name %>,</p>
 
-<p>Ownership of the item "<%= @work.head.title %>" in your collection <%= @work.collection_name %> has 
-  changed. Click <%= link_to work_url(@work), work_url(@work) %> to view the change in the 
+<p>Ownership of the item "<%= @work.head.title %>" in your collection <%= @work.collection_name %> has
+  changed. Click <%= link_to work_url(@work), work_url(@work) %> to view the change in the
   history table for this item.</p>
 
-<p>This person has also been added to the list of depositors for this collection if they were not 
+<p>This person has also been added to the list of depositors for this collection if they were not
   already on the list.</p>
 
 <p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>

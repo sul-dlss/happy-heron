@@ -7,12 +7,12 @@
     <%= action_cable_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <%= stylesheet_link_tag "https://www-media.stanford.edu/su-identity/css/su-identity.css" %>
-    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" %>
-    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/simple-datatables@2.1.13/dist/style.css" %>
-    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= stylesheet_link_tag 'https://www-media.stanford.edu/su-identity/css/su-identity.css' %>
+    <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' %>
+    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/simple-datatables@2.1.13/dist/style.css' %>
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' %>
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
   </head>
 
   <body data-controller="help-how">
@@ -37,12 +37,12 @@
               <ul class="navbar-nav ms-auto mb-2 mb-md-0">
                 <li class="nav-item">
                   <%= link_to('Help', '#contactUsModal',
-                            class: 'nav-link',
-                            data: {
-                              bs_toggle: 'modal',
-                              bs_target: '#contactUsModal',
-                              controller: 'contact-us'
-                            }) %>
+                              class: 'nav-link',
+                              data: {
+                                bs_toggle: 'modal',
+                                bs_target: '#contactUsModal',
+                                controller: 'contact-us'
+                              }) %>
                 </li>
                 <li class="nav-item">
                   <%= link_to('SDR Services', Settings.sdr_url,
@@ -78,7 +78,6 @@
           </div>
         <% end %>
 
-
         <%= render 'shared/flashes' %>
         <%= render 'shared/terms_of_deposit' %>
         <%= render 'shared/help_modal' %>
@@ -92,7 +91,7 @@
         <div id="sul-footer">
           <div id="sul-footer-img" class="span2">
             <%= link_to 'https://library.stanford.edu' do %>
-              <%= image_tag "sul-logo-stacked.svg", alt: "Stanford Libraries", height: 45 %>
+              <%= image_tag 'sul-logo-stacked.svg', alt: 'Stanford Libraries', height: 45 %>
             <% end %>
           </div>
           <div id="sul-footer-links" class="span2">
@@ -113,7 +112,7 @@
         <div class="row">
           <div id="bottom-logo" class="col-sm-2">
             <a href="https://www.stanford.edu">
-              <img src="https://www-media.stanford.edu/su-identity/images/footer-stanford-logo@2x.png" alt="Stanford University" width="105" height="49"/>
+              <img src="https://www-media.stanford.edu/su-identity/images/footer-stanford-logo@2x.png" alt="Stanford University" width="105" height="49">
             </a>
           </div>
           <!-- #bottom-logo end -->

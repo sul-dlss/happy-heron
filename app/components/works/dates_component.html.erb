@@ -2,9 +2,9 @@
   <header>Enter dates related to your deposit
     <%= render PopoverComponent.new key: 'work.date' %>
   </header>
-  <%= render Works::PublicationDateComponent.new(form: form,
-                                                 min_year: min_year,
-                                                 max_year: max_year) %>
+  <%= render Works::PublicationDateComponent.new(form:,
+                                                 min_year:,
+                                                 max_year:) %>
 
   <fieldset data-controller="date-choice">
 
@@ -18,59 +18,59 @@
       <div class="col-sm-10">
         <div class="row ms-1">
           <div class="col form-check">
-            <%= form.check_box :created_type, { class: "form-check-input", data: {"date-choice-target": "checkbox", action: "date-choice#toggleInputs"} }, 'range', 'single' %>
-            <%= form.label :created_type, 'Enter a date range', class: "form-check-label" %>
+            <%= form.check_box :created_type, { class: 'form-check-input', data: { 'date-choice-target': 'checkbox', action: 'date-choice#toggleInputs' } }, 'range', 'single' %>
+            <%= form.label :created_type, 'Enter a date range', class: 'form-check-label' %>
           </div>
         </div>
         <div class="row">
-          <div data-controller="date-validation date-approximate date-clear" 
-            data-date-approximate-enabled-value="<%= single? %>" 
+          <div data-controller="date-validation date-approximate date-clear"
+            data-date-approximate-enabled-value="<%= single? %>"
             data-date-choice-target="uncheckedSection"
             class="col-sm-10 date">
             <div class="year">
               <label for="<%= prefix %>_created_year" class="visually-hidden">Created year</label>
               <%= number_field_tag "#{prefix}[created(1i)]", created_year,
-                  data: {
-                    date_validation_target: 'year',
-                    date_clear_target: 'year',
-                    action: 'date-validation#change year-field#change',
-                    controller: 'year-field'
-                  },
-                  id: "#{prefix}_created_year",
-                  placeholder: 'year',
-                  class: "form-control", min: min_year, max: max_year %>
-              <div class="invalid-feedback" 
+                                   data: {
+                                     date_validation_target: 'year',
+                                     date_clear_target: 'year',
+                                     action: 'date-validation#change year-field#change',
+                                     controller: 'year-field'
+                                   },
+                                   id: "#{prefix}_created_year",
+                                   placeholder: 'year',
+                                   class: 'form-control', min: min_year, max: max_year %>
+              <div class="invalid-feedback"
                 data-date-validation-target="error"
                 data-date-clear-target="error"></div>
             </div>
             <div class="month">
               <label for="<%= prefix %>_created_month" class="visually-hidden">Created month</label>
-              <%= select_month created_month, { prefix: prefix, field_name: 'created(2i)', prompt: 'month'},
-                              data: { date_validation_target: 'month',
-                                      date_clear_target: 'month',
-                                      action: 'date-validation#change' },
-                              id: "#{prefix}_created_month", class: "form-control" %>
+              <%= select_month created_month, { prefix:, field_name: 'created(2i)', prompt: 'month' },
+                               data: { date_validation_target: 'month',
+                                       date_clear_target: 'month',
+                                       action: 'date-validation#change' },
+                               id: "#{prefix}_created_month", class: 'form-control' %>
             </div>
 
             <div class="day">
               <label for="<%= prefix %>_created_day" class="visually-hidden">Created day</label>
-              <%= select_day created_day, { prefix: prefix, field_name: 'created(3i)', prompt: 'day'},
-                            data: { date_validation_target: 'day',
-                              date_approximate_target: 'day',
-                              date_clear_target: 'day',
-                              action: 'date-validation#change date-approximate#change' },
-                            id: "#{prefix}_created_day", class: "form-control" %>
+              <%= select_day created_day, { prefix:, field_name: 'created(3i)', prompt: 'day' },
+                             data: { date_validation_target: 'day',
+                                     date_approximate_target: 'day',
+                                     date_clear_target: 'day',
+                                     action: 'date-validation#change date-approximate#change' },
+                             id: "#{prefix}_created_day", class: 'form-control' %>
             </div>
-            <%= button_tag type: 'button', class: 'btn btn-sm ms-3', aria: { label: "Clear created date" },
-                          data: { action: "date-clear#clear" } do %>
+            <%= button_tag type: 'button', class: 'btn btn-sm ms-3', aria: { label: 'Clear created date' },
+                           data: { action: 'date-clear#clear' } do %>
               <span class="fa-regular fa-trash-alt"></span>
             <% end %>
             <div>
             <%= check_box_tag "#{prefix}[created(approx0)]", true, created_approximate?,
-              data: { date_approximate_target: 'approximate',
-                date_clear_target: 'approximate',
-                action: 'date-approximate#change' },
-              class: 'form-check-input' %>
+                              data: { date_approximate_target: 'approximate',
+                                      date_clear_target: 'approximate',
+                                      action: 'date-approximate#change' },
+                              class: 'form-check-input' %>
             <%= form.label 'created(approx0)', 'Approximate (can\'t be selected if \'day\' is entered)' %>
             </div>
           </div>
@@ -86,32 +86,32 @@
               <div class="month">
                 <label for="<%= prefix %>_created_range_start_month" class="visually-hidden">Created range start month</label>
                 <%= select_month created_range_start_month,
-                    { prefix: prefix, field_name: 'created_range(2i)', prompt: 'month'},
-                    data: { date_validation_target: 'month', 
-                      date_range_target: 'startMonth', 
-                      date_clear_target: 'month',
-                      action: 'date-range#change' },
-                    id: "#{prefix}_created_range_start_month",
-                    class: "form-control" %>
+                                 { prefix:, field_name: 'created_range(2i)', prompt: 'month' },
+                                 data: { date_validation_target: 'month',
+                                         date_range_target: 'startMonth',
+                                         date_clear_target: 'month',
+                                         action: 'date-range#change' },
+                                 id: "#{prefix}_created_range_start_month",
+                                 class: 'form-control' %>
               </div>
               <div class="day">
                 <label for="<%= prefix %>_created_range_start_day" class="visually-hidden">Created range start day</label>
                 <%= select_day created_range_start_day,
-                    { prefix: prefix, field_name: 'created_range(3i)', prompt: 'day'},
-                    data: { date_validation_target: 'day', 
-                      date_range_target: 'startDay',
-                      date_approximate_target: 'day',
-                      date_clear_target: 'day',
-                      action: 'date-range#change date-approximate#change' },
-                    id: "#{prefix}_created_range_start_day",
-                    class: "form-control" %>
+                               { prefix:, field_name: 'created_range(3i)', prompt: 'day' },
+                               data: { date_validation_target: 'day',
+                                       date_range_target: 'startDay',
+                                       date_approximate_target: 'day',
+                                       date_clear_target: 'day',
+                                       action: 'date-range#change date-approximate#change' },
+                               id: "#{prefix}_created_range_start_day",
+                               class: 'form-control' %>
               </div>
               <div>
-              <%= check_box_tag "#{prefix}[created_range(approx0)]", true, created_range_start_approximate?, 
-                data: { date_approximate_target: 'approximate',
-                  date_clear_target: 'approximate',
-                  action: 'date-approximate#change' },
-                class: 'form-check-input' %>
+              <%= check_box_tag "#{prefix}[created_range(approx0)]", true, created_range_start_approximate?,
+                                data: { date_approximate_target: 'approximate',
+                                        date_clear_target: 'approximate',
+                                        action: 'date-approximate#change' },
+                                class: 'form-check-input' %>
               <label for="<%= prefix %>_created_range_start_approx">Approximate (can't be selected if 'day' is entered)</label>
               </div>
             </div>
@@ -130,35 +130,35 @@
               <div class="month">
                 <label for="<%= prefix %>_created_range_end_month" class="visually-hidden">Created range end month</label>
                 <%= select_month created_range_end_month,
-                    { prefix: prefix, field_name: 'created_range(5i)', prompt: 'month' },
-                    data: { date_validation_target: 'month', 
-                      date_clear_target: 'month',
-                      date_range_target: 'endMonth', 
-                      action: 'date-range#change' },
-                    id: "#{prefix}_created_range_end_month", class: "form-control" %>
+                                 { prefix:, field_name: 'created_range(5i)', prompt: 'month' },
+                                 data: { date_validation_target: 'month',
+                                         date_clear_target: 'month',
+                                         date_range_target: 'endMonth',
+                                         action: 'date-range#change' },
+                                 id: "#{prefix}_created_range_end_month", class: 'form-control' %>
               </div>
 
               <div class="day">
                 <label for="<%= prefix %>_created_range_end_day" class="visually-hidden">Created range end day</label>
                 <%= select_day created_range_end_day,
-                    { prefix: prefix, field_name: 'created_range(6i)', prompt: 'day' },
-                    data: { date_validation_target: 'day', 
-                      date_range_target: 'endDay',
-                      date_clear_target: 'day',
-                      date_approximate_target: 'day',
-                      action: 'date-range#change date-approximate#change' },
-                    id: "#{prefix}_created_range_end_day", class: "form-control" %>
+                               { prefix:, field_name: 'created_range(6i)', prompt: 'day' },
+                               data: { date_validation_target: 'day',
+                                       date_range_target: 'endDay',
+                                       date_clear_target: 'day',
+                                       date_approximate_target: 'day',
+                                       action: 'date-range#change date-approximate#change' },
+                               id: "#{prefix}_created_range_end_day", class: 'form-control' %>
               </div>
-              <%= button_tag type: 'button', class: 'btn btn-sm ms-3', aria: { label: "Clear created date range" },
-                          data: { action: "date-clear#clear" } do %>
+              <%= button_tag type: 'button', class: 'btn btn-sm ms-3', aria: { label: 'Clear created date range' },
+                             data: { action: 'date-clear#clear' } do %>
                 <span class="fa-regular fa-trash-alt"></span>
               <% end %>
               <div>
-              <%= check_box_tag "#{prefix}[created_range(approx3)]", true, created_range_end_approximate?, 
-                data: { date_approximate_target: 'approximate',
-                  date_clear_target: 'approximate',
-                  action: 'date-approximate#change' },
-                class: 'form-check-input' %>
+              <%= check_box_tag "#{prefix}[created_range(approx3)]", true, created_range_end_approximate?,
+                                data: { date_approximate_target: 'approximate',
+                                        date_clear_target: 'approximate',
+                                        action: 'date-approximate#change' },
+                                class: 'form-check-input' %>
               <label for="<%= prefix %>_created_range_end_approx">Approximate (can't be selected if 'day' is entered)</label>
               </div>
             </div>

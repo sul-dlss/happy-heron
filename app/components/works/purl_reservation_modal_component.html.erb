@@ -15,7 +15,7 @@
             <legend class="h6">
               DOI assignment
             </legend>
-            <%= link_to 'What is a DOI?', Settings.external_links.what_is_a_doi, target: '_blank' %>
+            <%= link_to 'What is a DOI?', Settings.external_links.what_is_a_doi, target: '_blank', rel: 'noopener' %>
             <div class="mb-3 inner-container">
               <div class="row">
                 <label class="form-check-label col-sm-9" for="work_assign_doi">Do you want a DOI to be assigned to your deposit?</label>
@@ -36,12 +36,12 @@
         <div class="modal-footer">
           <%= button_tag 'Submit', class: 'btn btn-primary' %>
           <%= button_tag 'Cancel',
-                data: {
-                  bs_dismiss: 'modal',
-                  bs_target: '#purlReservationModal',
-                  action: "purl-reservation#cancel"
-                },
-                class: 'btn btn-secondary' %>
+                         data: {
+                           bs_dismiss: 'modal',
+                           bs_target: '#purlReservationModal',
+                           action: 'purl-reservation#cancel'
+                         },
+                         class: 'btn btn-secondary' %>
         </div>
       </form>
     </div>

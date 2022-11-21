@@ -1,4 +1,4 @@
-<% content_for(:title, title_from_breadcrumbs)  %>
+<% content_for(:title, title_from_breadcrumbs) %>
 <div class="breadcrumbs">
   <nav id="breadcrumbs" aria-label="breadcrumb" class="container-xxl">
     <ol class="breadcrumb">
@@ -8,7 +8,7 @@
             <span title="<%= full_title(breadcrumb[:title]) %>" class="breadcrumb-link"><%= truncated_title(breadcrumb[:title]) %></span>
           <% else %>
             <%= link_to truncated_title(breadcrumb[:title]), breadcrumb[:link],
-                  class: 'breadcrumb-link', title: full_title(breadcrumb[:title]) %>
+                        class: 'breadcrumb-link', title: full_title(breadcrumb[:title]) %>
           <% end %>
         </li>
       <% end %>

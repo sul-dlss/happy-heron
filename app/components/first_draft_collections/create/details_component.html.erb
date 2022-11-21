@@ -6,7 +6,7 @@
       <%= render PopoverComponent.new key: 'collection.name' %>
     </div>
     <div class="col-sm-10 col-xl-8">
-      <%= form.text_field :name, class: "form-control", required: true %>
+      <%= form.text_field :name, class: 'form-control', required: true %>
       <div class="invalid-feedback">You must provide a name</div>
     </div>
   </div>
@@ -16,14 +16,14 @@
       <%= render PopoverComponent.new key: 'collection.description' %>
     </div>
     <div class="col-sm-10 col-xl-8">
-      <%= form.text_area :description, class: "form-control", required: true %>
+      <%= form.text_area :description, class: 'form-control', required: true %>
       <div class="invalid-feedback">You must provide a description</div>
     </div>
   </div>
 
-  <%= render Works::ContactEmailComponent.new(form: form, key: 'collection.contact_email') %>
+  <%= render Works::ContactEmailComponent.new(form:, key: 'collection.contact_email') %>
 </section>
 
 <section id="links">
-  <%= render RelatedLinkComponent.new(form: form, key: 'collection.related_link') %>
+  <%= render RelatedLinkComponent.new(form:, key: 'collection.related_link') %>
 </section>

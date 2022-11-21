@@ -14,7 +14,7 @@
         If you select "Immediately", your files will be available shortly after <%= when_available_statement %>.
         Or you may specify a specific date in the future.</p>
       <div class="mb-3 inner-container">
-        <%= render Works::AvailableDateComponent.new(form: form) %>
+        <%= render Works::AvailableDateComponent.new(form:) %>
       </div>
     </fieldset>
   <% else %>
@@ -33,7 +33,7 @@
         Download access *
       </legend>
       <div class="mb-3 inner-container">
-        <%= render Works::AccessComponent.new(form: form) %>
+        <%= render Works::AccessComponent.new(form:) %>
       </div>
     </fieldset>
   <% else %>
@@ -47,5 +47,5 @@
     </fieldset>
   <% end %>
 
-  <%= render Works::DoiComponent.new(form: form) %>
+  <%= render Works::DoiComponent.new(form:) %>
 </section>

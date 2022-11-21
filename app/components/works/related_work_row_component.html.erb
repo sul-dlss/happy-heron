@@ -4,13 +4,12 @@
 
     <div class="col-md-9">
       <%= form.text_area :citation, class: 'form-control',
-                         data: { action: "no-newlines#change", no_newlines_target: 'input', controller: 'no-newlines' }
-                          %>
+                                    data: { action: 'no-newlines#change', no_newlines_target: 'input', controller: 'no-newlines' } %>
     </div>
 
     <div class="col-md-1">
       <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: "Remove #{citation}" },
-                     data: { action: "click->nested-form#removeAssociation" } do %>
+                     data: { action: 'click->nested-form#removeAssociation' } do %>
         <span class="fa-regular fa-trash-alt"></span>
       <% end %>
       <%= form.hidden_field :_destroy %>

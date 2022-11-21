@@ -11,7 +11,7 @@
     <%= render Dashboard::ApprovalsComponent.new(presenter: @presenter) %>
     <section id="your-collections" class="yourCollections" data-controller="purl-reservation">
       <% if allowed_to?(:create?, Collection) %>
-        <%= link_to '+ Create a new collection', new_first_draft_collection_path, class: "btn btn-outline-primary float-end" %>
+        <%= link_to '+ Create a new collection', new_first_draft_collection_path, class: 'btn btn-outline-primary float-end' %>
       <% end %>
       <button class="btn collapse-header" data-bs-toggle="collapse" data-bs-target="#your-collections-table" role="button" aria-expanded="true" aria-controls="your-collections-table">
         Your collections
@@ -28,11 +28,11 @@
       <%= render CitationModalComponent.new %>
     </section>
     <%= link_to('Don\'t see an appropriate collection?', '#contactUsModal',
-                            data: {
-                              bs_toggle: 'modal',
-                              bs_target: '#contactUsModal',
-                              bs_showCollections: 'true'
-                            }) %>
+                data: {
+                  bs_toggle: 'modal',
+                  bs_target: '#contactUsModal',
+                  bs_showCollections: 'true'
+                }) %>
     <%= render Works::WorkTypeModalComponent.new %>
   </div>
 </main>

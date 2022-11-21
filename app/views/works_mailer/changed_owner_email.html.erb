@@ -1,12 +1,12 @@
 <p>Dear <%= @user.first_name %>,</p>
 
-<p>You are now the owner of the item "<%= @work.head.title %>" in the Stanford Digital Repository 
-  and have access to manage its metadata and files. Click <%= link_to work_url(@work), work_url(@work) %> 
+<p>You are now the owner of the item "<%= @work.head.title %>" in the Stanford Digital Repository
+  and have access to manage its metadata and files. Click <%= link_to work_url(@work), work_url(@work) %>
   to view or edit this item.</p>
 
 <p>You now also have permission to deposit items into the <%= @work.collection_name %> collection.</p>
 
-<p>Please check the contact emails information on this item and if it is no longer current, 
+<p>Please check the contact emails information on this item and if it is no longer current,
   update this field by clicking on the blue pencil icon next to the header "Title and contact."</p>
 
 <p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>

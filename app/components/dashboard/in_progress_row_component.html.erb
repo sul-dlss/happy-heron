@@ -5,6 +5,6 @@
     <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </td>
   <td><%= show_collection_link %></td>
-  <td><%= render Works::StateDisplayComponent.new(work_version: work_version) %></td>
+  <td><%= render Works::StateDisplayComponent.new(work_version:) %></td>
   <td><%= render LocalTimeComponent.new(datetime: work_version.updated_at, show_time: false) %></td>
 </tr>

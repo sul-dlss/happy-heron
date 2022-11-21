@@ -1,11 +1,11 @@
 <header><strong>* REQUIRED FIELDS</strong></header>
 <%= form_with model: collection_form,
-    data: {
-      controller: 'unsaved-changes',
-      action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage'
-    },
-    html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
-  <%= render FirstDraftCollections::Create::DetailsComponent.new(form: form) %>
-  <%= render Collections::SettingsComponent.new(form: form) %>
-  <%= render FirstDraftCollections::ButtonsComponent.new(form: form) %>
+              data: {
+                controller: 'unsaved-changes',
+                action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage'
+              },
+              html: { class: 'needs-validation collection-editor', novalidate: true, multipart: true } do |form| %>
+  <%= render FirstDraftCollections::Create::DetailsComponent.new(form:) %>
+  <%= render Collections::SettingsComponent.new(form:) %>
+  <%= render FirstDraftCollections::ButtonsComponent.new(form:) %>
 <% end %>

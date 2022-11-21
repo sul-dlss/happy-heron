@@ -17,11 +17,11 @@
   <header class="title clearfix"><%# clearfix here prevents the EditButtonCompnent from spilling outside the container if the title is long %>
     <span class="header-text"><%= title %></span>
     <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
-    <span class="state"><%= render Works::StateDisplayComponent.new(work_version: work_version) %></span>
-    <%= render Works::EditButtonComponent.new(work_version: work_version) %>
+    <span class="state"><%= render Works::StateDisplayComponent.new(work_version:) %></span>
+    <%= render Works::EditButtonComponent.new(work_version:) %>
   </header>
 
-  <%= render Works::AdminComponent.new(work: work) %>
+  <%= render Works::AdminComponent.new(work:) %>
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Details</caption>
@@ -40,7 +40,7 @@
       <tr>
         <th class="col-3" scope="row">DOI</th>
         <td>
-          <%= render Works::Show::DoiComponent.new(work_version: work_version) %>
+          <%= render Works::Show::DoiComponent.new(work_version:) %>
         </td>
       </tr>
       <tr>
@@ -82,7 +82,7 @@
     </tbody>
   </table>
 
-  <%= render Works::Show::FilesComponent.new work_version: work_version %>
+  <%= render Works::Show::FilesComponent.new work_version: %>
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Title and contact
@@ -94,7 +94,7 @@
       <td><%= title %></td>
     </tr>
     <tr>
-      <th class="col-3" >Contact emails</th>
+      <th class="col-3">Contact emails</th>
       <% if contact_emails.empty? %>
       <td>None provided</td>
       <% else %>
@@ -108,8 +108,8 @@
     </tbody>
   </table>
 
-<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: authors, participant_type: 'author') %>
-<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: contributors, participant_type: 'contributor') %>
+<%= render Works::Show::AuthorsContributorsComponent.new(work:, participants: authors, participant_type: 'author') %>
+<%= render Works::Show::AuthorsContributorsComponent.new(work:, participants: contributors, participant_type: 'contributor') %>
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Dates

@@ -9,6 +9,7 @@ group :development, :test do
   gem 'byebug'
   gem 'cypress-on-rails', '~> 1.0'
   gem 'cypress-rails'
+  gem 'erb_lint', require: false
   gem 'factory_bot_rails'
   gem 'rspec'
   gem 'rspec_junit_formatter' # used by CircleCI

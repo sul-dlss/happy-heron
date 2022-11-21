@@ -1,6 +1,6 @@
 <div class="dz-preview dz-file-preview row py-3 <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
   <div class="thumb col-1">
-    <img data-dz-thumbnail />
+    <img data-dz-thumbnail>
   </div>
   <div class="col-5">
     <% if uploaded? %>
@@ -42,9 +42,9 @@
 
   <div class="col-1 d-flex align-items-center">
     <%= button_tag type: 'button',
-                   class: "dz-remove pull-right btn remove-file",
-                   "aria-label": "Remove file",
-                   data: { action: "click->dropzone#removeAssociation" } do %>
+                   class: 'dz-remove pull-right btn remove-file',
+                   'aria-label': 'Remove file',
+                   data: { action: 'click->dropzone#removeAssociation' } do %>
       <span class="fa-regular fa-trash-alt"></span>
     <% end %>
   </div>

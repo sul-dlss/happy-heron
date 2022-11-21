@@ -10,7 +10,7 @@
   <% end %>
 
   <table class="table table-striped">
-    <%= render 'dashboards/collection_header', collection: collection %>
+    <%= render 'dashboards/collection_header', collection: %>
     <thead class="table-light">
       <tr>
         <th>Deposits in collection</th>
@@ -24,7 +24,7 @@
     </thead>
     <tbody>
       <% visible_deposits.take(MAX_DEPOSITS_TO_SHOW).each do |work| %>
-        <%= render 'dashboards/collection_summary_row', work: work %>
+        <%= render 'dashboards/collection_summary_row', work: %>
       <% end %>
     </tbody>
   </table>

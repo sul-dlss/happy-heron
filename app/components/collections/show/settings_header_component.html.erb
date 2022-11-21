@@ -11,7 +11,7 @@
       <%= render CitationModalComponent.new %>
     </div>
   </div>
-  <span class="header-text"><%= name %></span><%= render Collections::DraftComponent.new(collection_version: collection_version) %>
+  <span class="header-text"><%= name %></span><%= render Collections::DraftComponent.new(collection_version:) %>
   <% if collection.head&.decommissioned? %>
     <span class="state">Decommissioned</span>
   <% end %>

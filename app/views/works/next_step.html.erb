@@ -1,7 +1,8 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: CollectionTitlePresenter.show(@work.collection.head), link: collection_path(@work.collection) },
-                   { title: WorkTitlePresenter.show(@work.head), link: work_path(@work) } ]) %>
+        breadcrumbs: [{ title: CollectionTitlePresenter.show(@work.collection.head), link: collection_path(@work.collection) },
+                      { title: WorkTitlePresenter.show(@work.head), link: work_path(@work) }]
+      ) %>
 <% end %>
 
 <div class="container" id="next-step">

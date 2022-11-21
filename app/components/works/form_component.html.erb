@@ -1,15 +1,15 @@
 <h1><%= page_title %></h1>
-<%= form_with model: work_form, url: url,
-    data: {
-      controller: 'auto-citation unsaved-changes',
-      action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage',
-      auto_citation_purl: purl,
-      auto_citation_doi: doi_field
-    },
-    html: { class: "needs-validation work-editor", novalidate: true, multipart: true } do |f| %>
+<%= form_with model: work_form, url:,
+              data: {
+                controller: 'auto-citation unsaved-changes',
+                action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage',
+                auto_citation_purl: purl,
+                auto_citation_doi: doi_field
+              },
+              html: { class: 'needs-validation work-editor', novalidate: true, multipart: true } do |f| %>
   <% if work_form.errors.present? %>
     <div id="error_explanation" class="alert alert-danger">
-      <h4><%= pluralize(work_form.errors.count, "error") %> prohibited this item from being saved:</h4>
+      <h4><%= pluralize(work_form.errors.count, 'error') %> prohibited this item from being saved:</h4>
 
       <ul>
         <% work_form.errors.each do |error| %>
