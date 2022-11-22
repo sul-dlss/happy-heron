@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Profiles', type: :request do
+RSpec.describe 'Profiles' do
   describe 'GET /show' do
     let(:user) { create(:user) }
     let(:rendered) do

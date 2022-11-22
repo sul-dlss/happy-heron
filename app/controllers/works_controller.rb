@@ -7,6 +7,18 @@ class WorksController < ObjectsController
   before_action :ensure_sdr_updatable
   verify_authorized except: %i[delete_button edit_button]
 
+  def index
+    @collection = Collection.find(params[:collection_id])
+    authorize! @collection, to: :show?
+
+    @works = authorized_scope(@collection.works, as: :edits, with: WorkVersionPolicy)
+  end
+
+  def show
+    @work = Work.find(params[:id])
+    authorize! @work.head
+  end
+
   def new
     validate_work_types!
     collection = Collection.find(params[:collection_id])
@@ -15,6 +27,15 @@ class WorksController < ObjectsController
     authorize! work_version
 
     @form = WorkForm.new(work_version:, work:)
+    @form.prepopulate!
+  end
+
+  def edit
+    work = Work.find(params[:id])
+    work_version = work.head
+    authorize! work_version
+
+    @form = WorkForm.new(work_version:, work: work_version.work)
     @form.prepopulate!
   end
 
@@ -33,17 +54,7 @@ class WorksController < ObjectsController
     end
   end
 
-  def edit
-    work = Work.find(params[:id])
-    work_version = work.head
-    authorize! work_version
-
-    @form = WorkForm.new(work_version:, work: work_version.work)
-    @form.prepopulate!
-  end
-
-  # rubocop:disable Metrics/MethodLength
-  def update
+  def update # rubocop:disable Metrics/MethodLength
     work = Work.find(params[:id])
     work_version = work.head
     orig_work_version = work.head
@@ -66,19 +77,6 @@ class WorksController < ObjectsController
       @form.prepopulate!
       render :edit, status: :unprocessable_entity
     end
-  end
-  # rubocop:enable Metrics/MethodLength
-
-  def index
-    @collection = Collection.find(params[:collection_id])
-    authorize! @collection, to: :show?
-
-    @works = authorized_scope(@collection.works, as: :edits, with: WorkVersionPolicy)
-  end
-
-  def show
-    @work = Work.find(params[:id])
-    authorize! @work.head
   end
 
   def details

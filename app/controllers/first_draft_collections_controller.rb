@@ -16,8 +16,20 @@ class FirstDraftCollectionsController < ObjectsController
     @form.prepopulate!
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def create
+  def edit
+    collection = Collection.find(params[:id])
+    authorize! collection
+
+    # if we end up on the edit page for a version draft (deposited collection), redirect to the regular edit page
+    redirect_to edit_collection_path(collection) unless collection.head.first_draft?
+
+    collection_version = collection.collection_versions.first # this is a first draft and should only have one version
+    @form = CreateCollectionForm.new(collection_version:, collection:)
+    # @form = CollectionSettingsForm.new(collection)
+    @form.prepopulate!
+  end
+
+  def create # rubocop:disable Metrics/AbcSize
     collection = Collection.new(creator: current_user)
     authorize! collection
 
@@ -35,20 +47,6 @@ class FirstDraftCollectionsController < ObjectsController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-  # rubocop:enable Metrics/AbcSize
-
-  def edit
-    collection = Collection.find(params[:id])
-    authorize! collection
-
-    # if we end up on the edit page for a version draft (deposited collection), redirect to the regular edit page
-    redirect_to edit_collection_path(collection) unless collection.head.first_draft?
-
-    collection_version = collection.collection_versions.first # this is a first draft and should only have one version
-    @form = CreateCollectionForm.new(collection_version:, collection:)
-    # @form = CollectionSettingsForm.new(collection)
-    @form.prepopulate!
   end
 
   # rubocop:disable Metrics/AbcSize

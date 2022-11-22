@@ -37,7 +37,7 @@ RSpec.describe 'Edit a draft work', js: true do
         filename = work_version.attached_files.first.filename.to_s
         expect(page).to have_content(filename)
         # File removal should not raise an error
-        find('button.dz-remove').click
+        find('button.dz-remove').click # rubocop:disable RSpec/Capybara/SpecificActions
 
         # Test validation
         fill_in 'Other', with: ''
@@ -174,7 +174,7 @@ RSpec.describe 'Edit a draft work', js: true do
         filename = work_version.attached_files.first.filename.to_s
         expect(page).to have_content(filename)
         # File removal should not raise an error
-        find('button.dz-remove').click
+        find('button.dz-remove').click # rubocop:disable RSpec/Capybara/SpecificActions
 
         # Test validation
         fill_in 'Other', with: ''
@@ -228,7 +228,7 @@ RSpec.describe 'Edit a draft work', js: true do
         filename = work_version.attached_files.first.filename.to_s
         expect(page).to have_content(filename)
         # File removal should not raise an error
-        find('button.dz-remove').click
+        find('button.dz-remove').click # rubocop:disable RSpec/Capybara/SpecificActions
 
         # Test validation
         fill_in 'Other', with: ''

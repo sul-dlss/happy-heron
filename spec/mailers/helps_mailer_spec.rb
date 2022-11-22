@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe HelpsMailer, type: :mailer do
+RSpec.describe HelpsMailer do
   describe 'jira_email' do
     let(:mail) do
       described_class.with(name: 'Barbara Seville',

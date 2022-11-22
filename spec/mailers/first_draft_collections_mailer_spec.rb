@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FirstDraftCollectionsMailer, type: :mailer do
+RSpec.describe FirstDraftCollectionsMailer do
   let(:creator) { build_stubbed(:user, name: 'Peter Lorre', email: 'psl@example.org') }
   let(:collection) { build_stubbed(:collection, creator:) }
   let(:collection_version) { build_stubbed(:collection_version, collection:) }
