@@ -49,4 +49,19 @@ RSpec.describe Works::ButtonsComponent do
       expect(rendered.css('input[value="Save as draft"]')).to be_present
     end
   end
+
+  context 'when globus feature enabled' do
+    let(:work) { build(:work, collection: build(:collection, id: 7)) }
+    let(:work_version) { build(:work_version, work:, state: 'new') }
+
+    before do
+      allow(Settings).to receive(:globus_upload).and_return true
+    end
+
+    it 'updates the deposit button' do
+      expect(rendered.css('input[value="Deposit"]')).to be_present
+      expect(rendered.css('input[value="Deposit"][attribute="disabled"]')).not_to be_present
+      expect(rendered.to_html).to include('data-deposit-button-target="depositButton"')
+    end
+  end
 end

@@ -23,6 +23,7 @@
     <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button',
                                      data: { action: 'unsaved-changes#allowFormSubmission' } %>
     <%= form.submit submit_button_label, class: 'btn btn-primary',
-                                         data: { action: 'unsaved-changes#allowFormSubmission' } %>
+                                         disabled: false,
+                                         data: { action: 'unsaved-changes#allowFormSubmission', deposit_button_target: 'depositButton' } %>
   </div>
 </div>

@@ -5,6 +5,7 @@
 class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
+  before_action :set_globus_based_on_param
   verify_authorized except: %i[delete_button edit_button]
 
   def index
@@ -198,7 +199,7 @@ class WorksController < ObjectsController
                      :abstract, :citation_auto, :citation, :default_citation,
                      :access, :license, :version_description,
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
-                     :agree_to_terms, :assign_doi, :upload_type,
+                     :agree_to_terms, :assign_doi, :upload_type, :globus,
                      subtype: [],
                      attached_files_attributes: %i[_destroy id label hide file],
                      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
@@ -226,6 +227,10 @@ class WorksController < ObjectsController
 
     flash[:error] = errors.join("\n")
     redirect_to dashboard_path, status: :see_other
+  end
+
+  def set_globus_based_on_param
+    Settings.globus_upload = true if params[:globus] == 'true'
   end
 end
 # rubocop:enable Metrics/ClassLength

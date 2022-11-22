@@ -26,4 +26,15 @@ RSpec.describe Works::AddFilesComponent do
       expect(rendered.css('button.dz-clickable').to_html).to include('Choose files')
     end
   end
+
+  context 'when globus feature enabled' do
+    before do
+      allow(Settings).to receive(:globus_upload).and_return true
+    end
+
+    it 'shows the globus upload option' do
+      expect(rendered.to_html).to include('via Globus web-based transfer software')
+      expect(rendered.to_html).not_to include('I have uploaded my files to a Globus endpoint')
+    end
+  end
 end

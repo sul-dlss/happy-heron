@@ -27,4 +27,24 @@ RSpec.describe Works::FormComponent do
     expect(rendered.to_html)
       .not_to include("What's changing?")
   end
+
+  context 'when globus feature enabled' do
+    before do
+      allow(Settings).to receive(:globus_upload).and_return true
+    end
+
+    it 'uses the deposit-button controller' do
+      expect(rendered.to_html).to include('auto-citation unsaved-changes deposit-button')
+    end
+  end
+
+  context 'when globus feature is not enabled' do
+    before do
+      allow(Settings).to receive(:globus_upload).and_return false
+    end
+
+    it 'does not use the deposit-button controller' do
+      expect(rendered.to_html).not_to include('auto-citation unsaved-changes deposit-button')
+    end
+  end
 end

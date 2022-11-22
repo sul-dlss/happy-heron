@@ -1,4 +1,4 @@
-describe('Create work', () => {
+describe('Create work version', () => {
     let work_id
 
     beforeEach(() => {
@@ -7,13 +7,11 @@ describe('Create work', () => {
       ]).then((results) => {
         cy.log(results[0])
         work_id = results[0].work_id
-
-        cy.visit(`/works/${work_id}/edit`)
-    })
+      })
     })
 
     it('deposits a work correctly after uploading a file', () => {
-
+      cy.visit(`/works/${work_id}/edit`)
       // try to deposit
       cy.get('input.btn[value="Deposit"]').click()
 
@@ -37,7 +35,7 @@ describe('Create work', () => {
     })
 
     it('deposits a work correctly if globus is selected (without the need to upload a file)', () => {
-
+      cy.visit(`/works/${work_id}/edit`)
       // try to deposit
       cy.get('input.btn[value="Deposit"]').click()
 
@@ -53,5 +51,28 @@ describe('Create work', () => {
       // successful deposit!
       cy.url().should('include', `/works/${work_id}/next_step`)
       cy.contains('You have successfully deposited your work')
+    })
+
+    it('is not able to deposit when globus feature enabled and globus upload option is selected ', () => {
+      // globus feature flag is set
+      cy.visit(`/works/${work_id}/edit?globus=true`)
+
+      // try to deposit
+      cy.get('input.btn[value="Deposit"]').click()
+
+      // there is a message telling us we need to upload a file
+      cy.get('div.invalid-feedback').should('contain', 'You must attach a file')
+
+      // now select globus upload option
+      cy.get('#work_upload_type_globus').check()
+
+      // deposit button should be disabled
+      cy.get('input.btn[value="Deposit"]').should('be.disabled')
+      
+      // switch back to file upload option
+      cy.get('#work_upload_type_browser').check()
+
+      // deposit button should be enabled
+      cy.get('input.btn[value="Deposit"]').should('be.enabled')
     })
 })
