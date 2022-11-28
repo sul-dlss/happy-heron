@@ -36,6 +36,7 @@ external_links:
 
 # feature flag
 allow_sdr_content_changes: true
+globus_upload: false
 
 authorization_group_header: HTTP_X_GROUPS
 first_name_header: HTTP_X_PERSON_NAME

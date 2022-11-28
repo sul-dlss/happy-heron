@@ -1,7 +1,7 @@
 <h1><%= page_title %></h1>
 <%= form_with model: work_form, url: url,
     data: {
-      controller: 'auto-citation unsaved-changes',
+      controller: data_controllers,
       action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage',
       auto_citation_purl: purl,
       auto_citation_doi: doi_field

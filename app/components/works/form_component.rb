@@ -43,5 +43,9 @@ module Works
 
       WorkVersion::DOI_TEXT
     end
+
+    def data_controllers
+      Settings.globus_upload ? 'auto-citation unsaved-changes deposit-button' : 'auto-citation unsaved-changes'
+    end
   end
 end
