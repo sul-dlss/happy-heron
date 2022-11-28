@@ -45,9 +45,9 @@
   integrity sha512-viouXhegu/TjkvYQoiRZK3aax69dGXxgEjpvZW81wIJdxm5Fnvp3VVIP4VHKqX4SvFw6qpmkILkD4RJWAdrt7A==
 
 "@github/time-elements@^3.1.2":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.4.1.tgz#b4930e8e71dfa7a26cdfed4608158aabd61b609b"
-  integrity sha512-rCXmeD+Rd3NqyN/Q1KY2tFdKpA+iB4kz9Yk4G8LcDnZsMQZQjNaKGvtU12UpomxCq7J2azNL0DrFnMBlVryuDA==
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.6.0.tgz#c61cbab56e9defd3faa3f24bd87afac00deeccd4"
+  integrity sha512-MRt9TJztej6idLMvmuZbWc75TJrpl+1kgxWPFzCti4Md7kFtOFTRjXSGKmpc4vFT1NR3SgjHqTfI2Cnr9dJ7Wg==
 
 "@hotwired/turbo-rails@^7.0.1":
   version "7.2.4"
@@ -331,9 +331,9 @@ check-more-types@^2.24.0:
     fsevents "~2.3.2"
 
 ci-info@^3.2.0:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.6.2.tgz#362ea15378f1c39378ba786affbc1c9ef015ecfd"
-  integrity sha512-lVZdhvbEudris15CLytp2u6Y0p5EKfztae9Fqa189MfNmln9F33XuH69v5fvNfiRN5/0eAUz2yJL3mo+nhaRKg==
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.7.0.tgz#6d01b3696c59915b6ce057e4aa4adfc2fa25f5ef"
+  integrity sha512-2CpRNYmImPx+RXKLq6jko/L07phmS9I02TyqkcNU20GCF/GgaWvc58hPtjxDX8lPpkdwc9sNh72V9k00S7ezog==
 
 clean-stack@^2.0.0:
   version "2.2.0"
