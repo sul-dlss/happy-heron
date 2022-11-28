@@ -99,4 +99,12 @@ class WorksMailer < ApplicationMailer
     @work = @work_version.work
     mail(to: @user.email, subject: 'Upload your files to the SDR using Globus')
   end
+
+  def version_mismatch_email
+    @work = params[:work]
+    @user = @work.owner
+    @work_title = @work.head.title
+    @collection_name = @work.collection_name
+    mail(to: Settings.notifications.admin_email, subject: 'An H2 version mismatch error has occurred')
+  end
 end
