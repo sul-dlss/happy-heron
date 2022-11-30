@@ -4,16 +4,17 @@ module CocinaGenerator
   module Structural
     # This generates a Cocina File for a work
     class FileGenerator
-      def self.generate(work_version:, attached_file:)
-        new(work_version:, attached_file:).generate
+      def self.generate(work_version:, attached_file:, external_identifier: nil)
+        new(work_version:, attached_file:, external_identifier:).generate
       end
 
-      def initialize(work_version:, attached_file:)
+      def initialize(work_version:, attached_file:, external_identifier:)
         @work_version = work_version
         @attached_file = attached_file
+        @external_identifier = external_identifier
       end
 
-      attr_reader :work_version, :attached_file
+      attr_reader :work_version, :attached_file, :external_identifier
 
       def generate
         return nil unless blob
@@ -40,15 +41,15 @@ module CocinaGenerator
       end
 
       def file_attributes
-        request_file_attributes.merge(externalIdentifier: external_identifier)
+        request_file_attributes.merge(externalIdentifier: create_external_identifier)
       end
 
       def filename
         blob.filename.to_s # File.basename(filename(blob.key))
       end
 
-      def external_identifier
-        "#{work_version.work.druid}/#{filename}" if work_version.work.druid
+      def create_external_identifier
+        external_identifier || ("#{work_version.work.druid}/#{filename}" if work_version.work.druid)
       end
 
       def administrative
