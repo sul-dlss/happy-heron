@@ -167,6 +167,34 @@ RSpec.describe DepositJob do
           expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/123-456-789')
         end
       end
+
+      context 'when file description has changed' do
+        let(:attached_file_labeled) { build(:attached_file, label: 'My changed label') }
+        let(:second_work_version_metadata_only) do
+          build(:work_version, work:, attached_files: [attached_file_labeled], version: 2,
+                               version_description: 'Updated metadata')
+        end
+
+        before do
+          work.work_versions = [first_work_version, second_work_version_metadata_only]
+          allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
+          allow(attached_file_labeled).to receive_message_chain(:file, :blob).and_return(blob) # rubocop:disable RSpec/MessageChain
+        end
+
+        it 'calls UpdateResource.run and uses updated label' do
+          described_class.perform_now(second_work_version_metadata_only)
+
+          # Notice that UpdateResource.run is called but UploadFiles.upload is not.
+          # This makes this a "metadata only" update.
+          expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+            .with(a_hash_including(version_description: 'Updated metadata')) do |params|
+            external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
+            label = params[:metadata].structural.contains.first.structural.contains.first.label
+            expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/123-456-789')
+            expect(label).to eq('My changed label')
+          end
+        end
+      end
     end
 
     context 'when files have changed' do
@@ -185,33 +213,6 @@ RSpec.describe DepositJob do
         end
 
         expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
-      end
-    end
-
-    context 'when file description has changed' do
-      # The attached files for this version are the same as the previous version
-      let(:attached_file) { build(:attached_file, label: 'My changed label') }
-      let(:second_work_version_metadata_only) do
-        build(:work_version, work:, attached_files: [attached_file], version: 2,
-                             version_description: 'Updated metadata')
-      end
-
-      before do
-        work.work_versions = [first_work_version, second_work_version_metadata_only]
-      end
-
-      it 'calls UpdateResource.run and uses updated metadata' do
-        described_class.perform_now(second_work_version_metadata_only)
-
-        # Notice that UpdateResource.run is called but UploadFiles.upload is not.
-        # This makes this a "metadata only" update.
-        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
-          .with(a_hash_including(version_description: 'Updated metadata')) do |params|
-          external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
-          label = params[:metadata].structural.contains.first.structural.contains.first.label
-          expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/123-456-789')
-          expect(label).to eq('My changed label')
-        end
       end
     end
   end
