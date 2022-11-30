@@ -493,13 +493,13 @@ RSpec.describe CocinaGenerator::DROGenerator do
                         label: 'MyString',
                         size: 17_675,
                         type: Cocina::Models::ObjectType.file,
-                        externalIdentifier: 'druid:bk123gh4567/sul.svg',
+                        externalIdentifier: '9999999',
                         version: 1
                       }
                     ]
                   },
                   type: Cocina::Models::FileSetType.file,
-                  externalIdentifier: 'bk123gh4567_1',
+                  externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/bk123gh4567-123456',
                   version: 1
                 }
               ],
@@ -507,6 +507,11 @@ RSpec.describe CocinaGenerator::DROGenerator do
             }
           }
         )
+      end
+
+      before do
+        allow(SecureRandom).to receive(:uuid).and_return '123456'
+        allow(blob).to receive(:signed_id).and_return '9999999'
       end
 
       it 'generates the model' do

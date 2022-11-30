@@ -104,15 +104,17 @@ RSpec.describe DepositJob do
         structural: { contains: [
           {
             type: Cocina::Models::FileSetType.file,
-            externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/123-456-789', label: 'Page 1', version: 1,
+            externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/bk123gh4567-123456',
+            label: 'Page 1',
+            version: 1,
             structural: {
               contains: [
                 {
                   type: Cocina::Models::ObjectType.file,
-                  externalIdentifier: 'https://cocina.sul.stanford.edu/file/123-456-789',
+                  externalIdentifier: 'https://cocina.sul.stanford.edu/file/bk123gh4567-123456/sul.svg',
                   label: 'An image',
                   filename: 'sul.svg',
-                  size: 0,
+                  size: 123,
                   version: 1,
                   hasMimeType: 'text/html',
                   use: 'transcription',
@@ -164,7 +166,39 @@ RSpec.describe DepositJob do
         expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
           .with(a_hash_including(version_description: 'Updated metadata')) do |params|
           external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
-          expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/123-456-789')
+          expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/bk123gh4567-123456/sul.svg')
+        end
+      end
+
+      context 'when file description has changed' do
+        let(:attached_file_updated) { build(:attached_file, :with_preserved_file, label: 'My changed label') }
+        let(:second_work_version_metadata_only) do
+          build(:work_version, work:, attached_files: [attached_file_updated], version: 2,
+                               version_description: 'Updated metadata')
+        end
+
+        before do
+          work.work_versions = [first_work_version, second_work_version_metadata_only]
+          allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
+        end
+
+        it 'calls UpdateResource.run and uses updated label' do
+          described_class.perform_now(second_work_version_metadata_only)
+
+          # Notice that UpdateResource.run is called but UploadFiles.upload is not.
+          # This makes this a "metadata only" update.
+          expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+            .with(a_hash_including(version_description: 'Updated metadata')) do |params|
+            external_identifier =
+              params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
+            label = params[:metadata].structural.contains.first.structural.contains.first.label
+            size = params[:metadata].structural.contains.first.structural.contains.first.size
+            has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
+            expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/bk123gh4567-123456/sul.svg')
+            expect(label).to eq('My changed label')
+            expect(size).to eq(123)
+            expect(has_mime_type).to eq('text/html')
+          end
         end
       end
     end
@@ -181,9 +215,94 @@ RSpec.describe DepositJob do
         expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
           .with(a_hash_including(version_description: 'Changed files')) do |params|
           external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
+          size = params[:metadata].structural.contains.first.structural.contains.first.size
+          has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
           expect(external_identifier).to eq('9999999')
+          expect(size).to eq(17_675)
+          expect(has_mime_type).to eq('image/svg+xml')
         end
+        expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
+      end
+    end
 
+    context 'when a file is added to an existing deposit' do
+      let(:attached_file2) { build(:attached_file) }
+      let(:second_work_version) do
+        build(:work_version, work:, attached_files: [attached_file, attached_file2], version: 2,
+                             version_description: 'Added file')
+      end
+
+      before do
+        work.work_versions = [first_work_version, second_work_version]
+        allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
+        allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul2.svg',
+                                                                           signed_id: '9999999')])
+      end
+
+      it 'uploads files and calls UpdateResource.run' do
+        described_class.perform_now(second_work_version)
+        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+          .with(a_hash_including(version_description: 'Added file')) do |params|
+          # file from version1
+          external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
+          size = params[:metadata].structural.contains.first.structural.contains.first.size
+          has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
+          expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/bk123gh4567-123456/sul.svg')
+          expect(size).to eq(123)
+          expect(has_mime_type).to eq('text/html')
+          # new file
+          external_identifier2 =
+            params[:metadata].structural.contains.second.structural.contains.first.externalIdentifier
+          size2 = params[:metadata].structural.contains.second.structural.contains.first.size
+          has_mime_type2 = params[:metadata].structural.contains.second.structural.contains.first.hasMimeType
+          expect(external_identifier2).to eq('9999999')
+          expect(size2).to eq(17_675)
+          expect(has_mime_type2).to eq('image/svg+xml')
+        end
+        expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
+      end
+    end
+
+    context 'when a file with the same name is replaced on a deposit' do
+      let(:attached_file2) { build(:attached_file) }
+      let(:second_work_version) do
+        build(:work_version, work:, attached_files: [attached_file2], version: 2,
+                             version_description: 'Replaced file')
+      end
+      let!(:blob2) do
+        ActiveStorage::Blob.create_and_upload!(
+          io: Rails.root.join('spec/fixtures/files/sul.svg').open,
+          filename: 'sul.svg',
+          content_type: 'image/svg+xml'
+        )
+      end
+
+      before do
+        work.work_versions = [first_work_version, second_work_version]
+        allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
+        allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg',
+                                                                           signed_id: '9999999')])
+
+        blob.update!(service_name: ActiveStorage::Service::SdrService::SERVICE_NAME)
+        # rubocop:disable RSpec/MessageChain
+        allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2)
+        # rubocop:enable RSpec/MessageChain
+      end
+
+      it 'uploads the replaced file and calls UpdateResource.run' do
+        described_class.perform_now(second_work_version)
+        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+          .with(a_hash_including(version_description: 'Replaced file')) do |params|
+          # should use blob metadata not retrieved cocina
+          external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
+          size = params[:metadata].structural.contains.first.structural.contains.first.size
+          has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
+          expect(external_identifier).to eq('9999999')
+          expect(size).to eq(17_675)
+          expect(has_mime_type).to eq('image/svg+xml')
+        end
         expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       end
     end

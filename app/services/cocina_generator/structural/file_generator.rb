@@ -4,16 +4,20 @@ module CocinaGenerator
   module Structural
     # This generates a Cocina File for a work
     class FileGenerator
-      def self.generate(work_version:, attached_file:)
-        new(work_version:, attached_file:).generate
+      def self.generate(work_version:, attached_file:, resource_id: nil, cocina_file: nil)
+        new(work_version:, attached_file:, resource_id:, cocina_file:).generate
       end
 
-      def initialize(work_version:, attached_file:)
+      def initialize(work_version:, attached_file:, resource_id: nil, cocina_file: nil)
         @work_version = work_version
         @attached_file = attached_file
+        @resource_id = resource_id
+        @cocina_file = cocina_file
+
+        raise 'Either resource_id or cocina_file should be provided.' if resource_id.nil? && cocina_file.nil?
       end
 
-      attr_reader :work_version, :attached_file
+      attr_reader :work_version, :attached_file, :resource_id, :cocina_file
 
       def generate
         return nil unless blob
@@ -25,6 +29,7 @@ module CocinaGenerator
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def request_file_attributes
         {
           type: Cocina::Models::ObjectType.file,
@@ -33,22 +38,24 @@ module CocinaGenerator
           filename:,
           access:,
           administrative:,
-          hasMimeType: blob.content_type,
+          hasMimeType: cocina_file&.hasMimeType || blob.content_type,
           hasMessageDigests: message_digests,
-          size: blob.byte_size
+          size: cocina_file&.size || blob.byte_size
         }
       end
+      # rubocop:enable Metrics/AbcSize
 
       def file_attributes
         request_file_attributes.merge(externalIdentifier: external_identifier)
       end
 
       def filename
-        blob.filename.to_s # File.basename(filename(blob.key))
+        cocina_file&.filename || blob.filename.to_s # File.basename(filename(blob.key))
       end
 
       def external_identifier
-        "#{work_version.work.druid}/#{filename}" if work_version.work.druid
+        # see https://github.com/sul-dlss/dor-services-app/blob/main/app/services/cocina/id_generator.rb
+        cocina_file&.externalIdentifier || blob.signed_id
       end
 
       def administrative
@@ -60,10 +67,11 @@ module CocinaGenerator
       end
 
       def message_digests
-        [
-          { type: 'md5', digest: base64_to_hexdigest(blob.checksum) },
-          { type: 'sha1', digest: Digest::SHA1.file(file_path(blob.key)).hexdigest }
-        ]
+        cocina_file&.hasMessageDigests ||
+          [
+            { type: 'md5', digest: base64_to_hexdigest(blob.checksum) },
+            { type: 'sha1', digest: Digest::SHA1.file(file_path(blob.key)).hexdigest }
+          ]
       end
 
       delegate :blob, to: :attached_file
