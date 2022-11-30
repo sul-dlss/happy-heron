@@ -12,6 +12,10 @@ describe('Create work version', () => {
 
     it('deposits a work correctly after uploading a file', () => {
       cy.visit(`/works/${work_id}/edit`)
+
+      // select browser upload option
+      cy.get('#work_upload_type_browser').check()
+
       // try to deposit
       cy.get('input.btn[value="Deposit"]').click()
 
@@ -68,7 +72,7 @@ describe('Create work version', () => {
 
       // deposit button should be disabled
       cy.get('input.btn[value="Deposit"]').should('be.disabled')
-      
+
       // switch back to file upload option
       cy.get('#work_upload_type_browser').check()
 

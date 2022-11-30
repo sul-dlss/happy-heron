@@ -2,7 +2,7 @@
   <header>Add your files *</header>
 
   <div class="form-check" data-complex-radio-target="selection">
-    <%= form.radio_button :upload_type, 'browser', class: 'form-check-input',
+    <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton',
       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' }
     %>
     <%= form.label :upload_type, 'Upload files', class: 'form-check-label fw-semibold' %>

@@ -82,6 +82,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           select 'month', from: 'Created month'
           select 'day', from: 'Created day'
 
+          choose 'work_upload_type_browser'
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')
           end
@@ -187,6 +188,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
 
           click_button 'Continue'
 
+          choose 'work_upload_type_browser'
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')
           end
@@ -299,6 +301,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           fill_in 'Created year', with: ''
           fill_in 'Publication year', with: ''
 
+          choose 'work_upload_type_browser'
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')
           end
