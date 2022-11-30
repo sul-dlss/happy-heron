@@ -39,6 +39,8 @@ en:
       reserving_purl: Reserving PURL
       purl_reserved: PURL Reserved
       first_draft: Draft - Not deposited
+      globus_setup_first_draft: Draft - complete Globus account activation
+      globus_setup_version_draft: New version in draft - complete Globus account activation
       version_draft: New version in draft
       pending_approval: Pending approval
       rejected: Returned
