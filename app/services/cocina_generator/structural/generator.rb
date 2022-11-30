@@ -29,8 +29,8 @@ module CocinaGenerator
       def build_filesets
         filesets = find_preserved_filesets
         # new step to check for label differences between old cocina and preserved_files
-        existing_filesets, updated_filesets = check_labels(filesets)
-        existing_filesets + updated_filesets.map.with_index(existing_filesets.size + 1) { |af, n| rebuild_fileset(af, n) } +
+        unchanged_filesets, updated_filesets = check_labels(filesets) # make broader (e.g. find_differences)
+        unchanged_filesets + updated_filesets.map.with_index(unchanged_filesets.size + 1) { |af, n| rebuild_fileset(af, n) } +
           work_version.staged_files.map.with_index(filesets.size + 1) { |af, n| build_fileset(af, n) }
       end
 
@@ -60,6 +60,7 @@ module CocinaGenerator
         updated_files_cocina = files[1]
         # get the filenames so we can use them to look up the matching preserved file
         changed_filenames = updated_files_cocina.map { |fileset| fileset.structural.contains.first.filename }
+        # get the preserved_files that are changed
         need_to_be_rebuilt = work_version.preserved_files.select { |file| changed_filenames.include? file.filename.to_s }
 
         return unchanged_files_cocina, need_to_be_rebuilt
@@ -82,14 +83,15 @@ module CocinaGenerator
       end
 
       def rebuild_fileset(attached_file, offset)
-        # needs sdr-api's assigned externalIdentifier.
+        # needs sdr-api's assigned externalIdentifier
         file_cocina = cocina_obj.structural.contains.first.structural.contains.find { |f| f.filename == attached_file.filename.to_s }
+        external_identifier = file_cocina.externalIdentifier
         {
           type: Cocina::Models::FileSetType.file,
           version: work_version.version,
           label: attached_file.label,
           structural: {
-            contains: [FileGenerator.generate(work_version:, attached_file:, external_identifier: file_cocina[:externalIdentifier])]
+            contains: [FileGenerator.generate(work_version:, attached_file:, external_identifier:)]
           }
         }.tap do |fileset|
           if work_version.work.druid
