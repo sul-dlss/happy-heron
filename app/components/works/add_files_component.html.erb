@@ -45,8 +45,7 @@
         data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus'}
       %>
       <%= form.label :upload_type, "Upload one or more files (>10GB) via Globus web-based transfer software.", class: 'form-check-label fw-semibold' %>
-      Use single sign-on to activate your account first if you don't already have one, and then return here to complete this form.
-      <p>**Please check your email for further instructions on how to proceed with your deposit of files into Globus.**</p>
+      <p><%= link_to "Use single sign-on to activate your account first if you don't already have one" , 'https://globus.stanford.edu/accounts/create.html', target: :blank%>, and then return here to complete this form.</p>
     </div>
   <% else %>
     <div class="form-check pt-3" data-complex-radio-target="selection">
