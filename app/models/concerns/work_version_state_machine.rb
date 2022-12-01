@@ -38,6 +38,18 @@ module WorkVersionStateMachine
         transition %i[first_draft version_draft pending_approval] => :depositing
       end
 
+      # event occurs when a user requests to use globus for upload but still needs to complete initial globus setup
+      event :globus_setup_pending do
+        transition first_draft: :globus_setup_first_draft
+        transition version_draft: :globus_setup_version_draft
+      end
+
+      # event occurs when a user has completed initial globus setup; go back to regular draft state
+      event :globus_setup_complete do
+        transition globus_setup_first_draft: :first_draft
+        transition globus_setup_version_draft: :version_draft
+      end
+
       event :deposit_complete do
         transition depositing: :deposited
       end
@@ -63,7 +75,8 @@ module WorkVersionStateMachine
       event :update_metadata do
         transition new: :first_draft
 
-        transition %i[first_draft version_draft pending_approval rejected] => same
+        transition %i[first_draft version_draft pending_approval rejected globus_setup_first_draft
+                      globus_setup_version_draft] => same
         transition purl_reserved: :first_draft
       end
 
