@@ -75,7 +75,8 @@ module WorkVersionStateMachine
       event :update_metadata do
         transition new: :first_draft
 
-        transition %i[first_draft version_draft pending_approval rejected] => same
+        transition %i[first_draft version_draft pending_approval rejected globus_setup_first_draft
+                      globus_setup_version_draft] => same
         transition purl_reserved: :first_draft
       end
 
