@@ -169,16 +169,16 @@ RSpec.describe DepositJob do
       end
 
       context 'when file description has changed' do
-        let(:attached_file_labeled) { build(:attached_file, label: 'My changed label') }
+        let(:attached_file_relabeled) { build(:attached_file, label: 'My changed label') }
         let(:second_work_version_metadata_only) do
-          build(:work_version, work:, attached_files: [attached_file_labeled], version: 2,
+          build(:work_version, work:, attached_files: [attached_file_relabeled], version: 2,
                                version_description: 'Updated metadata')
         end
 
         before do
           work.work_versions = [first_work_version, second_work_version_metadata_only]
           allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
-          allow(attached_file_labeled).to receive_message_chain(:file, :blob).and_return(blob) # rubocop:disable RSpec/MessageChain
+          allow(attached_file_relabeled).to receive_message_chain(:file, :blob).and_return(blob) # rubocop:disable RSpec/MessageChain
         end
 
         it 'calls UpdateResource.run and uses updated label' do

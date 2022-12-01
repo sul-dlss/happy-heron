@@ -11,7 +11,7 @@ module CocinaGenerator
       def initialize(work_version:, attached_file:, external_identifier:)
         @work_version = work_version
         @attached_file = attached_file
-        @external_identifier = external_identifier
+        @external_identifier = external_identifier # may be nil
       end
 
       attr_reader :work_version, :attached_file, :external_identifier

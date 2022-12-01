@@ -30,7 +30,9 @@ module CocinaGenerator
         filesets = find_preserved_filesets
         # new step to check for label differences between old cocina and preserved_files
         unchanged_filesets, updated_filesets = check_labels(filesets) # make broader (e.g. find_differences)
-        unchanged_filesets + updated_filesets.map.with_index(unchanged_filesets.size + 1) { |af, n| rebuild_fileset(af, n) } +
+        unchanged_filesets + updated_filesets.map.with_index(unchanged_filesets.size + 1) do |af, n|
+                               rebuild_fileset(af, n)
+                             end +
           work_version.staged_files.map.with_index(filesets.size + 1) { |af, n| build_fileset(af, n) }
       end
 
@@ -38,21 +40,23 @@ module CocinaGenerator
       def find_preserved_filesets
         return [] unless cocina_obj
 
-        # need to find preserved_filesets and update their label with the work version's description for the file if it's different.
-        # h2 will only have one file per fileset
         cocina_obj.structural.contains.select do |fileset|
-          existing_file_name = fileset.structural.contains.first.filename
-          preserved_file_names = work_version.preserved_files.map(&:filename).map(&:to_s)
-          preserved_file_names.include?(existing_file_name)
+          existing_file_names = Set.new(fileset.structural.contains.map(&:filename))
+          preserved_file_names = Set.new(work_version.preserved_files.map(&:filename).map(&:to_s))
+          preserved_file_names.superset?(existing_file_names)
         end
       end
 
+      # @return [Array[Array<Cocina::FileSet>],[Array<Cocina::FileSet>]] list of unchanged files' cocina,
+      # and an array of changed files to get rebuilt.
       def check_labels(preserved_filesets)
-        # The label is the only thing that might change.
-        # @return [Array<Cocina::FileSet>] list of unchanged files' cocina, and an array of changed preserved_files to get rebuilt.
+        # The label might change.
         files = preserved_filesets.partition do |fileset|
           # find the preserved file with a filename that matches the cocina fileset
-          preserved_file = work_version.preserved_files.select { |file| file.filename.to_s == fileset.structural.contains.first.filename }
+          preserved_file = work_version.preserved_files.select do |file|
+            file.filename.to_s == fileset.structural.contains.first.filename
+          end
+          # check if the cocina and preserved version are different
           fileset.structural.contains.first.label == preserved_file.first.label.to_s
         end
 
@@ -61,9 +65,11 @@ module CocinaGenerator
         # get the filenames so we can use them to look up the matching preserved file
         changed_filenames = updated_files_cocina.map { |fileset| fileset.structural.contains.first.filename }
         # get the preserved_files that are changed
-        need_to_be_rebuilt = work_version.preserved_files.select { |file| changed_filenames.include? file.filename.to_s }
+        need_to_be_rebuilt = work_version.preserved_files.select do |file|
+          changed_filenames.include? file.filename.to_s
+        end
 
-        return unchanged_files_cocina, need_to_be_rebuilt
+        [unchanged_files_cocina, need_to_be_rebuilt]
       end
 
       def build_fileset(attached_file, offset)
@@ -84,7 +90,9 @@ module CocinaGenerator
 
       def rebuild_fileset(attached_file, offset)
         # needs sdr-api's assigned externalIdentifier
-        file_cocina = cocina_obj.structural.contains.first.structural.contains.find { |f| f.filename == attached_file.filename.to_s }
+        file_cocina = cocina_obj.structural.contains.first.structural.contains.find do |f|
+          f.filename == attached_file.filename.to_s
+        end
         external_identifier = file_cocina.externalIdentifier
         {
           type: Cocina::Models::FileSetType.file,
