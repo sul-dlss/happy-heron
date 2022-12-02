@@ -1,0 +1,19 @@
+<p>Dear <%= @user.first_name %>,</p>
+
+<p>You have initiated a deposit of more than 10 GB of content in the Stanford Digital Repository.</p>
+
+<h2>Step 1</h2>
+<p>You will need to use Globus to transfer the files for this deposit to us.  Click the link below to use single sign
+  to activate your Globus account.  Next follow the prompts in Globus to download the "Globus Personal Connect" applications.
+  Refer to our <%=link_to 'Help page', '#'%> if you have questions.</p>
+
+<p><%=link_to 'Globus setup', 'https://globus.stanford.edu/accounts/create.html'%></p>
+
+<h2>Step 2</h2>
+<p>Once you have activated your Globus account and donwloaded the application,
+  <%=link_to 'click this link to let us know you have completed your Globus activation.', work_url(@work)%>.
+  We will then email you a link to where you can deposit your files through Globus.</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>

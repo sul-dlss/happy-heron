@@ -438,8 +438,9 @@ RSpec.describe WorkVersion do
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :with_managers) }
       let(:collection_version) { create(:collection_version_with_collection, collection:) }
-      let(:work_version) { create(:work_version, state:, work:) }
+      let(:work_version) { create(:work_version, state:, work:, upload_type:) }
       let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
+      let(:upload_type) { 'browser' }
 
       context 'when the state was new' do
         let(:state) { 'new' }
@@ -472,18 +473,40 @@ RSpec.describe WorkVersion do
       context 'when the state is globus_setup_first_draft' do
         let(:state) { 'globus_setup_first_draft' }
 
-        it 'allows the transition and retains the same state' do
-          work_version.update_metadata!
-          expect(work_version.state).to eq 'globus_setup_first_draft'
+        context 'when upload type is browser' do
+          it 'transitions back to first_draft' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'first_draft'
+          end
+        end
+
+        context 'when upload type is globus' do
+          let(:upload_type) { 'globus' }
+
+          it 'allows the transition and retains the same state' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'globus_setup_first_draft'
+          end
         end
       end
 
       context 'when the state is globus_setup_version_draft' do
         let(:state) { 'globus_setup_version_draft' }
 
-        it 'allows the transition and retains the same state' do
-          work_version.update_metadata!
-          expect(work_version.state).to eq 'globus_setup_version_draft'
+        context 'when upload type is browser' do
+          it 'transitions back to version_draft' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'version_draft'
+          end
+        end
+
+        context 'when upload type is globus' do
+          let(:upload_type) { 'globus' }
+
+          it 'allows the transition and retains the same state' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'globus_setup_version_draft'
+          end
         end
       end
     end

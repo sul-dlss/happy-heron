@@ -1,0 +1,16 @@
+<p>Dear <%= @user.first_name %>,</p>
+
+<p>You have initiated a deposit of more than 10 GB of content in the Stanford Digital Repository.</p>
+
+<p>You will need to use Globus to transfer the files for this deposit to us. Please click on the link below
+  to access the Globus endpoint that we have created for you, then drag and drop your files to upload them to the endpoint.
+  Refer to our <%=link_to 'help page', '#'%> if you have questions.</p>
+
+<p><%= link_to @work_version.globus_endpoint %></p>
+
+<p>Once you have completed uploading your files, <%=link_to 'return to your deposit', work_url(@work)%>,
+  review your entries, and click "Deposit."</p>
+
+<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+
+<p>The Stanford Digital Repository Team</p>

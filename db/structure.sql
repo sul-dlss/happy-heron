@@ -587,7 +587,8 @@ CREATE TABLE public.work_versions (
     work_id bigint NOT NULL,
     version_description character varying,
     published_at timestamp(6) without time zone,
-    upload_type character varying
+    upload_type character varying,
+    globus_endpoint character varying
 );
 
 
@@ -1349,6 +1350,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220901184555'),
 ('20220914211415'),
 ('20221115215744'),
-('20221117233130');
+('20221117233130'),
+('20221201204010');
 
 

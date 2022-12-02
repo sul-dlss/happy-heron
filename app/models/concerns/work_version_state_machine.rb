@@ -24,6 +24,10 @@ module WorkVersionStateMachine
       after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
       after_transition on: :deposit_complete, do: CollectionObserver.method(:item_deposited)
       after_transition on: :decommission, do: WorkObserver.method(:after_decommission)
+      after_transition except_from: :globus_setup_first_draft, to: :globus_setup_first_draft,
+                       do: WorkObserver.method(:globus_setup)
+      after_transition except_from: :globus_setup_version_draft, to: :globus_setup_version_draft,
+                       do: WorkObserver.method(:globus_setup)
 
       # Trigger the collection observer when starting a new draft,
       # except when the previous state was draft.
@@ -31,6 +35,10 @@ module WorkVersionStateMachine
                        do: CollectionObserver.method(:first_draft_created)
       after_transition except_from: :version_draft, to: :version_draft,
                        do: CollectionObserver.method(:version_draft_created)
+
+      # check to see if there any globus related actions needed when transition to any draft state
+      after_transition to: %i[first_draft version_draft globus_setup_first_draft globus_setup_version_draft],
+                       do: :check_globus_setup
 
       # NOTE: there is no approval "event" because when a work is approved in review, it goes
       # directly to begin_deposit event, which will transition it to depositing
@@ -86,6 +94,18 @@ module WorkVersionStateMachine
 
       event :decommission do
         transition all => :decommissioned
+      end
+    end
+
+    def check_globus_setup
+      if globus?
+        # if the user selected the globus upload option, run the globus setup job each time we save as draft
+        #  to see if there is any work to be done for globus setup
+        GlobusSetupJob.perform_later(self)
+      elsif globus_setup?
+        # if this is NOT a globus upload job and we were in a globus setup pending state, go back to draft
+        #  this is when a user first selected globus and then later changed back to a different upload type
+        globus_setup_complete!
       end
     end
 
