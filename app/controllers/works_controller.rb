@@ -110,6 +110,23 @@ class WorksController < ObjectsController
     authorize! @work.head, to: :show?
   end
 
+  # the user has indicated that have completed their globus setup
+  def complete_globus_setup
+    work = Work.find(params[:id])
+    work_version = work.head
+
+    authorize! work_version, to: :show?
+
+    if user_is_known_to_globus?(work.depositor.sunetid) && work_version.globus?
+      GlobusSetupJob.perform_later(work_version)
+      flash[:notice] = I18n.t('work.flash.globus_setup_complete')
+    elsif !user_is_known_to_globus?(work.depositor.sunetid) && work_version.globus?
+      flash[:warning] = I18n.t('work.flash.globus_setup_not_complete')
+    end
+
+    redirect_to dashboard_path
+  end
+
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the work.
   def delete_button
@@ -231,6 +248,11 @@ class WorksController < ObjectsController
 
   def set_globus_based_on_param
     Settings.globus_upload = true if params[:globus] == 'true'
+  end
+
+  def user_is_known_to_globus?(_depositor_sunet)
+    # TODO: use globus client gem to see if this sunet is known to globus, return true/false
+    true
   end
 end
 # rubocop:enable Metrics/ClassLength

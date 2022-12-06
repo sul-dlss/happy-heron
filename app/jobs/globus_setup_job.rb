@@ -15,6 +15,7 @@ class GlobusSetupJob < ApplicationJob
       # user is known to globus but doesn't have an endpoint yet
       create_globus_endpoint(work_version)
       send_email_with_globus_endpoint(work_version)
+      work_version.globus_setup_complete! # this transitions the state back to draft
     elsif !user_is_known_to_globus?(depositor_sunet) && work_version.draft?
       # user is NOT known to globus, and is not yet in the globus_setup state,
       #  so put them into the pending state, which will then send them an email (via the state transition)
@@ -27,7 +28,7 @@ class GlobusSetupJob < ApplicationJob
 
   def user_is_known_to_globus?(_depositor_sunet)
     # TODO: use globus client gem to see if this sunet is known to globus, return true/false
-    false
+    true
   end
 
   def create_globus_endpoint(work_version)
