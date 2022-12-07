@@ -1,1 +1,145 @@
-<svg height="674pt" viewBox="0 0 568.13 674.18" width="568pt" xmlns="http://www.w3.org/2000/svg"><g transform="translate(4 670.18)"><path d="m-4 4v-674.18h568.13v674.18z" fill="#fff"/><ellipse cx="376.13" cy="-589.58" fill="none" rx="36" ry="36" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="376.13" y="-585.88">new</text><ellipse cx="281.13" cy="-466.58" fill="none" rx="38.54" ry="36" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="281.13" y="-462.88">first_draft</text><path d="m354.09-560.52c-12.88 16.41-29.31 37.34-43.32 55.18" fill="none" stroke="#000"/><path d="m313.56-503.23-8.93 5.71 3.43-10.03z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="387.13" y="-524.38">update_metadata</text><ellipse cx="264.13" cy="-66.79" fill="none" rx="62.59" ry="62.59" stroke="#000"/><ellipse cx="264.13" cy="-66.79" fill="none" rx="66.58" ry="66.58" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="264.13" y="-63.09">decommissioned</text><path d="m406.5-570.05c12.95 9.1 27.39 21 37.63 34.47 19.77 26.03 28 35.32 28 68v248c0 68-73.44 108.78-133.05 130.68" fill="none" stroke="#000"/><path d="m340.54-85.7-10.6.04 8.26-6.64z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="516.13" y="-339.88">decommission</text><g stroke="#000"><ellipse cx="376.13" cy="-664.38" rx="1.8" ry="1.8"/><path d="m376.13-662.12v24.95" fill="none"/><path d="m379.63-637.37-3.5 10-3.5-10z"/><path d="m318.09-478.09c11 .35 19.55 4.18 19.55 11.51 0 4.58-3.34 7.8-8.53 9.65" fill="none"/><path d="m330.03-453.54-10.45-1.79 9.28-5.11z"/></g><text font-family="Arial" font-size="14" text-anchor="middle" x="390.64" y="-462.88">update_metadata</text><ellipse cx="172.13" cy="-343.58" fill="none" rx="41.31" ry="36" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="172.13" y="-339.88">depositing</text><path d="m259.09-436.85c-9.79 12.35-21.63 26.79-32.96 39.27-5.78 6.36-12.13 12.93-18.38 19.18" fill="none" stroke="#000"/><path d="m210.59-376.28-9.58 4.54 4.66-9.52z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="280.63" y="-401.38">begin_deposit</text><path d="m308.06-440.47c7.3 8.2 14.44 17.81 19.07 27.89 24.3 52.98 49.11 207.49 26 261-6.1 14.11-15.87 26.94-26.74 38.09" fill="none" stroke="#000"/><path d="m329.02-111.17-9.63 4.44 4.76-9.47z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="402.13" y="-278.38">decommission</text><ellipse cx="50.13" cy="-466.58" fill="none" rx="50.25" ry="36" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="50.13" y="-462.88">version_draft</text><path d="m98.19-477.91c11.52.89 20.06 4.66 20.06 11.33 0 4.27-3.5 7.36-9.05 9.25" fill="none" stroke="#000"/><path d="m110.15-453.94-10.47-1.59 9.18-5.29z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="171.25" y="-462.88">update_metadata</text><path d="m79.04-436.9c17.35 17.21 39.55 39.22 57.92 57.44" fill="none" stroke="#000"/><path d="m139.38-381.98 4.64 9.52-9.57-4.55z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="161.63" y="-401.38">begin_deposit</text><path d="m46.41-430.32c-2.75 39.47-3.02 104.59 17.72 155.74 27.41 67.62 88.66 125.4 136.21 162.56" fill="none" stroke="#000"/><path d="m202.35-114.89 5.8 8.87-10.06-3.32z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="108.13" y="-278.38">decommission</text><ellipse cx="299.13" cy="-220.58" fill="none" rx="39.65" ry="36" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="299.13" y="-216.88">deposited</text><path d="m197.94-314.92c11.99 12.55 26.56 27.45 40.19 40.34 7.55 7.15 15.85 14.61 23.83 21.59" fill="none" stroke="#000"/><path d="m264.04-255.82 5.25 9.2-9.84-3.91z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="291.63" y="-278.38">deposit_complete</text><path d="m162.07-308.41c-7.86 32.84-15.15 83.3.06 123.83 9.18 24.48 26.08 47.2 43.52 65.96" fill="none" stroke="#000"/><path d="m207.94-121.28 4.41 9.64-9.45-4.79z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="206.13" y="-216.88">decommission</text><path d="m276.56-190.75c-4.67 7.47-8.93 15.79-11.43 24.17-2.07 6.93-3.49 14.26-4.41 21.66" fill="none" stroke="#000"/><path d="m264.23-144.8-4.41 9.63-2.56-10.27z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="309.13" y="-155.38">decommission</text><path d="m329.18-83.08c11.62 2.12 19.74 7.55 19.74 16.29 0 5.74-3.5 10.05-9.19 12.93" fill="none" stroke="#000"/><path d="m341.22-50.66-10.6-.3 8.47-6.37z" stroke="#000"/><text font-family="Arial" font-size="14" text-anchor="middle" x="392.92" y="-63.09">decommission</text></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 7.0.4 (20221203.1631)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="568pt" height="674pt"
+ viewBox="0.00 0.00 568.13 674.18" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 670.18)">
+<title>G</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-670.18 564.13,-670.18 564.13,4 -4,4"/>
+<!-- new -->
+<g id="node1" class="node">
+<title>new</title>
+<ellipse fill="none" stroke="black" cx="376.13" cy="-589.58" rx="36" ry="36"/>
+<text text-anchor="middle" x="376.13" y="-585.88" font-family="Arial" font-size="14.00">new</text>
+</g>
+<!-- first_draft -->
+<g id="node3" class="node">
+<title>first_draft</title>
+<ellipse fill="none" stroke="black" cx="281.13" cy="-466.58" rx="38.54" ry="36"/>
+<text text-anchor="middle" x="281.13" y="-462.88" font-family="Arial" font-size="14.00">first_draft</text>
+</g>
+<!-- new&#45;&gt;first_draft -->
+<g id="edge5" class="edge">
+<title>new&#45;&gt;first_draft</title>
+<path fill="none" stroke="black" d="M354.09,-560.52C341.21,-544.11 324.78,-523.18 310.77,-505.34"/>
+<polygon fill="black" stroke="black" points="313.56,-503.23 304.63,-497.52 308.06,-507.55 313.56,-503.23"/>
+<text text-anchor="middle" x="387.13" y="-524.38" font-family="Arial" font-size="14.00">update_metadata</text>
+</g>
+<!-- decommissioned -->
+<g id="node7" class="node">
+<title>decommissioned</title>
+<ellipse fill="none" stroke="black" cx="264.13" cy="-66.79" rx="62.59" ry="62.59"/>
+<ellipse fill="none" stroke="black" cx="264.13" cy="-66.79" rx="66.58" ry="66.58"/>
+<text text-anchor="middle" x="264.13" y="-63.09" font-family="Arial" font-size="14.00">decommissioned</text>
+</g>
+<!-- new&#45;&gt;decommissioned -->
+<g id="edge8" class="edge">
+<title>new&#45;&gt;decommissioned</title>
+<path fill="none" stroke="black" d="M406.5,-570.05C419.45,-560.95 433.89,-549.05 444.13,-535.58 463.9,-509.55 472.13,-500.26 472.13,-467.58 472.13,-467.58 472.13,-467.58 472.13,-219.58 472.13,-151.58 398.69,-110.8 339.08,-88.9"/>
+<polygon fill="black" stroke="black" points="340.54,-85.7 329.94,-85.66 338.2,-92.3 340.54,-85.7"/>
+<text text-anchor="middle" x="516.13" y="-339.88" font-family="Arial" font-size="14.00">decommission</text>
+</g>
+<!-- starting_state -->
+<g id="node2" class="node">
+<title>starting_state</title>
+<ellipse fill="black" stroke="black" cx="376.13" cy="-664.38" rx="1.8" ry="1.8"/>
+</g>
+<!-- starting_state&#45;&gt;new -->
+<g id="edge1" class="edge">
+<title>starting_state&#45;&gt;new</title>
+<path fill="none" stroke="black" d="M376.13,-662.12C376.13,-658.68 376.13,-648.66 376.13,-637.17"/>
+<polygon fill="black" stroke="black" points="379.63,-637.37 376.13,-627.37 372.63,-637.37 379.63,-637.37"/>
+</g>
+<!-- first_draft&#45;&gt;first_draft -->
+<g id="edge6" class="edge">
+<title>first_draft&#45;&gt;first_draft</title>
+<path fill="none" stroke="black" d="M318.09,-478.09C329.09,-477.74 337.64,-473.91 337.64,-466.58 337.64,-462 334.3,-458.78 329.11,-456.93"/>
+<polygon fill="black" stroke="black" points="330.03,-453.54 319.58,-455.33 328.86,-460.44 330.03,-453.54"/>
+<text text-anchor="middle" x="390.64" y="-462.88" font-family="Arial" font-size="14.00">update_metadata</text>
+</g>
+<!-- depositing -->
+<g id="node5" class="node">
+<title>depositing</title>
+<ellipse fill="none" stroke="black" cx="172.13" cy="-343.58" rx="41.31" ry="36"/>
+<text text-anchor="middle" x="172.13" y="-339.88" font-family="Arial" font-size="14.00">depositing</text>
+</g>
+<!-- first_draft&#45;&gt;depositing -->
+<g id="edge2" class="edge">
+<title>first_draft&#45;&gt;depositing</title>
+<path fill="none" stroke="black" d="M259.09,-436.85C249.3,-424.5 237.46,-410.06 226.13,-397.58 220.35,-391.22 214,-384.65 207.75,-378.4"/>
+<polygon fill="black" stroke="black" points="210.59,-376.28 201.01,-371.74 205.67,-381.26 210.59,-376.28"/>
+<text text-anchor="middle" x="280.63" y="-401.38" font-family="Arial" font-size="14.00">begin_deposit</text>
+</g>
+<!-- first_draft&#45;&gt;decommissioned -->
+<g id="edge9" class="edge">
+<title>first_draft&#45;&gt;decommissioned</title>
+<path fill="none" stroke="black" d="M308.06,-440.47C315.36,-432.27 322.5,-422.66 327.13,-412.58 351.43,-359.6 376.24,-205.09 353.13,-151.58 347.03,-137.47 337.26,-124.64 326.39,-113.49"/>
+<polygon fill="black" stroke="black" points="329.02,-111.17 319.39,-106.73 324.15,-116.2 329.02,-111.17"/>
+<text text-anchor="middle" x="402.13" y="-278.38" font-family="Arial" font-size="14.00">decommission</text>
+</g>
+<!-- version_draft -->
+<g id="node4" class="node">
+<title>version_draft</title>
+<ellipse fill="none" stroke="black" cx="50.13" cy="-466.58" rx="50.25" ry="36"/>
+<text text-anchor="middle" x="50.13" y="-462.88" font-family="Arial" font-size="14.00">version_draft</text>
+</g>
+<!-- version_draft&#45;&gt;version_draft -->
+<g id="edge7" class="edge">
+<title>version_draft&#45;&gt;version_draft</title>
+<path fill="none" stroke="black" d="M98.19,-477.91C109.71,-477.02 118.25,-473.25 118.25,-466.58 118.25,-462.31 114.75,-459.22 109.2,-457.33"/>
+<polygon fill="black" stroke="black" points="110.15,-453.94 99.68,-455.53 108.86,-460.82 110.15,-453.94"/>
+<text text-anchor="middle" x="171.25" y="-462.88" font-family="Arial" font-size="14.00">update_metadata</text>
+</g>
+<!-- version_draft&#45;&gt;depositing -->
+<g id="edge3" class="edge">
+<title>version_draft&#45;&gt;depositing</title>
+<path fill="none" stroke="black" d="M79.04,-436.9C96.39,-419.69 118.59,-397.68 136.96,-379.46"/>
+<polygon fill="black" stroke="black" points="139.38,-381.98 144.02,-372.46 134.45,-377.01 139.38,-381.98"/>
+<text text-anchor="middle" x="161.63" y="-401.38" font-family="Arial" font-size="14.00">begin_deposit</text>
+</g>
+<!-- version_draft&#45;&gt;decommissioned -->
+<g id="edge10" class="edge">
+<title>version_draft&#45;&gt;decommissioned</title>
+<path fill="none" stroke="black" d="M46.41,-430.32C43.66,-390.85 43.39,-325.73 64.13,-274.58 91.54,-206.96 152.79,-149.18 200.34,-112.02"/>
+<polygon fill="black" stroke="black" points="202.35,-114.89 208.15,-106.02 198.09,-109.34 202.35,-114.89"/>
+<text text-anchor="middle" x="108.13" y="-278.38" font-family="Arial" font-size="14.00">decommission</text>
+</g>
+<!-- deposited -->
+<g id="node6" class="node">
+<title>deposited</title>
+<ellipse fill="none" stroke="black" cx="299.13" cy="-220.58" rx="39.65" ry="36"/>
+<text text-anchor="middle" x="299.13" y="-216.88" font-family="Arial" font-size="14.00">deposited</text>
+</g>
+<!-- depositing&#45;&gt;deposited -->
+<g id="edge4" class="edge">
+<title>depositing&#45;&gt;deposited</title>
+<path fill="none" stroke="black" d="M197.94,-314.92C209.93,-302.37 224.5,-287.47 238.13,-274.58 245.68,-267.43 253.98,-259.97 261.96,-252.99"/>
+<polygon fill="black" stroke="black" points="264.04,-255.82 269.29,-246.62 259.45,-250.53 264.04,-255.82"/>
+<text text-anchor="middle" x="291.63" y="-278.38" font-family="Arial" font-size="14.00">deposit_complete</text>
+</g>
+<!-- depositing&#45;&gt;decommissioned -->
+<g id="edge11" class="edge">
+<title>depositing&#45;&gt;decommissioned</title>
+<path fill="none" stroke="black" d="M162.07,-308.41C154.21,-275.57 146.92,-225.11 162.13,-184.58 171.31,-160.1 188.21,-137.38 205.65,-118.62"/>
+<polygon fill="black" stroke="black" points="207.94,-121.28 212.35,-111.64 202.9,-116.43 207.94,-121.28"/>
+<text text-anchor="middle" x="206.13" y="-216.88" font-family="Arial" font-size="14.00">decommission</text>
+</g>
+<!-- deposited&#45;&gt;decommissioned -->
+<g id="edge12" class="edge">
+<title>deposited&#45;&gt;decommissioned</title>
+<path fill="none" stroke="black" d="M276.56,-190.75C271.89,-183.28 267.63,-174.96 265.13,-166.58 263.06,-159.65 261.64,-152.32 260.72,-144.92"/>
+<polygon fill="black" stroke="black" points="264.23,-144.8 259.82,-135.17 257.26,-145.44 264.23,-144.8"/>
+<text text-anchor="middle" x="309.13" y="-155.38" font-family="Arial" font-size="14.00">decommission</text>
+</g>
+<!-- decommissioned&#45;&gt;decommissioned -->
+<g id="edge13" class="edge">
+<title>decommissioned&#45;&gt;decommissioned</title>
+<path fill="none" stroke="black" d="M329.18,-83.08C340.8,-80.96 348.92,-75.53 348.92,-66.79 348.92,-61.05 345.42,-56.74 339.73,-53.86"/>
+<polygon fill="black" stroke="black" points="341.22,-50.66 330.62,-50.96 339.09,-57.33 341.22,-50.66"/>
+<text text-anchor="middle" x="392.92" y="-63.09" font-family="Arial" font-size="14.00">decommission</text>
+</g>
+</g>
+</svg>

@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["fileUploads", "globusRadioButton", "browserRadioButton"]
+  static targets = ["fileUploads", "browserRadioButton", "globusRadioButton", "zipUpload", "zipRadioButton"]
 
   connect() {
     this.updatePanelVisibility()
@@ -9,5 +9,6 @@ export default class extends Controller {
 
   updatePanelVisibility(_event) {
     this.fileUploadsTarget.hidden = !this.browserRadioButtonTarget.checked
+    this.zipUploadTarget.hidden = !this.zipRadioButtonTarget.checked
   }
 }

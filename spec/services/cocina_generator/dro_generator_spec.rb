@@ -341,8 +341,8 @@ RSpec.describe CocinaGenerator::DROGenerator do
         content_type: 'image/svg+xml'
       )
     end
-    let(:attached_file) { build(:attached_file) }
-    let(:attached_file2) { build(:attached_file) }
+    let(:attached_file) { build(:attached_file, path: 'sul.svg') }
+    let(:attached_file2) { build(:attached_file, path: 'favicon.ico') }
 
     before do
       # rubocop:disable RSpec/MessageChain

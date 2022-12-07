@@ -13,7 +13,7 @@
                                   bs_toggle: 'modal',
                                   bs_target: '#contactUsModal' }) %>
       </p>
-        <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="1000">
+      <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-previews-container=".dropzone-files-previews">
         <fieldset>
           <div class="dropzone dropzone-default" data-dropzone-target="container">
             <%= form.file_field :files, multiple: true, direct_upload: true,
@@ -24,7 +24,7 @@
           </div>
           <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
           <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
-          <div class="dropzone-previews" data-dropzone-target="previewsContainer">
+          <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
             <%= form.fields_for :attached_files do |file_form| %>
               <%= render Works::FileRowComponent.new(form: file_form) %>
             <% end %>
@@ -35,6 +35,37 @@
           <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
             <%= render Works::FileRowComponent.new(form: file_form) %>
           <% end %>
+        </template>
+      </div>
+    </div>
+  </div>
+  <div class="form-check pt-3" data-complex-radio-target="selection">
+    <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
+        data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton' }
+      %>
+    <%= form.label :upload_type, 'Upload a single .zip file (<10GB) to be displayed as a hierarchy.', class: 'form-check-label fw-semibold' %>
+    <div id="zip-files-panel" data-file-uploads-target="zipUpload">
+      <p>We recommend the .zip file not contain over 1000 files.</p>
+      <div data-controller="dropzone" data-dropzone-max-file-size="10000", data-dropzone-max-files="1",
+          data-dropzone-accepted-files=".zip" data-dropzone-clickable=".dz-zip-clickable" data-dropzone-previews-container=".dropzone-zip-previews">
+        <fieldset>
+          <div class="dropzone dropzone-default" data-dropzone-target="container">
+            <%= form.file_field :files, multiple: false, direct_upload: true,
+                                data: { dropzone_target: 'input' } %>
+            <div class="dz-message needsclick text-secondary">
+              <p>Drop zip file here</p>
+            </div>
+          </div>
+          <span style="margin: .7rem">or</span> <button type="button" class="dz-zip-clickable btn btn-outline-primary">Choose file</button>
+          <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
+          <div class="dropzone-previews dropzone-zip-previews" data-dropzone-target="previewsContainer">
+          </div>
+        </fieldset>
+
+        <template data-dropzone-target='template'>
+          <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
+            <%= render Works::FileRowComponent.new(form: file_form, zip_template: true) %>
+          <% end %>                  
         </template>
       </div>
     </div>

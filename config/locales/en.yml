@@ -27,7 +27,10 @@ en:
       decommission: Decommissioned
       no_review_workflow: Review no longer required
       collection_moved: ''
-
+      unzip: Starting unzip
+      unzip_and_submit_for_review: Starting unzip
+      unzip_and_begin_deposit: Starting unzip
+      unzip_complete: Unzip complete
   contributor:
     roles:
       person: Individual
@@ -47,6 +50,11 @@ en:
       depositing: Deposit in progress
       deposited: Deposited
       decommissioned: Decommissioned
+      unzip_first_draft: Unzipping in progress
+      unzip_version_draft: Unzipping in progress
+      unzip_pending_approval: Unzipping in progress
+      unzip_depositing: Unzipping in progress
+
     edit_links:
       title: 'Edit title and contact'
       author: 'Edit authors and contributors'

@@ -30,13 +30,19 @@ Metrics/BlockLength:
     - state_machine
     - class_methods
     - included
+
 Metrics/ClassLength:
   Max: 150
   Exclude:
     - app/services/description_generator.rb
+    - app/forms/draft_work_form.rb
 
 Metrics/MethodLength:
   Max: 15
+
+Metrics/ModuleLength:
+  Exclude:
+    - app/models/concerns/work_version_state_machine.rb
 
 Naming/PredicateName:
   NamePrefix:

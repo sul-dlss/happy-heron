@@ -172,4 +172,14 @@ class WorkVersion < ApplicationRecord
   def preserved_files
     @preserved_files ||= attached_files.select { |af| ActiveStorage::Service::SdrService.accessible?(af.file.blob) }
   end
+
+  # current state might take some time, so may want to display a spinner
+  def wait_state?
+    depositing? || reserving_purl? || unzipping_state?
+  end
+
+  # in one of the unzipping states
+  def unzipping_state?
+    unzip_first_draft? || unzip_version_draft? || unzip_pending_approval? || unzip_depositing?
+  end
 end

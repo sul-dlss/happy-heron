@@ -3,8 +3,9 @@
 module Works
   # Renders a widget corresponding to a single file attached to the work.
   class FileRowComponent < ApplicationComponent
-    def initialize(form:)
+    def initialize(form:, zip_template: false)
       @form = form
+      @zip_template = zip_template
     end
 
     attr_reader :form
@@ -12,7 +13,7 @@ module Works
     def filename
       return unless uploaded?
 
-      form.object.model.filename
+      form.object.model.path
     end
 
     def filesize
@@ -35,6 +36,10 @@ module Works
     # file has been uploaded and saved to the model
     def saved?
       form.object.persisted?
+    end
+
+    def zip_template?
+      @zip_template
     end
   end
 end

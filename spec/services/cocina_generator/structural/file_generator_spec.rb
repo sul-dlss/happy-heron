@@ -52,4 +52,24 @@ RSpec.describe CocinaGenerator::Structural::FileGenerator do
       end
     end
   end
+
+  describe '#filename' do
+    context 'when attached file has a path' do
+      let(:work_version) { build(:work_version) }
+      let(:attached_file) { create(:attached_file, :with_file, work_version:, path: 'test/file.txt') }
+
+      it 'uses the path' do
+        expect(model.filename).to eq 'test/file.txt'
+      end
+    end
+
+    context 'when attached file does not have a path' do
+      let(:work_version) { build(:work_version) }
+      let(:attached_file) { create(:attached_file, :with_file, work_version:, path: nil) }
+
+      it 'uses the file filename' do
+        expect(model.filename).to eq 'sul.svg'
+      end
+    end
+  end
 end

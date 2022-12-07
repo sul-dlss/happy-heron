@@ -6,8 +6,7 @@ class AttachedFile < ApplicationRecord
   has_one_attached :file
 
   def path
-    # Stubbing out for the future in which this may contain the path, not just the filename.
-    filename.to_s
+    super || blob&.filename.to_s
   end
 
   delegate :blob, to: :file

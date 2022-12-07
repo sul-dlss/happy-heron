@@ -99,6 +99,7 @@ class DraftWorkForm < Reform::Form
              on: :work_version do
     property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :label
+    property :path
     property :hide, type: Dry::Types['params.bool']
     # The file property is only necessary if there is a server side validation error and we need to re-render the form.
     property :file, virtual: true
@@ -172,6 +173,7 @@ class DraftWorkForm < Reform::Form
     super
     # if the user selects globus uploads, we cannot have any attached files
     work_version.attached_files.destroy_all if work_version.globus?
+    # For a zipfile, both the existing files and the zipfile will be attached. These will be removed during unzip.
     dedupe_keywords
     work.update(head: work_version)
   end

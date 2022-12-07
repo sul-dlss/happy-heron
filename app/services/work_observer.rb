@@ -28,6 +28,7 @@ class WorkObserver
   end
 
   def self.after_begin_deposit(work_version, _transition)
+    work_version.update_attribute(:published_at, DateTime.now.utc) # rubocop:disable Rails/SkipsModelValidations
     DepositJob.perform_later(work_version)
   end
 
@@ -71,6 +72,10 @@ class WorkObserver
 
   def self.globus_account_setup(work_version)
     work_mailer(work_version).globus_account_setup.deliver_later
+  end
+
+  def self.after_unzip(work_version, _transition)
+    UnzipJob.perform_later(work_version)
   end
 
   def self.work_mailer(work_version)

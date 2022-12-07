@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :attached_file do
     label { 'MyString' }
     hide { false }
+    path { 'sul.svg' }
     work_version
   end
 
