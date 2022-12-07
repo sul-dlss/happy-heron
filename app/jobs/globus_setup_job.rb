@@ -11,14 +11,15 @@ class GlobusSetupJob < ApplicationJob
     Honeybadger.context({ work_version_id: work_version.id, druid:,
                           work_id: work_version.work.id, depositor_sunet: })
 
-    if user_is_known_to_globus?(depositor_sunet) && work_version.globus_endpoint.blank?
-      # user is known to globus but doesn't have an endpoint yet
+    if glubus_user_exists?(depositor_sunet) && work_version.globus_endpoint.blank?
+      # user is known to globus but doesn't have a globus endpoint yet, so create it and send the email
       create_globus_endpoint(work_version)
       send_email_with_globus_endpoint(work_version)
-      work_version.globus_setup_complete! # this transitions the state back to draft
-    elsif !user_is_known_to_globus?(depositor_sunet) && work_version.draft?
-      # user is NOT known to globus, and is not yet in the globus_setup state,
-      #  so put them into the pending state, which will then send them an email (via the state transition)
+      work_version.globus_setup_complete! # this transitions the state back to draft (first of verion)
+    elsif !glubus_user_exists?(depositor_sunet) && work_version.draft?
+      # user is NOT known to globus, and is not yet in the globus_setup state:
+      # this means they need to complete their globus account activation first and then let us know,
+      #  so put them into the globus pending state, which will then send them an email (via the state transition)
       work_version.globus_setup_pending! # this transitions the state from draft to globus_setup
     end
   end
@@ -26,17 +27,14 @@ class GlobusSetupJob < ApplicationJob
 
   private
 
-  def user_is_known_to_globus?(_depositor_sunet)
-    # TODO: use globus client gem to see if this sunet is known to globus, return true/false
-    true
+  def glubus_user_exists?(depositor_sunet)
+    Globus::Client.user_exists?(depositor_sunet)
   end
 
   def create_globus_endpoint(work_version)
-    # depositor_sunet = work_version.work.depositor.sunetid
-    # TODO use globus client gem to create globus endpoint for this work_version/depositor
-    # then store endpoint URL in work_version
-    endpoint_url = 'some_globus_string'
-    work_version.update(globus_endpoint: endpoint_url)
+    result = Globus::Client.mkdir(user_id: work_version.work.depositor.sunetid, work_id: work_version.work.id,
+                                  work_version: work_version.id)
+    work_version.update(globus_endpoint: result)
   end
 
   def send_email_with_globus_endpoint(work_version)
