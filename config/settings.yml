@@ -7,6 +7,12 @@ preservation_catalog:
   url: 'https://preservation-catalog-stage-01.stanford.edu'
   token: 'mint-token-with-target-preservation-catalog-rake-generate-token'
 
+globus:
+  client_id: client_id
+  client_secret: client_secret
+  uploads_directory: /uploads/
+  transfer_endpoint_id: endpoint_uuid
+
 accountws:
   pem_file: /etc/pki/tls/certs/sul-h2-qa.stanford.edu.pem
   host: accountws-uat.stanford.edu
