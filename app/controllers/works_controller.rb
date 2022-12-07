@@ -119,7 +119,7 @@ class WorksController < ObjectsController
 
     return unless work_version.globus?
 
-    if Globus::Client.user_exists?(work.depositor.sunetid)
+    if GlobusClient.user_exists?(work.depositor.sunetid)
       GlobusSetupJob.perform_later(work_version)
       flash[:notice] = I18n.t('work.flash.globus_setup_complete')
     else

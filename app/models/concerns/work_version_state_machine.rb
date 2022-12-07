@@ -98,6 +98,8 @@ module WorkVersionStateMachine
     end
 
     def check_globus_setup
+      return unless Settings.globus_upload # feature flag, can remove when feature fully enabled
+
       if globus?
         # if the user selected the globus upload option, run the globus setup job each time we save as draft
         #  to see if there is any work to be done for globus setup

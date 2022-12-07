@@ -14,7 +14,6 @@ class GlobusSetupJob < ApplicationJob
     if glubus_user_exists?(depositor_sunet) && work_version.globus_endpoint.blank?
       # user is known to globus but doesn't have a globus endpoint yet, so create it and send the email
       create_globus_endpoint(work_version)
-      send_email_with_globus_endpoint(work_version)
       work_version.globus_setup_complete! # this transitions the state back to draft (first of verion)
     elsif !glubus_user_exists?(depositor_sunet) && work_version.draft?
       # user is NOT known to globus, and is not yet in the globus_setup state:
@@ -28,13 +27,17 @@ class GlobusSetupJob < ApplicationJob
   private
 
   def glubus_user_exists?(depositor_sunet)
-    Globus::Client.user_exists?(depositor_sunet)
+    GlobusClient.user_exists?(depositor_sunet)
   end
 
   def create_globus_endpoint(work_version)
-    result = Globus::Client.mkdir(user_id: work_version.work.depositor.sunetid, work_id: work_version.work.id,
-                                  work_version: work_version.id)
-    work_version.update(globus_endpoint: result)
+    result = GlobusClient.mkdir(user_id: work_version.work.depositor.sunetid, work_id: work_version.work.id,
+                                work_version: work_version.id)
+    return unless result.success?
+
+    endpoint_path = '' # TODO: compute this
+    work_version.update(globus_endpoint: endpoint_path)
+    # TODO: Error handling?
   end
 
   def send_email_with_globus_endpoint(work_version)
