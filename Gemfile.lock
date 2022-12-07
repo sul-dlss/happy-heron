@@ -251,7 +251,7 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    globus_client (0.2.1)
+    globus_client (0.3.2)
       activesupport (>= 4.2, < 8)
       faraday
       zeitwerk
@@ -569,7 +569,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday (~> 2.0)
-  globus_client (~> 0.2)
+  globus_client (~> 0.3, >= 0.3.2)
   honeybadger (~> 4.0)
   jbuilder
   jsbundling-rails (~> 0.1.9)

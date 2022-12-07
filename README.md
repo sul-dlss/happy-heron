@@ -41,6 +41,13 @@ REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
 
 See https://github.com/sul-dlss/happy-heron/wiki/Complete-deposits-locally for some other useful info for local development.
 
+### Globus Client Gem
+
+The globus client gem needs to be configured for it work in stage/qa during development.  You will need the client id/secrets/config
+from vault, and then add it to your `config/settings.local.yml`, matching the globus config setup shown in `config/settings.yml`.
+
+To get the config values from vault, see the globus client README: https://github.com/sul-dlss/globus_client/blob/main/README.md
+
 ## Testing
 
 To enable interactive debugging, invoke `bin/dev` as follows:
