@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Globus::Client.configure(
+GlobusClient.configure(
   client_id: Settings.globus.client_id,
   client_secret: Settings.globus.client_secret,
   uploads_directory: Settings.globus.uploads_directory,
