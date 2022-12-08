@@ -6,7 +6,7 @@
    with a link to take you directly to the location we created for you to place your files.  The folder location within Globus
    is shown below.  Please upload your files to that location in Globus. Refer to our <%=link_to 'help page', '#'%> if you have questions.</p>
 
-<p><strong>Globus folder:</strong> <%= link_to @work_version.globus_endpoint %></p>
+<p><strong>Globus folder:</strong> <%= @work_version.globus_endpoint %></p>
 
 <p>Once you have completed uploading your files, <%=link_to 'return to your deposit', work_url(@work)%>,
   review your entries, and click "Deposit."</p>

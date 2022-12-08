@@ -302,4 +302,38 @@ RSpec.describe WorksMailer do
       )
     end
   end
+
+  describe 'globus_setup' do
+    let(:work) { build_stubbed(:work) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
+    let(:mail) { described_class.with(work_version:, user: a_user).globus_setup }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Activate your Globus account'
+      expect(mail.to).to eq [a_user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders body' do
+      expect(mail.body).to include "Dear #{a_user.first_name},"
+      expect(mail.body).to include 'Click the link below to use single sign on to activate your Globus account'
+    end
+  end
+
+  describe 'globus_endpoint_created' do
+    let(:work) { build_stubbed(:work) }
+    let(:work_version) { build_stubbed(:work_version, work:) }
+    let(:mail) { described_class.with(work_version:, user: a_user).globus_endpoint_created }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Upload your files to the SDR using Globus'
+      expect(mail.to).to eq [a_user.email]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders body' do
+      expect(mail.body).to include "Dear #{a_user.first_name},"
+      expect(mail.body).to include 'You will need to use Globus to transfer the files for this deposit to us.'
+    end
+  end
 end

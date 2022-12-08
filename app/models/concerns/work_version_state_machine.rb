@@ -36,7 +36,7 @@ module WorkVersionStateMachine
       after_transition except_from: :version_draft, to: :version_draft,
                        do: CollectionObserver.method(:version_draft_created)
 
-      # check to see if there any globus related actions needed when transition to any draft state
+      # check to see if there any globus related actions needed when transitioning to any draft state
       after_transition to: %i[first_draft version_draft globus_setup_first_draft globus_setup_version_draft],
                        do: :check_globus_setup
 
@@ -52,7 +52,7 @@ module WorkVersionStateMachine
         transition version_draft: :globus_setup_version_draft
       end
 
-      # event occurs when a user has completed initial globus setup; go back to regular draft state
+      # event occurs when we've created the globus endpoint; go back to regular draft state if not already there
       event :globus_setup_complete do
         transition first_draft: :first_draft
         transition version_draft: :version_draft
