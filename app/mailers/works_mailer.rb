@@ -86,7 +86,7 @@ class WorksMailer < ApplicationMailer
     mail(to: @user.email, subject: 'An item in your collection has been removed from the Stanford Digital Repository')
   end
 
-  def globus_setup
+  def globus_account_setup
     @user = UserPresenter.new(user: params[:user])
     @work_version = params[:work_version]
     @work = @work_version.work

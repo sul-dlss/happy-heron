@@ -303,10 +303,10 @@ RSpec.describe WorksMailer do
     end
   end
 
-  describe 'globus_setup' do
+  describe 'globus_account_setup' do
     let(:work) { build_stubbed(:work) }
     let(:work_version) { build_stubbed(:work_version, work:) }
-    let(:mail) { described_class.with(work_version:, user: a_user).globus_setup }
+    let(:mail) { described_class.with(work_version:, user: a_user).globus_account_setup }
 
     it 'renders the headers' do
       expect(mail.subject).to eq 'Activate your Globus account'

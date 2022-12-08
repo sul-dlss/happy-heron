@@ -22,6 +22,8 @@ RSpec.describe GlobusSetupJob do
 
     context 'when the work does not yet have an endpoint created' do
       context 'when in first_draft state' do
+        before { work_version.update(state: 'first_draft') }
+
         it 'creates the globus endpoint, sends the email but does not transition state' do
           expect(work_version.state).to eq 'first_draft'
           described_class.perform_now(work_version)
@@ -42,10 +44,12 @@ RSpec.describe GlobusSetupJob do
     end
 
     context 'when the work already has an endpoint created' do
-      before { work_version.update(globus_endpoint: '/uploads/something') }
+      before do
+        work_version.update(globus_endpoint: '/uploads/something')
+        work_version.update(state: 'first_draft')
+      end
 
       it 'does nothing' do
-        expect(work_version.state).to eq 'first_draft'
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
         expect(work_version.state).to eq 'first_draft'
@@ -56,10 +60,12 @@ RSpec.describe GlobusSetupJob do
   context 'when the user is not known to globus' do
     before do
       allow(GlobusClient).to receive(:user_exists?).and_return(false)
-      allow(GlobusClient).to receive(:mkdir).and_return(true)
+      allow(GlobusClient).to receive(:mkdir)
     end
 
     context 'when the work is not in the globus setup draft state' do
+      before { work_version.update(state: 'first_draft') }
+
       it 'transitions into the globus_setup_first_draft state' do
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)

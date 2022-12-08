@@ -25,9 +25,9 @@ module WorkVersionStateMachine
       after_transition on: :deposit_complete, do: CollectionObserver.method(:item_deposited)
       after_transition on: :decommission, do: WorkObserver.method(:after_decommission)
       after_transition except_from: :globus_setup_first_draft, to: :globus_setup_first_draft,
-                       do: WorkObserver.method(:globus_setup)
+                       do: WorkObserver.method(:globus_account_setup)
       after_transition except_from: :globus_setup_version_draft, to: :globus_setup_version_draft,
-                       do: WorkObserver.method(:globus_setup)
+                       do: WorkObserver.method(:globus_account_setup)
 
       # Trigger the collection observer when starting a new draft,
       # except when the previous state was draft.
@@ -46,13 +46,14 @@ module WorkVersionStateMachine
         transition %i[first_draft version_draft pending_approval] => :depositing
       end
 
-      # event occurs when a user requests to use globus for upload but still needs to complete initial globus setup
+      # event occurs when a user selects globus for upload but does not have a globus account yet
+      #  transition to the globus_setup state so we can show them UI and send emails
       event :globus_setup_pending do
         transition first_draft: :globus_setup_first_draft
         transition version_draft: :globus_setup_version_draft
       end
 
-      # event occurs when we've created the globus endpoint; go back to regular draft state if not already there
+      # event occurs when we create the globus endpoint; go back to regular draft states (if not already there)
       event :globus_setup_complete do
         transition first_draft: :first_draft
         transition version_draft: :version_draft
@@ -106,7 +107,7 @@ module WorkVersionStateMachine
         # if the user selected the globus upload option, run the globus setup job each time we save as draft
         #  to see if there is any work to be done for globus setup
         GlobusSetupJob.perform_later(self)
-      elsif globus_setup?
+      elsif globus_setup_draft?
         # if this is NOT a globus upload job and we were in a globus setup pending state, go back to draft
         #  this is when a user first selected globus and then later changed back to a different upload type
         globus_setup_complete!
