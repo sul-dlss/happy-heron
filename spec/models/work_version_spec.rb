@@ -433,6 +433,24 @@ RSpec.describe WorkVersion do
             .from('globus_setup_version_draft').to('version_draft')
         end
       end
+
+      context 'when the state was first_draft' do
+        let(:state) { 'first_draft' }
+
+        it 'stays on first_draft' do
+          expect { work_version.globus_setup_complete! }
+            .not_to change(work_version, :state)
+        end
+      end
+
+      context 'when the state was version_draft' do
+        let(:state) { 'version_draft' }
+
+        it 'stays on version_draft' do
+          expect { work_version.globus_setup_complete! }
+            .not_to change(work_version, :state)
+        end
+      end
     end
 
     describe 'an update_metadata event' do

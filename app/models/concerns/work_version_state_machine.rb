@@ -54,6 +54,8 @@ module WorkVersionStateMachine
 
       # event occurs when a user has completed initial globus setup; go back to regular draft state
       event :globus_setup_complete do
+        transition first_draft: :first_draft
+        transition version_draft: :version_draft
         transition globus_setup_first_draft: :first_draft
         transition globus_setup_version_draft: :version_draft
       end

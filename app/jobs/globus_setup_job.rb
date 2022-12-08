@@ -14,7 +14,8 @@ class GlobusSetupJob < ApplicationJob
     if globus_user_exists?(user.email) && work_version.globus_endpoint.blank?
       # user is known to globus but doesn't have a globus endpoint yet, so create it and send the email
       create_globus_endpoint(work_version)
-      work_version.globus_setup_complete! # this transitions the state back to draft (first of verion)
+      send_email_with_globus_endpoint(work_version)
+      work_version.globus_setup_complete! # this transitions the state back to draft (first draft or version draft)
     elsif !globus_user_exists?(user.email) && work_version.draft?
       # user is NOT known to globus, and is not yet in the globus_setup state:
       # this means they need to complete their globus account activation first and then let us know,
