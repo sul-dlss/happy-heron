@@ -7,15 +7,15 @@ class GlobusSetupJob < ApplicationJob
   # rubocop:disable Metrics/AbcSize
   def perform(work_version)
     druid = work_version.work.druid # may be nil
-    depositor_sunet = work_version.work.depositor.sunetid
+    user = work_version.work.owner
     Honeybadger.context({ work_version_id: work_version.id, druid:,
-                          work_id: work_version.work.id, depositor_sunet: })
+                          work_id: work_version.work.id, depositor_sunet: user.sunetid })
 
-    if glubus_user_exists?(depositor_sunet) && work_version.globus_endpoint.blank?
+    if globus_user_exists?(user.email) && work_version.globus_endpoint.blank?
       # user is known to globus but doesn't have a globus endpoint yet, so create it and send the email
       create_globus_endpoint(work_version)
       work_version.globus_setup_complete! # this transitions the state back to draft (first of verion)
-    elsif !glubus_user_exists?(depositor_sunet) && work_version.draft?
+    elsif !globus_user_exists?(user.email) && work_version.draft?
       # user is NOT known to globus, and is not yet in the globus_setup state:
       # this means they need to complete their globus account activation first and then let us know,
       #  so put them into the globus pending state, which will then send them an email (via the state transition)
@@ -26,18 +26,20 @@ class GlobusSetupJob < ApplicationJob
 
   private
 
-  def glubus_user_exists?(depositor_sunet)
-    GlobusClient.user_exists?(depositor_sunet)
+  def globus_user_exists?(user_id)
+    GlobusClient.user_exists?(user_id)
   end
 
   def create_globus_endpoint(work_version)
-    result = GlobusClient.mkdir(user_id: work_version.work.depositor.sunetid, work_id: work_version.work.id,
-                                work_version: work_version.id)
-    return unless result.success?
+    user = work_version.work.owner
+    # e.g. 'mjgiarlo/work1234/version1'
+    endpoint_path = "#{user.sunetid}/work#{work_version.work.id}/version#{work_version.version}"
+    success = GlobusClient.mkdir(user_id: user.email, path: endpoint_path)
 
-    endpoint_path = '' # TODO: compute this
-    work_version.update(globus_endpoint: endpoint_path)
     # TODO: Error handling?
+    return unless success
+
+    work_version.update(globus_endpoint: endpoint_path)
   end
 
   def send_email_with_globus_endpoint(work_version)

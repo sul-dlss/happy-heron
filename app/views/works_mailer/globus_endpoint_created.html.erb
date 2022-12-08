@@ -2,11 +2,11 @@
 
 <p>You have initiated a deposit of more than 10 GB of content in the Stanford Digital Repository.</p>
 
-<p>You will need to use Globus to transfer the files for this deposit to us. Please click on the link below
-  to access the Globus endpoint that we have created for you, then drag and drop your files to upload them to the endpoint.
-  Refer to our <%=link_to 'help page', '#'%> if you have questions.</p>
+<p>You will need to use Globus to transfer the files for this deposit to us. You should have received an email from Globus
+   with a link to take you directly to the location we created for you to place your files.  The folder location within Globus
+   is shown below.  Please upload your files to that location in Globus. Refer to our <%=link_to 'help page', '#'%> if you have questions.</p>
 
-<p><%= link_to @work_version.globus_endpoint %></p>
+<p><strong>Globus folder:</strong> <%= link_to @work_version.globus_endpoint %></p>
 
 <p>Once you have completed uploading your files, <%=link_to 'return to your deposit', work_url(@work)%>,
   review your entries, and click "Deposit."</p>
