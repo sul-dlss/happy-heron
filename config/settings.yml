@@ -12,6 +12,7 @@ globus:
   client_secret: client_secret
   uploads_directory: /uploads/
   transfer_endpoint_id: endpoint_uuid
+  help_doc_url: https://docs.google.com/document/d/10b7y3yZCOfyVJ_uP4l7QHbkILQKnfdJi9hj-MpmmdIk
 
 accountws:
   pem_file: /etc/pki/tls/certs/sul-h2-qa.stanford.edu.pem

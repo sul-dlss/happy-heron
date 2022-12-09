@@ -16,6 +16,7 @@ RSpec.describe GlobusSetupJob do
     before do
       allow(GlobusClient).to receive(:user_exists?).and_return(true)
       allow(GlobusClient).to receive(:mkdir).and_return(true)
+      allow(WorkObserver).to receive(:globus_endpoint_created)
     end
 
     context 'when the work does not yet have an endpoint created' do
@@ -23,15 +24,10 @@ RSpec.describe GlobusSetupJob do
         before { work_version.update(state: 'first_draft') }
 
         it 'creates the globus endpoint, sends the email but does not transition state' do
-          expect { described_class.perform_now(work_version) }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            'WorksMailer', 'globus_endpoint_created', 'deliver_now',
-            { params: {
-              user:,
-              work_version:
-            }, args: [] }
-          )
+          described_class.perform_now(work_version)
           expect(GlobusClient).to have_received(:mkdir)
           expect(work_version.state).to eq 'first_draft'
+          expect(WorkObserver).to have_received(:globus_endpoint_created)
         end
       end
 
@@ -39,15 +35,10 @@ RSpec.describe GlobusSetupJob do
         before { work_version.update(state: 'globus_setup_first_draft') }
 
         it 'creates the globus endpoint, sends the email and transitions back to first_draft state' do
-          expect { described_class.perform_now(work_version) }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            'WorksMailer', 'globus_endpoint_created', 'deliver_now',
-            { params: {
-              user:,
-              work_version:
-            }, args: [] }
-          )
+          described_class.perform_now(work_version)
           expect(GlobusClient).to have_received(:mkdir)
           expect(work_version.state).to eq 'first_draft'
+          expect(WorkObserver).to have_received(:globus_endpoint_created)
         end
       end
     end
@@ -59,17 +50,10 @@ RSpec.describe GlobusSetupJob do
       end
 
       it 'does nothing' do
-        expect do
-          described_class.perform_now(work_version)
-        end.not_to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-          'WorksMailer', 'globus_endpoint_created', 'deliver_now',
-          { params: {
-            user:,
-            work_version:
-          }, args: [] }
-        )
+        described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
         expect(work_version.state).to eq 'first_draft'
+        expect(WorkObserver).not_to have_received(:globus_endpoint_created)
       end
     end
   end
@@ -81,12 +65,12 @@ RSpec.describe GlobusSetupJob do
     end
 
     context 'when the work is not in the globus setup draft state' do
-      before { work_version.update(state: 'first_draft') }
+      before { work_version.update(state: 'version_draft') }
 
-      it 'transitions into the globus_setup_first_draft state' do
+      it 'transitions into the globus_setup_version_draft state' do
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
-        expect(work_version.state).to eq 'globus_setup_first_draft'
+        expect(work_version.state).to eq 'globus_setup_version_draft'
       end
     end
 

@@ -14,7 +14,7 @@ class GlobusSetupJob < ApplicationJob
     if globus_user_exists?(user.email) && work_version.globus_endpoint.blank?
       # user is known to globus but doesn't have a globus endpoint yet, so create it and send the email
       create_globus_endpoint(work_version)
-      send_email_with_globus_endpoint(work_version)
+      WorkObserver.globus_endpoint_created(work_version) # send email with globus endpoint
       work_version.globus_setup_complete! # this transitions the state back to draft (first draft or version draft)
     elsif !globus_user_exists?(user.email) && work_version.draft?
       # user is NOT known to globus, and is not yet in the globus_setup state:
@@ -41,10 +41,5 @@ class GlobusSetupJob < ApplicationJob
     return unless success
 
     work_version.update(globus_endpoint: endpoint_path)
-  end
-
-  def send_email_with_globus_endpoint(work_version)
-    # send email instructions to user with globus endpoint
-    WorksMailer.with(user: work_version.work.owner, work_version:).globus_endpoint_created.deliver_later
   end
 end
