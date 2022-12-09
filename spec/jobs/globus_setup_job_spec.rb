@@ -10,9 +10,7 @@ RSpec.describe GlobusSetupJob do
   end
   let(:work) { create(:work, owner: user, collection: collection_version.collection) }
 
-  before do
-    work.update(head: work_version)
-  end
+  before { work.update(head: work_version) }
 
   context 'when the user is known to globus' do
     before do
@@ -29,6 +27,7 @@ RSpec.describe GlobusSetupJob do
           described_class.perform_now(work_version)
           expect(GlobusClient).to have_received(:mkdir)
           expect(work_version.state).to eq 'first_draft'
+          # TODO: verify email got sent
         end
       end
 
@@ -39,6 +38,7 @@ RSpec.describe GlobusSetupJob do
           described_class.perform_now(work_version)
           expect(GlobusClient).to have_received(:mkdir)
           expect(work_version.state).to eq 'first_draft'
+          # TODO: verify email got sent
         end
       end
     end
@@ -53,6 +53,7 @@ RSpec.describe GlobusSetupJob do
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
         expect(work_version.state).to eq 'first_draft'
+        # TODO: verify email did not got sent
       end
     end
   end

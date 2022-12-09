@@ -453,6 +453,33 @@ RSpec.describe WorkVersion do
       end
     end
 
+    describe 'globus_setup_aborted event' do
+      let(:collection) { create(:collection, :with_managers) }
+      let(:collection_version) { create(:collection_version_with_collection, collection:) }
+      let(:work_version) { create(:work_version, state:, work:) }
+      let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
+
+      context 'when the state was globus_setup_first_draft' do
+        let(:state) { 'globus_setup_first_draft' }
+
+        it 'transitions back to first_draft' do
+          expect { work_version.globus_setup_aborted! }
+            .to change(work_version, :state)
+            .from('globus_setup_first_draft').to('first_draft')
+        end
+      end
+
+      context 'when the state was globus_setup_version_draft' do
+        let(:state) { 'globus_setup_version_draft' }
+
+        it 'transitions back to version_draft' do
+          expect { work_version.globus_setup_aborted! }
+            .to change(work_version, :state)
+            .from('globus_setup_version_draft').to('version_draft')
+        end
+      end
+    end
+
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :with_managers) }
       let(:collection_version) { create(:collection_version_with_collection, collection:) }
