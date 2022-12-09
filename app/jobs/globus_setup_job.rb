@@ -45,6 +45,6 @@ class GlobusSetupJob < ApplicationJob
 
   def send_email_with_globus_endpoint(work_version)
     # send email instructions to user with globus endpoint
-    WorksMailer.with(user: work_version.work.owner, work_version:).globus_endpoint_created
+    WorksMailer.with(user: work_version.work.owner, work_version:).globus_endpoint_created.deliver_later
   end
 end
