@@ -303,7 +303,7 @@ RSpec.describe 'Create a new work' do
         before { create(:collection_version_with_collection, collection:) }
 
         it 'saves the draft' do
-          post "/collections/#{collection.id}/works", params: params
+          post("/collections/#{collection.id}/works", params:)
           expect(response).to have_http_status(:found)
           work_version = Work.last.head
           expect(work_version.authors.size).to eq 1
