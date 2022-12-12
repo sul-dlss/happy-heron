@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["depositButton", "globusRadioButton"]
+  static targets = ["depositButton", "globusRadioButton", "globusMessage"]
 
   connect() {
     this.updateDepositButtonStatus()
@@ -9,5 +9,6 @@ export default class extends Controller {
 
   updateDepositButtonStatus(_event) {
     this.depositButtonTarget.disabled = this.globusRadioButtonTarget.checked
+    this.globusMessageTarget.hidden = !this.globusRadioButtonTarget.checked
   }
 }

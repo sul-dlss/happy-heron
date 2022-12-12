@@ -69,6 +69,10 @@ class WorkObserver
     end
   end
 
+  def self.globus_account_setup(work_version)
+    work_mailer(work_version).globus_account_setup.deliver_later
+  end
+
   def self.work_mailer(work_version)
     WorksMailer.with(user: work_version.work.owner, work_version:)
   end

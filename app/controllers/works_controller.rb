@@ -110,6 +110,23 @@ class WorksController < ObjectsController
     authorize! @work.head, to: :show?
   end
 
+  # the user has indicated that they have completed their globus setup
+  def complete_globus_setup
+    work = Work.find(params[:id])
+    work_version = work.head
+
+    authorize! work_version, to: :show?
+
+    if GlobusClient.user_exists?(work.depositor.sunetid)
+      GlobusSetupJob.perform_later(work_version)
+      flash[:notice] = I18n.t('work.flash.globus_setup_complete')
+    else
+      flash[:warning] = I18n.t('work.flash.globus_setup_not_complete')
+    end
+
+    redirect_to dashboard_path
+  end
+
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the work.
   def delete_button

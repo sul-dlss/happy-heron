@@ -571,7 +571,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday (~> 2.0)
-  globus_client (~> 0.4)
+  globus_client (~> 0.5)
   honeybadger (~> 4.0)
   jbuilder
   jsbundling-rails (~> 0.1.9)

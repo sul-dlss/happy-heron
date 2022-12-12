@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         get :next_step
         get :next_step_review
         get :details
+        get :complete_globus_setup
         resource :owners, only: %i[edit update], controller: 'work_owners'
         resource :locks, only: %i[edit update], controller: 'work_locks'
         resource :decommission, only: %i[edit update], controller: 'work_decommission', as: :work_decommission

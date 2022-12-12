@@ -433,13 +433,59 @@ RSpec.describe WorkVersion do
             .from('globus_setup_version_draft').to('version_draft')
         end
       end
+
+      context 'when the state was first_draft' do
+        let(:state) { 'first_draft' }
+
+        it 'stays on first_draft' do
+          expect { work_version.globus_setup_complete! }
+            .not_to change(work_version, :state)
+        end
+      end
+
+      context 'when the state was version_draft' do
+        let(:state) { 'version_draft' }
+
+        it 'stays on version_draft' do
+          expect { work_version.globus_setup_complete! }
+            .not_to change(work_version, :state)
+        end
+      end
+    end
+
+    describe 'globus_setup_aborted event' do
+      let(:collection) { create(:collection, :with_managers) }
+      let(:collection_version) { create(:collection_version_with_collection, collection:) }
+      let(:work_version) { create(:work_version, state:, work:) }
+      let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
+
+      context 'when the state was globus_setup_first_draft' do
+        let(:state) { 'globus_setup_first_draft' }
+
+        it 'transitions back to first_draft' do
+          expect { work_version.globus_setup_aborted! }
+            .to change(work_version, :state)
+            .from('globus_setup_first_draft').to('first_draft')
+        end
+      end
+
+      context 'when the state was globus_setup_version_draft' do
+        let(:state) { 'globus_setup_version_draft' }
+
+        it 'transitions back to version_draft' do
+          expect { work_version.globus_setup_aborted! }
+            .to change(work_version, :state)
+            .from('globus_setup_version_draft').to('version_draft')
+        end
+      end
     end
 
     describe 'an update_metadata event' do
       let(:collection) { create(:collection, :with_managers) }
       let(:collection_version) { create(:collection_version_with_collection, collection:) }
-      let(:work_version) { create(:work_version, state:, work:) }
+      let(:work_version) { create(:work_version, state:, work:, upload_type:) }
       let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
+      let(:upload_type) { 'browser' }
 
       context 'when the state was new' do
         let(:state) { 'new' }
@@ -472,18 +518,44 @@ RSpec.describe WorkVersion do
       context 'when the state is globus_setup_first_draft' do
         let(:state) { 'globus_setup_first_draft' }
 
-        it 'allows the transition and retains the same state' do
-          work_version.update_metadata!
-          expect(work_version.state).to eq 'globus_setup_first_draft'
+        before { Settings.globus_upload = true }
+
+        context 'when upload type is browser' do
+          it 'transitions back to first_draft' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'first_draft'
+          end
+        end
+
+        context 'when upload type is globus' do
+          let(:upload_type) { 'globus' }
+
+          it 'allows the transition and retains the same state' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'globus_setup_first_draft'
+          end
         end
       end
 
       context 'when the state is globus_setup_version_draft' do
         let(:state) { 'globus_setup_version_draft' }
 
-        it 'allows the transition and retains the same state' do
-          work_version.update_metadata!
-          expect(work_version.state).to eq 'globus_setup_version_draft'
+        before { Settings.globus_upload = true }
+
+        context 'when upload type is browser' do
+          it 'transitions back to version_draft' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'version_draft'
+          end
+        end
+
+        context 'when upload type is globus' do
+          let(:upload_type) { 'globus' }
+
+          it 'allows the transition and retains the same state' do
+            work_version.update_metadata!
+            expect(work_version.state).to eq 'globus_setup_version_draft'
+          end
         end
       end
     end
