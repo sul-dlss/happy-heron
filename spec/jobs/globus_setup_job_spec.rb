@@ -27,6 +27,7 @@ RSpec.describe GlobusSetupJob do
             .with('WorksMailer', 'globus_endpoint_created', 'deliver_now',
                   { params: { user:, work_version: }, args: [] })
           expect(GlobusClient).to have_received(:mkdir)
+          work_version.reload
           expect(work_version.state).to eq 'first_draft'
         end
       end
@@ -39,6 +40,7 @@ RSpec.describe GlobusSetupJob do
             .with('WorksMailer', 'globus_endpoint_created', 'deliver_now',
                   { params: { user:, work_version: }, args: [] })
           expect(GlobusClient).to have_received(:mkdir)
+          work_version.reload
           expect(work_version.state).to eq 'first_draft'
         end
       end
@@ -55,6 +57,7 @@ RSpec.describe GlobusSetupJob do
           .with('WorksMailer', 'globus_endpoint_created', 'deliver_now',
                 { params: { user:, work_version: }, args: [] })
         expect(GlobusClient).not_to have_received(:mkdir)
+        work_version.reload
         expect(work_version.state).to eq 'first_draft'
       end
     end
@@ -72,6 +75,7 @@ RSpec.describe GlobusSetupJob do
       it 'transitions into the globus_setup_version_draft state' do
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
+        work_version.reload
         expect(work_version.state).to eq 'globus_setup_version_draft'
       end
     end
@@ -82,7 +86,7 @@ RSpec.describe GlobusSetupJob do
       it 'does nothing' do
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
-        expect(work_version.state).to eq 'globus_setup_first_draft'
+        expect(work_version.reload.state).to eq 'globus_setup_first_draft'
       end
     end
   end
