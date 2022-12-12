@@ -26,36 +26,30 @@ module CocinaGenerator
       # 1) Start with the existing filesets from SDR
       # 2) Rebuild filesets that have attached_files that are preserved
       # 3) Add new filesets that have attached_files in the local store.
+      # 4) Sort the filesets by filename (each fileset has a single file in H2 design) ascending and case-insensitive
       def build_filesets
-        filesets = find_preserved_filesets.to_h do |filename, fileset|
-          [
-            filename,
-            build_fileset(attached_file: get_preserved_file(filename), fileset:)
-          ]
-        end
-        filesets.values + work_version.staged_files.map { |af| build_fileset(attached_file: af) }
+        (work_version.staged_files.map { |af| build_fileset(attached_file: af) } + find_preserved_filesets)
+          .sort_by { |file_set_hash| file_set_hash.dig(:structural, :contains, 0).filename.downcase }
       end
 
       # @return [Hash] map of filename to matching fileset's cocina for preserved files.
       def find_preserved_filesets
-        return {} unless cocina_obj
+        return [] unless cocina_obj
 
-        preserved_file_names = work_version.preserved_files.map(&:filename).map(&:to_s)
-        create_filesmap(preserved_file_names)
+        # h2 only has one file per fileset
+        cocina_obj
+          .structural
+          .contains
+          .filter_map do |fileset|
+          next unless (preserved_file = get_preserved_file(fileset.structural.contains.first.filename))
+
+          build_fileset(attached_file: preserved_file, fileset:)
+        end
       end
 
       def get_preserved_file(filename)
         work_version.preserved_files.find { |attached_file| attached_file.filename.to_s == filename }
       end
-
-      # rubocop:disable Rails/IndexBy
-      def create_filesmap(preserved_file_names)
-        # h2 only has one file per fileset
-        cocina_obj.structural.contains
-                  .select { |fileset| preserved_file_names.include?(fileset.structural.contains.first.filename) }
-                  .to_h { |fileset| [fileset.structural.contains.first.filename, fileset] }
-      end
-      # rubocop:enable Rails/IndexBy
 
       # rubocop:disable Metrics/AbcSize
       # rubocop:disable Metrics/MethodLength
