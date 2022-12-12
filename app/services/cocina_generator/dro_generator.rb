@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module CocinaGenerator
+  ID_NAMESPACE = 'https://cocina.sul.stanford.edu'
+
   # This generates a RequestDRO for a work
   class DROGenerator
     def self.generate_model(work_version:, cocina_obj: nil)
