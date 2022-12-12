@@ -13,6 +13,8 @@ globus:
   uploads_directory: /uploads/
   transfer_endpoint_id: endpoint_uuid
   help_doc_url: https://docs.google.com/document/d/10b7y3yZCOfyVJ_uP4l7QHbkILQKnfdJi9hj-MpmmdIk
+  test_mode: false # for testing purposes in non-production only, simulates globus API calls
+  test_user_exists: true # if test_mode=true, simulates if the globus user exists
 
 accountws:
   pem_file: /etc/pki/tls/certs/sul-h2-qa.stanford.edu.pem
@@ -41,9 +43,9 @@ earliest_year: 1000
 external_links:
   what_is_a_doi: https://library.stanford.edu/research/stanford-digital-repository/documentation/purls-and-dois
 
-# feature flag
+# feature flags
 allow_sdr_content_changes: true
-globus_upload: false
+globus_upload: false  # set to true to use globus automation workflow; false is manual globus upload
 
 authorization_group_header: HTTP_X_GROUPS
 first_name_header: HTTP_X_PERSON_NAME

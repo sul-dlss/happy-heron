@@ -117,7 +117,7 @@ class WorksController < ObjectsController
 
     authorize! work_version, to: :show?
 
-    if GlobusClient.user_exists?(work.depositor.sunetid)
+    if globus_user_exists?(work.depositor.email)
       GlobusSetupJob.perform_later(work_version)
       flash[:notice] = I18n.t('work.flash.globus_setup_complete')
     else
@@ -151,6 +151,12 @@ class WorksController < ObjectsController
   end
 
   private
+
+  def globus_user_exists?(user_id)
+    return Settings.globus.test_user_exists if Settings.globus.test_mode && Rails.env.development?
+
+    GlobusClient.user_exists?(user_id)
+  end
 
   # Create the next WorkVersion for this work
   def create_new_version(previous_version)

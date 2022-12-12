@@ -35,6 +35,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                <% if Settings.globus.test_mode %>
+                  <li class="nav-item">Globus test mode user exists: <%= Settings.globus.test_user_exists %></li>
+                <% end %>
                 <li class="nav-item">
                   <%= link_to('Help', '#contactUsModal',
                             class: 'nav-link',
