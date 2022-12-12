@@ -10,7 +10,7 @@ module ActiveStorage
       def download(key, &block)
         raise NotImplementedError unless block
 
-        instrument :streaming_download, key: key do
+        instrument(:streaming_download, key:) do
           stream(key, &block)
         end
       end
