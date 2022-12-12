@@ -69,6 +69,22 @@ Create and migrate the database with `bundle exec rake db:prepare` and seed the 
 
 Then run tests with `bundle exec rspec`. If you also want to do style checks & linting, run Rubocop and RSpec serially via `bin/rake`.
 
+### Faking Globus Client Calls
+
+If you want to test the automated globus workflow setup on your laptop without actually making globus calls, add the following config
+to the globus section of your `settings.local.yml` file:
+
+```
+globus:
+  test_mode: true # for testing purposes in non-production only, simulates globus API calls
+  test_user_exists: true # if test_mode=true, simulates if the globus user exists
+```
+
+Setting `test_mode` to true will prevent the GlobusClient from making actual API calls and will simply assume they succeed.
+To simulate if a user is currently known to globus or not, set the `test_user_exists` to true or false depending on what you want
+to test.  You can change from false to true after creating an object and refreshing the page to simulate the user completing the
+globus account setup.  When `test_mode` is set to true, a message is shown in the top navigation to note you are in test mode.
+
 ### Integration
 
 Spin up all docker compose services for local development and in-browser testing:

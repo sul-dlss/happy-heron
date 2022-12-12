@@ -28,6 +28,8 @@ class GlobusSetupJob < ApplicationJob
   private
 
   def globus_user_exists?(user_id)
+    return Settings.globus.test_user_exists if fake_globus_calls?
+
     GlobusClient.user_exists?(user_id)
   end
 
@@ -35,10 +37,17 @@ class GlobusSetupJob < ApplicationJob
     user = work_version.work.owner
     # e.g. 'mjgiarlo/work1234/version1'
     endpoint_path = "#{user.sunetid}/work#{work_version.work.id}/version#{work_version.version}"
-    success = GlobusClient.mkdir(user_id: user.email, path: endpoint_path)
+
+    # if simulated globus calls, return success, else make globus client call
+    success = fake_globus_calls? ? true : GlobusClient.mkdir(user_id: user.email, path: endpoint_path)
 
     raise "Error creating globus endpoint for work ID #{work.id}" unless success
 
     work_version.update(globus_endpoint: endpoint_path)
+  end
+
+  # simulate globus calls in development if settings indicate we should for testing
+  def fake_globus_calls?
+    Settings.globus.test_mode && Rails.env.development?
   end
 end
