@@ -67,6 +67,7 @@ RSpec.describe GlobusSetupJob do
     before do
       allow(GlobusClient).to receive(:user_exists?).and_return(false)
       allow(GlobusClient).to receive(:mkdir)
+      allow(work_version).to receive(:globus_setup_pending!)
     end
 
     context 'when the work is not in the globus setup draft state' do
@@ -75,8 +76,7 @@ RSpec.describe GlobusSetupJob do
       it 'transitions into the globus_setup_version_draft state' do
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
-        work_version.reload
-        expect(work_version.state).to eq 'globus_setup_version_draft'
+        expect(work_version).to have_received(:globus_setup_pending!)
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe GlobusSetupJob do
       it 'does nothing' do
         described_class.perform_now(work_version)
         expect(GlobusClient).not_to have_received(:mkdir)
-        expect(work_version.reload.state).to eq 'globus_setup_first_draft'
+        expect(work_version).not_to have_received(:globus_setup_pending!)
       end
     end
   end
