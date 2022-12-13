@@ -39,21 +39,11 @@
       </div>
     </div>
   </div>
-  <% if Settings.globus_upload %>
-    <div class="form-check pt-3" data-complex-radio-target="selection">
-      <%= form.radio_button :upload_type, 'globus', class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton', 'data-deposit-button-target': 'globusRadioButton',
-        data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus'}
-      %>
-      <%= form.label :upload_type, "Upload one or more files (>10GB) via Globus web-based transfer software.", class: 'form-check-label fw-semibold' %>
-      <p><%= link_to "Use single sign-on to activate your account first if you don't already have one" , 'https://globus.stanford.edu/accounts/create.html', target: :blank%>, and then return here to complete this form.</p>
-    </div>
-  <% else %>
-    <div class="form-check pt-3" data-complex-radio-target="selection">
-      <%= form.radio_button :upload_type, 'globus', class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton',
-        data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility'}
-      %>
-      <%= form.label :upload_type, 'I have uploaded my files to a Globus endpoint provided to me by SDR staff.', class: 'form-check-label fw-semibold' %>
-      <p><em>Only select this option if you have already discussed Globus with SDR staff.</em></p>
-    </div>
-  <% end %>
+  <div class="form-check pt-3" data-complex-radio-target="selection">
+    <%= form.radio_button :upload_type, 'globus', class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton', 'data-deposit-button-target': 'globusRadioButton',
+      data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus'}
+    %>
+    <%= form.label :upload_type, "Upload one or more files (>10GB) via Globus web-based transfer software.", class: 'form-check-label fw-semibold' %>
+    <p><%= link_to "Use single sign-on to activate your account first if you don't already have one" , 'https://globus.stanford.edu/accounts/create.html', target: :blank%>, and then return here to complete this form.</p>
+  </div>
 </section>

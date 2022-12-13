@@ -50,13 +50,9 @@ RSpec.describe Works::ButtonsComponent do
     end
   end
 
-  context 'when globus feature enabled' do
+  context 'when globus' do
     let(:work) { build(:work, collection: build(:collection, id: 7)) }
     let(:work_version) { build(:work_version, work:, state: 'new') }
-
-    before do
-      allow(Settings).to receive(:globus_upload).and_return true
-    end
 
     it 'updates the deposit button' do
       expect(rendered.css('input[value="Deposit"]')).to be_present

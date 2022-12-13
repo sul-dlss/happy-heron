@@ -5,7 +5,6 @@
 class WorksController < ObjectsController
   before_action :authenticate_user!
   before_action :ensure_sdr_updatable
-  before_action :set_globus_based_on_param
   verify_authorized except: %i[delete_button edit_button]
 
   def index
@@ -250,10 +249,6 @@ class WorksController < ObjectsController
 
     flash[:error] = errors.join("\n")
     redirect_to dashboard_path, status: :see_other
-  end
-
-  def set_globus_based_on_param
-    Settings.globus_upload = true if params[:globus] == 'true'
   end
 end
 # rubocop:enable Metrics/ClassLength

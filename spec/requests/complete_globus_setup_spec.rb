@@ -13,7 +13,6 @@ RSpec.describe 'User indicates globus setup is complete' do
   before do
     work.update(head: work_version)
     sign_in user, groups: ['dlss:hydrus-app-administrators']
-    allow(Settings).to receive(:globus_upload).and_return(true)
     allow(GlobusSetupJob).to receive(:perform_later)
   end
 
