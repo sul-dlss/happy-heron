@@ -61,7 +61,6 @@ RSpec.describe CocinaGenerator::DROGenerator do
       }
     ]
   end
-
   let(:admin_metadata) do
     {
       event: [
@@ -85,7 +84,6 @@ RSpec.describe CocinaGenerator::DROGenerator do
       ]
     }
   end
-
   let(:license_uri) { License.find('CC0-1.0').uri }
 
   context 'when files are not present' do
@@ -328,7 +326,7 @@ RSpec.describe CocinaGenerator::DROGenerator do
     end
   end
 
-  context 'when a file is present' do
+  context 'when files are present' do
     let!(:blob) do
       ActiveStorage::Blob.create_and_upload!(
         io: Rails.root.join('spec/fixtures/files/sul.svg').open,
@@ -336,22 +334,32 @@ RSpec.describe CocinaGenerator::DROGenerator do
         content_type: 'image/svg+xml'
       )
     end
+    let!(:blob2) do
+      ActiveStorage::Blob.create_and_upload!(
+        io: Rails.root.join('spec/fixtures/files/favicon.ico').open,
+        filename: 'favicon.ico',
+        content_type: 'image/svg+xml'
+      )
+    end
     let(:attached_file) { build(:attached_file) }
+    let(:attached_file2) { build(:attached_file) }
 
     before do
       # rubocop:disable RSpec/MessageChain
       allow(attached_file).to receive_message_chain(:file, :blob).and_return(blob)
+      allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2)
       # rubocop:enable RSpec/MessageChain
       allow(work).to receive(:assign_doi?).and_return(false)
     end
 
     after do
       blob.destroy
+      blob2.destroy
     end
 
     context 'without a cocina_obj' do
       let(:work_version) do
-        build(:work_version, version: 1, attached_files: [attached_file], title: 'Test title', work:)
+        build(:work_version, version: 1, attached_files: [attached_file, attached_file2], title: 'Test title', work:)
       end
       let(:work) { build(:work, id: 7, collection:) }
 
@@ -395,6 +403,27 @@ RSpec.describe CocinaGenerator::DROGenerator do
             },
             structural: {
               contains: [
+                {
+                  label: 'MyString',
+                  structural: { contains: [
+                    {
+                      access: { view: 'world', download: 'world' },
+                      administrative: { publish: true, sdrPreserve: true, shelve: true },
+                      filename: 'favicon.ico',
+                      hasMessageDigests: [
+                        { digest: 'aa9cf3e587a33b77b6d6ee0f8d36de39', type: 'md5' },
+                        { digest: 'e30e483ba4222573e8952ca066af8d2a1bd0bc53', type: 'sha1' }
+                      ],
+                      hasMimeType: 'image/png',
+                      label: 'MyString',
+                      size: 4_045,
+                      type: Cocina::Models::ObjectType.file,
+                      version: 1
+                    }
+                  ] },
+                  type: Cocina::Models::FileSetType.file,
+                  version: 1
+                },
                 {
                   label: 'MyString',
                   structural: { contains: [
