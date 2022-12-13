@@ -45,7 +45,6 @@ external_links:
 
 # feature flags
 allow_sdr_content_changes: true
-globus_upload: false  # set to true to use globus automation workflow; false is manual globus upload
 
 authorization_group_header: HTTP_X_GROUPS
 first_name_header: HTTP_X_PERSON_NAME

@@ -38,28 +38,9 @@ describe('Create work version', () => {
       cy.contains('You have successfully deposited your work')
     })
 
-    it('deposits a work correctly if globus is selected (without the need to upload a file)', () => {
-      cy.visit(`/works/${work_id}/edit`)
-      // try to deposit
-      cy.get('input.btn[value="Deposit"]').click()
-
-      // there is a message telling us we need to upload a file
-      cy.get('div.invalid-feedback').should('contain', 'You must attach a file')
-
-      // now select globus upload option
-      cy.get('#work_upload_type_globus').check()
-
-      // now try to deposit again
-      cy.get('input.btn[value="Deposit"]').click()
-
-      // successful deposit!
-      cy.url().should('include', `/works/${work_id}/next_step`)
-      cy.contains('You have successfully deposited your work')
-    })
-
     it('is not able to deposit when globus feature enabled and globus upload option is selected ', () => {
       // globus feature flag is set
-      cy.visit(`/works/${work_id}/edit?globus=true`)
+      cy.visit(`/works/${work_id}/edit`)
 
       // try to deposit
       cy.get('input.btn[value="Deposit"]').click()

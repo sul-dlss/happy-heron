@@ -45,7 +45,7 @@ module Works
     end
 
     def data_controllers
-      Settings.globus_upload ? 'auto-citation unsaved-changes deposit-button' : 'auto-citation unsaved-changes'
+      'auto-citation unsaved-changes deposit-button'
     end
   end
 end
