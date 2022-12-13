@@ -92,3 +92,10 @@ datacite:
 notify_admin_list: false
 # set to false to stop sending all email
 perform_deliveries: true
+
+# checkin keys for honeybadger (actual keys are in shared_configs per environment as needed)
+# see https://app.honeybadger.io/projects/77112/check_ins
+honeybadger_checkins:
+  work_reminder: null
+  collection_reminder: null
+  uploads_cleaner: null
