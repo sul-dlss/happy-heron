@@ -38,6 +38,7 @@ module HappyHeron
     config.action_cable.mount_path = '/cable'
 
     config.action_mailer.default_url_options = { host: Settings.host }
+    config.action_mailer.perform_deliveries = Settings.perform_deliveries
 
     # Override the default (5.minutes), so that large files have enough time to upload
     # Currently 90 minutes is based on most 10G uploads on slow connections taking just under 1.5 hours
