@@ -123,7 +123,7 @@ class WorksController < ObjectsController
       flash[:warning] = I18n.t('work.flash.globus_setup_not_complete')
     end
 
-    redirect_to dashboard_path
+    redirect_to work_path(work)
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
