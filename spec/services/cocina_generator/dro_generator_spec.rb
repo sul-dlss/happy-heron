@@ -341,13 +341,24 @@ RSpec.describe CocinaGenerator::DROGenerator do
         content_type: 'image/svg+xml'
       )
     end
+    let(:blob3) do
+      ActiveStorage::Blob.create_before_direct_upload!(
+        key: attached_file.create_globus_active_storage_key,
+        filename: 'globus.pdf',
+        service_name: ActiveStorage::Service::GlobusService::SERVICE_NAME,
+        byte_size: 0,
+        checksum: 'globus.pdf'
+      )
+    end
     let(:attached_file) { build(:attached_file, path: 'sul.svg') }
     let(:attached_file2) { build(:attached_file, path: 'favicon.ico') }
+    let(:attached_file3) { build(:attached_file, path: 'globus.pdf') }
 
     before do
       # rubocop:disable RSpec/MessageChain
       allow(attached_file).to receive_message_chain(:file, :blob).and_return(blob)
       allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2)
+      allow(attached_file3).to receive_message_chain(:file, :blob).and_return(blob3)
       # rubocop:enable RSpec/MessageChain
       allow(work).to receive(:assign_doi?).and_return(false)
     end
@@ -359,7 +370,8 @@ RSpec.describe CocinaGenerator::DROGenerator do
 
     context 'without a cocina_obj' do
       let(:work_version) do
-        build(:work_version, version: 1, attached_files: [attached_file, attached_file2], title: 'Test title', work:)
+        build(:work_version, version: 1, attached_files: [attached_file, attached_file2, attached_file3],
+                             title: 'Test title', work:, globus_endpoint: 'jstanford/work333/version1')
       end
       let(:work) { build(:work, id: 7, collection:) }
 
@@ -419,6 +431,23 @@ RSpec.describe CocinaGenerator::DROGenerator do
                       size: 4_045,
                       type: Cocina::Models::ObjectType.file,
                       version: 1
+                    }
+                  ] },
+                  type: Cocina::Models::FileSetType.file,
+                  version: 1
+                },
+                {
+                  label: 'MyString',
+                  structural: { contains: [
+                    {
+                      access: { view: 'world', download: 'world' },
+                      administrative: { publish: true, sdrPreserve: true, shelve: true },
+                      filename: 'globus.pdf',
+                      hasMessageDigests: [],
+                      label: 'MyString',
+                      type: Cocina::Models::ObjectType.file,
+                      version: 1,
+                      externalIdentifier: 'globus://jstanford/work333/version1/globus.pdf'
                     }
                   ] },
                   type: Cocina::Models::FileSetType.file,

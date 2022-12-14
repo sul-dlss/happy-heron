@@ -3,7 +3,7 @@ describe('Create work version', () => {
 
     beforeEach(() => {
       const results = cy.appFactories([
-        ['create', 'work_version_with_work_and_collection', 'with_required_associations', {} ]
+        ['create', 'work_version_with_work_and_collection', 'with_required_associations', {globus_endpoint: 'jstanford/work333/version1'} ]
       ]).then((results) => {
         cy.log(results[0])
         work_id = results[0].work_id
@@ -87,5 +87,15 @@ describe('Create work version', () => {
 
       // deposit button should be enabled
       cy.get('input.btn[value="Deposit"]', {force: true}).should('be.enabled')
+
+      // now select globus upload option again
+      cy.get('#work_upload_type_globus').check()
+
+      // and check all files upload checkbox
+      cy.get('#work_fetch_globus_files').check()
+
+      // deposit button should be enabled
+      cy.get('input.btn[value="Deposit"]', {force: true}).should('be.enabled')
+      
     })
 })

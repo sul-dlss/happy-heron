@@ -13,8 +13,12 @@ module Works
       delegate :attached_files, :work, to: :work_version
 
       def render?
-        # Hide this while unzipping.
-        !work_version.zipfile?
+        # Hide this while unzipping and fetching files from Globus
+        work_version.browser?
+      end
+
+      def download_all?
+        work_version.attached_files.all? { |attached_file| !attached_file.in_globus? }
       end
     end
   end

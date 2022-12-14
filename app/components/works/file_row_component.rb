@@ -18,6 +18,8 @@ module Works
 
     def filesize
       return unless uploaded?
+      # Globus files don't have a size
+      return if form.object.model.in_globus?
 
       form.object.model.byte_size
     end

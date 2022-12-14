@@ -15,7 +15,6 @@ class DepositJob < BaseDepositJob
 
     cocina_obj = Repository.find(druid) if druid
     request_dro = CocinaGenerator::DROGenerator.generate_model(work_version:, cocina_obj:)
-
     new_request_dro = update_dro_with_file_identifiers(request_dro, work_version)
 
     case new_request_dro
@@ -91,14 +90,14 @@ class DepositJob < BaseDepositJob
   end
 
   def staged_blobs(work_version)
-    work_version.staged_files.to_h do |attached_file|
+    work_version.staged_local_files.to_h do |attached_file|
       [attached_file.path, attached_file.blob]
     end
   end
 
   def filepath_map_for(work_version)
     # attached_file.path contains the cocina filename (e.g. 'dir1/file1.txt')
-    work_version.staged_files.to_h do |attached_file|
+    work_version.staged_local_files.to_h do |attached_file|
       [attached_file.path, blob_filepath_for(attached_file.file.blob)]
     end
   end

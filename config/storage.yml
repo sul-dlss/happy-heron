@@ -9,6 +9,9 @@ local:
 preservation:
   service: Sdr
 
+globus:
+  service: Globus
+
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3

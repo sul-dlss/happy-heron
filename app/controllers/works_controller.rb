@@ -180,18 +180,37 @@ class WorksController < ObjectsController
     work.event_context = event_context
     work_version.update_metadata!
 
-    unless deposit_button_pushed?
-      work_version.unzip! if work_version.zipfile? && work_version.attached_files.any?
+    # Instead of crazy conditional logic, constructing the event name and sending
+    state_event = state_event_for(work_version)
+    work_version.send(state_event) if state_event
 
-      return redirect_to work
+    return redirect_to next_step_review_work_path(work) if deposit_button_pushed? && work.collection.review_enabled?
+    return redirect_to next_step_work_path(work) if deposit_button_pushed?
+
+    redirect_to work
+  end
+
+  def state_event_for(work_version)
+    event_parts = [file_event_part(work_version), workflow_event_part(work_version.work)].compact
+
+    return if event_parts.empty?
+
+    "#{event_parts.join('_and_')}!"
+  end
+
+  def file_event_part(work_version)
+    if work_version.zipfile? && work_version.attached_files.any?
+      'unzip'
+    elsif fetch_globus_files?
+      'fetch_globus'
     end
+  end
 
-    if work.collection.review_enabled?
-      work_version.zipfile? ? work_version.unzip_and_submit_for_review! : work_version.submit_for_review!
-      redirect_to next_step_review_work_path(work)
-    else
-      work_version.zipfile? ? work_version.unzip_and_begin_deposit! : work_version.begin_deposit!
-      redirect_to next_step_work_path(work)
+  def workflow_event_part(work)
+    if deposit_button_pushed? && work.collection.review_enabled?
+      'submit_for_review'
+    elsif deposit_button_pushed?
+      'begin_deposit'
     end
   end
 
@@ -225,7 +244,7 @@ class WorksController < ObjectsController
                      :abstract, :citation_auto, :citation, :default_citation,
                      :access, :license, :version_description,
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
-                     :agree_to_terms, :assign_doi, :upload_type, :globus,
+                     :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
                      subtype: [],
                      attached_files_attributes: %i[_destroy id label hide file path],
                      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
@@ -253,6 +272,10 @@ class WorksController < ObjectsController
 
     flash[:error] = errors.join("\n")
     redirect_to dashboard_path, status: :see_other
+  end
+
+  def fetch_globus_files?
+    params[:work][:fetch_globus_files] == 'true'
   end
 end
 # rubocop:enable Metrics/ClassLength

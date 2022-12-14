@@ -14,7 +14,10 @@ class NewVersionParameterFilter
 
   # Update the attached_files parameters so that we create new attached files
   # that point at the same Blobs
+  # rubocop:disable Metrics/AbcSize
   def self.filter_attached_files(clean_params, old_version)
+    return if clean_params[:attached_files_attributes].blank?
+
     old_version.attached_files.each do |existing|
       existing_params = clean_params[:attached_files_attributes].values.find { |hash| hash['id'] == existing.id.to_s }
       next if existing_params.blank?
@@ -23,6 +26,7 @@ class NewVersionParameterFilter
       existing_params.delete('id')
     end
   end
+  # rubocop:enable Metrics/AbcSize
   private_class_method :filter_attached_files
 
   def self.filter_relation_params(clean_params, old_version, relation)

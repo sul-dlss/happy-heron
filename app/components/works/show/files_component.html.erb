@@ -5,8 +5,10 @@
       <span class="ms-3">
         <%= helpers.turbo_frame_tag dom_id(work, 'edit_file'), src: edit_button_work_path(work, tag: 'file'), target: '_top' %>
       </span>
-      <%= link_to work_zip_path(work), class: 'ms-4', data: { turbo: false } do %>
-        <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download All Files</span>
+      <% if download_all? %>
+        <%= link_to work_zip_path(work), class: 'ms-4', data: { turbo: false } do %>
+          <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download All Files</span>
+        <% end %>
       <% end %>
     </th>
     <th scope="col">Description</th>

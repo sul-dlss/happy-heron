@@ -25,12 +25,11 @@ module CocinaGenerator
         if work_version.work.druid
           Cocina::Models::File.new(file_attributes)
         else
-          Cocina::Models::RequestFile.new(request_file_attributes)
+          Cocina::Models::RequestFile.new(file_attributes)
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
-      def request_file_attributes
+      def file_attributes
         {
           type: Cocina::Models::ObjectType.file,
           version: work_version.version,
@@ -38,15 +37,11 @@ module CocinaGenerator
           filename:,
           access:,
           administrative:,
-          hasMimeType: cocina_file&.hasMimeType || blob.content_type,
+          hasMimeType: mime_type,
           hasMessageDigests: message_digests,
-          size: cocina_file&.size || blob.byte_size
-        }
-      end
-      # rubocop:enable Metrics/AbcSize
-
-      def file_attributes
-        request_file_attributes.merge(externalIdentifier: external_identifier)
+          size:,
+          externalIdentifier: external_identifier
+        }.compact
       end
 
       def filename
@@ -55,7 +50,14 @@ module CocinaGenerator
 
       def external_identifier
         # see https://github.com/sul-dlss/dor-services-app/blob/main/app/services/cocina/id_generator.rb
-        cocina_file&.externalIdentifier || blob.signed_id
+        return cocina_file.externalIdentifier if cocina_file
+
+        return "globus://#{work_version.globus_endpoint}/#{attached_file.path}" if attached_file.in_globus?
+
+        # Cocina::Models::File need an external identifier
+        return blob.signed_id if work_version.work.druid
+
+        nil
       end
 
       def administrative
@@ -67,11 +69,20 @@ module CocinaGenerator
       end
 
       def message_digests
-        cocina_file&.hasMessageDigests ||
-          [
-            { type: 'md5', digest: base64_to_hexdigest(blob.checksum) },
-            { type: 'sha1', digest: Digest::SHA1.file(file_path(blob.key)).hexdigest }
-          ]
+        return [] if attached_file.in_globus?
+        return cocina_file.hasMessageDigests if cocina_file
+
+        [
+          { type: 'md5', digest: base64_to_hexdigest(blob.checksum) },
+          { type: 'sha1', digest: Digest::SHA1.file(file_path(blob.key)).hexdigest }
+        ]
+      end
+
+      def size
+        return if attached_file.in_globus?
+        return cocina_file.size if cocina_file
+
+        blob.byte_size
       end
 
       delegate :blob, to: :attached_file
@@ -98,6 +109,13 @@ module CocinaGenerator
 
       def base64_to_hexdigest(base64)
         Base64.decode64(base64).unpack1('H*')
+      end
+
+      def mime_type
+        return if attached_file.in_globus?
+        return cocina_file.hasMimeType if cocina_file
+
+        blob.content_type
       end
     end
   end

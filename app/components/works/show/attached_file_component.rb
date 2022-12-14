@@ -21,6 +21,10 @@ module Works
         rails_blob_path(attached_file.file, disposition: 'attachment')
       end
 
+      def can_download?
+        !attached_file.in_globus?
+      end
+
       def filename
         attached_file.path
       end

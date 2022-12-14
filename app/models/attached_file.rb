@@ -20,14 +20,20 @@ class AttachedFile < ApplicationRecord
     return if ActiveStorage::Service::SdrService.accessible?(file.blob)
 
     file.blob = file.blob.dup
-    file.blob.key = create_active_storage_key
+    file.blob.key = create_preservation_active_storage_key
     file.blob.service_name = ActiveStorage::Service::SdrService::SERVICE_NAME
   end
 
-  def create_active_storage_key
+  def create_preservation_active_storage_key
     ActiveStorage::Service::SdrService.encode_key(work_version.work.druid,
                                                   work_version.version,
-                                                  filename.to_s)
+                                                  path)
+  end
+
+  def create_globus_active_storage_key
+    ActiveStorage::Service::GlobusService.encode_key(work_version.work.druid,
+                                                     work_version.version,
+                                                     path)
   end
 
   # Is the most recently uploaded copy of this file in preservation?
@@ -35,6 +41,10 @@ class AttachedFile < ApplicationRecord
     ActiveStorage::Service::SdrService.accessible?(file.blob) ||
       work_version.deposited? ||
       !changed_in_this_version?
+  end
+
+  def in_globus?
+    ActiveStorage::Service::GlobusService.accessible?(file.blob)
   end
 
   private

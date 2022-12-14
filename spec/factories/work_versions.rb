@@ -223,8 +223,8 @@ FactoryBot.define do
       end
     end
     attached_files do
-      [association(:attached_file, file: uploads[0].signed_id),
-       association(:attached_file, file: uploads[1].signed_id)]
+      [association(:attached_file, path: 'favicon.ico', file: uploads[0].signed_id),
+       association(:attached_file, path: 'sul.svg', file: uploads[1].signed_id)]
     end
   end
 end

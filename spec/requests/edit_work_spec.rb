@@ -40,6 +40,8 @@ RSpec.describe 'Updating an existing work' do
             title: 'New title',
             work_type: 'text',
             abstract: 'test abstract',
+            upload_type:,
+            fetch_globus_files:,
             attached_files_attributes: {
               '0' => { 'label' => 'two', '_destroy' => '', 'hide' => '0', 'id' => work_version.attached_files.first.id }
             },
@@ -68,6 +70,9 @@ RSpec.describe 'Updating an existing work' do
             end
           end
         end
+
+        let(:upload_type) { 'browser' }
+        let(:fetch_globus_files) { 'false' }
 
         before do
           create(:attached_file, :with_file, work_version:)
@@ -142,29 +147,27 @@ RSpec.describe 'Updating an existing work' do
           end
         end
 
-        context 'with globus upload selected' do
-          before { work_params[:upload_type] = 'globus' }
+        context 'when editing globus' do
+          let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
+          let(:upload_type) { 'globus' }
+          let(:fetch_globus_files) { 'true' }
 
-          context 'when deposited' do
-            it 'removes any attached files' do
-              expect(work.head.attached_files.count).to eq 1
-              patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
-              expect(WorkVersion.where(work:).count).to eq 2
-              work.reload
-              expect(work.head.state).to eq 'depositing'
-              expect(work.head.attached_files.count).to eq 0
-            end
+          it 'redirects to the work page and starts fetching globus' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
+            expect(work.reload.head).to be_fetch_globus_version_draft
+            expect(response).to redirect_to(work)
           end
+        end
 
-          context 'when saved as draft' do
-            it 'removes any attached files' do
-              expect(work.head.attached_files.count).to eq 1
-              patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
-              expect(WorkVersion.where(work:).count).to eq 2
-              work.reload
-              expect(work.head.state).to eq 'version_draft'
-              expect(work.head.attached_files.count).to eq 0
-            end
+        context 'when depositing globus' do
+          let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
+          let(:upload_type) { 'globus' }
+          let(:fetch_globus_files) { 'true' }
+
+          it 'redirects to next_step page and starts fetching globus' do
+            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+            expect(work.reload.head).to be_fetch_globus_depositing
+            expect(response).to redirect_to(next_step_work_path(work))
           end
         end
       end
