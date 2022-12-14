@@ -7,7 +7,7 @@ class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true, allow_nil: false
   validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
   validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' },
-                             if: -> { upload_type == 'browser' }
+                             if: -> { %w[browser zip].include?(upload_type) }
   validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
   validates :license, presence: true, inclusion: { in: License.license_list }
   validates :authors, length: { minimum: 1, message: 'Please add at least one author.' }

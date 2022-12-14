@@ -452,6 +452,7 @@ GEM
     ruby-next-core (0.15.3)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    rubyzip (2.3.2)
     sdr-client (1.0.0)
       activesupport
       cocina-models (~> 0.86.0)
@@ -595,6 +596,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  rubyzip (~> 2.3)
   sdr-client (~> 1.0)
   sidekiq (~> 6.1)
   simplecov

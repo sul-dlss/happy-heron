@@ -13,17 +13,17 @@ module WorkVersionStateMachine
       before_transition WorkObserver.method(:before_transition)
 
       after_transition WorkObserver.method(:after_transition)
-      after_transition on: :begin_deposit do |work_version, transition|
-        work_version.update_attribute(:published_at, DateTime.now.utc) # rubocop:disable Rails/SkipsModelValidations
-        WorkObserver.after_begin_deposit(work_version, transition)
-      end
+      after_transition to: :depositing, do: WorkObserver.method(:after_begin_deposit)
       after_transition on: :reserve_purl, do: WorkObserver.method(:after_begin_reserve)
       after_transition on: :pid_assigned, do: WorkObserver.method(:after_druid_assigned)
       after_transition on: :reject, do: WorkObserver.method(:after_rejected)
-      after_transition on: :submit_for_review, do: WorkObserver.method(:after_submit_for_review)
+      after_transition to: :pending_approval, do: WorkObserver.method(:after_submit_for_review)
       after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
       after_transition on: :deposit_complete, do: CollectionObserver.method(:item_deposited)
       after_transition on: :decommission, do: WorkObserver.method(:after_decommission)
+      after_transition on: :unzip, do: WorkObserver.method(:after_unzip)
+      after_transition on: :unzip_and_submit_for_review, do: WorkObserver.method(:after_unzip)
+      after_transition on: :unzip_and_begin_deposit, do: WorkObserver.method(:after_unzip)
 
       # sends email to user about setting up a globus account; only happens first time we transition to this state
       after_transition except_from: :globus_setup_first_draft, to: :globus_setup_first_draft,
@@ -97,6 +97,26 @@ module WorkVersionStateMachine
         transition %i[first_draft version_draft pending_approval rejected globus_setup_first_draft
                       globus_setup_version_draft] => same
         transition purl_reserved: :first_draft
+      end
+
+      event :unzip do
+        transition first_draft: :unzip_first_draft
+        transition version_draft: :unzip_version_draft
+      end
+
+      event :unzip_and_submit_for_review do
+        transition %i[first_draft version_draft rejected pending_approval] => :unzip_pending_approval
+      end
+
+      event :unzip_and_begin_deposit do
+        transition %i[first_draft version_draft pending_approval] => :unzip_depositing
+      end
+
+      event :unzip_complete do
+        transition unzip_first_draft: :first_draft
+        transition unzip_version_draft: :version_draft
+        transition unzip_pending_approval: :pending_approval
+        transition unzip_depositing: :depositing
       end
 
       event :no_review_workflow do

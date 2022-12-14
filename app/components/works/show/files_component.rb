@@ -11,6 +11,11 @@ module Works
       attr_reader :work_version
 
       delegate :attached_files, :work, to: :work_version
+
+      def render?
+        # Hide this while unzipping.
+        !work_version.zipfile?
+      end
     end
   end
 end

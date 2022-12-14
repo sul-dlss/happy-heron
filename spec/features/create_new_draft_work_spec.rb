@@ -82,4 +82,32 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
       expect(page).not_to have_content WorkVersion::DOI_TEXT
     end
   end
+
+  context 'when attaching a zip file' do
+    it 'creates a draft and renders work show page' do
+      visit dashboard_path
+
+      click_button '+ Deposit to this collection'
+
+      expect(page).to have_content 'What type of content will you deposit?'
+
+      find('label', text: 'Sound').click
+
+      click_button 'Continue'
+
+      fill_in 'Title of deposit', with: 'My Draft'
+      choose 'work_upload_type_zipfile'
+
+      page.attach_file(Rails.root.join('spec/fixtures/files/folder3.zip')) do
+        click_button('Choose file')
+      end
+
+      expect(page).to have_css('.dz-success-mark')
+
+      click_button 'Save as draft'
+
+      expect(page).to have_content 'My Draft'
+      expect(page).to have_content 'Unzipping in progress'
+    end
+  end
 end

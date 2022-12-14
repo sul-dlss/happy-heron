@@ -28,21 +28,26 @@
   </div>
 
   <div class="upload-description col-4">
-      <div>
-        <%= form.label :label, 'Description (optional)' %>
-        <%= render PopoverComponent.new key: 'work.description' %>
-      </div>
-      <%= form.text_field :label, class: 'form-control' %>
+      <% unless zip_template? %>
+        <div>
+          <%= form.label :label, 'Description (optional)' %>
+          <%= render PopoverComponent.new key: 'work.description' %>
+        </div>
+        <%= form.text_field :label, class: 'form-control' %>
+      <% end %>
   </div>
 
   <div class="dz-details col-1 d-flex align-items-center">
-    <div class="form-check">
-    <%= form.hidden_field :_destroy %>
-    <%= form.hidden_field :file %>
-    <%= form.check_box :hide, class: 'form-check-input' %>
-    <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
-    <%= render PopoverComponent.new key: 'work.hide_file' %>
-    </div>
+      <div class="form-check">
+        <%= form.hidden_field :_destroy %>
+        <%= form.hidden_field :file %>
+        <%= form.hidden_field :path %>
+        <% unless zip_template? %>
+          <%= form.check_box :hide, class: 'form-check-input' %>
+          <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
+          <%= render PopoverComponent.new key: 'work.hide_file' %>
+        <% end %>
+      </div>
   </div>
 
   <div class="col-1 d-flex align-items-center">

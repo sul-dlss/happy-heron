@@ -11,7 +11,7 @@ module Works
 
     def call
       value = I18n.t(work_version.state, scope: 'work.state')
-      return value unless work_version.depositing? || work_version.reserving_purl?
+      return value unless work_version.wait_state?
 
       safe_join([value, spinner], ' ')
     end

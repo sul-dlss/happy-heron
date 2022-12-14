@@ -50,7 +50,7 @@ module CocinaGenerator
       end
 
       def filename
-        cocina_file&.filename || blob.filename.to_s # File.basename(filename(blob.key))
+        cocina_file&.filename || attached_file.path
       end
 
       def external_identifier

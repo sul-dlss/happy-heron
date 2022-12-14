@@ -81,14 +81,18 @@ export default class extends Controller {
   }
 
   bindEvents() {
-    this.dropZone.on("addedfile", file => {
+    this.dropZone.on("addedfile", file => {      
       setTimeout(() => {        
         file.accepted && createDirectUploadController(this, file).start();
         this.fileCount++
-        this.enableSubmission()
+        this.enableSubmission()        
         if (this.checkForDuplicates(file.name)) {
           this.dropZone.emit("error", file, 'Duplicate file');
         }
+        if(this.maxFiles && this.fileCount > this.maxFiles) {
+          this.dropZone.emit("error", file, `Too many files. Maximum is ${this.maxFiles}`);
+        }
+
       }, 500);
       this.done = false
     });
@@ -147,7 +151,7 @@ export default class extends Controller {
   }
 
   get maxFiles() {
-    return this.data.get("maxFiles") || 1;
+    return this.data.get("maxFiles");
   }
 
   get maxFileSize() {
@@ -160,6 +164,14 @@ export default class extends Controller {
 
   get addRemoveLinks() {
     return this.data.get("addRemoveLinks") || false;
+  }
+
+  get clickable() {
+    return this.data.get("clickable") || '.dz-clickable';
+  }
+
+  get previewsContainer() {
+    return this.data.get("previewsContainer") || '.dropzone-previews';
   }
 }
 
@@ -175,7 +187,8 @@ class DirectUploadController {
 
   start() {
     this.file.controller = this;
-    this.hiddenInput = this.createHiddenInput();
+    this.hiddenInput = this.createHiddenFileInput();
+    this.createHiddenPathInput();
     this.addDescription();
     this.addHideCheckbox();
     this.directUpload.create((error, attributes) => {
@@ -201,13 +214,21 @@ class DirectUploadController {
     detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
   }
 
-  createHiddenInput() {
+  createHiddenFileInput() {
     const input = document.createElement("input");
     input.type = "hidden";
     input.classList.add('hidden-file')
     input.name = `work[attached_files_attributes][${this.count}][file]`
     this.file.previewElement.appendChild(input);
     return input;
+  }
+
+  createHiddenPathInput() {
+    const input = document.createElement("input")
+    input.type = "hidden"
+    input.name = `work[attached_files_attributes][${this.count}][path]`
+    input.value = this.file.name
+    this.file.previewElement.appendChild(input)
   }
 
   directUploadWillStoreFileWithXHR(xhr) {
@@ -261,15 +282,15 @@ function createDropZone(controller, template) {
   return new Dropzone(controller.element, {
     url: controller.url,
     headers: controller.headers,
-    maxFiles: controller.maxFiles,
+    maxFiles: 1000,
     maxFilesize: controller.maxFileSize,
     acceptedFiles: controller.acceptedFiles,
     addRemoveLinks: controller.addRemoveLinks,
     previewTemplate: template,
-    previewsContainer: ".dropzone-previews",
+    previewsContainer: controller.previewsContainer,
     thumbnailHeight: 42,
     thumbnailWidth: 34,
-    clickable: '.dz-clickable',
+    clickable: controller.clickable,
 
     autoQueue: false
   });

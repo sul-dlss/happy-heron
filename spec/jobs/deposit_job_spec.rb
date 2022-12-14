@@ -25,9 +25,7 @@ RSpec.describe DepositJob do
     allow(SdrClient::Login).to receive(:run).and_return(Success())
     allow(SdrClient::Connection).to receive(:new).and_return(conn)
     allow(Honeybadger).to receive(:notify)
-    # rubocop:disable RSpec/MessageChain
-    allow(attached_file).to receive_message_chain(:file, :blob).and_return(blob)
-    # rubocop:enable RSpec/MessageChain
+    allow(attached_file).to receive_message_chain(:file, :blob).and_return(blob) # rubocop:disable RSpec/MessageChain
   end
 
   after do
@@ -78,7 +76,7 @@ RSpec.describe DepositJob do
     let(:second_work_version) do
       build(:work_version, work:, attached_files: [attached_file2], version: 2, version_description: 'Changed files')
     end
-    let(:attached_file2) { build(:attached_file) }
+    let(:attached_file2) { build(:attached_file, path: 'sul2.svg') }
     let!(:blob2) do
       ActiveStorage::Blob.create_and_upload!(
         io: Rails.root.join('spec/fixtures/files/sul.svg').open,
@@ -226,7 +224,6 @@ RSpec.describe DepositJob do
     end
 
     context 'when a file is added to an existing deposit' do
-      let(:attached_file2) { build(:attached_file) }
       let(:second_work_version) do
         build(:work_version, work:, attached_files: [attached_file, attached_file2], version: 2,
                              version_description: 'Added file')

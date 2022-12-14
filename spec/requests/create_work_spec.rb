@@ -132,19 +132,22 @@ RSpec.describe 'Create a new work' do
             '0' => {
               '_destroy' => '1',
               'label' => 'Wrong ICO',
-              'file' => upload1.signed_id
+              'file' => upload1.signed_id,
+              'path' => 'apple-touch-icon.png'
             },
             '999' => {
               '_destroy' => 'false',
               'label' => 'My ICO',
               'hide' => false,
-              'file' => upload2.signed_id
+              'file' => upload2.signed_id,
+              'path' => 'favicon.ico'
             },
             '1002' => {
               '_destroy' => 'false',
               'label' => 'My SVG',
               'hide' => false,
-              'file' => upload3.signed_id
+              'file' => upload3.signed_id,
+              'path' => 'sul.svg'
             }
           }
         end

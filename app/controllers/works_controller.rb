@@ -180,13 +180,17 @@ class WorksController < ObjectsController
     work.event_context = event_context
     work_version.update_metadata!
 
-    return redirect_to work unless deposit_button_pushed?
+    unless deposit_button_pushed?
+      work_version.unzip! if work_version.zipfile? && work_version.attached_files.any?
+
+      return redirect_to work
+    end
 
     if work.collection.review_enabled?
-      work_version.submit_for_review!
+      work_version.zipfile? ? work_version.unzip_and_submit_for_review! : work_version.submit_for_review!
       redirect_to next_step_review_work_path(work)
     else
-      work_version.begin_deposit!
+      work_version.zipfile? ? work_version.unzip_and_begin_deposit! : work_version.begin_deposit!
       redirect_to next_step_work_path(work)
     end
   end
@@ -223,7 +227,7 @@ class WorksController < ObjectsController
                      :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
                      :agree_to_terms, :assign_doi, :upload_type, :globus,
                      subtype: [],
-                     attached_files_attributes: %i[_destroy id label hide file],
+                     attached_files_attributes: %i[_destroy id label hide file path],
                      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
                      contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
                      contact_emails_attributes: %i[_destroy id email],

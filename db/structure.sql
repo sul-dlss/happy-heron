@@ -179,11 +179,12 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.attached_files (
     id bigint NOT NULL,
-    label character varying,
+    label character varying DEFAULT ''::character varying,
     hide boolean DEFAULT false NOT NULL,
     work_version_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    path character varying
 );
 
 
@@ -1351,6 +1352,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220914211415'),
 ('20221115215744'),
 ('20221117233130'),
-('20221201204010');
+('20221201204010'),
+('20221206194032'),
+('20221213211305');
 
 

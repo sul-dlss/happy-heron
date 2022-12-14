@@ -48,7 +48,7 @@ module CocinaGenerator
       end
 
       def get_preserved_file(filename)
-        work_version.preserved_files.find { |attached_file| attached_file.filename.to_s == filename }
+        work_version.preserved_files.find { |attached_file| attached_file.path == filename }
       end
 
       # rubocop:disable Metrics/AbcSize
