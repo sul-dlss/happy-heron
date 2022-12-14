@@ -1,8 +1,17 @@
-<div class="row my-5 mx-2 alert alert-danger">
-  <div class="col-9">
-     Click this button when you have completed setting up your Globus account and we will email you instructions on where to upload your files.
-  </div>
-  <div class="col-3">
-     <%= render Works::GlobusSetupButtonComponent.new(work_version:) %>
-  </div>
-</div>
+<% if work_version.globus_setup_draft? %>
+   <div class="row my-5 mx-2 alert alert-danger">
+      <div class="col-9">
+         Click this button when you have completed setting up your Globus account and we will email you instructions on where to upload your files.
+      </div>
+      <div class="col-3">
+         <%= render Works::GlobusSetupButtonComponent.new(work_version:) %>
+      </div>
+   </div>
+<% else %>
+   <div class="row my-5 mx-2 alert alert-info">
+      <div class="col-12">
+         Your files should now be uploaded to the Globus folder "<%=work_version.globus_endpoint%>" we created for this deposit.
+         Refer to our <%= link_to 'help page', Settings.globus.help_doc_url %> if you have questions.</p>
+      </div>
+   </div>
+<% end %>
