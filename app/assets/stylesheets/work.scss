@@ -53,6 +53,18 @@
     }
   }
 
+  // For files table
+  .files-list {
+    max-height: 550px;
+    overflow-y: auto;
+  }
+
+  .files-list thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
   // The pencil icon
   .edit {
     margin-left: 10px;

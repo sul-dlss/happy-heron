@@ -99,6 +99,11 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           expect(page).not_to have_content('Duplicate file')
           # End of client-side validation testing
 
+          choose 'work_upload_type_browser'
+          page.attach_file(Rails.root.join('spec/fixtures/files/favicon.ico')) do
+            click_button('Choose files')
+          end
+
           fill_in 'Title of deposit', with: 'My Title'
           fill_in 'Contact email', with: user.email
 
@@ -162,6 +167,12 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           expect(page).to have_content 'Citation from user input'
           expect(page).to have_content 'Everyone'
           expect(page).to have_content 'CC0-1.0'
+
+          within('#filesTable') do
+            # files are sorted alphabetically
+            expect(all('tr')[1]).to have_content 'favicon.ico'
+            expect(all('tr')[2]).to have_content 'sul.svg'
+          end
 
           within '#events' do
             # New work gets a description of what's changed (except subtypes)

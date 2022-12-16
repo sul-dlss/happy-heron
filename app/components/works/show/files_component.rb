@@ -20,6 +20,10 @@ module Works
       def download_all?
         work_version.attached_files.all? { |attached_file| !attached_file.in_globus? }
       end
+
+      def spinner
+        tag.span class: 'fa-solid fa-spinner fa-pulse fa-2xl my-5'
+      end
     end
   end
 end

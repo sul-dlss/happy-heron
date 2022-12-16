@@ -1,22 +1,14 @@
-<table class="table table-sm mb-5" id="filesTable">
-  <thead class="table-light">
-  <tr>
-    <th scope="col" class="table-title">Files
-      <span class="ms-3">
-        <%= helpers.turbo_frame_tag dom_id(work, 'edit_file'), src: edit_button_work_path(work, tag: 'file'), target: '_top' %>
-      </span>
-      <% if download_all? %>
-        <%= link_to work_zip_path(work), class: 'ms-4', data: { turbo: false } do %>
-          <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download All Files</span>
-        <% end %>
-      <% end %>
-    </th>
-    <th scope="col">Description</th>
-    <th scope="col">Hide file</th>
-  </tr>
-  </thead>
-  <tbody>
-    <%= render Works::Show::AttachedFileComponent.with_collection(attached_files.sort_by { |attached_file| attached_file.path.downcase },
-                                                                  work_version: work_version) %>
-  </tbody>
-</table>
+<turbo-frame id="<%= dom_id(work, 'files_list') %>" src="<%= files_list_work_path(work) %>" loading="lazy">
+  <table class="table table-sm mb-5" id="filesTable">
+    <thead class="table-light">
+    <tr>
+      <th scope="col" class="table-title">Files</th>
+      <th scope="col">Description</th>
+      <th scope="col">Hide file</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="3" class="text-center"><%= spinner %></td></tr>
+    </tbody>
+  </table>
+</turbo-frame>
