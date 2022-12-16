@@ -233,8 +233,6 @@ RSpec.describe WorkVersion do
     context 'when the state is globus_setup_version_draft' do
       let(:state) { 'globus_setup_version_draft' }
 
-      before { Settings.globus_upload = true }
-
       context 'when upload type is browser' do
         it 'transitions back to version_draft' do
           work_version.update_metadata!
