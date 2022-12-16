@@ -7,7 +7,6 @@
   <td><%= show_collection_link %></td>
   <td>
     <%= render Works::StateDisplayComponent.new(work_version: work_version) %>
-    <%= render Works::GlobusSetupButtonComponent.new(work_version: work_version) %>
   </td>
   <td><%= render LocalTimeComponent.new(datetime: work_version.updated_at, show_time: false) %></td>
 </tr>
