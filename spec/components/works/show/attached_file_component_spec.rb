@@ -3,13 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Works::Show::AttachedFileComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:rendered) { render_inline(described_class.new(attached_file:, work_version:)) }
+  let(:work_version) { create(:work_version, attached_files: [attached_file]) }
+  let(:attached_file) { build(:attached_file, :with_file) }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  context 'with an attached file' do
+    it 'shows a download link and the hide status' do
+      expect(rendered.css('a').last['href']).to start_with '/rails/active_storage/blobs/redirect/'
+      expect(rendered.css('td').last.to_html).to include 'No'
+    end
+  end
 end

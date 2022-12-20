@@ -126,6 +126,16 @@ class WorksController < ObjectsController
     redirect_to work_path(work)
   end
 
+  def files_list
+    work = Work.find(params[:id])
+    work_version = work.head
+    attached_files = work_version.attached_files.sort_by { |attached_file| attached_file.path.downcase }
+
+    authorize! work_version, to: :show?
+
+    render partial: 'works/files_list', locals: { work:, work_version:, attached_files: }
+  end
+
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the work.
   def delete_button
