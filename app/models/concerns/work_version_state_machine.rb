@@ -24,6 +24,9 @@ module WorkVersionStateMachine
       after_transition on: :unzip, do: WorkObserver.method(:after_unzip)
       after_transition on: :unzip_and_submit_for_review, do: WorkObserver.method(:after_unzip)
       after_transition on: :unzip_and_begin_deposit, do: WorkObserver.method(:after_unzip)
+      after_transition on: :fetch_globus, do: WorkObserver.method(:after_fetch_globus)
+      after_transition on: :fetch_globus_and_submit_for_review, do: WorkObserver.method(:after_fetch_globus)
+      after_transition on: :fetch_globus_and_begin_deposit, do: WorkObserver.method(:after_fetch_globus)
 
       # sends email to user about setting up a globus account; only happens first time we transition to this state
       after_transition except_from: :globus_setup_first_draft, to: :globus_setup_first_draft,
@@ -119,6 +122,26 @@ module WorkVersionStateMachine
         transition unzip_depositing: :depositing
       end
 
+      event :fetch_globus do
+        transition first_draft: :fetch_globus_first_draft
+        transition version_draft: :fetch_globus_version_draft
+      end
+
+      event :fetch_globus_and_submit_for_review do
+        transition %i[first_draft version_draft rejected pending_approval] => :fetch_globus_pending_approval
+      end
+
+      event :fetch_globus_and_begin_deposit do
+        transition %i[first_draft version_draft pending_approval] => :fetch_globus_depositing
+      end
+
+      event :fetch_globus_complete do
+        transition fetch_globus_first_draft: :first_draft
+        transition fetch_globus_version_draft: :version_draft
+        transition fetch_globus_pending_approval: :pending_approval
+        transition fetch_globus_depositing: :depositing
+      end
+
       event :no_review_workflow do
         transition %i[pending_approval rejected] => :version_draft
       end
@@ -129,7 +152,7 @@ module WorkVersionStateMachine
     end
 
     def check_globus_setup
-      if globus?
+      if globus? && globus_endpoint.blank?
         # if the user selected the globus upload option, run the globus setup job each time we save as draft
         #  to see if there is any work to be done for globus setup
         #  Note: all work happens in a job because it makes API calls to Globus which shouldn't block the HTTP cycle

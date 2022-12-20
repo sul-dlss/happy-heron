@@ -99,11 +99,11 @@ class WorkVersion < ApplicationRecord
   def switch_to_preserved_items!
     staged_files.each do |af|
       blob = af.file.blob
-      locally_cached_file = blob.service.path_for(blob.key)
-      blob.key = af.create_active_storage_key
+      locally_cached_file = locally_cached_file_for(blob)
+      blob.key = af.create_preservation_active_storage_key
       blob.service_name = ActiveStorage::Service::SdrService::SERVICE_NAME
       blob.save!
-      File.unlink(locally_cached_file)
+      File.unlink(locally_cached_file) if locally_cached_file
     end
   end
 
@@ -168,6 +168,14 @@ class WorkVersion < ApplicationRecord
     @staged_files ||= attached_files.reject { |af| ActiveStorage::Service::SdrService.accessible?(af.file.blob) }
   end
 
+  # @return [Array<AttachedFile>] a list of files not in preservation or globus
+  def staged_local_files
+    @staged_local_files ||= attached_files.reject do |af|
+      ActiveStorage::Service::SdrService.accessible?(af.file.blob) \
+      || ActiveStorage::Service::GlobusService.accessible?(af.file.blob)
+    end
+  end
+
   # @return [Array<AttachedFile>] a list of files in preservation
   def preserved_files
     @preserved_files ||= attached_files.select { |af| ActiveStorage::Service::SdrService.accessible?(af.file.blob) }
@@ -175,11 +183,25 @@ class WorkVersion < ApplicationRecord
 
   # current state might take some time, so may want to display a spinner
   def wait_state?
-    depositing? || reserving_purl? || unzipping_state?
+    depositing? || reserving_purl? || unzipping_state? || fetching_globus_state?
   end
 
   # in one of the unzipping states
   def unzipping_state?
     unzip_first_draft? || unzip_version_draft? || unzip_pending_approval? || unzip_depositing?
+  end
+
+  # in one of the fetching globus states
+  def fetching_globus_state?
+    fetch_globus_first_draft? || fetch_globus_version_draft? \
+    || fetch_globus_pending_approval? || fetch_globus_depositing?
+  end
+
+  private
+
+  def locally_cached_file_for(blob)
+    return unless blob.service.instance_of?(ActiveStorage::Service::DiskService)
+
+    blob.service.path_for(blob.key)
   end
 end

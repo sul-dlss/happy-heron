@@ -106,6 +106,7 @@ class DraftWorkForm < Reform::Form
     property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
   property :upload_type, on: :work_version
+  property :fetch_globus_files, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
@@ -171,8 +172,6 @@ class DraftWorkForm < Reform::Form
   # Ensure this work version is now head of the work versions for this work, and perform post save cleanup
   def save_model
     super
-    # if the user selects globus uploads, we cannot have any attached files
-    work_version.attached_files.destroy_all if work_version.globus?
     # For a zipfile, both the existing files and the zipfile will be attached. These will be removed during unzip.
     dedupe_keywords
     work.update(head: work_version)

@@ -601,7 +601,8 @@ RSpec.describe 'Create a new work' do
               '_destroy' => 'false',
               'label' => 'My ICO',
               'hide' => false,
-              'file' => upload.signed_id
+              'file' => upload.signed_id,
+              'path' => 'apple-touch-icon.png'
             }
           }
         end
@@ -894,14 +895,15 @@ RSpec.describe 'Create a new work' do
 
         before { create(:collection_version_with_collection, collection:) }
 
+        # When creating a new work, user can select globus but cannot deposit or mark files as ready for download.
         it 'displays the work' do
-          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Deposit' }
+          post "/collections/#{collection.id}/works", params: { work: work_params, commit: 'Save as draft' }
           expect(response).to have_http_status(:found)
           work_version = Work.last.head
           expect(work_version.attached_files).to be_empty
           expect(work_version.globus?).to be true
           expect(work_version.upload_type).to eq 'globus'
-          expect(work_version.state).to eq 'depositing'
+          expect(work_version.state).to eq 'first_draft'
         end
       end
     end

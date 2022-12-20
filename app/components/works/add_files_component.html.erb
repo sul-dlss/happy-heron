@@ -76,5 +76,13 @@
     %>
     <%= form.label :upload_type, "Upload one or more files (>10GB) via Globus web-based transfer software.", class: 'form-check-label fw-semibold' %>
     <p><%= link_to "Use single sign-on to activate your account first if you don't already have one" , 'https://globus.stanford.edu/accounts/create.html', target: :blank%>, and then return here to complete this form.</p>
+    <div data-file-uploads-target="globusUpload">
+      <% if globus_endpoint? %>
+        <%= form.check_box :fetch_globus_files, { class: "form-check-input", data: {deposit_button_target: 'globusCheckbox', action: 'deposit-button#updateDepositButtonStatus'} }, 'true', 'false' %>
+        <%= form.label :fetch_globus_files,
+         "All files have been uploaded to Globus.",
+         class: 'form-check-label' %>
+      <% end %>
+    </div>
   </div>
 </section>

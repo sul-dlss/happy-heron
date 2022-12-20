@@ -3,7 +3,7 @@
 module ActiveStorage
   class Service
     # This is a little bit different in that most services store the file at the key and the key is opaque,
-    # hoewever in this case the key is meaningful in that it stores the druid, version and filepath.
+    # however in this case the key is meaningful in that it stores the druid, version and filepath.
     class SdrService < Service
       SERVICE_NAME = 'preservation'
 

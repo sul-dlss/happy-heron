@@ -441,4 +441,37 @@ RSpec.describe WorkVersion do
         .and(have_enqueued_job(UnzipJob).with(work_version))
     end
   end
+
+  describe 'fetch globus event' do
+    let(:work_version) { create(:work_version) }
+
+    it 'transitions to fetch_globus_first_draft' do
+      expect { work_version.fetch_globus! }
+        .to change(work_version, :state)
+        .to('fetch_globus_first_draft')
+        .and(have_enqueued_job(FetchGlobusJob).with(work_version))
+    end
+  end
+
+  describe 'fetch_globus_and_submit_for_review event' do
+    let(:work_version) { create(:work_version, state: 'pending_approval') }
+
+    it 'transitions to fetch_globus_pending_approval' do
+      expect { work_version.fetch_globus_and_submit_for_review! }
+        .to change(work_version, :state)
+        .to('fetch_globus_pending_approval')
+        .and(have_enqueued_job(FetchGlobusJob).with(work_version))
+    end
+  end
+
+  describe 'fetch_globus_and_begin_deposit event' do
+    let(:work_version) { create(:work_version) }
+
+    it 'transitions to fetch_globus_depositing' do
+      expect { work_version.fetch_globus_and_begin_deposit! }
+        .to change(work_version, :state)
+        .to('fetch_globus_depositing')
+        .and(have_enqueued_job(FetchGlobusJob).with(work_version))
+    end
+  end
 end

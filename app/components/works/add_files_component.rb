@@ -20,5 +20,9 @@ module Works
     def errors
       form.object.errors.where(:attached_files)
     end
+
+    def globus_endpoint?
+      form.object.work_version.globus_endpoint.present?
+    end
   end
 end
