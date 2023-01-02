@@ -188,7 +188,7 @@ class DraftWorkForm < Reform::Form
 
   # de-dupe keywords, prefer throwing away the free text entry duplicate(s) without a URI
   def dedupe_keywords
-    return if work_version.keywords.size.zero?
+    return if work_version.keywords.empty?
 
     grouped_keywords = Keyword.where(work_version:).group_by(&:label) # group keywords by label for determining dupes
     grouped_keywords.each_value do |group|

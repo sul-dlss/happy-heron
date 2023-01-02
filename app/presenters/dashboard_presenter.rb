@@ -28,6 +28,6 @@ class DashboardPresenter
   end
 
   def in_progress_collections?
-    !@collection_managers_in_progress.size.zero?
+    !@collection_managers_in_progress.empty?
   end
 end
