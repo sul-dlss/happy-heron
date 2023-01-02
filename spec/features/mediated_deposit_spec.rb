@@ -10,8 +10,8 @@ RSpec.describe 'Create a work in a collection using mediated deposit', js: true 
 
   context 'when reviewer approves work' do
     # NOTE: added this spec alongside mediated_deposit_versioning_spec but this
-    #       spec flaps due (?) to client validation, so marking as xit for now
-    xit 'works as expected' do
+    #       spec flaps due (?) to client validation, so marking as skip for now
+    it 'works as expected', skip: 'flappy due to client validation' do
       sign_in user
       visit dashboard_path
       find("button[data-destination='/collections/#{collection.id}/works/new']").click
