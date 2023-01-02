@@ -53,9 +53,9 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
     before do
       work_form.validate({
                            release: 'embargo',
-                           'embargo_date(1i)': '2022',
-                           'embargo_date(2i)': '2',
-                           'embargo_date(3i)': '3'
+                           'embargo_date(1i)': DateTime.now.year.to_s,
+                           'embargo_date(2i)': '12',
+                           'embargo_date(3i)': '31'
                          })
     end
 
@@ -66,17 +66,17 @@ RSpec.describe Works::AvailableDateComponent, type: :component do
 
     it 'renders the year' do
       expect(rendered.css('#work_embargo_year option[@selected]').first['value'])
-        .to eq '2022'
+        .to eq DateTime.now.year.to_s
     end
 
     it 'renders the month' do
       expect(rendered.css('#work_embargo_month option[@selected]').first['value'])
-        .to eq '2'
+        .to eq '12'
     end
 
     it 'renders the day' do
       expect(rendered.css('#work_embargo_day option[@selected]').first['value'])
-        .to eq '3'
+        .to eq '31'
     end
   end
 
