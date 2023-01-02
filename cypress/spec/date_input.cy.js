@@ -80,7 +80,7 @@ describe('Date input', () => {
   })
 
   it('day that does not exist is invalid', () => {
-    cy.get('#work_published_year').type(now.getFullYear(), {force: true}).not('have.class', 'is-invalid')
+    cy.get('#work_published_year').type('2022', {force: true}).not('have.class', 'is-invalid')
     cy.get('#work_published_month').select('February', {force: true}).not('have.class', 'is-invalid')
     cy.get('#work_published_day').select('30', {force: true}).should('have.class', 'is-invalid')
     cy.get('#work_published_month').should('have.class', 'is-invalid')
