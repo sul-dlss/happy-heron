@@ -164,6 +164,13 @@ class WorksController < ObjectsController
   def globus_user_exists?(user_id)
     return Settings.globus.test_user_exists if Settings.globus.test_mode && Rails.env.development?
 
+    # Temporary debugging: notify via HB if error raised getting identity from Globus.
+    begin
+      GlobusClient::Identity.new(GlobusClient.config).get_identity_id(user_id)
+    rescue StandardError => e
+      Honeybadger.notify(e)
+    end
+
     GlobusClient.user_exists?(user_id)
   end
 

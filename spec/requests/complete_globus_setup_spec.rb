@@ -14,6 +14,16 @@ RSpec.describe 'User indicates globus setup is complete' do
     work.update(head: work_version)
     sign_in user, groups: ['dlss:hydrus-app-administrators']
     allow(GlobusSetupJob).to receive(:perform_later)
+    stub_request(:get, /auth.globus.org/)
+      .with(
+        headers: {
+          'Accept' => '*/*',
+          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Authorization' => 'Bearer',
+          'User-Agent' => 'Faraday v2.7.2'
+        }
+      )
+      .to_return(status: 200)
   end
 
   context 'when the user has not yet completed their globus setup' do
