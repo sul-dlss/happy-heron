@@ -10,7 +10,7 @@ happy-heron, or H2 (from "Hydrus 2.0"), is a Rails web application enabling user
 __H2 is currently frozen in production__
 
 * The `production` branch is what is currently deployed in production.
-* Any neccessary production patches should be applied to this branch and deployed with `cap prod deploy`.
+* Any necessary production patches should be applied to this branch and deployed with `cap prod deploy`.
 * `main` cannot be deployed to production due to changes in `config/deploy/prod.rb`. This should be removed once the freeze is lifted.
 * `sdr-deploy` has been configured to skip deploying H2 to production. This should be removed once the freeze is lifted.
 
