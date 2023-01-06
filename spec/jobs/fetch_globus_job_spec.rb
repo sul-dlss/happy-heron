@@ -14,9 +14,15 @@ RSpec.describe FetchGlobusJob do
   let(:work) { build(:work) }
 
   before do
-    allow(
-      allow(GlobusClient).to(receive(:get_filenames).and_return(['/uploads/jstanford/work333/version1/file1.txt',
-                                                                 '/uploads/jstanford/work333/version1/dir1/file2.txt']))
+    allow(GlobusClient).to receive(:get_filenames).and_return(
+      [
+        '/uploads/jstanford/work333/version1/file1.txt',
+        '/uploads/jstanford/work333/version1/__MACOSX/._file1.txt',
+        '/uploads/jstanford/work333/version1/dir1/file2.txt',
+        '/uploads/jstanford/work333/version1/__MACOSX/dir1/._file2.txt',
+        '/uploads/jstanford/work333/version1/dir2/.DS_Store',
+        '/uploads/jstanford/work333/version1/__MACOSX/dir2/._.DS_Store'
+      ]
     )
     work.update!(head: first_work_version)
   end

@@ -11,6 +11,8 @@ class FetchGlobusJob < BaseDepositJob
     work_version.attached_files.destroy_all
 
     filepaths_for(work_version).each do |path|
+      next if ignore?(path)
+
       work_version.attached_files << new_attached_file(path, work_version)
     end
     work_version.upload_type = 'browser'
@@ -24,6 +26,10 @@ class FetchGlobusJob < BaseDepositJob
 
   def globus_prefix(work_version)
     "#{Settings.globus.uploads_directory}#{work_version.globus_endpoint}/"
+  end
+
+  def ignore?(path)
+    path.start_with?('__MACOSX') || path.end_with?('.DS_Store')
   end
 
   def new_attached_file(path, work_version)
