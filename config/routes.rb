@@ -34,6 +34,7 @@ Rails.application.routes.draw do
         get :details
         get :complete_globus_setup
         get :files_list
+        get :globus_file_info
         resource :owners, only: %i[edit update], controller: 'work_owners'
         resource :locks, only: %i[edit update], controller: 'work_locks'
         resource :decommission, only: %i[edit update], controller: 'work_decommission', as: :work_decommission

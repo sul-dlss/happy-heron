@@ -159,6 +159,16 @@ class WorksController < ObjectsController
     render partial: 'works/edit_button', locals: { work:, anchor: params[:tag], edit_label: }
   end
 
+  def globus_file_info
+    @work = Work.find(params[:id])
+
+    authorize! @work.head, to: :show?
+
+    files = GlobusClient.list_files(user_id: @work.depositor.email, path: @work.head.globus_endpoint)
+    @files_count = files.count
+    @total_size = files.sum(&:size)
+  end
+
   private
 
   def globus_user_exists?(user_id)

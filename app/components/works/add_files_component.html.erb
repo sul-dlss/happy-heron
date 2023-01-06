@@ -82,6 +82,15 @@
         <%= form.label :fetch_globus_files,
          "All files have been uploaded to Globus.",
          class: 'form-check-label' %>
+
+         <%= tag.turbo_frame id: dom_id(work, :globus_file_info), src: globus_file_info_work_path(work)  do %>
+          <div>
+            Looking for files uploaded to Globus ...
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+         <% end %>
       <% end %>
     </div>
   </div>

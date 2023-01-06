@@ -24,5 +24,9 @@ module Works
     def globus_endpoint?
       form.object.work_version.globus_endpoint.present?
     end
+
+    def work
+      form.object.work_version.work
+    end
   end
 end
