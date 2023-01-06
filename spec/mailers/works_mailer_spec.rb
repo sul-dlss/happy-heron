@@ -316,7 +316,7 @@ RSpec.describe WorksMailer do
 
     it 'renders body' do
       expect(mail.body).to include "Dear #{a_user.first_name},"
-      expect(mail.body).to include 'Click the link below to use single sign on to activate your Globus account'
+      expect(mail.body).to include 'Click the link below and follow the instructions to access Globus'
     end
   end
 
