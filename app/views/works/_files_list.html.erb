@@ -16,7 +16,7 @@
     </tr>
     </thead>
     <tbody>
-      <%= render Works::Show::AttachedFileComponent.with_collection(attached_files, work_version: work_version) %>
+      <%= render Works::Show::DirectoryComponent.new(directory: root_directory) %>
     </tbody>
   </table>
 </div>

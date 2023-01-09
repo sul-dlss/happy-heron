@@ -47,6 +47,17 @@ class AttachedFile < ApplicationRecord
     ActiveStorage::Service::GlobusService.accessible?(file.blob)
   end
 
+  # an array of directorie(s) that contain this file; e.g. ['folder','sub-folder']
+  # if there are no containing directories, it will be an empty array; eg []
+  def paths
+    path.split(File::SEPARATOR)[...-1]
+  end
+
+  # a string containing the base filename, removing any containing directories if they exist; e.g. 'test.pdf'
+  def basename
+    path.split(File::SEPARATOR).last
+  end
+
   private
 
   def changed_in_this_version?

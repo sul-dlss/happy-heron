@@ -1,0 +1,11 @@
+<% if name.present? %>
+  <tr>
+    <td colspan="3"><strong><%= name %></strong></td>
+  </tr>
+<% end %>
+<% children_files.each do |file| %>
+   <%= render Works::Show::AttachedFileComponent.new(attached_file: file.attached_file) %>
+<% end %>
+<% children_directories.each do |directory| %>
+   <%= render Works::Show::DirectoryComponent.new(directory: directory) %>
+<% end %>
