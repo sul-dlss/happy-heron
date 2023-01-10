@@ -4,11 +4,12 @@ module Works
   module Show
     # Displays a single attached file
     class AttachedFileComponent < ApplicationComponent
-      def initialize(attached_file:)
+      def initialize(attached_file:, index:)
         @attached_file = attached_file
+        @index = index
       end
 
-      attr_reader :attached_file
+      attr_reader :attached_file, :index
 
       delegate :basename, :label, :hide?, :in_preservation?, to: :attached_file
 

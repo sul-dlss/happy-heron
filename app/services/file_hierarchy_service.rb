@@ -29,11 +29,11 @@ class FileHierarchyService
   def initialize(work_version:)
     @work_version = work_version
     @index = 0
-    @root_directory = Directory.new('', [], [], next_index)
+    @root_directory = Directory.new('', [], [], @index)
   end
 
   def to_hierarchy
-    work_version.attached_files.each { |attached_file| add_to_hierarchy(attached_file) }
+    work_version.attached_files.sort_by(&:filename).each { |attached_file| add_to_hierarchy(attached_file) }
     root_directory
   end
 
