@@ -4,6 +4,9 @@
 class WorkVersion < ApplicationRecord
   include AggregateAssociations
 
+  # Format with hash, e.g., { user_id: 'mjgiarlo', work_id: 123, work_version: 9 }
+  GLOBUS_ENDPOINT_TEMPLATE = '%<user_id>s/work%<work_id>d/version%<work_version>d'
+
   belongs_to :work
   has_many :contributors, dependent: :destroy, class_name: 'Contributor'
   has_many :authors, -> { order(weight: :asc) }, inverse_of: :work_version, dependent: :destroy, class_name: 'Author'
@@ -195,6 +198,14 @@ class WorkVersion < ApplicationRecord
   def fetching_globus_state?
     fetch_globus_first_draft? || fetch_globus_version_draft? \
     || fetch_globus_pending_approval? || fetch_globus_depositing?
+  end
+
+  def globus_endpoint_fullpath
+    File.join(
+      Settings.globus.uploads_directory,
+      globus_endpoint,
+      '/'
+    )
   end
 
   private

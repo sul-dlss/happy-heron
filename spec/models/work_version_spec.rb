@@ -85,6 +85,25 @@ RSpec.describe WorkVersion do
     end
   end
 
+  describe '#globus_endpoint_fullpath' do
+    subject(:work_version) { create(:work_version, work: create(:work)) }
+
+    before do
+      work_version.globus_endpoint = globus_endpoint
+    end
+
+    let(:globus_endpoint) do
+      format(WorkVersion::GLOBUS_ENDPOINT_TEMPLATE,
+             user_id: work_version.work.owner.sunetid,
+             work_id: work_version.work.id,
+             work_version: 1)
+    end
+
+    it 'returns the globus endpoint prefixed with the uploads dirand suffixed with slash' do
+      expect(work_version.globus_endpoint_fullpath).to eq("/uploads/#{globus_endpoint}/")
+    end
+  end
+
   describe '#attached_files' do
     before do
       create(:attached_file, :with_file, work_version:)
