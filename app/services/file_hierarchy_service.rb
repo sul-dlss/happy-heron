@@ -28,8 +28,7 @@ class FileHierarchyService
 
   def initialize(work_version:)
     @work_version = work_version
-    @index = 0
-    @root_directory = Directory.new('', [], [], @index)
+    @root_directory = Directory.new('', [], [], 0)
   end
 
   def to_hierarchy
@@ -40,10 +39,6 @@ class FileHierarchyService
   private
 
   attr_reader :work_version, :root_directory
-
-  def next_index
-    @index += 1
-  end
 
   def add_to_hierarchy(attached_file)
     directory = directory_for(attached_file.paths, root_directory)
@@ -56,7 +51,7 @@ class FileHierarchyService
     path = paths.shift
     child_directory = directory.children_directories.find { |cd| cd.name == path }
     unless child_directory
-      child_directory = Directory.new(path, [], [], next_index)
+      child_directory = Directory.new(path, [], [], directory.index + 1)
       directory.children_directories << child_directory
     end
 

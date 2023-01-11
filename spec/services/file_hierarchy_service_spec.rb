@@ -38,7 +38,7 @@ RSpec.describe FileHierarchyService do
               FileHierarchyService::Directory.new('dir3', [],
                 [
                   FileHierarchyService::File.new(attached_files[1])
-                ], 3) # <--- this index should be 2 and not 3, since it is at the second level (same level as dir2)
+                ], 2)
             ],
             [
               FileHierarchyService::File.new(attached_files[2]),
