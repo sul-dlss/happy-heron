@@ -43,6 +43,20 @@ RSpec.describe DraftWorkForm do
         expect(messages).to be_empty
       end
     end
+
+    context 'when Globus operation raises an exception' do
+      before do
+        allow(Honeybadger).to receive(:notify)
+        allow(GlobusClient).to receive(:get_filenames).and_raise(StandardError, 'oh no!')
+      end
+
+      it 'does not validate and logs a honeybadger alert' do
+        form.validate(fetch_globus_files: true)
+        expect(Honeybadger).to have_received(:notify)
+        expect(form).not_to be_valid
+        expect(messages).to eq ['encountered an error with the Globus API: oh no!']
+      end
+    end
   end
 
   describe 'type validation' do

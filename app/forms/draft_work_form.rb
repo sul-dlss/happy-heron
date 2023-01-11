@@ -90,6 +90,20 @@ class DraftWorkForm < Reform::Form
       :attached_files,
       "must include at least one file uploaded to Globus at #{work_version.globus_endpoint_fullpath}"
     )
+  rescue StandardError => e
+    Honeybadger.notify(
+      'Globus API Error',
+      context: {
+        exception: e,
+        work_owner: work.owner.email,
+        work_id: work.id,
+        work_version: work_version.version
+      }
+    )
+    errors.add(
+      :attached_files,
+      "encountered an error with the Globus API: #{e}"
+    )
   end
 
   def access_from_collection(params)
