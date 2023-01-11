@@ -14,6 +14,37 @@ RSpec.describe DraftWorkForm do
     end
   end
 
+  describe 'globus files validation' do
+    let(:errors) { form.errors.where(:attached_files) }
+    let(:messages) { errors.map(&:message) }
+    let(:work_version) { build(:work_version, globus_endpoint: 'foo/bar') }
+
+    context 'when no Globus files are provided' do
+      before do
+        allow(GlobusClient).to receive(:get_filenames).and_return([])
+      end
+
+      it 'does not validate with an invalid work type' do
+        form.validate(fetch_globus_files: true)
+        expect(form).not_to be_valid
+        expect(messages).to eq ['must include at least one file uploaded to Globus at /uploads/foo/bar/']
+      end
+    end
+
+    context 'when Globus files are provided' do
+      before do
+        # For the purposes of this test, a non-empty array will suffice
+        allow(GlobusClient).to receive(:get_filenames).and_return([1, 2])
+      end
+
+      it 'validates with a valid work_type and a "more" type' do
+        form.validate(fetch_globus_files: true)
+        expect(form).to be_valid
+        expect(messages).to be_empty
+      end
+    end
+  end
+
   describe 'type validation' do
     let(:errors) { form.errors.where(:work_type) }
     let(:messages) { errors.map(&:message) }
