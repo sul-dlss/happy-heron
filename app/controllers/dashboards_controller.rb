@@ -15,7 +15,6 @@ class DashboardsController < ApplicationController
   private
 
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def build_presenter
     DashboardPresenter.new(
       just_signed_in: session.delete(:just_signed_in),
@@ -35,5 +34,4 @@ class DashboardsController < ApplicationController
     )
   end
   # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 end

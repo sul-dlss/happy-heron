@@ -240,7 +240,6 @@ class WorksController < ObjectsController
     context_form
   end
 
-  # rubocop:disable Metrics/MethodLength
   def work_params
     top_level = params.require(:work)
     top_level.permit(:title, :work_type,
@@ -264,7 +263,6 @@ class WorksController < ObjectsController
                      related_works_attributes: %i[_destroy id citation],
                      related_links_attributes: %i[_destroy id link_title url])
   end
-  # rubocop:enable Metrics/MethodLength
 
   def validate_work_types!
     errors = []

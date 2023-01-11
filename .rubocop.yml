@@ -38,6 +38,7 @@ Metrics/ClassLength:
     - app/forms/draft_work_form.rb
 
 Metrics/MethodLength:
+  CountAsOne: ['array', 'hash']
   Max: 15
 
 Metrics/ModuleLength:

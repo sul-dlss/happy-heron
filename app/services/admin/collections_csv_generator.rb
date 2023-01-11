@@ -47,7 +47,6 @@ module Admin
     ].freeze
 
     # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def row(collection)
       collection_version = collection.head
       [
@@ -71,6 +70,5 @@ module Admin
       ]
     end
     # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
 end
