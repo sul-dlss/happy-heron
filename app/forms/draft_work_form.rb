@@ -59,7 +59,6 @@ class DraftWorkForm < Reform::Form
   end
 
   # Ensure the collection default overwrites whatever the user supplied
-  # rubocop:disable Metrics/AbcSize
   def deserialize_embargo(params)
     case collection.release_option
     when 'delay'
@@ -73,7 +72,6 @@ class DraftWorkForm < Reform::Form
       params['embargo_date(3i)'] = nil
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   # ensure all attached files have a unique filename
   def unique_filenames
