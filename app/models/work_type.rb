@@ -94,7 +94,6 @@ class WorkType
   end
 
   # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   # id is a value acceptable for MODS typeOfResource
 
   def self.all
@@ -119,7 +118,6 @@ class WorkType
           subtypes: [], cocina_type: Cocina::Models::ObjectType.object)
     ]
   end
-  # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
 
   def self.type_list

@@ -32,6 +32,8 @@ class DraftWorkForm < Reform::Form
   end)
   property :embargo_date, embargo_date: true, on: :work_version
   property :assign_doi, on: :work, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+  property :upload_type, on: :work_version
+  property :fetch_globus_files, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
 
   validates_with EmbargoDateParts,
                  if: proc { |form| form.user_can_set_availability? && form.release == 'embargo' }
@@ -42,6 +44,7 @@ class DraftWorkForm < Reform::Form
   validates :work_type, presence: true, work_type: true
   validates :upload_type, presence: true
   validate :unique_filenames
+  validate :globus_files_provided, if: proc { |form| form.fetch_globus_files }
 
   delegate :user_can_set_availability?, to: :collection
 
@@ -56,7 +59,6 @@ class DraftWorkForm < Reform::Form
   end
 
   # Ensure the collection default overwrites whatever the user supplied
-  # rubocop:disable Metrics/AbcSize
   def deserialize_embargo(params)
     case collection.release_option
     when 'delay'
@@ -70,13 +72,36 @@ class DraftWorkForm < Reform::Form
       params['embargo_date(3i)'] = nil
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   # ensure all attached files have a unique filename
   def unique_filenames
     filenames = attached_files.map { |file| file.model.filename.to_s }
 
     errors.add(:attached_files, 'must all have a unique filename.') unless filenames.size == filenames.uniq.size
+  end
+
+  # Ensure there is more than zero files if fetching from Globus
+  def globus_files_provided
+    return if GlobusClient.has_files?(path: work_version.globus_endpoint, user_id: work.owner.email)
+
+    errors.add(
+      :attached_files,
+      "must include at least one file uploaded to Globus at #{work_version.globus_endpoint_fullpath}"
+    )
+  rescue StandardError => e
+    Honeybadger.notify(
+      'Globus API Error',
+      context: {
+        exception: e,
+        work_owner: work.owner.email,
+        work_id: work.id,
+        work_version: work_version.version
+      }
+    )
+    errors.add(
+      :attached_files,
+      "encountered an error with the Globus API: #{e}"
+    )
   end
 
   def access_from_collection(params)
@@ -105,8 +130,6 @@ class DraftWorkForm < Reform::Form
     property :file, virtual: true
     property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
-  property :upload_type, on: :work_version
-  property :fetch_globus_files, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
                               prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },

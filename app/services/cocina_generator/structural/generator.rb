@@ -52,7 +52,6 @@ module CocinaGenerator
       end
 
       # rubocop:disable Metrics/AbcSize
-      # rubocop:disable Metrics/MethodLength
       def build_fileset(attached_file:, fileset: nil)
         # h2 only has one file per fileset
         cocina_file = fileset&.structural&.contains&.first
@@ -74,7 +73,6 @@ module CocinaGenerator
           end
         end
         # rubocop:enable Metrics/AbcSize
-        # rubocop:enable Metrics/MethodLength
       end
     end
   end

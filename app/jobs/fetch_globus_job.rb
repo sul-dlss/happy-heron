@@ -20,12 +20,9 @@ class FetchGlobusJob < BaseDepositJob
   end
 
   def filepaths_for(work_version)
-    filepaths = GlobusClient.get_filenames(path: work_version.globus_endpoint, user_id: work_version.work.owner.email)
-    filepaths.map { |filepath| filepath.delete_prefix(globus_prefix(work_version)) }
-  end
-
-  def globus_prefix(work_version)
-    "#{Settings.globus.uploads_directory}#{work_version.globus_endpoint}/"
+    GlobusClient
+      .get_filenames(path: work_version.globus_endpoint, user_id: work_version.work.owner.email)
+      .map { |filepath| filepath.delete_prefix(work_version.globus_endpoint_fullpath) }
   end
 
   def ignore?(path)

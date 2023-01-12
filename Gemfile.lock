@@ -252,7 +252,7 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    globus_client (0.8.0)
+    globus_client (0.9.0)
       activesupport (>= 4.2, < 8)
       faraday
       zeitwerk

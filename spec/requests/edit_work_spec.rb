@@ -147,27 +147,29 @@ RSpec.describe 'Updating an existing work' do
           end
         end
 
-        context 'when editing globus' do
-          let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
-          let(:upload_type) { 'globus' }
-          let(:fetch_globus_files) { 'true' }
-
-          it 'redirects to the work page and starts fetching globus' do
-            patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
-            expect(work.reload.head).to be_fetch_globus_version_draft
-            expect(response).to redirect_to(work)
+        context 'with a Globus upload type' do
+          before do
+            allow(GlobusClient).to receive(:has_files?).and_return(true)
           end
-        end
 
-        context 'when depositing globus' do
           let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
           let(:upload_type) { 'globus' }
           let(:fetch_globus_files) { 'true' }
 
-          it 'redirects to next_step page and starts fetching globus' do
-            patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
-            expect(work.reload.head).to be_fetch_globus_depositing
-            expect(response).to redirect_to(next_step_work_path(work))
+          context 'when saving draft' do
+            it 'redirects to the work page and starts fetching globus' do
+              patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
+              expect(work.reload.head).to be_fetch_globus_version_draft
+              expect(response).to redirect_to(work)
+            end
+          end
+
+          context 'when depositing' do
+            it 'redirects to next_step page and starts fetching globus' do
+              patch "/works/#{work.id}", params: { work: work_params, commit: 'Deposit' }
+              expect(work.reload.head).to be_fetch_globus_depositing
+              expect(response).to redirect_to(next_step_work_path(work))
+            end
           end
         end
       end

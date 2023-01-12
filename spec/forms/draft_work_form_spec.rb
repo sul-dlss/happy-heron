@@ -14,6 +14,50 @@ RSpec.describe DraftWorkForm do
     end
   end
 
+  describe 'globus files validation' do
+    let(:errors) { form.errors.where(:attached_files) }
+    let(:messages) { errors.map(&:message) }
+    let(:work_version) { build(:work_version, globus_endpoint: 'foo/bar') }
+
+    context 'when no Globus files are provided' do
+      before do
+        allow(GlobusClient).to receive(:has_files?).and_return(false)
+      end
+
+      it 'does not validate with an invalid work type' do
+        form.validate(fetch_globus_files: true)
+        expect(form).not_to be_valid
+        expect(messages).to eq ['must include at least one file uploaded to Globus at /uploads/foo/bar/']
+      end
+    end
+
+    context 'when Globus files are provided' do
+      before do
+        allow(GlobusClient).to receive(:has_files?).and_return(true)
+      end
+
+      it 'validates with a valid work_type and a "more" type' do
+        form.validate(fetch_globus_files: true)
+        expect(form).to be_valid
+        expect(messages).to be_empty
+      end
+    end
+
+    context 'when Globus operation raises an exception' do
+      before do
+        allow(Honeybadger).to receive(:notify)
+        allow(GlobusClient).to receive(:has_files?).and_raise(StandardError, 'oh no!')
+      end
+
+      it 'does not validate and logs a honeybadger alert' do
+        form.validate(fetch_globus_files: true)
+        expect(Honeybadger).to have_received(:notify)
+        expect(form).not_to be_valid
+        expect(messages).to eq ['encountered an error with the Globus API: oh no!']
+      end
+    end
+  end
+
   describe 'type validation' do
     let(:errors) { form.errors.where(:work_type) }
     let(:messages) { errors.map(&:message) }
