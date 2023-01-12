@@ -31,6 +31,7 @@ en:
       unzip_and_submit_for_review: Starting unzip
       unzip_and_begin_deposit: Starting unzip
       unzip_complete: Unzip complete
+      globus_setup_complete: Setting up Globus endpoint
       fetch_globus: Starting fetch from Globus
       fetch_globus_and_submit_for_review: Starting fetch from Globus
       fetch_globus_and_begin_deposit: Starting fetch from Globus
