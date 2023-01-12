@@ -1,0 +1,13 @@
+<% if name.present? %>
+  <tr class="attached-files">
+    <td class="file-level" style="--depth: <%= depth %>rem" colspan="3">
+       <i class="fa fa-folder" aria-hidden="true"></i> <strong><%= name %></strong>
+    </td>
+  </tr>
+<% end %>
+<% children_files.each do |file| %>
+   <%= render Works::Edit::AttachedFileComponent.new(attached_file: file.attached_file, depth:) %>
+<% end %>
+<% children_directories.each do |directory| %>
+   <%= render Works::Edit::DirectoryComponent.new(directory: directory) %>
+<% end %>

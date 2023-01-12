@@ -12,3 +12,8 @@
 td.file-level {
   padding-left: var(--depth);
 }
+
+/* zebra-stripe files table on edit page */
+tr.attached-files:nth-child(even) {
+  background-color: #dadada;
+}
