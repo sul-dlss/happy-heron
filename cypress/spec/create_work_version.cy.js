@@ -66,8 +66,7 @@ describe('Create work version', () => {
       cy.contains('You have successfully deposited your work')
     })
 
-    it('is not able to deposit when globus feature enabled and globus upload option is selected ', () => {
-      // globus feature flag is set
+    it('is not able to deposit when globus upload option is selected until user selects checkbox', () => {
       cy.visit(`/works/${work_id}/edit`)
 
       // try to deposit
@@ -76,8 +75,14 @@ describe('Create work version', () => {
       // there is a message telling us we need to upload a file
       cy.get('div.invalid-feedback').should('contain', 'You must attach a file')
 
+      // globus-specific message is not present
+      cy.contains('Once you have completed transferring files to Globus, return here to Deposit.').should('not.be.visible')
+
       // now select globus upload option
       cy.get('#work_upload_type_globus').check()
+
+      // globus-specific message appears
+      cy.contains('Once you have completed transferring files to Globus, return here to Deposit.').should('be.visible')
 
       // deposit button should be disabled
       cy.get('input.btn[value="Deposit"]', {force: true}).should('be.disabled')
@@ -96,6 +101,5 @@ describe('Create work version', () => {
 
       // deposit button should be enabled
       cy.get('input.btn[value="Deposit"]', {force: true}).should('be.enabled')
-      
     })
 })
