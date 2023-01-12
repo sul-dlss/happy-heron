@@ -1,5 +1,7 @@
 <tr>
-    <td><%= filename %>
+    <td class="file-level" style="--depth: <%= depth+1 %>rem">
+        &bull;
+        <%= basename %>
         <% if can_download? %>
             <%= link_to path, class: 'ms-2', data: { turbo: false } do %>
                 <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download</span>

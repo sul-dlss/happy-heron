@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::Show::AttachedFileComponent, type: :component do
-  let(:rendered) { render_inline(described_class.new(attached_file:, work_version:)) }
+  let(:rendered) { render_inline(described_class.new(attached_file:, depth: 1)) }
   let(:work_version) { create(:work_version, attached_files: [attached_file]) }
   let(:attached_file) { build(:attached_file, :with_file) }
 

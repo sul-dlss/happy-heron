@@ -129,11 +129,11 @@ class WorksController < ObjectsController
   def files_list
     work = Work.find(params[:id])
     work_version = work.head
-    attached_files = work_version.attached_files.sort_by { |attached_file| attached_file.path.downcase }
+    root_directory = FileHierarchyService.to_hierarchy(work_version:)
 
     authorize! work_version, to: :show?
 
-    render partial: 'works/files_list', locals: { work:, work_version:, attached_files: }
+    render partial: 'works/files_list', locals: { work:, root_directory: }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
