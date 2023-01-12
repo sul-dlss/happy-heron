@@ -82,7 +82,7 @@ class DraftWorkForm < Reform::Form
 
   # Ensure there is more than zero files if fetching from Globus
   def globus_files_provided
-    return if GlobusClient.get_filenames(path: work_version.globus_endpoint, user_id: work.owner.email).any?
+    return if GlobusClient.has_files?(path: work_version.globus_endpoint, user_id: work.owner.email)
 
     errors.add(
       :attached_files,

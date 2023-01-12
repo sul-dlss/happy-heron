@@ -149,8 +149,7 @@ RSpec.describe 'Updating an existing work' do
 
         context 'with a Globus upload type' do
           before do
-            allow(GlobusClient).to receive(:get_filenames)
-              .and_return(["/uploads/#{user.sunetid}/work#{work.id}/version1/file1.txt"])
+            allow(GlobusClient).to receive(:has_files?).and_return(true)
           end
 
           let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }

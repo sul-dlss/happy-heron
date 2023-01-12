@@ -21,7 +21,7 @@ RSpec.describe DraftWorkForm do
 
     context 'when no Globus files are provided' do
       before do
-        allow(GlobusClient).to receive(:get_filenames).and_return([])
+        allow(GlobusClient).to receive(:has_files?).and_return(false)
       end
 
       it 'does not validate with an invalid work type' do
@@ -33,8 +33,7 @@ RSpec.describe DraftWorkForm do
 
     context 'when Globus files are provided' do
       before do
-        # For the purposes of this test, a non-empty array will suffice
-        allow(GlobusClient).to receive(:get_filenames).and_return([1, 2])
+        allow(GlobusClient).to receive(:has_files?).and_return(true)
       end
 
       it 'validates with a valid work_type and a "more" type' do
@@ -47,7 +46,7 @@ RSpec.describe DraftWorkForm do
     context 'when Globus operation raises an exception' do
       before do
         allow(Honeybadger).to receive(:notify)
-        allow(GlobusClient).to receive(:get_filenames).and_raise(StandardError, 'oh no!')
+        allow(GlobusClient).to receive(:has_files?).and_raise(StandardError, 'oh no!')
       end
 
       it 'does not validate and logs a honeybadger alert' do
