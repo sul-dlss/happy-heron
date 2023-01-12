@@ -8,7 +8,7 @@ module Works
         @directory = directory
       end
 
-      delegate :name, :children_directories, :children_files, :index, to: :directory
+      delegate :name, :children_directories, :children_files, :depth, to: :directory
 
       attr_reader :directory
     end

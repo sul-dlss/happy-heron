@@ -34,21 +34,21 @@ RSpec.describe FileHierarchyService do
               FileHierarchyService::Directory.new('dir2', [],
                 [
                   FileHierarchyService::File.new(attached_files[0])
-                ], 2),
+                ], 2, 2),
               FileHierarchyService::Directory.new('dir3', [],
                 [
                   FileHierarchyService::File.new(attached_files[1])
-                ], 2)
+                ], 3, 2)
             ],
             [
               FileHierarchyService::File.new(attached_files[2]),
               FileHierarchyService::File.new(attached_files[3]),
               FileHierarchyService::File.new(attached_files[4])
-            ], 1)
+            ], 1, 1)
         ],
         [
           FileHierarchyService::File.new(attached_files[5])
-        ], 0)
+        ], 0, 0)
     )
   end
   # rubocop:enable Layout/ArgumentAlignment
