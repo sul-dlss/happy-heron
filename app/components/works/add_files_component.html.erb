@@ -27,16 +27,18 @@
           </div>
           <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
           <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
-          <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
-            <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version])%>
-          </div>
         </fieldset>
 
-        <template data-dropzone-target='template'>
-          <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
-            <%= render Works::Edit::FileRowComponent.new(form: file_form) %>
-          <% end %>
-        </template>
+        <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
+          <template data-dropzone-target='template'>
+            <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
+              <%= render Works::Edit::FileRowComponent.new(form: file_form) %>
+            <% end %>
+          </template>
+        </div>
+        <div>
+          <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version], form:)%>
+        </div>
       </div>
     </div>
   </div>
