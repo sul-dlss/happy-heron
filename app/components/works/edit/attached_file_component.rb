@@ -22,6 +22,11 @@ module Works
         rails_blob_path(file, disposition: 'attachment')
       end
 
+      # file has been uploaded but may not yet have been saved to the database model (and may not validate)
+      def uploaded?
+        !attached_file.blob.nil?
+      end
+
       # the user can get a download link unless the file is in globus (in which case, no download link is available)
       def can_download?
         !in_globus?
