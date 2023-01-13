@@ -1,8 +1,13 @@
-<tr class="attached-files">
-    <td class="file-level" style="--depth: <%= depth+1 %>rem"> &bull; <%= basename %></td>
-    <td><%= form.fields_for :attached_files, attached_file do |file_form| %>
-            <%= file_form.text_field :label, class: 'form-control' %>
-        <% end %>
+<tr class="attached-files <%= 'dz-complete' if uploaded? %>">
+    <%= form.fields_for :attached_files, attached_file do |file_form| %>
+    <td class="file-level" style="--depth: <%= depth+1 %>rem">
+        &bull; <%= basename %>
+    </td>
+    <td>
+        <%= file_form.text_field :label, class: 'form-control' %>
+    </td>
+    <td>
+        <%= file_form.check_box :hide, style: 'align: center' %>
     </td>
     <td>
         <%= button_tag type: 'button',
@@ -11,5 +16,7 @@
                     data: { action: "click->dropzone#removeAssociation" } do %>
         <span class="fa-regular fa-trash-alt"></span>
         <% end %>
+        <%= file_form.hidden_field :_destroy %>
+    <% end %>
     </td>
 </tr>

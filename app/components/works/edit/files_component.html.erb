@@ -1,4 +1,12 @@
-<table class="table table-sm" id="filesTable">
+<table class="table table-sm" id="filesTable" data-dropzone-target="preview">
+    <thead class="table-light">
+      <tr>
+        <th width="50%">Filename</th>
+        <th>Label</th>
+        <th width="10%">Hide <%= render PopoverComponent.new key: 'work.hide_file' %></th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     <tbody>
         <%= render Works::Edit::DirectoryComponent.new(directory: root_directory, form:) %>
     </tbody>
