@@ -10,7 +10,7 @@ module Works
     attr_reader :form
 
     def has_attached_files?
-      form.object.attached_files.size.positive?
+      form.object.attached_files.any?
     end
 
     def error?

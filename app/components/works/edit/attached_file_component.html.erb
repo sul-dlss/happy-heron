@@ -1,5 +1,15 @@
 <tr class="attached-files">
     <td class="file-level" style="--depth: <%= depth+1 %>rem"> &bull; <%= basename %></td>
-    <td><%= label %></td>
-    <td><%= hide? ? 'Yes' : 'No' %></td>
+    <td><%= form.fields_for :attached_files, attached_file do |file_form| %>
+            <%= file_form.text_field :label, class: 'form-control' %>
+        <% end %>
+    </td>
+    <td>
+        <%= button_tag type: 'button',
+                    class: "dz-remove pull-right btn remove-file",
+                    "aria-label": "Remove file",
+                    data: { action: "click->dropzone#removeAssociation" } do %>
+        <span class="fa-regular fa-trash-alt"></span>
+        <% end %>
+    </td>
 </tr>

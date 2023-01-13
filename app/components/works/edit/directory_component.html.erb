@@ -6,8 +6,8 @@
   </tr>
 <% end %>
 <% children_files.each do |file| %>
-   <%= render Works::Edit::AttachedFileComponent.new(attached_file: file.attached_file, depth:) %>
+   <%= render Works::Edit::AttachedFileComponent.new(attached_file: file.attached_file, depth:, form:) %>
 <% end %>
 <% children_directories.each do |directory| %>
-   <%= render Works::Edit::DirectoryComponent.new(directory: directory) %>
+   <%= render Works::Edit::DirectoryComponent.new(directory:, form:) %>
 <% end %>

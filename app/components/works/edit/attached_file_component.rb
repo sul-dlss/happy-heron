@@ -4,12 +4,13 @@ module Works
   module Edit
     # Displays a single attached file
     class AttachedFileComponent < ApplicationComponent
-      def initialize(attached_file:, depth:)
+      def initialize(attached_file:, depth:, form:)
         @attached_file = attached_file
         @depth = depth
+        @form = form
       end
 
-      attr_reader :attached_file, :depth
+      attr_reader :attached_file, :depth, :form
 
       delegate :basename, :label, :hide?, :in_preservation?, :in_globus?, :file, to: :attached_file
 
