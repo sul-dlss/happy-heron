@@ -1,9 +1,12 @@
 <section data-controller="complex-radio file-uploads" id="file">
-  <% if has_attached_files? %>
-    <header>Modify your files *</header>
-  <% else %>
-    <header>Add your files *</header>
-  <% end %>
+  <header>
+    <% if has_attached_files? %>
+      Modify your files *
+    <% else %>
+      Add your files *
+    <% end %>
+  </header>
+
   <div class="form-check" data-complex-radio-target="selection">
     <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton',
       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' }
@@ -27,18 +30,16 @@
           </div>
           <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
           <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
+          <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
+            <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version], form:)%>
+          </div>
         </fieldset>
 
-        <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
-          <template data-dropzone-target='template'>
-            <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
-              <%= render Works::Edit::FileRowComponent.new(form: file_form) %>
-            <% end %>
-          </template>
-        </div>
-        <div>
-          <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version], form:)%>
-        </div>
+        <template data-dropzone-target='template'>
+          <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
+            <%= render Works::Edit::FileRowComponent.new(form: file_form) %>
+          <% end %>
+        </template>
       </div>
     </div>
   </div>

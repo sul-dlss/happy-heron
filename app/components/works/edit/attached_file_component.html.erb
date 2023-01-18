@@ -1,7 +1,7 @@
-<tr class="attached-files <%= 'dz-complete' if uploaded? %>">
+<tr class="attached-files <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
     <%= form.fields_for :attached_files, attached_file do |file_form| %>
-    <td class="file-level" style="--depth: <%= depth+1 %>rem">
-        &bull; <%= basename %>
+    <td class="file-level" style="--depth: <%= depth+1 %>rem" data-dropzone-target="fileName">
+        <span class="fa-regular fa-file" aria-hidden="true"></span> <%= basename %>
     </td>
     <td>
         <%= file_form.text_field :label, class: 'form-control' %>
