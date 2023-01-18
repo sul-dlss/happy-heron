@@ -1,9 +1,16 @@
 <% if work_version.globus_setup_draft? %>
    <div class="row my-5 mx-2 alert alert-danger">
       <div class="col-9">
-         Click this button when you have completed setting up your Globus account and we will email you instructions on where to upload your files.
+         <p><strong>You have initiated a Globus-mediated deposit. Here are your next steps. 
+            If you need help, visit the <%= link_to 'help page', Settings.globus.help_doc_url, target: '_blank' %>.</strong>
+         </p>
+         <ul>
+           <li>Click this button when you have completed setting up your Globus account and installing any necessary software.</li>
+           <li>Check for an email from "Globus Notification" with the link to the location for uploading your files.</li>
+           <li>Follow these <%= link_to 'instructions', "#{Settings.globus.help_doc_url}/edit?pli=1#heading=h.f2rvtrjiw01", target: '_blank' %> to transfer your files.</li>        
+         </ul>
       </div>
-      <div class="col-3">
+      <div class="col-3 d-flex align-items-center">
          <%= render Works::GlobusSetupButtonComponent.new(work_version:) %>
       </div>
    </div>
