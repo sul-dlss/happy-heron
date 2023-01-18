@@ -333,7 +333,7 @@ RSpec.describe WorksMailer do
 
     it 'renders body' do
       expect(mail.body).to include "Dear #{a_user.first_name},"
-      expect(mail.body).to include 'You will need to use Globus to transfer the files for this deposit to us.'
+      expect(mail.body).to include 'Please transfer your files to the above location in Globus'
     end
   end
 end
