@@ -35,4 +35,8 @@ FactoryBot.define do
   trait :new do
     state { 'new' }
   end
+
+  trait :fetch_globus_first_draft do
+    state { 'fetch_globus_first_draft' }
+  end
 end

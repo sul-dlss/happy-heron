@@ -65,6 +65,16 @@ RSpec.describe Works::DetailComponent, type: :component do
     end
   end
 
+  context 'when fetching globus files' do
+    let(:work_version) { build_stubbed(:work_version, :fetch_globus_first_draft) }
+
+    it 'renders the message about transferring files taking time' do
+      expect(rendered.css('.globus-wait').to_html).to include(
+        'Transferring your files from Globus. This could take some time depending on file size.'
+      )
+    end
+  end
+
   describe 'events' do
     let(:work) { build_stubbed(:work, events:) }
     let(:events) do
