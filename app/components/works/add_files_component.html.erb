@@ -5,7 +5,7 @@
     <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton',
       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' }
     %>
-    <%= form.label :upload_type, 'Upload files', class: 'form-check-label fw-semibold' %>
+    <%= form.label :upload_type, 'Upload one or more files (less than 10GB) to be displayed as a flat list of files.', class: 'form-check-label fw-semibold' %>
     <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
       <p>All file types are accepted. If you have a deposit that is over 10GB, or
         have any trouble with adding your files,
@@ -43,9 +43,9 @@
     <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
         data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton' }
       %>
-    <%= form.label :upload_type, 'Upload a single .zip file (<10GB) to be displayed as a hierarchy.', class: 'form-check-label fw-semibold' %>
+    <%= form.label :upload_type, 'Upload a single zip file (less than 10GB) which will be unzipped and displayed in its original order, including any file hierarchy.', class: 'form-check-label fw-semibold' %>
     <div id="zip-files-panel" data-file-uploads-target="zipUpload">
-      <p>We recommend the .zip file not contain over 1000 files.</p>
+      <p>Viewers will see the file hierarchy and be able to download individual files.</p>
       <div data-controller="dropzone" data-dropzone-max-file-size="10000", data-dropzone-max-files="1",
           data-dropzone-accepted-files=".zip" data-dropzone-clickable=".dz-zip-clickable" data-dropzone-previews-container=".dropzone-zip-previews">
         <fieldset>
@@ -65,7 +65,7 @@
         <template data-dropzone-target='template'>
           <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
             <%= render Works::FileRowComponent.new(form: file_form, zip_template: true) %>
-          <% end %>                  
+          <% end %>
         </template>
       </div>
     </div>
@@ -74,9 +74,53 @@
     <%= form.radio_button :upload_type, 'globus', class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton', 'data-deposit-button-target': 'globusRadioButton',
       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus'}
     %>
-    <%= form.label :upload_type, "Upload one or more files (>10GB) via Globus web-based transfer software.", class: 'form-check-label fw-semibold' %>
-    <p>Follow <%= link_to "these instructions", Settings.globus.help_doc_url, target: :blank %> to set up your Globus account and the necessary software, then return here to complete your deposit.</p>
+    <%= form.label :upload_type, "Upload one or more files (more than 10GB) which will be displayed as uploaded, including any file hierarchy.", class: 'form-check-label fw-semibold' %>
     <div data-file-uploads-target="globusUpload">
+      <div class="container py-4">
+        <div class="row g-3">
+          <div class="col">
+            <div class="border border-dark h-100 p-2">
+              <p>STEP 1</p>
+              <p><strong>Scroll to the bottom of this page and click "Save as draft."</strong></p>
+              <p><em>You can finish filling out the form now or later.</em></p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="border border-dark h-100 p-2">
+              <p>STEP 2</p>
+              <p><strong>Set up a Stanford Globus account, following these <%= link_to 'instructions', "#{Settings.globus.help_doc_url}?pli=1#heading=h.ptdws4k1wnlz", target: :blank%>.</strong></p>
+              <p><em>Skip to Step 3 if you already have a Stanford Globus account.</em></p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="border border-dark h-100 p-2">
+              <p>STEP 3</p>
+              <p><strong>Complete Globus setup (may require software installation) following these <%= link_to 'instructions', "#{Settings.globus.help_doc_url}?pli=1#heading=h.3h6eldy9ndya", target: :blank%>.</strong></p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="border border-dark h-100 p-2">
+              <p>STEP 4</p>
+              <p><strong>Return to your item at sdr.stanford.edu and click the button that says "Globus setup complete."</strong></p>
+              <p><em>Don't see this button? Proceed to Step 5.</em></p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="border border-dark h-100 p-2">
+              <p>STEP 5</p>
+              <p><strong>Check your email from "Globus Notifications."</strong></p>
+              <p><em>Click the link in the email and follow these <%= link_to 'instructions', "#{Settings.globus.help_doc_url}?pli=1#heading=h.f2rvtrjiw01", target: :blank%> to complete your deposit.</em></p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="border border-dark h-100 p-2">
+              <p>STEP 6</p>
+              <p><strong>Return to this page and make sure the form is complete. Then click "Deposit."</strong></p>
+              <p><em>This will move your files from Globus to the SDR.</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
       <% if globus_endpoint? %>
         <%= form.check_box :fetch_globus_files, { class: "form-check-input", data: {deposit_button_target: 'globusCheckbox', action: 'deposit-button#updateDepositButtonStatus'} }, 'true', 'false' %>
         <%= form.label :fetch_globus_files,
