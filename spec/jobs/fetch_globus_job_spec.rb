@@ -37,6 +37,7 @@ RSpec.describe FetchGlobusJob do
     attached_file = first_work_version.reload.attached_files.first
     expect(attached_file.path).to eq('file1.txt')
     expect(attached_file.blob.service_name).to eq('globus')
+    expect(attached_file.blob.key).to eq("#{first_work_version.work.id}/1/file1.txt")
     expect(GlobusClient).to have_received(:get_filenames).with(path: 'jstanford/work333/version1',
                                                                user_id: work.owner.email)
   end
