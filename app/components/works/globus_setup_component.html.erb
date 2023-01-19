@@ -4,7 +4,7 @@
          <p><strong>You have initiated a Globus-mediated deposit. Here are your next steps. 
             If you need help, visit the <%= link_to 'help page', Settings.globus.help_doc_url, target: '_blank' %>.</strong>
          </p>
-         <ul>
+         <ol>
            <li>Click this button when you have completed setting up your Globus account and installing any necessary software.</li>
            <li>Check for an email from "Globus Notification" with the link to the location for uploading your files.</li>
            <li>Follow these <%= link_to 'instructions', "#{Settings.globus.help_doc_url}/edit?pli=1#heading=h.f2rvtrjiw01", target: '_blank' %> to transfer your files.</li>        
@@ -15,10 +15,16 @@
       </div>
    </div>
 <% else %>
-   <div class="row my-5 mx-2 alert alert-info">
+   <div class="row my-5 mx-2 alert alert-warning">
       <div class="col-12">
-         <p>Upload your files to the Globus folder "<%=work_version.globus_endpoint%>" and then click the "Edit or Deposit" button on this page to complete your deposit.
-         Refer to our <%= link_to 'help page', Settings.globus.help_doc_url %> if you have questions, or contact us at the Help link above.</p>
+         <p><strong><span class="fa fa-exclamation-circle me-2"></span> Almost there! Just a few more steps. If you need help, visit the
+           <%= link_to 'help page', "#{Settings.globus.help_doc_url}/edit?pli=1#heading=h.f2rvtrjiw01", target: '_blank' %>.</strong></p>
+         <ol>
+           <li>Look for an email from "Globus Notification." Click the link in that email under "Use this URL to access the share" and upload your files.</li>
+           <li>Then return here and click the pencil icon above to edit your draft.</li>
+           <li>Check the box in the "Add your files" section on the edit page to indicate you have uploaded your files to Globus.</li>
+           <li>Scroll to the bottom of the form and click "Save as draft" to return later to complete your deposit, or click "Deposit" to complete your deposit now.</li>
+         </ol>
       </div>
    </div>
 <% end %>
