@@ -1,14 +1,28 @@
-<turbo-frame id="<%= dom_id(work, 'files_list') %>" src="<%= files_list_work_path(work) %>" loading="lazy">
+<% if work_version.browser? %>
+  <turbo-frame id="<%= dom_id(work, 'files_list') %>" src="<%= files_list_work_path(work) %>" loading="lazy">
+    <table class="table table-sm mb-5" id="filesTable">
+      <thead class="table-light">
+      <tr>
+        <th scope="col" class="table-title">Files</th>
+        <th scope="col">Description</th>
+        <th scope="col">Hide file</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="3" class="text-center"><%= spinner %></td></tr>
+      </tbody>
+    </table>
+  </turbo-frame>
+<% elsif work_version.globus? %>
   <table class="table table-sm mb-5" id="filesTable">
     <thead class="table-light">
     <tr>
       <th scope="col" class="table-title">Files</th>
-      <th scope="col">Description</th>
-      <th scope="col">Hide file</th>
     </tr>
     </thead>
     <tbody>
-      <tr><td colspan="3" class="text-center"><%= spinner %></td></tr>
+      <tr><td><em>Your files will appear here once you've clicked the Edit button above, checked the box to confirm file upload
+                  to Globus is complete, and either saved the draft again or completed the deposit.</em></td></tr>
     </tbody>
   </table>
-</turbo-frame>
+<% end %>
