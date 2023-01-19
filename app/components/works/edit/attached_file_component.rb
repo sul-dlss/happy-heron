@@ -6,7 +6,7 @@ module Works
     class AttachedFileComponent < ApplicationComponent
       def initialize(attached_file:, depth:, form:)
         @attached_file = attached_file
-        @depth = depth
+        @depth = depth + 1 # the spacing amount we will indent a file for display
         @form = form
       end
 

@@ -11,12 +11,6 @@ module Works
 
       attr_reader :form
 
-      def filename
-        return unless uploaded?
-
-        form.object.model.path
-      end
-
       # file has been uploaded but may not yet have been saved to the database model (and may not validate)
       def uploaded?
         !form.object.try(:model)&.blob.nil?

@@ -3,22 +3,15 @@
     <img data-dz-thumbnail />
   </div>
   <div class="col-5">
-    <% if saved? || uploaded? %>
-      <div data-dropzone-target="fileName">
-        <span class="fa-regular fa-file" aria-hidden="true"></span>
-        <span><%= filename %></span>
+    <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
+    <div class="row">
+      <div class="dz-progress col-md-2"><span class="dz-upload" data-dz-uploadprogress></span></div>
+      <div class="col">
+        <div class="dz-success-mark"><span class="fa-solid fa-check fa-sm" /></div>
+        <div class="dz-error-mark"><span class="fa-solid fa-exclamation-triangle fa-sm" /></div>
       </div>
-    <% else %>
-      <div class="dz-filename" data-dropzone-target="fileName"><span data-dz-name></span></div>
-      <div class="row">
-        <div class="dz-progress col-md-2"><span class="dz-upload" data-dz-uploadprogress></span></div>
-        <div class="col">
-          <div class="dz-success-mark"><span class="fa-solid fa-check fa-sm" /></div>
-          <div class="dz-error-mark"><span class="fa-solid fa-exclamation-triangle fa-sm" /></div>
-        </div>
-        <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
-      </div>
-    <% end %>
+      <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
+    </div>
     <div class="invalid-feedback">We were unable to upload your file due to size or other issues. Delete this file and try again.</div>
   </div>
 
