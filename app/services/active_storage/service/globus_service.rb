@@ -19,6 +19,13 @@ module ActiveStorage
         # to be raised to HB either: https://app.honeybadger.io/projects/77112/faults/88770594
       end
 
+      def delete_prefixed(key)
+        # See comment for #delete above. Can be called with #destroy_all on AttachedFiles when
+        # an updated set of files is uploaded to the same work version via Globus.
+        # Would raise a NotImplementedError to HB:
+        # https://app.honeybadger.io/projects/77112/faults/92680932
+      end
+
       def self.encode_key(work_id, version, path)
         [work_id, version, path].join('/')
       end
