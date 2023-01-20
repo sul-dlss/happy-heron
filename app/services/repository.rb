@@ -14,10 +14,9 @@ class Repository
   def self.valid_version?(druid:, h2_version:)
     cocina_obj = find(druid)
 
-    # This occurs when reserving a PURL.
-    return true if cocina_obj.version == 1 && h2_version == 1
-
-    cocina_obj.version == h2_version - 1
+    # This is the same logic as SDR API.
+    allowed_versions = [cocina_obj.version, cocina_obj.version + 1]
+    allowed_versions.include?(h2_version)
   end
 
   def self.ensure_logged_in!
