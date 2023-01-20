@@ -31,7 +31,7 @@ class AttachedFile < ApplicationRecord
   end
 
   def create_globus_active_storage_key
-    ActiveStorage::Service::GlobusService.encode_key(work_version.work.druid,
+    ActiveStorage::Service::GlobusService.encode_key(work_version.work.id,
                                                      work_version.version,
                                                      path)
   end
