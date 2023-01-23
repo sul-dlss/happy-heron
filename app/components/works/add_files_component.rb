@@ -9,6 +9,10 @@ module Works
 
     attr_reader :form
 
+    def has_attached_files?
+      form.object.attached_files.any?
+    end
+
     def error?
       errors.present?
     end

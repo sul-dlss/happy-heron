@@ -21,7 +21,7 @@ RSpec.describe Works::AddFilesComponent do
     let(:work_version) { build(:work_version, attached_files: [attached_file]) }
 
     it 'renders the component with the filename visible' do
-      expect(rendered.to_html).to include('Add your files')
+      expect(rendered.to_html).to include('Modify your files')
       expect(rendered.to_html).to include(attached_file.filename.to_s)
       expect(rendered.css('button.dz-clickable').to_html).to include('Choose files')
     end

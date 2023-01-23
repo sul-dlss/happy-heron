@@ -11,4 +11,10 @@
 /* hierarchy display in work show page table */
 td.file-level {
   padding-left: var(--depth);
+  vertical-align: middle;
+}
+
+/* zebra-stripe files table on edit page */
+tr.attached-files:nth-child(even) {
+  background-color: #dadada;
 }
