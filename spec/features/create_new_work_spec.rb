@@ -86,7 +86,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')
           end
-
+          expect(page).to have_css('div.dz-success-mark')
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')
           end
@@ -316,7 +316,7 @@ RSpec.describe 'Create a new work in a deposited collection', js: true do
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')
           end
-
+          expect(page).to have_css('div.dz-success-mark')
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_button('Choose files')
           end

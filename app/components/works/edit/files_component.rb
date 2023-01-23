@@ -14,6 +14,10 @@ module Works
       def root_directory
         FileHierarchyService.to_hierarchy(work_version:)
       end
+
+      def render?
+        work_version.attached_files.any?
+      end
     end
   end
 end

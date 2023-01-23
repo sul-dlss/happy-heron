@@ -18,6 +18,11 @@ module Works
       def uploaded?
         !attached_file.blob.nil?
       end
+
+      # Directory path for the file (excluding the file name)
+      def path
+        attached_file.paths.join('/')
+      end
     end
   end
 end

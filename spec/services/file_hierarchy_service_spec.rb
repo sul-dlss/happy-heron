@@ -27,15 +27,15 @@ RSpec.describe FileHierarchyService do
   # rubocop:disable Layout/ArgumentAlignment
   it 'returns a hash of the file hierarchy' do
     expect(root_directory).to match(
-      FileHierarchyService::Directory.new('',
+      FileHierarchyService::Directory.new('', '',
         [
-          FileHierarchyService::Directory.new('dir1',
+          FileHierarchyService::Directory.new('dir1', 'dir1',
             [
-              FileHierarchyService::Directory.new('dir2', [],
+              FileHierarchyService::Directory.new('dir1/dir2', 'dir2', [],
                 [
                   FileHierarchyService::File.new(attached_files[0])
                 ], 2, 2),
-              FileHierarchyService::Directory.new('dir3', [],
+              FileHierarchyService::Directory.new('dir1/dir3', 'dir3', [],
                 [
                   FileHierarchyService::File.new(attached_files[1])
                 ], 3, 2)

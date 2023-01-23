@@ -15,6 +15,6 @@ td.file-level {
 }
 
 /* zebra-stripe files table on edit page */
-tr.attached-files:nth-child(even) {
+tr.attached-files:nth-child(even):not(.dropzone-row) {
   background-color: #dadada;
 }
