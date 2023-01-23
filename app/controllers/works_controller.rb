@@ -172,6 +172,8 @@ class WorksController < ObjectsController
     previous_version.dup.tap do |work_version|
       work_version.state = 'version_draft'
       work_version.version = previous_version.version + 1
+      # reset globus endpoint
+      work_version.globus_endpoint = nil
       CollectionObserver.version_draft_created(work_version, nil)
     end
   end

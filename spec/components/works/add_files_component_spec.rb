@@ -30,7 +30,16 @@ RSpec.describe Works::AddFilesComponent do
   context 'when globus section' do
     it 'shows the globus upload option' do
       expect(rendered.to_html).to include('Set up a Stanford Globus account')
-      expect(rendered.to_html).not_to include('I have uploaded my files to a Globus endpoint')
+      expect(rendered.to_html).not_to include('Check this box once all your files have been uploaded to Globus.')
+    end
+  end
+
+  context 'when creating a new work version from a previous globus upload version' do
+    let(:work_version) { build(:work_version, :with_globus_endpoint, work:) }
+    let(:work_form) { WorkForm.new(work_version:, work:) }
+
+    it 'does not shows the globus files confirmation checkbox' do
+      expect(rendered.to_html).not_to include('Check this box once all your files have been uploaded to Globus.')
     end
   end
 end
