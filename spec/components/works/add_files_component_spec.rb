@@ -39,7 +39,7 @@ RSpec.describe Works::AddFilesComponent do
     let(:work_form) { WorkForm.new(work_version:, work:) }
 
     it 'does not shows the globus files confirmation checkbox' do
-      expect(rendered.to_html).not_to include('Check this box once all your files have been uploaded to Globus.')
+      expect(rendered.to_html).not_to include('Check this box once all your files have completed uploading to Globus.')
     end
   end
 end
