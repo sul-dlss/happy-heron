@@ -227,4 +227,9 @@ FactoryBot.define do
        association(:attached_file, path: 'sul.svg', file: uploads[1].signed_id)]
     end
   end
+
+  trait :with_globus_endpoint do
+    globus_endpoint { 'userid/workid/version1' }
+    deposited
+  end
 end

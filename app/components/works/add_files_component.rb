@@ -26,7 +26,8 @@ module Works
     end
 
     def globus_endpoint?
-      form.object.work_version.globus_endpoint.present?
+      # Only show checkbox once a new work_version with a cleared out globus_endpoint has been created.
+      !form.object.work_version.deposited? && form.object.work_version.globus_endpoint.present?
     end
   end
 end
