@@ -12,7 +12,7 @@ RSpec.describe Repository do
         externalIdentifier: druid,
         type: Cocina::Models::ObjectType.book,
         label: 'Test DRO',
-        version: 1,
+        version: cocina_version,
         description: {
           title: [{ value: 'Test DRO' }],
           purl: "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
@@ -23,6 +23,8 @@ RSpec.describe Repository do
         structural: {}
       }
     end
+
+    let(:cocina_version) { 1 }
 
     before do
       allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
@@ -65,8 +67,17 @@ RSpec.describe Repository do
       end
     end
 
-    context 'when the H2 version and SDR version are 1' do
+    context 'when the H2 version and SDR version are 1 (PURL reservation)' do
       let(:h2_version) { 1 }
+
+      it 'returns true' do
+        expect(valid_version?).to be true
+      end
+    end
+
+    context 'when the H2 version and SDR version are same (embargo lifted)' do
+      let(:h2_version) { 2 }
+      let(:cocina_version) { 2 }
 
       it 'returns true' do
         expect(valid_version?).to be true
