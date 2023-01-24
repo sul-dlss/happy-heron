@@ -32,7 +32,7 @@
           <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
           <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
           </div>
-          <div>
+          <div class="files-list">
             <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version], form:)%>
           </div>
         </fieldset>
