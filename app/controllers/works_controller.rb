@@ -35,6 +35,12 @@ class WorksController < ObjectsController
     work_version = work.head
     authorize! work_version
 
+    if invalid_version_for_edit?(work, work_version)
+      WorksMailer.with(work:).version_mismatch_email.deliver_later
+      flash.notice = I18n.t('work.flash.cannot_edit')
+      return redirect_back(fallback_location: dashboard_path), status: :see_other
+    end
+
     @form = WorkForm.new(work_version:, work: work_version.work)
     @form.prepopulate!
   end
@@ -286,6 +292,16 @@ class WorksController < ObjectsController
 
   def fetch_globus_files?
     params[:work][:fetch_globus_files] == 'true'
+  end
+
+  def invalid_version_for_edit?(work, work_version)
+    # Development does not have SDR API, so stubbing out the version check
+    if Rails.env.development?
+      # This allows for local testing by adding ?invalid_version=true
+      return params[:invalid_version].present?
+    end
+
+    work.druid && !Repository.valid_version?(druid: work.druid, h2_version: work_version.version)
   end
 end
 # rubocop:enable Metrics/ClassLength

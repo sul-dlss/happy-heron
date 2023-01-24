@@ -336,4 +336,23 @@ RSpec.describe WorksMailer do
       expect(mail.body).to include 'Please transfer your files to the above location in Globus'
     end
   end
+
+  describe 'version_mismatch_email' do
+    let(:work) { build_stubbed(:work, head: work_version, collection:) }
+    let(:work_version) { build_stubbed(:work_version) }
+    let(:collection) { build_stubbed(:collection, head: collection_version) }
+    let(:collection_version) { build_stubbed(:collection_version) }
+    let(:mail) { described_class.with(work:, user: a_user).version_mismatch_email }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'An H2 version mismatch error has occurred'
+      expect(mail.to).to eq ['h2-administrators@lists.stanford.edu']
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders body' do
+      expect(mail.body).to include 'Dear Administrator'
+      expect(mail.body).to include 'encountered a version mismatch error'
+    end
+  end
 end

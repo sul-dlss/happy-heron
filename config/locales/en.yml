@@ -81,6 +81,7 @@ en:
       work_not_moved: "Unable to move the work because the collection or work changed. Please try again."
       globus_setup_not_complete: "You have not completed your Globus setup yet. Please verify you have a Globus account and then try again."
       globus_setup_complete: "Please check for email for further instructions on how to proceed with your Globus deposit."
+      cannot_edit: Your item can not currently be modified. Please contact SDR staff at sdr-contact@lists.stanford.edu or via the help link above for assistance.
   terms_of_use: User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the depositor.
   collection:
     actions: Actions

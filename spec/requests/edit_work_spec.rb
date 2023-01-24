@@ -20,13 +20,29 @@ RSpec.describe 'Updating an existing work' do
 
     describe 'display the form' do
       let(:collection) { create(:collection_version_with_collection).collection }
-      let(:work) { create(:work, collection:) }
+      let(:work) { create(:work, collection:, druid: 'druid:bb408qn5061') }
       let(:work_version) { create(:work_version, :published, :with_creation_date_range, work:) }
 
-      it 'shows the form' do
-        get "/works/#{work.id}/edit"
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to match(%r{<title>SDR \| MyString \| Test title \d+</title>})
+      context 'when a valid version' do
+        it 'shows the form' do
+          get "/works/#{work.id}/edit"
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to match(%r{<title>SDR \| MyString \| Test title \d+</title>})
+        end
+      end
+
+      context 'when an invalid version' do
+        before do
+          allow(Repository).to receive(:valid_version?).and_return(false)
+        end
+
+        it 'alerts and does not show the form' do
+          expect { get "/works/#{work.id}/edit" }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+            'WorksMailer', 'version_mismatch_email', 'deliver_now',
+            { params: { work: }, args: [] }
+          )
+          expect(response).to redirect_to(dashboard_path)
+        end
       end
     end
 
