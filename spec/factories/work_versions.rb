@@ -228,6 +228,29 @@ FactoryBot.define do
     end
   end
 
+  trait :with_hierachical_files do
+    transient do
+      uploads do
+        [
+          ActiveStorage::Blob.create_and_upload!(
+            io: Rails.root.join('spec/fixtures/files/favicon.ico').open,
+            filename: 'favicon.ico',
+            content_type: 'image/vnd.microsoft.icon'
+          ),
+          ActiveStorage::Blob.create_and_upload!(
+            io: Rails.root.join('spec/fixtures/files/sul.svg').open,
+            filename: 'sul.svg',
+            content_type: 'image/svg+xml'
+          )
+        ]
+      end
+    end
+    attached_files do
+      [association(:attached_file, path: 'favicon.ico', file: uploads[0].signed_id),
+       association(:attached_file, path: 'dir1/dir2/sul.svg', file: uploads[1].signed_id)]
+    end
+  end
+
   trait :with_globus_endpoint do
     globus_endpoint { 'userid/workid/version1' }
     deposited

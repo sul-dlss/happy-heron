@@ -8,7 +8,7 @@ import {
 } from "../helpers";
 
 export default class extends Controller {
-  static targets = ["input", "previewsContainer", "preview", "template", "feedback", "container", "fileName"];
+  static targets = ["input", "previewsContainer", "preview", "template", "feedback", "container"];
 
   connect() {
     this.dropZone = createDropZone(this, this.templateTarget.innerHTML)
@@ -26,19 +26,28 @@ export default class extends Controller {
   }
 
   validate() {
-    if (this.fileCount == 0) {
+    if (this.fileCount == 0 && this.required) {
       this.disableSubmission()
     }
   }
 
   checkForDuplicates(fileName) {
     // Extract all filenames that are visible
-    const fileNames = this.fileNameTargets.map(target => { if (target.offsetParent !== null) return target.innerText.trim() })
+    // Unfortunately, the filename targets are not contained in the scope of the controller.
+    // Get them directly from the DOM.
+    const filepath = this.dirPath ? `${this.dirPath}/${fileName}` : fileName
+    const fileNameNodes = Array.from(document.querySelectorAll('[data-dropzone-path]'))
+
+    const filepaths = fileNameNodes.map(fileNameNode => {      
+        const path = fileNameNode.getAttribute('data-dropzone-path')
+        const filename = fileNameNode.innerText.trim()
+        return path ? `${path}/${filename}` : filename
+    })
 
     // Remove current fileName
-    fileNames.splice(fileNames.indexOf(fileName), 1)
+    filepaths.splice(filepaths.indexOf(filepath), 1)
 
-    return fileNames.indexOf(fileName) > -1
+    return filepaths.indexOf(filepath) > -1
   }
 
   displayValidateMessage() {
@@ -150,6 +159,14 @@ export default class extends Controller {
     return this.inputTarget.getAttribute("data-direct-upload-url");
   }
 
+  get required() {
+    return this.data.get("required") !== "false";
+  }
+
+  get dirPath() {
+    return this.data.get("dirPath");
+  }
+
   get maxFiles() {
     return this.data.get("maxFiles");
   }
@@ -226,8 +243,8 @@ class DirectUploadController {
   createHiddenPathInput() {
     const input = document.createElement("input")
     input.type = "hidden"
-    input.name = `work[attached_files_attributes][${this.count}][path]`
-    input.value = this.file.name
+    input.name = `work[attached_files_attributes][${this.count}][path]`    
+    input.value = this.source.dirPath ? `${this.source.dirPath}/${this.file.name}` : this.file.name
     this.file.previewElement.appendChild(input)
   }
 

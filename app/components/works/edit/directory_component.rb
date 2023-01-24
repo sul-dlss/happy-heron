@@ -9,7 +9,11 @@ module Works
         @form = form
       end
 
-      delegate :name, :children_directories, :children_files, :depth, to: :directory
+      delegate :name, :children_directories, :children_files, :depth, :full_path, to: :directory
+
+      def dir_id
+        "dir-#{directory.index}"
+      end
 
       attr_reader :directory, :form
     end

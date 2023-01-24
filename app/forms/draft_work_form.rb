@@ -75,7 +75,7 @@ class DraftWorkForm < Reform::Form
 
   # ensure all attached files have a unique filename
   def unique_filenames
-    filenames = attached_files.map { |file| file.model.filename.to_s }
+    filenames = attached_files.map { |file| file.model.path }
 
     errors.add(:attached_files, 'must all have a unique filename.') unless filenames.size == filenames.uniq.size
   end

@@ -4,12 +4,13 @@ module Works
   module Edit
     # Renders a widget corresponding to a single file attached to the work.
     class FileRowComponent < ApplicationComponent
-      def initialize(form:, zip_template: false)
+      def initialize(form:, zip_template: false, path: nil)
         @form = form
         @zip_template = zip_template
+        @path = path
       end
 
-      attr_reader :form
+      attr_reader :form, :path
 
       # file has been uploaded but may not yet have been saved to the database model (and may not validate)
       def uploaded?

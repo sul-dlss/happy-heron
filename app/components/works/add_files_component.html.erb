@@ -31,6 +31,8 @@
           <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
           <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
           <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
+          </div>
+          <div>
             <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version], form:)%>
           </div>
         </fieldset>
@@ -47,7 +49,7 @@
     <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
         data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton' }
       %>
-    <%= form.label :upload_type, 'Upload a single zip file (less than 10GB) which will be unzipped and displayed in its original order, including any file hierarchy.', class: 'form-check-label fw-semibold' %>
+    <%= form.label :upload_type, 'Upload a single zip file (less than 10GB) which will be unzipped, including any file hierarchy.', class: 'form-check-label fw-semibold' %>
     <div id="zip-files-panel" data-file-uploads-target="zipUpload">
       <p>Viewers will see the file hierarchy and be able to download individual files.</p>
       <div data-controller="dropzone" data-dropzone-max-file-size="10000", data-dropzone-max-files="1",
