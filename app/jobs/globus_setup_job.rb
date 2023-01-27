@@ -28,7 +28,8 @@ class GlobusSetupJob < ApplicationJob
   private
 
   def globus_user_exists?(user_id)
-    return Settings.globus.test_user_exists if fake_globus_calls?
+    return true if integration_test_mode?
+    return Settings.globus.test_user_exists if test_mode?
 
     GlobusClient.user_exists?(user_id)
   end
@@ -36,21 +37,46 @@ class GlobusSetupJob < ApplicationJob
   def create_globus_endpoint(work_version)
     user = work_version.work.owner
     # e.g. 'mjgiarlo/work1234/version1'
-    endpoint_path = format(WorkVersion::GLOBUS_ENDPOINT_TEMPLATE,
-                           user_id: user.sunetid,
-                           work_id: work_version.work.id,
-                           work_version: work_version.version)
+    endpoint_path = endpoint_path_for(work_version, user)
 
     # if simulated globus calls, return success, else make globus client call
-    success = fake_globus_calls? ? true : GlobusClient.mkdir(user_id: user.email, path: endpoint_path)
+    success = make_dir(user, endpoint_path)
 
     raise "Error creating globus endpoint for work ID #{work.id}" unless success
 
     work_version.update(globus_endpoint: endpoint_path)
   end
 
+  def endpoint_path_for(work_version, user)
+    return integration_endpoint if integration_test_work_version?(work_version)
+
+    format(WorkVersion::GLOBUS_ENDPOINT_TEMPLATE,
+           user_id: user.sunetid,
+           work_id: work_version.work.id,
+           work_version: work_version.version)
+  end
+
+  def make_dir(user, path)
+    return true if test_mode?
+    return true if integration_test_mode? && path == integration_endpoint
+
+    GlobusClient.mkdir(user_id: user.email, path:)
+  end
+
   # simulate globus calls in development if settings indicate we should for testing
-  def fake_globus_calls?
+  def test_mode?
     Settings.globus.test_mode && Rails.env.development?
+  end
+
+  def integration_test_mode?
+    Settings.globus.integration_mode
+  end
+
+  def integration_test_work_version?(work_version)
+    integration_test_mode? && work_version.title.ends_with?('Integration Test')
+  end
+
+  def integration_endpoint
+    Settings.globus.integration_endpoint
   end
 end

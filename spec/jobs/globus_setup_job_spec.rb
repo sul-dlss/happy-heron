@@ -44,6 +44,23 @@ RSpec.describe GlobusSetupJob do
           expect(work_version.state).to eq 'first_draft'
         end
       end
+
+      context 'when an integration test' do
+        before do
+          work_version.update(state: 'globus_setup_first_draft', title: 'This is an Integration Test')
+          allow(Settings.globus).to receive(:integration_mode).and_return(true)
+        end
+
+        it 'uses the configured endpoint' do
+          expect { described_class.perform_now(work_version) }.to have_enqueued_job(ActionMailer::MailDeliveryJob)
+            .with('WorksMailer', 'globus_endpoint_created', 'deliver_now',
+                  { params: { user:, work_version: }, args: [] })
+          expect(GlobusClient).not_to have_received(:mkdir)
+          work_version.reload
+          expect(work_version.globus_endpoint).to eq Settings.globus.integration_endpoint
+          expect(work_version.state).to eq 'first_draft'
+        end
+      end
     end
 
     context 'when the work already has an endpoint created' do
