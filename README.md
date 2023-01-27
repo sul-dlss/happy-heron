@@ -6,16 +6,6 @@
 
 happy-heron, or H2 (from "Hydrus 2.0"), is a Rails web application enabling users to deposit scholarly content into the SDR. It replaced [Hydrus](https://github.com/sul-dlss/hydrus).
 
-**********************************
-__H2 is currently frozen in production__
-
-* The `production` branch is what is currently deployed in production.
-* Any necessary production patches should be applied to this branch and deployed with `cap prod deploy`.
-* `main` cannot be deployed to production due to changes in `config/deploy/prod.rb`. This should be removed once the freeze is lifted.
-* `sdr-deploy` has been configured to skip deploying H2 to production. This should be removed once the freeze is lifted.
-
-**********************************
-
 ## UX Design
 
 * Comps: https://projects.invisionapp.com/share/EQXC9CLKCR2
