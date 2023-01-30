@@ -67,7 +67,7 @@ purl_url: https://purl.stanford.edu
 terms_url: https://library.stanford.edu/research/stanford-digital-repository/documentation/sdr-terms-deposit
 sdr_url: https://library.stanford.edu/research/stanford-digital-repository
 
-host: <%= Socket.gethostname %>
+host: ~
 
 rabbitmq:
   enabled: false

@@ -195,7 +195,7 @@ RSpec.describe CollectionsMailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
 
       expect(mail.body).to include("Dear #{a_user.first_name},")
-      expect(mail.body).to match("http://#{Socket.gethostname}/collection_versions/#{collection_version.id}")
+      expect(mail.body).to match("http://#{Settings.host}/collection_versions/#{collection_version.id}")
     end
   end
 
@@ -212,7 +212,7 @@ RSpec.describe CollectionsMailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
 
       expect(mail.body).to include("Dear #{a_user.first_name},")
-      expect(mail.body).to match("http://#{Socket.gethostname}/collection_versions/#{collection_version.id}/edit")
+      expect(mail.body).to match("http://#{Settings.host}/collection_versions/#{collection_version.id}/edit")
     end
   end
 
