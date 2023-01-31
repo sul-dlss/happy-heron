@@ -66,7 +66,7 @@ class DepositJob < BaseDepositJob
   end
 
   def connection
-    @connection ||= SdrClient::Connection.new(url: Settings.sdr_api.url)
+    @connection ||= SdrClient::Connection.new(url: Settings.sdr_api.url, read_timeout: 1800)
   end
 
   def build_file_metadata(blobs_map)
