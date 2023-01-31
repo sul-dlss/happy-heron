@@ -15,6 +15,8 @@ globus:
   help_doc_url: https://docs.google.com/document/d/10b7y3yZCOfyVJ_uP4l7QHbkILQKnfdJi9hj-MpmmdIk
   test_mode: false # for testing purposes in non-production only, simulates globus API calls
   test_user_exists: true # if test_mode=true, simulates if the globus user exists
+  integration_mode: false # set to true for integration test
+  integration_endpoint: 'integration_test/work388/version1'
 
 accountws:
   pem_file: /etc/pki/tls/certs/sul-h2-qa.stanford.edu.pem
