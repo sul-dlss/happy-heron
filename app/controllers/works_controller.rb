@@ -301,8 +301,20 @@ class WorksController < ObjectsController
       return params[:invalid_version].present?
     end
 
-    # new work_version has not been created yet, so adding 1 to current version
-    work.druid && !Repository.valid_version?(druid: work.druid, h2_version: work_version.version + 1)
+    # If we are are about to create a new work_version (i.e. the current work_verion state is `deposited`)
+    # than the work_version number will match the currently deposited version in SDR, and we should verify
+    # that the next (about to be current) version number is valid.
+    # If we have a work_version in a draft state, we have already created a new work_version with a version
+    # number that is one larger than the current deposited version in SDR. Therefore, when we save a draft
+    # of a work_version, we should expect that the current version number in H2 is already one ahead of SDR,
+    # and we should verify that the current version number is valid.
+
+    new_version_number = if work_version.deposited?
+                           work_version.version + 1
+                         else
+                           work_version.version
+                         end
+    work.druid && !Repository.valid_version?(druid: work.druid, h2_version: new_version_number)
   end
 end
 # rubocop:enable Metrics/ClassLength
