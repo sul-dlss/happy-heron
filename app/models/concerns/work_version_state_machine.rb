@@ -173,7 +173,7 @@ module WorkVersionStateMachine
 
       return if Repository.valid_version?(druid: work.druid, h2_version: version)
 
-      errors.add(:version, 'must be one greater than the version in SDR')
+      errors.add(:version, 'must be one greater than or equal to the version in SDR')
     end
   end
 end
