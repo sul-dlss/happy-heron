@@ -301,7 +301,8 @@ class WorksController < ObjectsController
       return params[:invalid_version].present?
     end
 
-    work.druid && !Repository.valid_version?(druid: work.druid, h2_version: work_version.version)
+    # new work_version has not been created yet, so adding 1 to current version
+    work.druid && !Repository.valid_version?(druid: work.druid, h2_version: work_version.version + 1)
   end
 end
 # rubocop:enable Metrics/ClassLength
