@@ -27,7 +27,7 @@ class WorkObserver
     work_version.add_doi_to_citation if work.doi
   end
 
-  def self.after_begin_deposit(work_version, _transition)
+  def self.after_depositing(work_version, _transition)
     work_version.update_attribute(:published_at, DateTime.now.utc) # rubocop:disable Rails/SkipsModelValidations
     DepositJob.perform_later(work_version)
   end

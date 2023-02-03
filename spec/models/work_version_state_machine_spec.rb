@@ -55,7 +55,6 @@ RSpec.describe WorkVersion do
 
     context 'when version_draft' do
       let(:work_version) { create(:work_version, :version_draft) }
-
       let(:druid) { 'druid:bb652bq1296' }
       let(:cocina_obj) { instance_double(Cocina::Models::DRO, version: 1) }
 
@@ -100,6 +99,24 @@ RSpec.describe WorkVersion do
             .from('version_draft').to('globus_setup_version_draft')
         end
       end
+    end
+  end
+
+  describe 'pid_assigned event' do
+    let(:collection) { create(:collection, :with_managers) }
+    let(:collection_version) { create(:collection_version_with_collection, collection:) }
+    let(:work_version) { create(:work_version, :depositing) }
+    let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
+
+    before do
+      allow(DepositJob).to receive(:perform_later)
+      allow(Repository).to receive(:valid_version?).and_return(true)
+      work_version.work.druid = 'druid:bb652bq1296'
+    end
+
+    it 'does not trigger the after_depositing hook' do
+      work_version.pid_assigned!
+      expect(DepositJob).not_to have_received(:perform_later)
     end
   end
 

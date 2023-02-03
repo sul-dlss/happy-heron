@@ -13,10 +13,12 @@ module WorkVersionStateMachine
       before_transition WorkObserver.method(:before_transition)
 
       after_transition WorkObserver.method(:after_transition)
-      # we do not want to fire this WorkObserver event twice, which will occur after when a new object is
-      # registered, first on object registration, and second after the PID is assigned... so only run
-      # this method the first time we enter the depositing state
-      after_transition except_from: :depositing, to: :depositing, do: WorkObserver.method(:after_begin_deposit)
+      # NOTE: we do not want to fire this WorkObserver event twice, which will
+      #       occur after when a new object is registered, first on object
+      #       registration, and second after the PID is assigned... so only run
+      #       this method the first time we enter the depositing state for a
+      #       given version
+      after_transition except_from: :depositing, to: :depositing, do: WorkObserver.method(:after_depositing)
       after_transition on: :reserve_purl, do: WorkObserver.method(:after_begin_reserve)
       after_transition on: :pid_assigned, do: WorkObserver.method(:after_druid_assigned)
       after_transition on: :reject, do: WorkObserver.method(:after_rejected)
