@@ -83,6 +83,9 @@ Rails.application.routes.draw do
   direct :contact_form do
     { controller: 'welcome', action: 'show', anchor: 'help' }
   end
+  # legacy /contact links in PURLs should redirect to new contact form URL
+  get 'contact', to: redirect('/#help')
+
   resource :help, only: %i[new create]
   get 'print_terms_of_deposit', to: 'print#terms_of_deposit'
 
