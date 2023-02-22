@@ -121,7 +121,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     chronic (0.10.2)
-    cocina-models (0.87.1)
+    cocina-models (0.88.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -456,9 +456,9 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sdr-client (2.1.0)
+    sdr-client (2.2.0)
       activesupport
-      cocina-models (~> 0.87.0)
+      cocina-models (~> 0.88.0)
       config
       dry-monads
       faraday (>= 0.16)
