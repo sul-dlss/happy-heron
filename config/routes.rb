@@ -84,6 +84,8 @@ Rails.application.routes.draw do
     { controller: 'welcome', action: 'show', anchor: 'help' }
   end
   # legacy /contact links in PURLs should redirect to new contact form URL
+  # see https://jirasul.stanford.edu/jira/browse/PURL-1206
+  # e.g. https://purl.stanford.edu/gp739cs2671 which has the old URL encoded in the rightsMetadata XML
   get 'contact', to: redirect('/#help')
 
   resource :help, only: %i[new create]
