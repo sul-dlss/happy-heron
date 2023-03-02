@@ -9,8 +9,15 @@ class FetchGlobusJob < BaseDepositJob
 
   def perform(work_version)
     work_version.attached_files.destroy_all
+    filepaths = filepaths_for(work_version)
 
-    filepaths_for(work_version).each do |path|
+    # Since it can take a while (hours) to get the filepaths from Globus API for large
+    # deposits we need to ensure that we still have an active database connection
+    # before trying to use it again or else we can get an error:
+    # PG::UnableToSend: SSL SYSCALL error: EOF detected
+    ActiveRecord::Base.clear_active_connections!
+
+    filepaths.each do |path|
       next if ignore?(path)
 
       work_version.attached_files << new_attached_file(path, work_version)
