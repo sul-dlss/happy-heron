@@ -50,17 +50,17 @@
   integrity sha512-MRt9TJztej6idLMvmuZbWc75TJrpl+1kgxWPFzCti4Md7kFtOFTRjXSGKmpc4vFT1NR3SgjHqTfI2Cnr9dJ7Wg==
 
 "@hotwired/turbo-rails@^7.0.1":
-  version "7.2.5"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.2.5.tgz#74fc3395a29a76df2bb8835aa88c86885cffde4c"
-  integrity sha512-F8ztmARxd/XBdevRa//HoJGZ7u+Unb0J7cQUeUP+pBvt9Ta2TJJ7a2TORAOhjC8Zgxx+LKwm/1UUHqN3ojjiGw==
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-7.3.0.tgz#422c21752509f3edcd6c7b2725bbe9e157815f51"
+  integrity sha512-fvhO64vp/a2UVQ3jue9WTc2JisMv9XilIC7ViZmXAREVwiQ2S4UC7Go8f9A1j4Xu7DBI6SbFdqILk5ImqVoqyA==
   dependencies:
-    "@hotwired/turbo" "^7.2.5"
+    "@hotwired/turbo" "^7.3.0"
     "@rails/actioncable" "^7.0"
 
-"@hotwired/turbo@^7.2.5":
-  version "7.2.5"
-  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.2.5.tgz#2d9d6bde8a9549c3aea8970445ade16ffd56719a"
-  integrity sha512-o5PByC/mWkmTe4pWnKrixhPECJUxIT/NHtxKqjq7n9Fj6JlNza1pgxdTCJVIq+PI0j95U+7mA3N4n4A/QYZtZQ==
+"@hotwired/turbo@^7.3.0":
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-7.3.0.tgz#2226000fff1aabda9fd9587474565c9929dbf15d"
+  integrity sha512-Dcu+NaSvHLT7EjrDrkEmH4qET2ZJZ5IcCWmNXxNQTBwlnE5tBZfN6WxZ842n5cHV52DH/AKNirbPBtcEXDLW4g==
 
 "@popperjs/core@2":
   version "2.11.6"
@@ -114,14 +114,14 @@
   integrity sha512-D6tJWsAC024MwGEIKlUVYU8Ln87mlrmiwHvYAjipg+s8H4eLxUMQ3PZkWyPevfipH+oR3leuHsjYsK1gN5ViQA==
 
 "@types/node@*":
-  version "18.14.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.2.tgz#c076ed1d7b6095078ad3cf21dfeea951842778b1"
-  integrity sha512-1uEQxww3DaghA0RxqHx0O0ppVlo43pJhepY51OxuQIKHpjbnYLA7vcdwioNPzIqmC2u3I/dmylcqjlh0e7AyUA==
+  version "18.14.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.6.tgz#ae1973dd2b1eeb1825695bb11ebfb746d27e3e93"
+  integrity sha512-93+VvleD3mXwlLI/xASjw0FzKcwzl3OdTCzm1LaRfqgS21gfFtK3zDXM5Op9TeeMsJVOaJ2VRDpT9q4Y3d0AvA==
 
 "@types/node@^14.14.31":
-  version "14.18.36"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.36.tgz#c414052cb9d43fab67d679d5f3c641be911f5835"
-  integrity sha512-FXKWbsJ6a1hIrRxv+FoukuHnGTgEzKYGi7kilfMae96AL9UNkPFNWJEEYWzdRI9ooIkbr4AKldyuSTLql06vLQ==
+  version "14.18.37"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.37.tgz#0bfcd173e8e1e328337473a8317e37b3b14fd30d"
+  integrity sha512-7GgtHCs/QZrBrDzgIJnQtuSvhFSwhyYSI2uafSwZoNt1iOGhEN5fwNrQMjtONyHm9+/LoA4453jH0CMYcr06Pg==
 
 "@types/sinonjs__fake-timers@8.1.1":
   version "8.1.1"
