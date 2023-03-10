@@ -12,13 +12,7 @@
       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' }
     %>
     <%= form.label :upload_type, 'Upload one or more files (less than 10GB) to be displayed as a flat list of files.', class: 'form-check-label fw-semibold' %>
-    <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
-      <p>All file types are accepted. If you have a deposit that is over 10GB, or
-        have any trouble with adding your files,
-        <%= link_to('contact us.', '#contactUsModal', data: {
-                                  bs_toggle: 'modal',
-                                  bs_target: '#contactUsModal' }) %>
-      </p>
+    <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">      
       <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-previews-container=".dropzone-files-previews">
         <fieldset>
           <div class="dropzone dropzone-default" data-dropzone-target="container">
