@@ -41,6 +41,10 @@ export default class extends Controller {
     const filepaths = fileNameNodes.map(fileNameNode => {      
         const path = fileNameNode.getAttribute('data-dropzone-path')
         const filename = fileNameNode.innerText.trim()
+
+        const item = fileNameNode.closest('.dz-complete')
+        if(item && item.querySelector("input[name*='_destroy']").value == 1) return null
+    
         return path ? `${path}/${filename}` : filename
     })
 
