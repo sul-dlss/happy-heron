@@ -23,6 +23,12 @@ module ActiveStorage
         # to be raised to HB either: https://app.honeybadger.io/projects/77112/faults/88770594
       end
 
+      def delete_prefixed(prefix)
+        # See comment for #delete above.  Called for images by ActiveSupport when #destroy is called
+        # on AttachedFile.  Also marked as a noop for the same reason.
+        # Would raise a NotImplementedError to HB: https://app.honeybadger.io/projects/77112/faults/94613200
+      end
+
       def self.encode_key(druid, version, filepath)
         [druid, version, filepath].join('/')
       end
