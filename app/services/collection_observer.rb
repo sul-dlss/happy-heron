@@ -66,9 +66,10 @@ class CollectionObserver
   private_class_method :collection_managers_excluding_owner
 
   def self.mailer_with_owner(user:, work_version:)
-    owner = work_version.work.owner
-    collection = work_version.work.collection
-    CollectionsMailer.with(user:, collection_version: collection.head, owner:)
+    work = work_version.work
+    owner = work.owner
+    collection_version = work.collection.head
+    CollectionsMailer.with(user:, collection_version:, owner:, work:)
   end
   private_class_method :mailer_with_owner
 

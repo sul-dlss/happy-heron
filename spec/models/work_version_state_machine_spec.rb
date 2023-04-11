@@ -212,6 +212,7 @@ RSpec.describe WorkVersion do
                                            { params: {
                                              user: collection.managed_by.last,
                                              owner: work.owner,
+                                             work:,
                                              collection_version:
                                            }, args: [] }
                                          ))
