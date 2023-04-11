@@ -52,6 +52,7 @@ RSpec.describe WorksMailer do
       expect(mail.body.encoded).to have_content('“Photo booth activated charcoal”')
       expect(mail.body.encoded).to have_content('gastropub humblebrag taiyaki collection')
       expect(mail.body.encoded).to have_content('https://doi.org/10.001/bc123df4567')
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
 
     it 'salutation uses user.first_name' do
@@ -210,6 +211,7 @@ RSpec.describe WorksMailer do
     it 'renders body' do
       expect(mail.body).to include "You are now the owner of the item \"#{work_version.title}\""
       expect(mail.body).to match("http://#{Settings.host}/works/#{work.id}")
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
   end
 

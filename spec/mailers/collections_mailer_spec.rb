@@ -41,6 +41,7 @@ RSpec.describe CollectionsMailer do
     it 'renders the body with salutation of first name' do
       expect(mail.body.encoded).to match('Dear Maxwell,')
       expect(mail.body.encoded).to match("You have been invited to deposit to the #{collection_name} collection")
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
   end
 
@@ -80,6 +81,7 @@ RSpec.describe CollectionsMailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match('You have been invited to be a Manager ' \
                                          "of the #{collection_name} collection")
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
 
     it 'salutation uses user.first_name' do
@@ -125,6 +127,7 @@ RSpec.describe CollectionsMailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match('You have been invited to review new deposits ' \
                                          "to the #{collection_name} collection")
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
 
     it 'salutation uses user.first_name' do
