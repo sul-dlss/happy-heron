@@ -162,7 +162,7 @@ RSpec.describe CollectionsMailer do
     let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
-      described_class.with(user:, collection_version:, work_version:,
+      described_class.with(user:, collection_version:, work:,
                            owner:).first_draft_created
     end
     let(:collection) { build(:collection) }
@@ -224,7 +224,7 @@ RSpec.describe CollectionsMailer do
     let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
-      described_class.with(user:, collection_version:, owner:, work_version:).item_deposited
+      described_class.with(user:, collection_version:, owner:, work:).item_deposited
     end
     let(:collection) { build(:collection) }
 
@@ -251,8 +251,7 @@ RSpec.describe CollectionsMailer do
     let(:owner) { build(:user, name: 'Audre Lorde') }
 
     let(:mail) do
-      described_class.with(user:, collection_version:, work_version:,
-                           owner:).version_draft_created
+      described_class.with(user:, collection_version:, work:, owner:).version_draft_created
     end
     let(:collection) { build(:collection) }
 
