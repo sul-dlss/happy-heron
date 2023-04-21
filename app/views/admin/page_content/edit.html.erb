@@ -5,7 +5,7 @@
   <div class="container" id="dashboard">
     <h1>Edit Page Content - <%= @page_content.page %></h1>
 
-    <%= render Admin::NavigationComponent.new %>
+    <%= render Admin::NavigationComponent.new(selected: admin_page_content_index_path) %>
 
     <%= form_for [:admin, @page_content], class: 'col-md-4 mt-3' do |form| %>
        <% if @page_content.errors.any? %>
