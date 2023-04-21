@@ -2,11 +2,10 @@
 
 # Defines who is authorized to see the page content update (admin page)
 class PageContentPolicy < ApplicationPolicy
-  def index?
-    administrator?
-  end
+  alias_rule :update?, to: :index?
+  alias_rule :edit?, to: :index?
 
-  def update?
+  def index?
     administrator?
   end
 end

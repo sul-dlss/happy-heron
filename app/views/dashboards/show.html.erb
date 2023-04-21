@@ -3,8 +3,7 @@
 <% end %>
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="dashboard" data-controller="work-type">
-    <%= render PageContentComponent.new(page_content: @page_content) %>
-
+    <%= render Dashboard::PageContentComponent.new(page_content: @page_content) %>
     <%= render Dashboard::ContinueDepositModalComponent.new(presenter: @presenter) %>
     <%= render Dashboard::ProfileButtonComponent.new %>
     <%= render Dashboard::AdminButtonComponent.new %>

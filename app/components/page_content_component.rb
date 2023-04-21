@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Renders an optional user message on the selected page
+# Renders an optional user message on the home page
 class PageContentComponent < ApplicationComponent
   def initialize(page_content:)
     @page_content = page_content

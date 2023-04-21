@@ -1,21 +1,17 @@
 <% content_for :breadcrumbs do %>
-  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Edit Home Page Message' } ])%>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Edit page content' } ])%>
 <% end %>
 <main id="content">
   <div class="container" id="dashboard">
-    <h1>Edit Home Page Message</h1>
+    <h1>Edit Page Content</h1>
 
     <%= render Admin::NavigationComponent.new %>
 
-    <%= form_with model: [:admin, @page_content], class: 'col-md-4 mt-3' do |form| %>
-        <p>Last edited on <em><%= @page_content.updated_at.to_formatted_s(:long) %></em> by <em><%= @page_content.user %></em></p>
-        <%= form.label :value, "Text" %>
-        <%= form.text_area :value, class: 'form-control' %>
-        <div class="form-check">
-            <%= form.check_box :visible %>
-            <%= form.label :visible, "Visible to user" %>
-        </div>
-        <%= form.submit "Save", class: 'btn btn-primary my-3' %>
+    <h3>Pages to edit</h3>
+    <ul>
+    <% @page_contents.each do |page_content| %>
+        <li><%= link_to page_content.page, edit_admin_page_content_path(page_content) %>
     <% end %>
+    </ul>
   </div>
 </main>

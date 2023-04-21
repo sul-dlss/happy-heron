@@ -2,5 +2,5 @@
 
 # Optional text to display on home page/dashboard, as edited by an Admin user
 class PageContent < ApplicationRecord
-  validates :value, length: { maximum: 30 }
+  validates :value, length: { maximum: 1000 }
 end

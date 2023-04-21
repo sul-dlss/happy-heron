@@ -74,7 +74,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :druid_searches, only: :index
     resources :users, only: :index
-    resources :page_content, only: %i[index update]
+    resources :page_content, only: %i[index edit update]
     resources :collection_reports, only: %i[new create]
     resources :work_reports, only: %i[new create]
     resources :locked_items, only: :index
