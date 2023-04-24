@@ -65,6 +65,9 @@ RSpec.describe 'Edit page contents', js: true do
 
       visit root_path
       expect(page).not_to have_content(page_content.value)
+
+      visit dashboard_path
+      expect(page).not_to have_content(page_content.value)
     end
   end
 end

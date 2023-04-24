@@ -22,7 +22,7 @@
         font-weight: normal;
       }
     }
-    
+
     .work-title {
       width: 28%;
     }
@@ -40,4 +40,23 @@
 ul.collections {
   list-style-type: none;
   padding-left: 0;
+}
+
+.page-content-message-dashboard-top {
+  font-size: 1.0rem;
+  font-style: italic;
+  text-align: center;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.page-content-message-dashboard-bottom {
+  font-size: 0.9rem;
+  font-style: italic;
+
+  a {
+    text-decoration: underline;
+  }
 }
