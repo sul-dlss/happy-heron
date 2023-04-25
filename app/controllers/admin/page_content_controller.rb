@@ -41,7 +41,7 @@ module Admin
     private
 
     def page_content_params
-      params.require(:page_content).permit(:value, :visible)
+      params.require(:page_content).permit(:value, :visible, :link_visible, :link_url, :link_text)
     end
   end
 end

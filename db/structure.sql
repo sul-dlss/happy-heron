@@ -448,9 +448,12 @@ CREATE TABLE public.managers (
 
 CREATE TABLE public.page_contents (
     id bigint NOT NULL,
-    page character varying DEFAULT 'home'::character varying NOT NULL,
+    page character varying NOT NULL,
     value text DEFAULT ''::text,
     visible boolean DEFAULT false,
+    link_visible boolean DEFAULT false,
+    link_text character varying DEFAULT ''::character varying,
+    link_url character varying DEFAULT ''::character varying,
     "user" character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
