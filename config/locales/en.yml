@@ -211,3 +211,7 @@ en:
     decommissioned: The collection has been permanently removed
     assigned_new_owner: An item is assigned a new owner
     item_deleted: An item is deleted
+  admin:
+    page_content:
+      success: 'Home page message updated'
+      error: 'Home page message could not be saved'
