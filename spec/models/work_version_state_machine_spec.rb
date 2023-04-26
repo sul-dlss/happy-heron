@@ -292,10 +292,6 @@ RSpec.describe WorkVersion do
       let(:work_version) { build(:work_version, :depositing, work:, upload_type: 'globus') }
       let(:collection) { create(:collection) }
 
-      before do
-        allow(Settings).to receive(:notify_admin_list).and_return(true)
-      end
-
       it 'transitions to deposited' do
         expect { work_version.deposit_complete! }
           .to change(work_version, :state)
