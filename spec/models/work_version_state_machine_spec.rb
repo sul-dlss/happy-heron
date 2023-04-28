@@ -289,8 +289,14 @@ RSpec.describe WorkVersion do
     end
 
     context 'when a deposit with globus' do
-      let(:work_version) { build(:work_version, :depositing, work:, upload_type: 'globus') }
+      let(:work_version) do
+        build(:work_version, :depositing, work:, upload_type: 'browser', globus_endpoint: '/some/globus/url')
+      end
       let(:collection) { create(:collection) }
+
+      before do
+        allow(Settings).to receive(:notify_admin_list).and_return(true)
+      end
 
       it 'transitions to deposited' do
         expect { work_version.deposit_complete! }
