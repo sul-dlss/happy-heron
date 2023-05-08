@@ -4,7 +4,7 @@
 
 # Self-Deposit for the Stanford Digital Repository (SDR)
 
-happy-heron, or H2 (from "Hydrus 2.0"), is a Rails web application enabling users to deposit scholarly content into the SDR. It replaced [Hydrus](https://github.com/sul-dlss/hydrus).
+happy-heron 𓅣 𓅻, or H2 (from "Hydrus 2.0"), is a Rails web application enabling users to deposit scholarly content into the SDR. It replaced [Hydrus](https://github.com/sul-dlss/hydrus).
 
 ## UX Design
 
@@ -15,7 +15,7 @@ happy-heron, or H2 (from "Hydrus 2.0"), is a Rails web application enabling user
 
 Ruby dependencies can be installed with `bundle install`, JavaScript dependencies are installed via `yarn install`.
 
-NOTE: H2 uses Ruby 3.0.3.
+NOTE: H2 uses Ruby 3.1.4.
 
 ## Development
 
