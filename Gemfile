@@ -47,7 +47,7 @@ group :deployment do
   gem 'dlss-capistrano', require: false
 end
 
-gem 'action_policy', '~> 0.5.3'
+gem 'action_policy', '~> 0.6.5'
 gem 'addressable', '~> 2.8.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bunny', '~> 2.17' # RabbitMQ library
