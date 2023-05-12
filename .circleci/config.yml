@@ -1,15 +1,13 @@
 version: 2.1
 orbs:
-  ruby-rails: sul-dlss/ruby-rails@3.2.0
+  ruby-rails: sul-dlss/ruby-rails@4.0.0
   browser-tools: circleci/browser-tools@1.4.0
   node: circleci/node@5.0.0
   ruby: circleci/ruby@1.8.0
   cypress: cypress-io/cypress@2.2.0
 jobs:
   cypress:
-    executor:
-      name: ruby-rails/ruby-postgres
-      ruby-tag: '3.2.2'
+    executor: ruby-rails/ruby-postgres
     steps:
       - checkout
       - ruby/install-deps
@@ -33,14 +31,8 @@ workflows:
       - cypress
       - ruby-rails/lint:
           name: lint
-          executor:
-            name: ruby-rails/ruby
-            ruby-tag: '3.2.2'
       - ruby-rails/test-rails:
           name: test
-          executor:
-            name: ruby-rails/ruby-postgres
-            ruby-tag: '3.2.2'
           install-chrome: true
           before-test:
             - run:
