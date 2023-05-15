@@ -73,9 +73,7 @@ gem 'redis', '~> 4.0'
 # TODO: Deal with this
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
 gem 'reform', '~> 2.5.0'
-# TODO: Deal with this
-# pinned because 0.2.4 broke the build: https://github.com/trailblazer/reform-rails/issues/99
-gem 'reform-rails', '~> 0.2.0', '< 0.2.4'
+gem 'reform-rails'
 gem 'rubyzip', '~> 2.3'
 gem 'sdr-client', '~> 2.0'
 gem 'sidekiq', '~> 7.0'
