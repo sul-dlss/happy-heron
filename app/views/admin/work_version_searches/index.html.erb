@@ -1,0 +1,20 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Search for Work Version' } ])%>
+<% end %>
+<main id="content">
+  <div class="container" id="dashboard">
+    <h1>Search for Work Version</h1>
+
+    <%= render Admin::NavigationComponent.new %>
+
+    <%= form_with url: admin_work_version_searches_path, method: :get, class: 'col-md-4 mt-3' do |form| %>
+        <%= form.label :query, "Enter Work Version ID" %>
+        <%= form.search_field :query, class: 'form-control' %>
+        <%= form.submit "Search", class: 'btn btn-primary my-3' %>
+    <% end %>
+
+    <% if @failure %>
+        <span class="text-danger">Work version not found. Please try searching for another Work Version ID or try again if you think this is an error.</span>
+    <% end %>
+  </div>
+</main>
