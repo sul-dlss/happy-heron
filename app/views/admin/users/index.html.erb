@@ -86,7 +86,7 @@
               <th>Collection</th>
               <th>Status</th>
               <th>Druid</th>
-              <th>Role</th>
+              <th>Last Modified</th>
             </tr>
           </thead>
           <tbody>
@@ -96,13 +96,7 @@
                 <td><%= link_to work.collection.head.name, work.collection %></td>
                 <td><%= work.head.state.humanize %></td>
                 <td><%= work.druid_without_namespace %></td>
-                <td>
-                  <% if work.owner_id == presenter.user %>
-                    Current owner
-                  <% else %>
-                    Depositor
-                  <% end %>
-                </td>
+                <td><%= render LocalTimeComponent.new(datetime: work.head.updated_at) %></td>
               </tr>
             <% end %>
           </tbody>
