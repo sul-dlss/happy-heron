@@ -77,7 +77,7 @@ class DepositJob < BaseDepositJob
         content_type: clean_content_type(blob.content_type),
         filename: blob.filename.to_s
       )
-    end
+    end.tap { |blobs_map| Rails.logger.info("DepositJob#build_file_metadata for #{arguments.first} : blobs_map=#{blobs_map}") } # rubocop:disable Style/MultilineBlockChain, Lint/ShadowingOuterLocalVariable, Layout/LineLength
   end
 
   def clean_content_type(content_type)

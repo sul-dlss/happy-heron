@@ -75,7 +75,7 @@ gem 'redis', '~> 4.0'
 gem 'reform', '~> 2.5.0'
 gem 'reform-rails'
 gem 'rubyzip', '~> 2.3'
-gem 'sdr-client', '~> 2.0'
+gem 'sdr-client', github: 'sul-dlss/sdr-client', branch: 'upload_files-json-content_type'
 gem 'sidekiq', '~> 7.0'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
