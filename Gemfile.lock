@@ -152,7 +152,7 @@ GEM
     cuprite (0.14.3)
       capybara (~> 3.0)
       ferrum (~> 0.13.0)
-    cypress-on-rails (1.13.1)
+    cypress-on-rails (1.14.0)
       rack
     cypress-rails (0.5.5)
       puma (>= 3.8.0)
