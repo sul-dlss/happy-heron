@@ -1,3 +1,16 @@
+GIT
+  remote: https://github.com/sul-dlss/sdr-client.git
+  revision: b3e47d225ba629c3dac1e53684ed575555f166ef
+  branch: post-all-files-as-binary-content-type
+  specs:
+    sdr-client (2.4.0)
+      activesupport
+      cocina-models (~> 0.90.0)
+      config
+      dry-monads
+      faraday (>= 0.16)
+      launchy
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -465,13 +478,6 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sdr-client (2.4.0)
-      activesupport
-      cocina-models (~> 0.90.0)
-      config
-      dry-monads
-      faraday (>= 0.16)
-      launchy
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.0.3)
@@ -614,7 +620,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubyzip (~> 2.3)
-  sdr-client (~> 2.0)
+  sdr-client (~> 2.0)!
   sidekiq (~> 7.0)
   simplecov
   sneakers (~> 2.11)
