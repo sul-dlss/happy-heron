@@ -74,7 +74,7 @@ class DepositJob < BaseDepositJob
       SdrClient::Deposit::Files::DirectUploadRequest.new(
         checksum: blob.checksum,
         byte_size: blob.byte_size,
-        content_type: clean_content_type(blob.content_type),
+        content_type: 'application/octet-stream',
         filename: blob.filename.to_s
       )
     end
