@@ -81,6 +81,12 @@ class DepositJob < BaseDepositJob
   end
 
   def clean_content_type(content_type)
+    # Invalid JSON files uploaded through H2 will trigger 400 errors in sdr-api since they are parsed
+    # and rejected.  The work around is to change the content_type in H2 for any JSON files to something
+    # specific that will be changed back to application/json after upload is complete.
+    # There is a similar change in sdr-api to change the content_type back.  See https://github.com/sul-dlss/happy-heron/issues/3075
+    return 'application/x-stanford-json' if content_type == 'application/json'
+
     # ActiveStorage is expecting "application/x-stata-dta" not "application/x-stata-dta;version=14"
     content_type&.split(';')&.first
   end
