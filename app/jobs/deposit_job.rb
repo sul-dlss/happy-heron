@@ -74,15 +74,10 @@ class DepositJob < BaseDepositJob
       SdrClient::Deposit::Files::DirectUploadRequest.new(
         checksum: blob.checksum,
         byte_size: blob.byte_size,
-        content_type: clean_content_type(blob.content_type),
+        content_type: blob.content_type,
         filename: blob.filename.to_s
       )
     end
-  end
-
-  def clean_content_type(content_type)
-    # ActiveStorage is expecting "application/x-stata-dta" not "application/x-stata-dta;version=14"
-    content_type&.split(';')&.first
   end
 
   def blob_filepath_for(blob)
