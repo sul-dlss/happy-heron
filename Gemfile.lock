@@ -1,3 +1,16 @@
+GIT
+  remote: https://github.com/sul-dlss/sdr-client.git
+  revision: d28e787ac321b87586872eee938036b21b4a3f11
+  branch: handle-invalid-json
+  specs:
+    sdr-client (2.4.0)
+      activesupport
+      cocina-models (~> 0.90.0)
+      config
+      dry-monads
+      faraday (>= 0.16)
+      launchy
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -466,13 +479,6 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sdr-client (2.4.0)
-      activesupport
-      cocina-models (~> 0.90.0)
-      config
-      dry-monads
-      faraday (>= 0.16)
-      launchy
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.0.3)
@@ -615,7 +621,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubyzip (~> 2.3)
-  sdr-client (~> 2.0)
+  sdr-client (~> 2.0)!
   sidekiq (~> 7.0)
   simplecov
   sneakers (~> 2.11)
