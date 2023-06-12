@@ -64,10 +64,6 @@ module Works
     # In getters below, reform.send is used to return the original submitted values are returned when an EDTF
     # couldn't be created.
 
-    # rubocop:disable Lint/RedundantSafeNavigation
-    # We need presence to be able to return nil instead of 0 below so this rule
-    # is disabled until this is resolved: https://github.com/rubocop/rubocop/issues/11918
-
     def created_range_start_year
       created_range_start&.year || reform.send(:'created_range(1i)').presence&.to_i
     end
@@ -97,8 +93,6 @@ module Works
     def created_range_end_day
       resolve_day(created_range_end) || reform.send(:'created_range(6i)').presence&.to_i
     end
-
-    # rubocop:enable Lint/RedundantSafeNavigation
 
     def created_range_end_approximate?
       return false unless created_range_end
