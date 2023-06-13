@@ -61,8 +61,6 @@ class WorkType
     'White paper', 'Working paper'
   ].freeze
 
-  MIXED_TYPES = (%w[Music Software/Code Sound Video] + MORE_TYPES).sort.freeze
-
   attr_reader :id
 
   attr_reader :label
@@ -113,7 +111,7 @@ class WorkType
       new(id: 'music', label: 'Music', html_label: 'Music', icon: 'music',
           subtypes: MUSIC_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'mixed material', label: 'Mixed Materials', html_label: 'Mixed Materials', icon: 'play',
-          subtypes: MIXED_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+          subtypes: MORE_TYPES, cocina_type: Cocina::Models::ObjectType.object),
       new(id: 'other', label: 'Other', html_label: 'Other', icon: 'archive',
           subtypes: [], cocina_type: Cocina::Models::ObjectType.object)
     ]

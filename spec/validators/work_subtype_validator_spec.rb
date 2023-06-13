@@ -54,7 +54,7 @@ RSpec.describe WorkSubtypeValidator do
     end
 
     context 'with two valid subtypes and one or more valid "more" types' do
-      let(:value) { %w[Data Sound Preprint] }
+      let(:value) { %w[Data Speech Preprint] }
 
       it 'validates' do
         expect(record.errors).to be_empty
