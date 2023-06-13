@@ -8,7 +8,7 @@ RSpec.describe License do
       subject(:license_list) { described_class.license_list }
 
       it 'returns array of valid license strings' do
-        expect(license_list).to match_array [
+        expect(license_list).to contain_exactly(
           'CC0-1.0',
           'CC-BY-4.0',
           'CC-BY-SA-4.0',
@@ -32,7 +32,7 @@ RSpec.describe License do
           'MPL-2.0',
           'none',
           'PDM-1.0'
-        ]
+        )
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe License do
       subject(:license_list) { described_class.license_list(include_displayable: true) }
 
       it 'returns array of valid license strings' do
-        expect(license_list).to match_array [
+        expect(license_list).to contain_exactly(
           'CC0-1.0',
           'CC-BY-4.0',
           'CC-BY-SA-4.0',
@@ -70,7 +70,7 @@ RSpec.describe License do
           'CC-BY-NC-3.0',
           'CC-BY-NC-SA-3.0',
           'CC-BY-NC-ND-3.0'
-        ]
+        )
       end
     end
   end

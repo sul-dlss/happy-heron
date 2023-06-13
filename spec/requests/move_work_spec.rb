@@ -31,7 +31,7 @@ RSpec.describe 'Change collection of a work' do
       it 'returns an array with the collection' do
         get search_move_path(work), params: { druid: }
 
-        response_json = JSON.parse(response.body)
+        response_json = response.parsed_body
         expect(response_json).to eq([
                                       {
                                         id: collection.id,
@@ -47,7 +47,7 @@ RSpec.describe 'Change collection of a work' do
       it 'returns an empty array' do
         get search_move_path(work), params: { druid: 'druid:abc123' }
 
-        response_json = JSON.parse(response.body)
+        response_json = response.parsed_body
         expect(response_json).to eq([])
       end
     end

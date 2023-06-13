@@ -6,6 +6,8 @@ RSpec.describe CollectionsMailer do
   let(:collection_version) { build_stubbed(:collection_version, collection:) }
   let(:collection_name) { collection_version.name }
   let(:collection) { build_stubbed(:collection) }
+  let(:work) { build_stubbed(:work, collection:) }
+  let(:work_version) { build_stubbed(:work_version, work:) }
   let(:a_user) { build_stubbed(:user, name: 'Al Dente', first_name: 'Fred') }
 
   describe '#invitation_to_deposit_email for new user with no name' do
@@ -41,6 +43,7 @@ RSpec.describe CollectionsMailer do
     it 'renders the body with salutation of first name' do
       expect(mail.body.encoded).to match('Dear Maxwell,')
       expect(mail.body.encoded).to match("You have been invited to deposit to the #{collection_name} collection")
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
   end
 
@@ -80,6 +83,7 @@ RSpec.describe CollectionsMailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match('You have been invited to be a Manager ' \
                                          "of the #{collection_name} collection")
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
 
     it 'salutation uses user.first_name' do
@@ -125,6 +129,7 @@ RSpec.describe CollectionsMailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match('You have been invited to review new deposits ' \
                                          "to the #{collection_name} collection")
+      expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
 
     it 'salutation uses user.first_name' do
@@ -160,7 +165,7 @@ RSpec.describe CollectionsMailer do
     let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
-      described_class.with(user:, collection_version:,
+      described_class.with(user:, collection_version:, work:,
                            owner:).first_draft_created
     end
     let(:collection) { build(:collection) }
@@ -172,7 +177,8 @@ RSpec.describe CollectionsMailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match "The Depositor #{owner.name} has created a draft"
+      expect(mail.body.encoded).to match "The Depositor #{owner.name} has created a"
+      expect(mail.body.encoded).to match "<a href=\"#{work_url(work)}\">draft</a>"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
 
@@ -195,7 +201,7 @@ RSpec.describe CollectionsMailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
 
       expect(mail.body).to include("Dear #{a_user.first_name},")
-      expect(mail.body).to match("http://#{Socket.gethostname}/collection_versions/#{collection_version.id}")
+      expect(mail.body).to match("http://#{Settings.host}/collection_versions/#{collection_version.id}")
     end
   end
 
@@ -212,7 +218,7 @@ RSpec.describe CollectionsMailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
 
       expect(mail.body).to include("Dear #{a_user.first_name},")
-      expect(mail.body).to match("http://#{Socket.gethostname}/collection_versions/#{collection_version.id}/edit")
+      expect(mail.body).to match("http://#{Settings.host}/collection_versions/#{collection_version.id}/edit")
     end
   end
 
@@ -221,7 +227,7 @@ RSpec.describe CollectionsMailer do
     let(:owner) { build(:user, name: 'Audre Lorde', first_name: 'Queueueue') }
 
     let(:mail) do
-      described_class.with(user:, collection_version:, owner:).item_deposited
+      described_class.with(user:, collection_version:, owner:, work:).item_deposited
     end
     let(:collection) { build(:collection) }
 
@@ -232,7 +238,8 @@ RSpec.describe CollectionsMailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match "The Depositor #{owner.name} has submitted a deposit"
+      expect(mail.body.encoded).to match "The Depositor #{owner.name} has submitted a"
+      expect(mail.body.encoded).to match "<a href=\"#{work_url(work)}\">deposit</a>"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
 
@@ -247,8 +254,7 @@ RSpec.describe CollectionsMailer do
     let(:owner) { build(:user, name: 'Audre Lorde') }
 
     let(:mail) do
-      described_class.with(user:, collection_version:,
-                           owner:).version_draft_created
+      described_class.with(user:, collection_version:, work:, owner:).version_draft_created
     end
     let(:collection) { build(:collection) }
 
@@ -259,7 +265,8 @@ RSpec.describe CollectionsMailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match "The Depositor #{owner.name} has started a new version"
+      expect(mail.body.encoded).to match "The Depositor #{owner.name} has started a"
+      expect(mail.body.encoded).to match "<a href=\"#{work_url(work)}\">new version</a>"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
 

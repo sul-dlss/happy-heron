@@ -26,7 +26,7 @@ end
 group :development do
   gem 'faker'
   gem 'listen', '~> 3.2'
-  gem 'multi_json', require: false # needed to update RBIs after adding reform-rails
+  gem 'multi_json', require: false
   gem 'puma', '~> 5.6', '>= 5.6.4'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -47,7 +47,7 @@ group :deployment do
   gem 'dlss-capistrano', require: false
 end
 
-gem 'action_policy', '~> 0.5.3'
+gem 'action_policy', '~> 0.6.5'
 gem 'addressable', '~> 2.8.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bunny', '~> 2.17' # RabbitMQ library
@@ -66,20 +66,20 @@ gem 'jsbundling-rails', '~> 0.1.9'
 gem 'lograge', '~> 0.11.2'
 gem 'okcomputer'
 gem 'pg'
-gem 'preservation-client', '~> 5.0'
+gem 'preservation-client', '~> 6.0'
 gem 'propshaft'
 gem 'pry'
 gem 'redis', '~> 4.0'
 # TODO: Deal with this
 # pinned because 2.6.0 broke the build: [Reform] Your :populator did not return a Reform::Form instance for `authors`.
 gem 'reform', '~> 2.5.0'
-gem 'reform-rails', '~> 0.2.0'
+gem 'reform-rails'
 gem 'rubyzip', '~> 2.3'
-gem 'sdr-client', '~> 1.0'
-gem 'sidekiq', '~> 6.1'
+gem 'sdr-client', '~> 2.0'
+gem 'sidekiq', '~> 7.0'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
 gem 'turbo-rails', '~> 1.0'
 gem 'view_component', '~> 2.56.2' # https://github.com/github/view_component/issues/1390
-gem 'whenever'
+gem 'whenever', require: false # Work around https://github.com/javan/whenever/issues/831
 gem 'zipline', '~> 1.4'

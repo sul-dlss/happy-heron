@@ -10,6 +10,7 @@ class DashboardsController < ApplicationController
 
     authorize! :dashboard
     @presenter = build_presenter
+    @page_content = PageContent.find_by(page: 'home')
   end
 
   private

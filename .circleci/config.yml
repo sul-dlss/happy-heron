@@ -1,15 +1,13 @@
 version: 2.1
 orbs:
-  ruby-rails: sul-dlss/ruby-rails@3.1.2
+  ruby-rails: sul-dlss/ruby-rails@4.0.0
   browser-tools: circleci/browser-tools@1.4.0
   node: circleci/node@5.0.0
   ruby: circleci/ruby@1.8.0
   cypress: cypress-io/cypress@2.2.0
 jobs:
   cypress:
-    executor:
-      name: ruby-rails/ruby-postgres
-      ruby-tag: '3.1.2'
+    executor: ruby-rails/ruby-postgres
     steps:
       - checkout
       - ruby/install-deps
@@ -17,7 +15,7 @@ jobs:
           yarn: true
           post-install:
             - run: sudo apt-get update
-            - run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+            - run: sudo apt-get install --fix-missing libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
       - browser-tools/install-firefox
       - node/install-packages:
           pkg-manager: yarn
@@ -33,14 +31,8 @@ workflows:
       - cypress
       - ruby-rails/lint:
           name: lint
-          executor:
-            name: ruby-rails/ruby
-            ruby-tag: '3.1.2'
       - ruby-rails/test-rails:
           name: test
-          executor:
-            name: ruby-rails/ruby-postgres
-            ruby-tag: '3.1.2'
           install-chrome: true
           before-test:
             - run:

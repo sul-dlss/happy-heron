@@ -37,6 +37,7 @@ RSpec.describe DepositCompleteJob do
         { params: {
           user: collection.managed_by.last,
           owner: work.owner,
+          work:,
           collection_version:
         }, args: [] }
       )

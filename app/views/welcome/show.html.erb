@@ -13,6 +13,7 @@
       <%= link_to dashboard_path, class: 'btn btn-primary btn-xl mb-3 mr-md-3' do %>
         <span class="me-5">Enter here</span><span class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></span>
       <% end %>
+      <%= render PageContentComponent.new(page_content: @page_content) %>
     </div>
     <a href="#photo-credit" class="credit">Photo credit<sup>*</sup></a>
   </div>

@@ -1,0 +1,17 @@
+<% content_for :breadcrumbs do %>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Edit page content' } ])%>
+<% end %>
+<main id="content">
+  <div class="container" id="dashboard">
+    <h1>Edit Page Content</h1>
+
+    <%= render Admin::NavigationComponent.new %>
+
+    <h3>Pages to edit</h3>
+    <ul>
+    <% @page_contents.each do |page_content| %>
+        <li><%= link_to page_content.page, edit_admin_page_content_path(page_content) %>
+    <% end %>
+    </ul>
+  </div>
+</main>

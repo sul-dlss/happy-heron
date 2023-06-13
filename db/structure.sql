@@ -443,6 +443,43 @@ CREATE TABLE public.managers (
 
 
 --
+-- Name: page_contents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.page_contents (
+    id bigint NOT NULL,
+    page character varying NOT NULL,
+    value text DEFAULT ''::text,
+    visible boolean DEFAULT false,
+    link_visible boolean DEFAULT false,
+    link_text character varying DEFAULT ''::character varying,
+    link_url character varying DEFAULT ''::character varying,
+    "user" character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: page_contents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.page_contents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: page_contents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.page_contents_id_seq OWNED BY public.page_contents.id;
+
+
+--
 -- Name: related_links; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -728,6 +765,13 @@ ALTER TABLE ONLY public.mail_preferences ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: page_contents id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.page_contents ALTER COLUMN id SET DEFAULT nextval('public.page_contents_id_seq'::regclass);
+
+
+--
 -- Name: related_links id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -856,6 +900,14 @@ ALTER TABLE ONLY public.keywords
 
 ALTER TABLE ONLY public.mail_preferences
     ADD CONSTRAINT mail_preferences_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: page_contents page_contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.page_contents
+    ADD CONSTRAINT page_contents_pkey PRIMARY KEY (id);
 
 
 --
@@ -1354,6 +1406,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221117233130'),
 ('20221201204010'),
 ('20221206194032'),
-('20221213211305');
+('20221213211305'),
+('20230420204926');
 
 
