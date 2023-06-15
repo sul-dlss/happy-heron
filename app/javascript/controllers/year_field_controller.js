@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  
+
   connect() {
     this.hasChanged = false
   }
@@ -12,8 +12,10 @@ export default class extends Controller {
     if (this.hasChanged)
         return // nothing to do
 
-    if (evt.inputType === "insertReplacementText") // So that typing in digits doesn't do this, only arrow keys or the arrow buttons
-    evt.target.value = evt.target.max
+    // Be careful refactoring this because Firefox and Chrome send different event types when doing arrow buttons
+    // We prevent this behavior when typing or pasting, we only want it for arrow keys or the arrow buttons
+    if (evt.inputType !== "insertText" && evt.inputType !== "insertFromPaste")
+      evt.target.value = evt.target.max
     this.hasChanged = true
   }
 }
