@@ -14,7 +14,8 @@ export default class extends Controller {
 
     // Be careful refactoring this because Firefox and Chrome send different event types when doing arrow buttons
     // We prevent this behavior when typing or pasting, we only want it for arrow keys or the arrow buttons
-    if (evt.inputType !== "insertText" && evt.inputType !== "insertFromPaste")
+    const typeEvents = ["insertText", "insertFromPaste", "deleteContentBackward"]
+    if (!typeEvents.includes(evt.inputType))
       evt.target.value = evt.target.max
     this.hasChanged = true
   }
