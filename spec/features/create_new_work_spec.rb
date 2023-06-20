@@ -129,6 +129,9 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
           fill_in "Created range start year", with: "2020"
           select "March", from: "Created range start month"
           select "6", from: "Created range start day"
+          # javascript changes related to arrow selection causes issues with the test,
+          # filling in twice fixes the tests, even though it works as expected in browser
+          fill_in "Created range end year", with: "2020"
           fill_in "Created range end year", with: "2020"
           select "October", from: "Created range end month"
           select "30", from: "Created range end day"
@@ -347,6 +350,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
 
           check "Enter a date range"
 
+<<<<<<< HEAD
           fill_in "Created range start year", with: "2020"
           select "March", from: "Created range start month"
           select "6", from: "Created range start day"
@@ -354,6 +358,18 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
           select "October", from: "Created range end month"
           select "30", from: "Created range end day"
           select "Everyone", from: "Who can download the files?"
+=======
+          fill_in 'Created range start year', with: '2020'
+          select 'March', from: 'Created range start month'
+          select '6', from: 'Created range start day'
+          # javascript changes related to arrow selection causes issues with the test,
+          # filling in twice fixes the tests, even though it works as expected in browser
+          fill_in 'Created range end year', with: '2020'
+          fill_in 'Created range end year', with: '2020'
+          select 'October', from: 'Created range end month'
+          select '30', from: 'Created range end day'
+          select 'Everyone', from: 'Who can download the files?'
+>>>>>>> experiments in getting tests to work
 
           fill_in "Abstract", with: "User provided abstract"
           check "Oral history"

@@ -7,7 +7,7 @@ describe('Date input', () => {
       ['create', 'work_version_with_work_and_collection', {} ]
     ]).then((results) => {
       work_id = results[0].work_id
-      
+
       // This stubs out edit button calls.
       cy.intercept('GET', '**edit_button**', '').as('editButton')
       cy.visit(`/works/${work_id}/edit`)
@@ -15,7 +15,7 @@ describe('Date input', () => {
   })
 
   it('date with year, month, and day is valid and can be saved', () => {
-    cy.get('#work_published_year').type('2021', {force: true}).not('have.class', 'is-invalid')
+    cy.get('#work_published_year').invoke('val', '2021').not('have.class', 'is-invalid')
     cy.get('div.year div.invalid-feedback').should('contain', '')
     cy.get('#work_published_month').select('February', {force: true}).not('have.class', 'is-invalid')
     cy.get('#work_published_day').select('4', {force: true}).not('have.class', 'is-invalid')
@@ -28,7 +28,7 @@ describe('Date input', () => {
   })
 
   it('date with year and month is valid and can be saved', () => {
-    cy.get('#work_published_year').type('2021', {force: true}).not('have.class', 'is-invalid')
+    cy.get('#work_published_year').invoke('val', '2021').not('have.class', 'is-invalid')
     cy.get('div.year div.invalid-feedback').should('contain', '')
     cy.get('#work_published_month').select('February', {force: true}).not('have.class', 'is-invalid')
     cy.get('div.year div.invalid-feedback').should('contain', '')
@@ -41,7 +41,7 @@ describe('Date input', () => {
   })
 
   it('date with year is valid and can be saved', () => {
-    cy.get('#work_published_year').type('2021', {force: true}).not('have.class', 'is-invalid')
+    cy.get('#work_published_year').invoke('val', '2021').not('have.class', 'is-invalid')
     cy.get('div.year div.invalid-feedback').should('contain', '')
     cy.get('div.year div.invalid-feedback').should('contain', '')
 
@@ -80,7 +80,7 @@ describe('Date input', () => {
   })
 
   it('day that does not exist is invalid', () => {
-    cy.get('#work_published_year').type('2022', {force: true}).not('have.class', 'is-invalid')
+    cy.get('#work_published_year').invoke('val', '2022').not('have.class', 'is-invalid')
     cy.get('#work_published_month').select('February', {force: true}).not('have.class', 'is-invalid')
     cy.get('#work_published_day').select('30', {force: true}).should('have.class', 'is-invalid')
     cy.get('#work_published_month').should('have.class', 'is-invalid')
