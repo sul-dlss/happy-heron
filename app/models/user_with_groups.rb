@@ -7,9 +7,7 @@ class UserWithGroups
     @groups = groups
   end
 
-  attr_reader :user
-
-  attr_reader :groups
+  attr_reader :user, :groups
 
   def administrator?
     groups.include?(Settings.authorization_workgroup_names.administrators)

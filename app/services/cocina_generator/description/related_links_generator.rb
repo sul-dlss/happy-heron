@@ -19,9 +19,7 @@ module CocinaGenerator
 
       private
 
-      attr_reader :object
-
-      attr_reader :purl_host
+      attr_reader :object, :purl_host
 
       def build_related_link(rel_link)
         return purl_link(rel_link) if purl?(rel_link.url)

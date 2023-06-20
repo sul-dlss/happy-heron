@@ -63,17 +63,7 @@ class WorkType
     'White paper', 'Working paper'
   ].freeze
 
-  attr_reader :id
-
-  attr_reader :label
-
-  attr_reader :html_label
-
-  attr_reader :icon
-
-  attr_reader :cocina_type
-
-  attr_reader :subtypes
+  attr_reader :id, :label, :html_label, :icon, :cocina_type, :subtypes
 
   def initialize(**params)
     @id = params.fetch(:id)

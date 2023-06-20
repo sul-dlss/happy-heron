@@ -241,7 +241,7 @@ RSpec/StubbedMock: # (new in 1.44)
   Enabled: true
 
 Style/AccessorGrouping: # (new in 0.87)
-  Enabled: false # because this doesn't work well with Sorbet annotations
+  Enabled: true
 Style/ArgumentsForwarding: # (new in 1.1)
   Enabled: true
 Style/BisectedAttrAccessor: # (new in 0.87)
