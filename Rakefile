@@ -8,8 +8,8 @@ require "sneakers/tasks"
 
 Rails.application.load_tasks
 
-desc "Run Continuous Integration Suite (linter and tests)"
-task ci: %i[rubocop spec]
+desc "Run Continuous Integration Suite (linters and tests)"
+task ci: %i[rubocop erblint spec]
 
 # clear the default task injected by rspec
 task(:default).clear
