@@ -5,7 +5,7 @@ class SdrClientAuthenticator
   # This allows a login using credentials from the config gem.
   class LoginFromSettings
     def self.run
-      { email: Settings.sdr_api.email, password: Settings.sdr_api.password }
+      {email: Settings.sdr_api.email, password: Settings.sdr_api.password}
     end
   end
 

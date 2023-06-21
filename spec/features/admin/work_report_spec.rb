@@ -1,48 +1,48 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Create a work report', js: true do
+RSpec.describe "Create a work report", js: true do
   let(:user) { create(:user) }
 
-  context 'when user is not an application admin' do
+  context "when user is not an application admin" do
     before do
       sign_in user
     end
 
-    it 'is forbidden' do
+    it "is forbidden" do
       visit new_admin_work_report_path
-      expect(page).to have_content 'You are not authorized to perform the requested action'
+      expect(page).to have_content "You are not authorized to perform the requested action"
     end
   end
 
-  context 'when no results are found' do
+  context "when no results are found" do
     before do
-      sign_in user, groups: ['dlss:hydrus-app-administrators']
+      sign_in user, groups: ["dlss:hydrus-app-administrators"]
     end
 
-    it 'shows error' do
+    it "shows error" do
       visit new_admin_work_report_path
-      click_button 'Submit'
+      click_button "Submit"
 
-      expect(page).to have_content 'No results'
+      expect(page).to have_content "No results"
     end
   end
 
-  context 'when results are found' do
+  context "when results are found" do
     before do
-      create(:work_version_with_work_and_collection, state: 'deposited')
+      create(:work_version_with_work_and_collection, state: "deposited")
 
-      sign_in user, groups: ['dlss:hydrus-app-administrators']
+      sign_in user, groups: ["dlss:hydrus-app-administrators"]
     end
 
-    it 'allows report download' do
+    it "allows report download" do
       visit new_admin_work_report_path
-      click_button 'Submit'
+      click_button "Submit"
 
-      click_button 'Download'
-      expect(page.response_headers['Content-Type']).to match 'text/csv'
-      expect(page.response_headers['Content-Disposition']).to match(/attachment; filename="item_report.csv"/)
+      click_button "Download"
+      expect(page.response_headers["Content-Type"]).to match "text/csv"
+      expect(page.response_headers["Content-Disposition"]).to match(/attachment; filename="item_report.csv"/)
     end
   end
 end

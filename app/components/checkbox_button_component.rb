@@ -15,10 +15,10 @@ class CheckboxButtonComponent < ApplicationComponent
   end
 
   def check
-    '✓'
+    "✓"
   end
 
   def uncheck
-    ''
+    ""
   end
 end

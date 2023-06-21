@@ -17,10 +17,10 @@ module Admin
 
     def statuses
       [].tap do |statuses|
-        statuses << 'deposited' if status_deposited
-        statuses << 'first_draft' if status_first_draft
-        statuses << 'version_draft' if status_version_draft
-        statuses << 'decommissioned' if status_decommissioned
+        statuses << "deposited" if status_deposited
+        statuses << "first_draft" if status_first_draft
+        statuses << "version_draft" if status_version_draft
+        statuses << "decommissioned" if status_decommissioned
       end
     end
   end

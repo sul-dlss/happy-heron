@@ -13,7 +13,7 @@ module Collections
 
     def works
       policy.authorized_scope(collection.works, as: :edits, with: WorkVersionPolicy)
-            .order('works.updated_at DESC')
+        .order("works.updated_at DESC")
     end
 
     def hide_depositor?

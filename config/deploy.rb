@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-set :application, 'happy-heron'
-set :repo_url, 'ssh://git@github.com/sul-dlss/happy-heron.git'
+set :application, "happy-heron"
+set :repo_url, "ssh://git@github.com/sul-dlss/happy-heron.git"
 
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -24,12 +24,12 @@ set :log_level, :info
 
 # Default value for :linked_files is []
 append :linked_files,
-       'config/database.yml', # in Puppet
-       'config/secrets.yml', # in shared_configs
-       'config/honeybadger.yml' # in shared_configs
+  "config/database.yml", # in Puppet
+  "config/secrets.yml", # in shared_configs
+  "config/honeybadger.yml" # in shared_configs
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
+append :linked_dirs, "log", "config/settings", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -53,14 +53,14 @@ set :sidekiq_systemd_use_hooks, true
 set :sneakers_systemd_use_hooks, true
 
 # Set Rails env to production in all Cap environments
-set :rails_env, 'production'
+set :rails_env, "production"
 
 # Deploy passenger-standalone via systemd service
-set :passenger_restart_command, 'sudo systemctl restart passenger'
-set :passenger_restart_options, -> { '' }
+set :passenger_restart_command, "sudo systemctl restart passenger"
+set :passenger_restart_options, -> { "" }
 
 set :whenever_environment, fetch(:rails_env)
 set :whenever_roles, [:cron]
 
 # update shared_configs before restarting app (from dlss-capistrano gem)
-before 'deploy:restart', 'shared_configs:update'
+before "deploy:restart", "shared_configs:update"

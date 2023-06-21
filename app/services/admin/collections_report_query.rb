@@ -20,7 +20,7 @@ module Admin
       add_date_created_end_filter
       add_date_modified_start_filter
       add_date_modified_end_filter
-      query.order('collection_versions.name ASC')
+      query.order("collection_versions.name ASC")
     end
 
     private
@@ -31,35 +31,35 @@ module Admin
     def add_status_filter
       return if collections_report.statuses.empty?
 
-      self.query = query.where(collection_versions: { state: collections_report.statuses })
+      self.query = query.where(collection_versions: {state: collections_report.statuses})
     end
 
     def add_date_created_start_filter
       return unless collections_report.date_created_start
 
-      self.query = query.where('collections.created_at >= ?',
-                               collections_report.date_created_start)
+      self.query = query.where("collections.created_at >= ?",
+        collections_report.date_created_start)
     end
 
     def add_date_created_end_filter
       return unless collections_report.date_created_end
 
-      self.query = query.where('collections.created_at <= ?',
-                               collections_report.date_created_end)
+      self.query = query.where("collections.created_at <= ?",
+        collections_report.date_created_end)
     end
 
     def add_date_modified_start_filter
       return unless collections_report.date_modified_start
 
-      self.query = query.where('collection_versions.updated_at >= ?',
-                               collections_report.date_modified_start)
+      self.query = query.where("collection_versions.updated_at >= ?",
+        collections_report.date_modified_start)
     end
 
     def add_date_modified_end_filter
       return unless collections_report.date_modified_end
 
-      self.query = query.where('collection_versions.updated_at <= ?',
-                               collections_report.date_modified_end)
+      self.query = query.where("collection_versions.updated_at <= ?",
+        collections_report.date_modified_end)
     end
   end
 end

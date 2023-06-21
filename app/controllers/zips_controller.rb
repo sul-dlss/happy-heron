@@ -12,7 +12,7 @@ class ZipsController < ApplicationController
     authorize! work_version
     files = collect_files(work_version)
 
-    raise ActionController::RoutingError, 'No downloadable files' if files.none?
+    raise ActionController::RoutingError, "No downloadable files" if files.none?
 
     zipline(files, "#{work.druid.presence || work.id}.zip")
   end

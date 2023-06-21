@@ -37,7 +37,7 @@ class WorksController < ObjectsController
 
     if invalid_version_for_edit?(work, work_version)
       WorksMailer.with(work:).version_mismatch_email.deliver_later
-      flash.notice = I18n.t('work.flash.cannot_edit')
+      flash.notice = I18n.t("work.flash.cannot_edit")
       return redirect_back(fallback_location: dashboard_path), status: :see_other
     end
 
@@ -99,7 +99,7 @@ class WorksController < ObjectsController
       work.destroy
     end
 
-    redirect_path = request.referer.include?('dashboard') ? dashboard_path : collection_works_path(collection)
+    redirect_path = request.referer.include?("dashboard") ? dashboard_path : collection_works_path(collection)
     redirect_to redirect_path, status: :see_other
   end
 
@@ -124,9 +124,9 @@ class WorksController < ObjectsController
 
     if globus_user_exists?(work.depositor.email)
       GlobusSetupJob.perform_later(work_version)
-      flash[:notice] = I18n.t('work.flash.globus_setup_complete')
+      flash[:notice] = I18n.t("work.flash.globus_setup_complete")
     else
-      flash[:warning] = I18n.t('work.flash.globus_setup_not_complete')
+      flash[:warning] = I18n.t("work.flash.globus_setup_not_complete")
     end
 
     redirect_to work_path(work)
@@ -139,14 +139,14 @@ class WorksController < ObjectsController
 
     authorize! work_version, to: :show?
 
-    render partial: 'works/files_list', locals: { work:, root_directory: }
+    render partial: "works/files_list", locals: {work:, root_directory:}
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the work.
   def delete_button
     work = Work.find(params[:id])
-    render partial: 'works/delete_button', locals: { work: }
+    render partial: "works/delete_button", locals: {work:}
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
@@ -156,13 +156,13 @@ class WorksController < ObjectsController
     work = Work.find(params[:id])
 
     default_label = if work.purl_reservation?
-                      "Choose Type and Edit #{WorkTitlePresenter.show(work.head)}"
-                    else
-                      "Edit #{WorkTitlePresenter.show(work.head)}"
-                    end
+      "Choose Type and Edit #{WorkTitlePresenter.show(work.head)}"
+    else
+      "Edit #{WorkTitlePresenter.show(work.head)}"
+    end
     edit_label = I18n.t params[:tag], scope: %i[work edit_links], default: default_label
 
-    render partial: 'works/edit_button', locals: { work:, anchor: params[:tag], edit_label: }
+    render partial: "works/edit_button", locals: {work:, anchor: params[:tag], edit_label:}
   end
 
   private
@@ -176,7 +176,7 @@ class WorksController < ObjectsController
   # Create the next WorkVersion for this work
   def create_new_version(previous_version)
     previous_version.dup.tap do |work_version|
-      work_version.state = 'version_draft'
+      work_version.state = "version_draft"
       work_version.version = previous_version.version + 1
       # reset globus endpoint
       work_version.globus_endpoint = nil
@@ -213,22 +213,22 @@ class WorksController < ObjectsController
 
     return if event_parts.empty?
 
-    "#{event_parts.join('_and_')}!"
+    "#{event_parts.join("_and_")}!"
   end
 
   def file_event_part(work_version)
     if work_version.zipfile? && work_version.attached_files.any?
-      'unzip'
+      "unzip"
     elsif fetch_globus_files?
-      'fetch_globus'
+      "fetch_globus"
     end
   end
 
   def workflow_event_part(work)
     if deposit_button_pushed? && work.collection.review_enabled?
-      'submit_for_review'
+      "submit_for_review"
     elsif deposit_button_pushed?
-      'begin_deposit'
+      "begin_deposit"
     end
   end
 
@@ -251,37 +251,37 @@ class WorksController < ObjectsController
   def work_params
     top_level = params.require(:work)
     top_level.permit(:title, :work_type,
-                     'published(1i)', 'published(2i)', 'published(3i)',
-                     :created_type,
-                     'created(1i)', 'created(2i)', 'created(3i)', 'created(approx0)',
-                     'created_range(1i)', 'created_range(2i)', 'created_range(3i)',
-                     'created_range(approx0)',
-                     'created_range(4i)', 'created_range(5i)', 'created_range(6i)',
-                     'created_range(approx3)',
-                     :abstract, :citation_auto, :citation, :default_citation,
-                     :access, :license, :version_description,
-                     :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
-                     :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
-                     subtype: [],
-                     attached_files_attributes: %i[_destroy id label hide file path],
-                     authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
-                     contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
-                     contact_emails_attributes: %i[_destroy id email],
-                     keywords_attributes: %i[_destroy id label uri cocina_type],
-                     related_works_attributes: %i[_destroy id citation],
-                     related_links_attributes: %i[_destroy id link_title url])
+      "published(1i)", "published(2i)", "published(3i)",
+      :created_type,
+      "created(1i)", "created(2i)", "created(3i)", "created(approx0)",
+      "created_range(1i)", "created_range(2i)", "created_range(3i)",
+      "created_range(approx0)",
+      "created_range(4i)", "created_range(5i)", "created_range(6i)",
+      "created_range(approx3)",
+      :abstract, :citation_auto, :citation, :default_citation,
+      :access, :license, :version_description,
+      :release, "embargo_date(1i)", "embargo_date(2i)", "embargo_date(3i)",
+      :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
+      subtype: [],
+      attached_files_attributes: %i[_destroy id label hide file path],
+      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
+      contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
+      contact_emails_attributes: %i[_destroy id email],
+      keywords_attributes: %i[_destroy id label uri cocina_type],
+      related_works_attributes: %i[_destroy id citation],
+      related_links_attributes: %i[_destroy id link_title url])
   end
 
   def validate_work_types!
     errors = []
 
     unless WorkTypeValidator.valid?(params[:work_type])
-      errors << "Invalid value of required parameter work_type: #{params[:work_type].presence || 'missing'}"
+      errors << "Invalid value of required parameter work_type: #{params[:work_type].presence || "missing"}"
     end
 
     unless WorkSubtypeValidator.valid?(params[:work_type], params[:subtype])
       errors << ("Invalid subtype value for work of type '#{params[:work_type]}': " +
-                (Array(params[:subtype]).join.presence || 'missing'))
+                (Array(params[:subtype]).join.presence || "missing"))
     end
 
     return if errors.empty?
@@ -291,7 +291,7 @@ class WorksController < ObjectsController
   end
 
   def fetch_globus_files?
-    params[:work][:fetch_globus_files] == 'true'
+    params[:work][:fetch_globus_files] == "true"
   end
 
   def invalid_version_for_edit?(work, work_version)
@@ -310,10 +310,10 @@ class WorksController < ObjectsController
     # and we should verify that the current version number is valid.
 
     new_version_number = if work_version.deposited?
-                           work_version.version + 1
-                         else
-                           work_version.version
-                         end
+      work_version.version + 1
+    else
+      work_version.version
+    end
     work.druid && !Repository.valid_version?(druid: work.druid, h2_version: new_version_number)
   end
 end

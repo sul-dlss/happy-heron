@@ -15,10 +15,10 @@ class CollectionDecommissionController < ApplicationController
     collection = Collection.find(params[:id])
     # Check that collection contains only NO items or ONLY DECOMMISSIONED items
     if collection.works_without_decommissioned.any?
-      flash[:error] = I18n.t('collection.flash.decommission_failed')
+      flash[:error] = I18n.t("collection.flash.decommission_failed")
     else
       decommission!(collection)
-      flash[:success] = I18n.t('collection.flash.decommissioned')
+      flash[:success] = I18n.t("collection.flash.decommissioned")
     end
     redirect_to collection_path(collection)
   end
@@ -34,7 +34,7 @@ class CollectionDecommissionController < ApplicationController
       #       different in-memory collection instance than the collection here.
       collection.head.collection.event_context = {
         user: current_user,
-        description: I18n.t('collection.flash.decommissioned')
+        description: I18n.t("collection.flash.decommissioned")
       }
       collection.head.decommission!
       collection.update!(

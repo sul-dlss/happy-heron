@@ -33,10 +33,10 @@ class DepositCompleter
   private
 
   def sdr_user
-    User.find_by!(name: 'SDR')
+    User.find_by!(name: "SDR")
   end
 
   def what_changed
-    object_version.version_description.presence || 'not specified'
+    object_version.version_description.presence || "not specified"
   end
 end

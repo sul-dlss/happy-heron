@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
-desc 'Sync work versions with SDR'
+desc "Sync work versions with SDR"
 # specify a CSV file that contains work druids, one per row (no header),
 # and the current work version's version will be synced.
 task :sync_version, [:input_filename] => :environment do |_t, args|
   input_filename = args[:input_filename]
-  abort 'Input CSV file not found' unless File.exist? input_filename
+  abort "Input CSV file not found" unless File.exist? input_filename
 
   rows = CSV.read(input_filename).flatten
   num_druids = rows.size
@@ -30,5 +30,5 @@ task :sync_version, [:input_filename] => :environment do |_t, args|
 end
 
 def prepend_druid(row)
-  row.starts_with?('druid:') ? row : row.prepend('druid:')
+  row.starts_with?("druid:") ? row : row.prepend("druid:")
 end

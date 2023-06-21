@@ -62,11 +62,11 @@ class CollectionChangeSet
 
   def participant_change_description
     %i[added_managers added_depositors added_reviewers
-       removed_managers removed_depositors removed_reviewers].filter_map do |field_name|
+      removed_managers removed_depositors removed_reviewers].filter_map do |field_name|
       field_changes = send(field_name)
       next if field_changes.blank?
 
-      "#{field_name.to_s.humanize}: #{field_changes.map(&:sunetid).join(', ')}"
+      "#{field_name.to_s.humanize}: #{field_changes.map(&:sunetid).join(", ")}"
     end.join("\n")
   end
 
@@ -79,14 +79,14 @@ class CollectionChangeSet
       # underlying data in the database is mutable
       @depositors = collection.depositors.to_a
       @reviewers = collection.reviewed_by.to_a
-      @managers =  collection.managed_by.to_a
+      @managers = collection.managed_by.to_a
       @email_when_participants_changed = collection.email_when_participants_changed
       @email_depositors_status_changed = collection.email_depositors_status_changed
       @review_enabled = collection.review_enabled
     end
 
     attr_reader :depositors, :reviewers, :managers, :email_when_participants_changed, :email_depositors_status_changed,
-                :review_enabled
+      :review_enabled
 
     def diff(collection)
       CollectionChangeSet.new(self, PointInTime.new(collection))

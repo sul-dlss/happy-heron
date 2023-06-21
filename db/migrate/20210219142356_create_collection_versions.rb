@@ -9,21 +9,20 @@ class CreateCollectionVersions < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference :collections, :head, foreign_key: { to_table: :collection_versions }
+    add_reference :collections, :head, foreign_key: {to_table: :collection_versions}
 
     Collection.all.each do |collection|
       version = CollectionVersion.create(state: collection.state,
-                                         name: collection.name,
-                                         description: collection.description,
-                                         collection: collection,
-                                         version: collection.version)
+        name: collection.name,
+        description: collection.description,
+        collection: collection,
+        version: collection.version)
       collection.update(head: version)
-      RelatedLink.where(linkable_type: 'Collection', linkable_id: collection.id)
-        .update_all(linkable_type: 'CollectionVersion', linkable_id: version.id)
-      ContactEmail.where(emailable_type: 'Collection', emailable_id: collection.id)
-        .update_all(emailable_type: 'CollectionVersion', emailable_id: version.id)
+      RelatedLink.where(linkable_type: "Collection", linkable_id: collection.id)
+        .update_all(linkable_type: "CollectionVersion", linkable_id: version.id)
+      ContactEmail.where(emailable_type: "Collection", emailable_id: collection.id)
+        .update_all(emailable_type: "CollectionVersion", emailable_id: version.id)
     end
-
 
     remove_column :collections, :version, :integer, default: 1, null: false
     remove_column :collections, :name, :string, null: false

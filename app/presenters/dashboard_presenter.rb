@@ -3,7 +3,7 @@
 # The page model for the dashboard
 class DashboardPresenter
   def initialize(just_signed_in:, in_progress:, approvals:, collections:,
-                 collection_managers_in_progress:)
+    collection_managers_in_progress:)
     @just_signed_in = just_signed_in
     @in_progress = in_progress
     @approvals = approvals

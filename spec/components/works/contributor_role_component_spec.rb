@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Works::ContributorRoleComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
-  let(:rendered) { render_inline(described_class.new(form:, data_options: { contributors_target: 'role' })) }
+  let(:rendered) { render_inline(described_class.new(form:, data_options: {contributors_target: "role"})) }
 
-  it 'makes groups with headings including Department' do
+  it "makes groups with headings including Department" do
     expected = <<~HTML
       <select class="form-select" data-contributors-target="role" name="role_term" id="role_term"><optgroup label="Individual">
       <option value="person|Author">Author</option>

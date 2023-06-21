@@ -21,7 +21,7 @@ module Collections
     end
 
     def version
-      return '1 - initial version' if collection_version.version == 1
+      return "1 - initial version" if collection_version.version == 1
 
       "#{collection_version.version} - #{version_description}"
     end

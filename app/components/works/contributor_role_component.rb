@@ -14,7 +14,7 @@ module Works
 
     def call
       grouped_collection_select :role_term, grouped_options, :roles, :label, :key, :label,
-                                {}, class: 'form-select', data: @data_options
+        {}, class: "form-select", data: @data_options
     end
 
     # Represents the type of contributor top level option for the role select
@@ -27,12 +27,12 @@ module Works
       attr_reader :key, :citable
 
       def label
-        I18n.t(key, scope: 'contributor.roles')
+        I18n.t(key, scope: "contributor.roles")
       end
 
       def roles
         AbstractContributor.grouped_roles(citable:)
-                           .fetch(key).map { |label| Role.new(contributor_type: key, label:) }
+          .fetch(key).map { |label| Role.new(contributor_type: key, label:) }
       end
     end
 

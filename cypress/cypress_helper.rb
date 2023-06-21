@@ -14,17 +14,17 @@
 # end
 
 begin
-  require 'factory_bot_rails'
+  require "factory_bot_rails"
 rescue LoadError => e
   puts e.message
   begin
-    require 'factory_girl_rails'
+    require "factory_girl_rails"
   rescue LoadError => e
     puts e.message
   end
 end
 
-require 'cypress_on_rails/smart_factory_wrapper'
+require "cypress_on_rails/smart_factory_wrapper"
 
 factory = CypressOnRails::SimpleRailsFactory
 factory = FactoryBot if defined?(FactoryBot)
@@ -34,8 +34,8 @@ CypressOnRails::SmartFactoryWrapper.configure(
   always_reload: false,
   factory:,
   files: [
-    Rails.root.join('spec/factories.rb'),
-    Rails.root.join('spec/factories/**/*.rb')
+    Rails.root.join("spec/factories.rb"),
+    Rails.root.join("spec/factories/**/*.rb")
   ]
 )
 

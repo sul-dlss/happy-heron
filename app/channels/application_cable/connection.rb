@@ -12,7 +12,7 @@ module ApplicationCable
     private
 
     def user_from_session
-      env['warden'].user || reject_unauthorized_connection
+      env["warden"].user || reject_unauthorized_connection
     end
   end
 end

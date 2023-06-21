@@ -11,9 +11,9 @@ module FirstDraftCollections
 
     def cancel_button
       if model.persisted?
-        link_to 'Cancel', collection_version_path(collection_version), class: 'btn btn-link'
+        link_to "Cancel", collection_version_path(collection_version), class: "btn btn-link"
       else
-        link_to 'Cancel', dashboard_path, class: 'btn btn-link'
+        link_to "Cancel", dashboard_path, class: "btn btn-link"
       end
     end
 
@@ -29,6 +29,6 @@ module FirstDraftCollections
       object.model.fetch(:collection_version)
     end
 
-    alias collections_path first_draft_collections_path
+    alias_method :collections_path, :first_draft_collections_path
   end
 end

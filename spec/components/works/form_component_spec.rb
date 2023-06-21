@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Works::FormComponent do
   let(:component) { described_class.new(work_form:) }
@@ -15,16 +15,16 @@ RSpec.describe Works::FormComponent do
     allow(controller).to receive(:allowed_to?).and_return(true)
   end
 
-  it 'renders the component' do
+  it "renders the component" do
     expect(rendered.to_html)
-      .to include('Deposit', 'Save as draft', 'Add your files',
-                  'Title of deposit and contact information',
-                  'List authors and contributors',
-                  'Enter dates related to your deposit',
-                  'Describe your deposit',
-                  'Settings for release date and download access',
-                  'Select a license',
-                  'auto-citation unsaved-changes deposit-button')
+      .to include("Deposit", "Save as draft", "Add your files",
+        "Title of deposit and contact information",
+        "List authors and contributors",
+        "Enter dates related to your deposit",
+        "Describe your deposit",
+        "Settings for release date and download access",
+        "Select a license",
+        "auto-citation unsaved-changes deposit-button")
     expect(rendered.to_html)
       .not_to include("What's changing?")
   end

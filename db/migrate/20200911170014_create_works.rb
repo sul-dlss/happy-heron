@@ -13,7 +13,7 @@ class CreateWorks < ActiveRecord::Migration[6.0]
       t.string :access, null: false
       t.date :embargo_date
       t.string :license, null: false
-      t.boolean :agree_to_terms, default: false
+      t.boolean :agree_to_terms, default: false, null: false
       t.timestamps
     end
 

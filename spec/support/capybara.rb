@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'capybara/cuprite'
-require 'capybara/rails'
-require 'capybara/rspec'
+require "capybara/cuprite"
+require "capybara/rails"
+require "capybara/rspec"
 
 Capybara.javascript_driver = :cuprite
 Capybara.register_driver(:cuprite) do |app|
@@ -11,5 +11,5 @@ end
 
 Capybara.disable_animation = true
 Capybara.enable_aria_label = true
-Capybara.server = :puma, { Silent: true }
+Capybara.server = :puma, {Silent: true}
 Capybara.default_max_wait_time = 10 # default is 2

@@ -18,6 +18,6 @@ class HelpCollectionComponent < ApplicationComponent
   end
 
   def scope
-    'help.collections'
+    "help.collections"
   end
 end

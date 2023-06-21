@@ -22,7 +22,7 @@ module CocinaGenerator
 
       def generate
         count = 0
-        (work_version.authors + work_version.contributors.reject { |c| c.role == 'Publisher' })
+        (work_version.authors + work_version.contributors.reject { |c| c.role == "Publisher" })
           .map do |work_form_contributor|
           count += 1
           # First entered contributor is always status: "primary" (except for Publisher)
@@ -32,9 +32,9 @@ module CocinaGenerator
       end
 
       def publication_event_values(pub_date)
-        (work_version.authors + work_version.contributors).select { |c| c.role == 'Publisher' }.map do |publisher|
+        (work_version.authors + work_version.contributors).select { |c| c.role == "Publisher" }.map do |publisher|
           event = {
-            type: 'publication',
+            type: "publication",
             contributor: [publication_contributor(publisher)]
           }
           event[:date] = pub_date.date if pub_date
@@ -56,7 +56,7 @@ module CocinaGenerator
           identifier: identifiers(contributor)
         }.compact
 
-        contrib_hash[:status] = 'primary' if primary
+        contrib_hash[:status] = "primary" if primary
         Cocina::Models::Contributor.new(contrib_hash)
       end
 
@@ -77,8 +77,8 @@ module CocinaGenerator
 
       def structured_name(contributor)
         [
-          Cocina::Models::DescriptiveValue.new(value: contributor.first_name, type: 'forename'),
-          Cocina::Models::DescriptiveValue.new(value: contributor.last_name, type: 'surname')
+          Cocina::Models::DescriptiveValue.new(value: contributor.first_name, type: "forename"),
+          Cocina::Models::DescriptiveValue.new(value: contributor.last_name, type: "surname")
         ]
       end
 
@@ -89,8 +89,8 @@ module CocinaGenerator
       end
 
       def contributor_type(contributor)
-        return 'conference' if contributor.role == 'Conference'
-        return 'event' if contributor.role == 'Event'
+        return "conference" if contributor.role == "Conference"
+        return "event" if contributor.role == "Event"
 
         contributor.contributor_type
       end
@@ -103,10 +103,10 @@ module CocinaGenerator
       end
 
       def notes(contributor)
-        return unless contributor.type == 'Contributor'
+        return unless contributor.type == "Contributor"
 
         [
-          Cocina::Models::DescriptiveValue.new(type: 'citation status', value: 'false')
+          Cocina::Models::DescriptiveValue.new(type: "citation status", value: "false")
         ]
       end
 
@@ -120,72 +120,72 @@ module CocinaGenerator
           code: mr_code,
           uri: "http://id.loc.gov/vocabulary/relators/#{mr_code}",
           source: {
-            code: 'marcrelator',
-            uri: 'http://id.loc.gov/vocabulary/relators/'
+            code: "marcrelator",
+            uri: "http://id.loc.gov/vocabulary/relators/"
           }
         )
       end
 
       ROLE_TO_MARC_RELATOR_CODE = {
         # person
-        'Author' => 'aut',
-        'Composer' => 'cmp',
-        'Contributing author' => 'ctb',
-        'Copyright holder' => 'cph',
-        'Creator' => 'cre',
-        'Data collector' => 'com',
-        'Data contributor' => 'dtc',
-        'Editor' => 'edt',
-        'Event organizer' => 'orm',
-        'Interviewee' => 'ive',
-        'Interviewer' => 'ivr',
-        'Performer' => 'prf',
-        'Photographer' => 'pht',
-        'Primary thesis advisor' => 'ths',
-        'Principal investigator' => 'rth',
-        'Producer' => 'pro',
-        'Researcher' => 'res',
-        'Software developer' => 'prg',
-        'Speaker' => 'spk',
-        'Thesis advisor' => 'ths',
+        "Author" => "aut",
+        "Composer" => "cmp",
+        "Contributing author" => "ctb",
+        "Copyright holder" => "cph",
+        "Creator" => "cre",
+        "Data collector" => "com",
+        "Data contributor" => "dtc",
+        "Editor" => "edt",
+        "Event organizer" => "orm",
+        "Interviewee" => "ive",
+        "Interviewer" => "ivr",
+        "Performer" => "prf",
+        "Photographer" => "pht",
+        "Primary thesis advisor" => "ths",
+        "Principal investigator" => "rth",
+        "Producer" => "pro",
+        "Researcher" => "res",
+        "Software developer" => "prg",
+        "Speaker" => "spk",
+        "Thesis advisor" => "ths",
         # organization (when not already listed above)
         # 'Conference' => '', # not a marcrelator role
-        'Degree granting institution' => 'dgg',
+        "Degree granting institution" => "dgg",
         # 'Event' => '', # not a marcrelator role
-        'Funder' => 'fnd',
-        'Host institution' => 'his',
-        'Issuing body' => 'isb',
-        'Publisher' => 'pbl',
-        'Research group' => 'res',
-        'Sponsor' => 'spn'
+        "Funder" => "fnd",
+        "Host institution" => "his",
+        "Issuing body" => "isb",
+        "Publisher" => "pbl",
+        "Research group" => "res",
+        "Sponsor" => "spn"
       }.freeze
 
       MARC_RELATOR_CODE_TO_VALUE = {
-        'aut' => 'author',
-        'cmp' => 'composer',
-        'com' => 'compiler',
-        'cph' => 'copyright holder',
-        'cre' => 'creator',
-        'ctb' => 'contributor',
-        'dgg' => 'degree granting institution',
-        'dtc' => 'data contributor',
-        'edt' => 'editor',
-        'fnd' => 'funder',
-        'his' => 'host institution',
-        'isb' => 'issuing body',
-        'ive' => 'interviewee',
-        'ivr' => 'interviewer',
-        'orm' => 'organizer',
-        'pbl' => 'publisher',
-        'pht' => 'photographer',
-        'prf' => 'performer',
-        'prg' => 'programmer',
-        'pro' => 'producer',
-        'res' => 'researcher',
-        'rth' => 'research team head',
-        'spk' => 'speaker',
-        'spn' => 'sponsor',
-        'ths' => 'thesis advisor'
+        "aut" => "author",
+        "cmp" => "composer",
+        "com" => "compiler",
+        "cph" => "copyright holder",
+        "cre" => "creator",
+        "ctb" => "contributor",
+        "dgg" => "degree granting institution",
+        "dtc" => "data contributor",
+        "edt" => "editor",
+        "fnd" => "funder",
+        "his" => "host institution",
+        "isb" => "issuing body",
+        "ive" => "interviewee",
+        "ivr" => "interviewer",
+        "orm" => "organizer",
+        "pbl" => "publisher",
+        "pht" => "photographer",
+        "prf" => "performer",
+        "prg" => "programmer",
+        "pro" => "producer",
+        "res" => "researcher",
+        "rth" => "research team head",
+        "spk" => "speaker",
+        "spn" => "sponsor",
+        "ths" => "thesis advisor"
       }.freeze
 
       def identifiers(contributor)
@@ -194,7 +194,7 @@ module CocinaGenerator
         source, value = Orcid.split(contributor.orcid)
 
         [
-          Cocina::Models::DescriptiveValue.new(type: 'ORCID', value:, source: { uri: source })
+          Cocina::Models::DescriptiveValue.new(type: "ORCID", value:, source: {uri: source})
         ]
       end
       # rubocop:enable Metrics/ClassLength

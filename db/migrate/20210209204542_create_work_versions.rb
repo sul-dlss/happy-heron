@@ -4,9 +4,9 @@ class CreateWorkVersions < ActiveRecord::Migration[6.1]
 
     create_table :works do |t|
       t.string :druid
-      t.references :head, foreign_key: { to_table: :work_versions }
+      t.references :head, foreign_key: {to_table: :work_versions}
       t.references :collection, foreign_key: true
-      t.references :depositor, foreign_key: { to_table: :users }
+      t.references :depositor, foreign_key: {to_table: :users}
       t.timestamps
       t.index :druid, unique: true
     end
@@ -16,8 +16,8 @@ class CreateWorkVersions < ActiveRecord::Migration[6.1]
     WorkVersion.all.each do |version|
       work = Work.find_or_initialize_by(druid: version.druid)
       work.update(collection_id: version.collection_id,
-                  depositor_id: version.depositor_id,
-                  head_id: version.id)
+        depositor_id: version.depositor_id,
+        head_id: version.id)
       version.update(work: work)
     end
 

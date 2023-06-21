@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require 'reform/form/coercion'
+require "reform/form/coercion"
 
 # The form for deposit work creation and editing (which includes validation)
 class WorkForm < DraftWorkForm
   validates :abstract, :access, :title, presence: true, allow_nil: false
-  validates :keywords, length: { minimum: 1, message: 'Please add at least one keyword.' }
-  validates :attached_files, length: { minimum: 1, message: 'Please add at least one file.' },
-                             if: -> { %w[browser zip].include?(upload_type) }
-  validates :contact_emails, length: { minimum: 1, message: 'Please add at least contact email.' }
-  validates :license, presence: true, inclusion: { in: License.license_list }
-  validates :authors, length: { minimum: 1, message: 'Please add at least one author.' }
+  validates :keywords, length: {minimum: 1, message: "Please add at least one keyword."}
+  validates :attached_files, length: {minimum: 1, message: "Please add at least one file."},
+    if: -> { %w[browser zip].include?(upload_type) }
+  validates :contact_emails, length: {minimum: 1, message: "Please add at least contact email."}
+  validates :license, presence: true, inclusion: {in: License.license_list}
+  validates :authors, length: {minimum: 1, message: "Please add at least one author."}
   validates :created_edtf, created_in_past: true
   validates :published_edtf, created_in_past: true
   validates :release, presence: true,
-                      inclusion: { in: %w[immediate embargo] },
-                      if: :availability_component_present?
+    inclusion: {in: %w[immediate embargo]},
+    if: :availability_component_present?
   validates :embargo_date, embargo_date: true, if: :availability_component_present?
   validates :agree_to_terms, presence: true
 
@@ -35,10 +35,10 @@ class WorkForm < DraftWorkForm
   # Force assign_doi to match what the collection enforces
   def deserialize_doi(params)
     case collection.doi_option
-    when 'no'
-      params['assign_doi'] = 'false'
-    when 'yes'
-      params['assign_doi'] = 'true'
+    when "no"
+      params["assign_doi"] = "false"
+    when "yes"
+      params["assign_doi"] = "true"
     end
   end
 

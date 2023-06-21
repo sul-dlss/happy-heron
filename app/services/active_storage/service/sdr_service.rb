@@ -5,7 +5,7 @@ module ActiveStorage
     # This is a little bit different in that most services store the file at the key and the key is opaque,
     # however in this case the key is meaningful in that it stores the druid, version and filepath.
     class SdrService < Service
-      SERVICE_NAME = 'preservation'
+      SERVICE_NAME = "preservation"
 
       def download(key, &block)
         raise NotImplementedError unless block
@@ -30,7 +30,7 @@ module ActiveStorage
       end
 
       def self.encode_key(druid, version, filepath)
-        [druid, version, filepath].join('/')
+        [druid, version, filepath].join("/")
       end
 
       # @return [Boolean] true if this blob is for the SdrService
@@ -49,8 +49,8 @@ module ActiveStorage
       end
 
       def split_key(key)
-        druid, version, filepath = key.split('/', 3)
-        { druid:, version:, filepath: }
+        druid, version, filepath = key.split("/", 3)
+        {druid:, version:, filepath:}
       end
     end
   end

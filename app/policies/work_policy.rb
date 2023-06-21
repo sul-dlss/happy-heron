@@ -11,12 +11,12 @@ class WorkPolicy < ApplicationPolicy
     )
     return new_relation if administrator?
 
-    relation.joins(:head).where.not(head: { state: 'decommissioned' }).and(new_relation)
+    relation.joins(:head).where.not(head: {state: "decommissioned"}).and(new_relation)
   end
 
   def destroy?
     (allowed_to?(:review?,
-                 collection) || owner_of_the_work?) && record.persisted? && record.head.deleteable? && !record.locked?
+      collection) || owner_of_the_work?) && record.persisted? && record.head.deleteable? && !record.locked?
   end
 
   delegate :administrator?, to: :user_with_groups

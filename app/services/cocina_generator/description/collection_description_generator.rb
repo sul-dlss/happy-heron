@@ -33,7 +33,7 @@ module CocinaGenerator
       def abstract
         Cocina::Models::DescriptiveValue.new(
           value: collection_version.description,
-          type: 'abstract'
+          type: "abstract"
         )
       end
 
@@ -62,8 +62,8 @@ module CocinaGenerator
         collection_version.contact_emails.map do |email|
           {
             value: email.email,
-            type: 'email',
-            displayLabel: 'Contact'
+            type: "email",
+            displayLabel: "Contact"
           }
         end
       end

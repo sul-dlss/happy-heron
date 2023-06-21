@@ -30,8 +30,8 @@ class WorkReminderGenerator
   private_class_method def self.eligible_works(first_interval, subsequent_interval)
     %i[first_draft version_draft].index_with do |state|
       WorkVersion.with_state(state)
-                 .where('(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0',
-                        first_interval:, subsequent_interval:)
+        .where("(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0",
+          first_interval:, subsequent_interval:)
     end
   end
 end

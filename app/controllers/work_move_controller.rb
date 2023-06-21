@@ -27,12 +27,12 @@ class WorkMoveController < ApplicationController
     collection = Collection.find(params[:collection])
 
     if CheckMoveWorkService.check(work:, collection:).any?
-      flash[:error] = I18n.t('work.flash.work_not_moved')
+      flash[:error] = I18n.t("work.flash.work_not_moved")
     else
       Work.transaction do
         work.update!(collection:)
-        work.events.create(user: current_user, event_type: 'collection_moved',
-                           description: "Moved to \"#{collection.head.description}\" collection")
+        work.events.create(user: current_user, event_type: "collection_moved",
+          description: "Moved to \"#{collection.head.description}\" collection")
       end
       flash[:success] = "Moved #{work.head.title} to #{collection.head.name}"
     end

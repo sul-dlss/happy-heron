@@ -24,16 +24,16 @@ module CocinaGenerator
 
       def publisher_events
         @publisher_events ||= ContributorsGenerator.events_from_publisher_contributors(work_version:,
-                                                                                       pub_date: published_date_event)
+          pub_date: published_date_event)
       end
 
       def published_date_event
-        event_for_date(date: work_version.published_edtf, event_type: 'publication', date_type: 'publication',
-                       primary: true)
+        event_for_date(date: work_version.published_edtf, event_type: "publication", date_type: "publication",
+          primary: true)
       end
 
       def created_date_event
-        event_for_date(date: work_version.created_edtf, event_type: 'creation', date_type: 'creation')
+        event_for_date(date: work_version.created_edtf, event_type: "creation", date_type: "creation")
       end
 
       def deposit_events
@@ -43,13 +43,13 @@ module CocinaGenerator
       end
 
       def deposit_publication_event
-        event_for_work_version(work_version: deposit_publication_version, event_type: 'deposit',
-                               date_type: 'publication')
+        event_for_work_version(work_version: deposit_publication_version, event_type: "deposit",
+          date_type: "publication")
       end
 
       def deposit_modification_events
         deposit_modification_versions.map do |deposit_version|
-          event_for_work_version(work_version: deposit_version, event_type: 'deposit', date_type: 'modification')
+          event_for_work_version(work_version: deposit_version, event_type: "deposit", date_type: "modification")
         end
       end
 
@@ -72,9 +72,9 @@ module CocinaGenerator
         return unless date
 
         Cocina::Models::Event.new({
-                                    type: event_type,
-                                    date: [DateGenerator.generate(date:, type: date_type, primary:)]
-                                  })
+          type: event_type,
+          date: [DateGenerator.generate(date:, type: date_type, primary:)]
+        })
       end
 
       def event_for_work_version(work_version:, event_type:, date_type:)

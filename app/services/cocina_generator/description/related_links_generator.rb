@@ -10,7 +10,7 @@ module CocinaGenerator
 
       def initialize(object:)
         @object = object
-        @purl_host = Settings.purl_url.sub(%r{^https?://}, '')
+        @purl_host = Settings.purl_url.sub(%r{^https?://}, "")
       end
 
       def generate
@@ -29,16 +29,16 @@ module CocinaGenerator
             url: [Cocina::Models::DescriptiveValue.new(value: rel_link.url)]
           )
         }
-        resource_attrs[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
+        resource_attrs[:title] = [{value: rel_link.link_title}] if rel_link.link_title.present?
         Cocina::Models::RelatedResource.new(resource_attrs)
       end
 
       # This normalizes the PURL link to https (as it is currently the canonincal PURL)
       def purl_link(rel_link)
         resource_attrs = {
-          purl: rel_link.url.sub(/^https?/, 'https')
+          purl: rel_link.url.sub(/^https?/, "https")
         }
-        resource_attrs[:title] = [{ value: rel_link.link_title }] if rel_link.link_title.present?
+        resource_attrs[:title] = [{value: rel_link.link_title}] if rel_link.link_title.present?
         Cocina::Models::RelatedResource.new(resource_attrs)
       end
 

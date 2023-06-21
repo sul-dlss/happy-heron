@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Link to edit a work' do
+RSpec.describe "Link to edit a work" do
   before do
     sign_in user
   end
@@ -13,28 +13,28 @@ RSpec.describe 'Link to edit a work' do
   end
   let(:user) { create(:user) }
 
-  context 'with a user who may edit the object' do
+  context "with a user who may edit the object" do
     let(:work) { create(:work_version_with_work, :version_draft, collection:, owner: user).work }
 
-    it 'draws a link' do
+    it "draws a link" do
       get "/works/#{work.id}/edit_button"
       expect(response).to have_http_status(:ok)
-      expect(rendered).to have_selector('turbo-frame a span.fa-pencil-alt')
+      expect(rendered).to have_selector("turbo-frame a span.fa-pencil-alt")
     end
 
-    context 'when the work is locked and no tag is provided' do
+    context "when the work is locked and no tag is provided" do
       before do
         work.update(locked: true)
       end
 
-      it 'draws a lock' do
+      it "draws a lock" do
         get "/works/#{work.id}/edit_button"
         expect(response).to have_http_status(:ok)
-        expect(rendered).to have_selector('turbo-frame a span.fa-lock')
+        expect(rendered).to have_selector("turbo-frame a span.fa-lock")
       end
     end
 
-    context 'when the work is locked and tag (anchor) is provided' do
+    context "when the work is locked and tag (anchor) is provided" do
       before do
         work.update(locked: true)
       end
@@ -42,19 +42,19 @@ RSpec.describe 'Link to edit a work' do
       it "draws an empty frame (we don't want this button to appear for each section on the view page)" do
         get "/works/#{work.id}/edit_button?tag=details"
         expect(response).to have_http_status(:ok)
-        expect(rendered).to have_selector('turbo-frame')
+        expect(rendered).to have_selector("turbo-frame")
         expect(rendered).not_to have_selector('a[data-controller="popover"]')
       end
     end
   end
 
-  context 'with a user who may not edit the object' do
+  context "with a user who may not edit the object" do
     let(:work) { create(:work_version_with_work, :version_draft, collection:).work }
 
-    it 'only draws the turbo-frame' do
+    it "only draws the turbo-frame" do
       get "/works/#{work.id}/edit_button"
       expect(response).to have_http_status(:ok)
-      expect(rendered).to have_selector('turbo-frame')
+      expect(rendered).to have_selector("turbo-frame")
       expect(rendered).not_to have_link
     end
   end

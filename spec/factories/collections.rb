@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :collection do
-    release_option { 'immediate' }
-    access { 'world' }
-    license_option { 'depositor-selects' }
+    release_option { "immediate" }
+    access { "world" }
+    license_option { "depositor-selects" }
     email_when_participants_changed { false }
     email_depositors_status_changed { false }
     review_enabled { false }
@@ -12,12 +12,12 @@ FactoryBot.define do
   end
 
   trait :with_required_license do
-    required_license { 'CC-BY-4.0' }
-    license_option { 'required' }
+    required_license { "CC-BY-4.0" }
+    license_option { "required" }
   end
 
   trait :with_default_license do
-    default_license { 'CC-BY-4.0' }
+    default_license { "CC-BY-4.0" }
   end
 
   trait :with_works do
@@ -70,15 +70,15 @@ FactoryBot.define do
   end
 
   trait :depositor_selects_access do
-    access { 'depositor-selects' }
+    access { "depositor-selects" }
   end
 
   trait :depositor_selects_release_date do
-    release_option { 'depositor-selects' }
-    release_duration { '3 years' }
+    release_option { "depositor-selects" }
+    release_duration { "3 years" }
   end
 
   trait :with_collection_druid do
-    druid { 'druid:dc224fz4940' }
+    druid { "druid:dc224fz4940" }
   end
 end

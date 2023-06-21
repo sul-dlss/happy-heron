@@ -20,14 +20,14 @@ class MailPreference < ApplicationRecord
   # Orders the results the same way the TYPES array is ordered
   default_scope do
     first_letters = MANAGER_TYPES.map(&:first).join
-    a_byte = 'a'.bytes.first
-    replace_with = (a_byte..a_byte + MANAGER_TYPES.size - 1).to_a.pack('c*')
+    a_byte = "a".bytes.first
+    replace_with = (a_byte..a_byte + MANAGER_TYPES.size - 1).to_a.pack("c*")
     order(Arel.sql("translate(email, '#{first_letters}', '#{replace_with}')"))
   end
   belongs_to :user
   belongs_to :collection
-  validates :email, uniqueness: { scope: %i[user_id collection_id] },
-                    inclusion: { in: MANAGER_TYPES }
+  validates :email, uniqueness: {scope: %i[user_id collection_id]},
+    inclusion: {in: MANAGER_TYPES}
 
   def self.complete_manager_set?(preferences)
     preferences.size == MANAGER_TYPES.size

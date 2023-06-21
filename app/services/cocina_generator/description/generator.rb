@@ -50,11 +50,11 @@ module CocinaGenerator
       def keywords
         work_version.keywords.map do |keyword|
           props = {
-            value: keyword.label, type: keyword.cocina_type.presence || 'topic'
+            value: keyword.label, type: keyword.cocina_type.presence || "topic"
           }
           if keyword.uri.present?
             props[:uri] = keyword.uri
-            props[:source] = { code: 'fast', uri: 'http://id.worldcat.org/fast/' }
+            props[:source] = {code: "fast", uri: "http://id.worldcat.org/fast/"}
           end
           Cocina::Models::DescriptiveValue.new(props)
         end
@@ -65,7 +65,7 @@ module CocinaGenerator
 
         Cocina::Models::DescriptiveValue.new(
           value: work_version.abstract,
-          type: 'abstract'
+          type: "abstract"
         )
       end
 
@@ -74,12 +74,12 @@ module CocinaGenerator
 
         # :link: and :doi: are special placeholders in dor-services-app.
         # See https://github.com/sul-dlss/dor-services-app/pull/1566/files#diff-30396654f0ad00ad1daa7292fd8327759d7ff7f3b92f98f40a2e25b6839807e2R13
-        exportable_citation = work_version.citation.gsub(WorkVersion::LINK_TEXT, ':link:').gsub(WorkVersion::DOI_TEXT,
-                                                                                                ':doi:')
+        exportable_citation = work_version.citation.gsub(WorkVersion::LINK_TEXT, ":link:").gsub(WorkVersion::DOI_TEXT,
+          ":doi:")
 
         Cocina::Models::DescriptiveValue.new(
           value: exportable_citation,
-          type: 'preferred citation'
+          type: "preferred citation"
         )
       end
 
@@ -98,8 +98,8 @@ module CocinaGenerator
         work_version.contact_emails.map do |email|
           {
             value: email.email,
-            type: 'email',
-            displayLabel: 'Contact'
+            type: "email",
+            displayLabel: "Contact"
           }
         end
       end
@@ -108,7 +108,7 @@ module CocinaGenerator
         work_version.related_works.map do |rel_work|
           Cocina::Models::RelatedResource.new(
             note: [
-              Cocina::Models::DescriptiveValue.new(type: 'preferred citation', value: rel_work.citation)
+              Cocina::Models::DescriptiveValue.new(type: "preferred citation", value: rel_work.citation)
             ]
           )
         end
@@ -117,13 +117,13 @@ module CocinaGenerator
       def admin_metadata
         Cocina::Models::DescriptiveAdminMetadata.new(
           event: [
-            Cocina::Models::Event.new(type: 'creation',
-                                      date: [DateGenerator.generate(date: admin_metadata_creation_date)])
+            Cocina::Models::Event.new(type: "creation",
+              date: [DateGenerator.generate(date: admin_metadata_creation_date)])
           ],
           note: [
             Cocina::Models::DescriptiveValue.new(
-              value: 'Metadata created by user via Stanford self-deposit application',
-              type: 'record origin'
+              value: "Metadata created by user via Stanford self-deposit application",
+              type: "record origin"
             )
           ]
         )

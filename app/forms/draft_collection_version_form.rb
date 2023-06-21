@@ -2,24 +2,24 @@
 
 # The form for collection creation and editing
 class DraftCollectionVersionForm < Reform::Form
-  model 'collection_version' # Required so that rails knows where to route this form to.
+  model "collection_version" # Required so that rails knows where to route this form to.
 
   property :name, on: :collection_version
   property :description, on: :collection_version
   property :version_description, on: :collection_version,
-                                 prepopulator: ->(*) { self.version_description = '' if deposited? }
+    prepopulator: ->(*) { self.version_description = "" if deposited? }
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
-                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
-                              on: :collection_version do
+    prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
+    on: :collection_version do
     property :id
     property :email
     property :_destroy, virtual: true
   end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
-                             prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
-                             on: :collection_version do
+    prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
+    on: :collection_version do
     property :id
     property :link_title
     property :url

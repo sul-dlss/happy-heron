@@ -6,7 +6,7 @@ module Edtf
   module ClassMethods
     def property(name, options = {}, &)
       if options[:edtf]
-        prop_name = name.to_s.delete_suffix('_edtf')
+        prop_name = name.to_s.delete_suffix("_edtf")
         property "#{prop_name}(1i)", virtual: true
         property "#{prop_name}(2i)", virtual: true
         property "#{prop_name}(3i)", virtual: true

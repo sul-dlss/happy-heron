@@ -5,11 +5,11 @@ class WorkVersion < ApplicationRecord
   include AggregateAssociations
 
   # Format with hash, e.g., { user_id: 'mjgiarlo', work_id: 123, work_version: 9 }
-  GLOBUS_ENDPOINT_TEMPLATE = '%<user_id>s/work%<work_id>d/version%<work_version>d'
+  GLOBUS_ENDPOINT_TEMPLATE = "%<user_id>s/work%<work_id>d/version%<work_version>d"
 
   belongs_to :work
-  has_many :contributors, dependent: :destroy, class_name: 'Contributor'
-  has_many :authors, -> { order(weight: :asc) }, inverse_of: :work_version, dependent: :destroy, class_name: 'Author'
+  has_many :contributors, dependent: :destroy, class_name: "Contributor"
+  has_many :authors, -> { order(weight: :asc) }, inverse_of: :work_version, dependent: :destroy, class_name: "Author"
   before_destroy do
     # Unfortunately the STI relationships above, don't delete everything.
     # I first tried this approach, but it didn't work either
@@ -26,33 +26,33 @@ class WorkVersion < ApplicationRecord
   has_many :keywords, dependent: :destroy
 
   validates :state, presence: true
-  validates :license, inclusion: { in: License.license_list(include_displayable: true) }
+  validates :license, inclusion: {in: License.license_list(include_displayable: true)}
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
 
   scope :awaiting_review_by, lambda { |user|
     with_state(:pending_approval)
       .joins(:work)
-      .left_outer_joins(work: { collection: :reviewed_by })
-      .left_outer_joins(work: { collection: :managed_by })
-      .where('reviewers.user_id = %s OR managers.user_id = %s', user.id, user.id)
+      .left_outer_joins(work: {collection: :reviewed_by})
+      .left_outer_joins(work: {collection: :managed_by})
+      .where("reviewers.user_id = %s OR managers.user_id = %s", user.id, user.id)
       .distinct
   }
 
   enum access: {
-    stanford: 'stanford',
-    world: 'world'
+    stanford: "stanford",
+    world: "world"
   }
 
   # provides helper method to infer upload type... e.g. work_version.globus?
   enum upload_type: {
-    browser: 'browser',
-    globus: 'globus',
-    zipfile: 'zipfile'
+    browser: "browser",
+    globus: "globus",
+    zipfile: "zipfile"
   }
 
-  LINK_TEXT = ':link will be inserted here automatically when available:'
-  DOI_TEXT = ':DOI will be inserted here automatically when available:'
+  LINK_TEXT = ":link will be inserted here automatically when available:"
+  DOI_TEXT = ":DOI will be inserted here automatically when available:"
 
   after_update_commit -> { work.broadcast_update }
 
@@ -118,7 +118,7 @@ class WorkVersion < ApplicationRecord
 
   # the terms agreement checkbox value is not persisted in the database with the work but instead at the user level
   def agree_to_terms=(value)
-    return if value == false || value == '0' || work.owner.agreed_to_terms_recently?
+    return if value == false || value == "0" || work.owner.agreed_to_terms_recently?
 
     # update the last time the terms of agreement was accepted for this depositor
     #  if it has not been accepted within the defined timeframe and the checkbox was checked
@@ -143,7 +143,7 @@ class WorkVersion < ApplicationRecord
     when Date
       super(edtf.to_edtf)
     else
-      raise TypeError, 'Expected a Date or EDTF::Interval'
+      raise TypeError, "Expected a Date or EDTF::Interval"
     end
   end
 
@@ -204,7 +204,7 @@ class WorkVersion < ApplicationRecord
     File.join(
       Settings.globus.uploads_directory,
       globus_endpoint,
-      '/'
+      "/"
     )
   end
 

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec::Matchers.define_negated_matcher :not_have_enqueued_job, :have_enqueued_job
 
 RSpec.describe WorkReminderGenerator do
   # rubocop:disable RSpec/MultipleMemoizedHelpers
-  describe '.send_draft_reminders' do
+  describe ".send_draft_reminders" do
     let(:work_a) { create(:work_version, :pending_approval) }
     let(:work_b) { create(:work_version, :depositing) }
     let(:work_c) { create(:work_version, :deposited) }
@@ -36,61 +36,61 @@ RSpec.describe WorkReminderGenerator do
     let(:first_draft7) { create(:work_version, :first_draft, created_at: 47.days.ago) }
     let(:first_draft8) { create(:work_version, :first_draft, created_at: 70.days.ago) } # every 28 days from there
 
-    it 'queues an email for each draft work that needs a notification sent' do
+    it "queues an email for each draft work that needs a notification sent" do
       expect { described_class.send_draft_reminders }
         .to have_enqueued_job(ActionMailer::MailDeliveryJob)
         .with(
-          'WorksMailer', 'first_draft_reminder_email', 'deliver_now',
-          { params: { work_version: first_draft4 }, args: [] }
+          "WorksMailer", "first_draft_reminder_email", "deliver_now",
+          {params: {work_version: first_draft4}, args: []}
         )
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', 'deliver_now',
-              { params: { work_version: first_draft6 }, args: [] }
+              "WorksMailer", "first_draft_reminder_email", "deliver_now",
+              {params: {work_version: first_draft6}, args: []}
             ))
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', 'deliver_now',
-              { params: { work_version: first_draft8 }, args: [] }
+              "WorksMailer", "first_draft_reminder_email", "deliver_now",
+              {params: {work_version: first_draft8}, args: []}
             ))
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'new_version_reminder_email', 'deliver_now',
-              { params: { work_version: version_draft4 }, args: [] }
+              "WorksMailer", "new_version_reminder_email", "deliver_now",
+              {params: {work_version: version_draft4}, args: []}
             ))
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'new_version_reminder_email', 'deliver_now',
-              { params: { work_version: version_draft6 }, args: [] }
+              "WorksMailer", "new_version_reminder_email", "deliver_now",
+              {params: {work_version: version_draft6}, args: []}
             ))
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'new_version_reminder_email', 'deliver_now',
-              { params: { work_version: version_draft8 }, args: [] }
+              "WorksMailer", "new_version_reminder_email", "deliver_now",
+              {params: {work_version: version_draft8}, args: []}
             ))
     end
 
-    it 'does not queue notifications for works in the wrong state' do
+    it "does not queue notifications for works in the wrong state" do
       expect { described_class.send_draft_reminders }
         .to not_have_enqueued_job(ActionMailer::MailDeliveryJob)
         .with(
-          'WorksMailer', 'first_draft_reminder_email', anything,
-          { params: { work_version: work_a }, args: anything }
+          "WorksMailer", "first_draft_reminder_email", anything,
+          {params: {work_version: work_a}, args: anything}
         )
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: work_b }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: work_b}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: work_c }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: work_c}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: work_d }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: work_d}, args: anything}
             ))
     end
 
@@ -98,53 +98,53 @@ RSpec.describe WorkReminderGenerator do
       expect { described_class.send_draft_reminders }
         .to not_have_enqueued_job(ActionMailer::MailDeliveryJob)
         .with(
-          'WorksMailer', 'first_draft_reminder_email', anything,
-          { params: { work_version: first_draft1 }, args: anything }
+          "WorksMailer", "first_draft_reminder_email", anything,
+          {params: {work_version: first_draft1}, args: anything}
         )
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: first_draft2 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: first_draft2}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: first_draft3 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: first_draft3}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: first_draft5 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: first_draft5}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: first_draft7 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: first_draft7}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: version_draft1 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: version_draft1}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: version_draft2 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: version_draft2}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: version_draft3 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: version_draft3}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: version_draft5 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: version_draft5}, args: anything}
             ))
         .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with(
-              'WorksMailer', 'first_draft_reminder_email', anything,
-              { params: { work_version: version_draft7 }, args: anything }
+              "WorksMailer", "first_draft_reminder_email", anything,
+              {params: {work_version: version_draft7}, args: anything}
             ))
     end
   end

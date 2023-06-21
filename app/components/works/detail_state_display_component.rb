@@ -10,20 +10,20 @@ module Works
     attr_reader :work_version
 
     def call
-      value = I18n.t(work_version.state, scope: 'work.state')
+      value = I18n.t(work_version.state, scope: "work.state")
       return value unless work_version.wait_state?
 
       if work_version.fetching_globus_state?
         message = 'Transferring your files from Globus. This could take some time depending on file size.
                   You may leave this page or close this window and return later.'
-        tag.span(message, class: 'globus-wait')
+        tag.span(message, class: "globus-wait")
       else
-        safe_join([value, spinner], ' ')
+        safe_join([value, spinner], " ")
       end
     end
 
     def spinner
-      tag.span class: 'fa-solid fa-spinner fa-pulse'
+      tag.span class: "fa-solid fa-spinner fa-pulse"
     end
   end
 end

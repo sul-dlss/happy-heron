@@ -2,13 +2,13 @@
 
 FactoryBot.define do
   factory :collection_version do
-    name { 'MyString' }
-    description { 'MyString' }
-    state { 'first_draft' }
+    name { "MyString" }
+    description { "MyString" }
+    state { "first_draft" }
     collection
 
     trait :with_version_description do
-      version_description { 'really important changes' }
+      version_description { "really important changes" }
     end
 
     factory :collection_version_with_collection do
@@ -17,19 +17,19 @@ FactoryBot.define do
         reviewed_by { [] }
         managed_by { [] }
         review_enabled { false }
-        access { 'world' }
-        doi_option { 'no' }
+        access { "world" }
+        doi_option { "no" }
         collection_druid { nil }
       end
-      state { 'deposited' }
+      state { "deposited" }
       collection do
         association(:collection, depositors:,
-                                 managed_by:,
-                                 reviewed_by:,
-                                 review_enabled:,
-                                 doi_option:,
-                                 access:,
-                                 druid: collection_druid)
+          managed_by:,
+          reviewed_by:,
+          review_enabled:,
+          doi_option:,
+          access:,
+          druid: collection_druid)
       end
 
       after(:create) do |collection_version, _evaluator|
