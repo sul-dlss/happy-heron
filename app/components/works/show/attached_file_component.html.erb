@@ -1,13 +1,13 @@
 <tr>
-    <td class="file-level" style="--depth: <%= depth+1 %>rem">
+    <td class="file-level" style="--depth: <%= depth + 1 %>rem">
         &bull;
         <%= basename %>
         <% if can_download? %>
-            <%= link_to path, class: 'ms-2', data: { turbo: false } do %>
+            <%= link_to path, class: "ms-2", data: {turbo: false} do %>
                 <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download</span>
             <% end %>
         <% end %>
     </td>
     <td><%= label %></td>
-    <td><%= hide? ? 'Yes' : 'No' %></td>
+    <td><%= hide? ? "Yes" : "No" %></td>
 </tr>

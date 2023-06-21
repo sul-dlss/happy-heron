@@ -1,12 +1,12 @@
 <fieldset>
   <legend class="participant-type" style="font-size: 1rem; width: 5rem; float: left">Depositors</legend>
   <div style="float: left; margin-right: 6rem">
-    <%= render PopoverComponent.new key: 'collection.depositors' %>
+    <%= render PopoverComponent.new key: "collection.depositors" %>
   </div>
   <div class="mb-3 row">
     <div class="col-sm-12" data-controller="collection-participant-form" data-collection-participant-form-selector-value=".participant-container">
       <template data-collection-participant-form-target='template'>
-        <%= form.fields_for :depositors, User.new, child_index: 'TEMPLATE_RECORD' do |participant_form| %>
+        <%= form.fields_for :depositors, User.new, child_index: "TEMPLATE_RECORD" do |participant_form| %>
           <%= render Collections::Update::ParticipantRowComponent.new(form: participant_form) %>
         <% end %>
       </template>
@@ -25,7 +25,7 @@
 
             <span data-collection-participant-form-target="resultName"></span> -
             <span data-collection-participant-form-target="resultDescription"></span>
-            <%= button_tag 'Add', type: 'button', class: "btn btn-outline-primary", data: { action: "collection-participant-form#addAssociation" } %>
+            <%= button_tag "Add", type: "button", class: "btn btn-outline-primary", data: {action: "collection-participant-form#addAssociation"} %>
           </div>
           <div data-collection-participant-form-target="resultNone">
             <strong>No search results found for "<span data-collection-participant-form-target="queryValue"></span>" - enter an exact SUNetID only and try again</strong>
@@ -37,7 +37,7 @@
       </div>
 
       <div class="mt-2">
-        <%= button_tag '+ Add another depositor', type: 'button', class: "btn btn-outline-primary", data: { action: "collection-participant-form#openLookup" } %>
+        <%= button_tag "+ Add another depositor", type: "button", class: "btn btn-outline-primary", data: {action: "collection-participant-form#openLookup"} %>
       </div>
     </div>
   </div>

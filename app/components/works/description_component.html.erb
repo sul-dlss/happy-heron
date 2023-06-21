@@ -6,8 +6,8 @@
 
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <%= form.label :abstract, 'Abstract *', class: 'col-form-label' %>
-      <%= render PopoverComponent.new key: 'work.abstract' %>
+      <%= form.label :abstract, "Abstract *", class: "col-form-label" %>
+      <%= render PopoverComponent.new key: "work.abstract" %>
     </div>
     <div class="col-sm-10">
       <%= form.text_area :abstract, class: "form-control", required: true %>
@@ -17,9 +17,9 @@
 
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <%= form.label :keywords, 'Keywords *', class: 'col-form-label' %>
-      <%= render PopoverComponent.new key: 'work.keywords' %>
-      <br />(one per box)
+      <%= form.label :keywords, "Keywords *", class: "col-form-label" %>
+      <%= render PopoverComponent.new key: "work.keywords" %>
+      <br>(one per box)
     </div>
     <div class="col-sm-10">
       <%= render Works::KeywordsComponent.new(form: form) %>
@@ -31,24 +31,24 @@
   <fieldset class="mb-5">
     <legend class='h5'>
       Citation for this deposit
-      <%= render PopoverComponent.new key: 'work.citation' %>
+      <%= render PopoverComponent.new key: "work.citation" %>
     </legend>
 
     <p>This is the text that others can use when they want to cite this deposit. We highly recommend that you provide the text of that citation here to make it easier for them to cite your work and give you proper credit.</p>
 
     <div class="mb-3 row">
-      <%= form.label :default_citation, 'Use auto-generated citation', class: "form-check-label col-sm-2" %>
+      <%= form.label :default_citation, "Use auto-generated citation", class: "form-check-label col-sm-2" %>
 
       <div class="col-sm-3">
         <label class="switch" aria-label="Use auto-generated citation">
           <%= form.check_box :default_citation,
                 {
                   data: {
-                    action: 'change->auto-citation#switchChanged',
-                    auto_citation_target: 'switch'
+                    action: "change->auto-citation#switchChanged",
+                    auto_citation_target: "switch"
                   }
                 },
-                'true', 'false' %>
+                "true", "false" %>
           <div class="slider round">
             <span class="on">Yes</span>
             <span class="off">No</span>
@@ -60,20 +60,19 @@
       <div class='col-sm-2'></div>
       <div class="col-sm-10">
         <%= form.text_area :citation, class: "form-control",
-                           aria: { label: 'Provided citation' },
-                           data: { auto_citation_target: 'manual',
-                                   action: "no-newlines#change", no_newlines_target: 'input', controller: 'no-newlines' } %>
+              aria: {label: "Provided citation"},
+              data: {auto_citation_target: "manual",
+                     action: "no-newlines#change", no_newlines_target: "input", controller: "no-newlines"} %>
         <%= form.text_area :citation_auto,
-                           class: "form-control", readonly: true,
-                           aria: { label: 'Automatically generated citation' },
-                           data: { auto_citation_target: 'auto' } %>
+              class: "form-control", readonly: true,
+              aria: {label: "Automatically generated citation"},
+              data: {auto_citation_target: "auto"} %>
       </div>
     </div>
   </fieldset>
 
-
   <%= render Works::RelatedWorkComponent.new(form: form) %>
 
-  <%= render RelatedLinkComponent.new(form: form, key: 'work.related_link') %>
+  <%= render RelatedLinkComponent.new(form: form, key: "work.related_link") %>
 
 </section>

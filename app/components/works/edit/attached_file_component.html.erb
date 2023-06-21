@@ -1,26 +1,25 @@
-<tr class="attached-files <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
+<tr class="attached-files <%= "dz-complete" if uploaded? %>" data-dropzone-target="preview">
     <%= form.fields_for :attached_files, attached_file do |file_form| %>
     <%= file_form.hidden_field :path %>
     <td class="file-level" style="--depth: <%= depth %>rem" data-dropzone-path="<%= path %>">
         <span class="fa-regular fa-file" aria-hidden="true"></span> <%= basename %>
     </td>
     <td>
-        <%= file_form.text_field :label, class: 'form-control' %>
+        <%= file_form.text_field :label, class: "form-control" %>
     </td>
     <td style="vertical-align: middle">
         <%= file_form.check_box :hide %>
     </td>
     <td>
-        <%= button_tag type: 'button',
-                    class: "dz-remove pull-right btn remove-file",
-                    "aria-label": "Remove file",
-                    data: { action: "click->dropzone#removeAssociation" } do %>
+        <%= button_tag type: "button",
+              class: "dz-remove pull-right btn remove-file",
+              "aria-label": "Remove file",
+              data: {action: "click->dropzone#removeAssociation"} do %>
         <span class="fa-regular fa-trash-alt"></span>
         <% end %>
         <%= file_form.hidden_field :_destroy %>
     <% end %>
-    <%
-        # Note: the above end is deliberately nested inside the last </td> tag, even though the form tag is outside the
+# Note: the above end is deliberately nested inside the last </td> tag, even though the form tag is outside the
         # first <td>.  This is due to the way rails adds hidden input tags via the `fields_for` method.  If you put the
         # end tag outside the </td> tag, the hidden field will be rendered in the wrong spot and cause browser
         # rendering issues.

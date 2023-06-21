@@ -1,5 +1,5 @@
 <% content_for :breadcrumbs do %>
-  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Search for DRUID' } ])%>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [{title: "Search for DRUID"}]) %>
 <% end %>
 <main id="content">
   <div class="container" id="dashboard">
@@ -7,13 +7,13 @@
 
     <%= render Admin::NavigationComponent.new %>
 
-    <%= form_with url: admin_druid_searches_path, method: :get, class: 'col-md-4 mt-3' do |form| %>
+    <%= form_with url: admin_druid_searches_path, method: :get, class: "col-md-4 mt-3" do |form| %>
         <%= form.label :query, "Enter DRUID" %>
-        <%= form.search_field :query, class: 'form-control' %>
-        <%= form.submit "Search", class: 'btn btn-primary my-3' %>
+        <%= form.search_field :query, class: "form-control" %>
+        <%= form.submit "Search", class: "btn btn-primary my-3" %>
     <% end %>
- 
-    <% if @failure %> 
+
+    <% if @failure %>
         <span class="text-danger">DRUID not found. Please try searching for another DRUID or try again if you think this is an error.</span>
     <% end %>
   </div>

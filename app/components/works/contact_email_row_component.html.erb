@@ -1,15 +1,15 @@
 <div class="mb-3 row plain-container">
   <div class="col-sm-2">
-    <%= form.label :email, 'Contact email *', class: 'col-form-label' %> <%= tooltip %>
+    <%= form.label :email, "Contact email *", class: "col-form-label" %> <%= tooltip %>
   </div>
   <div class="<%= bootstrap_classes %>">
-    <%= form.email_field :email, class: "form-control#{' is-invalid' if error?}",
-                         pattern: Devise.email_regexp.source, required: true %>
+    <%= form.email_field :email, class: "form-control#{" is-invalid" if error?}",
+          pattern: Devise.email_regexp.source, required: true %>
     <div class="invalid-feedback">You must provide a valid email address</div>
   </div>
   <div class="col-sm-1">
-    <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: 'Remove' },
-     data: { action: "click->nested-form#removeAssociation" } do %>
+    <%= button_tag type: "button", class: "btn btn-sm float-end", aria: {label: "Remove"},
+          data: {action: "click->nested-form#removeAssociation"} do %>
       <span class="fa-regular fa-trash-alt"></span>
     <% end %>
     <%= form.hidden_field :_destroy %>

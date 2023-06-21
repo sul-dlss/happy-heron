@@ -1,8 +1,8 @@
 <turbo-frame id='workAdminSection'>
   <%= form_with url: move_path(params[:id]), method: :put, data: {turbo: false, controller: "collection-input", collection_input_target: "form"} do |form| %>
     <%= form.hidden_field :collection, data: {collection_input_target: "collectionInput"} %>
-    <%= form.label :druid, 'Enter the druid for a collection to move this item to' %>
-    <%= form.search_field :druid, class: "form-control my-2", style: "width:40%", data: {action: "collection-input#search"}%>
+    <%= form.label :druid, "Enter the druid for a collection to move this item to" %>
+    <%= form.search_field :druid, class: "form-control my-2", style: "width:40%", data: {action: "collection-input#search"} %>
     <div data-collection-input-target="resultOne">
       <span data-collection-input-target="resultName"></span> -
       <span data-collection-input-target="resultDruid"></span>
@@ -14,7 +14,7 @@
       <strong><span data-collection-input-target="errorValue"></strong>
     </div>
     <fieldset data-collection-input-target="submit">
-      <%= form.submit "Move", class: 'btn btn-primary mt-3' %>
+      <%= form.submit "Move", class: "btn btn-primary mt-3" %>
     </fieldset>
   <% end %>
 </turbo-frame>

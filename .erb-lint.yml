@@ -1,4 +1,6 @@
 ---
+exclude:
+  - '**/vendor/**/*'
 linters:
   Rubocop:
     enabled: true

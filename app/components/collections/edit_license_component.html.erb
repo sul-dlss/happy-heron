@@ -1,5 +1,5 @@
   <section id="terms" data-controller="complex-radio">
-    <header>Terms of use and license * <%= render PopoverComponent.new key: 'collection.terms' %></header>
+    <header>Terms of use and license * <%= render PopoverComponent.new key: "collection.terms" %></header>
 
     <p>
       We highly recommend every deposit be assigned a license when possible. A
@@ -9,23 +9,23 @@
     </p>
 
     <fieldset class="license-option">
-      <div class="form-check<%= ' is-invalid' if error? %>" data-complex-radio-target="selection">
-        <%= form.radio_button :license_option, 'required', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
-        <%= form.label :license_option_required, 'Require license for all deposits', class: "form-check-label" %>
-        <%= form.label :required_license, class: 'form-check-label visually-hidden' %>
+      <div class="form-check<%= " is-invalid" if error? %>" data-complex-radio-target="selection">
+        <%= form.radio_button :license_option, "required", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
+        <%= form.label :license_option_required, "Require license for all deposits", class: "form-check-label" %>
+        <%= form.label :required_license, class: "form-check-label visually-hidden" %>
         <%= form.select :required_license, grouped_options_for_select(License.grouped_options, required_license),
-                        { prompt: 'Select...' }, required: true, class: "form-select#{' is-invalid' if error?}" %>
+              {prompt: "Select..."}, required: true, class: "form-select#{" is-invalid" if error?}" %>
         <a href="https://library.stanford.edu/research/stanford-digital-repository/faqs/sdr-license-options" target="_blank">
           Get help selecting a license
         </a>
       </div>
 
-      <div class="form-check<%= ' is-invalid' if error? %>" data-complex-radio-target="selection">
-        <%= form.radio_button :license_option, 'depositor-selects', class: "form-check-input", data: { action: 'complex-radio#disableUnselectedInputs' } %>
-        <%= form.label 'license_option_depositor-selects', 'Depositor selects license', class: "form-check-label" %>
-        <%= form.label :default_license, class: 'form-check-label visually-hidden' %>
+      <div class="form-check<%= " is-invalid" if error? %>" data-complex-radio-target="selection">
+        <%= form.radio_button :license_option, "depositor-selects", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
+        <%= form.label "license_option_depositor-selects", "Depositor selects license", class: "form-check-label" %>
+        <%= form.label :default_license, class: "form-check-label visually-hidden" %>
         <%= form.select :default_license, grouped_options_for_select(License.grouped_options, default_license),
-                        { include_blank: 'Select default license...' }, required: true, class: "form-select default_license#{ ' is-invalid' if error? }" %>
+              {include_blank: "Select default license..."}, required: true, class: "form-select default_license#{" is-invalid" if error?}" %>
       </div>
 
       <div class="invalid-feedback"><%= error_message %></div>

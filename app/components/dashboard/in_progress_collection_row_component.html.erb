@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-4">
     <%= show_collection_link %> <%= helpers.turbo_frame_tag dom_id(collection_version, :edit),
-    src: edit_link_collection_version_path(collection_version),
-    target: '_top' %>
+                                      src: edit_link_collection_version_path(collection_version),
+                                      target: "_top" %>
   </div>
   <div class="col-3">
-    <%= link_to 'Edit or Deposit', edit_collection_version_path(collection.head), class: "mb-2 btn btn-outline-primary" %>
+    <%= link_to "Edit or Deposit", edit_collection_version_path(collection.head), class: "mb-2 btn btn-outline-primary" %>
   </div>
   <div class="col-5">
-    <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if collection_version.first_draft?%>
+    <%= helpers.turbo_frame_tag dom_id(collection, :delete), src: delete_button_collection_path(collection) if collection_version.first_draft? %>
   </div>
 </div>

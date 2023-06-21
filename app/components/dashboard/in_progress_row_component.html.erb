@@ -1,7 +1,7 @@
 <tr>
   <td>
     <%= work_link %>
-    <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
+    <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: "_top" %>
     <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </td>
   <td><%= show_collection_link %></td>

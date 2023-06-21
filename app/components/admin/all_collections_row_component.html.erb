@@ -1,11 +1,11 @@
 <tr>
   <td><%= link_to collection.head.name, collection %><%= state_label %></td>
   <td><%= total %></td>
-  <td><%= state_count('deposited') %></td>
-  <td><%= state_count('first_draft') %></td>
-  <td><%= state_count('version_draft') %></td>
-  <td><%= state_count('pending_approval') %></td>
-  <td><%= state_count('rejected') %></td>
-  <td><%= state_count('purl_reserved') %></td>
+  <td><%= state_count("deposited") %></td>
+  <td><%= state_count("first_draft") %></td>
+  <td><%= state_count("version_draft") %></td>
+  <td><%= state_count("pending_approval") %></td>
+  <td><%= state_count("rejected") %></td>
+  <td><%= state_count("purl_reserved") %></td>
   <td><%= render LocalTimeComponent.new(datetime: collection.updated_at, show_time: false) %></td>
 </tr>

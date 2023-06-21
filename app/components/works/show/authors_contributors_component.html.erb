@@ -1,6 +1,6 @@
   <table id="<%= participant_type %>s" class="table table-sm caption-header">
     <caption><%= participant_type.titlecase %>
-      <%= helpers.turbo_frame_tag dom_id(work, 'edit_author'), src: edit_button_work_path(work, tag: 'author'), target: '_top' %>
+      <%= helpers.turbo_frame_tag dom_id(work, "edit_author"), src: edit_button_work_path(work, tag: "author"), target: "_top" %>
     </caption>
     <tbody>
     <% participants.each do |participant| %>

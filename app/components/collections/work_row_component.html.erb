@@ -1,7 +1,7 @@
 <tr>
   <%= render Works::LinkToShowComponent.new(work_version: work_version) %>
   <td>
-    <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
+    <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: "_top" %>
     <%= helpers.turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </td>
   <td><%= work.owner.sunetid %></td>

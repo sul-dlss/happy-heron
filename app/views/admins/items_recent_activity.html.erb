@@ -1,4 +1,4 @@
 <turbo-frame id="itemsActivityFrame">
-  <%= render Admin::ActivityTimeSelectorComponent.new(path: items_recent_activity_admin_path, frame_id: 'itemsActivityFrame', default_days: @days_limit) %>
+  <%= render Admin::ActivityTimeSelectorComponent.new(path: items_recent_activity_admin_path, frame_id: "itemsActivityFrame", default_days: @days_limit) %>
   <%= render Admin::ItemsActivityTableComponent.new(items: @items) %>
 </turbo-frame>

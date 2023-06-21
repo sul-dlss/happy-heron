@@ -1,7 +1,7 @@
 <tr id="<%= dom_id(work) %>">
   <%= render Works::LinkToShowComponent.new(work_version: work.head) %>
   <td>
-    <%= turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
+    <%= turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: "_top" %>
     <%= turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work) %>
   </td>
   <td><%= render Works::StateDisplayComponent.new(work_version: work.head) %></td>

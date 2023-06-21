@@ -8,14 +8,14 @@
       <form method="post" action="" data-purl-reservation-target="form">
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" name="work[title]" data-purl-reservation-target="title" class="form-control" id="purl-reservation-title" required>
+            <input type="text" name="work[title]" data-purl-reservation-target="title" autocomplete="on" class="form-control" id="purl-reservation-title" required>
             <small class="form-text">You can update this later.</small>
           </div>
           <div data-purl-reservation-target="doiSection">
             <legend class="h6">
               DOI assignment
             </legend>
-            <%= link_to 'What is a DOI?', Settings.external_links.what_is_a_doi, target: '_blank' %>
+            <%= link_to "What is a DOI?", Settings.external_links.what_is_a_doi, target: "_blank" %>
             <div class="mb-3 inner-container">
               <div class="row">
                 <label class="form-check-label col-sm-9" for="work_assign_doi">Do you want a DOI to be assigned to your deposit?</label>
@@ -34,14 +34,14 @@
           </div>
         </div>
         <div class="modal-footer">
-          <%= button_tag 'Submit', class: 'btn btn-primary' %>
-          <%= button_tag 'Cancel',
+          <%= button_tag "Submit", class: "btn btn-primary" %>
+          <%= button_tag "Cancel",
                 data: {
-                  bs_dismiss: 'modal',
-                  bs_target: '#purlReservationModal',
+                  bs_dismiss: "modal",
+                  bs_target: "#purlReservationModal",
                   action: "purl-reservation#cancel"
                 },
-                class: 'btn btn-secondary' %>
+                class: "btn btn-secondary" %>
         </div>
       </form>
     </div>

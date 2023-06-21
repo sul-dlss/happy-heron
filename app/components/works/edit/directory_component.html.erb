@@ -2,25 +2,25 @@
   <tr class="attached-files">
     <td class="file-level" style="--depth: <%= depth %>rem" colspan="3">
        <i class="fa fa-folder" aria-hidden="true"></i> <strong><%= name %></strong>
-    </td>    
+    </td>
     <td>
-      <%= button_tag type: 'button',
-                    class: "pull-right btn",
-                    data: { controller: 'show', action: "show#show", show_id_value: "dropzone-#{dir_id}-row" },
-                    "aria-label": "Add file" do %>
+      <%= button_tag type: "button",
+            class: "pull-right btn",
+            data: {controller: "show", action: "show#show", show_id_value: "dropzone-#{dir_id}-row"},
+            "aria-label": "Add file" do %>
          <i class="fa-solid fa-file-circle-plus"></i>
       <% end %>
     </td>
   </tr>
   <tr id="dropzone-<%= dir_id %>-row" class="d-none">
    <td colspan="4">
-      <div data-controller="dropzone" data-dropzone-max-file-size="10000" 
+      <div data-controller="dropzone" data-dropzone-max-file-size="10000"
          data-dropzone-dir-path="<%= full_path %>" data-dropzone-required="false"
          data-dropzone-previews-container=".dropzone-<%= dir_id %>-previews" data-dropzone-clickable=".dz-<%= dir_id %>-clickable">
          <fieldset>
             <div class="dropzone dropzone-default" data-dropzone-target="container">
                <%= form.file_field :files, multiple: true, direct_upload: true,
-                                 data: { dropzone_target: 'input' } %>
+                     data: {dropzone_target: "input"} %>
                <div class="dz-message needsclick text-secondary">
                <p>Drop files here</p>
                </div>
@@ -32,7 +32,7 @@
          </fieldset>
 
          <template data-dropzone-target='template'>
-            <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
+            <%= form.fields_for :attached_files, AttachedFile.new, child_index: "TEMPLATE_RECORD" do |file_form| %>
                <%= render Works::Edit::FileRowComponent.new(form: file_form, path: full_path) %>
             <% end %>
          </template>

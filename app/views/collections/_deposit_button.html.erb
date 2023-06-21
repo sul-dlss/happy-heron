@@ -3,21 +3,21 @@
     if allowed_to?(:create?, WorkVersion.new(work: Work.new(collection: collection))) &&
        allowed_to?(:deposit?, collection.head)
   %>
-    <%= button_tag '+ Deposit to this collection',
+    <%= button_tag "+ Deposit to this collection",
           data: {
             destination: new_collection_work_path(collection),
-            bs_toggle: 'modal',
-            bs_target: '#workTypeModal',
+            bs_toggle: "modal",
+            bs_target: "#workTypeModal",
             action: "work-type#setCollection"
           },
           class: "btn btn-primary" %>
 
-    <%= button_tag 'Reserve a PURL',
+    <%= button_tag "Reserve a PURL",
           data: {
             destination: collection_reservations_path(collection),
-            bs_toggle: 'modal',
-            bs_target: '#purlReservationModal',
-            action: collection.doi_option == 'depositor-selects' ? "purl-reservation#setCollection purl-reservation#showSelectDoi" : "purl-reservation#setCollection"
+            bs_toggle: "modal",
+            bs_target: "#purlReservationModal",
+            action: (collection.doi_option == "depositor-selects") ? "purl-reservation#setCollection purl-reservation#showSelectDoi" : "purl-reservation#setCollection"
           },
           class: "btn btn btn-outline-primary" %>
   <% end %>

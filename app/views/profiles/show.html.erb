@@ -1,6 +1,7 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-    breadcrumbs: [ { title: 'User profile' } ]) %>
+        breadcrumbs: [{title: "User profile"}]
+      ) %>
 <% end %>
 <main id="content">
   <div class="container">
@@ -13,7 +14,7 @@
         <tr>
             <td>
                 <%= title = CollectionTitlePresenter.show(collection.head) %>
-                <%= link_to edit_collection_mail_preferences_path(collection), aria: { label: "Edit communication preferences for #{title}"} do %>
+                <%= link_to edit_collection_mail_preferences_path(collection), aria: {label: "Edit communication preferences for #{title}"} do %>
                     <span class="fa-solid fa-pencil"></span>
                 <% end %>
             </td>
