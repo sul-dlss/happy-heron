@@ -11,13 +11,7 @@ class DashboardPresenter
     @collection_managers_in_progress = collection_managers_in_progress
   end
 
-  attr_reader :in_progress
-
-  attr_reader :collection_managers_in_progress
-
-  attr_reader :approvals
-
-  attr_reader :collections
+  attr_reader :in_progress, :collection_managers_in_progress, :approvals, :collections
 
   def show_popup?
     @just_signed_in && (in_progress_works? || in_progress_collections?)

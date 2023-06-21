@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :contact_email do
     email { 'io@io.io' }
-    association :emailable, factory: :work
+    emailable factory: %i[work]
   end
 end

@@ -3,6 +3,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
   - rubocop-capybara
+  - rubocop-factory_bot
 
 inherit_from: .rubocop_todo.yml
 
@@ -240,7 +241,7 @@ RSpec/StubbedMock: # (new in 1.44)
   Enabled: true
 
 Style/AccessorGrouping: # (new in 0.87)
-  Enabled: false # because this doesn't work well with Sorbet annotations
+  Enabled: true
 Style/ArgumentsForwarding: # (new in 1.1)
   Enabled: true
 Style/BisectedAttrAccessor: # (new in 0.87)
@@ -587,4 +588,19 @@ RSpec/RedundantAround: # new in 2.19
 RSpec/SkipBlockInsideExample: # new in 2.19
   Enabled: true
 RSpec/Rails/TravelAround: # new in 2.19
+  Enabled: true
+
+Style/ExactRegexpMatch: # new in 1.51
+  Enabled: true
+Style/RedundantArrayConstructor: # new in 1.52
+  Enabled: true
+Style/RedundantFilterChain: # new in 1.52
+  Enabled: true
+Style/RedundantRegexpConstructor: # new in 1.52
+  Enabled: true
+FactoryBot/AssociationStyle: # new in 2.23
+  Enabled: true
+FactoryBot/FactoryAssociationWithStrategy: # new in 2.23
+  Enabled: true
+FactoryBot/RedundantFactoryOption: # new in 2.23
   Enabled: true
