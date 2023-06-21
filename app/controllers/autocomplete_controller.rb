@@ -8,12 +8,12 @@ class AutocompleteController < ApplicationController
     result = lookups(params.require(:q))
     @suggestions = result.value_or([])
     if result.success?
-      render status: :no_content, html: '' and return if @suggestions.empty?
+      render status: :no_content, html: "" and return if @suggestions.empty?
 
       render status: :ok, layout: false
     else
       logger.warn(result.failure)
-      render status: :internal_server_error, html: ''
+      render status: :internal_server_error, html: ""
     end
   end
 
@@ -37,15 +37,15 @@ class AutocompleteController < ApplicationController
   # rubocop:disable Metrics/AbcSize
   def lookup(query, wildcard: false)
     resp = lookup_connection.get do |req|
-      req.params['q'] = wildcard ? "keywords:(#{query}*)" : "keywords:(#{query})"
+      req.params["q"] = wildcard ? "keywords:(#{query}*)" : "keywords:(#{query})"
       # Requesting extra records to try to increase the likelihood that get left anchored matches
       # since results are sorted by usage.
-      req.params['rows'] = num_records * 2
-      req.params['start'] = 0
-      req.params['version'] = '2.2'
-      req.params['indent'] = 'on'
-      req.params['fl'] = 'id,fullphrase,type'
-      req.params['sort'] = 'usage desc'
+      req.params["rows"] = num_records * 2
+      req.params["start"] = 0
+      req.params["version"] = "2.2"
+      req.params["indent"] = "on"
+      req.params["fl"] = "id,fullphrase,type"
+      req.params["sort"] = "usage desc"
     end
 
     return Failure("Autocomplete results for #{query} returned #{resp.status}") unless resp.success?
@@ -56,11 +56,11 @@ class AutocompleteController < ApplicationController
 
   def parse(body)
     ng = Nokogiri::XML(body)
-    ng.root.xpath('/response/result/doc').map do |doc_node|
+    ng.root.xpath("/response/result/doc").map do |doc_node|
       id = doc_node.at_xpath('str[@name="id"]').content
       label = doc_node.at_xpath('str[@name="fullphrase"]').content
       type = doc_node.at_xpath('str[@name="type"]').content
-      { label => key(id, type) }
+      {label => key(id, type)}
     end
   end
 
@@ -68,8 +68,8 @@ class AutocompleteController < ApplicationController
     @lookup_connection ||= Faraday.new(
       url: Settings.autocomplete_lookup.url,
       headers: {
-        'Accept' => 'application/xml',
-        'User-Agent' => 'Stanford Self-Deposit (Happy Heron)'
+        "Accept" => "application/xml",
+        "User-Agent" => "Stanford Self-Deposit (Happy Heron)"
       }
     )
   end
@@ -89,11 +89,11 @@ class AutocompleteController < ApplicationController
 
     # Order is left match (non-wildcard) alpha, left match (wildcard) alpha, other matches alpha
     left_match_suggestions = (sort_suggestions(left_match_suggestions1) + sort_suggestions(left_match_suggestions2))
-                             .take(num_records)
+      .take(num_records)
     num_other_suggestions = num_records - left_match_suggestions.size
     other_suggestions = (other_suggestions1 + other_suggestions2)
-                        .uniq
-                        .take(num_other_suggestions)
+      .uniq
+      .take(num_other_suggestions)
 
     left_match_suggestions + sort_suggestions(other_suggestions)
   end
@@ -102,25 +102,25 @@ class AutocompleteController < ApplicationController
     suggestions.sort { |suggestion1, suggestion2| suggestion1.keys.first <=> suggestion2.keys.first }
   end
 
-  URI_PREFIX = 'http://id.worldcat.org/fast/'
+  URI_PREFIX = "http://id.worldcat.org/fast/"
 
   def key(idroot, type)
-    "#{URI_PREFIX}#{idroot.delete_prefix('fst').to_i}/::#{cocina_type(type)}"
+    "#{URI_PREFIX}#{idroot.delete_prefix("fst").to_i}/::#{cocina_type(type)}"
   end
 
   # Map of FAST types to Cocina types.
   SUBJECT_TYPES = {
-    'person' => 'person',
-    'corporate' => 'organization',
-    'event' => 'event',
-    'geographic' => 'place',
-    'title' => 'title',
-    'form' => 'genre',
-    'meeting' => 'conference',
-    'chronological' => 'time'
+    "person" => "person",
+    "corporate" => "organization",
+    "event" => "event",
+    "geographic" => "place",
+    "title" => "title",
+    "form" => "genre",
+    "meeting" => "conference",
+    "chronological" => "time"
   }.freeze
 
   def cocina_type(type)
-    SUBJECT_TYPES.fetch(type, 'topic')
+    SUBJECT_TYPES.fetch(type, "topic")
   end
 end

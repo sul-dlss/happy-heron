@@ -15,7 +15,7 @@ class CollectionReminderGenerator
     eligible_collections.each do |state, scope|
       scope.find_each do |collection_version|
         collection_version.collection.managed_by.each do |user|
-          next if collection_version.collection.opted_out_of_email?(user, 'version_started_but_not_finished')
+          next if collection_version.collection.opted_out_of_email?(user, "version_started_but_not_finished")
 
           mailer = CollectionsMailer.with(collection_version:, user:)
           case state
@@ -34,10 +34,10 @@ class CollectionReminderGenerator
     first_interval = Settings.notifications.first_draft_reminder.first_interval
     subsequent_interval = Settings.notifications.first_draft_reminder.subsequent_interval
 
-    query = '(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0'
+    query = "(((CURRENT_DATE - CAST(created_at AS DATE)) - :first_interval) % :subsequent_interval) = 0"
     %i[first_draft version_draft].index_with do |state|
       CollectionVersion.with_state(state)
-                       .where(query, first_interval:, subsequent_interval:)
+        .where(query, first_interval:, subsequent_interval:)
     end
   end
 end

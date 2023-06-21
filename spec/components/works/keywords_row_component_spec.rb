@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Works::KeywordsRowComponent do
   subject(:rendered) { render_inline(described_class.new(form: form_builder)) }
@@ -13,11 +13,11 @@ RSpec.describe Works::KeywordsRowComponent do
     work_form.keywords.first
   end
   let(:form_builder) do
-    ActionView::Helpers::FormBuilder.new('work', keyword_form, controller.view_context, {})
+    ActionView::Helpers::FormBuilder.new("work", keyword_form, controller.view_context, {})
   end
 
-  it 'renders the component' do
-    expect(rendered.to_html).to include('Keyword')
-    expect(rendered.css('.plain-container')).to be_present
+  it "renders the component" do
+    expect(rendered.to_html).to include("Keyword")
+    expect(rendered.css(".plain-container")).to be_present
   end
 end

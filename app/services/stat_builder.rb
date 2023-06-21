@@ -14,7 +14,7 @@ class StatBuilder
         # change keys via `#group` above from `[80, "rejected"]=>1` to `"rejected"=>1`
         .transform_keys { |(_collection_id, state)| state }
         # inject totals into hash
-        .tap { |counts| counts['total'] = counts.values.sum }
+        .tap { |counts| counts["total"] = counts.values.sum }
     end
   end
 end

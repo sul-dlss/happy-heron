@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CocinaGenerator
-  ID_NAMESPACE = 'https://cocina.sul.stanford.edu'
+  ID_NAMESPACE = "https://cocina.sul.stanford.edu"
 
   # This generates a RequestDRO for a work
   class DROGenerator

@@ -5,16 +5,16 @@ FactoryBot.define do
     depositor { association(:user) }
     owner { association(:user) }
     head { nil }
-    created_at { Time.zone.parse('2007-02-10 15:30:45') }
+    created_at { Time.zone.parse("2007-02-10 15:30:45") }
     collection
   end
 
   trait :with_druid do
-    druid { 'druid:bc123df4567' }
+    druid { "druid:bc123df4567" }
   end
 
   trait :with_doi do
-    doi { '10.25740/hs561fr1234' }
+    doi { "10.25740/hs561fr1234" }
   end
 
   trait :locked do

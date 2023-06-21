@@ -31,11 +31,11 @@ class ReservationsController < ObjectsController
 
     unless work_version.valid?
       return redirect_to dashboard_path, status: :see_other,
-                                         flash: { error: 'Invalid subtype value' }
+        flash: {error: "Invalid subtype value"}
     end
 
     work_version.transaction do
-      work.events.create(user: current_user, event_type: 'type_selected')
+      work.events.create(user: current_user, event_type: "type_selected")
       work_version.update_metadata! # This causes a save
     end
 

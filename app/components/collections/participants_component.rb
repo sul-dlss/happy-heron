@@ -10,11 +10,11 @@ module Collections
     attr_reader :collection
 
     def depositors
-      collection.depositors.map(&:sunetid).join(', ')
+      collection.depositors.map(&:sunetid).join(", ")
     end
 
     def managers
-      collection.managed_by.map(&:sunetid).join(', ')
+      collection.managed_by.map(&:sunetid).join(", ")
     end
   end
 end

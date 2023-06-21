@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Works::ContributorsComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
@@ -9,14 +9,14 @@ RSpec.describe Works::ContributorsComponent do
   let(:work_form) { WorkForm.new(work_version:, work:) }
   let(:rendered) { render_inline(described_class.new(form:)) }
 
-  it 'renders the component' do
-    expect(rendered.to_html).to include 'Additional contributors'
+  it "renders the component" do
+    expect(rendered.to_html).to include "Additional contributors"
   end
 
-  context 'with an existing organizational contributor' do
+  context "with an existing organizational contributor" do
     let(:work_version) { build(:work_version, contributors: [build(:org_contributor)]) }
 
-    it 'renders the component' do
+    it "renders the component" do
       expect(rendered.css('option[@selected="selected"][@value="organization|Sponsor"]')).to be_present
     end
   end

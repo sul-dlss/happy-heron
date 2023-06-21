@@ -8,8 +8,8 @@ class GlobusSetupJob < ApplicationJob
   def perform(work_version)
     druid = work_version.work.druid # may be nil
     user = work_version.work.owner
-    Honeybadger.context({ work_version_id: work_version.id, druid:,
-                          work_id: work_version.work.id, depositor_sunet: user.sunetid })
+    Honeybadger.context({work_version_id: work_version.id, druid:,
+                          work_id: work_version.work.id, depositor_sunet: user.sunetid})
 
     if globus_user_exists?(user.email) && work_version.globus_endpoint.blank?
       # user is known to globus but doesn't have a globus endpoint yet, so create it and send the email
@@ -51,9 +51,9 @@ class GlobusSetupJob < ApplicationJob
     return integration_endpoint if integration_test_work_version?(work_version)
 
     format(WorkVersion::GLOBUS_ENDPOINT_TEMPLATE,
-           user_id: user.sunetid,
-           work_id: work_version.work.id,
-           work_version: work_version.version)
+      user_id: user.sunetid,
+      work_id: work_version.work.id,
+      work_version: work_version.version)
   end
 
   def make_dir(user, path)
@@ -73,7 +73,7 @@ class GlobusSetupJob < ApplicationJob
   end
 
   def integration_test_work_version?(work_version)
-    integration_test_mode? && work_version.title.ends_with?('Integration Test')
+    integration_test_mode? && work_version.title.ends_with?("Integration Test")
   end
 
   def integration_endpoint

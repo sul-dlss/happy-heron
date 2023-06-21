@@ -17,8 +17,8 @@ class OrcidService
     return Dry::Monads::Result::Failure.new(resp.status) unless resp.success?
 
     resp_json = JSON.parse(resp.body)
-    Dry::Monads::Result::Success.new([resp_json.dig('name', 'given-names', 'value'),
-                                      resp_json.dig('name', 'family-name', 'value')])
+    Dry::Monads::Result::Success.new([resp_json.dig("name", "given-names", "value"),
+      resp_json.dig("name", "family-name", "value")])
   end
 
   private
@@ -38,8 +38,8 @@ class OrcidService
 
   def headers
     {
-      'Accept' => 'application/json',
-      'User-Agent' => 'Stanford Self-Deposit (Happy Heron)'
+      "Accept" => "application/json",
+      "User-Agent" => "Stanford Self-Deposit (Happy Heron)"
     }
   end
 end

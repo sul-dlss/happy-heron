@@ -13,23 +13,23 @@ module Collections
 
     def release_info
       case collection.release_option
-      when 'immediate'
-        'Immediately'
-      when 'delay'
+      when "immediate"
+        "Immediately"
+      when "delay"
         "#{collection.release_duration} from date of deposit"
-      when 'depositor-selects'
+      when "depositor-selects"
         "depositor selects release date at no more than #{collection.release_duration} from date of deposit"
       end
     end
 
     def doi_assignment
       case collection.doi_option
-      when 'no'
-        'Not assigned'
-      when 'depositor-selects'
-        'Depositor selects'
+      when "no"
+        "Not assigned"
+      when "depositor-selects"
+        "Depositor selects"
       else
-        'Automatically assigned'
+        "Automatically assigned"
       end
     end
   end

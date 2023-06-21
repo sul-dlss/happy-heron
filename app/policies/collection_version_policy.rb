@@ -9,7 +9,7 @@ class CollectionVersionPolicy < ApplicationPolicy
   scope_for :relation do |relation|
     return relation if administrator?
 
-    relation.where.not(state: 'decommissioned').and(
+    relation.where.not(state: "decommissioned").and(
       relation.where(
         collection_id: user.deposits_into_ids + user.manages_collection_ids + user.reviews_collection_ids
       )

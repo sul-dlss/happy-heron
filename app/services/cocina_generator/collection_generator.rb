@@ -14,7 +14,7 @@ module CocinaGenerator
     def generate_model
       if collection_version.collection.druid
         Cocina::Models::Collection.new(model_attributes.merge(externalIdentifier: collection_version.collection.druid),
-                                       false, false)
+          false, false)
       else
         Cocina::Models::RequestCollection.new(model_attributes, false, false)
       end
@@ -45,7 +45,7 @@ module CocinaGenerator
     # TODO: This varies based on what the user selected
     def access
       {
-        view: 'world'
+        view: "world"
       }
     end
   end

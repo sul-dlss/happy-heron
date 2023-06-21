@@ -10,7 +10,7 @@ class CreateCollections < ActiveRecord::Migration[6.0]
       t.string :visibility, null: false
       t.string :required_license
       t.string :default_license
-      t.boolean :email_when_participants_changed
+      t.boolean :email_when_participants_changed, default: true, null: false
       t.string :managers, null: false
       t.string :depositors
       t.string :reviewers

@@ -35,20 +35,20 @@ module WorkVersionStateMachine
 
       # sends email to user about setting up a globus account; only happens first time we transition to this state
       after_transition except_from: :globus_setup_first_draft, to: :globus_setup_first_draft,
-                       do: WorkObserver.method(:globus_account_setup)
+        do: WorkObserver.method(:globus_account_setup)
       after_transition except_from: :globus_setup_version_draft, to: :globus_setup_version_draft,
-                       do: WorkObserver.method(:globus_account_setup)
+        do: WorkObserver.method(:globus_account_setup)
 
       # check to see if there any globus related actions needed when transitioning to any draft state
       after_transition to: %i[first_draft version_draft globus_setup_first_draft globus_setup_version_draft],
-                       do: :check_globus_setup
+        do: :check_globus_setup
 
       # Trigger the collection observer when starting a new draft,
       # except when the previous state was draft.
       after_transition except_from: :first_draft, to: :first_draft,
-                       do: CollectionObserver.method(:first_draft_created)
+        do: CollectionObserver.method(:first_draft_created)
       after_transition except_from: :version_draft, to: :version_draft,
-                       do: CollectionObserver.method(:version_draft_created)
+        do: CollectionObserver.method(:version_draft_created)
 
       # NOTE: there is no approval "event" because when a work is approved in review, it goes
       # directly to begin_deposit event, which will transition it to depositing
@@ -103,7 +103,7 @@ module WorkVersionStateMachine
         transition new: :first_draft
 
         transition %i[first_draft version_draft pending_approval rejected globus_setup_first_draft
-                      globus_setup_version_draft] => same
+          globus_setup_version_draft] => same
         transition purl_reserved: :first_draft
       end
 
@@ -178,7 +178,7 @@ module WorkVersionStateMachine
 
       return if Repository.valid_version?(druid: work.druid, h2_version: version)
 
-      errors.add(:version, 'must be one greater than or equal to the version in SDR')
+      errors.add(:version, "must be one greater than or equal to the version in SDR")
     end
   end
 end

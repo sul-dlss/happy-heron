@@ -5,19 +5,19 @@ class DraftCollectionForm < Reform::Form
   feature EmbargoDate
   # This form is a composition of 2 models. See: https://github.com/trailblazer/reform#compositions
   include Composition
-  model 'collection'
+  model "collection"
 
   property :name, on: :collection_version
   property :description, on: :collection_version
   property :version_description, on: :collection_version
-  property :access, default: 'world', on: :collection
+  property :access, default: "world", on: :collection
 
   property :email_when_participants_changed, on: :collection
   property :email_depositors_status_changed, on: :collection
 
-  property :release_option, default: 'immediate', on: :collection
+  property :release_option, default: "immediate", on: :collection
   property :release_duration, on: :collection
-  property :doi_option, default: 'yes', on: :collection
+  property :doi_option, default: "yes", on: :collection
 
   property :license_option, on: :collection
   property :required_license, on: :collection
@@ -25,16 +25,16 @@ class DraftCollectionForm < Reform::Form
   property :review_enabled, on: :collection
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
-                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
-                              on: :collection_version do
+    prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
+    on: :collection_version do
     property :id
     property :email
     property :_destroy, virtual: true
   end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
-                             prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
-                             on: :collection_version do
+    prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
+    on: :collection_version do
     property :id
     property :link_title
     property :url
@@ -42,40 +42,40 @@ class DraftCollectionForm < Reform::Form
   end
 
   collection :managed_by, populator: CollectionContributorPopulator.new(:managed_by, User),
-                          prepopulator: ->(*) { managed_by << collection.creator if managed_by.empty? },
-                          on: :collection do
+    prepopulator: ->(*) { managed_by << collection.creator if managed_by.empty? },
+    on: :collection do
     property :id, writeable: false
     property :sunetid, writeable: false
     property :name
-    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
   end
 
   collection :reviewed_by, populator: ReviewersPopulator.new(:reviewed_by, User),
-                           on: :collection do
+    on: :collection do
     property :id, writeable: false
     property :sunetid, writeable: false
     property :name
-    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
   end
 
   collection :depositors, populator: CollectionContributorPopulator.new(:depositors, User),
-                          on: :collection do
+    on: :collection do
     property :id, writeable: false
     property :sunetid, writeable: false
     property :name
-    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
+    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
   end
 
-  validates :release_option, presence: true, inclusion: { in: %w[immediate delay depositor-selects] }
-  validates :release_duration, inclusion: { in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values },
-                               allow_blank: true
+  validates :release_option, presence: true, inclusion: {in: %w[immediate delay depositor-selects]}
+  validates :release_duration, inclusion: {in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values},
+    allow_blank: true
 
   def deserialize!(params)
-    case params['license_option']
-    when 'required'
-      params['default_license'] = nil
-    when 'depositor-selects'
-      params['required_license'] = nil
+    case params["license_option"]
+    when "required"
+      params["default_license"] = nil
+    when "depositor-selects"
+      params["required_license"] = nil
     end
     super(params)
   end

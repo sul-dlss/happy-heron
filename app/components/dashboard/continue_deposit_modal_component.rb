@@ -32,10 +32,10 @@ module Dashboard
 
     def title
       @title ||= if deposit_version.instance_of?(WorkVersion)
-                   WorkTitlePresenter.show(deposit_version)
-                 else
-                   CollectionTitlePresenter.show(deposit_version)
-                 end
+        WorkTitlePresenter.show(deposit_version)
+      else
+        CollectionTitlePresenter.show(deposit_version)
+      end
     end
   end
 end

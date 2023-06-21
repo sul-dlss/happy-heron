@@ -14,8 +14,8 @@ class PreservationController < ApplicationController
 
     # Set headers on the response before writing to the response stream
     send_file_headers!(
-      type: 'application/octet-stream',
-      disposition: 'attachment',
+      type: "application/octet-stream",
+      disposition: "attachment",
       filename: CGI.escape(attached_file.filename.to_s)
     )
 

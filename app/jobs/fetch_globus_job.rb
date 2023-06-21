@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'zip'
+require "zip"
 
 # Change work version from a globus type to a browser type by fetching file names
 # from Globus and creating Attached Files.
@@ -22,7 +22,7 @@ class FetchGlobusJob < BaseDepositJob
 
       work_version.attached_files << new_attached_file(path, work_version)
     end
-    work_version.upload_type = 'browser'
+    work_version.upload_type = "browser"
     work_version.fetch_globus_complete!
   end
 
@@ -33,7 +33,7 @@ class FetchGlobusJob < BaseDepositJob
   end
 
   def ignore?(path)
-    path.start_with?('__MACOSX') || path.end_with?('.DS_Store')
+    path.start_with?("__MACOSX") || path.end_with?(".DS_Store")
   end
 
   def new_attached_file(path, work_version)

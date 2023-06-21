@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require 'sidekiq/web'
+require "sidekiq/web"
 
 Rails.application.routes.draw do
   devise_for :users, skip: %i[registrations passwords sessions]
   devise_scope :user do
-    get 'webauth/login' => 'login#login', as: :new_user_session
-    get 'webauth/logout' => 'devise/sessions#destroy',
-        as: :destroy_user_session,
-        via: Devise.mappings[:user].sign_out_via
+    get "webauth/login" => "login#login", :as => :new_user_session
+    get "webauth/logout" => "devise/sessions#destroy",
+      :as => :destroy_user_session,
+      :via => Devise.mappings[:user].sign_out_via
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: 'welcome#show'
+  root to: "welcome#show"
   resources :accounts, only: :show
   resource :dashboard, only: :show
   resources :collections, only: %i[show edit update destroy] do
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       get :edit_link
       get :dashboard
       get :admin
-      resource :decommission, only: %i[edit update], controller: 'collection_decommission', as: :collection_decommission
+      resource :decommission, only: %i[edit update], controller: "collection_decommission", as: :collection_decommission
     end
 
     resources :works, shallow: true do
@@ -34,10 +34,10 @@ Rails.application.routes.draw do
         get :details
         get :complete_globus_setup
         get :files_list
-        resource :owners, only: %i[edit update], controller: 'work_owners'
-        resource :locks, only: %i[edit update], controller: 'work_locks'
-        resource :decommission, only: %i[edit update], controller: 'work_decommission', as: :work_decommission
-        resource :move, only: %i[edit update], controller: 'work_move' do
+        resource :owners, only: %i[edit update], controller: "work_owners"
+        resource :locks, only: %i[edit update], controller: "work_locks"
+        resource :decommission, only: %i[edit update], controller: "work_decommission", as: :work_decommission
+        resource :move, only: %i[edit update], controller: "work_move" do
           get :search
         end
       end
@@ -83,22 +83,22 @@ Rails.application.routes.draw do
 
   # This route is used by the emails for the contact the SDR team link.
   direct :contact_form do
-    { controller: 'welcome', action: 'show', anchor: 'help' }
+    {controller: "welcome", action: "show", anchor: "help"}
   end
   # legacy /contact links in PURLs should redirect to new contact form URL
   # see https://jirasul.stanford.edu/jira/browse/PURL-1206
   # e.g. https://purl.stanford.edu/gp739cs2671 which has the old URL encoded in the rightsMetadata XML
-  get 'contact', to: redirect('/#help')
+  get "contact", to: redirect("/#help")
 
   resource :help, only: %i[new create]
-  get 'print_terms_of_deposit', to: 'print#terms_of_deposit'
+  get "print_terms_of_deposit", to: "print#terms_of_deposit"
 
-  get 'autocomplete', to: 'autocomplete#show', defaults: { format: 'html' }
+  get "autocomplete", to: "autocomplete#show", defaults: {format: "html"}
 
-  get 'orcid', to: 'orcid#search'
+  get "orcid", to: "orcid#search"
 
   # @note Only admins should be able to access the Sidekiq web UI.  But this is accomplished by Puppet
   # configuration restricting access using a shib workgroup, so the request doesn't reach the app if the user
   # isn't authorized (because ApplicationController#current_user doesn't get called until after this runs).
-  mount Sidekiq::Web => '/queues'
+  mount Sidekiq::Web => "/queues"
 end

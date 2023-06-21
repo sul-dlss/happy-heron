@@ -16,7 +16,7 @@ module Works
     end
 
     def call
-      link_to 'Edit or Deposit', edit_work_path(work), class: 'btn btn-outline-primary float-end', target: '_top'
+      link_to "Edit or Deposit", edit_work_path(work), class: "btn btn-outline-primary float-end", target: "_top"
     end
   end
 end

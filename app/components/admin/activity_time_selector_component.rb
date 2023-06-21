@@ -10,13 +10,13 @@ module Admin
     end
 
     def dropdown
-      options = options_for_select([['1 day', path_with_days(1)],
-                                    ['7 days', path_with_days(7)],
-                                    ['14 days', path_with_days(14)],
-                                    ['30 days', path_with_days(30)]],
-                                   path_with_days(@default_days))
-      select_tag 'path', options, class: 'form-select',
-                                  onchange: "document.querySelector('##{@frame_id}').src = this.value"
+      options = options_for_select([["1 day", path_with_days(1)],
+        ["7 days", path_with_days(7)],
+        ["14 days", path_with_days(14)],
+        ["30 days", path_with_days(30)]],
+        path_with_days(@default_days))
+      select_tag "path", options, class: "form-select",
+        onchange: "document.querySelector('##{@frame_id}').src = this.value"
     end
 
     private

@@ -18,7 +18,7 @@ module Works
       def path
         return preservation_path(attached_file) if in_preservation?
 
-        rails_blob_path(file, disposition: 'attachment')
+        rails_blob_path(file, disposition: "attachment")
       end
 
       # the user can get a download link unless the file is in globus (in which case, no download link is available)

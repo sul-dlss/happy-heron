@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Show a work detail' do
+RSpec.describe "Show a work detail" do
   let(:collection) { create(:collection_version_with_collection).collection }
   let(:work) { create(:work, collection:) }
   let(:work_version) { create(:work_version, work:) }
@@ -11,33 +11,33 @@ RSpec.describe 'Show a work detail' do
     work.update(head: work_version)
   end
 
-  context 'with unauthenticated user' do
+  context "with unauthenticated user" do
     before do
       sign_out
     end
 
-    it 'redirects from /works/:work_id to login URL' do
+    it "redirects from /works/:work_id to login URL" do
       get "/works/#{work.id}"
       expect(response).to redirect_to(new_user_session_path)
     end
   end
 
-  context 'with an unauthorized user' do
+  context "with an unauthorized user" do
     let(:user) { create(:user) }
 
     before do
       sign_in user
     end
 
-    it 'redirects from /works/:work_id to the root path' do
+    it "redirects from /works/:work_id to the root path" do
       get "/works/#{work.id}"
       expect(response).to redirect_to(root_path)
       follow_redirect!
-      expect(response.body).to include 'You are not authorized to perform the requested action'
+      expect(response.body).to include "You are not authorized to perform the requested action"
     end
   end
 
-  context 'with an authorized user' do
+  context "with an authorized user" do
     let(:user) { work.owner }
 
     before do
@@ -45,31 +45,31 @@ RSpec.describe 'Show a work detail' do
       get "/works/#{work.id}/details"
     end
 
-    it 'displays the work' do
+    it "displays the work" do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include work_version.title
       # Owner is different than depositor, so displayed.
       # Matching on "Owner" but not "Ownership".
       expect(response.body).to match(/Owner(?!ship)/)
       # Not an admin, so no admin functions
-      expect(response.body).not_to include 'Admin functions'
+      expect(response.body).not_to include "Admin functions"
     end
 
-    context 'when the work has a blank title' do
-      let(:work_version) { create(:work_version, title: '', work:) }
+    context "when the work has a blank title" do
+      let(:work_version) { create(:work_version, title: "", work:) }
 
-      it 'displays a default title for a work when it is blank' do
+      it "displays a default title for a work when it is blank" do
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include 'No title'
+        expect(response.body).to include "No title"
       end
     end
 
-    context 'when work opener is same as depositor' do
+    context "when work opener is same as depositor" do
       let(:user) { create(:user) }
 
       let(:work) { create(:work, collection:, owner: user, depositor: user) }
 
-      it 'does not display the owner' do
+      it "does not display the owner" do
         expect(response).to have_http_status(:ok)
         expect(response.body).not_to match(/Owner(?!ship)/)
       end

@@ -67,7 +67,7 @@ class CollectionVersionsController < ObjectsController
   def edit_link
     collection_version = CollectionVersion.find(params[:id])
     label = params.fetch(:label) { "Edit #{collection_version.name}" }
-    render partial: 'edit_link', locals: {
+    render partial: "edit_link", locals: {
       collection_version:,
       label:,
       anchor: params[:ref]
@@ -79,7 +79,7 @@ class CollectionVersionsController < ObjectsController
   # Create the next CollectionVersion for this Collection
   def create_new_version(previous_version)
     previous_version.dup.tap do |collection_version|
-      collection_version.state = 'version_draft'
+      collection_version.state = "version_draft"
       collection_version.version = previous_version.version + 1
     end
   end
@@ -105,8 +105,8 @@ class CollectionVersionsController < ObjectsController
 
   def collection_params
     params.require(:collection_version).permit(:name, :description, :version_description,
-                                               related_links_attributes: %i[_destroy id link_title url],
-                                               contact_emails_attributes: %i[_destroy id email])
+      related_links_attributes: %i[_destroy id link_title url],
+      contact_emails_attributes: %i[_destroy id email])
   end
 
   def collection_form(collection_version)

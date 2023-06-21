@@ -23,7 +23,7 @@ module Admin
       add_date_modified_end_filter
       add_date_deposited_start_filter
       add_date_deposited_end_filter
-      query.order('users.email ASC')
+      query.order("users.email ASC")
     end
 
     private
@@ -36,7 +36,7 @@ module Admin
       state = report.state.compact_blank
       return if state.empty?
 
-      self.query = query.where(head: { state: })
+      self.query = query.where(head: {state:})
     end
 
     def add_collection_filter
@@ -48,43 +48,43 @@ module Admin
     def add_date_created_start_filter
       return unless report.date_created_start
 
-      self.query = query.where('works.created_at >= ?',
-                               report.date_created_start)
+      self.query = query.where("works.created_at >= ?",
+        report.date_created_start)
     end
 
     def add_date_created_end_filter
       return unless report.date_created_end
 
-      self.query = query.where('works.created_at <= ?',
-                               report.date_created_end)
+      self.query = query.where("works.created_at <= ?",
+        report.date_created_end)
     end
 
     def add_date_modified_start_filter
       return unless report.date_modified_start
 
-      self.query = query.where('work_versions.updated_at >= ?',
-                               report.date_modified_start)
+      self.query = query.where("work_versions.updated_at >= ?",
+        report.date_modified_start)
     end
 
     def add_date_modified_end_filter
       return unless report.date_modified_end
 
-      self.query = query.where('work_versions.updated_at <= ?',
-                               report.date_modified_end)
+      self.query = query.where("work_versions.updated_at <= ?",
+        report.date_modified_end)
     end
 
     def add_date_deposited_start_filter
       return unless report.date_deposited_start
 
-      self.query = query.where('work_versions.published_at >= ?',
-                               report.date_deposited_start)
+      self.query = query.where("work_versions.published_at >= ?",
+        report.date_deposited_start)
     end
 
     def add_date_deposited_end_filter
       return unless report.date_deposited_end
 
-      self.query = query.where('work_versions.published_at <= ?',
-                               report.date_deposited_end)
+      self.query = query.where("work_versions.published_at <= ?",
+        report.date_deposited_end)
     end
   end
 end

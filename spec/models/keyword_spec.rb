@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Keyword do
   subject(:keyword) { build(:keyword) }
 
-  it 'has a label' do
+  it "has a label" do
     expect(keyword.label).to be_present
   end
 
-  it 'has a url' do
+  it "has a url" do
     expect(keyword.uri).to be_present
   end
 end

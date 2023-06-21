@@ -12,15 +12,15 @@ module Admin
 
     def state_label # rubocop:disable Metrics/CyclomaticComplexity
       state = @collection.head&.state
-      return unless state&.include?('draft') || state == 'decommissioned'
+      return unless state&.include?("draft") || state == "decommissioned"
 
       case state
-      when 'first_draft'
-        tag.span ' - Draft', class: 'draft-tag'
-      when 'version_draft'
-        tag.span ' - Version Draft', class: 'draft-tag'
-      when 'decommissioned'
-        tag.span ' - Decommissioned', class: 'draft-tag'
+      when "first_draft"
+        tag.span " - Draft", class: "draft-tag"
+      when "version_draft"
+        tag.span " - Version Draft", class: "draft-tag"
+      when "decommissioned"
+        tag.span " - Decommissioned", class: "draft-tag"
       end
     end
 
@@ -31,7 +31,7 @@ module Admin
     end
 
     def total
-      return '0' if total_count.zero?
+      return "0" if total_count.zero?
 
       link_to total_count, collection_works_path(collection)
     end
@@ -39,7 +39,7 @@ module Admin
     private
 
     def total_count
-      counts.fetch('total', 0)
+      counts.fetch("total", 0)
     end
   end
 end

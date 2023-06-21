@@ -10,8 +10,8 @@ module FirstDraftCollections
         @collection_form = collection_form
       end
 
-      alias collections_path first_draft_collections_path
-      alias collection_path first_draft_collection_path
+      alias_method :collections_path, :first_draft_collections_path
+      alias_method :collection_path, :first_draft_collection_path
     end
   end
 end

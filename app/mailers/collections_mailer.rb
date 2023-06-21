@@ -14,14 +14,14 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @collection = @collection_version.collection
     mail(to: @user.email, subject: "Your Depositor permissions for the #{@collection_version.name} " \
-                                   'collection in the SDR have been removed')
+                                   "collection in the SDR have been removed")
   end
 
   def manage_access_granted_email
     @user = UserPresenter.new(user: params[:user])
     @collection_version = params[:collection_version]
     mail(to: @user.email, subject: "You are invited to participate as a Manager in the #{@collection_version.name} " \
-                                   'collection in the SDR')
+                                   "collection in the SDR")
   end
 
   def manage_access_removed_email
@@ -29,14 +29,14 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @collection = @collection_version.collection
     mail(to: @user.email, subject: "Your permissions have changed for the #{@collection_version.name} " \
-                                   'collection in the SDR')
+                                   "collection in the SDR")
   end
 
   def review_access_granted_email
     @user = UserPresenter.new(user: params[:user])
     @collection_version = params[:collection_version]
     mail(to: @user.email, subject: "You are invited to participate as a Reviewer in the #{@collection_version.name} " \
-                                   'collection in the SDR')
+                                   "collection in the SDR")
   end
 
   def review_access_removed_email
@@ -44,7 +44,7 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @collection = @collection_version.collection
     mail(to: @user.email, subject: "Your permissions have changed for the #{@collection_version.name} " \
-                                   'collection in the SDR')
+                                   "collection in the SDR")
   end
 
   def first_draft_created
@@ -101,6 +101,6 @@ class CollectionsMailer < ApplicationMailer
   def decommission_manager_email
     @collection_version = params[:collection_version]
     @user = UserPresenter.new(user: params[:user])
-    mail(to: @user.email, subject: 'Your collection has been removed from the Stanford Digital Repository')
+    mail(to: @user.email, subject: "Your collection has been removed from the Stanford Digital Repository")
   end
 end

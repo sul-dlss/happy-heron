@@ -6,8 +6,8 @@ class DepositCollectionJob < BaseDepositJob
 
   def perform(collection_version)
     deposit(request_dro: CocinaGenerator::CollectionGenerator.generate_model(collection_version:),
-            version_description: collection_version.version_description.presence)
-  rescue StandardError => e
+      version_description: collection_version.version_description.presence)
+  rescue => e
     Honeybadger.notify(e)
   end
 
@@ -25,14 +25,14 @@ class DepositCollectionJob < BaseDepositJob
     case request_dro
     when Cocina::Models::RequestCollection
       SdrClient::Deposit::CreateResource.run(accession: true,
-                                             metadata: request_dro,
-                                             logger: Rails.logger,
-                                             connection:)
+        metadata: request_dro,
+        logger: Rails.logger,
+        connection:)
     when Cocina::Models::Collection
       SdrClient::Deposit::UpdateResource.run(metadata: request_dro,
-                                             logger: Rails.logger,
-                                             connection:,
-                                             version_description:)
+        logger: Rails.logger,
+        connection:,
+        version_description:)
     end
   end
 

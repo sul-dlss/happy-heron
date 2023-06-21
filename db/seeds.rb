@@ -9,4 +9,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # The SDR user is used in Events performed by SDR.
-User.create!(name: 'SDR', email: 'sdr@stanford.edu')
+User.create!(name: "SDR", email: "sdr@stanford.edu")

@@ -5,16 +5,16 @@ FactoryBot.define do
     sequence :title do |n|
       "Test title #{n}"
     end
-    work_type { 'text' }
-    subtype { ['Code', 'Oral history'] } # Subtype values intentionally include an item with whitespace
-    abstract { 'test abstract' }
-    citation { 'test citation' }
-    license { 'CC0-1.0' }
-    access { 'world' }
-    state { 'first_draft' }
-    version_description { 'initial version' }
-    published_at { Time.zone.parse('2019-01-01') }
-    upload_type { 'browser' }
+    work_type { "text" }
+    subtype { ["Code", "Oral history"] } # Subtype values intentionally include an item with whitespace
+    abstract { "test abstract" }
+    citation { "test citation" }
+    license { "CC0-1.0" }
+    access { "world" }
+    state { "first_draft" }
+    version_description { "initial version" }
+    published_at { Time.zone.parse("2019-01-01") }
+    upload_type { "browser" }
     work
 
     factory :valid_work_version do
@@ -40,7 +40,7 @@ FactoryBot.define do
         transient do
           collection { association(:collection) }
           collection_version do
-            association(:collection_version_with_collection, state: 'first_draft', collection:)
+            association(:collection_version_with_collection, state: "first_draft", collection:)
           end
           owner { association(:user) }
         end
@@ -54,15 +54,15 @@ FactoryBot.define do
   end
 
   trait :published do
-    published_edtf { EDTF.parse('2020-02-14') }
+    published_edtf { EDTF.parse("2020-02-14") }
   end
 
   trait :published_with_year_only do
-    published_edtf { EDTF.parse('2021') }
+    published_edtf { EDTF.parse("2021") }
   end
 
   trait :published_with_year_month_only do
-    published_edtf { EDTF.parse('2021-04') }
+    published_edtf { EDTF.parse("2021-04") }
   end
 
   trait :embargoed do
@@ -80,35 +80,35 @@ FactoryBot.define do
   end
 
   trait :with_creation_date_range do
-    created_edtf { EDTF.parse('2020-03-04/2020-10-31') }
+    created_edtf { EDTF.parse("2020-03-04/2020-10-31") }
   end
 
   trait :with_approximate_creation_date_range do
-    created_edtf { EDTF.parse('2020-03-04~/2020-10-31~') }
+    created_edtf { EDTF.parse("2020-03-04~/2020-10-31~") }
   end
 
   trait :with_creation_date do
-    created_edtf { EDTF.parse('2020-03-08') }
+    created_edtf { EDTF.parse("2020-03-08") }
   end
 
   trait :with_creation_date_year_only do
-    created_edtf { EDTF.parse('2020') }
+    created_edtf { EDTF.parse("2020") }
   end
 
   trait :with_creation_date_year_month_only do
-    created_edtf { EDTF.parse('2020-06') }
+    created_edtf { EDTF.parse("2020-06") }
   end
 
   trait :with_approximate_creation_date do
-    created_edtf { EDTF.parse('2020-03-08~') }
+    created_edtf { EDTF.parse("2020-03-08~") }
   end
 
   trait :with_approximate_creation_date_year_only do
-    created_edtf { EDTF.parse('2020~') }
+    created_edtf { EDTF.parse("2020~") }
   end
 
   trait :with_approximate_creation_date_year_month_only do
-    created_edtf { EDTF.parse('2020-06~') }
+    created_edtf { EDTF.parse("2020-06~") }
   end
 
   trait :with_keywords do
@@ -174,19 +174,19 @@ FactoryBot.define do
   trait :purl_reserved do
     work_type { WorkType.purl_reservation_type.id }
     subtype { [] }
-    abstract { '' }
+    abstract { "" }
     citation { nil }
-    license { 'none' }
-    state { 'purl_reserved' }
+    license { "none" }
+    state { "purl_reserved" }
   end
 
   trait :reserving_purl do
     work_type { WorkType.purl_reservation_type.id }
     subtype { [] }
-    abstract { '' }
+    abstract { "" }
     citation { nil }
-    license { 'none' }
-    state { 'reserving_purl' }
+    license { "none" }
+    state { "reserving_purl" }
   end
 
   trait :with_work do
@@ -210,21 +210,21 @@ FactoryBot.define do
       uploads do
         [
           ActiveStorage::Blob.create_and_upload!(
-            io: Rails.root.join('spec/fixtures/files/favicon.ico').open,
-            filename: 'favicon.ico',
-            content_type: 'image/vnd.microsoft.icon'
+            io: Rails.root.join("spec/fixtures/files/favicon.ico").open,
+            filename: "favicon.ico",
+            content_type: "image/vnd.microsoft.icon"
           ),
           ActiveStorage::Blob.create_and_upload!(
-            io: Rails.root.join('spec/fixtures/files/sul.svg').open,
-            filename: 'sul.svg',
-            content_type: 'image/svg+xml'
+            io: Rails.root.join("spec/fixtures/files/sul.svg").open,
+            filename: "sul.svg",
+            content_type: "image/svg+xml"
           )
         ]
       end
     end
     attached_files do
-      [association(:attached_file, path: 'favicon.ico', file: uploads[0].signed_id),
-       association(:attached_file, path: 'sul.svg', file: uploads[1].signed_id)]
+      [association(:attached_file, path: "favicon.ico", file: uploads[0].signed_id),
+        association(:attached_file, path: "sul.svg", file: uploads[1].signed_id)]
     end
   end
 
@@ -233,26 +233,26 @@ FactoryBot.define do
       uploads do
         [
           ActiveStorage::Blob.create_and_upload!(
-            io: Rails.root.join('spec/fixtures/files/favicon.ico').open,
-            filename: 'favicon.ico',
-            content_type: 'image/vnd.microsoft.icon'
+            io: Rails.root.join("spec/fixtures/files/favicon.ico").open,
+            filename: "favicon.ico",
+            content_type: "image/vnd.microsoft.icon"
           ),
           ActiveStorage::Blob.create_and_upload!(
-            io: Rails.root.join('spec/fixtures/files/sul.svg').open,
-            filename: 'sul.svg',
-            content_type: 'image/svg+xml'
+            io: Rails.root.join("spec/fixtures/files/sul.svg").open,
+            filename: "sul.svg",
+            content_type: "image/svg+xml"
           )
         ]
       end
     end
     attached_files do
-      [association(:attached_file, path: 'favicon.ico', file: uploads[0].signed_id),
-       association(:attached_file, path: 'dir1/dir2/sul.svg', file: uploads[1].signed_id)]
+      [association(:attached_file, path: "favicon.ico", file: uploads[0].signed_id),
+        association(:attached_file, path: "dir1/dir2/sul.svg", file: uploads[1].signed_id)]
     end
   end
 
   trait :with_globus_endpoint do
-    globus_endpoint { 'userid/workid/version1' }
+    globus_endpoint { "userid/workid/version1" }
     deposited
   end
 end

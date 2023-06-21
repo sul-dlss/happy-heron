@@ -17,7 +17,7 @@ module Dashboard
     end
 
     def spinner
-      tag.span class: 'fa-solid fa-spinner fa-pulse'
+      tag.span class: "fa-solid fa-spinner fa-pulse"
     end
   end
 end

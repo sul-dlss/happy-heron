@@ -15,7 +15,7 @@ class WorkDecommissionController < ApplicationController
     work = Work.find(params[:id])
     decommission(work)
 
-    flash[:success] = I18n.t('work.flash.decommissioned')
+    flash[:success] = I18n.t("work.flash.decommissioned")
     redirect_to work_path(work)
   end
 

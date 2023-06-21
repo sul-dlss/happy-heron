@@ -33,24 +33,24 @@ class ApplicationController < ActionController::Base
   # This looks first in the session for groups, and then to the headers.
   # This allows the application session to outlive the shiboleth session
   def ldap_groups
-    session['groups'].presence || groups_from_request_env
+    session["groups"].presence || groups_from_request_env
   end
 
   # Get the groups from the headers and store them in the session
   def groups_from_request_env
-    session['groups'] = begin
+    session["groups"] = begin
       raw_header = request.env[Settings.authorization_group_header]
-      roles = ENV.fetch('ROLES', nil) # rubocop:disable Rails/EnvironmentVariableAccess
+      roles = ENV.fetch("ROLES", nil) # rubocop:disable Rails/EnvironmentVariableAccess
       raw_header = roles if Rails.env.development?
       # This test setting is for cypress.
       raw_header = roles if Rails.env.test? && roles
       logger.debug("Roles are #{raw_header}")
-      raw_header&.split(';') || []
+      raw_header&.split(";") || []
     end
   end
 
   def deny_access
-    flash[:warning] = 'You are not authorized to perform the requested action'
+    flash[:warning] = "You are not authorized to perform the requested action"
     redirect_to :root
   end
 
@@ -87,7 +87,7 @@ class ApplicationController < ActionController::Base
   def ensure_sdr_updatable
     return if Settings.allow_sdr_content_changes
 
-    flash[:warning] = 'Creating/Updating SDR content (i.e. collections or works) is not yet available.'
+    flash[:warning] = "Creating/Updating SDR content (i.e. collections or works) is not yet available."
     redirect_to :root
   end
 end
