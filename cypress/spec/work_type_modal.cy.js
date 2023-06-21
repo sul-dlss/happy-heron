@@ -62,7 +62,7 @@ describe('Work type modal', () => {
       cy.get('div.subtype-container[data-work-type-target="subtype"] div.subtype-item input').last().click()
       cy.get('button[type="submit"]').click()
     })
-    cy.url().should('include', `/collections/${collection_id}/works/new?work_type=mixed+material&subtype%5B%5D=Data&subtype%5B%5D=Video`)
+    cy.url().should('include', `/collections/${collection_id}/works/new?work_type=mixed+material&subtype%5B%5D=3D+model&subtype%5B%5D=Working+paper`)
   })
 
   // the tests below show that you do not need to select a subtype for these work types and that clicking submit after

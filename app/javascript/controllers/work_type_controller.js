@@ -88,6 +88,7 @@ export default class extends Controller {
         this.areaTarget.innerHTML += this.musicTemplateSubheaderTarget.innerHTML
         break
       case 'mixed material':
+        this.moreTypesLinkTarget.hidden = true
         this.areaTarget.innerHTML += this.mixedMaterialTemplateSubheaderTarget.innerHTML
         break
     }
