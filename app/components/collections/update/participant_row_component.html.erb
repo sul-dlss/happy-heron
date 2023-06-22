@@ -4,13 +4,13 @@
       <%= sunetid %>: <%= name %>
     </div>
     <div class="col-md-1">
-        <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: "Remove #{sunetid}" },
-                       data: { action: "click->collection-participant-form#removeAssociation" } do %>
+        <%= button_tag type: "button", class: "btn btn-sm float-end", aria: {label: "Remove #{sunetid}"},
+              data: {action: "click->collection-participant-form#removeAssociation"} do %>
           <span class="fa-regular fa-trash-alt"></span>
         <% end %>
         <%= form.hidden_field :_destroy %>
         <%= form.hidden_field :id %>
-        <%= form.hidden_field :sunetid, data: { target: 'sunetid' } %>
+        <%= form.hidden_field :sunetid, data: {target: "sunetid"} %>
     </div>
   </div>
 </div>

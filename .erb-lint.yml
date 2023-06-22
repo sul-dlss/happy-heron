@@ -1,0 +1,32 @@
+---
+exclude:
+  - '**/vendor/**/*'
+linters:
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_from:
+        - .rubocop.yml
+      # Suggested by https://github.com/Shopify/erb-lint#rubocop
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/LineLength:
+        Enabled: false
+      Layout/TrailingEmptyLines:
+        Enabled: false
+      Style/FrozenStringLiteralComment:
+        Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false
+      Rails/OutputSafety: # Already covered by ErbSafety linter
+        Enabled: false
+  ErbSafety:
+    enabled: true
+  PartialInstanceVariable:
+    enabled: true
+  DeprecatedClasses:
+    enabled: true
+  NoUnusedDisable:
+    enabled: true
+  RubocopText:
+    enabled: true

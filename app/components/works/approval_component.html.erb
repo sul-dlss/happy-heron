@@ -1,16 +1,16 @@
 <section class="approve mb-4" data-controller="approval">
-  <%= form_with url: work_review_path(work), remote: true, html: { class: "details" } do %>
+  <%= form_with url: work_review_path(work), remote: true, html: {class: "details"} do %>
     <header class="mb-3">Review all details below, then approve or return this deposit</header>
     <div class="row mb-4">
       <div class="col-md-2"></div>
 
       <div class="col-md-4" style="height: 4rem">
-        <%= render CheckboxButtonComponent.new(name: 'state', value: 'approve', data: { action: 'approval#hide' }) do %>
+        <%= render CheckboxButtonComponent.new(name: "state", value: "approve", data: {action: "approval#hide"}) do %>
           Approve and deposit
         <% end %>
       </div>
       <div class="col-md-4" style="height: 4rem">
-        <%= render CheckboxButtonComponent.new(name: 'state', value: 'reject', data: { action: 'approval#reveal' }) do %>
+        <%= render CheckboxButtonComponent.new(name: "state", value: "reject", data: {action: "approval#reveal"}) do %>
           Return
         <% end %>
       </div>
@@ -18,11 +18,11 @@
     <div class="row">
       <div class="col-md-6 reason" data-approval-target="reason">
         <label>Reason</label>
-        <input type="text" name="reason" class="form-control" id="reason" data-approval-target="text">
+        <input type="text" name="reason" class="form-control" id="reason" autocomplete="on" data-approval-target="text">
       </div>
       <div class="col-md-4 text-right">
-        <%= link_to 'Cancel', dashboard_path, class: 'btn btn-link' %>
-        <%= button_tag 'Submit', class: 'btn btn-primary' %>
+        <%= link_to "Cancel", dashboard_path, class: "btn btn-link" %>
+        <%= button_tag "Submit", class: "btn btn-primary" %>
       </div>
     </div>
   <% end %>

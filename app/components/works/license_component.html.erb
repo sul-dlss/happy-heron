@@ -3,20 +3,20 @@
   <% if user_can_set_license? %>
     <div class="mb-3 row">
       <div class="col-sm-2">
-        <%= form.label :license, 'License *', class: 'col-form-label' %>
-        <%= render PopoverComponent.new key: 'work.license' %>
+        <%= form.label :license, "License *", class: "col-form-label" %>
+        <%= render PopoverComponent.new key: "work.license" %>
       </div>
       <div class="col-sm-5">
         <%= form.select :license,
-                        grouped_options_for_select(License.grouped_options(license), license),
-                        {}, class: "form-select",
-                        data: { controller: 'license', action: 'change->license#validate' } %>
+              grouped_options_for_select(License.grouped_options(license), license),
+              {}, class: "form-select",
+              data: {controller: "license", action: "change->license#validate"} %>
         <div class="invalid-feedback">
           Please select a supported license.
         </div>
       </div>
       <div class="col-sm-5">
-        <%= link_to 'Get help selecting a license', 'https://library.stanford.edu/research/stanford-digital-repository/faqs/sdr-license-options', target: '_blank' %>
+        <%= link_to "Get help selecting a license", "https://library.stanford.edu/research/stanford-digital-repository/faqs/sdr-license-options", target: "_blank" %>
       </div>
     </div>
   <% else %>

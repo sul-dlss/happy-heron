@@ -1,5 +1,5 @@
 <main class="stanford-masthead" id="content"
-  style="background-image: url(<%= asset_path 'splash.jpg' %>); background-position: center; ">
+  style="background-image: url(<%= asset_path "splash.jpg" %>); background-position: center; ">
   <div class="container flex-wrap flex-md-nowrap">
     <div class="row">
       <div class="col-md-12">
@@ -10,7 +10,7 @@
     <div class="text-center text-md-left way-down">
       <h2>Go to the SDR Dashboard</h2>
       <h3 class="mb-4">to create or manage deposits</h3>
-      <%= link_to dashboard_path, class: 'btn btn-primary btn-xl mb-3 mr-md-3' do %>
+      <%= link_to dashboard_path, class: "btn btn-primary btn-xl mb-3 mr-md-3" do %>
         <span class="me-5">Enter here</span><span class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></span>
       <% end %>
       <%= render PageContentComponent.new(page_content: @page_content) %>
@@ -28,8 +28,8 @@
           <li>Choose a license and access settings.</li>
           <li>Click "Deposit" to submit.</li>
         </ol>
-        <%= link_to('Learn more about SDR Services', Settings.sdr_url,
-                    class: 'btn') %>
+        <%= link_to("Learn more about SDR Services", Settings.sdr_url,
+              class: "btn") %>
       </div>
       <div class="col-md-4">
         <h3>Small effort for large payoff</h3>
@@ -42,7 +42,7 @@
       <div class="col-md-4">
         <div class="card news">
           <div class="text-center">
-            <%= image_tag 'home_news.jpg', height: 54, width: 185, alt: 'News' %>
+            <%= image_tag "home_news.jpg", height: 54, width: 185, alt: "News" %>
 
             <h3 class="fs-5 mt-3">Latest SDR news</h3>
           </div>
@@ -50,12 +50,12 @@
           <form action="https://stanford.us20.list-manage.com/subscribe/post?u=139e1b2d3df8f8cacd77c8160&amp;id=4f4148a871"
             method="post" data-turbo="false" id="mc-embedded-subscribe-form"
             name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-        	   <label for="mce-EMAIL">Sign up for our newsletter</label>
+             <label for="mce-EMAIL">Sign up for our newsletter</label>
              <div class="row">
                <div class="col-sm-9">
-        	      <input type="email" value="" name="EMAIL" class="form-control form-control-sm" id="mce-EMAIL" placeholder="Enter your email address" required>
+                <input type="email" value="" name="EMAIL" class="form-control form-control-sm" id="mce-EMAIL" autocomplete="on" placeholder="Enter your email address" required>
              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_139e1b2d3df8f8cacd77c8160_4f4148a871" tabindex="-1" value=""></div>
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_139e1b2d3df8f8cacd77c8160_4f4148a871" tabindex="-1" autocomplete="off" value=""></div>
                 </div>
                 <div class="col-sm-3">
                   <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-sm">
@@ -73,16 +73,16 @@
   <div class="container p-4">
     <div class="row">
       <div class="col-md-3">
-        <%= image_tag 'home_who.jpg', height: 80, width: 80, aria: { hidden: true } %>
+        <%= image_tag "home_who.jpg", height: 80, width: 80, aria: {hidden: true} %>
       </div>
       <div class="col-md-3">
-        <%= image_tag 'home_what.jpg', height: 80, width: 80, aria: { hidden: true } %>
+        <%= image_tag "home_what.jpg", height: 80, width: 80, aria: {hidden: true} %>
       </div>
       <div class="col-md-3">
-        <%= image_tag 'home_why.jpg', height: 88, width: 80, aria: { hidden: true } %>
+        <%= image_tag "home_why.jpg", height: 88, width: 80, aria: {hidden: true} %>
       </div>
       <div class="col-md-3">
-        <%= image_tag 'home_when.jpg', height: 80, width: 80, aria: { hidden: true } %>
+        <%= image_tag "home_when.jpg", height: 80, width: 80, aria: {hidden: true} %>
       </div>
     </div>
 
@@ -96,7 +96,6 @@
           <li>Postdocs</li>
           <li>Staff</li>
         </ul>
-
 
       </div>
       <div class="col-md-3">

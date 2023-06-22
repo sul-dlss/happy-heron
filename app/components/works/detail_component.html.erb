@@ -16,7 +16,7 @@
 
   <header class="title clearfix"><%# clearfix here prevents the EditButtonComponent from spilling outside the container if the title is long %>
     <span class="header-text"><%= title %></span>
-    <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
+    <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: "_top" %>
     <span class="state"><%= render Works::DetailStateDisplayComponent.new(work_version: work_version) %></span>
     <%= render Works::EditButtonComponent.new(work_version: work_version) %>
   </header>
@@ -47,7 +47,7 @@
       </tr>
       <tr>
         <th class="col-3" scope="row">Collection</th>
-        <td><%= link_to collection_name, collection, target: '_top' %></td>
+        <td><%= link_to collection_name, collection, target: "_top" %></td>
       </tr>
       <tr>
         <th class="col-3" scope="row">Deposit type</th>
@@ -88,7 +88,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Title and contact
-      <%= helpers.turbo_frame_tag dom_id(work, 'edit_title'), src: edit_button_work_path(work, tag: 'title'), target: '_top' %>
+      <%= helpers.turbo_frame_tag dom_id(work, "edit_title"), src: edit_button_work_path(work, tag: "title"), target: "_top" %>
     </caption>
     <tbody>
     <tr>
@@ -96,7 +96,7 @@
       <td><%= title %></td>
     </tr>
     <tr>
-      <th class="col-3" >Contact emails</th>
+      <th class="col-3">Contact emails</th>
       <% if contact_emails.empty? %>
       <td>None provided</td>
       <% else %>
@@ -110,12 +110,12 @@
     </tbody>
   </table>
 
-<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: authors, participant_type: 'author') %>
-<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: contributors, participant_type: 'contributor') %>
+<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: authors, participant_type: "author") %>
+<%= render Works::Show::AuthorsContributorsComponent.new(work: work, participants: contributors, participant_type: "contributor") %>
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Dates
-      <%= helpers.turbo_frame_tag dom_id(work, 'edit_dates'), src: edit_button_work_path(work, tag: 'dates'), target: '_top' %>
+      <%= helpers.turbo_frame_tag dom_id(work, "edit_dates"), src: edit_button_work_path(work, tag: "dates"), target: "_top" %>
     </caption>
     <tbody>
     <tr>
@@ -131,12 +131,12 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Description
-      <%= helpers.turbo_frame_tag dom_id(work, 'edit_description'), src: edit_button_work_path(work, tag: 'description'), target: '_top' %>
+      <%= helpers.turbo_frame_tag dom_id(work, "edit_description"), src: edit_button_work_path(work, tag: "description"), target: "_top" %>
     </caption>
     <tbody>
     <tr>
       <th class="col-3" scope="row">Abstract</th>
-      <td><%= simple_format abstract, class: 'mb-3' %></td>
+      <td><%= simple_format abstract, class: "mb-3" %></td>
     </tr>
     <tr>
       <th class="col-3" scope="row">Keywords</th>
@@ -177,7 +177,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Release and visibility
-      <%= helpers.turbo_frame_tag dom_id(work, 'edit_release'), src: edit_button_work_path(work, tag: 'release'), target: '_top' %>
+      <%= helpers.turbo_frame_tag dom_id(work, "edit_release"), src: edit_button_work_path(work, tag: "release"), target: "_top" %>
     </caption>
     <tbody>
     <tr>
@@ -197,7 +197,7 @@
 
   <table class="table table-sm mb-5 caption-header">
     <caption>Terms of use and license
-      <%= helpers.turbo_frame_tag dom_id(work, 'edit_license'), src: edit_button_work_path(work, tag: 'license'), target: '_top' %>
+      <%= helpers.turbo_frame_tag dom_id(work, "edit_license"), src: edit_button_work_path(work, tag: "license"), target: "_top" %>
     </caption>
     <tbody>
     <tr>
@@ -223,7 +223,7 @@
     <tbody>
       <% events.each do |event| %>
         <tr>
-          <td><%= I18n.t event.event_type, scope: 'event.type' %></td>
+          <td><%= I18n.t event.event_type, scope: "event.type" %></td>
           <td><%= event.user&.sunetid %></td>
           <td><%= render LocalTimeComponent.new(datetime: event.created_at) %></td>
 

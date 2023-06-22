@@ -25,9 +25,18 @@ jobs:
       - run:
           command: 'bundle exec bin/cypress run'
           name: Test
+  erblint:
+    executor: ruby-rails/ruby
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Lint ERBs
+          command: 'bundle exec erblint --lint-all --format compact'
 workflows:
   build:
     jobs:
+      - erblint
       - cypress
       - ruby-rails/lint:
           name: lint

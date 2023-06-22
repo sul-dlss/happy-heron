@@ -1,7 +1,7 @@
 <div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".plain-container">
-  <div class="keywords-container<%= ' is-invalid' if error? %>" data-keywords-target="container" data-action="click->keywords#open" data-keywords-target="addItem">
+  <div class="keywords-container<%= " is-invalid" if error? %>" data-keywords-target="container" data-action="click->keywords#open" data-keywords-target="addItem">
     <template data-nested-form-target='template' data-keywords-target="selectedTemplate">
-      <%= form.fields_for :keywords, Keyword.new, child_index: 'TEMPLATE_RECORD' do |keyword_form| %>
+      <%= form.fields_for :keywords, Keyword.new, child_index: "TEMPLATE_RECORD" do |keyword_form| %>
         <%= row(keyword_form) %>
       <% end %>
     </template>
@@ -12,6 +12,6 @@
   </div>
 
   <div data-nested-form-target="add_item">
-    <%= button_tag '+ Add another keyword', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+    <%= button_tag "+ Add another keyword", type: "button", class: "btn btn-outline-primary", data: {action: "nested-form#addAssociation"} %>
   </div>
 </div>

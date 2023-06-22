@@ -1,11 +1,11 @@
 <div class="row justify-content-between">
   <div class="col-auto">
     <% if first_draft? %>
-      <%= link_to model, method: :delete, aria: { label: "Delete #{name}" },
-        data: {
-          confirm: "Are you sure you want to delete this draft collection? It cannot be undone.",
-          action: 'unsaved-changes#allowFormSubmission'
-        } do %>
+      <%= link_to model, method: :delete, aria: {label: "Delete #{name}"},
+            data: {
+              confirm: "Are you sure you want to delete this draft collection? It cannot be undone.",
+              action: "unsaved-changes#allowFormSubmission"
+            } do %>
         <span class="btn btn-primary"><span class="fa-regular fa-trash-alt"></span> Discard draft</span>
       <% end %>
     <% end %>
@@ -14,7 +14,7 @@
   </div>
   <div class="col-auto">
     <%= cancel_button %>
-    <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button', data: { action: 'unsaved-changes#allowFormSubmission' } %>
-    <%= form.submit 'Deposit', class: 'btn btn-primary', data: { action: 'unsaved-changes#allowFormSubmission' } %>
+    <%= form.submit "Save as draft", class: "btn btn-primary", id: "save-draft-button", data: {action: "unsaved-changes#allowFormSubmission"} %>
+    <%= form.submit "Deposit", class: "btn btn-primary", data: {action: "unsaved-changes#allowFormSubmission"} %>
   </div>
 </div>

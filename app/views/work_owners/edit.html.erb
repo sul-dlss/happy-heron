@@ -1,8 +1,8 @@
 <turbo-frame id='workAdminSection'>
   <%= form_with url: owners_path(params[:id]), method: :put, data: {turbo: false} do |form| %>
     <div data-controller="sunet-input">
-      <%= form.label :sunetid, 'Enter a valid SUNet ID to change to a new owner' %>
-      <%= form.search_field :sunetid, class: "form-control mb-1",  style: "width:40%", data: {action: "input->sunet-input#search"}%>
+      <%= form.label :sunetid, "Enter a valid SUNet ID to change to a new owner" %>
+      <%= form.search_field :sunetid, class: "form-control mb-1", style: "width:40%", data: {action: "input->sunet-input#search"} %>
       <div data-sunet-input-target="resultOne">
         <span data-sunet-input-target="resultName"></span> -
         <span data-sunet-input-target="resultDescription"></span>
@@ -14,7 +14,7 @@
         <strong>Error looking up sunet: "<span data-sunet-input-target="errorValue"></span>" - try again later</strong>
       </div>
       <fieldset data-sunet-input-target="submit">
-        <%= form.submit "Change owner", class: 'btn btn-primary mt-3' %>
+        <%= form.submit "Change owner", class: "btn btn-primary mt-3" %>
       </fieldset>
     </div>
   <% end %>

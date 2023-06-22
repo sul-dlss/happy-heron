@@ -1,6 +1,6 @@
-<div class="dz-preview dz-file-preview row py-3 <%= 'dz-complete' if uploaded? %>" data-dropzone-target="preview">
+<div class="dz-preview dz-file-preview row py-3 <%= "dz-complete" if uploaded? %>" data-dropzone-target="preview">
   <div class="thumb col-1">
-    <img data-dz-thumbnail />
+    <img data-dz-thumbnail>
   </div>
   <div class="col-5">
     <div class="dz-filename" data-dropzone-path="<%= path %>"><span data-dz-name></span></div>
@@ -18,10 +18,10 @@
   <div class="upload-description col-4">
       <% unless zip_template? %>
         <div>
-          <%= form.label :label, 'Description (optional)' %>
-          <%= render PopoverComponent.new key: 'work.description' %>
+          <%= form.label :label, "Description (optional)" %>
+          <%= render PopoverComponent.new key: "work.description" %>
         </div>
-        <%= form.text_field :label, class: 'form-control' %>
+        <%= form.text_field :label, class: "form-control" %>
       <% end %>
   </div>
 
@@ -31,18 +31,18 @@
         <%= form.hidden_field :file %>
         <%= form.hidden_field :path %>
         <% unless zip_template? %>
-          <%= form.check_box :hide, class: 'form-check-input' %>
-          <%= form.label :hide, 'Hide file', class: 'form-check-label col-form-label ' %>
-          <%= render PopoverComponent.new key: 'work.hide_file' %>
+          <%= form.check_box :hide, class: "form-check-input" %>
+          <%= form.label :hide, "Hide file", class: "form-check-label col-form-label " %>
+          <%= render PopoverComponent.new key: "work.hide_file" %>
         <% end %>
       </div>
   </div>
 
   <div class="col-1 d-flex align-items-center">
-    <%= button_tag type: 'button',
-                   class: "dz-remove pull-right btn remove-file",
-                   "aria-label": "Remove file",
-                   data: { action: "click->dropzone#removeAssociation" } do %>
+    <%= button_tag type: "button",
+          class: "dz-remove pull-right btn remove-file",
+          "aria-label": "Remove file",
+          data: {action: "click->dropzone#removeAssociation"} do %>
       <span class="fa-regular fa-trash-alt"></span>
     <% end %>
   </div>

@@ -1,4 +1,4 @@
-<% # The collection settings page %>
+# The collection settings page %>
 <section id="<%= dom_id(collection) %>" data-controller="work-type">
   <%= render Collections::Show::SettingsHeaderComponent.new(collection_version: collection.head) %>
   <%= render Works::WorkTypeModalComponent.new %>

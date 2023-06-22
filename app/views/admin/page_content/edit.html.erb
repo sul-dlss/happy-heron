@@ -1,5 +1,5 @@
 <% content_for :breadcrumbs do %>
-  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [ { title: 'Edit page content' } ])%>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [{title: "Edit page content"}]) %>
 <% end %>
 <main id="content">
   <div class="container" id="dashboard">
@@ -7,7 +7,7 @@
 
     <%= render Admin::NavigationComponent.new(selected: admin_page_content_index_path) %>
 
-    <%= form_for [:admin, @page_content], class: 'col-md-4 mt-3' do |form| %>
+    <%= form_for [:admin, @page_content], class: "col-md-4 mt-3" do |form| %>
        <% if @page_content.errors.any? %>
             <div class="alert alert-danger" role="alert">
                 <ul>
@@ -24,16 +24,16 @@
             <%= form.label :visible, "Visible to user" %>
         </div>
         <%= form.label :value, "Message" %>
-        <%= form.text_area :value, class: 'form-control' %>
+        <%= form.text_area :value, class: "form-control" %>
         <%= form.label :link_text, "Link Text" %>
-        <%= form.text_field :link_text, size: 30, class: 'form-control' %>
+        <%= form.text_field :link_text, size: 30, class: "form-control" %>
         <%= form.label :link_url, "Link URL" %>
-        <%= form.text_field :link_url, size: 30, class: 'form-control' %>
+        <%= form.text_field :link_url, size: 30, class: "form-control" %>
         <div class="form-check">
             <%= form.check_box :link_visible %>
             <%= form.label :link_visible, "Show link" %>
         </div>
-        <%= form.submit "Save", class: 'btn btn-primary my-3' %>
+        <%= form.submit "Save", class: "btn btn-primary my-3" %>
     <% end %>
 
   </div>

@@ -1,11 +1,11 @@
 <section data-controller="nested-form" data-nested-form-selector-value=".inner-container">
   <header>Additional contributors
-   <%= render PopoverComponent.new key: 'work.contributor' %>
+   <%= render PopoverComponent.new key: "work.contributor" %>
   </header>
   <p>Names will be listed in the order shown below.</p>
 
   <template data-nested-form-target='template'>
-    <%= form.fields_for :contributors, Contributor.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
+    <%= form.fields_for :contributors, Contributor.new, child_index: "TEMPLATE_RECORD" do |contributor_form| %>
       <%= render Works::ContributorRowComponent.new(form: contributor_form) %>
     <% end %>
   </template>
@@ -15,6 +15,6 @@
   <% end %>
 
   <div data-nested-form-target="add_item">
-    <%= button_tag '+ Add another contributor', type: 'button', class: "btn btn-outline-primary", data: { action: "nested-form#addAssociation" } %>
+    <%= button_tag "+ Add another contributor", type: "button", class: "btn btn-outline-primary", data: {action: "nested-form#addAssociation"} %>
   </div>
 </section>
