@@ -16,7 +16,11 @@ rescue LoadError
   end
 end
 
+desc "Run erblint against ERB files"
 task :erblint do
   puts "Running erblint..."
-  `erblint --lint-all --format compact`
+  system("erblint --lint-all --format compact")
 end
+
+desc "Run all configured linters"
+task lint: %i[rubocop erblint]

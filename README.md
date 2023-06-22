@@ -67,7 +67,11 @@ Start up dependencies with `docker compose up db` (with `-d` to run in backgroun
 
 Create and migrate the database with `bundle exec rake db:prepare` and seed the test database with `RAILS_ENV=test bin/rails db:seed`
 
-Then run tests with `bundle exec rspec`. If you also want to do style checks & linting of Ruby code and ERBs, run `bin/rake`.
+Then run tests with `bundle exec rspec`.
+
+If you also want to do style checks & linting of Ruby code and ERBs, run `bin/rake`.
+
+To run just the linters, run `bin/rake lint`. To run the linters individually, run `bundle exec erblint --lint-all` and `bundle exec rubocop`
 
 ### Faking Globus Client Calls
 
