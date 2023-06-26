@@ -19,11 +19,12 @@
         <% end %>
         <%= file_form.hidden_field :_destroy %>
     <% end %>
-# Note: the above end is deliberately nested inside the last </td> tag, even though the form tag is outside the
-        # first <td>.  This is due to the way rails adds hidden input tags via the `fields_for` method.  If you put the
-        # end tag outside the </td> tag, the hidden field will be rendered in the wrong spot and cause browser
-        # rendering issues.
-        # see https://stackoverflow.com/questions/6602579/fields-for-in-table-produces-technically-incorrect-html
+    <%#
+      # Note: the above end is deliberately nested inside the last </td> tag, even though the form tag is outside the
+      # first <td>.  This is due to the way rails adds hidden input tags via the `fields_for` method.  If you put the
+      # end tag outside the </td> tag, the hidden field will be rendered in the wrong spot and cause browser
+      # rendering issues.
+      # see https://stackoverflow.com/questions/6602579/fields-for-in-table-produces-technically-incorrect-html
     %>
     </td>
 </tr>
