@@ -5,8 +5,8 @@
 class NewVersionService
   # @param [WorkVersion] old_version
   # @return [WorkVersion] the new version
-  def self.dup(old_version, increment_version: false, save: false, version_description: nil, state: nil)
-    new(old_version).dup(increment_version:, save:, version_description:, state:)
+  def self.dup(old_version, increment_version: false, save: false, version_description: nil, state: nil, &block)
+    new(old_version).dup(increment_version:, save:, version_description:, state:, &block)
   end
 
   def initialize(old_version)
@@ -24,6 +24,7 @@ class NewVersionService
     new_version.version = old_version.version + 1 if increment_version
     new_version.version_description = version_description if version_description
     new_version.state = state if state
+    yield new_version if block_given?
     perform_save if save
 
     new_version

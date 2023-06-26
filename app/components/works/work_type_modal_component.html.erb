@@ -14,39 +14,45 @@
       </div>
 
       <div class="modal-body">
-        <form method="get" action="/collections/1/work/new" class="mb-4" data-work-type-target="form">
+        <form method="<%= form_method %>" action="/collections/1/work/new" class="mb-4" data-work-type-modal-target="form" data-work-type-target="form" data-work-type-edit-target="form" <% unless turbo? %> data-turbo=false<% end %>>
+          <% if hidden_method? %>
+            <input type="hidden" name="_method" value="<%= method %>">
+          <% end %>
+          <% if form_authenticity_token %>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <% end %>
           <div class="row">
             <% types.each do |type| %>
               <div class="work-type-box">
-                <%= render CheckboxButtonComponent.new(name: "work_type", value: type.id, data: {action: "work-type#change"}) do %>
+                <%= render CheckboxButtonComponent.new(name: "work_type", value: type.id, data: {action: "work-type-modal#change"}) do %>
                   <span class="fa-solid fa-2x fa-<%= type.icon %>" aria-hidden="true"></span> <div class="work-type-button-text"><%= type.html_label %></div>
                 <% end %>
               </div>
             <% end %>
           </div>
 
-          <template data-work-type-target="templateHeader">
+          <template data-work-type-modal-target="templateHeader">
             <h5>Which of the following terms further describe your deposit?
               <%= render PopoverComponent.new key: :further_types %>
             </h5>
           </template>
 
-          <template data-work-type-target="template">
+          <template data-work-type-modal-target="template">
             <div class="subtype-item">
               <input type="checkbox" name="subtype[]" value="SUBTYPE_LABEL" id="subtype_SUBTYPE_ID" class="form-check-input">
               <label for="subtype_SUBTYPE_ID" class="ms-1">SUBTYPE_LABEL</label>
             </div>
           </template>
 
-          <template data-work-type-target="musicTemplateSubheader">
+          <template data-work-type-modal-target="musicTemplateSubheader">
             <h6>Select at least one term below:</h6>
           </template>
 
-          <template data-work-type-target="mixedMaterialTemplateSubheader">
+          <template data-work-type-modal-target="mixedMaterialTemplateSubheader">
             <h6>Select at least two terms below:</h6>
           </template>
 
-          <template data-work-type-target="otherTemplate">
+          <template data-work-type-modal-target="otherTemplate">
             <div class="ms-4 col-auto">
               <h5>Specify "Other" type*</h5>
             </div>
@@ -55,20 +61,20 @@
             </div>
           </template>
 
-          <div class="row" data-work-type-target="area" hidden></div>
+          <div class="row" data-work-type-modal-target="area" hidden></div>
 
-          <div class="mb-4 subtype-container" data-work-type-target="subtype"></div>
+          <div class="mb-4 subtype-container" data-work-type-modal-target="subtype"></div>
 
-          <a href="#" class="more-options collapsed" data-action="work-type#toggleMoreTypes" data-work-type-target="moreTypesLink" hidden>
+          <a href="#" class="more-options collapsed" data-action="work-type-modal#toggleMoreTypes" data-work-type-modal-target="moreTypesLink" hidden>
             See more options
           </a>
 
-          <div class="mb-4 subtype-container" data-work-type-target="moreTypes" hidden></div>
+          <div class="mb-4 subtype-container" data-work-type-modal-target="moreTypes" hidden></div>
 
           <button type="submit"
             class="btn btn-primary mx-auto d-block"
-            data-action="work-type#checkSubtypes"
-            data-work-type-target="continueButton">Continue</button>
+            data-action="work-type-modal#checkSubtypes"
+            data-work-type-modal-target="continueButton">Continue</button>
         </form>
       </div>
     </div>

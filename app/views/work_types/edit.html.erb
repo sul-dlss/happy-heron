@@ -1,0 +1,10 @@
+<turbo-frame id='workAdminSection'>
+  <div class="workTypeModalWrapper" data-controller="work-type-modal work-type-edit"
+    data-work-type-edit-id-value="#workTypeModal"
+    data-work-type-edit-action-value="<%= work_types_path(@work) %>"
+    data-work-type-edit-work-type-value="<%= @work.head.work_type %>"
+    data-work-type-edit-work-subtype-value="<%= @work.head.subtype.to_json %>"
+    data-work-type-edit-work-type-modal-outlet=".workTypeModalWrapper">
+    <%= render Works::WorkTypeModalComponent.new(turbo: false, form_authenticity_token: @form_authenticity_token, method: :put) %>
+  </div>
+</turbo-frame>

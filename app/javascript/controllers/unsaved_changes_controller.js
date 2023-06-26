@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 const LEAVING_PAGE_MESSAGE = "Are you sure you want to leave this page? Your changes will not be saved."
 

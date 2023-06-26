@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 // This controller removes newlines from an input such as a textarea.
 // This allows the input to wrap long text.

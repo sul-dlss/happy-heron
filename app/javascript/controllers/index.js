@@ -1,4 +1,4 @@
-import { Application } from "stimulus"
+import { Application } from "@hotwired/stimulus"
 import { Autocomplete } from 'stimulus-autocomplete'
 import { definitions } from 'stimulus:./'
 

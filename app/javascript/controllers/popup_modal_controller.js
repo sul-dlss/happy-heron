@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 // This pops up the bootstrap modal that asks a user if they want to continue working on a draft.
 export default class extends Controller {

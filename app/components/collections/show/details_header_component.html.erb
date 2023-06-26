@@ -4,7 +4,7 @@
   <% end %>
   <div class="row">
     <div class="col"> </div>
-    <div class="col-6" data-controller="work-type purl-reservation">
+    <div class="col-6" data-controller="work-type work-type-modal purl-reservation">
       <%= edit_button %>
       <%= helpers.turbo_frame_tag dom_id(collection, :deposit), src: deposit_button_collection_path(collection) %>
       <%= render Works::WorkTypeModalComponent.new %>
