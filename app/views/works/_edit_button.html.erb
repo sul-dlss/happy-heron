@@ -12,6 +12,8 @@
             aria: {label: edit_label} do %>
         <span class="fa-solid fa-pencil-alt" aria-hidden="true"></span>
       <% end %>
+    <% elsif work.head.fetching_globus_state? %>
+      <%# do not render %>
     <% else %>
       <%= link_to edit_work_path(work, anchor: anchor), aria: {label: edit_label} do %>
         <span class="fa-solid fa-pencil-alt" aria-hidden="true"></span>
