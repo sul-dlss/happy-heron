@@ -1,6 +1,5 @@
 <tr>
     <td class="file-level" style="--depth: <%= depth + 1 %>rem">
-        &bull;
         <%= basename %>
         <% if can_download? %>
             <%= link_to path, class: "ms-2", data: {turbo: false} do %>
