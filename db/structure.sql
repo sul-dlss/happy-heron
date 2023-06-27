@@ -297,7 +297,10 @@ CREATE TABLE public.collections (
     review_enabled boolean DEFAULT false,
     license_option character varying DEFAULT 'required'::character varying NOT NULL,
     head_id bigint,
-    doi_option character varying DEFAULT 'yes'::character varying
+    doi_option character varying DEFAULT 'yes'::character varying,
+    allow_custom_rights_statement boolean DEFAULT false NOT NULL,
+    provided_custom_rights_statement character varying,
+    custom_rights_statement_custom_instructions character varying
 );
 
 
@@ -1473,6 +1476,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221206194032'),
 ('20221213211305'),
 ('20230420204926'),
+('20230627053607'),
 ('20230629154913'),
 ('20230705222153');
 
