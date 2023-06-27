@@ -97,6 +97,8 @@ notify_admin_list: false
 # set to false to stop sending all email
 perform_deliveries: true
 
+google_analytics: false
+
 # checkin keys for honeybadger (actual keys are in shared_configs per environment as needed)
 # see https://app.honeybadger.io/projects/77112/check_ins
 honeybadger_checkins:
