@@ -4,6 +4,8 @@
 class GlobusSetupJob < ApplicationJob
   queue_as :default
 
+  discard_on ActiveJob::DeserializationError
+
   # rubocop:disable Metrics/AbcSize
   def perform(work_version)
     druid = work_version.work.druid # may be nil
