@@ -43,7 +43,8 @@ h2:
 earliest_year: 1000
 
 external_links:
-  what_is_a_doi: https://library.stanford.edu/research/stanford-digital-repository/documentation/purls-and-dois
+  what_is_a_doi: https://sdr.sites.stanford.edu/documentation/purls-and-dois
+  license_help: https://sdr.sites.stanford.edu/documentation/license-options
 
 # feature flags
 allow_sdr_content_changes: true
@@ -64,10 +65,10 @@ autocomplete_lookup:
 
 file_uploads_root: tmp/uploads
 
-faq_url: https://library.stanford.edu/research/stanford-digital-repository/terms-deposit
+faq_url: https://sdr.sites.stanford.edu/documentation/understanding-sdr-terms-deposit
 purl_url: https://purl.stanford.edu
-terms_url: https://library.stanford.edu/research/stanford-digital-repository/documentation/sdr-terms-deposit
-sdr_url: https://library.stanford.edu/research/stanford-digital-repository
+terms_url: https://sdr.sites.stanford.edu/documentation/understanding-sdr-terms-deposit
+sdr_url: https://sdr.sites.stanford.edu/
 newsletter_url: https://stanford.us20.list-manage.com/subscribe?u=139e1b2d3df8f8cacd77c8160&id=4f4148a871
 
 host: ~
