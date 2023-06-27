@@ -46,6 +46,19 @@ RSpec.describe "Link to edit a work" do
         expect(rendered).not_to have_selector('a[data-controller="popover"]')
       end
     end
+
+    context "when the work is pending globus" do
+      before do
+        work.head.update(state: "fetch_globus_version_draft")
+      end
+
+      it "draws an empty frame (we don't want this button to appear for each section on the view page)" do
+        get "/works/#{work.id}/edit_button?tag=details"
+        expect(response).to have_http_status(:ok)
+        expect(rendered).to have_selector("turbo-frame")
+        expect(rendered).not_to have_selector('a[data-controller="popover"]')
+      end
+    end
   end
 
   context "with a user who may not edit the object" do
