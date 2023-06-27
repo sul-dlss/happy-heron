@@ -604,6 +604,8 @@ Mixed Materials:
         value: text
         source:
           value: MODS resource types
+    Conference abstract:
+      # no value
     Conference session:
       # no value
     Correspondence:
@@ -706,6 +708,8 @@ Mixed Materials:
     Oral history:
       # no value
     Other spoken word:
+      # no value
+    Pamphlet:
       # no value
     Performance:
       # no value

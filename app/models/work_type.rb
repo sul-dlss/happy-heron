@@ -46,12 +46,12 @@ class WorkType
   # These types appear below the fold and may be expanded
   MORE_TYPES = [
     "3D model", "Animation", "Article", "Book", "Book chapter", "Broadcast", "CAD", "Capstone",
-    "Code", "Conference session", "Correspondence", "Course/instructional materials",
+    "Code", "Conference abstract", "Conference session", "Correspondence", "Course/instructional materials",
     "Data", "Database", "Documentary", "Documentation", "Dramatic performance",
     "Essay", "Ethnography", "Event", "Experimental audio/video", "Field recording",
     "Game", "Geospatial data", "Government document", "Image", "Interview",
     "Journal/periodical issue", "Manuscript", "Map", "MIDI", "Musical transcription",
-    "Narrative film", "Notated music", "Oral history", "Other spoken word",
+    "Narrative film", "Notated music", "Oral history", "Other spoken word", "Pamphlet",
     "Performance", "Photograph", "Piano roll", "Podcast", "Poetry reading",
     "Policy brief", "Poster", "Portfolio", "Preprint", "Presentation recording",
     "Presentation slides", "Questionnaire", "Remote sensing imagery", "Report",

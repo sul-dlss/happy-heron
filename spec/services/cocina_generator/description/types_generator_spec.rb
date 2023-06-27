@@ -240,11 +240,11 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
       end
       # these represent subtypes that will get the genre from the parent type
       let(:known_genreless) do
-        ["Animation", "Article", "Book", "Book chapter", "Broadcast", "Conference session", "Correspondence",
-          "Documentation", "Event", "Government document", "Image", "Manuscript", "MIDI", "Musical transcription",
-          "Notated music", "Other spoken word", "Policy brief", "Presentation recording", "Presentation slides",
-          "Questionnaire", "Report", "Software", "Sound recording", "Speaker notes", "Technical report", "Text",
-          "Thesis", "Video recording", "Video art"]
+        ["Animation", "Article", "Book", "Book chapter", "Broadcast", "Conference abstract", "Conference session",
+          "Correspondence", "Documentation", "Event", "Government document", "Image", "Manuscript", "MIDI",
+          "Musical transcription", "Notated music", "Other spoken word", "Pamphlet", "Policy brief",
+          "Presentation recording", "Presentation slides", "Questionnaire", "Report", "Software", "Sound recording",
+          "Speaker notes", "Technical report", "Text", "Thesis", "Video recording", "Video art"]
       end
 
       it "has one genre for each" do
