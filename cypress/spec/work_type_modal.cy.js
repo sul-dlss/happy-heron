@@ -132,7 +132,7 @@ describe('Work type modal', () => {
       cy.get('#text').click()
       cy.get('.subtype-item:visible').should('have.length', 9) // has the correct number of top level subtypes for a text type
       cy.get('.more-options').click() // expand subtypes
-      cy.get('.subtype-item:visible').should('have.length', 57) // has the correct number of all subtypes for a text type
+      cy.get('.subtype-item:visible').should('have.length', 59) // has the correct number of all subtypes for a text type
       cy.get('.more-options').click() // collapse subtypes
       cy.get('.subtype-item:visible').should('have.length', 9) // back to fewer subtypes
     })
