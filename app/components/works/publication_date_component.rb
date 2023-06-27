@@ -57,8 +57,7 @@ module Works
         data: {
           date_validation_target: "year",
           date_clear_target: "year",
-          action: "date-validation#change year-field#change",
-          controller: "year-field"
+          action: "date-validation#change"
         },
         id: "#{prefix}_published_year",
         placeholder: "year",
