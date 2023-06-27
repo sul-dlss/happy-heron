@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["person", "organization", "role", "personName", "personNameSelect", "personOrcid", "personOrcidName", "orcid", "orcidFeedback", "orcidFirstName", "orcidLastName", "orcidDisplayName"]

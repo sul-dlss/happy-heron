@@ -2,7 +2,7 @@
   <%= render BreadcrumbNavComponent.new %>
 <% end %>
 <main class="mb-3 mb-md-5" id="content">
-  <div class="container px-4 px-md-3" id="dashboard" data-controller="work-type">
+  <div class="container px-4 px-md-3" id="dashboard" data-controller="work-type work-type-modal">
     <%= render Dashboard::PageContentComponent.new(page_content: @page_content, location: :top) %>
     <%= render Dashboard::ContinueDepositModalComponent.new(presenter: @presenter) %>
     <%= render Dashboard::ProfileButtonComponent.new %>

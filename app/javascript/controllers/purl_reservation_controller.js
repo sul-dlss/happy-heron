@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 // Handles the "Reserve a PURL" button which pops up a form allowing a title to be provided
 export default class extends Controller {

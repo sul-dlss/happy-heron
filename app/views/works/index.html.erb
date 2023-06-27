@@ -7,7 +7,7 @@
 <main id="content" class="mb-3 mb-md-5">
   <div class="container px-4 px-md-3" id="collection">
     <%= render Collections::Show::TabsComponent.new(collection: @collection) %>
-    <section data-controller="work-type">
+    <section data-controller="work-type work-type-modal">
       <%= render Collections::Show::DepositsHeaderComponent.new(collection_version: @collection.head) %>
       <%= render Collections::WorksComponent.new(collection: @collection) %>
       <%= render Works::WorkTypeModalComponent.new %>

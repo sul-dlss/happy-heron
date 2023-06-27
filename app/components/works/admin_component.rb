@@ -21,7 +21,12 @@ module Works
         ["Move to another collection", edit_move_path(work)]
       ]
       opts << ["Decommission", edit_work_decommission_path(work)] unless work.head.decommissioned?
+      opts << ["Change work type", edit_work_types_path(work)] if change_work_type?
       options_for_select(opts, "select")
+    end
+
+    def change_work_type?
+      [:reserving_purl, :purl_reserved, :first_draft, :pending_approval, :rejected, :depositing, :version_draft, :decommissioned].exclude?(work.head.state.to_sym)
     end
   end
 end

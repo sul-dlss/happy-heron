@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         resource :move, only: %i[edit update], controller: "work_move" do
           get :search
         end
+        resource :work_types, only: %i[edit update], controller: "work_types"
       end
 
       resource :review, only: :create

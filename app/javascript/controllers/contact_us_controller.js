@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 // Opens the modal if the url hash is 'help'
 export default class extends Controller {

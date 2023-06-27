@@ -1,5 +1,5 @@
 <%# The collection settings page %>
-<section id="<%= dom_id(collection) %>" data-controller="work-type">
+<section id="<%= dom_id(collection) %>" data-controller="work-type work-type-modal">
   <%= render Collections::Show::SettingsHeaderComponent.new(collection_version: collection.head) %>
   <%= render Works::WorkTypeModalComponent.new %>
   <turbo-frame id="collectionAdminFrame" src="<%= admin_collection_path(collection) %>">
