@@ -89,6 +89,10 @@ export default class extends Controller {
   }
 
   displayOtherSubtypeOptions() {
+    // Clear checked subtypes
+    this.formTarget.querySelectorAll('div.subtype-container input[type="checkbox"]:checked').forEach((input) => {
+      input.checked = false
+    })
     // Hide the more options link
     this.moreTypesLinkTarget.hidden = true
     this.hideMoreTypes()
