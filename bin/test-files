@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'optparse'
+require 'faker'
+require 'fileutils'
+require 'securerandom'
+require 'tty-progressbar'
+require 'pathname'
+
+options = { segments: 0, files: 1, zip: false }
+parser = OptionParser.new do |option_parser|
+  option_parser.banner = 'Usage: bin/test-files [options]'
+  option_parser.on('-fFILES', '--files FILES', Integer, "Number of files. Default is #{options[:file]}.")
+  option_parser.on('-sSEGMENTS', '--segments SEGMENTS', Integer, "Number of directory path segments. Default is #{options[:segments]}.")
+  option_parser.on('-dDIR', '--dir DIR', String, "Directory for the files. If not will be provided, a directory name will be generated.")
+  option_parser.on('-z', '--zip', "Zip the files.")
+  option_parser.on('-h', '--help', 'Displays help.') do
+    puts option_parser
+    exit
+  end
+end
+
+parser.parse!(into: options)
+
+def write_file(path:, filename:)
+  FileUtils.mkdir_p(path) unless Dir.exist?(path)
+  filepath = File.join(path, filename)
+  File.open(filepath, 'w') do |file|
+    file.write(filename)
+  end
+end
+
+def generate_path(base_path:, segments:)
+  rand_segments = SecureRandom.random_number(0..segments)
+  return base_path if rand_segments.zero?
+
+  Faker::File.dir(segment_count: rand_segments, root: base_path)
+end
+
+def tty_progress_bar(files)
+  TTY::ProgressBar.new(
+    "Generating [:bar] (:percent (:current/:total), rate: :rate/s, mean rate: :mean_rate/s, :elapsed total, ETA: :eta_time)",
+    bar_format: :crate,
+    total: files
+  )
+end
+
+def zip(path:)
+  puts "Zipping"
+  zip_path = "#{path}.zip"
+  File.delete(zip_path) if File.exist?(zip_path)
+  system("cd #{path} && zip -qdg -r ../#{Pathname.new(path).basename}.zip *")
+  puts "Zipped to #{zip_path}"
+end
+
+base_path = options[:dir] || "test-data/test-data-f#{options[:files]}-s#{options[:segments]}"
+FileUtils.rm_rf(base_path) if Dir.exist?(base_path)
+
+progress_bar = tty_progress_bar(options[:files])
+progress_bar.start
+
+
+for i in 1..options[:files]
+  path = generate_path(base_path: base_path, segments: options[:segments])
+  filename = "#{Faker::File.file_name(dir: '')}-#{i}"
+  
+  write_file(path: path, filename: filename)
+  progress_bar.advance
+end
+
+puts "Created test data in #{base_path}"
+zip(path: base_path) if options[:zip]

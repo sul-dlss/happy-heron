@@ -31,6 +31,7 @@ group :development do
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "state_machines-graphviz"
+  gem "tty-progressbar"
   gem "web-console", ">= 3.3.0"
 end
 

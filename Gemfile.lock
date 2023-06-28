@@ -358,8 +358,6 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.3-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.15.3-x86_64-linux)
-      racc (~> 1.4)
     nokogiri-happymapper (0.9.0)
       nokogiri (~> 1.5)
     oauth2 (2.0.9)
@@ -586,6 +584,7 @@ GEM
     state_machines-graphviz (0.0.2)
       ruby-graphviz
       state_machines
+    strings-ansi (0.2.0)
     strip_attributes (1.13.0)
       activemodel (>= 3.0, < 8.0)
     super_diff (0.10.0)
@@ -595,6 +594,13 @@ GEM
     thor (1.2.2)
     thread_safe (0.3.6)
     timeout (0.4.0)
+    tty-cursor (0.7.1)
+    tty-progressbar (0.18.2)
+      strings-ansi (~> 0.2)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.8)
+      unicode-display_width (>= 1.6, < 3.0)
+    tty-screen (0.8.1)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
@@ -642,6 +648,7 @@ PLATFORMS
   x86_64-darwin-19
   x86_64-darwin-20
   x86_64-darwin-21
+  x86_64-darwin-22
   x86_64-darwin-22
   x86_64-linux
 
@@ -708,6 +715,7 @@ DEPENDENCIES
   state_machines-graphviz
   strip_attributes
   super_diff
+  tty-progressbar
   turbo-rails (~> 1.0)
   view_component (~> 2.56.2)
   web-console (>= 3.3.0)
