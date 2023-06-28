@@ -23,8 +23,14 @@
       </tr>
     </thead>
     <tbody>
-      <% visible_deposits.take(MAX_DEPOSITS_TO_SHOW).each do |work| %>
-        <%= render "dashboards/collection_summary_row", work: work %>
+      <% if visible_deposits.any? %>
+        <% visible_deposits.take(MAX_DEPOSITS_TO_SHOW).each do |work| %>
+          <%= render "dashboards/collection_summary_row", work: work %>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="7" class="text-center">No visible deposits</td>
+        </tr>
       <% end %>
     </tbody>
   </table>

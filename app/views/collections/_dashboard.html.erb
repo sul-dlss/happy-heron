@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(collection, :summary) do %>
-  <li class="mb-5"><!-- from _dashboard.html -->
+  <div class="mb-5"><!-- from _dashboard.html -->
     <%= render Dashboard::CollectionComponent.new(collection: collection) %>
-  </li>
+  </div>
 <% end %>

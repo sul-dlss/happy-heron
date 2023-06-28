@@ -83,14 +83,14 @@
           </div>
         </nav>
         <% if controller_name != 'welcome' %>
-          <div class="background-holder">
+          <header class="background-holder">
             <div class="sdr-header">
               <div class="container-xxl">
                 <span class="stanford">Stanford</span><span class="digital-repo">Digital Repository</span>
               </div>
             </div>
             <%= yield :breadcrumbs %>
-          </div>
+          </header>
         <% end %>
 
         <%= render "shared/flashes" %>

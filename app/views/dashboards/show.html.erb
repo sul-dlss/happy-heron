@@ -3,6 +3,7 @@
 <% end %>
 <main class="mb-3 mb-md-5" id="content">
   <div class="container px-4 px-md-3" id="dashboard" data-controller="work-type work-type-modal">
+    <h1 class="mb-3">Dashboard</h1>
     <%= render Dashboard::PageContentComponent.new(page_content: @page_content, location: :top) %>
     <%= render Dashboard::ContinueDepositModalComponent.new(presenter: @presenter) %>
     <%= render Dashboard::ProfileButtonComponent.new %>
@@ -21,9 +22,9 @@
       <%= turbo_stream_from :summary %>
       <%= turbo_stream_from :summary_rows %>
 
-      <ul class="collections show" id="your-collections-table">
+      <div class="collections show" id="your-collections-table">
         <%= render partial: "collection_without_user", collection: @presenter.collections, as: :collection %>
-      </ul>
+      </div>
 
       <%= render Works::PurlReservationModalComponent.new %>
       <%= render CitationModalComponent.new %>
