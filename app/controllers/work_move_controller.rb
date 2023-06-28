@@ -30,6 +30,8 @@ class WorkMoveController < ApplicationController
       flash[:error] = I18n.t("work.flash.work_not_moved")
     else
       Work.transaction do
+        collection.depositors << work.owner unless collection.depositors.include?(work.owner)
+        collection.save!
         work.update!(collection:)
         work.events.create(user: current_user, event_type: "collection_moved",
           description: "Moved to \"#{collection.head.description}\" collection")
