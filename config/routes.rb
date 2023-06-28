@@ -32,7 +32,6 @@ Rails.application.routes.draw do
         get :next_step
         get :next_step_review
         get :details
-        get :complete_globus_setup
         get :files_list
         resource :owners, only: %i[edit update], controller: "work_owners"
         resource :locks, only: %i[edit update], controller: "work_locks"

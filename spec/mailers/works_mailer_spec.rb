@@ -305,23 +305,6 @@ RSpec.describe WorksMailer do
     end
   end
 
-  describe "globus_account_setup" do
-    let(:work) { build_stubbed(:work) }
-    let(:work_version) { build_stubbed(:work_version, work:) }
-    let(:mail) { described_class.with(work_version:, user: a_user).globus_account_setup }
-
-    it "renders the headers" do
-      expect(mail.subject).to eq "Activate your Globus account"
-      expect(mail.to).to eq [a_user.email]
-      expect(mail.from).to eq ["no-reply@sdr.stanford.edu"]
-    end
-
-    it "renders body" do
-      expect(mail.body).to include "Dear #{a_user.first_name},"
-      expect(mail.body).to include "Click the link below and follow the instructions to access Globus"
-    end
-  end
-
   describe "globus_endpoint_created" do
     let(:work) { build_stubbed(:work) }
     let(:work_version) { build_stubbed(:work_version, work:) }

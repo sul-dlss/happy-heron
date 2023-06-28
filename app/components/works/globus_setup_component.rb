@@ -12,5 +12,25 @@ module Works
     def render?
       work_version.globus?
     end
+
+    def globus_user_valid?
+      return true if integration_test_mode?
+      return Settings.globus.test_user_valid if test_mode?
+
+      GlobusClient.user_valid?(work_version.work.owner.email)
+    end
+
+    def integration_test_mode?
+      Settings.globus.integration_mode
+    end
+
+    # simulate globus calls in development if settings indicate we should for testing
+    def test_mode?
+      Settings.globus.test_mode && Rails.env.development?
+    end
+
+    def endpoint
+      "https://app.globus.org/file-manager?&origin_id=#{Settings.globus.transfer_endpoint_id}&origin_path=#{Settings.globus.uploads_directory}#{work_version.globus_endpoint}"
+    end
   end
 end

@@ -12,9 +12,9 @@ RSpec.describe GlobusSetupJob do
 
   before { work.update(head: work_version) }
 
-  context "when the user is known to globus" do
+  context "when the user is valid in globus" do
     before do
-      allow(GlobusClient).to receive(:user_exists?).and_return(true)
+      allow(GlobusClient).to receive(:user_valid?).and_return(true)
       allow(GlobusClient).to receive(:mkdir).and_return(true)
     end
 
@@ -32,22 +32,9 @@ RSpec.describe GlobusSetupJob do
         end
       end
 
-      context "when in globus_setup_first_draft state" do
-        before { work_version.update(state: "globus_setup_first_draft") }
-
-        it "creates the globus endpoint, sends the email and transitions back to first_draft state" do
-          expect { described_class.perform_now(work_version) }.to have_enqueued_job(ActionMailer::MailDeliveryJob)
-            .with("WorksMailer", "globus_endpoint_created", "deliver_now",
-              {params: {user:, work_version:}, args: []})
-          expect(GlobusClient).to have_received(:mkdir)
-          work_version.reload
-          expect(work_version.state).to eq "first_draft"
-        end
-      end
-
       context "when an integration test" do
         before do
-          work_version.update(state: "globus_setup_first_draft", title: "This is an Integration Test")
+          work_version.update(state: "first_draft", title: "This is an Integration Test")
           allow(Settings.globus).to receive(:integration_mode).and_return(true)
         end
 
@@ -80,31 +67,18 @@ RSpec.describe GlobusSetupJob do
     end
   end
 
-  context "when the user is not known to globus" do
+  context "when the user does not have a valid globus status" do
     before do
-      allow(GlobusClient).to receive(:user_exists?).and_return(false)
+      allow(GlobusClient).to receive(:user_valid?).and_return(false)
       allow(GlobusClient).to receive(:mkdir)
-      allow(work_version).to receive(:globus_setup_pending!)
+      work_version.update(state: "first_draft")
     end
 
-    context "when the work is not in the globus setup draft state" do
-      before { work_version.update(state: "version_draft") }
-
-      it "transitions into the globus_setup_version_draft state" do
-        described_class.perform_now(work_version)
-        expect(GlobusClient).not_to have_received(:mkdir)
-        expect(work_version).to have_received(:globus_setup_pending!)
-      end
-    end
-
-    context "when work is already in a globus setup draft state" do
-      before { work_version.update(state: "globus_setup_first_draft") }
-
-      it "does nothing" do
-        described_class.perform_now(work_version)
-        expect(GlobusClient).not_to have_received(:mkdir)
-        expect(work_version).not_to have_received(:globus_setup_pending!)
-      end
+    it "raises and stays in first_draft state" do
+      expect { described_class.perform_now(work_version) }.to raise_error(RuntimeError, "Globus username #{user.email} is not a valid Globus account. Not creating globus endpoint for work ID #{work_version.work.id}")
+      expect(GlobusClient).not_to have_received(:mkdir)
+      work_version.reload
+      expect(work_version.state).to eq "first_draft"
     end
   end
 end
