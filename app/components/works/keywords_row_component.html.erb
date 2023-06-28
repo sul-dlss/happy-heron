@@ -1,7 +1,7 @@
 <div class="mb-3 row plain-container g-0 keyword-row">
   <div class="col-sm-6">
     <%= form.label :label, "Keyword", class: "col-form-label visually-hidden" %>
-    <div data-controller="keywords autocomplete autocomplete-edit" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3" class="dropdown">
+    <div data-controller="keywords autocomplete autocomplete-edit" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3" class="dropdown" role="combobox">
       <%= form.text_field :label, {class: "form-control#{"is-invalid" if error?}", required: true, "data-autocomplete-target": "input", "data-autocomplete-edit-target": "input",
                 "data-keywords-target": "input"} %>
       <!-- This input is populated by autocomplete controller.-->
@@ -9,7 +9,7 @@
       <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-edit-target="value" data-action="autocomplete-edit#change">
       <%= form.hidden_field :uri, {required: true, "data-autocomplete-edit-target": "uri"} %>
       <%= form.hidden_field :cocina_type, {required: true, "data-autocomplete-edit-target": "type"} %>
-      <ul class="show dropdown-menu" data-autocomplete-target="results"></ul>
+      <ul class="list-group" data-autocomplete-target="results"></ul>
       <div class="invalid-feedback">At least one keyword is required. Each keyword must be unique.</div>
     </div>
   </div>
