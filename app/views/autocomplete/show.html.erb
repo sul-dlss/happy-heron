@@ -1,3 +1,3 @@
 <% @suggestions.each_with_index.map do |suggestion, i| %>
-  <li class="dropdown-item" role="option" data-autocomplete-value="<%= suggestion.values.first %>" data-autocomplete-label="<%= suggestion.keys.first %>"><%= html_escape(suggestion.keys.first) %></li>
+  <li class="list-group-item" role="option" data-autocomplete-value="<%= suggestion.values.first %>" data-autocomplete-label="<%= suggestion.keys.first %>"><%= html_escape(suggestion.keys.first) %></li>
 <% end %>

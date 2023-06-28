@@ -293,7 +293,7 @@ RSpec.describe "Autocomplete Controller" do
     suggestions.each do |suggestion|
       actual_suggestion = suggestion.keys.first
       uri = suggestion.values.first
-      li_element_html = '<li class="dropdown-item" role="option" ' \
+      li_element_html = '<li class="list-group-item" role="option" ' \
                         "data-autocomplete-value=\"#{uri}\" data-autocomplete-label=\"#{actual_suggestion}\">" \
                         "#{ERB::Util.html_escape(actual_suggestion)}</li>"
       expect(response.body).to include(li_element_html)
