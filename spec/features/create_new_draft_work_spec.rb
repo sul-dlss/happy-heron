@@ -37,7 +37,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
   end
 
   context "when no upload type is selected" do
-    it "does not allow user to save a draft" do
+    it "allows user to save a draft" do
       visit dashboard_path
 
       click_button "+ Deposit to this collection"
@@ -52,8 +52,8 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
 
       click_button "Save as draft"
 
-      expect(page).to have_content "Upload type can't be blank"
-      expect(current_url).to include "/collections/#{collection.id}/works/new?work_type=sound"
+      expect(page).to have_content "My Draft"
+      expect(page).to have_content "Draft - Not deposited"
     end
   end
 

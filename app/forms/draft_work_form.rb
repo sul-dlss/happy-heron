@@ -42,7 +42,6 @@ class DraftWorkForm < Reform::Form
 
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
-  validates :upload_type, presence: true
   validate :unique_filenames
   validate :globus_files_provided, if: proc { |form| form.fetch_globus_files }
 

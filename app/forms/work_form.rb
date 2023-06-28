@@ -18,6 +18,7 @@ class WorkForm < DraftWorkForm
     if: :availability_component_present?
   validates :embargo_date, embargo_date: true, if: :availability_component_present?
   validates :agree_to_terms, presence: true
+  validates :upload_type, presence: true
 
   has_contributors(validate: true)
 
