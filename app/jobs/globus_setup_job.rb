@@ -76,7 +76,7 @@ class GlobusSetupJob < ApplicationJob
   end
 
   def integration_test_work_version?(work_version)
-    integration_test_mode? && work_version.title.ends_with?("Integration Test")
+    integration_test_mode? && work_version.title&.ends_with?("Integration Test")
   end
 
   def integration_endpoint
