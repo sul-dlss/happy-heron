@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Autocomplete Controller" do
+RSpec.describe "Fast Controller" do
   let(:headers) do
     {
       "Accept" => "application/xml",
@@ -127,7 +127,7 @@ RSpec.describe "Autocomplete Controller" do
     end
 
     it "returns status 200 and html with suggestions" do
-      get "/autocomplete", params: {q: "tea"}
+      get "/fast", params: {q: "tea"}
       expect(response).to have_http_status :ok
 
       match_suggestions(suggestions, response)
@@ -282,7 +282,7 @@ RSpec.describe "Autocomplete Controller" do
     end
 
     it "returns status 200 and html with suggestions" do
-      get "/autocomplete", params: {q: "tesl"}
+      get "/fast", params: {q: "tesl"}
       expect(response).to have_http_status :ok
 
       match_suggestions(suggestions, response)
@@ -310,7 +310,7 @@ RSpec.describe "Autocomplete Controller" do
     end
 
     it "returns status 500 and an empty body" do
-      get "/autocomplete", params: {q: "tea"}
+      get "/fast", params: {q: "tea"}
       expect(response).to have_http_status :internal_server_error
       expect(response.body).to eq ""
       expect(Rails.logger).to have_received(:warn).with("Autocomplete results for tea returned 404")

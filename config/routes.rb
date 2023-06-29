@@ -94,7 +94,7 @@ Rails.application.routes.draw do
   resource :help, only: %i[new create]
   get "print_terms_of_deposit", to: "print#terms_of_deposit"
 
-  get "autocomplete", to: "autocomplete#show", defaults: {format: "html"}
+  get "fast", to: "fast#show", defaults: {format: "html"}
 
   get "orcid", to: "orcid#search"
 
