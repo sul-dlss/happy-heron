@@ -95,6 +95,7 @@ Rails.application.routes.draw do
   get "print_terms_of_deposit", to: "print#terms_of_deposit"
 
   get "fast", to: "fast#show", defaults: {format: "html"}
+  get "ror", to: "ror#show", defaults: {format: "html"}
 
   get "orcid", to: "orcid#search"
 
