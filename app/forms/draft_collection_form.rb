@@ -22,6 +22,11 @@ class DraftCollectionForm < Reform::Form
   property :license_option, on: :collection
   property :required_license, on: :collection
   property :default_license, on: :collection
+  property :allow_custom_rights_statement, on: :collection
+  property :custom_rights_statement_source_option, virtual: true
+  property :custom_rights_instructions_source_option, virtual: true
+  property :custom_rights_statement_custom_instructions, on: :collection
+  property :provided_custom_rights_statement, on: :collection
   property :review_enabled, on: :collection
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
@@ -77,6 +82,30 @@ class DraftCollectionForm < Reform::Form
     when "depositor-selects"
       params["required_license"] = nil
     end
+
+    # If the collection doesn't allow custom additional rights statements at
+    # all, the source of the custom rights statement and possible collection
+    # level rights statement are both necessarily nil
+    unless params["allow_custom_rights_statement"] == "true" # form param is still a string at this point
+      params["custom_rights_statement_source_option"] = nil
+      params["provided_custom_rights_statement"] = nil
+    end
+
+    # If the depositor is allowed to enter their own usage rights, provided terms are necessarily nil.
+    # If the depositor is provided with specific additional terms of use by the collection, instructions for
+    # entering their own terms are necessarily nil.
+    if params["custom_rights_statement_source_option"] == "entered_by_depositor"
+      params["provided_custom_rights_statement"] = nil
+    else
+      params["custom_rights_instructions_source_option"] = nil
+      params["custom_rights_statement_custom_instructions"] = nil
+    end
+
+    # If the collection uses the default instructions for entering custom additional terms of use, custom entered instructions are necessarily nil
+    if params["custom_rights_instructions_source_option"] == "default_instructions"
+      params["custom_rights_statement_custom_instructions"] = nil
+    end
+
     super(params)
   end
 
