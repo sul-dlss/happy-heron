@@ -30,7 +30,7 @@ module Works
     end
 
     def endpoint
-      "https://app.globus.org/file-manager?&origin_id=#{Settings.globus.transfer_endpoint_id}&origin_path=#{Settings.globus.uploads_directory}#{work_version.globus_endpoint}"
+      "https://app.globus.org/file-manager?&destination_id=#{Settings.globus.transfer_endpoint_id}&destination_path=#{Settings.globus.uploads_directory}#{work_version.globus_endpoint}"
     end
   end
 end

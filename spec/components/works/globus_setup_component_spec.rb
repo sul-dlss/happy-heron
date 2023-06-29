@@ -13,7 +13,7 @@ RSpec.describe Works::GlobusSetupComponent, type: :component do
 
     it "renders the instructions" do
       expect(rendered.to_html).to include "How to complete your deposit using Globus"
-      expect(rendered.css("a").map { |node| node["href"] }).to include "https://app.globus.org/file-manager?&origin_id=endpoint_uuid&origin_path=/uploads/user/123/version1"
+      expect(rendered.css("a").map { |node| node["href"] }).to include "https://app.globus.org/file-manager?&destination_id=endpoint_uuid&destination_path=/uploads/user/123/version1"
     end
   end
 
