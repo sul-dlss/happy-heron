@@ -57,6 +57,7 @@ RSpec.describe "Updating an existing work" do
             work_type: "text",
             abstract: "test abstract",
             upload_type:,
+            globus_origin:,
             fetch_globus_files:,
             attached_files_attributes: {
               "0" => {"label" => "two", "_destroy" => "", "hide" => "0", "id" => work_version.attached_files.first.id}
@@ -89,6 +90,7 @@ RSpec.describe "Updating an existing work" do
 
         let(:upload_type) { "browser" }
         let(:fetch_globus_files) { "false" }
+        let(:globus_origin) { "" }
 
         before do
           create(:attached_file, :with_file, work_version:)
@@ -171,11 +173,13 @@ RSpec.describe "Updating an existing work" do
           let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
           let(:upload_type) { "globus" }
           let(:fetch_globus_files) { "true" }
+          let(:globus_origin) { "oak" }
 
           context "when saving draft" do
             it "redirects to the work page and starts fetching globus" do
               patch "/works/#{work.id}", params: {work: work_params, commit: "Save as draft"}
               expect(work.reload.head).to be_fetch_globus_version_draft
+              expect(work.head).to be_oak
               expect(response).to redirect_to(work)
             end
           end

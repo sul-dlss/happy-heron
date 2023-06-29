@@ -33,6 +33,7 @@ class DraftWorkForm < Reform::Form
   property :embargo_date, embargo_date: true, on: :work_version
   property :assign_doi, on: :work, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
   property :upload_type, on: :work_version
+  property :globus_origin, on: :work_version
   property :fetch_globus_files, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
 
   validates_with EmbargoDateParts,

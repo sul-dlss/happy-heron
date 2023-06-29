@@ -29,5 +29,13 @@ module Works
       # Only show checkbox once a new work_version with a cleared out globus_endpoint has been created.
       !form.object.work_version.deposited? && form.object.work_version.globus_endpoint.present?
     end
+
+    def origin_options
+      [
+        ["Stanford Google Drive", "stanford_gdrive"],
+        ["Oak", "oak"],
+        ["Sherlock", "sherlock"]
+      ]
+    end
   end
 end

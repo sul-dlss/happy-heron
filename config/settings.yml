@@ -17,6 +17,10 @@ globus:
   test_user_valid: true # if test_mode=true, simulates the globus user is valid
   integration_mode: false # set to true for integration test
   integration_endpoint: 'integration_test/work388/version1'
+  origins:
+    stanford_gdrive: e1c8858b-d5aa-4e36-b97e-95913047ec2b
+    oak: 8b3a8b64-d4ab-4551-b37e-ca0092f769a7
+    sherlock: 6881ae2e-db26-11e5-9772-22000b9da45e
 
 accountws:
   pem_file: /etc/pki/tls/certs/sul-h2-qa.stanford.edu.pem

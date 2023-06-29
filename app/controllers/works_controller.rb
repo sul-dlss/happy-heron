@@ -245,7 +245,7 @@ class WorksController < ObjectsController
       :access, :license, :version_description,
       :release, "embargo_date(1i)", "embargo_date(2i)", "embargo_date(3i)",
       :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
-      subtype: [],
+      :globus_origin, subtype: [],
       attached_files_attributes: %i[_destroy id label hide file path],
       authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
       contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],

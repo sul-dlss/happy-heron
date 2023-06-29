@@ -51,6 +51,12 @@ class WorkVersion < ApplicationRecord
     zipfile: "zipfile"
   }
 
+  enum globus_origin: {
+    stanford_gdrive: "stanford_gdrive",
+    oak: "oak",
+    sherlock: "sherlock"
+  }
+
   LINK_TEXT = ":link will be inserted here automatically when available:"
   DOI_TEXT = ":DOI will be inserted here automatically when available:"
 
