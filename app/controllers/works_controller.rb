@@ -146,7 +146,7 @@ class WorksController < ObjectsController
   # The access can vary depending on the user and the state of the work.
   def delete_button
     work = Work.find(params[:id])
-    render partial: "works/delete_button", locals: {work:}
+    render partial: "works/delete_button", locals: {work:, anchor: params[:tag]}
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
