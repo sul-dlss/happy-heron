@@ -1,4 +1,4 @@
-  <section id="terms" data-controller="complex-radio" aria-describedby="popover-collection.terms">
+  <section id="terms" data-controller="complex-radio custom-rights" aria-describedby="popover-collection.terms">
     <header>Terms of use and license * <%= render PopoverComponent.new key: "collection.terms" %></header>
 
     <p>
@@ -38,4 +38,72 @@
     <p class="terms-of-use">
       <%= Settings.access.use_and_reproduction_statement %>
     </p>
+
+    <hr>
+
+    <p>
+      The option below will allow you either to:
+    </p>
+
+    <ol>
+      <li>Provide a custom use statement that will appear on every deposit in this collection or</li>
+      <li>allow depositors to enter a custom use statement, typically one required by a publisher in order to deposit an Open Access version of an article.</li>
+    </ol>
+
+    <p>
+      You will also be able to provide custom instructions for this field if you wish.
+    </p>
+
+    <fieldset>
+      <p>
+        Include custom use statement?
+      </p>
+
+      <div class="ms-2">
+        <div class="form-check<%= " is-invalid" if error? %>">
+          <%= form.radio_button :allow_custom_rights_statement, false, class: "form-check-input", data: {action: "custom-rights#updateChooseCustomRightsFieldsetEnabled", custom_rights_target: "noIncludeCustomRightsRadioButton"} %>
+          <%= form.label :allow_custom_rights_statement_false, "No", class: "form-check-label" %>
+        </div>
+        <div class="form-check<%= " is-invalid" if error? %>">
+          <%= form.radio_button :allow_custom_rights_statement, true, class: "form-check-input", data: {action: "custom-rights#updateChooseCustomRightsFieldsetEnabled", custom_rights_target: "yesIncludeCustomRightsRadioButton"} %>
+          <%= form.label :allow_custom_rights_statement_true, "Yes", class: "form-check-label" %>
+        </div>
+
+        <fieldset data-custom-rights-target="customRightsConfigFieldset">
+          <div class="ms-4">
+            <div class="form-check<%= " is-invalid" if error? %>">
+              <%= form.radio_button :custom_rights_statement_source_option, "provided_by_collection", checked: (custom_rights_statement_source_option == "provided_by_collection"), class: "form-check-input", data: {action: "custom-rights#updateCustomRightsInstructionsFieldsetEnabled", custom_rights_target: "customRightsSourceIsCollectionButton"} %>
+              <%= form.label :custom_rights_statement_source_option_provided_by_collection, "Provide specific terms", class: "form-check-label pe-2" %>
+              <%= form.text_area :provided_custom_rights_statement, cols: "55", rows: "1" %>
+              <%# TODO: text area needs a label %>
+            </div>
+            <div class="form-check<%= " is-invalid" if error? %>">
+              <%= form.radio_button :custom_rights_statement_source_option, "entered_by_depositor", checked: (custom_rights_statement_source_option == "entered_by_depositor"), class: "form-check-input", data: {action: "custom-rights#updateCustomRightsInstructionsFieldsetEnabled", custom_rights_target: "customRightsSourceIsDepositorButton"} %>
+              <%= form.label :custom_rights_statement_source_option_entered_by_depositor, "Allow depositor to enter their own terms", class: "form-check-label" %>
+            </div>
+
+            <div class="ms-4">
+              <fieldset data-custom-rights-target="customRightsInstructionsFieldset">
+                <header class="fs-5">
+                  Use default instructions?
+                </header>
+                <div class="form-check<%= " is-invalid" if error? %>">
+                  <%= form.radio_button :custom_rights_instructions_source_option, "default_instructions", checked: (custom_rights_instructions_source_option == "default_instructions"), class: "form-check-input" %>
+                  <%= form.label :custom_rights_instructions_source_option_default_instructions, "Yes, display the following instructions", class: "form-check-label" %>
+                  <p class="terms-of-use">
+                    <%= Settings.access.default_instructions_for_custom_use_statement %>
+                  </p>
+                </div>
+                <div class="form-check<%= " is-invalid" if error? %>">
+                  <%= form.radio_button :custom_rights_instructions_source_option, "provided_by_collection", checked: (custom_rights_instructions_source_option == "provided_by_collection"), class: "form-check-input" %>
+                  <%= form.label :custom_rights_instructions_source_option_provided_by_collection, "No, display these instructions", class: "form-check-label pe-2" %>
+                  <%= form.text_area :custom_rights_statement_custom_instructions, cols: "55", rows: "1" %>
+                  <%# TODO: text area needs a label %>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </fieldset>
   </section>
