@@ -1,4 +1,5 @@
 <div class="row inner-container contributor-row" data-controller="contributors" data-contributors-required-value="<%= author? %>">
+  <% namespace = author? ? "author" : "contributor" %>
   <div class="col-md-11">
     <div class="row">
       <div class="col-md-3">
@@ -39,23 +40,24 @@
             <%= form.label :with_orcid, "Enter ORCID iD", value: "true", class: "form-check-label fw-semibold" %>
           </div>
           <div class="row person-identifier-row" data-contributors-target="personOrcid">
+            <% text_field_id_prefix = "work_#{namespace}_orcid_#{form.options[:child_index]}_" %>
             <div class="col">
               <%= form.label :orcid, orcid_label, class: "form-label" %>
               <%= render PopoverComponent.new key: "work.orcid" %>
-              <%= form.text_field :orcid, class: "form-control", required: author?, data: {contributors_target: "orcid", action: "contributors#lookupOrcid"} %>
-              <div class="invalid-feedback" data-contributors-target="orcidFeedback">You must provide an ORCID iD</div>
+              <%= form.text_field :orcid, class: "form-control", required: author?, id: "#{text_field_id_prefix}id", data: {contributors_target: "orcid", action: "contributors#lookupOrcid"} %>
+              <div class="invalid-feedback" data-contributors-target="orcidFeedback">You must provide an ORCID ID</div>
               <div data-contributors-target="personOrcidName">
                 <div class="form-text" data-contributors-target="orcidDisplayName"></div>
                 <div class="row">
                   <div class="col-md-5">
                     <%= form.label :first_name, first_name_label, class: "form-label" %>
                     <%= render PopoverComponent.new key: "work.orcid_name" %>
-                    <%= form.text_field :first_name, html_options("contributorFirst", contributors_target: "orcidFirstName", disabled: !orcid?) %>
+                    <%= form.text_field :first_name, html_options("contributorFirst",contributors_target: "orcidFirstName", disabled: !orcid?).merge(id: "#{text_field_id_prefix}first_name") %>
                     <div class="invalid-feedback">You must provide a first name</div>
                   </div>
                   <div class="col-md-6">
                     <%= form.label :last_name, last_name_label, class: "form-label" %>
-                    <%= form.text_field :last_name, html_options("contributorLast", contributors_target: "orcidLastName", disabled: !orcid?) %>
+                    <%= form.text_field :last_name, html_options("contributorLast", contributors_target: "orcidLastName", disabled: !orcid?).merge(id: "#{text_field_id_prefix}last_name") %>
                     <div class="invalid-feedback">You must provide a last name</div>
                   </div>
                 </div>
