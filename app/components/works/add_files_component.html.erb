@@ -15,7 +15,7 @@
       <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-previews-container=".dropzone-files-previews">
         <fieldset>
           <div class="dropzone dropzone-default" data-dropzone-target="container">
-            <%= form.file_field :files, multiple: true, direct_upload: true,
+            <%= form.file_field :files, multiple: true, direct_upload: true, namespace: "flat_list",
                   data: {dropzone_target: "input"} %>
             <div class="dz-message needsclick text-secondary">
               <p>Drop files here</p>
@@ -49,7 +49,7 @@
            data-dropzone-previews-container=".dropzone-zip-previews">
         <fieldset>
           <div class="dropzone dropzone-default" data-dropzone-target="container">
-            <%= form.file_field :files, multiple: false, direct_upload: true,
+            <%= form.file_field :files, multiple: false, direct_upload: true, namespace: "zip",
                   data: {dropzone_target: "input"} %>
             <div class="dz-message needsclick text-secondary">
               <p>Drop zip file here</p>
