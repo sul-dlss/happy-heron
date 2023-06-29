@@ -82,6 +82,30 @@ class Collection < ApplicationRecord
     reviewer_mail_preferences_for_user(user)
   end
 
+  def allow_custom_rights_statement?
+    allow_custom_rights_statement
+  end
+
+  def custom_rights_statement_source_option
+    return nil unless allow_custom_rights_statement?
+
+    if provided_custom_rights_statement.present?
+      "provided_by_collection"
+    else
+      "entered_by_depositor"
+    end
+  end
+
+  def custom_rights_instructions_source_option
+    return nil unless allow_custom_rights_statement?
+
+    if custom_rights_statement_custom_instructions.present?
+      "provided_by_collection"
+    else
+      "default_instructions"
+    end
+  end
+
   private
 
   def default_event_context
