@@ -15,6 +15,23 @@ module Collections
       form.object
     end
 
+    def collection
+      case form.object.model
+      when Collection
+        form.object.model
+      when CollectionVersion
+        form.object.model.collection
+      end
+    end
+
+    def custom_rights_statement_source_option
+      collection&.custom_rights_statement_source_option
+    end
+
+    def custom_rights_instructions_source_option
+      collection&.custom_rights_instructions_source_option
+    end
+
     def error?
       errors.present?
     end
