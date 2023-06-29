@@ -38,13 +38,13 @@ export default class extends Controller {
     const filepath = this.dirPath ? `${this.dirPath}/${fileName}` : fileName
     const fileNameNodes = Array.from(document.querySelectorAll('[data-dropzone-path]'))
 
-    const filepaths = fileNameNodes.map(fileNameNode => {      
+    const filepaths = fileNameNodes.map(fileNameNode => {
         const path = fileNameNode.getAttribute('data-dropzone-path')
         const filename = fileNameNode.innerText.trim()
 
         const item = fileNameNode.closest('.dz-complete')
         if(item && item.querySelector("input[name*='_destroy']").value == 1) return null
-    
+
         return path ? `${path}/${filename}` : filename
     })
 
@@ -94,11 +94,11 @@ export default class extends Controller {
   }
 
   bindEvents() {
-    this.dropZone.on("addedfile", file => {      
-      setTimeout(() => {        
+    this.dropZone.on("addedfile", file => {
+      setTimeout(() => {
         file.accepted && createDirectUploadController(this, file).start();
         this.fileCount++
-        this.enableSubmission()        
+        this.enableSubmission()
         if (this.checkForDuplicates(file.name)) {
           this.dropZone.emit("error", file, 'Duplicate file');
         }
@@ -240,6 +240,7 @@ class DirectUploadController {
     input.type = "hidden";
     input.classList.add('hidden-file')
     input.name = `work[attached_files_attributes][${this.count}][file]`
+    input.setAttribute("aria-label", "hidden file");
     this.file.previewElement.appendChild(input);
     return input;
   }
@@ -247,8 +248,9 @@ class DirectUploadController {
   createHiddenPathInput() {
     const input = document.createElement("input")
     input.type = "hidden"
-    input.name = `work[attached_files_attributes][${this.count}][path]`    
+    input.name = `work[attached_files_attributes][${this.count}][path]`
     input.value = this.source.dirPath ? `${this.source.dirPath}/${this.file.name}` : this.file.name
+    input.setAttribute("aria-label", "hidden path");
     this.file.previewElement.appendChild(input)
   }
 
