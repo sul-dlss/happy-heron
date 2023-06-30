@@ -115,23 +115,6 @@ class WorksController < ObjectsController
     authorize! @work.head, to: :show?
   end
 
-  # the user has indicated that they have completed their globus setup
-  def complete_globus_setup
-    work = Work.find(params[:id])
-    work_version = work.head
-
-    authorize! work_version, to: :show?
-
-    if globus_user_exists?(work.depositor.email)
-      GlobusSetupJob.perform_later(work_version)
-      flash[:notice] = I18n.t("work.flash.globus_setup_complete")
-    else
-      flash[:warning] = I18n.t("work.flash.globus_setup_not_complete")
-    end
-
-    redirect_to work_path(work)
-  end
-
   def files_list
     work = Work.find(params[:id])
     work_version = work.head
@@ -167,10 +150,10 @@ class WorksController < ObjectsController
 
   private
 
-  def globus_user_exists?(user_id)
+  def globus_user_valid?(user_id)
     return Settings.globus.test_user_exists if Settings.globus.test_mode && Rails.env.development?
 
-    GlobusClient.user_exists?(user_id)
+    GlobusClient.user_valid?(user_id)
   end
 
   # Create the next WorkVersion for this work

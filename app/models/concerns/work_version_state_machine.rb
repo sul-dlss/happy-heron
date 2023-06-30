@@ -33,14 +33,8 @@ module WorkVersionStateMachine
       after_transition on: :fetch_globus_and_submit_for_review, do: WorkObserver.method(:after_fetch_globus)
       after_transition on: :fetch_globus_and_begin_deposit, do: WorkObserver.method(:after_fetch_globus)
 
-      # sends email to user about setting up a globus account; only happens first time we transition to this state
-      after_transition except_from: :globus_setup_first_draft, to: :globus_setup_first_draft,
-        do: WorkObserver.method(:globus_account_setup)
-      after_transition except_from: :globus_setup_version_draft, to: :globus_setup_version_draft,
-        do: WorkObserver.method(:globus_account_setup)
-
       # check to see if there any globus related actions needed when transitioning to any draft state
-      after_transition to: %i[first_draft version_draft globus_setup_first_draft globus_setup_version_draft],
+      after_transition to: %i[first_draft version_draft],
         do: :check_globus_setup
 
       # Trigger the collection observer when starting a new draft,
@@ -54,27 +48,6 @@ module WorkVersionStateMachine
       # directly to begin_deposit event, which will transition it to depositing
       event :begin_deposit do
         transition %i[first_draft version_draft pending_approval] => :depositing
-      end
-
-      # event occurs when a user selects globus for upload but does not have a globus account yet:
-      #  transition to the globus_setup state so we can show them UI elements and send emails
-      event :globus_setup_pending do
-        transition first_draft: :globus_setup_first_draft
-        transition version_draft: :globus_setup_version_draft
-      end
-
-      # event occurs when we create the globus endpoint; go back to regular draft states (if not already there)
-      event :globus_setup_complete do
-        transition first_draft: :first_draft
-        transition version_draft: :version_draft
-        transition globus_setup_first_draft: :first_draft
-        transition globus_setup_version_draft: :version_draft
-      end
-
-      # event occurs when the user aborts globus uploads and chooses a different upload method
-      event :globus_setup_aborted do
-        transition globus_setup_first_draft: :first_draft
-        transition globus_setup_version_draft: :version_draft
       end
 
       event :deposit_complete do
@@ -101,9 +74,7 @@ module WorkVersionStateMachine
 
       event :update_metadata do
         transition new: :first_draft
-
-        transition %i[first_draft version_draft pending_approval rejected globus_setup_first_draft
-          globus_setup_version_draft] => same
+        transition %i[first_draft version_draft pending_approval rejected] => same
         transition purl_reserved: :first_draft
       end
 
@@ -162,11 +133,6 @@ module WorkVersionStateMachine
         #  to see if there is any work to be done for globus setup
         #  Note: all work happens in a job because it makes API calls to Globus which shouldn't block the HTTP cycle
         GlobusSetupJob.perform_later(self)
-      elsif globus_setup_draft?
-        # if this is NOT a globus upload job and we were in a globus setup pending state, go back to draft
-        #  the reason is that if a user first selected globus, didn't have a globus account, and then later
-        #  changed back to a different upload type, we need to get them back to the draft state
-        globus_setup_aborted!
       end
     end
 

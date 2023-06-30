@@ -41,18 +41,6 @@ RSpec.describe WorkVersion do
       end
     end
 
-    context "when globus upload" do
-      before do
-        work_version.upload_type = "globus"
-      end
-
-      it "is able to transition to globus_setup_pending" do
-        expect { work_version.globus_setup_pending! }
-          .to change(work_version, :state)
-          .from("first_draft").to("globus_setup_first_draft")
-      end
-    end
-
     context "when version_draft" do
       let(:work_version) { create(:work_version, :version_draft) }
       let(:druid) { "druid:bb652bq1296" }
@@ -87,18 +75,6 @@ RSpec.describe WorkVersion do
           expect(Repository).to have_received(:valid_version?)
         end
       end
-
-      context "when globus upload" do
-        before do
-          work_version.upload_type = "globus"
-        end
-
-        it "is able to transition to globus_setup_pending" do
-          expect { work_version.globus_setup_pending! }
-            .to change(work_version, :state)
-            .from("version_draft").to("globus_setup_version_draft")
-        end
-      end
     end
   end
 
@@ -117,78 +93,6 @@ RSpec.describe WorkVersion do
     it "does not trigger the after_depositing hook" do
       work_version.pid_assigned!
       expect(DepositJob).not_to have_received(:perform_later)
-    end
-  end
-
-  describe "globus_setup_complete event" do
-    let(:collection) { create(:collection, :with_managers) }
-    let(:collection_version) { create(:collection_version_with_collection, collection:) }
-    let(:work_version) { create(:work_version, state:, work:) }
-    let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
-
-    context "when the state was globus_setup_first_draft" do
-      let(:state) { "globus_setup_first_draft" }
-
-      it "transitions back to first_draft" do
-        expect { work_version.globus_setup_complete! }
-          .to change(work_version, :state)
-          .from("globus_setup_first_draft").to("first_draft")
-      end
-    end
-
-    context "when the state was globus_setup_version_draft" do
-      let(:state) { "globus_setup_version_draft" }
-
-      it "transitions back to version_draft" do
-        expect { work_version.globus_setup_complete! }
-          .to change(work_version, :state)
-          .from("globus_setup_version_draft").to("version_draft")
-      end
-    end
-
-    context "when the state was first_draft" do
-      let(:state) { "first_draft" }
-
-      it "stays on first_draft" do
-        expect { work_version.globus_setup_complete! }
-          .not_to change(work_version, :state)
-      end
-    end
-
-    context "when the state was version_draft" do
-      let(:state) { "version_draft" }
-
-      it "stays on version_draft" do
-        expect { work_version.globus_setup_complete! }
-          .not_to change(work_version, :state)
-      end
-    end
-  end
-
-  describe "globus_setup_aborted event" do
-    let(:collection) { create(:collection, :with_managers) }
-    let(:collection_version) { create(:collection_version_with_collection, collection:) }
-    let(:work_version) { create(:work_version, state:, work:) }
-    let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
-
-    context "when the state was globus_setup_first_draft" do
-      let(:state) { "globus_setup_first_draft" }
-
-      it "transitions back to first_draft" do
-        expect { work_version.globus_setup_aborted! }
-          .to change(work_version, :state)
-          .from("globus_setup_first_draft").to("first_draft")
-      end
-    end
-
-    context "when the state was globus_setup_version_draft" do
-      let(:state) { "globus_setup_version_draft" }
-
-      it "transitions back to version_draft" do
-        expect { work_version.globus_setup_aborted! }
-          .to change(work_version, :state)
-          .from("globus_setup_version_draft").to("version_draft")
-      end
     end
   end
 
@@ -228,8 +132,8 @@ RSpec.describe WorkVersion do
       end
     end
 
-    context "when the state is globus_setup_first_draft" do
-      let(:state) { "globus_setup_first_draft" }
+    context "when the state is first_draft" do
+      let(:state) { "first_draft" }
 
       context "when upload type is browser" do
         it "transitions back to first_draft" do
@@ -243,16 +147,16 @@ RSpec.describe WorkVersion do
 
         it "allows the transition and retains the same state" do
           work_version.update_metadata!
-          expect(work_version.state).to eq "globus_setup_first_draft"
+          expect(work_version.state).to eq "first_draft"
         end
       end
     end
 
-    context "when the state is globus_setup_version_draft" do
-      let(:state) { "globus_setup_version_draft" }
+    context "when the state is version_draft" do
+      let(:state) { "version_draft" }
 
       context "when upload type is browser" do
-        it "transitions back to version_draft" do
+        it "allows the transition and retains the same state" do
           work_version.update_metadata!
           expect(work_version.state).to eq "version_draft"
         end
@@ -263,7 +167,7 @@ RSpec.describe WorkVersion do
 
         it "allows the transition and retains the same state" do
           work_version.update_metadata!
-          expect(work_version.state).to eq "globus_setup_version_draft"
+          expect(work_version.state).to eq "version_draft"
         end
       end
     end

@@ -6,7 +6,6 @@ class GlobusSetupJob < ApplicationJob
 
   discard_on ActiveJob::DeserializationError
 
-  # rubocop:disable Metrics/AbcSize
   def perform(work_version)
     druid = work_version.work.druid # may be nil
     user = work_version.work.owner
@@ -14,27 +13,23 @@ class GlobusSetupJob < ApplicationJob
                           work_id: work_version.work.id, depositor_sunet: user.sunetid,
                           state: work_version.state})
 
-    if globus_user_exists?(user.email) && work_version.globus_endpoint.blank?
-      # user is known to globus but doesn't have a globus endpoint yet, so create it and send the email
+    # user has a valid status in globus but doesn't have a globus endpoint yet, so create it and send the email
+    if globus_user_valid?(user.email) && work_version.globus_endpoint.blank?
+      # Create endpoint whether or not user has logged into Globus for the first time
       create_globus_endpoint(work_version)
       WorksMailer.with(user: work_version.work.owner, work_version:).globus_endpoint_created.deliver_later # send email
-      work_version.globus_setup_complete! # this transitions the state back to draft (first draft or version draft)
-    elsif !globus_user_exists?(user.email) && work_version.draft?
-      # user is NOT known to globus, and is not yet in the globus_setup state:
-      # this means they need to complete their globus account activation first and then let us know,
-      #  so put them into the globus pending state, which will then send them an email (via the state transition)
-      work_version.globus_setup_pending! # this transitions the state from draft to globus_setup
+    elsif !globus_user_valid?(user.email)
+      raise "Globus username #{user.email} is not a valid Globus account. Not creating globus endpoint for work ID #{work_version.work.id}"
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
-  def globus_user_exists?(user_id)
+  def globus_user_valid?(user_id)
     return true if integration_test_mode?
-    return Settings.globus.test_user_exists if test_mode?
+    return Settings.globus.test_user_valid if test_mode?
 
-    GlobusClient.user_exists?(user_id)
+    GlobusClient.user_valid?(user_id)
   end
 
   def create_globus_endpoint(work_version)

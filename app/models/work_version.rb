@@ -78,10 +78,6 @@ class WorkVersion < ApplicationRecord
     version_draft? || first_draft?
   end
 
-  def globus_setup_draft?
-    globus_setup_first_draft? || globus_setup_version_draft?
-  end
-
   def deleteable?
     first_draft? || purl_reservation? || (version == 1 && (pending_approval? || rejected?))
   end
