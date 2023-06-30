@@ -107,6 +107,10 @@
   color: #FEC51D;
 }
 
+.btn-default {
+   --bs-btn-hover-border-color: var(--bs-link-hover-color);
+}
+
 .page-content-message {
   font-size: 1.1rem;
   font-style: italic;

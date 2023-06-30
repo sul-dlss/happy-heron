@@ -1,6 +1,6 @@
 
 <div class="form-check">
   <%= form.check_box(:collection, {multiple: true, class: "form-check-input"}, label) %>
-  <%= form.label :collection, label, value: label, class: "form-check-label" %>
+  <%= form.label :collection, label, value: label, class: "form-check-label", "aria-describedby": "popover-#{description_key}" %>
   <%= render PopoverComponent.new(key: description_key, scope: scope) %>
 </div>
