@@ -151,7 +151,7 @@ class WorksController < ObjectsController
   private
 
   def globus_user_valid?(user_id)
-    return Settings.globus.test_user_exists if Settings.globus.test_mode && Rails.env.development?
+    return Settings.globus.test_user_valid if Settings.globus.test_mode && Rails.env.development?
 
     GlobusClient.user_valid?(user_id)
   end
