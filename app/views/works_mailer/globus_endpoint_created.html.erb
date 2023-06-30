@@ -1,9 +1,10 @@
 <p>Dear <%= @user.first_name %>,</p>
 
-<p>You should have received an email from "Globus Notification" with a link to the location we created for you to transfer your files.</p>
+<p>You have initiated a deposit to the SDR using Globus. Here's what you need to do to complete it:</p>
 
 <ol>
-  <li>Please transfer your files to the above location in Globus using these <%= link_to "instructions", "#{Settings.globus.help_doc_url}?pli=1#heading=h.n1tmzgcygoqj" %>.</li>
+  <li>Follow these <%= link_to "instructions", "#{Settings.globus.help_doc_url}?pli=1#heading=h.3h6eldy9ndya" %> to set up Globus (may require software installation). Be sure you have logged into Globus with your Stanford credentials!</li>
+  <li>Go to this <%= link_to "shared folder at Globus", Works::GlobusSetupComponent.new(work_version: @work_version).endpoint %> that we have created just for you and transfer your files there.</li>
   <li><%= link_to "Return to your item", work_url(@work) %> at sdr.stanford.edu and click the pencil icon to edit your draft.</li>
   <li>Check the box in the "Add your files" section to indicate that you have uploaded your files to Globus.</li>
   <li>Scroll to the bottom and click "Save as draft" to finish your deposit later, or click "Deposit" to complete your deposit.</li>
