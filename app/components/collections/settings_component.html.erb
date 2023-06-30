@@ -3,7 +3,7 @@
     <header>Manage release of deposits for discovery and download *</header>
 
     <fieldset class="mb-5 release-option" data-controller="complex-radio">
-      <legend class="h5">When will files on deposits to this collection be downloadable? * <%= render PopoverComponent.new key: "collection.release" %></legend>
+      <legend aria-describedby="popover-collection.release" class="h5">When will files on deposits to this collection be downloadable? * <%= render PopoverComponent.new key: "collection.release" %></legend>
       <div class="form-check<%= " is-invalid" if release_option_errors? %>" data-complex-radio-target="selection">
         <%= form.radio_button :release_option, "immediate", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
         <%= form.label "release_option_immediate", t("options.collection.release.immediate"), class: "form-check-label" %>
@@ -35,7 +35,7 @@
     </fieldset>
 
     <fieldset class="mb-5">
-      <legend class="h5">Who will have permission to download files for deposits to this collection? * <%= render PopoverComponent.new key: "collection.access" %></legend>
+      <legend aria-describedby="popover-collection.access" class="h5">Who will have permission to download files for deposits to this collection? * <%= render PopoverComponent.new key: "collection.access" %></legend>
       <div class="form-check">
         <%= form.radio_button :access, "world", class: "form-check-input" %>
         <%= form.label "access_world", t("options.collection.access.world"), class: "form-check-label" %>
@@ -51,7 +51,7 @@
     </fieldset>
 
     <fieldset class="mb-5">
-      <legend class="h5">Will a DOI be assigned to the deposits in this collection?* <%= render PopoverComponent.new key: "collection.doi" %>
+      <legend aria-describedby="popover-collection.doi" class="h5">Will a DOI be assigned to the deposits in this collection?* <%= render PopoverComponent.new key: "collection.doi" %>
         <%= link_to "What is a DOI?", Settings.external_links.what_is_a_doi, target: "_blank" %>
       </legend>
       <div class="form-check">

@@ -7,7 +7,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="content-type-prompt">What type of content will you deposit?
+        <h5 class="modal-title" id="content-type-prompt" aria-describedby="popover-what_type">What type of content will you deposit?
           <%= render PopoverComponent.new key: :what_type %>
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -32,7 +32,7 @@
           </div>
 
           <template data-work-type-modal-target="templateHeader">
-            <h5>Which of the following terms further describe your deposit?
+            <h5 aria-describedby="popover-further_types">Which of the following terms further describe your deposit?
               <%= render PopoverComponent.new key: :further_types %>
             </h5>
           </template>

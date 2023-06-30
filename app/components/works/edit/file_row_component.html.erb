@@ -18,7 +18,7 @@
   <div class="upload-description col-4">
       <% unless zip_template? %>
         <div>
-          <%= form.label :label, "Description (optional)" %>
+          <%= form.label :label, "Description (optional)", "aria-describedby": "popover-work.description" %>
           <%= render PopoverComponent.new key: "work.description" %>
         </div>
         <%= form.text_field :label, class: "form-control" %>
@@ -32,7 +32,7 @@
         <%= form.hidden_field :path %>
         <% unless zip_template? %>
           <%= form.check_box :hide, class: "form-check-input" %>
-          <%= form.label :hide, "Hide file", class: "form-check-label col-form-label " %>
+          <%= form.label :hide, "Hide file", class: "form-check-label col-form-label", "aria-describedby": "popover-work.hide_file" %>
           <%= render PopoverComponent.new key: "work.hide_file" %>
         <% end %>
       </div>

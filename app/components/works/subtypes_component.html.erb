@@ -11,7 +11,7 @@
     <div class="mb-4 subtype-container">
       <div class="col-sm-2">
         <div class="col-form-label">
-          <%= form.label :subtype, 'Specify "Other" type' %> <%= render PopoverComponent.new key: "work.subtypes.other" %>
+          <%= form.label :subtype, 'Specify "Other" type', "aria-describedby": "popover-work.subtypes.other" %> <%= render PopoverComponent.new key: "work.subtypes.other" %>
         </div>
       </div>
 
