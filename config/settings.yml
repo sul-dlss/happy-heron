@@ -48,6 +48,8 @@ external_links:
 
 # feature flags
 allow_sdr_content_changes: true
+# This can be removed after affiliation implementation.
+ror_demo: false
 
 authorization_group_header: HTTP_X_GROUPS
 first_name_header: HTTP_X_PERSON_NAME
@@ -62,6 +64,9 @@ authorization_workgroup_names:
 autocomplete_lookup:
   url: http://fast.oclc.org/fastIndex/select
   num_records: 10
+
+ror_lookup:
+  url: https://api.ror.org/organizations
 
 file_uploads_root: tmp/uploads
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # A proxy to Settings.autocomplete_lookup.url to get OCLC's FAST data for typeahead
-class AutocompleteController < ApplicationController
+class FastController < ApplicationController
   include Dry::Monads[:result]
 
   def show

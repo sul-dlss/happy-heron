@@ -1,7 +1,7 @@
 <div class="mb-3 row plain-container g-0 keyword-row">
   <div class="col-sm-6">
     <% unique_field_id = "work_keywords_attributes_#{form.options[:child_index]}" %>
-    <div data-controller="keywords autocomplete autocomplete-edit" data-autocomplete-url-value="/autocomplete" data-autocomplete-min-length-value="3" aria-label="autocomplete group" class="dropdown" role="combobox" aria-expanded="false">
+    <div data-controller="keywords autocomplete autocomplete-edit" data-autocomplete-url-value="/fast" data-autocomplete-min-length-value="3" aria-label="autocomplete group" class="dropdown" role="combobox" aria-expanded="false">
       <%= form.label :label, "Keyword", for: unique_field_id, class: "col-form-label visually-hidden" %>
       <%= form.text_field :label, {class: "form-control#{"is-invalid" if error?}", required: true, id: unique_field_id, "data-autocomplete-target": "input", "data-autocomplete-edit-target": "input",
                 "data-keywords-target": "input"} %>
