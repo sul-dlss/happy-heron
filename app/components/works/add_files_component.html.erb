@@ -79,42 +79,29 @@
           <div class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 1</p>
-              <p>Scroll to the bottom of this page and click "Save as draft."</p>
-              <p><em>You can finish filling out the form now or later.</em></p>
+              <p>If your files are located on Stanford Google Drive, Oak, or Sherlock, select where they are located below.</p>
+              <%= form.select :globus_origin, origin_options, {prompt: "Select..."}, {class: "form-select", "aria-label": "Origin for Globus deposit"} %>
             </div>
           </div>
           <div class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 2</p>
-              <p>Set up a Stanford Globus account, following these <%= link_to "instructions", "#{Settings.globus.help_doc_url}?pli=1#heading=h.ptdws4k1wnlz", target: :blank %>.</p>
-              <p><em>Skip to Step 3 if you already have a Stanford Globus account.</em></p>
+              <p>Scroll to the bottom of this page and click "Save as draft".</p>
+              <p>You can finish filling out this form later.</p>
             </div>
           </div>
           <div class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 3</p>
-              <p>Complete Globus setup (may require software installation) following these <%= link_to "instructions", "#{Settings.globus.help_doc_url}?pli=1#heading=h.3h6eldy9ndya", target: :blank %>.</p>
+              <p>Follow our <%= link_to "instructions", Settings.globus.help_doc_url.to_s, target: :blank %> to set up Globus (may require software installation).</p>
+              <p>Transfer your files to the location you'll see on your item page once you've saved this form.</p>
             </div>
           </div>
           <div class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 4</p>
-              <p>Return to your item at sdr.stanford.edu and click the button that says "Globus setup complete."</p>
-              <p><em>Don't see this button? Proceed to Step 5.</em></p>
-            </div>
-          </div>
-          <div class="col">
-            <div class="border border-dark h-100 p-2 bg-light">
-              <p>STEP 5</p>
-              <p>Check your email from "Globus Notifications."</p>
-              <p><em>Click the link in the email and follow these <%= link_to "instructions", "#{Settings.globus.help_doc_url}?pli=1#heading=h.n1tmzgcygoqj", target: :blank %> to complete your deposit.</em></p>
-            </div>
-          </div>
-          <div class="col">
-            <div class="border border-dark h-100 p-2 bg-light">
-              <p>STEP 6</p>
               <p>Return to this page and make sure the form is complete. Then click "Deposit."</p>
-              <p><em>This will move your files from Globus to the SDR.</em></p>
+              <p>This will move your files from Globus to SDR.</p>
             </div>
           </div>
         </div>
