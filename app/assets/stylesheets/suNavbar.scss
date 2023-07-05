@@ -24,11 +24,13 @@
       font-family: Palatino, ‘Palatino Linotype’, ‘Hoefler Text’, Times, ‘Times New Roman’, serif;
       padding-right: 1rem;
       border-right: 1px solid $white;
+      color: $white;
     }
 
     .digital-repo {
       @extend h4;
       padding-left: 1rem;
+      color: $white;
     }
   }
 }

@@ -38,7 +38,7 @@
       <div id="su-content">
         <nav class="navbar navbar-expand-md navbar-dark stanford-navbar">
           <div class="container">
-            <a class="navbar-brand me-auto" href="/" aria-label="Stanford Digital Repository">
+            <a class="navbar-brand me-auto" href="https://library.stanford.edu" aria-label="Stanford Libraries">
               <%= image_tag("StanfordLibraries-logo-whitetext.svg", height: 32, alt: "Stanford Digital Repository") %>
             </a>
 
@@ -86,7 +86,9 @@
           <header class="background-holder">
             <div class="sdr-header">
               <div class="container-xxl">
-                <span class="stanford">Stanford</span><span class="digital-repo">Digital Repository</span>
+                <%= link_to "/", "aria-label": "Stanford Digital Repository"  do %>
+                  <span class="stanford">Stanford</span> <span class="digital-repo">Digital Repository</span>
+                <% end %>
               </div>
             </div>
             <%= yield :breadcrumbs %>
