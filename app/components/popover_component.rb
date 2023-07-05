@@ -8,7 +8,7 @@ class PopoverComponent < ApplicationComponent
     @scope = scope
   end
 
-  attr_reader :icon, :scope
+  attr_reader :icon, :scope, :key
 
   def text
     t(@key, scope:)

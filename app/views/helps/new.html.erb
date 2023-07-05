@@ -6,7 +6,7 @@
          <div class="col-md-9">
            <div class="form-group">
              <%= form.label(:name, "What is your name?") %>
-             <%= form.text_field(:name, class: "form-control") %>
+             <%= form.text_field(:name, autocomplete: "name", class: "form-control") %>
            </div>
          </div>
       </div>
@@ -14,7 +14,7 @@
          <div class="col-md-9">
            <div class="form-group">
              <%= form.label(:email, "What is your email address?*") %>
-             <%= form.text_field(:email, value: @email, class: "form-control", required: true) %>
+             <%= form.text_field(:email, autocomplete: "email", value: @email, class: "form-control", required: true) %>
            </div>
          </div>
       </div>
