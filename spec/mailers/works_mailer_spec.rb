@@ -318,7 +318,9 @@ RSpec.describe WorksMailer do
 
     it "renders body" do
       expect(mail.body).to include "Dear #{a_user.first_name},"
-      expect(mail.body).to include "Please transfer your files to the above location in Globus"
+      expect(mail.body).to include "Be sure you have logged into Globus with your Stanford credentials!"
+      expect(mail.body).to include "#{Works::GlobusSetupComponent.new(work_version: work_version).endpoint.gsub("&", "&amp;")}\">shared folder at Globus</a> that we have created just for you and transfer your files there."
+      expect(mail.body).to include Works::GlobusSetupComponent.new(work_version: work_version).endpoint.gsub("&", "&amp;")
     end
   end
 
