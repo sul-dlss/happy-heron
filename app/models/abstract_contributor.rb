@@ -55,6 +55,7 @@ class AbstractContributor < ApplicationRecord
   }.freeze
 
   belongs_to :work_version
+  has_many :affiliations, dependent: :destroy
 
   validates :contributor_type, presence: true, inclusion: {in: %w[person organization]}
 

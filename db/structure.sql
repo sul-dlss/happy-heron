@@ -10,13 +10,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: -
---
-
--- *not* creating schema, since initdb creates it
-
-
---
 -- Name: work_access; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -169,6 +162,40 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 
 
 --
+-- Name: affiliations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.affiliations (
+    id bigint NOT NULL,
+    abstract_contributor_id bigint NOT NULL,
+    label character varying,
+    uri character varying,
+    department character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: affiliations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.affiliations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: affiliations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.affiliations_id_seq OWNED BY public.affiliations.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -261,13 +288,13 @@ CREATE TABLE public.collections (
     access character varying,
     required_license character varying,
     default_license character varying,
-    email_when_participants_changed boolean DEFAULT true NOT NULL,
+    email_when_participants_changed boolean,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
     druid character varying,
-    email_depositors_status_changed boolean DEFAULT true NOT NULL,
-    review_enabled boolean DEFAULT false NOT NULL,
+    email_depositors_status_changed boolean,
+    review_enabled boolean DEFAULT false,
     license_option character varying DEFAULT 'required'::character varying NOT NULL,
     head_id bigint,
     doi_option character varying DEFAULT 'yes'::character varying
@@ -724,6 +751,13 @@ ALTER TABLE ONLY public.active_storage_variant_records ALTER COLUMN id SET DEFAU
 
 
 --
+-- Name: affiliations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.affiliations ALTER COLUMN id SET DEFAULT nextval('public.affiliations_id_seq'::regclass);
+
+
+--
 -- Name: attached_files id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -844,6 +878,14 @@ ALTER TABLE ONLY public.active_storage_blobs
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT active_storage_variant_records_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: affiliations affiliations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.affiliations
+    ADD CONSTRAINT affiliations_pkey PRIMARY KEY (id);
 
 
 --
@@ -999,6 +1041,13 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_affiliations_on_abstract_contributor_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_affiliations_on_abstract_contributor_id ON public.affiliations USING btree (abstract_contributor_id);
 
 
 --
@@ -1203,6 +1252,14 @@ CREATE INDEX index_works_on_owner_id ON public.works USING btree (owner_id);
 
 ALTER TABLE ONLY public.events
     ADD CONSTRAINT fk_rails_0cb5590091 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: affiliations fk_rails_0e4c3990b6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.affiliations
+    ADD CONSTRAINT fk_rails_0e4c3990b6 FOREIGN KEY (abstract_contributor_id) REFERENCES public.abstract_contributors(id);
 
 
 --
@@ -1416,6 +1473,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221206194032'),
 ('20221213211305'),
 ('20230420204926'),
-('20230629154913');
+('20230629154913'),
+('20230705222153');
 
 
