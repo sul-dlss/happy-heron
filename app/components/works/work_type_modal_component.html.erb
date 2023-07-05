@@ -65,11 +65,11 @@
 
           <div class="mb-4 subtype-container" data-work-type-modal-target="subtype"></div>
 
-          <a href="#" class="more-options collapsed" data-action="work-type-modal#toggleMoreTypes" data-work-type-modal-target="moreTypesLink" hidden>
+          <a href="#" class="more-options collapsed" data-action="work-type-modal#toggleMoreTypes" data-work-type-modal-target="moreTypesLink" hidden aria-expanded="false" role="button" aria-controls="modalSubtypeContainer">
             See more options
           </a>
 
-          <div class="mb-4 subtype-container" data-work-type-modal-target="moreTypes" hidden></div>
+          <div id="modalSubtypeContainer" class="mb-4 subtype-container" data-work-type-modal-target="moreTypes" hidden></div>
 
           <button type="submit"
             class="btn btn-primary mx-auto d-block"

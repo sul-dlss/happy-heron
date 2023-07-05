@@ -15,11 +15,13 @@ export default class extends Controller {
     this.moreTypesTarget.hidden = false
     this.moreTypesLinkTarget.innerHTML = 'See fewer options'
     this.moreTypesLinkTarget.classList.toggle('collapsed', false)
+    this.moreTypesLinkTarget.setAttribute('aria-expanded', true)
   }
 
   hideMoreTypes() {
     this.moreTypesTarget.hidden = true
     this.moreTypesLinkTarget.innerHTML = 'See more options'
     this.moreTypesLinkTarget.classList.toggle('collapsed', true)
+    this.moreTypesLinkTarget.setAttribute('aria-expanded', false)
   }
 }

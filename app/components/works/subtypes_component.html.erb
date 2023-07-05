@@ -39,12 +39,12 @@
     </div>
 
     <% unless mixed_material_type? %>
-      <a href="#" class="more-options collapsed" data-action="more-types#toggleMoreTypes" data-more-types-target="moreTypesLink">
+      <a href="#" class="more-options collapsed" data-action="more-types#toggleMoreTypes" data-more-types-target="moreTypesLink" aria-expanded="false" role="button" aria-controls="subtypeContainer">
         See more options
       </a>
     <% end %>
 
-    <div class="mb-4 subtype-container" data-more-types-target="moreTypes" hidden>
+    <div id="subtypeContainer" class="mb-4 subtype-container" data-more-types-target="moreTypes" hidden>
       <% more_types.each do |more_type| %>
         <div class="subtype-item">
           <div class="form-check">
