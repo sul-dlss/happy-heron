@@ -232,27 +232,28 @@ class WorksController < ObjectsController
   end
 
   def work_params
-    top_level = params.require(:work)
-    top_level.permit(:title, :work_type,
-      "published(1i)", "published(2i)", "published(3i)",
-      :created_type,
-      "created(1i)", "created(2i)", "created(3i)", "created(approx0)",
-      "created_range(1i)", "created_range(2i)", "created_range(3i)",
-      "created_range(approx0)",
-      "created_range(4i)", "created_range(5i)", "created_range(6i)",
-      "created_range(approx3)",
-      :abstract, :citation_auto, :citation, :default_citation,
-      :access, :license, :version_description,
-      :release, "embargo_date(1i)", "embargo_date(2i)", "embargo_date(3i)",
-      :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
-      :globus_origin, subtype: [],
-      attached_files_attributes: %i[_destroy id label hide file path],
-      authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
-      contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid],
-      contact_emails_attributes: %i[_destroy id email],
-      keywords_attributes: %i[_destroy id label uri cocina_type],
-      related_works_attributes: %i[_destroy id citation],
-      related_links_attributes: %i[_destroy id link_title url])
+    params
+      .require(:work)
+      .permit(:title, :work_type,
+        "published(1i)", "published(2i)", "published(3i)",
+        :created_type,
+        "created(1i)", "created(2i)", "created(3i)", "created(approx0)",
+        "created_range(1i)", "created_range(2i)", "created_range(3i)",
+        "created_range(approx0)",
+        "created_range(4i)", "created_range(5i)", "created_range(6i)",
+        "created_range(approx3)",
+        :abstract, :citation_auto, :citation, :default_citation,
+        :access, :license, :version_description,
+        :release, "embargo_date(1i)", "embargo_date(2i)", "embargo_date(3i)",
+        :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
+        :globus_origin, subtype: [], files: [],
+        attached_files_attributes: %i[_destroy id label hide file path],
+        authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid with_orcid],
+        contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid with_orcid],
+        contact_emails_attributes: %i[_destroy id email],
+        keywords_attributes: %i[_destroy id label uri cocina_type],
+        related_works_attributes: %i[_destroy id citation],
+        related_links_attributes: %i[_destroy id link_title url])
   end
 
   def validate_work_types!

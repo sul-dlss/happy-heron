@@ -190,6 +190,7 @@ RSpec.describe "Create a new work" do
 
         let(:work_params) do
           attributes_for(:work_version)
+            .except(:published_at, :state) # Unpermitted params
             .merge(:authors_attributes => authors,
               :attached_files_attributes => files,
               :contact_emails_attributes => contact_emails,
@@ -645,9 +646,9 @@ RSpec.describe "Create a new work" do
             license: "CC0-1.0",
             upload_type: "browser",
             release: "embargo",
-            "embargo(1i)": "2030",
-            "embargo(2i)": "09",
-            "embargo(3i)": "01"
+            "embargo_date(1i)": "2030",
+            "embargo_date(2i)": "09",
+            "embargo_date(3i)": "01"
           }
         end
 
