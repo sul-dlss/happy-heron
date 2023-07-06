@@ -34,7 +34,6 @@ RSpec.describe Works::ContributorRowComponent do
 
     it "does not have required inputs" do
       expect(rendered.css('input[required = "required"]')).not_to be_present
-      expect(rendered.to_html).not_to include(" *")
     end
 
     it "does not update citation" do

@@ -65,10 +65,7 @@
             </div>
           </div>
         </fieldset>
-        <%# This can be removed after affiliation implementation. %>
-        <% if Settings.ror_demo %>
-          <%= render("works/organization_input") %>
-        <% end %>
+        <%= render Works::AffiliationsComponent.new(form: form) %>
       </div>
       <div class="col" data-contributors-target="organization">
         <%= form.label :full_name, organization_label, class: "form-label" %>

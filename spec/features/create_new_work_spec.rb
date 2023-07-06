@@ -108,17 +108,23 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
           fill_in "Contact email", with: user.email
 
           within_section "Authors to include in citation" do
+            # Switch to an organization
+            select "Publisher", from: "Role term"
+            fill_in "Name", with: "Best Publisher"
+          end
+
+          within_section "Additional contributors" do
             fill_in "First name", with: "Contributor First Name"
             fill_in "Last name", with: "Contributor Last Name"
 
             # Switch to an ORCID
             choose "Enter author by ORCID iD"
-            fill_in "ORCID iD *", with: "https://orcid.org/0000-0003-1527-0030"
+            fill_in "ORCID iD", with: "https://orcid.org/0000-0003-1527-0030"
             expect(page).to have_content("Name associated with this ORCID iD is Orcid First Name Orcid Last Name")
 
-            # Switch to an organization
-            select "Publisher", from: "Role term"
-            fill_in "Name", with: "Best Publisher"
+            # Add affiliation
+            fill_in "Affiliation *", with: "Stanford"
+            fill_in "Department/Institute/Center", with: "Stanford Libraries"
           end
 
           fill_in "Publication year", with: "2020"
@@ -162,6 +168,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
           expect(page).to have_content("Sound")
           expect(page).to have_content("Oral history, Podcast, Poetry reading")
           expect(page).to have_content("Best Publisher")
+          expect(page).to have_content("Orcid First Name Orcid Last Name (Stanford, Stanford Libraries)")
           expect(page).to have_content("2020-03-06 - 2020-10-30")
           expect(page).to have_content "User provided abstract"
           expect(page).to have_content "Citation from user input"
@@ -176,7 +183,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
 
           within "#events" do
             # New work gets a description of what's changed (except subtypes)
-            changed = ["title of deposit modified", "abstract modified", "contact email modified", "authors modified",
+            changed = ["title of deposit modified", "abstract modified", "contact email modified", "authors modified", "contributors modified",
               "publication date modified", "creation date modified", "keywords modified", "citation modified",
               "files added/removed"]
             expect(page).to have_content changed.join(", "), count: 1

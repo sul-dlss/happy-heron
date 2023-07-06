@@ -64,10 +64,10 @@ export default class extends Controller {
   displayOrganization() {
     this.organizationTarget.hidden = false
     if (this.requiredValue)
-      this.organizationTarget.querySelectorAll('input[type="text"]').forEach((element) => element.required = true)
+      this.organizationTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => element.required = true)
 
     this.personTarget.hidden = true
-    this.personTarget.querySelectorAll('input[type="text"],input[type="hidden"]').forEach((element) => {
+    this.personTarget.querySelectorAll('input[type="text"]:not(.affiliation-input),input[type="hidden"]:not(.affiliation-input)').forEach((element) => {
       element.required = false
       element.value = ''
     })
@@ -77,10 +77,10 @@ export default class extends Controller {
   displayPerson() {
     this.personTarget.hidden = false
     if (this.requiredValue)
-      this.personTarget.querySelectorAll('input[type="text"]').forEach((element) => element.required = true)
+      this.personTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => element.required = true)
 
     this.organizationTarget.hidden = true
-    this.organizationTarget.querySelectorAll('input[type="text"]').forEach((element) => {
+    this.organizationTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => {
       element.required = false
       element.value = ''
     })

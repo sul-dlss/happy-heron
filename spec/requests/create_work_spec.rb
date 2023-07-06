@@ -87,7 +87,8 @@ RSpec.describe "Create a new work" do
              "last_name" => "Coyne", "role_term" => "person|Data collector"},
            "999" =>
             {"_destroy" => "false", "first_name" => "Naomi", "weight" => "1",
-             "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author"},
+             "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author",
+             "affiliations_attributes" => {"0" => {"_destroy" => "false", "label" => "Stanford University", "uri" => "http://ror.org/12345", "department" => "Department of Classics"}}},
            "1002" =>
             {"_destroy" => "false", "first_name" => "Naomi", "weight" => "0",
              "last_name" => "Dushay", "full_name" => "The Leland Stanford Junior University",
@@ -218,6 +219,11 @@ RSpec.describe "Create a new work" do
           work_version = Work.last.head
           expect(work_version.authors.size).to eq 2
           expect(work_version.authors.first.full_name).to eq "The Leland Stanford Junior University"
+          expect(work_version.authors.last.affiliations.size).to eq 1
+          affiliation = work_version.authors.last.affiliations.first
+          expect(affiliation.label).to eq "Stanford University"
+          expect(affiliation.uri).to eq "http://ror.org/12345"
+          expect(affiliation.department).to eq "Department of Classics"
           expect(work_version.attached_files.size).to eq 2
           expect(work_version.contact_emails.size).to eq 2
           expect(work_version.keywords.size).to eq 2

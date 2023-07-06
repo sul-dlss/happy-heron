@@ -5,13 +5,16 @@
     <tbody>
     <% participants.each do |participant| %>
       <tr>
-        <% if participant.person? %>
-          <td style="width: 50%">
+        <td style="width: 50%">
+          <% if participant.person? %>
             <%= participant.first_name %> <%= participant.last_name %>
-          </td>
-        <% else %>
-          <td style="width: 50%"><%= participant.full_name %></td>
-        <% end %>
+          <% else %>
+            <%= participant.full_name %>
+          <% end %>
+          <% if participant.affiliations.any? %>
+            (<%= participant.affiliations.map(&:to_s).join("; ") %>)
+          <% end %>
+        </td>
         <td style="width: 25%"><%= render Works::Show::OrcidComponent.new(orcid: participant.orcid) %></td>
         <td style="width: 25%"><%= participant.role %></td>
       </tr>

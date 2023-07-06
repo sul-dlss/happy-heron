@@ -52,8 +52,6 @@ external_links:
 
 # feature flags
 allow_sdr_content_changes: true
-# This can be removed after affiliation implementation.
-ror_demo: false
 
 authorization_group_header: HTTP_X_GROUPS
 first_name_header: HTTP_X_PERSON_NAME

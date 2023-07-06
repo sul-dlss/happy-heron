@@ -1,0 +1,23 @@
+<div class="mb-3 row plain-container">
+  <div class="col-sm-5">
+      <div data-controller="autocomplete" data-autocomplete-url-value="/ror" data-autocomplete-min-length-value="3" class="dropdown" role="combobox" aria-expanded="false" data-autocomplete-ready-value="true" aria-label="Autocomplete for affiliation">
+        <!-- This input is populated by autocomplete controller.-->
+        <!-- That triggers the autocomplete-edit controller, which populates the uri and cocina type inputs. -->
+        <%= form.label :label, "Affiliation *", class: "col-form-label" %>
+        <%= form.text_field :label, class: "form-control affiliation-input", data: {autocomplete_target: "input"} %>
+        <%= form.hidden_field :uri, {"data-autocomplete-target": "hidden", "aria-label": "URI for affiliation", class: "affiliation-input"} %>
+        <ul class="list-group" data-autocomplete-target="results"></ul>
+      </div>
+  </div>
+  <div class="col-sm-5">
+      <%= form.label :department, "Department/Institute/Center", class: "col-form-label" %>
+      <%= form.text_field :department, class: "form-control affiliation-input" %>
+  </div>
+  <div class="offset-sm-1 col-sm-1">
+    <%= button_tag type: "button", class: "btn btn-sm", aria: {label: "Remove affiliation"},
+          data: {action: "click->nested-form#removeAssociation"} do %>
+      <span class="fa-regular fa-trash-alt"></span>
+    <% end %>
+    <%= form.hidden_field :_destroy %>
+  </div>
+</div>

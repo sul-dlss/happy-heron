@@ -38,6 +38,17 @@ module ContributorForm
         property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
         property :weight, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
 
+        collection :affiliations,
+          populator: AffiliationsPopulator.new(:affiliations, Affiliation),
+          prepopulator: ->(*) { affiliations << Affiliation.new if affiliations.blank? } do
+          property :id, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
+          property :label, type: Dry::Types["params.nil"] | Dry::Types["params.string"]
+          property :uri, type: Dry::Types["params.nil"] | Dry::Types["params.string"]
+          property :department, type: Dry::Types["params.nil"] | Dry::Types["params.string"]
+          property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+          validates :label, presence: true if validate
+        end
+
         if validate
           validates :first_name, presence: true, if: -> { role_term.start_with?("person") }
           validates :last_name, presence: true, if: -> { role_term.start_with?("person") }
