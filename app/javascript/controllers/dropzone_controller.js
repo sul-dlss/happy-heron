@@ -102,7 +102,7 @@ export default class extends Controller {
         if (this.checkForDuplicates(file.name)) {
           this.dropZone.emit("error", file, 'Duplicate file');
         }
-        if(this.maxFiles && this.fileCount > this.maxFiles) {
+        if (this.maxFiles && this.fileCount > this.maxFiles) {
           this.dropZone.emit("error", file, `Too many files. Maximum is ${this.maxFiles}`);
         }
 
@@ -172,7 +172,7 @@ export default class extends Controller {
   }
 
   get maxFiles() {
-    return this.data.get("maxFiles");
+    return this.data.get("maxFiles") || 250;
   }
 
   get maxFileSize() {
@@ -305,7 +305,7 @@ function createDropZone(controller, template) {
   return new Dropzone(controller.element, {
     url: controller.url,
     headers: controller.headers,
-    maxFiles: 1000,
+    maxFiles: controller.maxFiles,
     maxFilesize: controller.maxFileSize,
     acceptedFiles: controller.acceptedFiles,
     addRemoveLinks: controller.addRemoveLinks,
@@ -314,7 +314,6 @@ function createDropZone(controller, template) {
     thumbnailHeight: 42,
     thumbnailWidth: 34,
     clickable: controller.clickable,
-
     autoQueue: false
   });
 }
