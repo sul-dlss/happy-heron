@@ -34,8 +34,6 @@ RSpec.describe "Updating an existing collection" do
       context "when collection saves" do
         let(:collection_params) do
           {
-            name: "My Test Collection",
-            description: "This is a very good collection.",
             access: "world",
             required_license: "CC0-1.0",
             doi_option: "depositor-selects",
@@ -47,14 +45,8 @@ RSpec.describe "Updating an existing collection" do
               "9995" => {"sunetid" => "giancarlo", "_destroy" => "false"},
               "9994" => {"sunetid" => "zhengyi", "_destroy" => "false"}
             },
-            email_depositors_status_changed: true,
-            contact_emails_attributes: {}
-          }.tap do |param|
-            collection_version.contact_emails.each_with_object(param[:contact_emails_attributes])
-              .with_index do |(author, attrs), index|
-              attrs[index.to_s] = {"_destroy" => "false", "id" => author.id, "email" => "bob@foo.io"}
-            end
-          end
+            email_depositors_status_changed: true
+          }
         end
 
         context "when an existing collection is updated" do

@@ -25,7 +25,6 @@ class FirstDraftCollectionsController < ObjectsController
 
     collection_version = collection.collection_versions.first # this is a first draft and should only have one version
     @form = CreateCollectionForm.new(collection_version:, collection:)
-    # @form = CollectionSettingsForm.new(collection)
     @form.prepopulate!
   end
 

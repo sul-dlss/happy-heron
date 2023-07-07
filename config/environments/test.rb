@@ -12,6 +12,10 @@ Rails.application.configure do
   require "test_shibboleth_headers"
   config.middleware.use TestShibbolethHeaders
 
+  # Raise when request includes unpermitted params to help find errors in
+  # dev/test (default value is `nil`, which is used in production)
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
   # Turn false under Spring and add config.action_view.cache_template_loading = true.
   config.cache_classes = true
 

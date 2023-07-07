@@ -320,7 +320,7 @@ RSpec.describe "Create a collection" do
       context "when collection fails to save" do
         let(:collection_params) do
           {
-            visibility: "world"
+            release_option: "non-existent-value"
           }
         end
 
