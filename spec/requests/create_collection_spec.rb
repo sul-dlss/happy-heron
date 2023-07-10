@@ -116,6 +116,16 @@ RSpec.describe "Create a collection" do
           {"0" => {"_destroy" => "false", :email => ""}}
         end
 
+        let(:collection_custom_rights_params) do
+          {
+            allow_custom_rights_statement: "false",
+            custom_rights_statement_source_option: "",
+            provided_custom_rights_statement: "",
+            custom_rights_instructions_source_option: "",
+            custom_rights_statement_custom_instructions: ""
+          }
+        end
+
         let(:collection_params) do
           {
             :name => "My Test Collection",
@@ -139,7 +149,7 @@ RSpec.describe "Create a collection" do
             :doi_option => "depositor-selects",
             :contact_emails_attributes => contact_emails,
             :related_links_attributes => related_links
-          }
+          }.merge(collection_custom_rights_params)
         end
 
         it "creates a new collection" do
@@ -158,10 +168,91 @@ RSpec.describe "Create a collection" do
           expect(collection.release_option).to eq "delay"
           expect(collection.release_date).to eq next_year
           expect(collection.doi_option).to eq "depositor-selects"
+          expect(collection.allow_custom_rights_statement).to be false
+          expect(collection.custom_rights_statement_source_option).to be_nil
+          expect(collection.custom_rights_instructions_source_option).to be_nil
+          expect(collection.custom_rights_statement_custom_instructions).to be_nil
           expect(collection_version.contact_emails.size).to eq 2
           expect(collection_version.contact_emails).to all(be_a(ContactEmail))
           expect(collection_version.related_links.size).to eq 2
           expect(collection_version.related_links).to all(be_a(RelatedLink))
+        end
+
+        context "with a custom rights statement provided by the collection" do
+          let(:collection_custom_rights_params) do
+            {
+              allow_custom_rights_statement: "true",
+              custom_rights_statement_source_option: "provided_by_collection",
+              provided_custom_rights_statement: "These are the additional rights that were not already covered",
+              custom_rights_instructions_source_option: "",
+              custom_rights_statement_custom_instructions: ""
+            }
+          end
+
+          it "creates a new collection" do
+            post first_draft_collections_path, params: {collection: collection_params, commit: deposit_button}
+            collection = Collection.last
+
+            expect(response).to have_http_status(:found)
+            expect(response).to redirect_to(collection_path(collection))
+            expect(collection.allow_custom_rights_statement).to be true
+            expect(collection.custom_rights_statement_source_option).to eq "provided_by_collection"
+            expect(collection.provided_custom_rights_statement).to eq "These are the additional rights that were not already covered"
+          end
+        end
+
+        context "with a custom rights statement provided by the depositor" do
+          let(:collection_custom_rights_params) do
+            {
+              allow_custom_rights_statement: "true",
+              custom_rights_statement_source_option: "entered_by_depositor",
+              provided_custom_rights_statement: "Maybe entered some text here, but but then picked other options that caused it to get discarded"
+            }.merge(collection_custom_rights_instructions_params)
+          end
+
+          context "with instructions provided by the collection" do
+            let(:collection_custom_rights_instructions_params) do
+              {
+                custom_rights_instructions_source_option: "provided_by_collection",
+                custom_rights_statement_custom_instructions: "Some things to consider when entering additional terms of use not covered by your chosen license"
+              }
+            end
+
+            it "creates a new collection" do
+              post first_draft_collections_path, params: {collection: collection_params, commit: deposit_button}
+              collection = Collection.last
+
+              expect(response).to have_http_status(:found)
+              expect(response).to redirect_to(collection_path(collection))
+              expect(collection.allow_custom_rights_statement).to be true
+              expect(collection.custom_rights_statement_source_option).to eq "entered_by_depositor"
+              expect(collection.custom_rights_instructions_source_option).to eq "provided_by_collection"
+              expect(collection.provided_custom_rights_statement).to be_nil
+              expect(collection.custom_rights_statement_custom_instructions).to eq "Some things to consider when entering additional terms of use not covered by your chosen license"
+            end
+          end
+
+          context "with default instructions" do
+            let(:collection_custom_rights_instructions_params) do
+              {
+                custom_rights_instructions_source_option: "default_instructions",
+                custom_rights_statement_custom_instructions: ""
+              }
+            end
+
+            it "creates a new collection" do
+              post first_draft_collections_path, params: {collection: collection_params, commit: deposit_button}
+              collection = Collection.last
+
+              expect(response).to have_http_status(:found)
+              expect(response).to redirect_to(collection_path(collection))
+              expect(collection.allow_custom_rights_statement).to be true
+              expect(collection.custom_rights_statement_source_option).to eq "entered_by_depositor"
+              expect(collection.custom_rights_instructions_source_option).to eq "default_instructions"
+              expect(collection.provided_custom_rights_statement).to be_nil
+              expect(collection.custom_rights_statement_custom_instructions).to be_nil
+            end
+          end
         end
 
         it "sends emails to depositors when a new collection is created and deposited" do
