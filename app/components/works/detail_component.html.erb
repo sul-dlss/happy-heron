@@ -15,7 +15,7 @@
   <% end %>
 
   <header class="title clearfix"><%# clearfix here prevents the EditButtonComponent from spilling outside the container if the title is long %>
-    <span class="header-text"><%= title %></span>
+    <h1 class="header-text d-inline-block"><%= title %></h1>
     <%= helpers.turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: "_top" %>
     <span class="state"><%= render Works::DetailStateDisplayComponent.new(work_version: work_version) %></span>
     <%= render Works::EditButtonComponent.new(work_version: work_version) %>

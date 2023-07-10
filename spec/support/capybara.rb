@@ -13,3 +13,12 @@ Capybara.disable_animation = true
 Capybara.enable_aria_label = true
 Capybara.server = :puma, {Silent: true}
 Capybara.default_max_wait_time = 10 # default is 2
+
+# Allow tests to specify a custom Capybara driver if needed, e.g., for accessibility
+RSpec.configure do |config|
+  config.around(:each, :driver) do |example|
+    Capybara.current_driver = example.metadata[:driver]
+    example.run
+    Capybara.use_default_driver
+  end
+end
