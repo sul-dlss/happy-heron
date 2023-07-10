@@ -36,6 +36,9 @@ RSpec.describe "Updating an existing collection" do
           {
             access: "world",
             required_license: "CC0-1.0",
+            allow_custom_rights_statement: "true",
+            custom_rights_statement_source_option: "entered_by_depositor",
+            custom_rights_instructions_source_option: "default_instructions",
             doi_option: "depositor-selects",
             depositors_attributes: {
               "9999" => {"sunetid" => "maya.aguirre", "_destroy" => "false"},
@@ -61,6 +64,8 @@ RSpec.describe "Updating an existing collection" do
             expect(collection.depositors.size).to eq 6
             expect(collection.doi_option).to eq "depositor-selects"
             expect(collection.email_depositors_status_changed).to be true
+            expect(collection.custom_rights_statement_source_option).to eq "entered_by_depositor"
+            expect(collection.custom_rights_instructions_source_option).to eq "default_instructions"
           end
         end
 
