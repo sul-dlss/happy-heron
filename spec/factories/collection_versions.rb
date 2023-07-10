@@ -35,6 +35,10 @@ FactoryBot.define do
       after(:create) do |collection_version, _evaluator|
         collection_version.collection.update(head: collection_version)
       end
+
+      after(:build) do |collection_version, _evaluator|
+        collection_version.collection.head = collection_version
+      end
     end
   end
 end
