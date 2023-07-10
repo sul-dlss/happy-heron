@@ -10,9 +10,9 @@
   <div class="form-check" data-complex-radio-target="selection">
     <%= form.radio_button :upload_type, "browser", class: "form-check-input", "data-file-uploads-target": "browserRadioButton",
           data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus"} %>
-    <%= form.label :upload_type_browser, "Upload fewer than 250 files (total less than 10 GB) to be displayed as a flat list of files.", class: "form-check-label fw-semibold" %>
+    <%= form.label :upload_type_browser, "Upload one or more files (less than 10GB) to be displayed as a flat list of files.", class: "form-check-label fw-semibold" %>
     <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
-      <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="250" data-dropzone-previews-container=".dropzone-files-previews">
+      <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-previews-container=".dropzone-files-previews">
         <fieldset>
           <div class="dropzone dropzone-default" data-dropzone-target="container">
             <%= form.file_field :files, multiple: true, direct_upload: true, namespace: "flat_list", "aria-label": "Upload files",
@@ -80,7 +80,7 @@
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 1</p>
               <p>If your files are located on Stanford Google Drive, Oak, or Sherlock, select where they are located below.</p>
-              <%= form.select :globus_origin, origin_options, {prompt: "Select..."}, {class: "form-select", "aria-label": "Origin for Globus deposit"} %>
+              <%= form.select :globus_origin, origin_options, {}, {class: "form-select", "aria-label": "Origin for Globus deposit"} %>
             </div>
           </div>
           <div class="col">

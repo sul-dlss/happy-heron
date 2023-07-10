@@ -32,6 +32,7 @@ module Works
 
     def origin_options
       [
+        ["Select...", ""],
         ["Stanford Google Drive", "stanford_gdrive"],
         ["Oak", "oak"],
         ["Sherlock", "sherlock"]
