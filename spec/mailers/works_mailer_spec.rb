@@ -319,8 +319,7 @@ RSpec.describe WorksMailer do
     it "renders body" do
       expect(mail.body).to include "Dear #{a_user.first_name},"
       expect(mail.body).to include "Be sure you have logged into Globus with your Stanford credentials!"
-      expect(mail.body).to include "#{Works::GlobusSetupComponent.new(work_version: work_version).endpoint.gsub("&", "&amp;")}\">shared folder at Globus</a> that we have created just for you and transfer your files there."
-      expect(mail.body).to include Works::GlobusSetupComponent.new(work_version: work_version).endpoint.gsub("&", "&amp;")
+      expect(mail.body).to include "<a href=\"#{work_url(work)}\">Return to your item</a> at sdr.stanford.edu, click on the link for the shared folder"
     end
   end
 
