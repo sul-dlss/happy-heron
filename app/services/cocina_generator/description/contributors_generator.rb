@@ -103,11 +103,10 @@ module CocinaGenerator
       end
 
       def notes(contributor)
-        return unless contributor.type == "Contributor"
-
-        [
-          Cocina::Models::DescriptiveValue.new(type: "citation status", value: "false")
-        ]
+        notes = []
+        notes << Cocina::Models::DescriptiveValue.new(type: "citation status", value: "false") if contributor.type == "Contributor"
+        notes.concat(AffiliationsGenerator.generate(contributor: contributor))
+        notes.presence
       end
 
       def marcrelator_role(role)

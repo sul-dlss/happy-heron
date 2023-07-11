@@ -1107,4 +1107,56 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
       end
     end
   end
+
+  context "with contributor with affiliation" do
+    let(:affiliation) { build(:affiliation, label: "Stanford University") }
+    let(:contributor) { build(:person_contributor, orcid: "https://orcid.org/0000-0000-0000-0000", affiliations: [affiliation]) }
+    let(:work_version) { build(:work_version, contributors: [contributor]) }
+
+    it "creates Cocina::Models::Contributor" do
+      expect(cocina_props).to eq(
+        [
+          Cocina::Models::Contributor.new({
+            name: [
+              {
+                structuredValue: [
+                  {
+                    value: contributor.first_name,
+                    type: "forename"
+                  },
+                  {
+                    value: contributor.last_name,
+                    type: "surname"
+                  }
+                ]
+              }
+            ],
+            type: "person",
+            status: "primary",
+            role: [contributing_author_role],
+            identifier: [
+              {
+                value: "0000-0000-0000-0000",
+                type: "ORCID",
+                source: {
+                  uri: "https://orcid.org"
+                }
+              }
+            ],
+            note: [
+              {
+                type: "citation status",
+                value: "false"
+              },
+              {
+                type: "affiliation",
+                value: "Stanford University"
+              }
+
+            ]
+          }).to_h
+        ]
+      )
+    end
+  end
 end
