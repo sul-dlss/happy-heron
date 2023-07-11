@@ -122,5 +122,9 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
     it "renders a link to purl" do
       expect(rendered.css("a").map { |node| node["href"] }).to include "https://purl.stanford.edu/yq268qt4607"
     end
+
+    it "renders a copy link button with a unique aria-label" do
+      expect(rendered.css("a").map { |node| node["aria-label"] }).to include "Copy persistent link to #{WorkTitlePresenter.show(work.head)}"
+    end
   end
 end
