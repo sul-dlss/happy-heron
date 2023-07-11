@@ -15,8 +15,10 @@
   </style>
 <% end %>
 
-<div class="container" id="work">
-  <%= render Works::ApprovalComponent.new(work_version: @work.head) %>
-  <%= turbo_stream_from @work %>
-  <%= render @work %>
-</div>
+<main id="content" class="mb-3 mb-md-5">
+  <div class="container" id="work">
+    <%= render Works::ApprovalComponent.new(work_version: @work.head) %>
+    <%= turbo_stream_from @work %>
+    <%= render @work %>
+  </div>
+</main>

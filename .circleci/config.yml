@@ -33,11 +33,27 @@ jobs:
       - run:
           name: Lint ERBs
           command: 'bundle exec erblint --lint-all --format compact'
+  accessibility-features:
+    executor: ruby-rails/ruby-postgres
+    steps:
+      - checkout
+      - ruby/install-deps
+      - browser-tools/install-chrome
+      - run:
+          command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
+          name: Wait for DB
+      - run:
+          command: bin/rails db:prepare
+          name: Set up DB
+      - run:
+          name: Run accessibility feature tests
+          command: 'bundle exec rspec --tag accessibility'
 workflows:
   build:
     jobs:
       - erblint
       - cypress
+      - accessibility-features
       - ruby-rails/lint:
           name: lint
       - ruby-rails/test-rails:

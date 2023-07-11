@@ -17,6 +17,7 @@ require "super_diff/rspec-rails"
 require "action_policy/rspec/dsl"
 require "capybara-screenshot/rspec"
 require "cocina/rspec/factories"
+require "axe-rspec"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

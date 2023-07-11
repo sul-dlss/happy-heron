@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rails", "~> 7.0.1"
 
 group :development, :test do
+  gem "axe-core-rspec"
   gem "byebug"
   gem "cypress-on-rails", "~> 1.0"
   gem "cypress-rails"
@@ -41,7 +42,8 @@ end
 group :test do
   gem "capybara", "~> 3.34"
   gem "capybara-screenshot"
-  gem "cuprite"
+  gem "cuprite" # Pure Ruby headless Chrome web driver used for Capybara feature tests
+  gem "selenium-webdriver" # Used as Capybara driver by axe-core-rspec gem for accessibility tests
 end
 
 group :deployment do
