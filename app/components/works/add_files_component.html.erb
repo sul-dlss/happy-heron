@@ -43,7 +43,7 @@
           data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus", file_uploads_target: "zipRadioButton"} %>
     <%= form.label :upload_type_zipfile, "Upload a single zip file (less than 10GB) which will be unzipped, including any file hierarchy.", class: "form-check-label fw-semibold" %>
     <div id="zip-files-panel" data-file-uploads-target="zipUpload">
-      <p>Viewers will see the file hierarchy and be able to download individual files.</p>
+      <p>Viewers will see the file hierarchy and be able to download individual files. Unzipping may take several minutes if your zip file contains a large number of individual files.</p>
       <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="1"
            data-dropzone-accepted-files=".zip" data-dropzone-clickable=".dz-zip-clickable"
            data-dropzone-previews-container=".dropzone-zip-previews">
