@@ -10,7 +10,7 @@ module Works
     attr_reader :work_version
 
     def render?
-      work_version.globus?
+      work_version.globus? && work_version.globus_endpoint
     end
 
     def globus_user_valid?
