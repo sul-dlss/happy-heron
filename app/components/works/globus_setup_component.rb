@@ -13,6 +13,10 @@ module Works
       work_version.globus?
     end
 
+    def placeholder?
+      work_version.globus_endpoint.blank?
+    end
+
     def globus_user_valid?
       return true if integration_test_mode?
       return Settings.globus.test_user_valid if test_mode?
