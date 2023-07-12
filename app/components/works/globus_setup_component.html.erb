@@ -2,16 +2,26 @@
   <div class="row my-5 mx-2 alert alert-danger">
     <div class="col-12">
       <p><strong>How to complete your deposit using Globus:</strong></p>
-      <ol>
-        <li>If you are NOT transferring content from Oak, Sherlock, or Google Drive, you may need to perform some setup tasks, including installation of software. Check the appendices of our <%= link_to "instructions", "#{Settings.globus.help_doc_url}/edit", target: "_blank" %> for details.</li>
-          <ul>
-            <li>Be sure you have logged into Globus with your Stanford credentials!</li>
-          </ul>
-        <li>Go to this <%= link_to "shared folder at Globus", endpoint, target: "_blank" %> that we have created just for you and transfer your files there.</li>
-        <li>Return here and click the pencil icon above to edit your item.</li>
-        <li>Check the box in the "Add your files" section on the edit page to indicate that your files have finished transferring to Globus (transfer must be complete!).</li>
-        <li>Scroll to the bottom of the form and click "Deposit" to finish up now, or click "Save as draft" to finish later.</li>
-      </ol>
+      <% if placeholder? %>
+        <ol>
+          <li><span class="placeholder w-100"></span></li>
+          <li><span class="placeholder w-100"></span></li>
+          <li><span class="placeholder w-100"></span></li>
+          <li><span class="placeholder w-100"></span></li>
+          <li><span class="placeholder w-100"></span></li>
+        </ol>
+      <% else %>
+        <ol>
+          <li>If you are NOT transferring content from Oak, Sherlock, or Google Drive, you may need to perform some setup tasks, including installation of software. Check the appendices of our <%= link_to "instructions", "#{Settings.globus.help_doc_url}/edit", target: "_blank" %> for details.</li>
+            <ul>
+              <li>Be sure you have logged into Globus with your Stanford credentials!</li>
+            </ul>
+          <li>Go to this <%= link_to "shared folder at Globus", endpoint, target: "_blank" %> that we have created just for you and transfer your files there.</li>
+          <li>Return here and click the pencil icon above to edit your item.</li>
+          <li>Check the box in the "Add your files" section on the edit page to indicate that your files have finished transferring to Globus (transfer must be complete!).</li>
+          <li>Scroll to the bottom of the form and click "Deposit" to finish up now, or click "Save as draft" to finish later.</li>
+        </ol>
+      <% end %>
     </div>
   </div>
 <% else %>
