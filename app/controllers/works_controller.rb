@@ -248,12 +248,16 @@ class WorksController < ObjectsController
         :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
         :globus_origin, subtype: [], files: [],
         attached_files_attributes: %i[_destroy id label hide file path],
-        authors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid with_orcid],
-        contributors_attributes: %i[_destroy id full_name first_name last_name role_term weight orcid with_orcid],
+        authors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name, :role_term, :weight, :orcid, :with_orcid, affiliations_attributes: affiliation_attributes],
+        contributors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name, :role_term, :weight, :orcid, :with_orcid, affiliations_attributes: affiliation_attributes],
         contact_emails_attributes: %i[_destroy id email],
         keywords_attributes: %i[_destroy id label uri cocina_type],
         related_works_attributes: %i[_destroy id citation],
         related_links_attributes: %i[_destroy id link_title url])
+  end
+
+  def affiliation_attributes
+    [:_destroy, :id, :label, :department, :uri]
   end
 
   def validate_work_types!
