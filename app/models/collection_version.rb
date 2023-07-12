@@ -8,6 +8,8 @@ class CollectionVersion < ApplicationRecord
   has_many :contact_emails, as: :emailable, dependent: :destroy
   belongs_to :collection, touch: true
 
+  strip_attributes allow_empty: true, only: [:name, :description]
+
   after_update_commit -> { collection.broadcast_update }
 
   include CollectionVersionStateMachine

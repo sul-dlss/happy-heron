@@ -159,4 +159,23 @@ RSpec.describe CollectionVersion do
       end
     end
   end
+
+  context "when select attributes contain leading/trailing whitespace" do
+    let(:collection_version) do
+      create(
+        :collection_version,
+        name: " W3C ",
+        description: " W3C Documents ",
+        collection: build(:collection)
+      )
+    end
+
+    it "strips name" do
+      expect(collection_version.name).to eq("W3C")
+    end
+
+    it "strips description" do
+      expect(collection_version.description).to eq("W3C Documents")
+    end
+  end
 end
