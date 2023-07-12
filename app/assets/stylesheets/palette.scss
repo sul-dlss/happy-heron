@@ -14,3 +14,8 @@ $stanford-digital-red: #b1040e;
 
 // https://identity.stanford.edu/design-elements/color/accent-colors/
 $stanford-fog-light: #f4f4f4;
+$stanford-poppy: #e98300;
+
+:root {
+  --stanford-warning: #{$stanford-poppy};
+}
