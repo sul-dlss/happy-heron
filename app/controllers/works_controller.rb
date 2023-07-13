@@ -183,7 +183,11 @@ class WorksController < ObjectsController
 
     # Instead of crazy conditional logic, constructing the event name and sending
     state_event = state_event_for(work_version)
-    work_version.send(state_event) if state_event
+    if state_event
+      work_version.send(state_event)
+      FetchGlobusJob.perform_later(work_version) if state_event.starts_with?("fetch_globus")
+      UnzipJob.perform_later(work_version) if state_event.starts_with?("unzip")
+    end
 
     return redirect_to next_step_review_work_path(work) if deposit_button_pushed? && work.collection.review_enabled?
     return redirect_to next_step_work_path(work) if deposit_button_pushed?

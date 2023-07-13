@@ -70,14 +70,6 @@ class WorkObserver
     end
   end
 
-  def self.after_unzip(work_version, _transition)
-    UnzipJob.perform_later(work_version)
-  end
-
-  def self.after_fetch_globus(work_version, _transition)
-    FetchGlobusJob.perform_later(work_version)
-  end
-
   def self.work_mailer(work_version)
     WorksMailer.with(user: work_version.work.owner, work_version:)
   end
