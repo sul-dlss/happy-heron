@@ -62,6 +62,8 @@ class AbstractContributor < ApplicationRecord
   validates :orcid, format: {with: Orcid::REGEX}, allow_nil: true, if: :person?
   validates :orcid, absence: true, unless: :person?
 
+  strip_attributes allow_empty: true, only: [:first_name, :last_name, :full_name]
+
   def self.grouped_roles(citable:)
     return GROUPED_ROLES if citable
 

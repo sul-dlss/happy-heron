@@ -30,6 +30,8 @@ class WorkVersion < ApplicationRecord
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
 
+  strip_attributes allow_empty: true, only: [:title, :abstract, :citation]
+
   scope :awaiting_review_by, lambda { |user|
     with_state(:pending_approval)
       .joins(:work)

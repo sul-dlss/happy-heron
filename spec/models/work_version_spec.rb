@@ -330,4 +330,27 @@ RSpec.describe WorkVersion do
       end
     end
   end
+
+  context "when select attributes contain leading/trailing whitespace" do
+    let(:work_version) do
+      create(
+        :work_version,
+        title: " Information Management: A Proposal ",
+        abstract: " This proposal concerns the management of general information about accelerators and experiments at CERN. It discusses the problems of loss of information about complex evolving systems and derives a solution based on a distributed hypertext system. ",
+        citation: " Berners-Lee, Tim (1998). Information Management: A Proposal, CERN. "
+      )
+    end
+
+    it "strips the title" do
+      expect(work_version.title).to eq("Information Management: A Proposal")
+    end
+
+    it "strips the abstract" do
+      expect(work_version.abstract).to eq("This proposal concerns the management of general information about accelerators and experiments at CERN. It discusses the problems of loss of information about complex evolving systems and derives a solution based on a distributed hypertext system.")
+    end
+
+    it "strips the citation" do
+      expect(work_version.citation).to eq("Berners-Lee, Tim (1998). Information Management: A Proposal, CERN.")
+    end
+  end
 end

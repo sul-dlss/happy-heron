@@ -566,6 +566,8 @@ GEM
     state_machines-graphviz (0.0.2)
       ruby-graphviz
       state_machines
+    strip_attributes (1.13.0)
+      activemodel (>= 3.0, < 8.0)
     super_diff (0.10.0)
       attr_extras (>= 6.2.4)
       diff-lcs
@@ -683,6 +685,7 @@ DEPENDENCIES
   standard-rails
   state_machines-activerecord
   state_machines-graphviz
+  strip_attributes
   super_diff
   turbo-rails (~> 1.0)
   view_component (~> 2.56.2)
