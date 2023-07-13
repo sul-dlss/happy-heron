@@ -4,11 +4,14 @@ inherit_mode:
 
 require:
   - standard
+  - standard-custom
+  - standard-performance
+  - standard-rails
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-capybara
-  - rubocop-factory_bot
 
 inherit_gem:
   standard: config/base.yml
