@@ -15,14 +15,9 @@ group :development, :test do
   gem "rspec"
   gem "rspec_junit_formatter" # used by CircleCI
   gem "rspec-rails"
-  # NOTE: the `standard` way does not support using the rubocop CLI with
-  # extensions like standard-rails, so until that changes or we decide to switch
-  # to the standardrb CLI (which would need CI and editor support), we have to
-  # carry both this dependency and standard-rails.
-  gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
   gem "simplecov", require: false
-  gem "standard", "< 1.30", require: false # TODO: 1.30.x breaks build as of 2023-07-10, unpin once a later release fixes this, or if suggested workaround is acceptable and fixes the issue, see https://github.com/standardrb/standard/issues/569
+  gem "standard", require: false
   gem "standard-rails", require: false
   gem "super_diff", require: false
   gem "webmock" # test calls to external QA lookup service for autocomplete
