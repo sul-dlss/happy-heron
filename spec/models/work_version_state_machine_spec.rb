@@ -340,7 +340,6 @@ RSpec.describe WorkVersion do
       expect { work_version.unzip! }
         .to change(work_version, :state)
         .to("unzip_first_draft")
-        .and(have_enqueued_job(UnzipJob).with(work_version))
     end
   end
 
@@ -351,7 +350,6 @@ RSpec.describe WorkVersion do
       expect { work_version.unzip_and_submit_for_review! }
         .to change(work_version, :state)
         .to("unzip_pending_approval")
-        .and(have_enqueued_job(UnzipJob).with(work_version))
     end
   end
 
@@ -362,7 +360,6 @@ RSpec.describe WorkVersion do
       expect { work_version.unzip_and_begin_deposit! }
         .to change(work_version, :state)
         .to("unzip_depositing")
-        .and(have_enqueued_job(UnzipJob).with(work_version))
     end
   end
 
@@ -373,7 +370,6 @@ RSpec.describe WorkVersion do
       expect { work_version.fetch_globus! }
         .to change(work_version, :state)
         .to("fetch_globus_first_draft")
-        .and(have_enqueued_job(FetchGlobusJob).with(work_version))
     end
   end
 
@@ -384,7 +380,6 @@ RSpec.describe WorkVersion do
       expect { work_version.fetch_globus_and_submit_for_review! }
         .to change(work_version, :state)
         .to("fetch_globus_pending_approval")
-        .and(have_enqueued_job(FetchGlobusJob).with(work_version))
     end
   end
 
@@ -395,7 +390,6 @@ RSpec.describe WorkVersion do
       expect { work_version.fetch_globus_and_begin_deposit! }
         .to change(work_version, :state)
         .to("fetch_globus_depositing")
-        .and(have_enqueued_job(FetchGlobusJob).with(work_version))
     end
   end
 end

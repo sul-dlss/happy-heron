@@ -26,12 +26,6 @@ module WorkVersionStateMachine
       after_transition on: :deposit_complete, do: WorkObserver.method(:after_deposit_complete)
       after_transition on: :deposit_complete, do: CollectionObserver.method(:item_deposited)
       after_transition on: :decommission, do: WorkObserver.method(:after_decommission)
-      after_transition on: :unzip, do: WorkObserver.method(:after_unzip)
-      after_transition on: :unzip_and_submit_for_review, do: WorkObserver.method(:after_unzip)
-      after_transition on: :unzip_and_begin_deposit, do: WorkObserver.method(:after_unzip)
-      after_transition on: :fetch_globus, do: WorkObserver.method(:after_fetch_globus)
-      after_transition on: :fetch_globus_and_submit_for_review, do: WorkObserver.method(:after_fetch_globus)
-      after_transition on: :fetch_globus_and_begin_deposit, do: WorkObserver.method(:after_fetch_globus)
 
       # check to see if there any globus related actions needed when transitioning to any draft state
       after_transition to: %i[first_draft version_draft],

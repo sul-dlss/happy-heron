@@ -168,6 +168,7 @@ RSpec.describe "Updating an existing work" do
         context "with a Globus upload type" do
           before do
             allow(GlobusClient).to receive(:has_files?).and_return(true)
+            allow(FetchGlobusJob).to receive(:perform_later)
           end
 
           let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
@@ -181,6 +182,7 @@ RSpec.describe "Updating an existing work" do
               expect(work.reload.head).to be_fetch_globus_version_draft
               expect(work.head).to be_oak
               expect(response).to redirect_to(work)
+              expect(FetchGlobusJob).to have_received(:perform_later).with(work_version)
             end
           end
 
@@ -189,6 +191,24 @@ RSpec.describe "Updating an existing work" do
               patch "/works/#{work.id}", params: {work: work_params, commit: "Deposit"}
               expect(work.reload.head).to be_fetch_globus_depositing
               expect(response).to redirect_to(next_step_work_path(work))
+            end
+          end
+        end
+
+        context "with a zipfile upload type" do
+          before do
+            allow(UnzipJob).to receive(:perform_later)
+          end
+
+          let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
+          let(:upload_type) { "zipfile" }
+
+          context "when saving draft" do
+            it "redirects to the work page and starts unzipping the file" do
+              patch "/works/#{work.id}", params: {work: work_params, commit: "Save as draft"}
+              expect(work.reload.head).to be_unzip_version_draft
+              expect(response).to redirect_to(work)
+              expect(UnzipJob).to have_received(:perform_later).with(work_version)
             end
           end
         end
