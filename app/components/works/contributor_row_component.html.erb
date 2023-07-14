@@ -3,11 +3,35 @@
   <div class="col-md-11">
     <div class="row" style="margin-bottom: 10px;">
       <div class="col-md-2">
+        <%= form.label :role_term_type, role_term_type_label, class: "form-label" %>
+      </div>
+      <div class="col-md-2">
+        <%= radio_button_tag :role_term_type, "individual", true, id: "role_term_type_individual", data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypeIndividual" %>
+        <%= label_tag "role_term_type_individual", "Individual" %>
+      </div>
+      <div class="col-md-4">
+        <%= radio_button_tag :role_term_type, "organization", false, id: "role_term_type_organization", data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypeOrganization" %>
+        <%= label_tag "role_term_type_organization", "Organization" %>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 10px;">
+      <div class="col-md-2">
         <%= form.label :role_term, role_term_label, class: "form-label" %>
         <%= render PopoverComponent.new key: "work.role_term" %>
       </div>
-      <div class="col-md-3">
-        <%= select_role %>
+      <div class="col-md-4">
+        <div data-contributors-target="selectPersonRole">
+          <%= select_person_role %>
+        </div>
+        <div data-contributors-target="selectOrganizationRole">
+          <%= select_organization_role %>
+        </div>
+      </div>
+      <div class="col-md-6">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
       </div>
     </div>
     <div class="row">

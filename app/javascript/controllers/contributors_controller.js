@@ -1,14 +1,29 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["person", "organization", "role", "personName", "personNameSelect", "personOrcid", "personOrcidName", "orcid", "orcidFeedback", "orcidFirstName", "orcidLastName", "orcidDisplayName"]
+  static targets = ["person", "organization", "role", "personName", "personNameSelect", "personOrcid", "personOrcidName", "orcid",
+                    "orcidFeedback", "orcidFirstName", "orcidLastName", "orcidDisplayName", "selectPersonRole", "selectOrganizationRole",
+                    "roleTermTypeIndividual", "roleTermTypeOrganization"]
   static values = { required: Boolean }
 
   connect() {
+    this.roleTermTypeIndividualTarget.checked = true
+    this.roleTermTypeChanged()
     this.roleChanged()
     this.personChanged()
     if(this.hasValidOrcid) {
       this.lookupOrcid()
+    }
+  }
+
+  roleTermTypeChanged() {
+    if (this.roleTermTypeIndividualTarget.checked) {
+      this.selectPersonRoleTarget.hidden = false
+      this.selectOrganizationRoleTarget.hidden = true
+    }
+    else {
+      this.selectPersonRoleTarget.hidden = true
+      this.selectOrganizationRoleTarget.hidden = false
     }
   }
 

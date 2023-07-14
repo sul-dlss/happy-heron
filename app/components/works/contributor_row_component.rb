@@ -18,8 +18,12 @@ module Works
       @is_author
     end
 
-    def select_role
-      render ContributorRoleComponent.new(form:, data_options: data_options_for_select)
+    def select_person_role
+      render ContributorRoleComponent.new(form:, role_term_type: "person", data_options: data_options_for_select)
+    end
+
+    def select_organization_role
+      render ContributorRoleComponent.new(form:, role_term_type: "organization", data_options: data_options_for_select)
     end
 
     def html_options(auto_citation_target, contributors_target: nil, disabled: false)
@@ -48,6 +52,10 @@ module Works
 
     def role_term_label
       with_required("Role term")
+    end
+
+    def role_term_type_label
+      with_required("Role term type")
     end
 
     def orcid_label

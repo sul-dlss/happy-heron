@@ -3,17 +3,18 @@
 module Works
   # Renders a widget for selecting a contributor role
   class ContributorRoleComponent < ApplicationComponent
-    def initialize(form:, data_options:)
+    def initialize(form:, data_options:, role_term_type:)
       @form = form
+      @role_term_type = role_term_type # person or organization
       @data_options = data_options
     end
 
-    attr_reader :form
+    attr_reader :form, :role_term_type
 
     delegate :grouped_collection_select, to: :form
 
     def call
-      grouped_collection_select :role_term, grouped_options, :roles, :label, :key, :label,
+      grouped_collection_select :role_term, grouped_options(role_term_type), :roles, :label, :key, :label,
         {}, class: "form-select", data: @data_options, "aria-describedby": "popover-work.role_term"
     end
 
@@ -52,8 +53,8 @@ module Works
 
     # list for work_form pulldown
 
-    def grouped_options
-      %w[person organization].map do |key|
+    def grouped_options(role_term_type)
+      [role_term_type].map do |key|
         ContributorType.new(key:, citable: false)
       end
     end
