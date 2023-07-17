@@ -10,14 +10,14 @@
       <%= render PopoverComponent.new key: "work.abstract" %>
     </div>
     <div class="col-sm-10">
-      <%= form.text_area :abstract, class: "form-control", required: true %>
+      <%= form.text_area :abstract, class: "form-control", required: true, "aria-describedby": "popover-work.abstract" %>
       <div class="invalid-feedback">You must provide an abstract</div>
     </div>
   </div>
 
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <%= form.label :keywords, "Keywords *", class: "col-form-label" %>
+      <%= form.label :keywords, "Keywords *", class: "col-form-label", "aria-describedby": "popover-work.keywords" %>
       <%= render PopoverComponent.new key: "work.keywords" %>
       <br>(one per box)
     </div>
@@ -29,7 +29,7 @@
   <%= render Works::SubtypesComponent.new(form: form) %>
 
   <fieldset class="mb-5">
-    <legend class='h5'>
+    <legend class="h5" aria-describedby="popover-work.citation">
       Citation for this deposit
       <%= render PopoverComponent.new key: "work.citation" %>
     </legend>

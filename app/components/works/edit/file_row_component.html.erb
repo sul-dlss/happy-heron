@@ -21,7 +21,7 @@
           <%= form.label :label, "Description (optional)" %>
           <%= render PopoverComponent.new key: "work.description" %>
         </div>
-        <%= form.text_field :label, class: "form-control" %>
+        <%= form.text_field :label, class: "form-control", "aria-describedby": "popover-work.description" %>
       <% end %>
   </div>
 
@@ -31,8 +31,8 @@
         <%= form.hidden_field :file %>
         <%= form.hidden_field :path %>
         <% unless zip_template? %>
-          <%= form.check_box :hide, class: "form-check-input" %>
-          <%= form.label :hide, "Hide file", class: "form-check-label col-form-label " %>
+          <%= form.check_box :hide, class: "form-check-input", "aria-describedby": "popover-work.hide_file" %>
+          <%= form.label :hide, "Hide file", class: "form-check-label col-form-label" %>
           <%= render PopoverComponent.new key: "work.hide_file" %>
         <% end %>
       </div>

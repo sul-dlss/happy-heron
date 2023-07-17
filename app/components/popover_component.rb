@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 # Draws a bootstrap popover icon.
+# When rendering the PopoverComponent, add a "aria-describedby" attribute to
+#  the element described by the popover with a value of "popover-KEY",
+#  where KEY is the value of the key passed to the PopoverComponent, e.g.:
+#  <legend aria-describedby="popover-collection.depositors">Depositors</legend>
+#  <%= render PopoverComponent.new key: "collection.depositors" %>
 class PopoverComponent < ApplicationComponent
   def initialize(key:, icon: "fa-solid fa-info-circle", scope: "tooltip")
     @key = key

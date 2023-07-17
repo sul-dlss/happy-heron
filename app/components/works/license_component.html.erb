@@ -9,7 +9,7 @@
       <div class="col-sm-5">
         <%= form.select :license,
               grouped_options_for_select(License.grouped_options(license), license),
-              {}, class: "form-select",
+              {}, class: "form-select", "aria-describedby": "popover-work.license",
               data: {controller: "license", action: "change->license#validate"} %>
         <div class="invalid-feedback">
           Please select a supported license.

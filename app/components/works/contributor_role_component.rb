@@ -14,7 +14,7 @@ module Works
 
     def call
       grouped_collection_select :role_term, grouped_options, :roles, :label, :key, :label,
-        {}, class: "form-select", data: @data_options
+        {}, class: "form-select", data: @data_options, "aria-describedby": "popover-work.role_term"
     end
 
     # Represents the type of contributor top level option for the role select

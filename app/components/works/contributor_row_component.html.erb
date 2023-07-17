@@ -20,7 +20,7 @@
             <div class="col-md-5">
               <%= form.label :first_name, first_name_label, class: "form-label" %>
               <%= render PopoverComponent.new key: "work.first_name" %>
-              <%= form.text_field :first_name, html_options("contributorFirst", disabled: orcid?) %>
+              <%= form.text_field :first_name, html_options("contributorFirst", disabled: orcid?).merge("aria-describedby": "popover-work.first_name") %>
               <div class="invalid-feedback">You must provide a first name</div>
             </div>
             <div class="col-md-6">
@@ -44,7 +44,7 @@
             <div class="col">
               <%= form.label :orcid, orcid_label, for: "#{text_field_id_prefix}id", class: "form-label" %>
               <%= render PopoverComponent.new key: "work.orcid" %>
-              <%= form.text_field :orcid, class: "form-control", required: author?, id: "#{text_field_id_prefix}id", data: {contributors_target: "orcid", action: "contributors#lookupOrcid"} %>
+              <%= form.text_field :orcid, class: "form-control", required: author?, id: "#{text_field_id_prefix}id", data: {contributors_target: "orcid", action: "contributors#lookupOrcid"}, "aria-describedby": "popover-work.orcid" %>
               <div class="invalid-feedback" data-contributors-target="orcidFeedback">You must provide an ORCID iD</div>
               <div data-contributors-target="personOrcidName">
                 <div class="form-text" data-contributors-target="orcidDisplayName"></div>
@@ -52,7 +52,7 @@
                   <div class="col-md-5">
                     <%= form.label :first_name, first_name_label, for: "#{text_field_id_prefix}first_name", class: "form-label" %>
                     <%= render PopoverComponent.new key: "work.orcid_name" %>
-                    <%= form.text_field :first_name, html_options("contributorFirst", contributors_target: "orcidFirstName", disabled: !orcid?).merge(id: "#{text_field_id_prefix}first_name") %>
+                    <%= form.text_field :first_name, html_options("contributorFirst", contributors_target: "orcidFirstName", disabled: !orcid?).merge(id: "#{text_field_id_prefix}first_name", "aria-describedby": "popover-work.orcid_name") %>
                     <div class="invalid-feedback">You must provide a first name</div>
                   </div>
                   <div class="col-md-6">
@@ -70,7 +70,7 @@
       <div class="col" data-contributors-target="organization">
         <%= form.label :full_name, organization_label, class: "form-label" %>
         <%= render PopoverComponent.new key: "work.organization" %>
-        <%= form.text_field :full_name, html_options("contributorOrg") %>
+        <%= form.text_field :full_name, html_options("contributorOrg").merge("aria-describedby": "popover-work.organization") %>
         <div class="invalid-feedback">You must provide a name</div>
       </div>
     </div>
