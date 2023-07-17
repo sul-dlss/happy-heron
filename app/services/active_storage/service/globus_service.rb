@@ -11,6 +11,14 @@ module ActiveStorage
         raise NotImplementedError
       end
 
+      def download_chunk(key, range)
+        # This is called by ActiveStorage::Blob::Identifiable when an
+        # ActiveStorage::Blob is being attached to an AttachedFile to identify the
+        # content type of the file. Since we don't have access to the content
+        # here we don't return anything. If we didn't have this here we would get a
+        # NotImplementedError exception.
+      end
+
       def delete(key)
         # This is called by ActiveSupport when #destroy is called on AttachedFile due to our use
         # of ActiveStorage for file storage.  This can happen during a decommission of a work.
