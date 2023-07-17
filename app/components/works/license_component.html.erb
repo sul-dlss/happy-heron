@@ -3,13 +3,13 @@
   <% if user_can_set_license? %>
     <div class="mb-3 row">
       <div class="col-sm-2">
-        <%= form.label :license, "License *", class: "col-form-label", "aria-describedby": "popover-work.license" %>
+        <%= form.label :license, "License *", class: "col-form-label" %>
         <%= render PopoverComponent.new key: "work.license" %>
       </div>
       <div class="col-sm-5">
         <%= form.select :license,
               grouped_options_for_select(License.grouped_options(license), license),
-              {}, class: "form-select",
+              {}, class: "form-select", "aria-describedby": "popover-work.license",
               data: {controller: "license", action: "change->license#validate"} %>
         <div class="invalid-feedback">
           Please select a supported license.
