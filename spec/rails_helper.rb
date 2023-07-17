@@ -3,6 +3,7 @@
 require "simplecov"
 SimpleCov.start :rails do
   add_filter "/cypress/"
+  add_filter "/lib/tasks/"
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'

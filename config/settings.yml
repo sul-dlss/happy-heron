@@ -112,3 +112,8 @@ honeybadger_checkins:
   work_reminder: null
   collection_reminder: null
   uploads_cleaner: null
+
+mais_orcid:
+  client_id: ~
+  client_secret: ~
+  base_url: https://mais-sandbox.stanford.edu
