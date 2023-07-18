@@ -117,3 +117,7 @@ mais_orcid:
   client_id: ~
   client_secret: ~
   base_url: https://mais-sandbox.stanford.edu
+
+dor_services:
+  url: https://dor-services-qa.stanford.edu
+  token: secret-token
