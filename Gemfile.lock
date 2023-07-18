@@ -208,6 +208,13 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.4.0)
+    dor-services-client (12.15.0)
+      activesupport (>= 4.2, < 8)
+      cocina-models (~> 0.90.0)
+      deprecation
+      faraday (~> 2.0)
+      faraday-retry
+      zeitwerk (~> 2.1)
     druid-tools (3.0.0)
     dry-configurable (1.1.0)
       dry-core (~> 1.0, < 2)
@@ -672,6 +679,7 @@ DEPENDENCIES
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
   dlss-capistrano
+  dor-services-client (~> 12.15)
   druid-tools
   dry-types
   edtf
