@@ -101,5 +101,8 @@ describe('Create work version', () => {
 
       // deposit button should be enabled
       cy.get('input.btn[value="Deposit"]', {force: true}).should('be.enabled')
+
+      // globus-specific message is not present
+      cy.contains('Deposit is disabled until file transfer is complete.').should('not.be.visible')
     })
 })
