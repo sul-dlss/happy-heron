@@ -8,7 +8,7 @@ export default class extends Controller {
   }
 
   updateDepositButtonStatus(_event) {
-    this.globusMessageTarget.hidden = !this.globusRadioButtonTarget.checked
+    this.globusMessageTarget.hidden = !this.globusRadioButtonTarget.checked || this.globusCheckboxTarget.checked
     this.depositButtonTarget.disabled = this.globusRadioButtonTarget.checked && (!this.hasGlobusCheckboxTarget || !this.globusCheckboxTarget.checked)
   }
 }
