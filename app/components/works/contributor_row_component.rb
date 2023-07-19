@@ -66,11 +66,19 @@ module Works
       form.object.class.method_defined?(:model) ? form.object.model : form.object
     end
 
+    def contributor_remove_label
+      "Remove #{contributor_name.empty? ? "blank contributor" : contributor_name}"
+    end
+
+    def contributor_name
+      "#{form.object.first_name} #{form.object.last_name}".strip
+    end
+
     def html_options_for_delete
       {
         type: "button",
         class: "btn btn-sm",
-        aria: {label: "Remove"},
+        aria: {label: contributor_remove_label},
         data: {}.tap do |data|
           actions = ["contributors#remove #{form_controller}#removeAssociation"]
           actions << "auto-citation#updateDisplay" if author?
