@@ -62,16 +62,16 @@ RSpec.describe CheckMoveWorkService do
     end
   end
 
-  context "when DOI is required but work does not have a DOI" do
-    let(:work) { build(:work) }
+  context "when DOI is required but work is not assigned DOI" do
+    let(:work) { build(:work, assign_doi: false) }
 
     it "returns an error" do
       expect(errors).to eq ["Depositor of the item chose not to get a DOI but the collection requires DOI assignment."]
     end
   end
 
-  context "when DOI is not required and work does not have a DOI" do
-    let(:work) { build(:work) }
+  context "when DOI is not required and work is not assigned a DOI" do
+    let(:work) { build(:work, assign_doi: false) }
 
     before do
       collection.doi_option = "depositor-selects"

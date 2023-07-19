@@ -38,7 +38,7 @@ class CheckMoveWorkService
   end
 
   def missing_doi?
-    !work.doi && collection.doi_option == "yes"
+    !work.assign_doi && collection.doi_option == "yes"
   end
 
   def compatible_license?
