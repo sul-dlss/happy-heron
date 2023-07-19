@@ -21,7 +21,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "cypress": "^10.6.0"
+    "cypress": "^12.17.0"
   },
   "browserslist": [
     "defaults"
