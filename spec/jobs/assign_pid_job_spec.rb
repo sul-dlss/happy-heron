@@ -58,8 +58,13 @@ RSpec.describe AssignPidJob do
           contains: []
         })
     end
-    let(:work) { create(:work_version_with_work, :reserving_purl, collection:).work }
+    let(:work_version) { create(:work_version, :reserving_purl, work: work) }
+    let(:work) { create(:work, collection: collection, assign_doi: true) }
     let(:collection) { create(:collection_version_with_collection).collection }
+
+    before do
+      work.update(head: work_version)
+    end
 
     it "updates the druid" do
       described_class.new.work(message)

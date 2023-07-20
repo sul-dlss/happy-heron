@@ -6,6 +6,7 @@ FactoryBot.define do
     owner { association(:user) }
     head { nil }
     created_at { Time.zone.parse("2007-02-10 15:30:45") }
+    assign_doi { false }
     collection
   end
 
@@ -14,6 +15,7 @@ FactoryBot.define do
   end
 
   trait :with_doi do
+    assign_doi { true }
     doi { "10.25740/hs561fr1234" }
   end
 

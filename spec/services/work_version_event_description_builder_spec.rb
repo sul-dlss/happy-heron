@@ -7,9 +7,9 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
   let(:collection) { build(:collection, :depositor_selects_access, :depositor_selects_release_date) }
   let(:work_version) do
-    create(:work_version_with_work, :with_no_subtype, collection:, attached_files:, state:, version: 1)
+    create(:work_version, :with_no_subtype, :with_keywords, attached_files:, state:, version: 1, work: work)
   end
-  let(:work) { work_version.work }
+  let(:work) { build(:work, assign_doi: true, collection: collection) }
   let(:form) { DraftWorkForm.new(work_version:, work:) }
   let(:attached_files) { [] }
   let(:filename) { "xml.svg" }
