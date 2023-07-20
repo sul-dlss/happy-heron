@@ -15,7 +15,7 @@ RSpec.describe Works::ContributorRowComponent do
     expect(rendered.css('button[aria-label="Move up"]')).to be_present
     expect(rendered.css('button[aria-label="Move down"]')).to be_present
     expect(rendered.css('input[name*="_destroy"]')).to be_present
-    expect(rendered.css('button[aria-label="Remove"]')).to be_present
+    expect(rendered.css("button[aria-label=\"Remove #{author.first_name} #{author.last_name}\"]")).to be_present
   end
 
   context "when an author" do
