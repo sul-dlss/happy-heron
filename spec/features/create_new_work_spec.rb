@@ -123,8 +123,9 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
             expect(page).to have_content("Name associated with this ORCID iD is Orcid First Name Orcid Last Name")
 
             # Add affiliation
-            fill_in "Affiliation *", with: "Stanford"
-            fill_in "Department/Institute/Center", with: "Stanford Libraries"
+            # NOTE: Affiliations are temporarily disabled due to bugs.  see https://github.com/sul-dlss/happy-heron/issues/3285
+            # fill_in "Affiliation *", with: "Stanford"
+            # fill_in "Department/Institute/Center", with: "Stanford Libraries"
           end
 
           fill_in "Publication year", with: "2020"
@@ -168,7 +169,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
           expect(page).to have_content("Sound")
           expect(page).to have_content("Oral history, Podcast, Poetry reading")
           expect(page).to have_content("Best Publisher")
-          expect(page).to have_content("Orcid First Name Orcid Last Name (Stanford, Stanford Libraries)")
+          expect(page).to have_content("Orcid First Name Orcid Last Name") # (Stanford, Stanford Libraries)") # Note: affiliations disabled for now
           expect(page).to have_content("2020-03-06 - 2020-10-30")
           expect(page).to have_content "User provided abstract"
           expect(page).to have_content "Citation from user input"
