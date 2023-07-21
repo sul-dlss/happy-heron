@@ -1,18 +1,21 @@
 import { Controller } from "@hotwired/stimulus";
 
+const PURL_PLACE_HOLDER = ":link will be inserted here automatically when available:"
+const DOI_PLACE_HOLDER = ":DOI will be inserted here automatically when available:"
+
 export default class extends Controller {
   static targets = ["titleField", "manual", "auto", "switch",
     "contributorFirst", "contributorLast", "contributorRole", "contributorOrg",
     "embargoYear", "embargo"];
 
   connect() {
-    this.purl = this.data.get("purl") || ":link will be inserted here automatically when available:" // Use a real purl on a persisted item or a placeholder
+    this.purl = this.data.get("purl") || PURL_PLACE_HOLDER // Use a real purl on a persisted item or a placeholder
     this.doi = this.data.get("doi") || ""
 
     this.updateDisplay()
 
-    // If the manualTarget matches the autoTarget or is blank, then display the auto.
-    const showAuto = this.manualTarget.value === '' || this.manualTarget.value === this.autoTarget.value
+    // If the manualTarget is blank or the autoTarget matches the citation, then display the auto.
+    const showAuto = this.enableAutoCitation()
     this.switchTarget.checked = showAuto
     this.displayDefault(showAuto)
   }
@@ -20,6 +23,19 @@ export default class extends Controller {
   // Populate the text area with the auto generated citation
   updateDisplay() {
     this.autoTarget.value = this.citation
+  }
+
+  enableAutoCitation() {
+    if (this.manualTarget.value === '') { // The initial value
+      return true
+    } else {
+      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
+      if (manualValue === this.autoTarget.value) {
+        return true
+      }
+    }
+
+    return false
   }
 
   get citation() {
