@@ -6,12 +6,12 @@
         <%= form.label :role_term_type, role_term_type_label, class: "form-label" %>
       </div>
       <div class="col-md-2">
-        <%= radio_button_tag :role_term_type, "individual", true, id: "role_term_type_individual", data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypeIndividual" %>
-        <%= label_tag "role_term_type_individual", "Individual" %>
+        <%= form.radio_button :role_term_type, "person", class: "form-check-input", checked: true, data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypePerson" %>
+        <%= label_tag "role_term_type_person", I18n.t("contributor.roles.person") %>
       </div>
       <div class="col-md-4">
-        <%= radio_button_tag :role_term_type, "organization", false, id: "role_term_type_organization", data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypeOrganization" %>
-        <%= label_tag "role_term_type_organization", "Organization" %>
+        <%= form.radio_button :role_term_type, "organization", class: "form-check-input", checked: false, data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypeOrganization" %>
+        <%= label_tag "role_term_type_organization", I18n.t("contributor.roles.organization") %>
       </div>
     </div>
     <div class="row" style="margin-bottom: 10px;">

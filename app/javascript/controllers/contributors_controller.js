@@ -3,11 +3,10 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["person", "organization", "role", "personName", "personNameSelect", "personOrcid", "personOrcidName", "orcid",
                     "orcidFeedback", "orcidFirstName", "orcidLastName", "orcidDisplayName", "selectPersonRole", "selectOrganizationRole",
-                    "roleTermTypeIndividual", "roleTermTypeOrganization"]
+                    "roleTermTypePerson", "roleTermTypeOrganization"]
   static values = { required: Boolean }
 
   connect() {
-    this.roleTermTypeIndividualTarget.checked = true
     this.roleTermTypeChanged()
     this.roleChanged()
     this.personChanged()
@@ -17,7 +16,7 @@ export default class extends Controller {
   }
 
   roleTermTypeChanged() {
-    if (this.roleTermTypeIndividualTarget.checked) {
+    if (this.roleTermTypePersonTarget.checked) {
       this.selectPersonRoleTarget.hidden = false
       this.selectOrganizationRoleTarget.hidden = true
     }
