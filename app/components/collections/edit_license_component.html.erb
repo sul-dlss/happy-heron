@@ -72,7 +72,7 @@
             <legend class="fs-6"><strong>Choose the source of the custom use statement</strong></legend>
             <div class="form-check<%= " is-invalid" if error? %>">
               <%= form.radio_button :custom_rights_statement_source_option, "provided_by_collection", checked: (custom_rights_statement_source_option == "provided_by_collection"), class: "form-check-input", data: {action: "custom-rights#updateCustomRightsInstructionsFieldsetEnabled", custom_rights_target: "customRightsSourceIsCollectionButton"} %>
-              <%= form.label :custom_rights_statement_source_option_provided_by_collection, "Provide specific terms", class: "form-check-label pe-2",
+              <%= form.label :custom_rights_statement_source_option_provided_by_collection, "Provide specific terms", class: "form-check-label pe-2", style: "vertical-align: top",
                     id: "custom_rights_statement_source_option_provided_by_collection_label" %>
               <%= form.text_area :provided_custom_rights_statement, cols: "55", rows: "1", aria: {label: "Enter terms here"},
                     "aria-labelledby": "custom_rights_statement_source_option_provided_by_collection_label" %>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="form-check<%= " is-invalid" if error? %>">
                   <%= form.radio_button :custom_rights_instructions_source_option, "provided_by_collection", checked: (custom_rights_instructions_source_option == "provided_by_collection"), class: "form-check-input" %>
-                  <%= form.label :custom_rights_instructions_source_option_provided_by_collection, "No, display these instructions", class: "form-check-label pe-2",
+                  <%= form.label :custom_rights_instructions_source_option_provided_by_collection, "No, display these instructions", class: "form-check-label pe-2", style: "vertical-align: top",
                         id: "custom_rights_instructions_source_option_provided_by_collection_label" %>
                   <%= form.text_area :custom_rights_statement_custom_instructions, cols: "55", rows: "1", aria: {label: "Enter instructions here"},
                         "aria-labelledby": "custom_rights_instructions_source_option_provided_by_collection_label" %>
