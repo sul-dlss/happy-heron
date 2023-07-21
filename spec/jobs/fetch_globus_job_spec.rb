@@ -13,15 +13,17 @@ RSpec.describe FetchGlobusJob do
 
   let(:work) { build(:work) }
 
+  let(:file_info) { GlobusClient::Endpoint::FileInfo }
+
   before do
-    allow(GlobusClient).to receive(:get_filenames).and_return(
+    allow(GlobusClient).to receive(:list_files).and_return(
       [
-        "/uploads/jstanford/work333/version1/file1.txt",
-        "/uploads/jstanford/work333/version1/__MACOSX/._file1.txt",
-        "/uploads/jstanford/work333/version1/dir1/file2.txt",
-        "/uploads/jstanford/work333/version1/__MACOSX/dir1/._file2.txt",
-        "/uploads/jstanford/work333/version1/dir2/.DS_Store",
-        "/uploads/jstanford/work333/version1/__MACOSX/dir2/._.DS_Store"
+        file_info.new("/uploads/jstanford/work333/version1/file1.txt", 24601),
+        file_info.new("/uploads/jstanford/work333/version1/__MACOSX/._file1.txt", 1),
+        file_info.new("/uploads/jstanford/work333/version1/dir1/file2.txt", 1),
+        file_info.new("/uploads/jstanford/work333/version1/__MACOSX/dir1/._file2.txt", 1),
+        file_info.new("/uploads/jstanford/work333/version1/dir2/.DS_Store", 1),
+        file_info.new("/uploads/jstanford/work333/version1/__MACOSX/dir2/._.DS_Store", 1)
       ]
     )
     work.update!(head: first_work_version)
@@ -36,9 +38,10 @@ RSpec.describe FetchGlobusJob do
     expect(AttachedFile.find_by(id: attached_file.id)).to be_nil
     attached_file = first_work_version.reload.attached_files.first
     expect(attached_file.path).to eq("file1.txt")
+    expect(attached_file.byte_size).to eq(24601)
     expect(attached_file.blob.service_name).to eq("globus")
     expect(attached_file.blob.key).to eq("#{first_work_version.work.id}/1/file1.txt")
-    expect(GlobusClient).to have_received(:get_filenames).with(path: "jstanford/work333/version1",
+    expect(GlobusClient).to have_received(:list_files).with(path: "jstanford/work333/version1",
       user_id: work.owner.email)
   end
 end
