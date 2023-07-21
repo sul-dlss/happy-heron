@@ -55,9 +55,7 @@
     </p>
 
     <fieldset>
-      <p>
-        Include custom use statement?
-      </p>
+      <legend class="fs-6"><strong>Include custom use statement?</strong></legend>
 
       <div class="ms-2">
         <div class="form-check<%= " is-invalid" if error? %>">
@@ -69,13 +67,15 @@
           <%= form.label :allow_custom_rights_statement_true, "Yes", class: "form-check-label" %>
         </div>
 
-        <fieldset data-custom-rights-target="customRightsConfigFieldset">
-          <div class="ms-4">
+        <div class="ms-4">
+          <fieldset data-custom-rights-target="customRightsConfigFieldset">
+            <legend class="fs-6"><strong>Choose the source of the custom use statement</strong></legend>
             <div class="form-check<%= " is-invalid" if error? %>">
               <%= form.radio_button :custom_rights_statement_source_option, "provided_by_collection", checked: (custom_rights_statement_source_option == "provided_by_collection"), class: "form-check-input", data: {action: "custom-rights#updateCustomRightsInstructionsFieldsetEnabled", custom_rights_target: "customRightsSourceIsCollectionButton"} %>
-              <%= form.label :custom_rights_statement_source_option_provided_by_collection, "Provide specific terms", class: "form-check-label pe-2" %>
-              <%= form.text_area :provided_custom_rights_statement, cols: "55", rows: "1" %>
-              <%# TODO: text area needs a label %>
+              <%= form.label :custom_rights_statement_source_option_provided_by_collection, "Provide specific terms", class: "form-check-label pe-2",
+                    id: "custom_rights_statement_source_option_provided_by_collection_label" %>
+              <%= form.text_area :provided_custom_rights_statement, cols: "55", rows: "1", aria: {label: "Enter terms here"},
+                    "aria-labelledby": "custom_rights_statement_source_option_provided_by_collection_label" %>
             </div>
             <div class="form-check<%= " is-invalid" if error? %>">
               <%= form.radio_button :custom_rights_statement_source_option, "entered_by_depositor", checked: (custom_rights_statement_source_option == "entered_by_depositor"), class: "form-check-input", data: {action: "custom-rights#updateCustomRightsInstructionsFieldsetEnabled", custom_rights_target: "customRightsSourceIsDepositorButton"} %>
@@ -84,9 +84,7 @@
 
             <div class="ms-4">
               <fieldset data-custom-rights-target="customRightsInstructionsFieldset">
-                <header class="fs-5">
-                  Use default instructions?
-                </header>
+                <legend class="fs-6"><strong>Use default instructions?</strong></legend>
                 <div class="form-check<%= " is-invalid" if error? %>">
                   <%= form.radio_button :custom_rights_instructions_source_option, "default_instructions", checked: (custom_rights_instructions_source_option == "default_instructions"), class: "form-check-input" %>
                   <%= form.label :custom_rights_instructions_source_option_default_instructions, "Yes, display the following instructions", class: "form-check-label" %>
@@ -96,14 +94,15 @@
                 </div>
                 <div class="form-check<%= " is-invalid" if error? %>">
                   <%= form.radio_button :custom_rights_instructions_source_option, "provided_by_collection", checked: (custom_rights_instructions_source_option == "provided_by_collection"), class: "form-check-input" %>
-                  <%= form.label :custom_rights_instructions_source_option_provided_by_collection, "No, display these instructions", class: "form-check-label pe-2" %>
-                  <%= form.text_area :custom_rights_statement_custom_instructions, cols: "55", rows: "1" %>
-                  <%# TODO: text area needs a label %>
+                  <%= form.label :custom_rights_instructions_source_option_provided_by_collection, "No, display these instructions", class: "form-check-label pe-2",
+                        id: "custom_rights_instructions_source_option_provided_by_collection_label" %>
+                  <%= form.text_area :custom_rights_statement_custom_instructions, cols: "55", rows: "1", aria: {label: "Enter instructions here"},
+                        "aria-labelledby": "custom_rights_instructions_source_option_provided_by_collection_label" %>
                 </div>
               </fieldset>
             </div>
-          </div>
-        </fieldset>
+          </fieldset>
+        </div>
       </div>
     </fieldset>
   </section>
