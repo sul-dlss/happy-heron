@@ -33,8 +33,33 @@ class RorController < ApplicationController
 
   def parse(body)
     JSON.parse(body)["items"].map do |item|
-      [item["id"], item["name"]]
+      [item["id"], item["name"], details(item)]
     end
+  end
+
+  def details(item)
+    [
+      item["name"],
+      location_detail(item),
+      other_name_details(item)
+    ].compact
+  end
+
+  def location_detail(item)
+    city = item.dig("addresses", 0, "city")
+    country = item.dig("country", "country_name")
+
+    return "#{city}, #{country}" if city && country
+    return country if country
+    nil
+  end
+
+  def other_name_details(item)
+    [].tap do |names|
+      names.concat(item["acronyms"])
+      names.concat(item["aliases"])
+      names.concat(item["labels"].map { |label| label["label"] })
+    end.join(", ")
   end
 
   def lookup_connection

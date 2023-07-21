@@ -1,3 +1,7 @@
-<% @suggestions.each do |value, label| %>
-  <li class="list-group-item" role="option" data-autocomplete-value="<%= value %>" data-autocomplete-label="<%= label %>"><%= html_escape(label) %></li>
+<% @suggestions.each do |value, label, details| %>
+  <li class="list-group-item" role="option" data-autocomplete-value="<%= value %>" data-autocomplete-label="<%= label %>">
+    <% details.each do |detail| %>
+      <p class="mb-0"><%= html_escape(detail) %></p>
+    <% end %>
+  </li>
 <% end %>

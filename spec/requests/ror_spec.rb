@@ -29,49 +29,7 @@ RSpec.describe "Ror Controller" do
               "type": "Related",
               "id": "https://ror.org/00f54p054"
             }],
-            "addresses": [{
-              "lat": 37.42411,
-              "lng": -122.16608,
-              "state": null,
-              "state_code": null,
-              "city": "Stanford",
-              "geonames_city": {
-                "id": 5398563,
-                "city": "Stanford",
-                "geonames_admin1": {
-                  "name": "California",
-                  "id": 5332921,
-                  "ascii_name": "California",
-                  "code": "US.CA"
-                },
-                "geonames_admin2": {
-                  "name": "Santa Clara",
-                  "id": 5393021,
-                  "ascii_name": "Santa Clara",
-                  "code": "US.CA.085"
-                },
-                "license": {
-                  "attribution": "Data from geonames.org under a CC-BY 3.0 license",
-                  "license": "http://creativecommons.org/licenses/by/3.0/"
-                },
-                "nuts_level1": {
-                  "name": null,
-                  "code": null
-                },
-                "nuts_level2": {
-                  "name": null,
-                  "code": null
-                },
-                "nuts_level3": {
-                  "name": null,
-                  "code": null
-                }
-              },
-              "postcode": null,
-              "primary": false,
-              "line": null,
-              "country_geonames_id": 6252001
-            }],
+            "addresses": [],
             "links": ["http://med.stanford.edu/"],
             "aliases": ["Stanford University Medical Center"],
             "acronyms": [],
@@ -239,14 +197,6 @@ RSpec.describe "Ror Controller" do
       JSON
     end
 
-    # returns the organizations.
-    let(:suggestions) do
-      [
-        ["https://ror.org/03mtd9a03", "Stanford Medicine"],
-        ["https://ror.org/00f54p054", "Stanford University"]
-      ]
-    end
-
     before do
       url = "#{Settings.ror_lookup.url}?query=stanford"
       stub_request(:get, url).with(headers:).to_return(status: 200, body: lookup_resp_body, headers: {})
@@ -256,18 +206,17 @@ RSpec.describe "Ror Controller" do
       get "/ror", params: {q: "stanford"}
       expect(response).to have_http_status :ok
 
-      match_suggestions(suggestions, response)
+      match_suggestion("https://ror.org/03mtd9a03", "Stanford Medicine", "United States", "Stanford University Medical Center", response)
+      match_suggestion("https://ror.org/00f54p054", "Stanford University", "Stanford, United States", "SU, Leland Stanford Junior University, Universidad Stanford", response)
     end
-  end
 
-  def match_suggestions(suggestions, response)
-    suggestions.each do |suggestion|
-      uri = suggestion.first
-      actual_suggestion = suggestion.last
+    def match_suggestion(uri, label, location, other_names, response)
       li_element_html = '<li class="list-group-item" role="option" ' \
-                        "data-autocomplete-value=\"#{uri}\" data-autocomplete-label=\"#{actual_suggestion}\">" \
-                        "#{ERB::Util.html_escape(actual_suggestion)}</li>"
+                        "data-autocomplete-value=\"#{uri}\" data-autocomplete-label=\"#{label}\">"
       expect(response.body).to include(li_element_html)
+      expect(response.body).to include(">#{label}</")
+      expect(response.body).to include(">#{location}</")
+      expect(response.body).to include(">#{other_names}</")
     end
   end
 
