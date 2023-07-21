@@ -1,0 +1,12 @@
+<section>
+  <header aria-describedby="popover-work.contributor">Additional contributors
+   <%= render PopoverComponent.new key: "work.contributor" %>
+  </header>
+  <p>Names will be listed in the order shown below.</p>
+
+  <%= render NestedFormComponent.new(form: form, controller: "contributor-form", row: Wokes::ContributorRowComponent, field: "contributors", clazz: Forms::Contributor) do |component| %>
+    <% component.with_add_another_button do %>
+        <%= form.add_another_button "contributor-form", "+ Add another contributor", class: "btn btn-outline-primary" %>
+    <% end %>
+  <% end %>
+</section>

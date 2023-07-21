@@ -1,0 +1,15 @@
+<div class="mb-3 row plain-container">
+  <div class="col-sm-2">
+    <%= form.label :email, "Contact email *", class: "col-form-label" %> <%= render PopoverComponent.new key: "work.contact_email" %>
+  </div>
+  <div class="col-sm-9">
+    <%= form.email_field :email, class: "form-control#{" is-invalid" if error?}",
+          pattern: Devise.email_regexp.source, required: true %>
+    <div class="invalid-feedback">You must provide a valid email address</div>
+  </div>
+  <div class="col-sm-1">
+    <%= form.remove_button controller, class: "btn btn-sm float-end", aria: {label: "Remove"} do %>
+      <span class="fa-regular fa-trash-alt"></span>
+    <% end %>
+  </div>
+</div>

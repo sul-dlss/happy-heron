@@ -1,0 +1,25 @@
+<section id="title">
+  <header>Title of deposit and contact information *</header>
+  <div class="mb-3 row">
+    <div class='col-sm-2'>
+      <%= form.label :title, "Title of deposit *", class: "col-form-label" %>
+      <%= render PopoverComponent.new key: "work.title" %>
+    </div>
+    <div class="col-sm-9">
+      <%= form.text_area :title, class: "form-control", required: true, rows: 1,
+            "aria-describedby": "popover-work.title",
+            data: {action: "no-newlines#change change->auto-citation#updateDisplay",
+                   auto_citation_target: "titleField",
+                   no_newlines_target: "input",
+                   controller: "no-newlines"} %>
+      <div class="invalid-feedback">You must provide a title</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= render NestedFormComponent.new(controller: "contact-email-form", form: form, field: "contact_emails", clazz: Forms::ContactEmail, row: Wokes::ContactEmailRowComponent) do |component| %>
+      <% component.with_add_another_button do %>
+          <%= form.add_another_button "contact-email-form", "+ Add another email", class: "col-sm-2 btn btn-outline-primary" %>
+      <% end %>
+    <% end %>
+  </div>
+ </section>

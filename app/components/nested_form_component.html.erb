@@ -1,0 +1,29 @@
+<div data-controller="<%= controller %>" data-<%= controller %>-wrapper-selector-value=".<%= controller %>-wrapper">
+  <template data-<%= controller %>-target="template">
+    <%= form.fields_for field, clazz.new, child_index: "NEW_RECORD" do |nested_form| %>
+      <div class="<%= controller %>-wrapper" data-new-record="<%= nested_form.object.main_model.new_record? %>">
+        <%= nested_form.hidden_field :_destroy %>
+        <%= render row.new(form: nested_form, controller: controller, **other_row_params) %>
+      </div>
+    <% end %>
+  </template>
+
+  <%= form.fields_for field, nested_forms do |nested_form| %>
+    <div class="<%= controller %>-wrapper" data-new-record="<%= nested_form.object.main_model.new_record? %>">
+      <%= nested_form.hidden_field :id %>
+      <%# :_destroy must come before nested form given queryselector that controller uses for find it. %>
+      <%= nested_form.hidden_field :_destroy %>
+      <%# nested_form may have a remove button which has remove action for the controller %>
+      <%= render row.new(form: nested_form, controller: controller, **other_row_params) %>
+    </div>
+  <% end %>
+
+  <%# Inserted elements will be injected before that target. %>
+  <div data-<%= controller %>-target="target"></div>
+
+  <% if add_another_button? %>
+    <%= add_another_button %>
+  <% else %>
+    <%= form.add_another_button controller, "+ Add another", class: "btn btn-outline-primary" %>
+  <% end %>
+</div>

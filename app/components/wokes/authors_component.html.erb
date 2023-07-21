@@ -1,0 +1,14 @@
+<section>
+  <header aria-describedby="popover-work.author">
+    Authors to include in citation
+    <%= render PopoverComponent.new key: "work.author" %>
+  </header>
+  <p>When there are multiple authors, list them in the order they should appear in the citation. If you need to change the order of the authors, click the arrows to move individual authors up or down in the list.</p>
+
+  <%= render NestedFormComponent.new(form: form, controller: "author-form", row: Wokes::ContributorRowComponent,
+        field: "authors", clazz: Forms::Author, ordered: true) do |component| %>
+    <% component.with_add_another_button do %>
+        <%= form.add_another_button "author-form", "+ Add another author", class: "btn btn-outline-primary" %>
+    <% end %>
+  <% end %>
+</section>
