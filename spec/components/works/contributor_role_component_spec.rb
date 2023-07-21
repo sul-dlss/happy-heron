@@ -6,7 +6,7 @@ RSpec.describe Works::ContributorRoleComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
 
   context "when person" do
-    let(:rendered) { render_inline(described_class.new(form:, role_term_type: "person", data_options: {contributors_target: "role"})) }
+    let(:rendered) { render_inline(described_class.new(form:, contributor_type: "person", data_options: {contributors_target: "role"})) }
 
     it "makes select list for individuals" do
       expected = <<~HTML
@@ -39,7 +39,7 @@ RSpec.describe Works::ContributorRoleComponent do
   end
 
   context "when organization" do
-    let(:rendered) { render_inline(described_class.new(form:, role_term_type: "organization", data_options: {contributors_target: "role"})) }
+    let(:rendered) { render_inline(described_class.new(form:, contributor_type: "organization", data_options: {contributors_target: "role"})) }
 
     it "makes select list for organizations" do
       expected = <<~HTML

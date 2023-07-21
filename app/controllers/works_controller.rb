@@ -75,6 +75,7 @@ class WorksController < ObjectsController
     authorize! work_version
 
     @form = work_form(work_version)
+    byebug
     # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
     event_context = build_event_context(context_form(orig_work_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save
@@ -252,8 +253,8 @@ class WorksController < ObjectsController
         :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
         :globus_origin, subtype: [], files: [],
         attached_files_attributes: %i[_destroy id label hide file path],
-        authors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name, :role_term_type, :role_term, :weight, :orcid, :with_orcid, affiliations_attributes: affiliation_attributes],
-        contributors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name, :role_term_type, :role_term, :weight, :orcid, :with_orcid, affiliations_attributes: affiliation_attributes],
+        authors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name, :contributor_type, :role_term, :weight, :orcid, :with_orcid, affiliations_attributes: affiliation_attributes],
+        contributors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name, :contributor_type, :role_term, :weight, :orcid, :with_orcid, affiliations_attributes: affiliation_attributes],
         contact_emails_attributes: %i[_destroy id email],
         keywords_attributes: %i[_destroy id label uri cocina_type],
         related_works_attributes: %i[_destroy id citation],

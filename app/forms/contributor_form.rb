@@ -35,7 +35,7 @@ module ContributorForm
         property :full_name
         property :orcid
         property :role_term
-        property :role_term_type
+        property :contributor_type
         property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
         property :weight, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
 

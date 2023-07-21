@@ -3,15 +3,15 @@
   <div class="col-md-11">
     <div class="row" style="margin-bottom: 10px;">
       <div class="col-md-2">
-        <%= form.label :role_term_type, role_term_type_label, class: "form-label" %>
+        <%= form.label :contributor_type, contributor_type_label, class: "form-label" %>
       </div>
       <div class="col-md-2">
-        <%= form.radio_button :role_term_type, "person", class: "form-check-input", checked: true, data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypePerson" %>
-        <%= label_tag "role_term_type_person", I18n.t("contributor.roles.person") %>
+        <%= form.radio_button :contributor_type, "person", class: "form-check-input", checked: true, data: {action: "contributors#contributorTypeChanged"}, "data-contributors-target": "contributorTypePerson" %>
+        <%= label_tag "contributor_type_person", I18n.t("contributor.roles.person") %>
       </div>
       <div class="col-md-4">
-        <%= form.radio_button :role_term_type, "organization", class: "form-check-input", checked: false, data: {action: "contributors#roleTermTypeChanged"}, "data-contributors-target": "roleTermTypeOrganization" %>
-        <%= label_tag "role_term_type_organization", I18n.t("contributor.roles.organization") %>
+        <%= form.radio_button :contributor_type, "organization", class: "form-check-input", checked: false, data: {action: "contributors#contributorTypeChanged"}, "data-contributors-target": "contributorTypeOrganization" %>
+        <%= label_tag "contributor_type_organization", I18n.t("contributor.roles.organization") %>
       </div>
     </div>
     <div class="row" style="margin-bottom: 10px;">
