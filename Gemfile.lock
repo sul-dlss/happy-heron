@@ -172,7 +172,7 @@ GEM
     cuprite (0.14.3)
       capybara (~> 3.0)
       ferrum (~> 0.13.0)
-    cypress-on-rails (1.15.0)
+    cypress-on-rails (1.15.1)
       rack
     cypress-rails (0.6.1)
       puma (>= 3.8.0)
@@ -364,6 +364,8 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.5.9)
     nokogiri (1.15.3-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.3-x86_64-linux)
       racc (~> 1.4)
     nokogiri-happymapper (0.9.0)
       nokogiri (~> 1.5)
