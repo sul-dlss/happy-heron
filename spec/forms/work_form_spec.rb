@@ -35,11 +35,11 @@ RSpec.describe WorkForm do
     let(:contributors) do
       [
         {"_destroy" => "1", "first_name" => "Justin",
-         "last_name" => "Coyne", "role_term" => "person|Data collector"},
+         "last_name" => "Coyne", "role_term" => "person|Data collector", "contributor_type" => "person"},
         {"_destroy" => "false", "first_name" => "Naomi",
-         "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author"},
+         "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author", "contributor_type" => "person"},
         {"_destroy" => "false", "first_name" => "Naomi",
-         "last_name" => "Dushay", "full_name" => "The Leland Stanford Junior University",
+         "last_name" => "Dushay", "full_name" => "The Leland Stanford Junior University", "contributor_type" => "organization",
          "role_term" => "organization|Host institution"}
       ]
     end

@@ -131,9 +131,13 @@ module Works
 
     def data_options_for_select(contributor_type)
       {
-        action: "change->auto-citation#updateDisplay",
         contributors_target: "select#{contributor_type.titlecase}Role"
-      }.tap { |opts| opts[:auto_citation_target] = "contributorRole" if author? }
+      }.tap do |opts|
+        if author?
+          opts[:action] = "change->auto-citation#updateDisplay"
+          opts[:auto_citation_target] = "contributorRole"
+        end
+      end
     end
   end
 end

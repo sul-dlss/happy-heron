@@ -84,15 +84,15 @@ RSpec.describe "Create a new work" do
         let(:authors) do
           {"0" =>
             {"_destroy" => "1", "first_name" => "Justin",
-             "last_name" => "Coyne", "role_term" => "person|Data collector"},
+             "last_name" => "Coyne", "role_term" => "person|Data collector", "contributor_type" => "person"},
            "999" =>
             {"_destroy" => "false", "first_name" => "Naomi", "weight" => "1",
-             "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author",
+             "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author", "contributor_type" => "person",
              "affiliations_attributes" => {"0" => {"_destroy" => "false", "label" => "Stanford University", "uri" => "http://ror.org/12345", "department" => "Department of Classics"}}},
            "1002" =>
             {"_destroy" => "false", "first_name" => "Naomi", "weight" => "0",
              "last_name" => "Dushay", "full_name" => "The Leland Stanford Junior University",
-             "role_term" => "organization|Host institution"}}
+             "role_term" => "organization|Host institution", "contributor_type" => "organization"}}
         end
 
         let(:upload1) do
@@ -256,6 +256,7 @@ RSpec.describe "Create a new work" do
               }},
               "authors_attributes" => {"0" => {
                 "role_term" => "person|Author",
+                "contributor_type" => "person",
                 "with_orcid" => "false",
                 "first_name" => "Camille ",
                 "last_name" => "",
@@ -266,6 +267,7 @@ RSpec.describe "Create a new work" do
               }},
               "contributors_attributes" => {"0" => {
                 "role_term" => "person|Author",
+                "contributor_type" => "person",
                 "with_orcid" => "false",
                 "first_name" => "",
                 "last_name" => "",
@@ -354,7 +356,7 @@ RSpec.describe "Create a new work" do
         let(:authors) do
           {"999" =>
             {"_destroy" => "false", "first_name" => "", "last_name" => "",
-             "full_name" => "Stanford", "role_term" => "organization|Host institution"}}
+             "full_name" => "Stanford", "role_term" => "organization|Host institution", "contributor_type" => "organization"}}
         end
 
         let(:contact_emails) do
@@ -582,7 +584,7 @@ RSpec.describe "Create a new work" do
         let(:authors) do
           {"999" =>
             {"_destroy" => "false", "full_name" => "", "first_name" => "Naomi",
-             "last_name" => "Dushay", "role_term" => "person|Author"}}
+             "last_name" => "Dushay", "role_term" => "person|Author", "contributor_type" => "person"}}
         end
 
         let(:contact_emails) do
@@ -661,7 +663,7 @@ RSpec.describe "Create a new work" do
         let(:authors) do
           {"999" =>
             {"_destroy" => "false", "full_name" => "", "first_name" => "Naomi",
-             "last_name" => "Dushay", "role_term" => "person|Author"}}
+             "last_name" => "Dushay", "role_term" => "person|Author", "contributor_type" => "person"}}
         end
 
         let(:contact_emails) do
@@ -729,7 +731,7 @@ RSpec.describe "Create a new work" do
         let(:authors) do
           {"999" =>
             {"_destroy" => "false", "full_name" => "", "first_name" => "Naomi",
-             "last_name" => "Dushay", "role_term" => "person|Author"}}
+             "last_name" => "Dushay", "role_term" => "person|Author", "contributor_type" => "person"}}
         end
 
         let(:contact_emails) do
@@ -795,7 +797,7 @@ RSpec.describe "Create a new work" do
         let(:authors) do
           {"999" =>
             {"_destroy" => "false", "full_name" => "", "first_name" => "Naomi",
-             "last_name" => "Dushay", "role_term" => "person|Author"}}
+             "last_name" => "Dushay", "role_term" => "person|Author", "contributor_type" => "person"}}
         end
 
         let(:contact_emails) do
@@ -888,7 +890,7 @@ RSpec.describe "Create a new work" do
         let(:authors) do
           {"999" =>
             {"_destroy" => "false", "first_name" => "", "last_name" => "",
-             "full_name" => "Stanford", "role_term" => "organization|Host institution"}}
+             "full_name" => "Stanford", "role_term" => "organization|Host institution", "contributor_type" => "organization"}}
         end
 
         let(:contact_emails) do

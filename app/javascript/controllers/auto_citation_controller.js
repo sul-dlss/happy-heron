@@ -65,15 +65,15 @@ export default class extends Controller {
   }
 
   get contributorRoles() {
-    return this.contributorRoleTargets.filter(elem => elem.disabled == false)
+    return this.contributorRoleTargets.filter(elem => elem.hidden == false)
   }
 
   get contributorFirsts() {
-    return this.contributorFirstTargets.filter(elem => elem.disabled == false)
+    return this.contributorFirstTargets.filter(elem => elem.hidden == false)
   }
 
   get contributorLasts() {
-    return this.contributorLastTargets.filter(elem => elem.disabled == false)
+    return this.contributorLastTargets.filter(elem => elem.hidden == false)
   }
 
   // Triggered when the switch is toggled
