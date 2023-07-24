@@ -60,7 +60,7 @@ export default class extends Controller {
         const surname = this.contributorLasts[index].value
         return `${surname}, ${firstInitial}`
       }
-      //return this.contributorOrgTargets[index].value
+      return this.contributorOrgTargets[index].value
     })
   }
 
