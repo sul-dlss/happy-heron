@@ -70,6 +70,14 @@ module Works
       model.orcid.present?
     end
 
+    def person?
+      model.contributor_type == 'person' || model.contributor_type.blank?
+    end
+
+    def organization?
+      model.contributor_type == 'organization'
+    end
+
     def model
       form.object.class.method_defined?(:model) ? form.object.model : form.object
     end
@@ -123,16 +131,9 @@ module Works
 
     def data_options_for_select
       {
-        action: "change->contributors#roleChanged change->auto-citation#updateDisplay",
+        action: "change->auto-citation#updateDisplay",
         contributors_target: "role"
-      }.tap do |opts|
-        actions = ["change->contributors#roleChanged"]
-        if author?
-          opts[:auto_citation_target] = "contributorRole"
-          actions << ["change->auto-citation#updateDisplay"]
-        end
-        opts[:action] = actions.join(" ")
-      end
+      }.tap { |opts| opts[:auto_citation_target] = "contributorRole" if author? }
     end
   end
 end

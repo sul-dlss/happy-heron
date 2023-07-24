@@ -75,7 +75,6 @@ class WorksController < ObjectsController
     authorize! work_version
 
     @form = work_form(work_version)
-    byebug
     # `changed?(field)` on a reform form object needs to be asked before persistence on existing records
     event_context = build_event_context(context_form(orig_work_version, orig_clean_params))
     if @form.validate(clean_params) && @form.save

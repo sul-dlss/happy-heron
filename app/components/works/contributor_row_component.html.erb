@@ -6,11 +6,11 @@
         <%= form.label :contributor_type, contributor_type_label, class: "form-label" %>
       </div>
       <div class="col-md-2">
-        <%= form.radio_button :contributor_type, "person", class: "form-check-input", checked: true, data: {action: "contributors#contributorTypeChanged"}, "data-contributors-target": "contributorTypePerson" %>
+        <%= form.radio_button :contributor_type, "person", class: "form-check-input", checked: person?, data: {action: "contributors#contributorTypeChanged"}, "data-contributors-target": "contributorTypePerson" %>
         <%= label_tag "contributor_type_person", I18n.t("contributor.roles.person") %>
       </div>
       <div class="col-md-4">
-        <%= form.radio_button :contributor_type, "organization", class: "form-check-input", checked: false, data: {action: "contributors#contributorTypeChanged"}, "data-contributors-target": "contributorTypeOrganization" %>
+        <%= form.radio_button :contributor_type, "organization", class: "form-check-input", checked: organization?, data: {action: "contributors#contributorTypeChanged"}, "data-contributors-target": "contributorTypeOrganization" %>
         <%= label_tag "contributor_type_organization", I18n.t("contributor.roles.organization") %>
       </div>
     </div>

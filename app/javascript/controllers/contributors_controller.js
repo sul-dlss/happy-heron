@@ -8,7 +8,6 @@ export default class extends Controller {
 
   connect() {
     this.contributorTypeChanged()
-    this.roleChanged()
     this.personChanged()
     if(this.hasValidOrcid) {
       this.lookupOrcid()
@@ -19,18 +18,13 @@ export default class extends Controller {
     if (this.contributorTypePersonTarget.checked) {
       this.selectPersonRoleTarget.hidden = false
       this.selectOrganizationRoleTarget.hidden = true
+      this.displayPerson()
     }
     else {
       this.selectPersonRoleTarget.hidden = true
       this.selectOrganizationRoleTarget.hidden = false
-    }
-  }
-
-  roleChanged() {
-    if (this.roleTarget.value.startsWith('person'))
-      this.displayPerson()
-    else
       this.displayOrganization()
+    }
   }
 
   // Person radio button toggled.

@@ -51,9 +51,9 @@ module ContributorForm
         end
 
         if validate
-          validates :first_name, presence: true, if: -> { role_term.start_with?("person") }
-          validates :last_name, presence: true, if: -> { role_term.start_with?("person") }
-          validates :full_name, presence: true, unless: -> { role_term.start_with?("person") }
+          validates :first_name, presence: true, if: -> { contributor_type == "person" }
+          validates :last_name, presence: true, if: -> { contributor_type == "person" }
+          validates :full_name, presence: true, unless: -> { contributor_type == "person" }
         end
       }
     end
