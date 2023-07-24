@@ -244,7 +244,7 @@ RSpec.describe CocinaGenerator::Description::TypesGenerator do
           "Correspondence", "Documentation", "Event", "Government document", "Image", "Manuscript", "MIDI",
           "Musical transcription", "Notated music", "Other spoken word", "Pamphlet", "Policy brief",
           "Presentation recording", "Presentation slides", "Questionnaire", "Report", "Software", "Sound recording",
-          "Speaker notes", "Technical report", "Text", "Thesis", "Video recording", "Video art"]
+          "Speaker notes", "Technical report", "Text", "Thesis", "Video art", "Video recording"]
       end
 
       it "has one genre for each" do
