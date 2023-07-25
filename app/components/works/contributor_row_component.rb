@@ -19,11 +19,11 @@ module Works
     end
 
     def select_person_role
-      render ContributorRoleComponent.new(form:, contributor_type: "person", data_options: data_options_for_select("person"))
+      render ContributorRoleComponent.new(form:, contributor_type: "person", visible: person?, data_options: data_options_for_select("person"))
     end
 
     def select_organization_role
-      render ContributorRoleComponent.new(form:, contributor_type: "organization", data_options: data_options_for_select("organization"))
+      render ContributorRoleComponent.new(form:, contributor_type: "organization", visible: organization?, data_options: data_options_for_select("organization"))
     end
 
     def html_options(auto_citation_target, contributors_target: nil, disabled: false)

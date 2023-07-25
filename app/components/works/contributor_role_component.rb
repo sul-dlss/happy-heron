@@ -3,19 +3,20 @@
 module Works
   # Renders a widget for selecting a contributor role
   class ContributorRoleComponent < ApplicationComponent
-    def initialize(form:, data_options:, contributor_type:)
+    def initialize(form:, data_options:, contributor_type:, visible:)
       @form = form
       @contributor_type = contributor_type # person or organization
+      @visible = visible # if drop down starts out as hidden/disabled
       @data_options = data_options
     end
 
-    attr_reader :form, :contributor_type
+    attr_reader :form, :contributor_type, :visible
 
     delegate :grouped_collection_select, to: :form
 
     def call
       grouped_collection_select :role_term, grouped_options(contributor_type), :roles, :label, :key, :label,
-        {}, class: "form-select", data: @data_options, "aria-describedby": "popover-work.role_term"
+        {}, disabled: !visible, hidden: !visible, class: "form-select", data: @data_options, "aria-describedby": "popover-work.role_term"
     end
 
     # Represents the type of contributor top level option for the role select

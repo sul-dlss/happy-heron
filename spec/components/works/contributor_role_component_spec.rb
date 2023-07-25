@@ -6,7 +6,7 @@ RSpec.describe Works::ContributorRoleComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
 
   context "when person" do
-    let(:rendered) { render_inline(described_class.new(form:, contributor_type: "person", data_options: {contributors_target: "role"})) }
+    let(:rendered) { render_inline(described_class.new(form:, visible: true, contributor_type: "person", data_options: {contributors_target: "role"})) }
 
     it "makes select list for individuals" do
       expected = <<~HTML
@@ -38,8 +38,41 @@ RSpec.describe Works::ContributorRoleComponent do
     end
   end
 
+  context "when hidden person" do
+    let(:rendered) { render_inline(described_class.new(form:, visible: false, contributor_type: "person", data_options: {contributors_target: "role"})) }
+
+    it "makes select list for individuals" do
+      expected = <<~HTML
+        <select disabled hidden="hidden" class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role_term" id="role_term"><optgroup label="Individual">
+        <option value="person|Author">Author</option>
+        <option value="person|Advisor">Advisor</option>
+        <option value="person|Composer">Composer</option>
+        <option value="person|Contributing author">Contributing author</option>
+        <option value="person|Copyright holder">Copyright holder</option>
+        <option value="person|Creator">Creator</option>
+        <option value="person|Data collector">Data collector</option>
+        <option value="person|Data contributor">Data contributor</option>
+        <option value="person|Editor">Editor</option>
+        <option value="person|Event organizer">Event organizer</option>
+        <option value="person|Interviewee">Interviewee</option>
+        <option value="person|Interviewer">Interviewer</option>
+        <option value="person|Performer">Performer</option>
+        <option value="person|Photographer">Photographer</option>
+        <option value="person|Primary thesis advisor">Primary thesis advisor</option>
+        <option value="person|Principal investigator">Principal investigator</option>
+        <option value="person|Researcher">Researcher</option>
+        <option value="person|Software developer">Software developer</option>
+        <option value="person|Speaker">Speaker</option>
+        <option value="person|Thesis advisor">Thesis advisor</option>
+        </optgroup></select>
+      HTML
+
+      expect(rendered.to_html).to eq expected.chomp
+    end
+  end
+
   context "when organization" do
-    let(:rendered) { render_inline(described_class.new(form:, contributor_type: "organization", data_options: {contributors_target: "role"})) }
+    let(:rendered) { render_inline(described_class.new(form:, visible: true, contributor_type: "organization", data_options: {contributors_target: "role"})) }
 
     it "makes select list for organizations" do
       expected = <<~HTML
