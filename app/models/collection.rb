@@ -106,6 +106,18 @@ class Collection < ApplicationRecord
     end
   end
 
+  def effective_custom_rights_instructions
+    unless custom_rights_statement_source_option == "entered_by_depositor"
+      raise "Custom rights for #{collection.id} not entered by depositor; thus it doesn't make sense to determine instructions for entering"
+    end
+
+    if custom_rights_instructions_source_option == "provided_by_collection"
+      custom_rights_statement_custom_instructions
+    else
+      Settings.access.default_instructions_for_custom_use_statement
+    end
+  end
+
   private
 
   def default_event_context
