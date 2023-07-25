@@ -57,7 +57,7 @@ class WorkType
     "Presentation slides", "Questionnaire", "Remote sensing imagery", "Report",
     "Software", "Sound recording", "Speaker notes", "Speech", "Story", "Syllabus",
     "Tabular data", "Technical report", "Text", "Text corpus", "Thesis",
-    "Transcript", "Unedited recording", "Video recording", "Video art",
+    "Transcript", "Unedited recording", "Video art", "Video recording",
     "White paper", "Working paper"
   ].freeze
 
