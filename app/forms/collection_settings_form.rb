@@ -48,9 +48,7 @@ class CollectionSettingsForm < Reform::Form
 
   validates :release_option, presence: true, inclusion: {in: %w[immediate delay depositor-selects]}
   validate :no_orphaned_embargoes
-  validates :release_duration, inclusion: {in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values},
-
-    allow_blank: true
+  validates :release_duration, inclusion: {in: ::Collection::EMBARGO_RELEASE_DURATION_OPTIONS.values}, allow_blank: true
   validates :access, presence: true
   validates :managed_by, length: {minimum: 1, message: "Please add at least one manager."}
   validates_with CollectionLicenseValidator
