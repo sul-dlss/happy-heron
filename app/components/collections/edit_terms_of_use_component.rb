@@ -9,8 +9,6 @@ module Collections
 
     attr_reader :form
 
-    delegate :default_license, :required_license, to: :collection_form
-
     def collection_form
       # Can be a DraftCollectionForm or a CollectionSettingsForm
       form.object
@@ -38,10 +36,6 @@ module Collections
 
     def errors
       collection_form.errors.where(:license)
-    end
-
-    def error_message
-      safe_join(errors.map(&:message), tag.br)
     end
   end
 end
