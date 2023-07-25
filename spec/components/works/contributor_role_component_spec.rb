@@ -10,27 +10,27 @@ RSpec.describe Works::ContributorRoleComponent do
 
     it "makes select list for individuals" do
       expected = <<~HTML
-        <select class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role_term" id="role_term"><optgroup label="Individual">
-        <option value="person|Author">Author</option>
-        <option value="person|Advisor">Advisor</option>
-        <option value="person|Composer">Composer</option>
-        <option value="person|Contributing author">Contributing author</option>
-        <option value="person|Copyright holder">Copyright holder</option>
-        <option value="person|Creator">Creator</option>
-        <option value="person|Data collector">Data collector</option>
-        <option value="person|Data contributor">Data contributor</option>
-        <option value="person|Editor">Editor</option>
-        <option value="person|Event organizer">Event organizer</option>
-        <option value="person|Interviewee">Interviewee</option>
-        <option value="person|Interviewer">Interviewer</option>
-        <option value="person|Performer">Performer</option>
-        <option value="person|Photographer">Photographer</option>
-        <option value="person|Primary thesis advisor">Primary thesis advisor</option>
-        <option value="person|Principal investigator">Principal investigator</option>
-        <option value="person|Researcher">Researcher</option>
-        <option value="person|Software developer">Software developer</option>
-        <option value="person|Speaker">Speaker</option>
-        <option value="person|Thesis advisor">Thesis advisor</option>
+        <select class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role" id="role"><optgroup label="Individual">
+        <option value="Author">Author</option>
+        <option value="Advisor">Advisor</option>
+        <option value="Composer">Composer</option>
+        <option value="Contributing author">Contributing author</option>
+        <option value="Copyright holder">Copyright holder</option>
+        <option value="Creator">Creator</option>
+        <option value="Data collector">Data collector</option>
+        <option value="Data contributor">Data contributor</option>
+        <option value="Editor">Editor</option>
+        <option value="Event organizer">Event organizer</option>
+        <option value="Interviewee">Interviewee</option>
+        <option value="Interviewer">Interviewer</option>
+        <option value="Performer">Performer</option>
+        <option value="Photographer">Photographer</option>
+        <option value="Primary thesis advisor">Primary thesis advisor</option>
+        <option value="Principal investigator">Principal investigator</option>
+        <option value="Researcher">Researcher</option>
+        <option value="Software developer">Software developer</option>
+        <option value="Speaker">Speaker</option>
+        <option value="Thesis advisor">Thesis advisor</option>
         </optgroup></select>
       HTML
 
@@ -43,27 +43,27 @@ RSpec.describe Works::ContributorRoleComponent do
 
     it "makes select list for individuals" do
       expected = <<~HTML
-        <select disabled hidden="hidden" class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role_term" id="role_term"><optgroup label="Individual">
-        <option value="person|Author">Author</option>
-        <option value="person|Advisor">Advisor</option>
-        <option value="person|Composer">Composer</option>
-        <option value="person|Contributing author">Contributing author</option>
-        <option value="person|Copyright holder">Copyright holder</option>
-        <option value="person|Creator">Creator</option>
-        <option value="person|Data collector">Data collector</option>
-        <option value="person|Data contributor">Data contributor</option>
-        <option value="person|Editor">Editor</option>
-        <option value="person|Event organizer">Event organizer</option>
-        <option value="person|Interviewee">Interviewee</option>
-        <option value="person|Interviewer">Interviewer</option>
-        <option value="person|Performer">Performer</option>
-        <option value="person|Photographer">Photographer</option>
-        <option value="person|Primary thesis advisor">Primary thesis advisor</option>
-        <option value="person|Principal investigator">Principal investigator</option>
-        <option value="person|Researcher">Researcher</option>
-        <option value="person|Software developer">Software developer</option>
-        <option value="person|Speaker">Speaker</option>
-        <option value="person|Thesis advisor">Thesis advisor</option>
+        <select disabled hidden="hidden" class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role" id="role"><optgroup label="Individual">
+        <option value="Author">Author</option>
+        <option value="Advisor">Advisor</option>
+        <option value="Composer">Composer</option>
+        <option value="Contributing author">Contributing author</option>
+        <option value="Copyright holder">Copyright holder</option>
+        <option value="Creator">Creator</option>
+        <option value="Data collector">Data collector</option>
+        <option value="Data contributor">Data contributor</option>
+        <option value="Editor">Editor</option>
+        <option value="Event organizer">Event organizer</option>
+        <option value="Interviewee">Interviewee</option>
+        <option value="Interviewer">Interviewer</option>
+        <option value="Performer">Performer</option>
+        <option value="Photographer">Photographer</option>
+        <option value="Primary thesis advisor">Primary thesis advisor</option>
+        <option value="Principal investigator">Principal investigator</option>
+        <option value="Researcher">Researcher</option>
+        <option value="Software developer">Software developer</option>
+        <option value="Speaker">Speaker</option>
+        <option value="Thesis advisor">Thesis advisor</option>
         </optgroup></select>
       HTML
 
@@ -76,24 +76,24 @@ RSpec.describe Works::ContributorRoleComponent do
 
     it "makes select list for organizations" do
       expected = <<~HTML
-        <select class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role_term" id="role_term"><optgroup label="Organization">
-        <option value="organization|Author">Author</option>
-        <option value="organization|Conference">Conference</option>
-        <option value="organization|Contributing author">Contributing author</option>
-        <option value="organization|Copyright holder">Copyright holder</option>
-        <option value="organization|Data collector">Data collector</option>
-        <option value="organization|Data contributor">Data contributor</option>
-        <option value="organization|Degree granting institution">Degree granting institution</option>
-        <option value="organization|Department">Department</option>
-        <option value="organization|Distributor">Distributor</option>
-        <option value="organization|Event">Event</option>
-        <option value="organization|Event organizer">Event organizer</option>
-        <option value="organization|Funder">Funder</option>
-        <option value="organization|Host institution">Host institution</option>
-        <option value="organization|Issuing body">Issuing body</option>
-        <option value="organization|Publisher">Publisher</option>
-        <option value="organization|Research group">Research group</option>
-        <option value="organization|Sponsor">Sponsor</option>
+        <select class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role" id="role"><optgroup label="Organization">
+        <option value="Author">Author</option>
+        <option value="Conference">Conference</option>
+        <option value="Contributing author">Contributing author</option>
+        <option value="Copyright holder">Copyright holder</option>
+        <option value="Data collector">Data collector</option>
+        <option value="Data contributor">Data contributor</option>
+        <option value="Degree granting institution">Degree granting institution</option>
+        <option value="Department">Department</option>
+        <option value="Distributor">Distributor</option>
+        <option value="Event">Event</option>
+        <option value="Event organizer">Event organizer</option>
+        <option value="Funder">Funder</option>
+        <option value="Host institution">Host institution</option>
+        <option value="Issuing body">Issuing body</option>
+        <option value="Publisher">Publisher</option>
+        <option value="Research group">Research group</option>
+        <option value="Sponsor">Sponsor</option>
         </optgroup></select>
       HTML
 

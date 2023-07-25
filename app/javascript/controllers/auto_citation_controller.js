@@ -55,7 +55,7 @@ export default class extends Controller {
   // Authors (person and organization) as an array of strings.
   get authors() {
     return this.contributorRoles.map((roleField, index) => {
-      if (roleField.value.startsWith('person')) {
+      if (roleField.attributes['data-contributors-target'].value == 'selectPersonRole') {
         const firstInitial = `${this.contributorFirsts[index].value.charAt(0)}.`
         const surname = this.contributorLasts[index].value
         return `${surname}, ${firstInitial}`

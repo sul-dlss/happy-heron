@@ -35,12 +35,12 @@ RSpec.describe WorkForm do
     let(:contributors) do
       [
         {"_destroy" => "1", "first_name" => "Justin",
-         "last_name" => "Coyne", "role_term" => "person|Data collector", "contributor_type" => "person"},
+         "last_name" => "Coyne", "role" => "Data collector", "contributor_type" => "person"},
         {"_destroy" => "false", "first_name" => "Naomi",
-         "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author", "contributor_type" => "person"},
+         "last_name" => "Dushay", "full_name" => "Stanford", "role" => "Author", "contributor_type" => "person"},
         {"_destroy" => "false", "first_name" => "Naomi",
          "last_name" => "Dushay", "full_name" => "The Leland Stanford Junior University", "contributor_type" => "organization",
-         "role_term" => "organization|Host institution"}
+         "role" => "Host institution"}
       ]
     end
 
@@ -72,10 +72,10 @@ RSpec.describe WorkForm do
       let(:authors) do
         [
           {"_destroy" => "false", "first_name" => "Naomi",
-           "last_name" => "Dushay", "full_name" => "Stanford", "role_term" => "person|Author"},
+           "last_name" => "Dushay", "full_name" => "Stanford", "role" => "Author"},
           {"_destroy" => "false", "first_name" => "Naomi",
            "last_name" => "Dushay", "full_name" => "The Leland Stanford Junior University",
-           "role_term" => "organization|Host institution"}
+           "role" => "Host institution"}
         ]
       end
       let(:errors) { form.errors.where(:authors) }

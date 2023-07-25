@@ -4,8 +4,6 @@
 # It is necessary so that Rails STI will assign the proper type to each concrete model
 # and so that when you query Work#contributors you only get the non-author contributors.
 class AbstractContributor < ApplicationRecord
-  SEPARATOR = "|"
-
   # NOTE: "Author" is deliberately set to first (out of alpha order), as it should be the default
   PERSON_ROLES = [
     "Author",
@@ -77,18 +75,5 @@ class AbstractContributor < ApplicationRecord
 
   def person?
     contributor_type == "person"
-  end
-
-  # used by DraftWorkForm
-
-  def role_term
-    [contributor_type, role].join(SEPARATOR)
-  end
-
-  # used by DraftWorkForm for setting values from the form.
-
-  def role_term=(val)
-    contributor_type, role = val.split(SEPARATOR)
-    self.attributes = {contributor_type:, role:}
   end
 end

@@ -15,7 +15,7 @@ module Works
     delegate :grouped_collection_select, to: :form
 
     def call
-      grouped_collection_select :role_term, grouped_options(contributor_type), :roles, :label, :key, :label,
+      grouped_collection_select :role, grouped_options(contributor_type), :roles, :label, :key, :label,
         {}, disabled: !visible, hidden: !visible, class: "form-select", data: @data_options, "aria-describedby": "popover-work.role_term"
     end
 
@@ -34,21 +34,20 @@ module Works
 
       def roles
         AbstractContributor.grouped_roles(citable:)
-          .fetch(key).map { |label| Role.new(contributor_type: key, label:) }
+          .fetch(key).map { |label| Role.new(label:) }
       end
     end
 
     # Represents a role that may be selected for a specific type of contributor
     class Role
-      def initialize(contributor_type:, label:)
-        @contributor_type = contributor_type
+      def initialize(label:)
         @label = label
       end
 
-      attr_reader :label, :contributor_type
+      attr_reader :label
 
       def key
-        [contributor_type, label].join(AbstractContributor::SEPARATOR)
+        label
       end
     end
 
