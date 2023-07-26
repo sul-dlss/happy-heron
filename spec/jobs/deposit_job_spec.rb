@@ -305,6 +305,25 @@ RSpec.describe DepositJob do
     end
   end
 
+  context "when the deposit is a globus deposit" do
+    before do
+      allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
+      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
+        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: "sul.svg",
+          signed_id: "9999999")])
+      allow(GlobusClient).to receive(:disallow_writes).and_return(true)
+    end
+
+    let(:first_work_version) do
+      build(:work_version, :with_globus_endpoint_draft, work:, attached_files: [attached_file], version: 1)
+    end
+
+    it "updates globus permissions" do
+      described_class.perform_now(first_work_version)
+      expect(GlobusClient).to have_received(:disallow_writes).with(path: "userid/workid/version1", user_id: nil)
+    end
+  end
+
   context "when the deposit request is not successful" do
     before do
       allow(SdrClient::Deposit::CreateResource).to receive(:run).and_raise("Deposit failed.")

@@ -13,6 +13,8 @@ class DepositJob < BaseDepositJob
     # NOTE: this login ensures `Repository.find` and various SdrClient::* calls below all have a valid token
     perform_login
 
+    disallow_writes(work_version) if work_version.globus_endpoint.present?
+
     cocina_obj = Repository.find(druid) if druid
     request_dro = CocinaGenerator::DROGenerator.generate_model(work_version:, cocina_obj:)
     new_request_dro = update_dro_with_file_identifiers(request_dro, work_version)
@@ -30,6 +32,14 @@ class DepositJob < BaseDepositJob
   def perform_login
     login_result = login
     raise login_result.failure unless login_result.success?
+  end
+
+  def disallow_writes(work_version)
+    return true if test_mode?
+    return true if integration_test_mode? && work_version.globus_endpoint == integration_endpoint
+
+    # user_id nil because unneeded for permission update operations
+    GlobusClient.disallow_writes(path: work_version.globus_endpoint, user_id: nil)
   end
 
   def update_dro_with_file_identifiers(request_dro, work_version)
@@ -95,5 +105,18 @@ class DepositJob < BaseDepositJob
     work_version.staged_local_files.to_h do |attached_file|
       [attached_file.path, blob_filepath_for(attached_file.file.blob)]
     end
+  end
+
+  # simulate globus calls in development if settings indicate we should for testing
+  def test_mode?
+    Settings.globus.test_mode && Rails.env.development?
+  end
+
+  def integration_test_mode?
+    Settings.globus.integration_mode
+  end
+
+  def integration_endpoint
+    Settings.globus.integration_endpoint
   end
 end
