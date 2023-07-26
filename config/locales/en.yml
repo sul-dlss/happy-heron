@@ -138,6 +138,7 @@ en:
       related_link: This section allows you to provide links to other web pages that are related to your deposit. These links will display on the persistent URL (PURL) page for your deposit and on the Stanford Libraries' catalog record. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are lab, institute, or project pages; GitHub repositories for the current version of software code; or funder websites.
       license: A license helps others who access your content to understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for assistance with the license options presented here.
       locked: This deposit can no longer be edited in this application. If you need to make changes to this deposit, please use the Help link at the top of this page to contact us.
+      rights: For open access articles, use this section for required publisher's statement. For other deposits, use this section to describe other terms of use not covered by the license you select below. This section does not constitute a formal Data Use Agreement.
   hints:
     collection:
       review_enabled: >

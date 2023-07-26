@@ -664,7 +664,8 @@ CREATE TABLE public.work_versions (
     published_at timestamp(6) without time zone,
     upload_type character varying,
     globus_endpoint character varying,
-    globus_origin character varying
+    globus_origin character varying,
+    rights character varying
 );
 
 
@@ -1478,6 +1479,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230420204926'),
 ('20230627053607'),
 ('20230629154913'),
-('20230705222153');
+('20230705222153'),
+('20230726172521');
 
 
