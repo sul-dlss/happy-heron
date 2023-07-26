@@ -23,7 +23,7 @@ RSpec.describe Works::FormComponent do
         "Enter dates related to your deposit",
         "Describe your deposit",
         "Settings for release date and download access",
-        "Select a license",
+        "License",
         "auto-citation unsaved-changes deposit-button")
     expect(rendered.to_html)
       .not_to include("What's changing?")

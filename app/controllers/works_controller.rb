@@ -247,7 +247,7 @@ class WorksController < ObjectsController
         "created_range(4i)", "created_range(5i)", "created_range(6i)",
         "created_range(approx3)",
         :abstract, :citation_auto, :citation, :default_citation,
-        :access, :license, :version_description,
+        :access, :license, :rights, :version_description,
         :release, "embargo_date(1i)", "embargo_date(2i)", "embargo_date(3i)",
         :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
         :globus_origin, subtype: [], files: [],

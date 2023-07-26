@@ -31,14 +31,17 @@
 
   <hr>
   <div class="row">
-    <div class="col-sm-2"><strong>Additional terms of use</strong></div>
+    <div class="col-sm-2">
+      <%= form.label :rights, "Additional terms of use", class: "col-form-label" %>
+      <%= render PopoverComponent.new key: "work.rights" %>
+    </div>
     <div class="col-sm-8">Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on th PURL page.</div>
   </div>
   <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
-      <%= form.input :rights,
-            class: "form-textarea" %>
+      <%= form.text_area :rights, class: "form-control",
+            data: {action: "no-newlines#change", no_newlines_target: "input", controller: "no-newlines"} %>
     </div>
   </div>
 
