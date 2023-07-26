@@ -43,7 +43,7 @@
       <div class="col-sm-8">
         <% if collection.provided_custom_rights_statement %>
           <p><%= collection.provided_custom_rights_statement %></p>
-          <%= form.hidden_field :rights, value: "#{collection.provided_custom_rights_statement}" %>
+          <%= form.hidden_field :rights, value: collection.provided_custom_rights_statement %>
         <% else %>
           <%= form.text_area :rights, class: "form-control",
                 data: {action: "no-newlines#change", no_newlines_target: "input", controller: "no-newlines"} %>
