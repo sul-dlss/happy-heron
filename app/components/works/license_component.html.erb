@@ -1,5 +1,5 @@
 <section id="license">
-  <header>Select a license *</header>
+  <header>License *</header>
   <% if user_can_set_license? %>
     <div class="mb-3 row">
       <div class="col-sm-2">
@@ -28,4 +28,18 @@
   <p style="font-style: italic; margin-left: 2.5rem;">
     <%= Settings.access.use_and_reproduction_statement %>
   </p>
+
+  <hr>
+  <div class="row">
+    <div class="col-sm-2"><strong>Additional terms of use</strong></div>
+    <div class="col-sm-8">Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on th PURL page.</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <%= form.input :rights,
+            class: "form-textarea" %>
+    </div>
+  </div>
+
 </section>
