@@ -256,4 +256,8 @@ FactoryBot.define do
     globus_endpoint { "userid/workid/version1" }
     deposited
   end
+
+  trait :with_custom_rights_statement do
+    rights { "An addendum to the built in terms of use" }
+  end
 end
