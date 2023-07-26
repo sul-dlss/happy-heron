@@ -64,7 +64,7 @@ RSpec.describe CocinaGenerator::AccessGenerator do
     end
   end
 
-  context "when access is world" do
+  context "when access is world and custom rights are provided" do
     let(:work_version) { build(:work_version, :with_custom_rights_statement) }
 
     it "generates the model" do
