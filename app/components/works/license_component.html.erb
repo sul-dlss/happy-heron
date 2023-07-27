@@ -33,8 +33,8 @@
     <hr>
     <div class="row">
       <div class="col-sm-2">
-        <%= form.label :rights, "Additional terms of use", class: "col-form-label" %>
-        <%= render PopoverComponent.new key: "work.rights" %>
+        <%= form.label :custom_rights, "Additional terms of use", class: "col-form-label" %>
+        <%= render PopoverComponent.new key: "work.custom_rights" %>
       </div>
       <div class="col-sm-8">Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on th PURL page.</div>
     </div>
@@ -43,9 +43,9 @@
       <div class="col-sm-8">
         <% if collection.provided_custom_rights_statement %>
           <p><%= collection.provided_custom_rights_statement %></p>
-          <%= form.hidden_field :rights, value: collection.provided_custom_rights_statement %>
+          <%= form.hidden_field :custom_rights, value: collection.provided_custom_rights_statement %>
         <% else %>
-          <%= form.text_area :rights, class: "form-control",
+          <%= form.text_area :custom_rights, class: "form-control",
                 data: {action: "no-newlines#change", no_newlines_target: "input", controller: "no-newlines"} %>
         <% end %>
       </div>

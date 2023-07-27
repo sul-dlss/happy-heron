@@ -21,7 +21,7 @@ class BaseWorkForm < Reform::Form
   property :collection_id, on: :work
   property :access, on: :work_version
   property :license, on: :work_version
-  property :rights, on: :work_version
+  property :custom_rights, on: :work_version
   property :agree_to_terms, on: :work_version
   property :created_type, virtual: true, prepopulator: (proc do |*|
     self.created_type = created_edtf.is_a?(EDTF::Interval) ? "range" : "single" unless created_type
