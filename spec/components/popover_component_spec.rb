@@ -36,4 +36,12 @@ RSpec.describe PopoverComponent, type: :component do
       expect(rendered.to_html).to eq ""
     end
   end
+
+  context "when custom content is provided" do
+    let(:rendered) { render_inline(described_class.new(key: "work.creation_date", custom_content: "This is some custom content.")) }
+
+    it "renders the component" do
+      expect(rendered.css("a").first["data-bs-content"]).to eq "This is some custom content."
+    end
+  end
 end
