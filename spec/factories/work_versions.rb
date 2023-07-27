@@ -256,4 +256,8 @@ FactoryBot.define do
     globus_endpoint { "userid/workid/version1" }
     deposited
   end
+
+  trait :with_globus_endpoint_draft do
+    globus_endpoint { "userid/workid/version1" }
+  end
 end
