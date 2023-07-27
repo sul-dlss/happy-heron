@@ -665,7 +665,7 @@ CREATE TABLE public.work_versions (
     upload_type character varying,
     globus_endpoint character varying,
     globus_origin character varying,
-    rights character varying
+    custom_rights character varying
 );
 
 

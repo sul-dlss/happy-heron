@@ -200,7 +200,7 @@ RSpec.describe "Create a new work" do
               :related_links_attributes => related_links,
               :default_citation => false,
               :license => "PDDL-1.0",
-              :rights => "An addendum to the built in terms of use",
+              :custom_rights => "An addendum to the built in terms of use",
               "published(1i)" => "2020", "published(2i)" => "2", "published(3i)" => "14",
               :created_type => "range",
               "created(1i)" => "2020", "created(2i)" => "2", "created(3i)" => "14",
@@ -232,7 +232,7 @@ RSpec.describe "Create a new work" do
           expect(work_version.related_links.size).to eq 2
           expect(work_version.citation).to eq "test citation"
           expect(work_version.license).to eq "PDDL-1.0"
-          expect(work_version.rights).to eq "An addendum to the built in terms of use"
+          expect(work_version.custom_rights).to eq "An addendum to the built in terms of use"
           expect(work_version.published_edtf.to_edtf).to eq "2020-02-14"
           expect(work_version.created_edtf.to_s).to eq "2020-03-04/2020-10-31"
           expect(work_version.embargo_date).to eq Date.parse("#{embargo_year}-04-04")

@@ -44,7 +44,7 @@ module CocinaGenerator
     end
 
     def rights_statement
-      [work_version.rights, Settings.access.use_and_reproduction_statement].compact.join(". ")
+      [work_version.custom_rights, Settings.access.use_and_reproduction_statement].compact.join(". ")
     end
   end
 end
