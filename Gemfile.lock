@@ -1,14 +1,3 @@
-GIT
-  remote: https://github.com/sul-dlss/globus_client.git
-  revision: 1b7ba2ab7767e88bc81d516f1ecf1ff73f3f04db
-  branch: delete-access-rule
-  specs:
-    globus_client (0.10.1)
-      activesupport (>= 4.2, < 8)
-      faraday
-      faraday-retry
-      zeitwerk
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -302,6 +291,11 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    globus_client (0.11.0)
+      activesupport (>= 4.2, < 8)
+      faraday
+      faraday-retry
+      zeitwerk
     hashdiff (1.0.1)
     hashie (5.0.0)
     honeybadger (4.12.2)
@@ -695,7 +689,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday (~> 2.0)
-  globus_client!
+  globus_client (~> 0.11)
   honeybadger (~> 4.0)
   jbuilder
   jsbundling-rails (~> 0.1.9)

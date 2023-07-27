@@ -200,6 +200,7 @@ RSpec.describe WorkVersion do
 
       before do
         allow(Settings).to receive(:notify_admin_list).and_return(true)
+        allow(GlobusClient).to receive(:delete_access_rule).and_return(true)
       end
 
       it "transitions to deposited" do
@@ -215,6 +216,7 @@ RSpec.describe WorkVersion do
             {params: {user: work.owner, work_version:}, args: []}
           ))
           .and change(Event, :count).by(1)
+        expect(GlobusClient).to have_received(:delete_access_rule).with(path: "/some/globus/url", user_id: nil)
       end
     end
 
