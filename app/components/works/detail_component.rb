@@ -13,9 +13,9 @@ module Works
 
     delegate :doi_option, to: :collection, prefix: true
 
-    delegate :work_type, :contact_emails, :abstract, :citation, :first_draft?,
-      :attached_files, :related_works, :related_links, :contributors, :authors,
-      :created_edtf, :published_edtf, :rejected?, :rights, :work, :version_description, to: :work_version
+    delegate :abstract, :attached_files, :authors, :citation, :contact_emails, :contributors,
+      :created_edtf, :custom_rights, :first_draft?, :published_edtf, :rejected?, :related_links,
+      :related_works, :version_description, :work, :work_type, to: :work_version
 
     def version
       return "1 - initial version" if first_draft?
