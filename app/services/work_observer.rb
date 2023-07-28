@@ -44,6 +44,8 @@ class WorkObserver
     end
     job.deliver_later
     mailer.globus_deposited_email.deliver_later if work_version.globus_endpoint && Settings.notify_admin_list
+
+    delete_access_rule(work_version) if work_version.globus_endpoint
   end
 
   def self.after_rejected(work_version, _transition)
@@ -74,4 +76,25 @@ class WorkObserver
     WorksMailer.with(user: work_version.work.owner, work_version:)
   end
   private_class_method :work_mailer
+
+  def self.delete_access_rule(work_version)
+    return true if test_mode?
+    return true if integration_test_mode? && work_version.globus_endpoint == integration_endpoint
+
+    # user_id nil because unneeded for permission update operations
+    GlobusClient.delete_access_rule(path: work_version.globus_endpoint, user_id: nil)
+  end
+
+  # simulate globus calls in development if settings indicate we should for testing
+  def self.test_mode?
+    Settings.globus.test_mode && Rails.env.development?
+  end
+
+  def self.integration_test_mode?
+    Settings.globus.integration_mode
+  end
+
+  def self.integration_endpoint
+    Settings.globus.integration_endpoint
+  end
 end

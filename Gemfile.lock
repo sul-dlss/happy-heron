@@ -291,7 +291,7 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    globus_client (0.10.1)
+    globus_client (0.11.0)
       activesupport (>= 4.2, < 8)
       faraday
       faraday-retry
@@ -341,7 +341,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    minitest (5.18.1)
+    minitest (5.19.0)
     moab-versioning (6.1.0)
       druid-tools (>= 1.0.0)
       json
@@ -646,7 +646,7 @@ GEM
       chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.9)
     zip_tricks (5.6.0)
     zipline (1.5.0)
       actionpack (>= 6.0, < 8.0)
@@ -689,7 +689,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday (~> 2.0)
-  globus_client (~> 0.10)
+  globus_client (~> 0.11)
   honeybadger (~> 4.0)
   jbuilder
   jsbundling-rails (~> 0.1.9)
