@@ -34,9 +34,11 @@
     <div class="row">
       <div class="col-sm-2">
         <%= form.label :custom_rights, "Additional terms of use", class: "col-form-label" %>
-        <%= render PopoverComponent.new key: "work.custom_rights", custom_content: collection.custom_rights_statement_custom_instructions %>
+        <% unless collection.provided_custom_rights_statement %>
+          <%= render PopoverComponent.new key: "work.custom_rights", custom_content: collection.custom_rights_statement_custom_instructions %>
+        <% end %>
       </div>
-      <div class="col-sm-8">Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on th PURL page.</div>
+      <div class="col-sm-8">Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the PURL page.</div>
     </div>
     <div class="row">
       <div class="col-sm-2"></div>
