@@ -14,12 +14,12 @@ module Collections
       :required_license, :user_can_set_license?, to: :collection
 
     def collection_custom_rights_summary
-      return "Additional terms of use are disabled for this collection" unless allow_custom_rights_statement?
+      return "No" unless allow_custom_rights_statement?
 
       if custom_rights_statement_source_option == "provided_by_collection"
-        "\"#{provided_custom_rights_statement}\""
+        provided_custom_rights_statement
       else
-        "The depositor is allowed to enter their own terms. They will be presented with the following instructions: \"#{effective_custom_rights_instructions}\""
+        "Allow user to enter"
       end
     end
   end

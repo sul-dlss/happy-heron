@@ -11,6 +11,16 @@
       <th class="col-3">Terms of use</th>
       <td><%= I18n.t(:terms_of_use) %></td>
     </tr>
+    <tr>
+      <th class="col-3">Additional terms of use</th>
+      <td><%= collection_custom_rights_summary %></td>
+    </tr>
+    <% if allow_custom_rights_statement? && custom_rights_statement_source_option == "entered_by_depositor" %>
+      <tr>
+        <th class="col-3">Instructions</th>
+        <td><%= effective_custom_rights_instructions %></td>
+      </tr>
+    <% end %>
     <% if user_can_set_license? %>
       <tr>
         <th class="col-3">Default license (depositor selects)</th>
@@ -22,9 +32,5 @@
         <td><%= required_license %></td>
       </tr>
     <% end %>
-    <tr>
-      <th class="col-3">Additional terms of use</th>
-      <td><%= collection_custom_rights_summary %></td>
-    </tr>
   </tbody>
 </table>
