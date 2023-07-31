@@ -20,14 +20,12 @@ RSpec.describe Admin::WorkCsvGenerator do
   let(:user1) { build(:user, email: "user1@stanford.edu") }
   let(:user2) { build(:user, email: "user2@stanford.edu") }
 
-
   context "when the work version has a custom rights statement" do
     let(:version) do
       build(:work_version, :with_custom_rights_statement, work:,
         title: "Test title 1",
         state: "deposited", updated_at: Time.zone.parse("2019-01-01"))
     end
-
 
     before do
       work.head = version
@@ -47,7 +45,6 @@ RSpec.describe Admin::WorkCsvGenerator do
         title: "Test title 1",
         state: "deposited", updated_at: Time.zone.parse("2019-01-01"))
     end
-
 
     before do
       work.head = version
