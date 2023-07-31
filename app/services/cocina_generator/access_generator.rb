@@ -39,8 +39,12 @@ module CocinaGenerator
     def base_access
       {
         license: License.find(work_version.license).uri.presence,
-        useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+        useAndReproductionStatement: rights_statement
       }.compact
+    end
+
+    def rights_statement
+      [work_version.custom_rights, Settings.access.use_and_reproduction_statement].compact.join(" ")
     end
   end
 end

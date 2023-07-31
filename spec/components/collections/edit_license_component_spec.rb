@@ -6,7 +6,7 @@ RSpec.describe Collections::EditLicenseComponent, type: :component do
   subject(:rendered) { render_inline(described_class.new(form:)) }
 
   let(:collection) { build(:collection) }
-  let(:collection_version) { build(:collection_version) }
+  let(:collection_version) { build(:collection_version, collection:) }
 
   let(:collection_form) { CreateCollectionForm.new(collection:, collection_version:) }
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, controller.view_context, {}) }

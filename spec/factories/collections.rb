@@ -8,6 +8,7 @@ FactoryBot.define do
     email_when_participants_changed { false }
     email_depositors_status_changed { false }
     review_enabled { false }
+    allow_custom_rights_statement { false }
     creator
   end
 
@@ -80,5 +81,21 @@ FactoryBot.define do
 
   trait :with_collection_druid do
     druid { "druid:dc224fz4940" }
+  end
+
+  trait :with_custom_rights_from_collection do
+    allow_custom_rights_statement { true }
+    provided_custom_rights_statement { "An addendum to the built in terms of use" }
+  end
+
+  trait :with_custom_rights_from_depositor do
+    allow_custom_rights_statement { true }
+    provided_custom_rights_statement { nil }
+  end
+
+  trait :with_custom_rights_instructions_from_collection do
+    allow_custom_rights_statement { true }
+    provided_custom_rights_statement { nil }
+    custom_rights_statement_custom_instructions { "Instructions you should follow about the terms you're allowed to enter" }
   end
 end

@@ -63,4 +63,15 @@ RSpec.describe CocinaGenerator::AccessGenerator do
         useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
     end
   end
+
+  context "when access is world and custom rights are provided" do
+    let(:work_version) { build(:work_version, :with_custom_rights_statement) }
+
+    it "generates the model" do
+      expect(model).to eq(view: "world",
+        download: "world",
+        license: license_uri,
+        useAndReproductionStatement: "An addendum to the built in terms of use #{Settings.access.use_and_reproduction_statement}")
+    end
+  end
 end

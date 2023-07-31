@@ -7,19 +7,20 @@
 #  <legend aria-describedby="popover-collection.depositors">Depositors</legend>
 #  <%= render PopoverComponent.new key: "collection.depositors" %>
 class PopoverComponent < ApplicationComponent
-  def initialize(key:, icon: "fa-solid fa-info-circle", scope: "tooltip")
+  def initialize(key:, icon: "fa-solid fa-info-circle", scope: "tooltip", custom_content: nil)
     @key = key
     @icon = icon
     @scope = scope
+    @custom_content = custom_content
   end
 
-  attr_reader :icon, :scope, :key
+  attr_reader :custom_content, :icon, :scope, :key
 
   def text
-    t(@key, scope:)
+    custom_content || t(key, scope:)
   end
 
   def render?
-    I18n.exists?("#{scope}.#{@key}")
+    I18n.exists?("#{scope}.#{key}")
   end
 end

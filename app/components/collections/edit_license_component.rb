@@ -12,6 +12,7 @@ module Collections
     delegate :default_license, :required_license, to: :collection_form
 
     def collection_form
+      # Can be a DraftCollectionForm or a CollectionSettingsForm
       form.object
     end
 

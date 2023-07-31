@@ -9,6 +9,18 @@ module Collections
 
     attr_reader :collection
 
-    delegate :default_license, :required_license, :user_can_set_license?, to: :collection
+    delegate :allow_custom_rights_statement?, :custom_rights_statement_source_option,
+      :default_license, :effective_custom_rights_instructions, :provided_custom_rights_statement,
+      :required_license, :user_can_set_license?, to: :collection
+
+    def collection_custom_rights_summary
+      return "No" unless allow_custom_rights_statement?
+
+      if custom_rights_statement_source_option == "provided_by_collection"
+        provided_custom_rights_statement
+      else
+        "Allow user to enter"
+      end
+    end
   end
 end

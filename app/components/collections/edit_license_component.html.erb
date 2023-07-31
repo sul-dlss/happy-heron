@@ -1,5 +1,5 @@
   <section id="terms" data-controller="complex-radio" aria-describedby="popover-collection.terms">
-    <header>Terms of use and license * <%= render PopoverComponent.new key: "collection.terms" %></header>
+    <header>License * <%= render PopoverComponent.new key: "collection.license" %></header>
 
     <p>
       We highly recommend every deposit be assigned a license when possible. A
@@ -28,14 +28,4 @@
 
       <div class="invalid-feedback"><%= error_message %></div>
     </fieldset>
-
-    <hr>
-
-    <p>
-      In addition to the license chosen, the following Terms of Use will also be displayed on your PURL page:
-    </p>
-
-    <p class="terms-of-use">
-      <%= Settings.access.use_and_reproduction_statement %>
-    </p>
   </section>

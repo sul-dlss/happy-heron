@@ -1,5 +1,5 @@
 <section id="license">
-  <header>Select a license *</header>
+  <header>License *</header>
   <% if user_can_set_license? %>
     <div class="mb-3 row">
       <div class="col-sm-2">
@@ -28,4 +28,32 @@
   <p style="font-style: italic; margin-left: 2.5rem;">
     <%= Settings.access.use_and_reproduction_statement %>
   </p>
+
+  <% if collection.allow_custom_rights_statement? %>
+    <hr>
+    <div class="row">
+      <div class="col-sm-2">
+        <%= form.label :custom_rights, "Additional terms of use", class: "col-form-label" %>
+        <% if custom_rights_statement_source_option == "entered_by_depositor" %>
+          <%= render PopoverComponent.new key: "work.custom_rights_from_depositor" %>
+        <% end %>
+      </div>
+      <% if custom_rights_statement_source_option == "entered_by_depositor" %>
+        <div class="col-sm-8"><%= effective_custom_rights_instructions %></div>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <% if collection.provided_custom_rights_statement %>
+          <p><%= collection.provided_custom_rights_statement %></p>
+          <%= form.hidden_field :custom_rights, value: collection.provided_custom_rights_statement %>
+        <% else %>
+          <%= form.text_area :custom_rights, class: "form-control",
+                data: {action: "no-newlines#change", no_newlines_target: "input", controller: "no-newlines"} %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
 </section>
