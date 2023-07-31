@@ -71,7 +71,7 @@ RSpec.describe CocinaGenerator::AccessGenerator do
       expect(model).to eq(view: "world",
         download: "world",
         license: license_uri,
-        useAndReproductionStatement: "An addendum to the built in terms of use. #{Settings.access.use_and_reproduction_statement}")
+        useAndReproductionStatement: "An addendum to the built in terms of use #{Settings.access.use_and_reproduction_statement}")
     end
   end
 end
