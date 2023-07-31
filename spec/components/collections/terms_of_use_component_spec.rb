@@ -55,7 +55,7 @@ RSpec.describe Collections::TermsOfUseComponent, type: :component do
       context "when the default H2 instructions for depositors entering custom rights should be displayed to the depositor" do
         let(:collection) { build_stubbed(:collection, :with_custom_rights_from_depositor, custom_rights_statement_custom_instructions: nil) }
 
-        it { is_expected.to have_xpath("//tr[contains(th, 'Instructions') and contains(td, \"#{Settings.access.default_instructions_for_custom_use_statement}\")]") }
+        it { is_expected.to have_xpath("//tr[contains(th, 'Instructions') and contains(td, \"#{I18n.t("collection.depositor_custom_rights_instructions")}\")]") }
       end
     end
   end

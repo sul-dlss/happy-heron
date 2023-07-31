@@ -95,7 +95,6 @@ notifications:
 
 access:
   use_and_reproduction_statement: User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the depositor.
-  default_instructions_for_custom_use_statement: Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the PURL page.
 
 datacite:
   prefix: '10.80343'

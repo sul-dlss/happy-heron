@@ -59,7 +59,7 @@
                   <%= form.radio_button :custom_rights_instructions_source_option, "default_instructions", checked: (custom_rights_instructions_source_option == "default_instructions"), class: "form-check-input" %>
                   <%= form.label :custom_rights_instructions_source_option_default_instructions, "Yes, display the following instructions", class: "form-check-label" %>
                   <p class="terms-of-use">
-                    <%= Settings.access.default_instructions_for_custom_use_statement %>
+                    <%= t("collection.depositor_custom_rights_instructions") %>
                   </p>
                 </div>
                 <div class="form-check<%= " is-invalid" if error? %>">

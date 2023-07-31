@@ -14,13 +14,13 @@ class PopoverComponent < ApplicationComponent
     @custom_content = custom_content
   end
 
-  attr_reader :icon, :scope, :key
+  attr_reader :custom_content, :icon, :scope, :key
 
   def text
-    @custom_content || t(@key, scope:)
+    custom_content || t(key, scope:)
   end
 
   def render?
-    I18n.exists?("#{scope}.#{@key}")
+    I18n.exists?("#{scope}.#{key}")
   end
 end
