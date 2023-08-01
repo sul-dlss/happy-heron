@@ -42,6 +42,9 @@ module Admin
       "license setting",
       "required license",
       "default license",
+      "custom rights allowed",
+      "custom rights provided",
+      "custom rights instructions",
       "DOI yes/no",
       "review workflow"
     ].freeze
@@ -65,6 +68,9 @@ module Admin
         collection.license_option,
         collection.required_license,
         collection.default_license,
+        collection.allow_custom_rights_statement ? "yes" : "no",
+        collection.provided_custom_rights_statement ? "yes" : "no",
+        collection.custom_rights_statement_custom_instructions ? "yes" : "no",
         collection.doi_option,
         collection.review_enabled
       ]
