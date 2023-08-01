@@ -28,7 +28,7 @@ RSpec.describe Collections::WorksComponent, type: :component do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
 
       it "renders the works detail table component" do
-        expect(rendered.css("table").to_html).to include("Test title").exactly(6).times
+        expect(rendered.css("table").to_html).to include("Test title").exactly(8).times
         expect(rendered.to_html).to include('data-datatable-works-hide-depositor-value="false"')
       end
     end

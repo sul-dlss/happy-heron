@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe CitationComponent, type: :component do
-  subject(:button) { rendered.css("button").first }
+  subject(:link) { rendered.css("a").first }
 
   let(:rendered) { render_inline(described_class.new(work_version:)) }
 
@@ -11,9 +11,9 @@ RSpec.describe CitationComponent, type: :component do
     let(:work_version) { build(:work_version, :deposited) }
 
     it "renders a button" do
-      expect(button["data-bs-target"]).to eq "#citationModal"
-      expect(button["data-controller"]).to eq "show-citation"
-      expect(button["disabled"]).not_to be_present
+      expect(link["data-bs-target"]).to eq "#citationModal"
+      expect(link["data-controller"]).to eq "show-citation"
+      expect(link["disabled"]).not_to be_present
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe CitationComponent, type: :component do
     let(:work_version) { build(:work_version, :purl_reserved) }
 
     it "renders a disabled button" do
-      expect(button["disabled"]).to be_present
+      expect(link["disabled"]).to be_present
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe CitationComponent, type: :component do
     let(:work_version) { build(:work_version, :first_draft) }
 
     it "renders a disabled button" do
-      expect(button["disabled"]).to be_present
+      expect(link["disabled"]).to be_present
     end
   end
 end
