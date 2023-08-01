@@ -10,6 +10,8 @@ RSpec.describe CollectionsMailer do
   let(:work_version) { build_stubbed(:work_version, work:) }
   let(:a_user) { build_stubbed(:user, name: "Al Dente", first_name: "Fred") }
 
+  before { work.head = work_version }
+
   describe "#invitation_to_deposit_email for new user with no name" do
     let(:user) { collection.depositors.first }
     let(:mail) { described_class.with(user:, collection_version:).invitation_to_deposit_email }
@@ -225,7 +227,6 @@ RSpec.describe CollectionsMailer do
   describe "#item_deposited" do
     let(:user) { a_user }
     let(:owner) { build(:user, name: "Audre Lorde", first_name: "Queueueue") }
-
     let(:mail) do
       described_class.with(user:, collection_version:, owner:, work:).item_deposited
     end
@@ -241,11 +242,25 @@ RSpec.describe CollectionsMailer do
       expect(mail.body.encoded).to match "The Depositor #{owner.name} has submitted a"
       expect(mail.body.encoded).to match "<a href=\"#{work_url(work)}\">deposit</a>"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
+      expect(mail.body.encoded).not_to match "This item has a custom rights statement"
     end
 
     it "salutation uses user.first_name" do
       expect(mail.body).to include("Dear #{user.first_name},")
       expect(mail.body).not_to include("Dear #{user.name},")
+    end
+
+    context "when work version has a custom rights statement" do
+      let(:custom_rights_statement) { "All rights reserved at this time" }
+
+      before do
+        work_version.custom_rights = custom_rights_statement
+      end
+
+      it "renders the body with the statement included" do
+        expect(mail.body.encoded).to match "This item has a custom rights statement"
+        expect(mail.body.encoded).to match custom_rights_statement
+      end
     end
   end
 
