@@ -8,12 +8,12 @@ class CitationComponent < ApplicationComponent
 
   def call
     attrs = {
-      data: data_attributes, class: "citation-button"
+      data: data_attributes, class: "citation-button", "aria-label": aria_label, href: "#citationModal", id: citation_link_id
     }
 
     attrs[:disabled] = work_version.first_draft? || work_version.purl_reserved?
 
-    tag.button(**attrs) do
+    tag.a(**attrs) do
       # It's a SafeBuffer, not a String
       tag.span(class: "fa-solid fa-quote-left") + " Cite" # rubocop:disable Style/StringConcatenation
     end
@@ -33,5 +33,13 @@ class CitationComponent < ApplicationComponent
       bs_toggle: "modal",
       bs_target: "#citationModal"
     }
+  end
+
+  def aria_label
+    "Get citation for #{work_version.title}"
+  end
+
+  def citation_link_id
+    "get-citation-#{work_version.id}"
   end
 end
