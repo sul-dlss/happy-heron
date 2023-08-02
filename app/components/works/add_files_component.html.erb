@@ -78,36 +78,36 @@
     <div data-file-uploads-target="globusUpload">
       <p>Please notify us at <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> if you are uploading 1TB or more of content.</p>
       <div class="container py-4">
-        <div class="row g-3">
-          <div class="col">
+        <ol class="row g-3 list-unstyled">
+          <li class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 1</p>
               <p>If your files are located on Stanford Google Drive, Oak, or Sherlock, select where they are located below.</p>
               <%= form.select :globus_origin, origin_options, {}, {class: "form-select", "aria-label": "Origin for Globus deposit"} %>
             </div>
-          </div>
-          <div class="col">
+          </li>
+          <li class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 2</p>
               <p>Scroll to the bottom of this page and click "Save as draft".</p>
               <p>You can finish filling out this form later.</p>
             </div>
-          </div>
-          <div class="col">
+          </li>
+          <li class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 3</p>
               <p>Follow our <%= link_to "instructions", Settings.globus.help_doc_url.to_s, target: :blank %> to set up Globus (may require software installation).</p>
               <p>Transfer your files to the location you'll see on your item page once you've saved this form.</p>
             </div>
-          </div>
-          <div class="col">
+          </li>
+          <li class="col">
             <div class="border border-dark h-100 p-2 bg-light">
               <p>STEP 4</p>
               <p>Return to this page and make sure the form is complete. Then click "Deposit."</p>
               <p>This will move your files from Globus to SDR.</p>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
       <% if globus_endpoint? %>
       <div class="container">
