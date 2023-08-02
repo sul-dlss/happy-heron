@@ -1,7 +1,7 @@
 <section id="dates">
-  <header aria-describedby="popover-work.date">Enter dates related to your deposit
+  <h2 class="h5 fw-bold" aria-describedby="popover-work.date">Enter dates related to your deposit
     <%= render PopoverComponent.new key: "work.date" %>
-  </header>
+  </h2>
   <%= render Works::PublicationDateComponent.new(form: form,
         min_year: min_year,
         max_year: max_year) %>

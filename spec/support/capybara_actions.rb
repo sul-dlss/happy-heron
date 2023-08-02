@@ -7,7 +7,9 @@ module CapybaraActions
   end
 
   def within_section(title, &)
-    within(:xpath, "//section[contains(header/text(),'#{title}')]", &)
+    within(:xpath, "//section[contains(h2/text(),'#{title}')]", &)
+  rescue Capybara::ElementNotFound
+    within(:xpath, "//section[contains(h3/text(),'#{title}')]", &)
   end
 
   # NOTE: this is here to ensure all turbo frames are loaded before auditing a11y

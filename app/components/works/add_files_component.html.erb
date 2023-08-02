@@ -1,11 +1,11 @@
 <section data-controller="complex-radio file-uploads" id="file">
-  <header>
+  <h2 class="h5 fw-bold">
     <% if has_attached_files? %>
       Modify your files *
     <% else %>
       Add your files *
     <% end %>
-  </header>
+  </h2>
 
   <div class="form-check" data-complex-radio-target="selection">
     <%= form.radio_button :upload_type, "browser", class: "form-check-input", "data-file-uploads-target": "browserRadioButton",

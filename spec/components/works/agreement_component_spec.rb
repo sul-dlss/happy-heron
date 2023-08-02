@@ -12,6 +12,6 @@ RSpec.describe Works::AgreementComponent do
   it "renders the component" do
     expect(rendered.to_html)
       .to include("SDR Terms of Deposit")
-    expect(rendered.css("header").text).to eq "Terms of Deposit *"
+    expect(rendered.css("h2").text).to eq "Terms of Deposit *"
   end
 end
