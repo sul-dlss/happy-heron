@@ -1,8 +1,8 @@
 <section data-controller="ordered-nested-form" data-ordered-nested-form-selector-value=".inner-container">
-  <header aria-describedby="popover-work.author">
+  <h3 class="h5 fw-bold" aria-describedby="popover-work.author">
     Authors to include in citation
     <%= render PopoverComponent.new key: "work.author" %>
-  </header>
+  </h3>
   <p>When there are multiple authors, list them in the order they should appear in the citation. If you need to change the order of the authors, click the arrows to move individual authors up or down in the list.</p>
 
   <template data-ordered-nested-form-target='template'>

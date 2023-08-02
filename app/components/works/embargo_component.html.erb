@@ -1,10 +1,10 @@
 <section id="release">
-  <header>
+  <h2 class="h5 fw-bold">
     Settings for release date and download access
     <% if user_can_set_availability? || user_can_set_access? %>
      *
     <% end %>
-  </header>
+  </h2>
   <% if user_can_set_availability? %>
     <fieldset class="mb-5">
       <legend class="h5">
