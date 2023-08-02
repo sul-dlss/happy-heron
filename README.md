@@ -33,7 +33,12 @@ bin/dev
 ```
 
 You can change user or roles by setting environment variables.  Note that you may need to clear your browser
-session cookies to pick up the new roles set here, as they may be cached from a previous session.
+session cookies to pick up the new roles set here, as they may be cached from a previous session.  If you want to
+avoid clearing _all_ your cookies, e.g. to prevent logging out of various services, you may be able to clear cookies
+for specific top-level domains (e.g. stanford.edu) by using your browser's settings (e.g. 
+`Privacy and Security > Cookies and Site Data > Manage Data` in Firefox).  You may be able to clear specific cookies
+for specific subdomains (e.g. sdr.stanford.edu) by visiting a page at that subdomain, and using the storage inspector
+tool in dev tools (e.g. `Web Developer Tools > Storage > Cookies` in Firefox).
 
 ```shell
 REMOTE_USER=auser@stanford.edu ROLES=dlss:hydrus-app-administrators bin/dev
