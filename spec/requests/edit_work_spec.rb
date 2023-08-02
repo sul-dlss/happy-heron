@@ -77,8 +77,8 @@ RSpec.describe "Updating an existing work" do
 
             work_version.authors.each_with_object(param[:authors_attributes]).with_index do |(author, attrs), index|
               attrs[index.to_s] =
-                {"_destroy" => "false", "id" => author.id, "role_term" => "person|Author", "first_name" => "Justin",
-                 "last_name" => "Coyne", "full_name" => ""}
+                {"_destroy" => "false", "id" => author.id, "role" => "Author", "contributor_type" => "person",
+                 "first_name" => "Justin", "last_name" => "Coyne", "full_name" => ""}
             end
 
             work_version.contact_emails.each_with_object(param[:contact_emails_attributes])

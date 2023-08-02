@@ -34,7 +34,8 @@ module ContributorForm
         property :last_name
         property :full_name
         property :orcid
-        property :role_term
+        property :role
+        property :contributor_type
         property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
         property :weight, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
 
@@ -50,9 +51,9 @@ module ContributorForm
         end
 
         if validate
-          validates :first_name, presence: true, if: -> { role_term.start_with?("person") }
-          validates :last_name, presence: true, if: -> { role_term.start_with?("person") }
-          validates :full_name, presence: true, unless: -> { role_term.start_with?("person") }
+          validates :first_name, presence: true, if: -> { contributor_type == "person" }
+          validates :last_name, presence: true, if: -> { contributor_type == "person" }
+          validates :full_name, presence: true, unless: -> { contributor_type == "person" }
         end
       }
     end

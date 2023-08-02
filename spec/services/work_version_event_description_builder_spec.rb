@@ -357,8 +357,8 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
           :title => "new title",
           :abstract => "foo",
           :contact_emails => [{"email" => "foo@bar.io"}],
-          :authors => [{"role_term" => "person|Author", "first_name" => "Megan"}],
-          :contributors => [{"role_term" => "person|Author", "first_name" => "Sara"}],
+          :authors => [{"role" => "Author", "first_name" => "Megan"}],
+          :contributors => [{"role" => "Author", "first_name" => "Sara"}],
           :related_links => [{"link_title" => "Hey", "url" => "http://io.io"}],
           :related_works => [{"citation" => "Hey"}],
           "published(1i)" => "2020",
@@ -428,7 +428,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
                   "full_name" => "",
                   "first_name" => "",
                   "last_name" => "",
-                  "role_term" => "person|Author",
+                  "role" => "Author",
                   "weight" => "0",
                   "orcid" => ""
                 }
@@ -439,7 +439,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
                   "full_name" => "",
                   "first_name" => "",
                   "last_name" => "",
-                  "role_term" => "person|Author", "orcid" => ""
+                  "role" => "Author", "orcid" => ""
                 }
               },
               "contact_emails_attributes" => {

@@ -20,7 +20,7 @@ class ContributorPopulator < ApplicationPopulator
     # Clear out names that we don't want to store (e.g. first & last name for an organization)
     # These can get submitted to the server if the user enters a person
     # name and then switches the type/role to an organization name.
-    if fragment["role_term"].start_with?("person")
+    if fragment["contributor_type"] == "person"
       fragment["full_name"] = nil
     else
       fragment["first_name"] = nil

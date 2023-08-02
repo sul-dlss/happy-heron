@@ -17,7 +17,7 @@ RSpec.describe Works::ContributorsComponent do
     let(:work_version) { build(:work_version, contributors: [build(:org_contributor)]) }
 
     it "renders the component" do
-      expect(rendered.css('option[@selected="selected"][@value="organization|Sponsor"]')).to be_present
+      expect(rendered.css('option[@selected="selected"][@value="Sponsor"]')).to be_present
     end
   end
 end

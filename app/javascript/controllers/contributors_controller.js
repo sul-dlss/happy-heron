@@ -1,22 +1,34 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["person", "organization", "role", "personName", "personNameSelect", "personOrcid", "personOrcidName", "orcid", "orcidFeedback", "orcidFirstName", "orcidLastName", "orcidDisplayName"]
+  static targets = ["person", "organization", "personName", "personNameSelect", "personOrcid", "personOrcidName", "orcid",
+                    "orcidFeedback", "orcidFirstName", "orcidLastName", "orcidDisplayName", "selectPersonRole", "selectOrganizationRole",
+                    "contributorTypePerson", "contributorTypeOrganization"]
   static values = { required: Boolean }
 
   connect() {
-    this.roleChanged()
+    this.contributorTypeChanged()
     this.personChanged()
     if(this.hasValidOrcid) {
       this.lookupOrcid()
     }
   }
 
-  roleChanged() {
-    if (this.roleTarget.value.startsWith('person'))
+  contributorTypeChanged() {
+    if (this.contributorTypePersonTarget.checked) {
+      this.selectPersonRoleTarget.hidden = false
+      this.selectPersonRoleTarget.disabled = false
+      this.selectOrganizationRoleTarget.hidden = true
+      this.selectOrganizationRoleTarget.disabled = true
       this.displayPerson()
-    else
+    }
+    else {
+      this.selectPersonRoleTarget.hidden = true
+      this.selectPersonRoleTarget.disabled = true
+      this.selectOrganizationRoleTarget.hidden = false
+      this.selectOrganizationRoleTarget.disabled = false
       this.displayOrganization()
+    }
   }
 
   // Person radio button toggled.
@@ -131,7 +143,8 @@ export default class extends Controller {
   }
 
   remove() {
-    this.roleTarget.disabled = true
+    this.selectPersonRoleTarget.disabled = true
+    this.selectOrganizationRoleTarget.disabled = true
     this.organizationTarget.querySelectorAll('input[type="text"]').forEach((element) => element.disabled = true)
     this.personTarget.querySelectorAll('input[type="text"]').forEach((element) => element.disabled = true)
   }

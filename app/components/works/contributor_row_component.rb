@@ -18,8 +18,12 @@ module Works
       @is_author
     end
 
-    def select_role
-      render ContributorRoleComponent.new(form:, data_options: data_options_for_select)
+    def select_person_role
+      render ContributorRoleComponent.new(form:, contributor_type: "person", visible: person?, data_options: data_options_for_select("person"))
+    end
+
+    def select_organization_role
+      render ContributorRoleComponent.new(form:, contributor_type: "organization", visible: organization?, data_options: data_options_for_select("organization"))
     end
 
     def html_options(auto_citation_target, contributors_target: nil, disabled: false)
@@ -50,6 +54,10 @@ module Works
       with_required("Role term")
     end
 
+    def contributor_type_label
+      with_required("Role term type")
+    end
+
     def orcid_label
       with_required("ORCID iD")
     end
@@ -60,6 +68,14 @@ module Works
 
     def orcid?
       model.orcid.present?
+    end
+
+    def person?
+      model.contributor_type == "person" || model.contributor_type.blank?
+    end
+
+    def organization?
+      model.contributor_type == "organization"
     end
 
     def model
@@ -113,17 +129,14 @@ module Works
       "#{label} *"
     end
 
-    def data_options_for_select
+    def data_options_for_select(contributor_type)
       {
-        action: "change->contributors#roleChanged change->auto-citation#updateDisplay",
-        contributors_target: "role"
+        contributors_target: "select#{contributor_type.titlecase}Role"
       }.tap do |opts|
-        actions = ["change->contributors#roleChanged"]
         if author?
+          opts[:action] = "change->auto-citation#updateDisplay"
           opts[:auto_citation_target] = "contributorRole"
-          actions << ["change->auto-citation#updateDisplay"]
         end
-        opts[:action] = actions.join(" ")
       end
     end
   end

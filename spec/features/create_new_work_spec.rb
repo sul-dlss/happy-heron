@@ -109,6 +109,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
 
           within_section "Authors to include in citation" do
             # Switch to an organization
+            choose "work_authors_attributes_0_contributor_type_organization"
             select "Publisher", from: "Role term"
             fill_in "Name", with: "Best Publisher"
           end
@@ -346,6 +347,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
             fill_in "First name", with: "Contributor First Name"
             fill_in "Last name", with: "Contributor Last Name"
 
+            choose "work_authors_attributes_0_contributor_type_organization"
             select "Publisher", from: "Role term"
             fill_in "Name", with: "Best Publisher"
           end
