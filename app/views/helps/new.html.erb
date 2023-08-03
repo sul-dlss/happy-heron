@@ -6,7 +6,7 @@
          <div class="col-md-9">
            <div class="form-group">
              <%= form.label(:name, "What is your name?") %>
-             <%= form.text_field(:name, autocomplete: "name", class: "form-control") %>
+             <%= form.text_field(:name, autocomplete: "name", class: "form-control", value: @name) %>
            </div>
          </div>
       </div>
@@ -22,7 +22,7 @@
          <div class="col-md-9">
            <div class="form-group">
              <%= form.label(:affiliation, "What is your Stanford affiliation/department?") %>
-             <%= form.text_field(:affiliation, class: "form-control") %>
+             <%= form.text_field(:affiliation, class: "form-control", placeholder: "(ex: Student)") %>
            </div>
          </div>
       </div>

@@ -4,6 +4,7 @@
 class HelpsController < ApplicationController
   def new
     @email = current_user&.email
+    @name = current_user&.name
     @help_how_value = if params[:show_collections] == "true"
       "Request access to another collection"
     elsif !current_user
