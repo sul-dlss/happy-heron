@@ -52,4 +52,8 @@
   .dropdown .list-group-item {
     cursor: default;
   }
+
+  button:focus-visible {
+    border: 1px solid $stanford-cardinal;
+  }
 }
