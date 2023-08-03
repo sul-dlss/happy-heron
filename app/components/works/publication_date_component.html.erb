@@ -1,28 +1,33 @@
-<div class="mb-3 row">
-  <div class="col-sm-2 h6" aria-describedby="popover-work.publication_date">
-    Publication date
-    <%= render PopoverComponent.new key: "work.publication_date" %>
-  </div>
-  <div data-controller="date-validation date-clear" class="col-sm-10 date <%= " is-invalid" if error? %>">
-    <div class="year">
-      <label for="work_published_year" class="visually-hidden">Publication year</label>
-      <%= year_field %>
-      <div class="invalid-feedback" data-date-validation-target="error" data-date-clear-target="error"></div>
-    </div>
-    <div class="month">
-      <label for="work_published_month" class="visually-hidden">Publication month</label>
-      <%= month_field %>
-    </div>
+<fieldset role="group">
 
-    <div class="day">
-      <label for="work_published_day" class="visually-hidden">Publication day</label>
-      <%= day_field %>
-    </div>
+  <legend class="visually-hidden">Publication date</legend>
 
-    <%= button_tag type: "button", class: "btn btn-sm ms-3", aria: {label: "Clear published date"},
-          data: {action: "date-clear#clear"} do %>
-        <span class="fa-regular fa-trash-alt"></span>
-    <% end %>
+  <div class="mb-3 row">
+    <div class="col-sm-2 h6" aria-describedby="popover-work.publication_date">
+      Publication date
+      <%= render PopoverComponent.new key: "work.publication_date" %>
+    </div>
+    <div data-controller="date-validation date-clear" class="col-sm-10 date <%= " is-invalid" if error? %>">
+      <div class="year">
+        <label for="work_published_year" class="visually-hidden">Publication year</label>
+        <%= year_field %>
+        <div class="invalid-feedback" data-date-validation-target="error" data-date-clear-target="error"></div>
+      </div>
+      <div class="month">
+        <label for="work_published_month" class="visually-hidden">Publication month</label>
+        <%= month_field %>
+      </div>
+
+      <div class="day">
+        <label for="work_published_day" class="visually-hidden">Publication day</label>
+        <%= day_field %>
+      </div>
+
+      <%= button_tag type: "button", class: "btn btn-sm ms-3", aria: {label: "Clear published date"},
+            data: {action: "date-clear#clear"} do %>
+          <span class="fa-regular fa-trash-alt"></span>
+      <% end %>
+    </div>
+    <div class="invalid-feedback"><%= error_message %></div>
   </div>
-  <div class="invalid-feedback"><%= error_message %></div>
-</div>
+</fieldset>
