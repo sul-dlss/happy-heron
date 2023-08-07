@@ -18,8 +18,8 @@ RSpec.describe RelatedLinkComponent, type: :component do
     let(:model_form) { WorkForm.new(work_version:, work:) }
 
     it "renders a delete button for all links" do
-      expect(rendered.css('button[@aria-label="Remove Second Link"]')).to be_present
-      expect(rendered.css('button[@aria-label="Remove First Link"]')).to be_present
+      expect(rendered.css('button[@aria-label="Remove related link Second Link"]')).to be_present
+      expect(rendered.css('button[@aria-label="Remove related link First Link"]')).to be_present
     end
   end
 
@@ -29,8 +29,8 @@ RSpec.describe RelatedLinkComponent, type: :component do
     let(:collection_version) { build_stubbed(:collection_version, related_links:) }
 
     it "renders a delete button for all links" do
-      expect(rendered.css('button[@aria-label="Remove Second Link"]')).to be_present
-      expect(rendered.css('button[@aria-label="Remove First Link"]')).to be_present
+      expect(rendered.css('button[@aria-label="Remove related link Second Link"]')).to be_present
+      expect(rendered.css('button[@aria-label="Remove related link First Link"]')).to be_present
     end
   end
 end

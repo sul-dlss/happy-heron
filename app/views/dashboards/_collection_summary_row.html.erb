@@ -9,7 +9,7 @@
   <td><%= render LocalTimeComponent.new(datetime: work.updated_at, show_time: false) %></td>
   <td>
     <% if work.purl %>
-      <%= link_to work.purl, work.purl %>
+      <%= link_to work.purl, work.purl, "aria-label": "Persistent link to #{WorkTitlePresenter.show(work.head)}" %>
       <a class="copy-button" data-controller="copy" data-copy-clip-value="<%= work.purl %>" data-action="copy#copy" aria-label="Copy persistent link to <%= WorkTitlePresenter.show(work.head) %>" href="<%= work.purl %>"><span class="fa-solid fa-copy"></span></a>
     <% end %>
   </td>
