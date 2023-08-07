@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-md-1">
-      <%= button_tag type: "button", class: "btn btn-sm float-end", aria: {label: "Remove #{link_title}"},
+      <%= button_tag type: "button", class: "btn btn-sm float-end", aria: {label: "Remove related link #{link_title}"},
             data: {action: "click->nested-form#removeAssociation"} do %>
         <span class="fa-regular fa-trash-alt"></span>
       <% end %>

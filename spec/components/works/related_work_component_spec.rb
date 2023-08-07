@@ -16,7 +16,7 @@ RSpec.describe Works::RelatedWorkComponent, type: :component do
   let(:work_form) { WorkForm.new(work_version:, work:) }
 
   it "renders a delete button for all works" do
-    expect(rendered.css('button[@aria-label="Remove Second Citation"]')).to be_present
-    expect(rendered.css('button[@aria-label="Remove First Citation"]')).to be_present
+    expect(rendered.css('button[@aria-label="Remove related work Second Citation"]')).to be_present
+    expect(rendered.css('button[@aria-label="Remove related work First Citation"]')).to be_present
   end
 end
