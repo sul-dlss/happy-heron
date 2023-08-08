@@ -15,13 +15,21 @@ class CollectionEventDescriptionBuilder
 
   def build
     [participants, release_settings, download_settings, doi_settings, license_settings, notification_settings,
-      review_settings].compact.join(", ")
+      review_settings, custom_rights_settings].compact.join(", ")
   end
 
   private
 
   def participants
     change_set.participant_change_description if change_set.participants_changed?
+  end
+
+  def custom_rights_settings
+    "custom terms of use modified" if form.changed?(:allow_custom_rights_statement) ||
+      form.changed?(:provided_custom_rights_statement) ||
+      form.changed?(:custom_rights_statement_custom_instructions) ||
+      form.changed?(:custom_rights_statement_source_option) ||
+      form.changed?(:custom_rights_instructions_source_option)
   end
 
   def release_settings

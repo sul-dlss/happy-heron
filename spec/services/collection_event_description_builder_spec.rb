@@ -38,6 +38,61 @@ RSpec.describe CollectionEventDescriptionBuilder do
     it { is_expected.to eq "Added depositors: lstanford" }
   end
 
+  context "when custom rights added" do
+    before do
+      form.validate(
+        allow_custom_rights_statement: "true",
+        provided_custom_rights_statement: "",
+        custom_rights_statement_custom_instructions: "Do your own thing.",
+        custom_rights_statement_source_option: "entered_by_depositor",
+        custom_rights_instructions_source_option: "provided_by_collection"
+      )
+    end
+
+    it "has a complete description" do
+      expect(result).to eq "custom terms of use modified"
+    end
+  end
+
+  context "when custom rights changed" do
+    let(:collection) { create(:collection, :with_custom_rights_from_collection) }
+
+    before do
+      form.validate(provided_custom_rights_statement: "A revision to the addendum to the built in terms of use")
+    end
+
+    it "has a complete description" do
+      expect(result).to eq "custom terms of use modified"
+    end
+  end
+
+  context "when custom rights unchanged" do
+    let(:collection) { create(:collection, :with_custom_rights_from_collection) }
+
+    before do
+      form.validate(provided_custom_rights_statement: "An addendum to the built in terms of use")
+    end
+
+    it "has a complete description" do
+      expect(result).to eq ""
+    end
+  end
+
+  context "when custom rights removed" do
+    let(:collection) { create(:collection, :with_custom_rights_from_collection) }
+
+    before do
+      form.validate(
+        allow_custom_rights_statement: "false",
+        provided_custom_rights_statement: ""
+      )
+    end
+
+    it "has a complete description" do
+      expect(result).to eq "custom terms of use modified"
+    end
+  end
+
   context "when release settings has changed" do
     before do
       form.validate(release_option: "delay", release_duration: "6 months")
