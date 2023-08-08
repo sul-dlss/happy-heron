@@ -7,9 +7,9 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="content-type-prompt" aria-describedby="popover-what_type">What type of content will you deposit?
+        <h1 class="h5 modal-title" id="content-type-prompt" aria-describedby="popover-what_type">What type of content will you deposit?
           <%= render PopoverComponent.new key: :what_type %>
-        </h5>
+        </h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -32,9 +32,9 @@
           </div>
 
           <template data-work-type-modal-target="templateHeader">
-            <h5 aria-describedby="popover-further_types">Which of the following terms further describe your deposit?
+            <h2 class="h5" aria-describedby="popover-further_types">Which of the following terms further describe your deposit?
               <%= render PopoverComponent.new key: :further_types %>
-            </h5>
+            </h2>
           </template>
 
           <template data-work-type-modal-target="template">
@@ -45,16 +45,16 @@
           </template>
 
           <template data-work-type-modal-target="musicTemplateSubheader">
-            <h6>Select at least one term below:</h6>
+            <h2 class="h6">Select at least one term below:</h2>
           </template>
 
           <template data-work-type-modal-target="mixedMaterialTemplateSubheader">
-            <h6>Select at least two terms below:</h6>
+            <h2 class="h6">Select at least two terms below:</h2>
           </template>
 
           <template data-work-type-modal-target="otherTemplate">
             <div class="ms-4 col-auto">
-              <h5>Specify "Other" type*</h5>
+              <h2 class="h5">Specify "Other" type*</h2>
             </div>
             <div class="me-5 mb-3 col subtype-item">
               <input type="text" name="subtype[]" class="form-control" id="subtype_other" autocomplete="on" required>
