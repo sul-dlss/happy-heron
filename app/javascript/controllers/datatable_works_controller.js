@@ -40,5 +40,18 @@ export default class extends Controller {
       searchInput.setAttribute("id", "dataTable-search")
       searchInput.insertAdjacentHTML("afterend", '<label for="dataTable-search" class="visually-hidden">Search for works</label>')
     })
+
+    dt.on('datatable.sort', function(column, direction) {
+      const searchColHeader = document.querySelector("table.dataTable-table > thead > tr")
+
+      for (var i = 0; i < searchColHeader.cells.length; i++) {
+        var dir = direction == "asc" ? "ascending" : "descending"
+        if (i == column) {
+          searchColHeader.cells[i].setAttribute("aria-sort", dir)
+        } else {
+          searchColHeader.cells[i].removeAttribute("aria-sort")
+        }
+      }
+    })
   }
 }
