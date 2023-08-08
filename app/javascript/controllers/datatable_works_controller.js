@@ -40,5 +40,50 @@ export default class extends Controller {
       searchInput.setAttribute("id", "dataTable-search")
       searchInput.insertAdjacentHTML("afterend", '<label for="dataTable-search" class="visually-hidden">Search for works</label>')
     })
+
+    dt.on('datatable.init', () => {
+      applyTablePaginationLabels()
+      // }
+    })
+
+    dt.on('datatable.update', () => {
+      applyTablePaginationLabels()
+    })
+
+    dt.on('datatable.sort', function(column, direction) {
+      const searchColHeader = document.querySelector("table.dataTable-table > thead > tr")
+
+      for (var i = 0; i < searchColHeader.cells.length; i++) {
+        var dir = direction == "asc" ? "ascending" : "descending"
+        if (i == column) {
+          searchColHeader.cells[i].setAttribute("aria-sort", dir)
+        } else {
+          searchColHeader.cells[i].removeAttribute("aria-sort")
+        }
+      }
+
+      // Make sure the table maintains focus when interacting with sort
+      const tableElement = document.querySelector("table.dataTable-table")
+      tableElement.focus()
+    })
   }
 }
+
+function applyTablePaginationLabels() {
+  const paginationList = document.querySelectorAll("ul.dataTable-pagination-list > li > a")
+  for (var i = 0; i < paginationList.length; i++) {
+    // If the text of the page link is a number, set the label to "Go to {page}
+    // else if the first button set "Go to previous page" else set "Go to next page"
+    var value = Number(paginationList[i].text);
+    if (Math.floor(value) == value) {
+      paginationList[i].setAttribute("aria-label", "Go to page " + value)
+    } else {
+      if (i == 0) {
+        paginationList[i].setAttribute("aria-label", "Go to previous page")
+      } else {
+        paginationList[i].setAttribute("aria-label", "Go to next page")
+      }
+    }
+  }
+}
+
