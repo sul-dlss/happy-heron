@@ -64,3 +64,13 @@ ul.collections {
     text-decoration: underline;
   }
 }
+
+// This adds a visible border with a high contrast ratio
+// to improve keyboard and voice read navigation for links and buttons
+.nav-link:focus,
+.copy-button:focus,
+.citation-button:focus,
+.form-control:focus,
+a:focus {
+  outline: 1px solid #8c1515;
+}
