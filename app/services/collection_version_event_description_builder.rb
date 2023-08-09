@@ -16,12 +16,14 @@ class CollectionVersionEventDescriptionBuilder
     [name, description, contact_email, related_links].compact.join(", ")
   end
 
+  private
+
   def name
     "collection name modified" if form.changed?(:name)
   end
 
   def description
-    "description modified" if form.changed?("description")
+    "description modified" if form.changed?(:description)
   end
 
   # The has many relationships are showing as changed and that their "id" has changed. I don't know why.

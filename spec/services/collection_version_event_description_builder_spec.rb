@@ -27,9 +27,12 @@ RSpec.describe CollectionVersionEventDescriptionBuilder do
 
   context "when many fields have changed" do
     before do
-      form.validate(name: "new name", description: "foo",
+      form.validate(
+        name: "new name",
+        description: "foo",
         contact_emails: [{"email" => "foo@bar.io"}],
-        related_links: [{"link_title" => "Hey", "url" => "http://io.io"}])
+        related_links: [{"link_title" => "Hey", "url" => "http://io.io"}]
+      )
     end
 
     it "has a complete description" do
