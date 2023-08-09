@@ -7,11 +7,13 @@ class CitationComponent < ApplicationComponent
   end
 
   def call
+    link_class = disabled? ? "citation-button disabled" : "citation-button"
+
     attrs = {
-      data: data_attributes, class: "citation-button", "aria-label": aria_label, href: "#citationModal", id: citation_link_id
+      data: data_attributes, class: link_class, "aria-label": aria_label, href: "#citationModal", id: citation_link_id
     }
 
-    attrs[:disabled] = work_version.first_draft? || work_version.purl_reserved?
+    attrs[:disabled] = disabled?
 
     tag.a(**attrs) do
       # It's a SafeBuffer, not a String
@@ -41,5 +43,9 @@ class CitationComponent < ApplicationComponent
 
   def citation_link_id
     "get-citation-#{work_version.id}"
+  end
+
+  def disabled?
+    work_version.first_draft? || work_version.purl_reserved?
   end
 end
