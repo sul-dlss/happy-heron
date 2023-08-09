@@ -16,8 +16,8 @@ class WorkVersionEventDescriptionBuilder
     changes = [
       title, abstract, contact_email, authors, contributors, related_links,
       related_works, publication_date, created_date, keywords, subtype,
-      citation, embargo, access, license, files, file_visibility, file_description,
-      assign_doi
+      citation, embargo, access, license, custom_rights, files, file_visibility,
+      file_description, assign_doi
     ].compact.join(", ")
 
     # if this is a new work and there are no changes, return "Created", else return changes
@@ -43,6 +43,10 @@ class WorkVersionEventDescriptionBuilder
 
   def collection
     @collection ||= form.model[:work].collection
+  end
+
+  def custom_rights
+    "custom terms modified" if form.changed?("custom_rights")
   end
 
   def title

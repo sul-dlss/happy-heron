@@ -50,11 +50,12 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
           work_type: work_version.work_type,
           subtype: work_version.subtype,
           title: "A great work",
-          abstract: "This is really fundamental work."
+          abstract: "This is really fundamental work.",
+          custom_rights: "Here are new terms of use."
         )
       end
 
-      it { is_expected.to eq "title of deposit modified, abstract modified" }
+      it { is_expected.to eq "title of deposit modified, abstract modified, custom terms modified" }
     end
   end
 
@@ -351,6 +352,14 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
       it { is_expected.to eq "title of deposit modified" }
     end
 
+    context "when custom rights have changed" do
+      before do
+        form.validate(custom_rights: "Free-for-all!")
+      end
+
+      it { is_expected.to eq "custom terms modified" }
+    end
+
     context "when many fields have changed" do
       let(:params) do
         ActionController::Parameters.new(
@@ -371,6 +380,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
           :citation => "Lorem ipsum",
           :subtype => %w[foo bar],
           :assign_doi => "false",
+          :custom_rights => "Please do what you wish.",
           :attached_files_attributes => {"0" =>
                         {"label" => "a label", "_destroy" => "false", "hide" => "0",
                          "file" => "eyJfcmFpbHMiOnsibWVzc2FnZS..."}}
@@ -391,7 +401,7 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
                              "publication date modified, creation date modified, " \
                              "keywords modified, work subtypes modified, " \
                              "citation modified, embargo modified, " \
-                             "visibility modified, license modified, " \
+                             "visibility modified, license modified, custom terms modified, " \
                              "files added/removed, file description changed, assign DOI modified"
       end
     end
