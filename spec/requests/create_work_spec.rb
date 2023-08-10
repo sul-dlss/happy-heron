@@ -400,7 +400,7 @@ RSpec.describe "Create a new work" do
           last_event = Work.last.events.last
           expect(last_event.event_type).to eq "update_metadata"
           changes = ["title of deposit modified", "abstract modified", "contact email modified", "authors modified",
-            "keywords modified", "visibility modified", "license modified", "files added/removed",
+            "keywords modified", "visibility modified", "license modified",
             "file description changed"]
           expect(last_event.description).to eq changes.join(", ")
         end

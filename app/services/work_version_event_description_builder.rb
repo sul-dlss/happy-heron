@@ -151,7 +151,7 @@ class WorkVersionEventDescriptionBuilder
     destroyed = attributes.values.any? { |params| params["_destroy"] == "1" }
 
     # we don't want description changes to cause an "added new file" message
-    added = form.attached_files.any? { |af| af.changed?("_destroy") }
+    added = form.attached_files.any? { |af| !af.persisted? }
 
     return unless added || destroyed
 
