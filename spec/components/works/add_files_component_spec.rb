@@ -42,4 +42,14 @@ RSpec.describe Works::AddFilesComponent do
       expect(rendered.to_html).not_to include("Check this box once all your files have completed uploading to Globus.")
     end
   end
+
+  context "when more than 250 files" do
+    let(:work_version) { build(:work_version, work:, attached_files: attached_files) }
+    let(:attached_files) { [].tap { |af| 300.times { af << build(:attached_file) } } }
+
+    it "show message and does not show upload section" do
+      expect(rendered.to_html).to include("You have more than 250 files in your deposit.")
+      expect(rendered.to_html).not_to include("Upload fewer than 250 files")
+    end
+  end
 end
