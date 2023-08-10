@@ -10,36 +10,44 @@
   <fieldset>
     <legend class="visually-hidden">Add or modify files</legend>
     <div class="form-check" data-complex-radio-target="selection">
-      <%= form.radio_button :upload_type, "browser", class: "form-check-input", "data-file-uploads-target": "browserRadioButton",
-            data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus"} %>
-      <%= form.label :upload_type_browser, "Upload fewer than 250 files (total less than 10 GB) to be displayed as a flat list of files.", class: "form-check-label fw-semibold" %>
-      <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
-        <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="250" data-dropzone-previews-container=".dropzone-files-previews">
-          <fieldset>
-            <div class="dropzone dropzone-default" data-dropzone-target="container">
-              <%= form.file_field :files, multiple: true, direct_upload: true, namespace: "flat_list", "aria-label": "Upload files",
-                    data: {dropzone_target: "input"} %>
-              <div class="dz-message needsclick text-secondary">
-                <p>Drop files here</p>
+      <% if browser_option? %>
+        <%= form.radio_button :upload_type, "browser", class: "form-check-input", "data-file-uploads-target": "browserRadioButton",
+              data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus"} %>
+        <%= form.label :upload_type_browser, "Upload fewer than 250 files (total less than 10 GB) to be displayed as a flat list of files.", class: "form-check-label fw-semibold" %>
+        <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
+          <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="250" data-dropzone-previews-container=".dropzone-files-previews">
+            <fieldset>
+              <div class="dropzone dropzone-default" data-dropzone-target="container">
+                <%= form.file_field :files, multiple: true, direct_upload: true, namespace: "flat_list", "aria-label": "Upload files",
+                      data: {dropzone_target: "input"} %>
+                <div class="dz-message needsclick text-secondary">
+                  <p>Drop files here</p>
+                </div>
               </div>
-            </div>
-            <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
-            <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
-            <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
-            </div>
-            <div class="files-list">
-              <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version], form:) %>
-            </div>
-          </fieldset>
+              <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
+              <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
+              <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
+              </div>
+              <div class="files-list">
+                <%= render Works::Edit::FilesComponent.new(work_version: form.object.model[:work_version], form:) %>
+              </div>
+            </fieldset>
 
-          <template data-dropzone-target='template'>
-            <%= form.fields_for :attached_files, AttachedFile.new, child_index: "TEMPLATE_RECORD" do |file_form| %>
-              <%= render Works::Edit::FileRowComponent.new(form: file_form) %>
-            <% end %>
-          </template>
+            <template data-dropzone-target='template'>
+              <%= form.fields_for :attached_files, AttachedFile.new, child_index: "TEMPLATE_RECORD" do |file_form| %>
+                <%= render Works::Edit::FileRowComponent.new(form: file_form) %>
+              <% end %>
+            </template>
+          </div>
         </div>
       </div>
-    </div>
+    <% else %>
+      <p style="color: var(--stanford-warning);">
+        <strong>
+          You have more than 250 files in your deposit. You can either upload a zip file with all your files or upload them via Globus.
+        </strong>
+      </p>
+    <% end %>
     <div class="form-check pt-3" data-complex-radio-target="selection">
       <%= form.radio_button :upload_type, "zipfile", class: "form-check-input",
             data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus", file_uploads_target: "zipRadioButton"} %>

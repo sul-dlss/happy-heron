@@ -13,6 +13,10 @@ module Works
       form.object.attached_files.any?
     end
 
+    def browser_option?
+      form.object.attached_files.length <= 250
+    end
+
     def error?
       errors.present?
     end
