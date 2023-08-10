@@ -118,10 +118,8 @@ RSpec.describe "Create a collection" do
 
         let(:collection_custom_rights_params) do
           {
-            allow_custom_rights_statement: "false",
-            custom_rights_statement_source_option: "",
+            custom_rights_statement_option: "none",
             provided_custom_rights_statement: "",
-            custom_rights_instructions_source_option: "",
             custom_rights_statement_custom_instructions: ""
           }
         end
@@ -181,10 +179,8 @@ RSpec.describe "Create a collection" do
         context "with a custom rights statement provided by the collection" do
           let(:collection_custom_rights_params) do
             {
-              allow_custom_rights_statement: "true",
-              custom_rights_statement_source_option: "provided_by_collection",
+              custom_rights_statement_option: "custom",
               provided_custom_rights_statement: "These are the additional rights that were not already covered",
-              custom_rights_instructions_source_option: "",
               custom_rights_statement_custom_instructions: ""
             }
           end
@@ -204,16 +200,15 @@ RSpec.describe "Create a collection" do
         context "with a custom rights statement provided by the depositor" do
           let(:collection_custom_rights_params) do
             {
-              allow_custom_rights_statement: "true",
-              custom_rights_statement_source_option: "entered_by_depositor",
-              provided_custom_rights_statement: "Maybe entered some text here, but but then picked other options that caused it to get discarded"
+              custom_rights_statement_option: "entered_by_depositor",
+              provided_custom_rights_statement: "Maybe entered some text here, but but then picked other options that caused it to get discarded",
+              custom_rights_statement_custom_instructions: ""
             }.merge(collection_custom_rights_instructions_params)
           end
 
           context "with instructions provided by the collection" do
             let(:collection_custom_rights_instructions_params) do
               {
-                custom_rights_instructions_source_option: "provided_by_collection",
                 custom_rights_statement_custom_instructions: "Some things to consider when entering additional terms of use not covered by your chosen license"
               }
             end
@@ -235,7 +230,6 @@ RSpec.describe "Create a collection" do
           context "with default instructions" do
             let(:collection_custom_rights_instructions_params) do
               {
-                custom_rights_instructions_source_option: "default_instructions",
                 custom_rights_statement_custom_instructions: ""
               }
             end
@@ -250,7 +244,7 @@ RSpec.describe "Create a collection" do
               expect(collection.custom_rights_statement_source_option).to eq "entered_by_depositor"
               expect(collection.custom_rights_instructions_source_option).to eq "default_instructions"
               expect(collection.provided_custom_rights_statement).to be_nil
-              expect(collection.custom_rights_statement_custom_instructions).to be_nil
+              expect(collection.custom_rights_statement_custom_instructions).to eq("")
             end
           end
         end

@@ -28,8 +28,7 @@ class CollectionEventDescriptionBuilder
     "custom terms of use modified" if form.changed?(:allow_custom_rights_statement) ||
       form.changed?(:provided_custom_rights_statement) ||
       form.changed?(:custom_rights_statement_custom_instructions) ||
-      form.changed?(:custom_rights_statement_source_option) ||
-      form.changed?(:custom_rights_instructions_source_option)
+      form.changed?(:custom_rights_statement_option)
   end
 
   def release_settings

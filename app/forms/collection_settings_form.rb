@@ -39,9 +39,17 @@ class CollectionSettingsForm < Reform::Form
   property :license_option
   property :required_license
   property :default_license
+  property :custom_rights_statement_option, virtual: true,
+    prepopulator: ->(*) do
+      self.custom_rights_statement_option = if allow_custom_rights_statement && provided_custom_rights_statement.blank?
+        "entered_by_depositor"
+      elsif allow_custom_rights_statement && provided_custom_rights_statement.present?
+        "custom"
+      else
+        "none"
+      end
+    end
   property :allow_custom_rights_statement, on: :collection
-  property :custom_rights_statement_source_option, virtual: true
-  property :custom_rights_instructions_source_option, virtual: true
   property :custom_rights_statement_custom_instructions, on: :collection
   property :provided_custom_rights_statement, on: :collection
   property :review_enabled
@@ -80,26 +88,16 @@ class CollectionSettingsForm < Reform::Form
       params["required_license"] = nil
     end
 
-    # If the collection doesn't allow custom additional rights statements at
-    # all, the source of the custom rights statement and possible collection
-    # level rights statement are both necessarily nil
-    unless params["allow_custom_rights_statement"] == "true" # form param is still a string at this point
-      params["custom_rights_statement_source_option"] = nil
+    case params["custom_rights_statement_option"]
+    when "entered_by_depositor"
+      params["allow_custom_rights_statement"] = "true"
       params["provided_custom_rights_statement"] = nil
-    end
-
-    # If the depositor is allowed to enter their own usage rights, provided terms are necessarily nil.
-    # If the depositor is provided with specific additional terms of use by the collection, instructions for
-    # entering their own terms are necessarily nil.
-    if params["custom_rights_statement_source_option"] == "entered_by_depositor"
-      params["provided_custom_rights_statement"] = nil
-    else
-      params["custom_rights_instructions_source_option"] = nil
+    when "custom"
+      params["allow_custom_rights_statement"] = "true"
       params["custom_rights_statement_custom_instructions"] = nil
-    end
-
-    # If the collection uses the default instructions for entering custom additional terms of use, custom entered instructions are necessarily nil
-    if params["custom_rights_instructions_source_option"] == "default_instructions"
+    when "none"
+      params["allow_custom_rights_statement"] = "false"
+      params["provided_custom_rights_statement"] = nil
       params["custom_rights_statement_custom_instructions"] = nil
     end
 
