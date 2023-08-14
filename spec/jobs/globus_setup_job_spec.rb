@@ -14,8 +14,7 @@ RSpec.describe GlobusSetupJob do
 
   context "when the user is valid in globus" do
     before do
-      allow(GlobusClient).to receive(:user_valid?).and_return(true)
-      allow(GlobusClient).to receive(:mkdir).and_return(true)
+      allow(GlobusClient).to receive_messages(user_valid?: true, mkdir: true)
     end
 
     context "when the work does not yet have an endpoint created" do
