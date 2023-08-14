@@ -21,9 +21,17 @@ module Works
         rails_blob_path(file, disposition: "attachment")
       end
 
+      def stacks_path
+        "#{Settings.stacks_file_url}/#{attached_file.work_version.work.druid}/#{ERB::Util.url_encode(attached_file.path)}"
+      end
+
       # the user can get a download link unless the file is in globus (in which case, no download link is available)
       def can_download?
         !in_globus?
+      end
+
+      def can_share?
+        !(attached_file.work_version.first_draft? || attached_file.work_version.purl_reserved?)
       end
     end
   end
