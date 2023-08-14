@@ -36,9 +36,9 @@ RSpec.describe "Updating an existing collection" do
           {
             access: "world",
             required_license: "CC0-1.0",
-            allow_custom_rights_statement: "true",
-            custom_rights_statement_source_option: "entered_by_depositor",
-            custom_rights_instructions_source_option: "default_instructions",
+            custom_rights_statement_option: "entered_by_depositor",
+            provided_custom_rights_statement: "",
+            custom_rights_statement_custom_instructions: "",
             doi_option: "depositor-selects",
             depositors_attributes: {
               "9999" => {"sunetid" => "maya.aguirre", "_destroy" => "false"},
