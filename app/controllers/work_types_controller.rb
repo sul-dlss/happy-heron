@@ -36,6 +36,6 @@ class WorkTypesController < ApplicationController
   def description_for(original_version, new_version)
     return "work type modified, subtypes modified" if original_version.work_type != new_version.work_type && original_version.subtype != new_version.subtype
     return "work type modified" if original_version.work_type != new_version.work_type
-    return "subtypes modified" if original_version.subtype != new_version.subtype
+    "subtypes modified" if original_version.subtype != new_version.subtype
   end
 end
