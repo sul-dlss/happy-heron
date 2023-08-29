@@ -161,3 +161,16 @@ H2 uses the [SDR API](https://github.com/sul-dlss/sdr-api) to deposit collection
 H2 relies upon dor-services-app publishing messages to the `sdr.objects.created` topic when a resource is persisted. Then RabbitMQ routes this message to a queue `h2.druid_assigned`.  The `AssignPidJob` running via Sneakers works on messages from this queue.  Similarly workflow-server-rails publishes messages to the `sdr.workflow` topic when accessioning is completed.  RabbitMQ then routes these messages to a queue `h2.deposit_complete` which is processed by the `DepositCompleteJob` via Sneakers.
 
 There is also a `sdr.objects.embargo_lifted` topic that gets messages when dor-services-app lifts an embargo. H2 monitors those messages and logs an event when it detects one for an item it knows about.
+
+## Reset Process (for QA/Stage)
+
+### Requirements
+
+* Hydrus APO
+   * QA: druid:zx485kb6348
+   * Stage: druid:zw306xn5593
+
+### Steps
+
+1. Reset the database: `bin/rails -e p db:reset`. Note that this will also seed the SDR user.
+2. Clear the file upload directory: `rm -fr /data/h2-files/*`
