@@ -95,14 +95,14 @@
   integrity sha512-0e7WQ4LE/+LEfW2zfAw9ppsB6A8RmxbdAUPAF++UT80epY+7emuQDkKXmaK0a9lp6An50RvzezI0cIQjp1A58w==
 
 "@types/node@*":
-  version "20.5.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.1.tgz#178d58ee7e4834152b0e8b4d30cbfab578b9bb30"
-  integrity sha512-4tT2UrL5LBqDwoed9wZ6N3umC4Yhz3W3FloMmiiG4JwmUJWpie0c7lcnUNd4gtMKuDEO4wRVS8B6Xa0uMRsMKg==
+  version "20.5.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.7.tgz#4b8ecac87fbefbc92f431d09c30e176fc0a7c377"
+  integrity sha512-dP7f3LdZIysZnmvP3ANJYTSwg+wLLl8p7RqniVlV7j+oXSXAbt9h0WIBFmJy5inWZoX9wZN6eXx+YXd9Rh3RBA==
 
 "@types/node@^14.14.31":
-  version "14.18.54"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.54.tgz#fc304bd66419030141fa997dc5a9e0e374029ae8"
-  integrity sha512-uq7O52wvo2Lggsx1x21tKZgqkJpvwCseBBPtX/nKQfpVlEsLOb11zZ1CRsWUKvJF0+lzuA9jwvA7Pr2Wt7i3xw==
+  version "14.18.56"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.56.tgz#09e092d684cd8cfbdb3c5e5802672712242f2600"
+  integrity sha512-+k+57NVS9opgrEn5l9c0gvD1r6C+PtyhVE4BTnMMRwiEA8ZO8uFcs6Yy2sXIy0eC95ZurBtRSvhZiHXBysbl6w==
 
 "@types/sinonjs__fake-timers@8.1.1":
   version "8.1.1"
@@ -740,9 +740,9 @@ fs.realpath@^1.0.0:
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
 fsevents@~2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
-  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
+  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 function-bind@^1.1.1:
   version "1.1.1"
@@ -853,9 +853,9 @@ ieee754@^1.1.13:
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
 
 immutable@^4.0.0:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.3.2.tgz#f89d910f8dfb6e15c03b2cae2faaf8c1f66455fe"
-  integrity sha512-oGXzbEDem9OOpDWZu88jGiYCvIsLHMvGw+8OXlpsvTFvIQplQbjg1B1cvKg8f7Hoch6+NGjpPsH1Fr+Mc2D1aA==
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.3.4.tgz#2e07b33837b4bb7662f288c244d1ced1ef65a78f"
+  integrity sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==
 
 indent-string@^4.0.0:
   version "4.0.0"
