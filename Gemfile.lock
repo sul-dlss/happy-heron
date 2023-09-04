@@ -290,8 +290,8 @@ GEM
       webrick (~> 1.7)
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
-    globalid (1.1.0)
-      activesupport (>= 5.0)
+    globalid (1.2.0)
+      activesupport (>= 6.1)
     globus_client (0.11.1)
       activesupport (>= 4.2, < 8)
       faraday
@@ -389,8 +389,8 @@ GEM
       racc
     patience_diff (1.2.0)
       optimist (~> 3.0)
-    pg (1.5.3)
-    preservation-client (6.1.0)
+    pg (1.5.4)
+    preservation-client (6.2.0)
       activesupport (>= 4.2, < 8)
       faraday (~> 2.0)
       moab-versioning (>= 5.0.0, < 7)
@@ -490,7 +490,7 @@ GEM
       rspec-core (>= 2, < 4, != 2.12.0)
     rss (0.3.0)
       rexml
-    rubocop (1.56.1)
+    rubocop (1.56.2)
       base64 (~> 0.1.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -532,7 +532,7 @@ GEM
       dry-monads
       faraday (>= 0.16)
       launchy
-    selenium-webdriver (4.11.0)
+    selenium-webdriver (4.12.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -636,7 +636,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webmock (3.19.0)
+    webmock (3.19.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
