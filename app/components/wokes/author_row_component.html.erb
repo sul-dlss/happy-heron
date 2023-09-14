@@ -1,0 +1,10 @@
+<div>
+  <%= form.label :first_name %>
+  <%= form.text_field :first_name %>
+</div>
+<div>
+  <%= form.label :last_name %>
+  <%= form.text_field :last_name %>
+</div>
+<%= render NestedFormComponent.new(form: form, controller: "affiliation-form", row: Wokes::AffiliationRowComponent, field: "affiliations", clazz: Forms::Affiliation) %>
+<%= form.remove_button controller, "Remove", class: "btn btn-outline-primary" %>

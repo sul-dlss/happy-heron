@@ -1,0 +1,26 @@
+<% if form.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(form.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+    <ul>
+      <% form.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with model: form, url: url, scope: :work, builder: H2FormBuilder,
+      data: {
+        # controller: "auto-citation unsaved-changes deposit-button",
+        action: "change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage",
+        auto_citation_purl: form.purl,
+        auto_citation_doi: doi_field
+      },
+      html: {class: "needs-validation work-editor", novalidate: true, multipart: true} do |form| %>
+  <%= form.hidden_field :collection_id %>
+  <%= render Wokes::TitleComponent.new(form: form) %>
+  <%= render Wokes::AuthorsAndContributorsComponent.new(form: form) %>
+  <%= render Wokes::DescriptionComponent.new(form: form) %>
+
+  <%= render Wokes::ButtonsComponent.new(form: form) %>
+<% end %>

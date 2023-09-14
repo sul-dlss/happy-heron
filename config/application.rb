@@ -49,5 +49,7 @@ module HappyHeron
         config.report_data = false
       end
     end
+
+    config.view_component.capture_compatibility_patch_enabled = true
   end
 end

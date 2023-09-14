@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       resource :decommission, only: %i[edit update], controller: "collection_decommission", as: :collection_decommission
     end
 
+    resources :wokes, shallow: true
+
     resources :works, shallow: true do
       member do
         get :delete_button
