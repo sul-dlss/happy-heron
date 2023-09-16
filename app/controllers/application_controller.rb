@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
       raw_header = roles if Rails.env.development?
       # This test setting is for cypress.
       raw_header = roles if Rails.env.test? && roles
-      logger.debug("Roles are #{raw_header}")
+      logger.info("Rails Env: #{Rails.env}; User: #{current_user}; Roles: #{raw_header}")
       raw_header&.split(";") || []
     end
   end
