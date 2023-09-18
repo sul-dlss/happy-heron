@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    action_policy (0.6.5)
+    action_policy (0.6.7)
       ruby-next-core (>= 0.14.0)
     actioncable (7.0.8)
       actionpack (= 7.0.8)
@@ -209,7 +209,7 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.4.0)
-    dor-services-client (12.17.0)
+    dor-services-client (12.18.0)
       activesupport (>= 4.2, < 8)
       cocina-models (~> 0.91.0)
       deprecation
@@ -507,9 +507,9 @@ GEM
       parser (>= 3.2.1.0)
     rubocop-capybara (2.18.0)
       rubocop (~> 1.41)
-    rubocop-factory_bot (2.23.1)
+    rubocop-factory_bot (2.24.0)
       rubocop (~> 1.33)
-    rubocop-performance (1.19.0)
+    rubocop-performance (1.19.1)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rails (2.20.2)
@@ -540,7 +540,7 @@ GEM
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.0.3)
-    sidekiq (7.1.2)
+    sidekiq (7.1.4)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
