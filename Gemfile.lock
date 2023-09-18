@@ -140,7 +140,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     chronic (0.10.2)
-    cocina-models (0.91.0)
+    cocina-models (0.91.1)
       activesupport
       deprecation
       dry-struct (~> 1.0)
