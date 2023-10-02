@@ -172,5 +172,5 @@ There is also a `sdr.objects.embargo_lifted` topic that gets messages when dor-s
 
 ### Steps
 
-1. Reset the database: `bin/rails -e p db:reset`. Note that this will also seed the SDR user.
+1. [Reset the database](https://github.com/sul-dlss/DeveloperPlaybook/blob/main/best-practices/db_reset.md) including seeding.
 2. Clear the file upload directory: `rm -fr /data/h2-files/*`
