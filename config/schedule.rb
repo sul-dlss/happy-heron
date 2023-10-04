@@ -29,3 +29,8 @@ every :day, at: "12:00am" do
   set :check_in, Settings.honeybadger_checkins.uploads_cleaner
   rake_hb "cleanup:uploads"
 end
+
+every :hour do
+  set :check_in, Settings.honeybadger_checkins.deposit_complete_auditor
+  runner_hb "DepositCompleteAuditor.execute"
+end

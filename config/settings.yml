@@ -110,9 +110,10 @@ google_analytics: false
 # checkin keys for honeybadger (actual keys are in shared_configs per environment as needed)
 # see https://app.honeybadger.io/projects/77112/check_ins
 honeybadger_checkins:
-  work_reminder: null
-  collection_reminder: null
-  uploads_cleaner: null
+  work_reminder: ~
+  collection_reminder: ~
+  uploads_cleaner: ~
+  deposit_complete_auditor: ~
 
 mais_orcid:
   client_id: ~
@@ -122,3 +123,5 @@ mais_orcid:
 dor_services:
   url: https://dor-services-qa.stanford.edu
   token: secret-token
+
+workflow_url: 'https://workflow.example.com/workflow'
