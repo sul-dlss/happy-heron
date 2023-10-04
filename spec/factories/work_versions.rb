@@ -44,8 +44,9 @@ FactoryBot.define do
             association(:collection_version_with_collection, state: "first_draft", collection:)
           end
           owner { association(:user) }
+          druid { nil }
         end
-        work { association :work, collection: collection_version.collection, owner: }
+        work { association :work, collection: collection_version.collection, owner:, druid: }
 
         after(:create) do |work_version, _evaluator|
           work_version.work.update(head: work_version)
