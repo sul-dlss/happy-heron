@@ -9,12 +9,16 @@ module Works
 
     attr_reader :form
 
+    def max_upload_files
+      Settings.max_upload_files
+    end
+
     def has_attached_files?
       form.object.attached_files.any?
     end
 
     def browser_option?
-      form.object.attached_files.length <= 250
+      form.object.attached_files.length <= max_upload_files
     end
 
     def error?

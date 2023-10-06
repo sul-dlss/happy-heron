@@ -125,3 +125,5 @@ dor_services:
   token: secret-token
 
 workflow_url: 'https://workflow.example.com/workflow'
+
+max_upload_files: 250

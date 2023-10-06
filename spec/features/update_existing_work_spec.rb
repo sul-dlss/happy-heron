@@ -49,4 +49,38 @@ RSpec.describe "Update an existing work in a deposited collection", js: true do
       expect(page).to have_content "title of deposit modified, abstract modified", count: 1
     end
   end
+
+  context "when existing work has more than max_upload_files" do
+    let(:work_version) { create(:work_version_with_work, :with_files, collection:, owner: user, title: original_title) }
+
+    before do
+      # Setting max_upload_files to 1, while work version has 2 attached files.
+      # This situation indicates the files were originally attached by zip or globus upload
+      # and because of the number of files, the user is not able to edit them via the UI.
+      # However, they must still be added to the new version of the work.
+      allow(Settings).to receive(:max_upload_files).and_return(1)
+    end
+
+    it "updates the work keeping attached files" do
+      visit work_path(work_version.work)
+
+      click_link "Edit #{original_title}"
+
+      expect(page).to have_content("You have more than 1 files in your deposit.")
+
+      # update the title and abstract
+      fill_in "Title of deposit", with: new_title
+      fill_in "Abstract", with: "I did really cool stuff"
+
+      click_button "Save as draft"
+
+      # work detail page has new title
+      expect(page).to have_content(new_title)
+      expect(page).not_to have_content(original_title)
+
+      # All files are still attached.
+      expect(page).to have_content("favicon.ico")
+      expect(page).to have_content("sul.svg")
+    end
+  end
 end
