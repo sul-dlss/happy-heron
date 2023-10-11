@@ -13,9 +13,9 @@
       <% if browser_option? %>
         <%= form.radio_button :upload_type, "browser", class: "form-check-input", "data-file-uploads-target": "browserRadioButton",
               data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus"} %>
-        <%= form.label :upload_type_browser, "Upload fewer than 250 files (total less than 10 GB) to be displayed as a flat list of files.", class: "form-check-label fw-semibold" %>
+        <%= form.label :upload_type_browser, "Upload fewer than #{max_upload_files} files (total less than 10 GB) to be displayed as a flat list of files.", class: "form-check-label fw-semibold" %>
         <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
-          <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="250" data-dropzone-previews-container=".dropzone-files-previews">
+          <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="<%= max_upload_files %>" data-dropzone-previews-container=".dropzone-files-previews">
             <fieldset>
               <div class="dropzone dropzone-default" data-dropzone-target="container">
                 <%= form.file_field :files, multiple: true, direct_upload: true, namespace: "flat_list", "aria-label": "Upload files",
@@ -44,7 +44,7 @@
     <% else %>
       <p style="color: var(--stanford-warning);">
         <strong>
-          You have more than 250 files in your deposit. You can either upload a zip file with all your files or upload them via Globus.
+          You have more than <%= max_upload_files %> files in your deposit. You can either upload a zip file with all your files or upload them via Globus.
         </strong>
       </p>
     <% end %>

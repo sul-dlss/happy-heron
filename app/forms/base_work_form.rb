@@ -197,8 +197,25 @@ class BaseWorkForm < Reform::Form
   def save_model
     super
     # For a zipfile, both the existing files and the zipfile will be attached. These will be removed during unzip.
+
+    # If the previous version has > 250 files and the upload_type is browser then copy the files from previous version.
+    # Having > 250 files and upload_type is browser indicates that the files were originally uploaded via zip or globus.
+    # However, because of the number of files the user is not able to edit them via the UI and they are not provided
+    # in the form, so they must be copied from the previous version.
+    # Note that the octets of the files are not being copied, only the ActiveStorage references.
+    if work.head && work_version.upload_type == "browser" && work.head.attached_files.length > Settings.max_upload_files && work_version.attached_files.empty?
+      dupe_attached_files
+    end
     dedupe_keywords
     work.update(head: work_version)
+  end
+
+  def dupe_attached_files
+    work.head.attached_files.each do |existing_attached_file|
+      new_attached_file = existing_attached_file.dup
+      new_attached_file.file.attach(existing_attached_file.file.blob.signed_id)
+      work_version.attached_files << new_attached_file
+    end
   end
 
   # Override reform so that this looks just like a Work
