@@ -300,7 +300,7 @@ GEM
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    globus_client (0.13.0)
+    globus_client (0.14.0)
       activesupport (>= 4.2, < 8)
       faraday
       faraday-retry
@@ -746,4 +746,4 @@ DEPENDENCIES
   zipline (~> 1.4)
 
 BUNDLED WITH
-   2.4.20
+   2.4.14

@@ -25,7 +25,7 @@ RSpec.describe GlobusSetupJob do
           expect { described_class.perform_now(work_version) }.to have_enqueued_job(ActionMailer::MailDeliveryJob)
             .with("WorksMailer", "globus_endpoint_created", "deliver_now",
               {params: {user:, work_version:}, args: []})
-          expect(GlobusClient).to have_received(:mkdir)
+          expect(GlobusClient).to have_received(:mkdir).with(user_id: user.email, path: work_version.globus_endpoint, notify_email: false)
           work_version.reload
           expect(work_version.state).to eq "first_draft"
         end
