@@ -24,6 +24,7 @@ class DepositCompleteJob
       return ack! unless object
 
       Honeybadger.context(object: object.to_global_id.to_s)
+      Rails.logger.info("Deposit complete on #{druid}")
 
       DepositCompleter.complete(object_version: object.head)
     end
