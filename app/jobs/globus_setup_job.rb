@@ -58,7 +58,7 @@ class GlobusSetupJob < ApplicationJob
     return true if test_mode?
     return true if integration_test_mode? && path == integration_endpoint
 
-    GlobusClient.mkdir(user_id: user.email, path:)
+    GlobusClient.mkdir(user_id: user.email, path:, notify_email: false)
   end
 
   # simulate globus calls in development if settings indicate we should for testing
