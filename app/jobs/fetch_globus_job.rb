@@ -18,7 +18,7 @@ class FetchGlobusJob < BaseDepositJob
     ActiveRecord::Base.clear_active_connections!
 
     filepaths.each do |path|
-      next if ignore?(path)
+      next if IgnoreFileService.ignore?(path)
 
       work_version.attached_files << new_attached_file(path, work_version)
     end
@@ -30,10 +30,6 @@ class FetchGlobusJob < BaseDepositJob
     GlobusClient
       .get_filenames(path: work_version.globus_endpoint, user_id: work_version.work.owner.email)
       .map { |filepath| filepath.delete_prefix(work_version.globus_endpoint_fullpath) }
-  end
-
-  def ignore?(path)
-    path.start_with?("__MACOSX") || path.end_with?(".DS_Store")
   end
 
   def new_attached_file(path, work_version)
