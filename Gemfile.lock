@@ -702,7 +702,7 @@ DEPENDENCIES
   faker
   faraday (~> 2.0)
   globus_client (~> 0.11)
-  honeybadger (~> 4.0)
+  honeybadger
   jbuilder
   jsbundling-rails (~> 0.1.9)
   listen (~> 3.2)
