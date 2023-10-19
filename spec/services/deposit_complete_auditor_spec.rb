@@ -3,34 +3,91 @@
 require "rails_helper"
 
 RSpec.describe DepositCompleteAuditor do
-  let(:work_still_accessioning) { create(:work_version_with_work_and_collection, state: :depositing, druid: "druid:bc123df4567").work }
-  let(:work_done_accessioning) { create(:work_version_with_work_and_collection, state: :depositing, druid: "druid:bc123df4568").work }
-  let(:collection_still_accessioning) { create(:collection_version_with_collection, state: :depositing, collection_druid: "druid:bc123df4569").collection }
-  let(:collection_done_accessioning) { create(:collection_version_with_collection, state: :depositing, collection_druid: "druid:bc123df4560").collection }
-
   let(:workflow_client) { instance_double(Dor::Workflow::Client) }
 
   before do
     allow(Repository).to receive(:valid_version?).and_return(true)
-    # These works / collections should be ignored.
-    build(:valid_deposited_work_version)
-    build(:work_version)
-    build(:collection_version_with_collection) # Deposited
-    build(:collection_version)
     allow(Dor::Workflow::Client).to receive(:new).and_return(workflow_client)
-    allow(workflow_client).to receive(:active_lifecycle).with(druid: work_still_accessioning.druid, milestone_name: "submitted", version: work_still_accessioning.head.version.to_s).and_return(Time.now)
-    allow(workflow_client).to receive(:active_lifecycle).with(druid: work_done_accessioning.druid, milestone_name: "submitted", version: work_done_accessioning.head.version.to_s).and_return(nil)
-    allow(workflow_client).to receive(:active_lifecycle).with(druid: collection_still_accessioning.druid, milestone_name: "submitted", version: collection_still_accessioning.head.version.to_s).and_return(Time.now)
-    allow(workflow_client).to receive(:active_lifecycle).with(druid: collection_done_accessioning.druid, milestone_name: "submitted", version: collection_done_accessioning.head.version.to_s).and_return(nil)
     allow(Honeybadger).to receive(:notify)
     allow(DepositCompleter).to receive(:complete)
+    allow(workflow_client).to receive(:active_lifecycle)
+      .with(druid: object.druid, milestone_name: "submitted", version: object.head.version.to_s)
+      .and_return(active_lifecycle_value)
   end
 
-  it "calls DepositCompleter and Honeybadger notify" do
-    described_class.execute
-    expect(DepositCompleter).to have_received(:complete).twice
-    expect(DepositCompleter).to have_received(:complete).with(object_version: work_done_accessioning.head)
-    expect(DepositCompleter).to have_received(:complete).with(object_version: collection_done_accessioning.head)
-    expect(Honeybadger).to have_received(:notify).twice
+  context "with a work still going through accessioning" do
+    let(:active_lifecycle_value) { Time.now }
+    let(:object) { create(:work_version_with_work_and_collection, state: :depositing, druid: "druid:bc123df4567").work }
+
+    it "skips calling DepositCompleter and notifying Honeybadger" do
+      described_class.execute
+      expect(DepositCompleter).not_to have_received(:complete)
+      expect(Honeybadger).not_to have_received(:notify)
+    end
+  end
+
+  context "with a collection still going through accessioning" do
+    let(:active_lifecycle_value) { Time.now }
+    let(:object) { create(:collection_version_with_collection, state: :depositing, collection_druid: "druid:bc123df4569").collection }
+
+    it "skips calling DepositCompleter and notifying Honeybadger" do
+      described_class.execute
+      expect(DepositCompleter).not_to have_received(:complete)
+      expect(Honeybadger).not_to have_received(:notify)
+    end
+  end
+
+  context "with an accessioned work" do
+    let(:active_lifecycle_value) { nil }
+    let(:object) { create(:work_version_with_work_and_collection, state: :depositing, druid: "druid:bc123df4568").work }
+
+    it "calls DepositCompleter and notifies Honeybadger" do
+      described_class.execute
+      expect(DepositCompleter).to have_received(:complete).with(object_version: object.head)
+      expect(Honeybadger).to have_received(:notify)
+    end
+  end
+
+  context "with an accessioned collection" do
+    let(:active_lifecycle_value) { nil }
+    let(:object) { create(:collection_version_with_collection, state: :depositing, collection_druid: "druid:bc123df4560").collection }
+
+    it "calls DepositCompleter and notifies Honeybadger" do
+      described_class.execute
+      expect(DepositCompleter).to have_received(:complete).with(object_version: object.head)
+      expect(Honeybadger).to have_received(:notify)
+    end
+  end
+
+  context "with a work not yet assigned a druid" do
+    let(:active_lifecycle_value) { nil }
+    let(:object) { create(:work_version_with_work_and_collection, state: :depositing, druid: nil).work }
+
+    before do
+      allow(workflow_client).to receive(:active_lifecycle)
+        .and_raise(Dor::MissingWorkflowException, "Failed to retrieve resource: get https://workflow-service-prod.stanford.edu//objects//lifecycle?version=1&active-only=true (HTTP status 404)")
+    end
+
+    it "skips calling DepositCompleter and notifying Honeybadger" do
+      described_class.execute
+      expect(DepositCompleter).not_to have_received(:complete)
+      expect(Honeybadger).not_to have_received(:notify)
+    end
+  end
+
+  context "with a collection not yet assigned a druid" do
+    let(:active_lifecycle_value) { nil }
+    let(:object) { create(:collection_version_with_collection, state: :depositing, collection_druid: nil).collection }
+
+    before do
+      allow(workflow_client).to receive(:active_lifecycle)
+        .and_raise(Dor::MissingWorkflowException, "Failed to retrieve resource: get https://workflow-service-prod.stanford.edu//objects//lifecycle?version=1&active-only=true (HTTP status 404)")
+    end
+
+    it "skips calling DepositCompleter and notifying Honeybadger" do
+      described_class.execute
+      expect(DepositCompleter).not_to have_received(:complete)
+      expect(Honeybadger).not_to have_received(:notify)
+    end
   end
 end

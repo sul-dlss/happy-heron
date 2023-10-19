@@ -7,7 +7,7 @@ class DepositCompleteAuditor
 
   def execute
     depositing_objects.each do |object|
-      next if accessioning?(object)
+      next if object.druid.blank? || accessioning?(object)
 
       Honeybadger.notify("Object is still in depositing state, but accessioning is complete", context: {druid: object.druid, version: object.head.version})
       Rails.logger.info("Object is still in depositing state, but accessioning is complete: #{object.druid}")
