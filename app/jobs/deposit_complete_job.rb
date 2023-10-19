@@ -16,6 +16,7 @@ class DepositCompleteJob
   def work(msg)
     druid = parse_message(msg)
     Honeybadger.context(druid:)
+    Rails.logger.info("Trying deposit complete on #{druid}")
 
     # Without this, the database connection pool gets exhausted
     ActiveRecord::Base.connection_pool.with_connection do
