@@ -69,7 +69,17 @@ Rails.application.routes.draw do
   end
 
   resource :profile, only: :show
-  resources :preservation, only: :show
+
+  # Must authenticate on routes for authentication to work with
+  # ActionController::Live-based controllers, else Warden raises an
+  # UncaughtThrowError:
+  #
+  # https://app.honeybadger.io/projects/77112/faults/98674411/
+  #
+  # Workaround suggested by Devise maintainers: https://github.com/heartcombo/devise/issues/2332#issuecomment-15083116
+  authenticate :user do
+    resources :preservation, only: :show
+  end
 
   namespace :admin do
     resources :druid_searches, only: :index
