@@ -4,7 +4,7 @@
 class PreservationController < ApplicationController
   include ActionController::Live # required for streaming
 
-  before_action :authenticate_user!
+  # Authentication is done in the routes for reasons explained there.
   verify_authorized
 
   # rubocop:disable Metrics/AbcSize
