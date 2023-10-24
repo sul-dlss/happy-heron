@@ -30,7 +30,7 @@ class UnzipJob < BaseDepositJob
   end
 
   def ignore?(entry)
-    !entry.file? || entry.name.start_with?("__MACOSX") || entry.name.end_with?(".DS_Store")
+    !entry.file? || IgnoreFileService.ignore?(entry.name)
   end
 
   def filepath_for(attached_file)
