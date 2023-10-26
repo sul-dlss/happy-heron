@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 // Sets the form when the user is selecting a work type and subtypes when they
 // would like to start a new deposit.
@@ -6,11 +6,11 @@ import { Controller } from "@hotwired/stimulus"
 // all of the targets that this script expects.
 export default class extends Controller {
   static targets = [
-    "form"
+    'form'
   ]
 
   // Sets the form in the popup to use the action in the data-destination attribute
-  setCollection(event) {
+  setCollection (event) {
     event.preventDefault()
     // Use currentTarget (instead of target) because it gets the element with the Stimulus data attributes. Useful
     // when the data attributes and Stimulus action are defined on an element that wraps other elements. E.g. when an

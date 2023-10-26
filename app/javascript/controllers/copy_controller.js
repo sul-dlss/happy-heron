@@ -1,11 +1,12 @@
-import { Controller } from "@hotwired/stimulus"
+import bootstrap from 'bootstrap/dist/js/bootstrap'
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static values = {
     clip: String
   }
 
-  copy(event) {
+  copy (event) {
     navigator.clipboard.writeText(this.clipValue)
     event.preventDefault()
 
@@ -15,6 +16,6 @@ export default class extends Controller {
       trigger: 'manual'
     })
     popover.show()
-    setTimeout(function() { popover.dispose() }, 1500)
+    setTimeout(function () { popover.dispose() }, 1500)
   }
 }

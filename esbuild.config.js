@@ -14,6 +14,7 @@ esbuild
   .build({
     entryPoints: ["app/javascript/application.js"],
     bundle: true,
+    sourcemap: true,
     outdir: "app/assets/builds",
     watch: watch,
     plugins: [stimulusPlugin()],

@@ -1,24 +1,24 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["moreTypesLink", "moreTypes"]
+  static targets = ['moreTypesLink', 'moreTypes']
 
-  toggleMoreTypes(event) {
+  toggleMoreTypes (event) {
     event.preventDefault()
 
-    this.moreTypesTarget.hidden ?
-      this.showMoreTypes() :
-      this.hideMoreTypes()
+    this.moreTypesTarget.hidden
+      ? this.showMoreTypes()
+      : this.hideMoreTypes()
   }
 
-  showMoreTypes() {
+  showMoreTypes () {
     this.moreTypesTarget.hidden = false
     this.moreTypesLinkTarget.innerHTML = 'See fewer options'
     this.moreTypesLinkTarget.classList.toggle('collapsed', false)
     this.moreTypesLinkTarget.setAttribute('aria-expanded', true)
   }
 
-  hideMoreTypes() {
+  hideMoreTypes () {
     this.moreTypesTarget.hidden = true
     this.moreTypesLinkTarget.innerHTML = 'See more options'
     this.moreTypesLinkTarget.classList.toggle('collapsed', true)

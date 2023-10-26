@@ -1,9 +1,9 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["year", "month", "day", "error"]
+  static targets = ['year', 'month', 'day', 'error']
 
-  validate() {
+  validate () {
     this.errors = {}
     this.dateInFuture()
     this.allPartsPresent()
@@ -11,7 +11,7 @@ export default class extends Controller {
     this.displayErrors()
   }
 
-  showError(err) {
+  showError (err) {
     if (err) {
       this.errorTarget.innerHTML = err
       this.errorTarget.style.display = 'block'
@@ -20,11 +20,11 @@ export default class extends Controller {
     }
   }
 
-  hideError() {
+  hideError () {
     this.errorTarget.style.display = 'none'
   }
 
-  clearError() {
+  clearError () {
     this.errors = {}
     this.displayErrors()
   }
@@ -57,7 +57,7 @@ export default class extends Controller {
     this.showError(this.errors.year || this.errors.month || this.errors.day)
   }
 
-  dateInFuture() {
+  dateInFuture () {
     const currentTime = new Date()
     const currentMonth = currentTime.getMonth() + 1
     const currentDay = currentTime.getDate()
@@ -68,17 +68,17 @@ export default class extends Controller {
 
     if (year < currentYear) {
       this.errors.year = 'must be in the future'
-    } else if (year == currentYear) {
+    } else if (year === currentYear) {
       if (month < currentMonth) {
         this.errors.month = 'must be in the future'
-      } else if (month == currentMonth && day < currentDay) {
+      } else if (month === currentMonth && day < currentDay) {
         this.errors.day = 'must be in the future'
       }
     }
   }
 
   // Validate that all parts are provided
-  allPartsPresent() {
+  allPartsPresent () {
     const day = this.dayTarget.value
     const month = this.monthTarget.value
     const year = this.yearTarget.value
@@ -93,7 +93,7 @@ export default class extends Controller {
   }
 
   // Validate that the day selected is in the month
-  validDate() {
+  validDate () {
     const day = this.dayTarget.value
     const month = this.monthTarget.value
     const year = this.yearTarget.value

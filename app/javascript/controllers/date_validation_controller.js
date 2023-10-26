@@ -1,23 +1,23 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["year", "month", "day", "error"]
+  static targets = ['year', 'month', 'day', 'error']
 
-  connect() {
+  connect () {
     this.validate()
   }
 
-  change() {
+  change () {
     this.clearValidations()
     this.validate()
   }
 
-  validate() {
+  validate () {
     this.mostSignificantPartsPresent()
     this.validDateRange()
   }
 
-  clearValidations() {
+  clearValidations () {
     this.yearTarget.classList.remove('is-invalid')
     this.yearTarget.setCustomValidity('')
     this.yearTarget.required = false
@@ -29,7 +29,7 @@ export default class extends Controller {
     this.errorTarget.textContent = ''
   }
 
-  validDateRange() {
+  validDateRange () {
     const currentTime = new Date()
     const currentMonth = currentTime.getMonth() + 1
     const currentDay = currentTime.getDate()
@@ -45,15 +45,15 @@ export default class extends Controller {
     this.validateDayExists(month, day)
   }
 
-  validateYearMin(year) {
-    if (year != 0 && year < this.yearTarget.min) {
+  validateYearMin (year) {
+    if (year !== 0 && year < this.yearTarget.min) {
       this.invalid('must be after ' + this.yearTarget.min, false, false)
       return false
     }
     return true
   }
 
-  validateYearPast(year, currentYear, month, day) {
+  validateYearPast (year, currentYear, month, day) {
     if (year > currentYear) {
       this.invalid('must be in the past', !!month, !!day)
       return false
@@ -61,24 +61,24 @@ export default class extends Controller {
     return true
   }
 
-  validateMonthPast(year, currentYear, month, currentMonth, day) {
-    if (year == currentYear && month > currentMonth) {
+  validateMonthPast (year, currentYear, month, currentMonth, day) {
+    if (year === currentYear && month > currentMonth) {
       this.invalid('must be in the past', true, !!day)
       return false
     }
     return true
   }
 
-  validateDayPast(year, currentYear, month, currentMonth, day, currentDay) {
-    if (year == currentYear && month == currentMonth && day > currentDay) {
+  validateDayPast (year, currentYear, month, currentMonth, day, currentDay) {
+    if (year === currentYear && month === currentMonth && day > currentDay) {
       this.invalid('must be in the past', true, true)
       return false
     }
     return true
   }
 
-  validateDayExists(month, day) {
-    if(!month || !day) return true
+  validateDayExists (month, day) {
+    if (!month || !day) return true
 
     const lastDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
@@ -89,14 +89,14 @@ export default class extends Controller {
     return true
   }
 
-  invalid(msg, invalid_month, invalid_day) {
+  invalid (msg, invalidMonth, invalidDay) {
     this.yearTarget.classList.add('is-invalid')
-    this.yearTarget.setCustomValidity('invalid')  
-    if(invalid_month) {
+    this.yearTarget.setCustomValidity('invalid')
+    if (invalidMonth) {
       this.monthTarget.classList.add('is-invalid')
       this.monthTarget.setCustomValidity('invalid')
     }
-    if(invalid_day) {
+    if (invalidDay) {
       this.dayTarget.classList.add('is-invalid')
       this.dayTarget.setCustomValidity('invalid')
     }
@@ -105,7 +105,7 @@ export default class extends Controller {
 
   // Validate that the most signifcant parts are provided when a less significant part is provided.
   // Draft cannot be saved unless this is satisfied so should be displayed immediately.
-  mostSignificantPartsPresent() {
+  mostSignificantPartsPresent () {
     const day = this.dayTarget.value
     const month = this.monthTarget.value
     const year = this.yearTarget.value
@@ -120,7 +120,7 @@ export default class extends Controller {
     }
   }
 
-  toInt(target) {
+  toInt (target) {
     return parseInt(target.value) || 0
   }
 }

@@ -1,11 +1,11 @@
-import NestedFormController from "./nested_form_controller"
+import NestedFormController from './nested_form_controller'
 
 export default class extends NestedFormController {
-  connect() {
+  connect () {
     this.renumber()
   }
 
-  addAssociation(event) {
+  addAssociation (event) {
     super.addAssociation(event)
     // This depends on the superclass inserting the element before the add_itemTarget
     const element = this.add_itemTarget.previousElementSibling
@@ -15,23 +15,23 @@ export default class extends NestedFormController {
     })
   }
 
-  setWeight(element, value) {
+  setWeight (element, value) {
     element.querySelector("input[name*='weight']").value = value
   }
 
-  filterButtons(index) {
-    this.upButtonTargets[index].hidden = (index == 0)
-    this.downButtonTargets[index].hidden = (index == this.count - 1)
+  filterButtons (index) {
+    this.upButtonTargets[index].hidden = (index === 0)
+    this.downButtonTargets[index].hidden = (index === this.count - 1)
   }
 
-  renumber() {
+  renumber () {
     this.rows().forEach((row, index) => {
       this.setWeight(row, index)
       this.filterButtons(index)
     })
   }
 
-  moveUp(event) {
+  moveUp (event) {
     const item = this.getItemForButton(event.target)
     const previous = this.getPreviousSibling(item, 'div.contributor-row')
     previous.remove()
@@ -39,7 +39,7 @@ export default class extends NestedFormController {
     this.renumber()
   }
 
-  moveDown(event) {
+  moveDown (event) {
     const item = this.getItemForButton(event.target)
     const next = this.getNextSibling(item, 'div.contributor-row')
     next.remove()
@@ -47,27 +47,27 @@ export default class extends NestedFormController {
     this.renumber()
   }
 
-  removeAssociation(event) {
+  removeAssociation (event) {
     super.removeAssociation(event)
     this.renumber()
   }
 
-  get count() {
+  get count () {
     return this.rows().length
   }
 
   // Returns all of the not deleted rows (we don't want controls showing if there is only one visibile row, but many deleted rows)
-  rows() {
+  rows () {
     const allRows = this.element.querySelectorAll(this.selectorValue)
-    return Array.from(allRows).filter((item) => item.querySelector("input[name*='_destroy']").value != "1")
+    return Array.from(allRows).filter((item) => item.querySelector("input[name*='_destroy']").value !== '1')
   }
 
   // These methods help us find the next or previous element that also match a given selector.
   // This allows us to better target a specific element of interest.
-  getNextSibling(elem, selector) {
+  getNextSibling (elem, selector) {
     // Get the next sibling element
     // this is native JS: https://developer.mozilla.org/en-US/docs/Web/API/Element/nextElementSibling
-    var sibling = elem.nextElementSibling
+    let sibling = elem.nextElementSibling
 
     // If there's no selector, return the sibling
     if (!selector) return sibling
@@ -80,10 +80,10 @@ export default class extends NestedFormController {
     }
   }
 
-  getPreviousSibling(elem, selector) {
+  getPreviousSibling (elem, selector) {
     // Get the previous sibling element
     // this is native JS: https://developer.mozilla.org/en-US/docs/Web/API/Element/previousElementSibling
-    var sibling = elem.previousElementSibling
+    let sibling = elem.previousElementSibling
 
     // If there's no selector, return the sibling
     if (!selector) return sibling
@@ -95,5 +95,4 @@ export default class extends NestedFormController {
       sibling = sibling.previousElementSibling
     }
   }
-
 }

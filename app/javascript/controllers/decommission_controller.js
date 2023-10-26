@@ -1,13 +1,13 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["confirm", "submit"]
+  static targets = ['confirm', 'submit']
 
-  connect() {
+  connect () {
     this.change()
   }
 
-  change() {
+  change () {
     this.submitTarget.disabled = !this.confirmTarget.checked
   }
 }
