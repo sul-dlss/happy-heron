@@ -33,6 +33,15 @@ jobs:
       - run:
           name: Lint ERBs
           command: 'bundle exec erblint --lint-all --format compact'
+  eslint:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Lint JavaScript
+          command: yarn run lint
   accessibility-features:
     executor: ruby-rails/ruby-postgres
     steps:
@@ -51,6 +60,7 @@ jobs:
 workflows:
   build:
     jobs:
+      - eslint
       - erblint
       - cypress
       - accessibility-features

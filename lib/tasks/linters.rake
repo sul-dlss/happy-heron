@@ -12,8 +12,14 @@ end
 desc "Run erblint against ERB files"
 task :erblint do
   puts "Running erblint..."
-  system("erblint --lint-all --format compact")
+  system("bundle exec erblint --lint-all --format compact")
+end
+
+desc "Run Yarn linter against JS files"
+task :eslint do
+  puts "Running JS linters..."
+  system("yarn run lint")
 end
 
 desc "Run all configured linters"
-task lint: %i[rubocop erblint]
+task lint: %i[rubocop erblint eslint]
