@@ -67,6 +67,7 @@ RSpec.describe "Update an existing work in a deposited collection", js: true do
       click_link "Edit #{original_title}"
 
       expect(page).to have_content("You have more than 1 files in your deposit.")
+      expect(page).not_to have_content("Unzipping may take several minutes", wait: 0)
 
       # update the title and abstract
       fill_in "Title of deposit", with: new_title
