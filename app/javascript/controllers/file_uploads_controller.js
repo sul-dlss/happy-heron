@@ -8,7 +8,10 @@ export default class extends Controller {
   }
 
   updatePanelVisibility() {
-    this.fileUploadsTarget.hidden = !this.browserRadioButtonTarget.checked
+    // The fileUploadsTarget is undefined if the user has already uploaded more than Settings.max_uploaded_files.
+    if (this.hasFileUploadsTarget) {
+      this.fileUploadsTarget.hidden = !this.browserRadioButtonTarget.checked
+    }
     this.zipUploadTarget.hidden = !this.zipRadioButtonTarget.checked
     this.globusUploadTarget.hidden = !this.globusRadioButtonTarget.checked
   }
