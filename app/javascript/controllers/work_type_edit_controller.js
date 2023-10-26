@@ -1,15 +1,16 @@
-import { Controller } from "@hotwired/stimulus"
+import bootstrap from 'bootstrap/dist/js/bootstrap'
+import { Controller } from '@hotwired/stimulus'
 
 // Sets the form when the admin is changing the work type and subtypes of an existing work.
 // This must be wrapped around the WorkTypeModalComponent because that renders
 // all of the targets that this script expects.
 export default class extends Controller {
   static targets = [
-    "form"
+    'form'
   ]
 
   static outlets = [
-    "work-type-modal"
+    'work-type-modal'
   ]
 
   static values = {
@@ -19,7 +20,7 @@ export default class extends Controller {
     workSubtype: Array
   }
 
-  connect() {    
+  connect () {
     this.formTarget.action = this.actionValue
     bootstrap.Modal.getOrCreateInstance(this.idValue).show()
     this.workTypeModalOutlet.selectType(this.workTypeValue)

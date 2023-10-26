@@ -1,25 +1,25 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = [ "collections", "helpHow" ]
+  static targets = ['collections', 'helpHow']
 
-  connect() {
+  connect () {
     this.changeHelpHow({ target: this.helpHowTarget })
   }
 
-  changeHelpHow(event) {
+  changeHelpHow (event) {
     event.target.value === 'Request access to another collection' ? this.showCollections() : this.hideCollections()
   }
 
-  showCollections() {
+  showCollections () {
     this.collectionsTarget.hidden = false
   }
 
-  hideCollections() {
+  hideCollections () {
     this.collectionsTarget.hidden = true
   }
 
-  checkCollections() {
+  checkCollections () {
     const checked = this.collectionsTarget.querySelector('input[type="checkbox"]:checked')
     const firstInput = this.collectionsTarget.querySelector('input[type="checkbox"]')
     checked || this.collectionsTarget.hidden ? firstInput.setCustomValidity('') : firstInput.setCustomValidity('Please select an option.')

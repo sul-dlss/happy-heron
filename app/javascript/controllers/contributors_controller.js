@@ -1,28 +1,28 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["person", "organization", "personName", "personNameSelect", "personOrcid", "personOrcidName", "orcid",
-                    "orcidFeedback", "orcidFirstName", "orcidLastName", "orcidDisplayName", "selectPersonRole", "selectOrganizationRole",
-                    "contributorTypePerson", "contributorTypeOrganization"]
+  static targets = ['person', 'organization', 'personName', 'personNameSelect', 'personOrcid', 'personOrcidName', 'orcid',
+    'orcidFeedback', 'orcidFirstName', 'orcidLastName', 'orcidDisplayName', 'selectPersonRole', 'selectOrganizationRole',
+    'contributorTypePerson', 'contributorTypeOrganization']
+
   static values = { required: Boolean }
 
-  connect() {
+  connect () {
     this.contributorTypeChanged()
     this.personChanged()
-    if(this.hasValidOrcid) {
+    if (this.hasValidOrcid) {
       this.lookupOrcid()
     }
   }
 
-  contributorTypeChanged() {
+  contributorTypeChanged () {
     if (this.contributorTypePersonTarget.checked) {
       this.selectPersonRoleTarget.hidden = false
       this.selectPersonRoleTarget.disabled = false
       this.selectOrganizationRoleTarget.hidden = true
       this.selectOrganizationRoleTarget.disabled = true
       this.displayPerson()
-    }
-    else {
+    } else {
       this.selectPersonRoleTarget.hidden = true
       this.selectPersonRoleTarget.disabled = true
       this.selectOrganizationRoleTarget.hidden = false
@@ -32,17 +32,16 @@ export default class extends Controller {
   }
 
   // Person radio button toggled.
-  personChanged() {
-    if (this.isPersonNameSelected)
-      this.displayPersonName()
-    else
-      this.displayPersonOrcid()
+  personChanged () {
+    if (this.isPersonNameSelected) { this.displayPersonName() } else { this.displayPersonOrcid() }
   }
 
   // Person is displayed and name radio button selected.
-  displayPersonName() {
+  displayPersonName () {
     // Name displayed.
-    this.personNameTarget.querySelectorAll('input[type="text"],input[type="hidden"]').forEach((element) => element.disabled = false)
+    this.personNameTarget.querySelectorAll('input[type="text"],input[type="hidden"]').forEach((element) => {
+      element.disabled = false
+    })
 
     // ORCID inputs disabled and cleared
     this.personOrcidTarget.querySelectorAll('input[type="text"]').forEach((element) => {
@@ -57,7 +56,7 @@ export default class extends Controller {
   }
 
   // Person is displayed and ORCID radio button selected.
-  displayPersonOrcid() {
+  displayPersonOrcid () {
     // ORCID displayed.
     this.personOrcidTarget.querySelectorAll('input[type="text"]').forEach((element) => {
       element.disabled = false
@@ -73,10 +72,13 @@ export default class extends Controller {
   }
 
   // Organization role is selected.
-  displayOrganization() {
+  displayOrganization () {
     this.organizationTarget.hidden = false
-    if (this.requiredValue)
-      this.organizationTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => element.required = true)
+    if (this.requiredValue) {
+      this.organizationTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => {
+        element.required = true
+      })
+    }
 
     this.personTarget.hidden = true
     this.personTarget.querySelectorAll('input[type="text"]:not(.affiliation-input),input[type="hidden"]:not(.affiliation-input)').forEach((element) => {
@@ -86,10 +88,13 @@ export default class extends Controller {
   }
 
   // Person role is selected.
-  displayPerson() {
+  displayPerson () {
     this.personTarget.hidden = false
-    if (this.requiredValue)
-      this.personTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => element.required = true)
+    if (this.requiredValue) {
+      this.personTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => {
+        element.required = true
+      })
+    }
 
     this.organizationTarget.hidden = true
     this.organizationTarget.querySelectorAll('input[type="text"]:not(.affiliation-input)').forEach((element) => {
@@ -98,16 +103,16 @@ export default class extends Controller {
     })
   }
 
-  get hasValidOrcid() {
+  get hasValidOrcid () {
     return /^https:\/\/(.*\.)?orcid\.org\/\d{4}-\d{4}-\d{4}-[0-9X]{4}$/.test(this.orcidTarget.value)
   }
 
-  get isPersonNameSelected() {
+  get isPersonNameSelected () {
     return this.personNameSelectTarget.checked
   }
 
-  lookupOrcid() {
-    if(this.hasValidOrcid) {
+  lookupOrcid () {
+    if (this.hasValidOrcid) {
       // Freeze it so that user can't change.
       this.clearOrcidError()
       this.orcidTarget.readOnly = true
@@ -117,14 +122,14 @@ export default class extends Controller {
     }
   }
 
-  clearOrcidError() {
+  clearOrcidError () {
     this.orcidFeedbackTarget.innerText = 'You must provide an ORCID iD'
     this.orcidTarget.classList.remove('is-invalid')
     this.orcidTarget.setCustomValidity('')
     this.orcidTarget.readOnly = false
   }
 
-  showOrcidError(error) {
+  showOrcidError (error) {
     this.orcidTarget.readOnly = false
     this.orcidFeedbackTarget.innerText = error
     this.orcidTarget.classList.add('is-invalid')
@@ -132,38 +137,42 @@ export default class extends Controller {
   }
 
   // Displays name retrieved for ORCID.
-  showOrcidName(first_name, last_name) {
+  showOrcidName (firstName, lastName) {
     this.orcidTarget.readOnly = true
-    if(this.orcidFirstNameTarget.value === '') this.orcidFirstNameTarget.value = first_name
-    if(this.orcidLastNameTarget.value === '') this.orcidLastNameTarget.value = last_name
-    this.orcidDisplayNameTarget.innerText = `Name associated with this ORCID iD is ${first_name} ${last_name}.`
+    if (this.orcidFirstNameTarget.value === '') this.orcidFirstNameTarget.value = firstName
+    if (this.orcidLastNameTarget.value === '') this.orcidLastNameTarget.value = lastName
+    this.orcidDisplayNameTarget.innerText = `Name associated with this ORCID iD is ${firstName} ${lastName}.`
     this.personOrcidNameTarget.hidden = false
     // So that citation is updated.
     this.orcidLastNameTarget.dispatchEvent(new Event('change'))
   }
 
-  remove() {
+  remove () {
     this.selectPersonRoleTarget.disabled = true
     this.selectOrganizationRoleTarget.disabled = true
-    this.organizationTarget.querySelectorAll('input[type="text"]').forEach((element) => element.disabled = true)
-    this.personTarget.querySelectorAll('input[type="text"]').forEach((element) => element.disabled = true)
+    this.organizationTarget.querySelectorAll('input[type="text"]').forEach((element) => {
+      element.disabled = true
+    })
+    this.personTarget.querySelectorAll('input[type="text"]').forEach((element) => {
+      element.disabled = true
+    })
   }
 
-  performLookup() {
+  performLookup () {
     fetch('/orcid?id=' + this.orcidTarget.value)
-        .then(response => {
-          if(!response.ok) throw new Error(response.status)
-          return response.json()
-        })
-        .then(data => {
-          this.showOrcidName(data['first_name'], data['last_name'])
-        })
-        .catch(error => {
-          if(error.message === '404') {
-            this.showOrcidError('ORCID iD not found')
-          } else {
-            this.showOrcidError('Error validating ORCID iD. Please clear and try again.')
-          }
-        })
+      .then(response => {
+        if (!response.ok) throw new Error(response.status)
+        return response.json()
+      })
+      .then(data => {
+        this.showOrcidName(data.first_name, data.last_name)
+      })
+      .catch(error => {
+        if (error.message === '404') {
+          this.showOrcidError('ORCID iD not found')
+        } else {
+          this.showOrcidError('Error validating ORCID iD. Please clear and try again.')
+        }
+      })
   }
 }

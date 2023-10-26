@@ -1,17 +1,17 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["uri", "input", "value", "type"]
+  static targets = ['uri', 'input', 'value', 'type']
 
-  connect() {
+  connect () {
     this.change()
   }
 
-  change() {
-    if(this.valueTarget.value) {
-      const [uri, cocina_type] = this.valueTarget.value.split('::')
+  change () {
+    if (this.valueTarget.value) {
+      const [uri, cocinaType] = this.valueTarget.value.split('::')
       this.uriTarget.value = uri
-      this.typeTarget.value = cocina_type
+      this.typeTarget.value = cocinaType
     }
   }
 }

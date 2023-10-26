@@ -1,32 +1,32 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 // Manipulates work types and subtypes within the work type modal
 export default class extends Controller {
   static targets = [
-    "form", "template", "otherTemplate", "subtype", "area", "templateHeader",
-    "moreTypesLink", "moreTypes", "continueButton",
-    "musicTemplateSubheader", "mixedMaterialTemplateSubheader"
+    'form', 'template', 'otherTemplate', 'subtype', 'area', 'templateHeader',
+    'moreTypesLink', 'moreTypes', 'continueButton',
+    'musicTemplateSubheader', 'mixedMaterialTemplateSubheader'
   ]
 
-  connect() {
+  connect () {
     this.requiredSubtypeCount = 0
   }
 
-  change(event) {
+  change (event) {
     this.changeType(event.target.value)
   }
 
-  changeType(type) {
+  changeType (type) {
     // We treat the "other" work type differently than all the others.
-    type === 'other' ?
-      this.displayOtherSubtypeOptions() :
-      this.displaySubtypeOptions(type)
+    type === 'other'
+      ? this.displayOtherSubtypeOptions()
+      : this.displaySubtypeOptions(type)
 
     // Display the work type choices
     this.areaTarget.hidden = false
 
     // Set the number of required subtypes
-    switch(type) {
+    switch (type) {
       case 'music':
         this.requiredSubtypeCount = 1
         break
@@ -38,26 +38,26 @@ export default class extends Controller {
     }
   }
 
-  selectType(type) {
+  selectType (type) {
     const input = this.formTarget.querySelector(`input[value="${type}"]`)
     input.checked = true
     this.changeType(type)
   }
 
-  selectSubtype(subtype) {
+  selectSubtype (subtype) {
     const input = this.formTarget.querySelector(`input[value="${subtype}"]`)
     input.checked = true
   }
 
-  toggleMoreTypes(event) {
+  toggleMoreTypes (event) {
     event.preventDefault()
 
-    this.moreTypesTarget.hidden ?
-      this.showMoreTypes() :
-      this.hideMoreTypes()
+    this.moreTypesTarget.hidden
+      ? this.showMoreTypes()
+      : this.hideMoreTypes()
   }
 
-  showMoreTypes() {
+  showMoreTypes () {
     this.moreTypesTarget.hidden = false
     this.moreTypesLinkTarget.innerHTML = 'See fewer options'
     this.moreTypesLinkTarget.classList.toggle('collapsed', false)
@@ -65,21 +65,21 @@ export default class extends Controller {
     this.continueButtonTarget.focus()
   }
 
-  hideMoreTypes() {
+  hideMoreTypes () {
     this.moreTypesTarget.hidden = true
     this.moreTypesLinkTarget.innerHTML = 'See more options'
     this.moreTypesLinkTarget.classList.toggle('collapsed', true)
     this.moreTypesLinkTarget.setAttribute('aria-expanded', false)
   }
 
-  displaySubtypeOptions(type) {
+  displaySubtypeOptions (type) {
     // Show the more options link
     this.moreTypesLinkTarget.hidden = false
     this.subtypeTarget.hidden = false
     this.subtypeTarget.innerHTML = this.subtypesFor(type).join('')
     this.moreTypesTarget.innerHTML = this.moreTypesFor(type).join('')
     this.areaTarget.innerHTML = this.templateHeaderTarget.innerHTML
-    switch(type) {
+    switch (type) {
       case 'music':
         this.areaTarget.innerHTML += this.musicTemplateSubheaderTarget.innerHTML
         break
@@ -90,7 +90,7 @@ export default class extends Controller {
     }
   }
 
-  displayOtherSubtypeOptions() {
+  displayOtherSubtypeOptions () {
     // Clear checked subtypes
     this.formTarget.querySelectorAll('div.subtype-container input[type="checkbox"]:checked').forEach((input) => {
       input.checked = false
@@ -102,16 +102,16 @@ export default class extends Controller {
     this.areaTarget.innerHTML = this.otherTemplateTarget.innerHTML
   }
 
-  subtypesFor(type) {
+  subtypesFor (type) {
     return document
       .subtypes[type]
-      .map((subtype)=> {
+      .map((subtype) => {
         const id = subtype.replace(/\s/g, '_')
         return this.templateTarget.innerHTML.replace(/SUBTYPE_LABEL/g, subtype).replace(/SUBTYPE_ID/g, id)
       })
   }
 
-  moreTypesFor(type) {
+  moreTypesFor (type) {
     // Work types have a small number of primary subtypes and they share a large
     // number of general subtypes, which we refer to as "more types." Some work types
     // appear in the list of "more types" and also have primary subtypes that can appear
@@ -128,11 +128,11 @@ export default class extends Controller {
       })
   }
 
-  checkSubtypes() {    
+  checkSubtypes () {
     const checked = this.formTarget.querySelectorAll('div.subtype-container input[type="checkbox"]:checked')
     const firstInput = this.formTarget.querySelector('div.subtype-container input[type="checkbox"]:not(:checked)')
     const inputs = this.formTarget.querySelectorAll('div.subtype-container input[type="checkbox"]')
-    inputs.forEach((input) => {      
+    inputs.forEach((input) => {
       input.setCustomValidity('')
     })
     if (checked.length < this.requiredSubtypeCount) {

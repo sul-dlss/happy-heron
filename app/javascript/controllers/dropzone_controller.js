@@ -1,16 +1,16 @@
-import Dropzone from "dropzone";
-import { Controller } from "@hotwired/stimulus";
-import { DirectUpload } from "@rails/activestorage";
+import Dropzone from 'dropzone'
+import { Controller } from '@hotwired/stimulus'
+import { DirectUpload } from '@rails/activestorage'
 import {
   getMetaValue,
   findElement,
-  removeElement,
-} from "../helpers";
+  removeElement
+} from '../helpers'
 
 export default class extends Controller {
-  static targets = ["input", "previewsContainer", "preview", "template", "feedback", "container"];
+  static targets = ['input', 'previewsContainer', 'preview', 'template', 'feedback', 'container']
 
-  connect() {
+  connect () {
     this.dropZone = createDropZone(this, this.templateTarget.innerHTML)
     this.hideFileInput()
     this.fileCount = this.previewTargets.length
@@ -21,17 +21,17 @@ export default class extends Controller {
   }
 
   // Private
-  hideFileInput() {
-    this.inputTarget.style.display = "none"
+  hideFileInput () {
+    this.inputTarget.style.display = 'none'
   }
 
-  validate() {
-    if (this.fileCount == 0 && this.required) {
+  validate () {
+    if (this.fileCount === 0 && this.required) {
       this.disableSubmission()
     }
   }
 
-  checkForDuplicates(fileName) {
+  checkForDuplicates (fileName) {
     // Extract all filenames that are visible
     // Unfortunately, the filename targets are not contained in the scope of the controller.
     // Get them directly from the DOM.
@@ -39,13 +39,13 @@ export default class extends Controller {
     const fileNameNodes = Array.from(document.querySelectorAll('[data-dropzone-path]'))
 
     const filepaths = fileNameNodes.map(fileNameNode => {
-        const path = fileNameNode.getAttribute('data-dropzone-path')
-        const filename = fileNameNode.innerText.trim()
+      const path = fileNameNode.getAttribute('data-dropzone-path')
+      const filename = fileNameNode.innerText.trim()
 
-        const item = fileNameNode.closest('.dz-complete')
-        if(item && item.querySelector("input[name*='_destroy']").value == 1) return null
+      const item = fileNameNode.closest('.dz-complete')
+      if (item && item.querySelector("input[name*='_destroy']").value === 1) return null
 
-        return path ? `${path}/${filename}` : filename
+      return path ? `${path}/${filename}` : filename
     })
 
     // Remove current fileName
@@ -54,30 +54,30 @@ export default class extends Controller {
     return filepaths.indexOf(filepath) > -1
   }
 
-  displayValidateMessage() {
+  displayValidateMessage () {
     // Because the feedback isn't a sibling of the input field, we can't simply
     // rely on the bootstrap selector to display the message
     if (this.inputTarget.checkValidity()) {
-      this.containerTarget.classList.remove("is-invalid")
+      this.containerTarget.classList.remove('is-invalid')
       this.feedbackTarget.style.display = 'none'
     } else {
-      this.containerTarget.classList.add("is-invalid")
+      this.containerTarget.classList.add('is-invalid')
       this.feedbackTarget.style.display = 'block'
     }
   }
 
-  disableSubmission() {
+  disableSubmission () {
     this.inputTarget.disabled = false // block the form from submitting
-    this.inputTarget.setCustomValidity("you must upload a file")
+    this.inputTarget.setCustomValidity('you must upload a file')
   }
 
-  enableSubmission() {
+  enableSubmission () {
     this.inputTarget.disabled = true // don't send the value with the form.
-    this.inputTarget.setCustomValidity("")
+    this.inputTarget.setCustomValidity('')
     this.displayValidateMessage()
   }
 
-  removeAssociation(event) {
+  removeAssociation (event) {
     event.preventDefault()
     const item = event.target.closest('.dz-complete')
     item.querySelector("input[name*='_destroy']").value = 1
@@ -89,38 +89,37 @@ export default class extends Controller {
   }
 
   // Tell the EditDepositController to update
-  informProgress() {
+  informProgress () {
     this.inputTarget.dispatchEvent(new Event('change'))
   }
 
-  bindEvents() {
-    this.dropZone.on("addedfile", file => {
+  bindEvents () {
+    this.dropZone.on('addedfile', file => {
       setTimeout(() => {
-        file.accepted && createDirectUploadController(this, file).start();
+        file.accepted && createDirectUploadController(this, file).start()
         this.fileCount++
         this.enableSubmission()
         if (this.checkForDuplicates(file.name)) {
-          this.dropZone.emit("error", file, 'Duplicate file');
+          this.dropZone.emit('error', file, 'Duplicate file')
         }
         if (this.maxFiles && this.fileCount > this.maxFiles) {
-          this.dropZone.emit("error", file, `Too many files. Maximum is ${this.maxFiles}`);
+          this.dropZone.emit('error', file, `Too many files. Maximum is ${this.maxFiles}`)
         }
-
-      }, 500);
+      }, 500)
       this.done = false
-    });
+    })
 
-    this.dropZone.on("removedfile", file => {
+    this.dropZone.on('removedfile', file => {
       file.controller && removeElement(file.controller.hiddenInput)
       this.informProgress()
-    });
+    })
 
-    this.dropZone.on("canceled", file => {
-      file.controller && file.controller.xhr.abort();
-    });
+    this.dropZone.on('canceled', file => {
+      file.controller && file.controller.xhr.abort()
+    })
 
-    this.dropZone.on("error", (file, error) => {
-      file.status = Dropzone.ERROR;
+    this.dropZone.on('error', (file, error) => {
+      file.status = Dropzone.ERROR
       file.previewElement.querySelector('.upload-description').style.display = 'none'
       file.previewElement.querySelector('.dz-details').style.display = 'none'
       file.previewElement.querySelector('.thumb img').style.display = 'none'
@@ -136,17 +135,17 @@ export default class extends Controller {
       file.previewElement.querySelector('.hidden-file')?.classList?.add('is-invalid')
     })
 
-    this.dropZone.on("complete", () => {
+    this.dropZone.on('complete', () => {
       this.informProgress()
     })
 
-    this.dropZone.on("queuecomplete", () => {
+    this.dropZone.on('queuecomplete', () => {
       this.done = true
     })
 
     this.inputTarget.form.addEventListener('submit', (evt) => {
       if (!this.done) {
-        alert("Deposit will be enabled once files have finished uploading")
+        window.alert('Deposit will be enabled once files have finished uploading')
         evt.preventDefault()
         evt.stopPropagation()
       } else {
@@ -155,153 +154,152 @@ export default class extends Controller {
     }, false)
   }
 
-  get headers() {
-    return { "X-CSRF-Token": getMetaValue("csrf-token") };
+  get headers () {
+    return { 'X-CSRF-Token': getMetaValue('csrf-token') }
   }
 
-  get url() {
-    return this.inputTarget.getAttribute("data-direct-upload-url");
+  get url () {
+    return this.inputTarget.getAttribute('data-direct-upload-url')
   }
 
-  get required() {
-    return this.data.get("required") !== "false";
+  get required () {
+    return this.data.get('required') !== 'false'
   }
 
-  get dirPath() {
-    return this.data.get("dirPath");
+  get dirPath () {
+    return this.data.get('dirPath')
   }
 
-  get maxFiles() {
-    return this.data.get("maxFiles") || 250;
+  get maxFiles () {
+    return this.data.get('maxFiles') || 250
   }
 
-  get maxFileSize() {
-    return this.data.get("maxFileSize") || 256;
+  get maxFileSize () {
+    return this.data.get('maxFileSize') || 256
   }
 
-  get acceptedFiles() {
-    return this.data.get("acceptedFiles");
+  get acceptedFiles () {
+    return this.data.get('acceptedFiles')
   }
 
-  get addRemoveLinks() {
-    return this.data.get("addRemoveLinks") || false;
+  get addRemoveLinks () {
+    return this.data.get('addRemoveLinks') || false
   }
 
-  get clickable() {
-    return this.data.get("clickable") || '.dz-clickable';
+  get clickable () {
+    return this.data.get('clickable') || '.dz-clickable'
   }
 
-  get previewsContainer() {
-    return this.data.get("previewsContainer") || '.dropzone-previews';
+  get previewsContainer () {
+    return this.data.get('previewsContainer') || '.dropzone-previews'
   }
 }
 
 class DirectUploadController {
   // source is the input element
   // file is the File object from dropzone
-  constructor(source, file) {
+  constructor (source, file) {
     this.count = Math.floor(Math.random() * 1_000_000_000)
-    this.directUpload = createDirectUpload(file, source.url, this);
-    this.source = source;
-    this.file = file;
+    this.directUpload = createDirectUpload(file, source.url, this)
+    this.source = source
+    this.file = file
   }
 
-  start() {
-    this.file.controller = this;
-    this.hiddenInput = this.createHiddenFileInput();
-    this.createHiddenPathInput();
-    this.addDescription();
-    this.addHideCheckbox();
+  start () {
+    this.file.controller = this
+    this.hiddenInput = this.createHiddenFileInput()
+    this.createHiddenPathInput()
+    this.addDescription()
+    this.addHideCheckbox()
     this.directUpload.create((error, attributes) => {
       // If the file is named dropzone_error.txt it will trigger an error for testing.
-      if (error || attributes['filename'] == 'dropzone_error.txt') {
+      if (error || attributes.filename === 'dropzone_error.txt') {
         // Note that setCustomValidity doesn't invalidate a hidden input, so setting class instead.
         this.hiddenInput.classList.add('is-invalid')
-        this.emitDropzoneError(error || 'Test error');
+        this.emitDropzoneError(error || 'Test error')
       } else {
-        this.hiddenInput.value = attributes.signed_id;
-        this.emitDropzoneSuccess();
+        this.hiddenInput.value = attributes.signed_id
+        this.emitDropzoneSuccess()
       }
-    });
+    })
   }
 
-  addDescription() {
+  addDescription () {
     const detail = this.file.previewElement.querySelector('.upload-description')
     detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
   }
 
-  addHideCheckbox()   {
+  addHideCheckbox () {
     const detail = this.file.previewElement.querySelector('.dz-details')
     detail.innerHTML = detail.innerHTML.replace(/TEMPLATE_RECORD/g, this.count)
   }
 
-  createHiddenFileInput() {
-    const input = document.createElement("input");
-    input.type = "hidden";
+  createHiddenFileInput () {
+    const input = document.createElement('input')
+    input.type = 'hidden'
     input.classList.add('hidden-file')
     input.name = `work[attached_files_attributes][${this.count}][file]`
-    input.setAttribute("aria-label", "hidden file");
-    this.file.previewElement.appendChild(input);
-    return input;
+    input.setAttribute('aria-label', 'hidden file')
+    this.file.previewElement.appendChild(input)
+    return input
   }
 
-  createHiddenPathInput() {
-    const input = document.createElement("input")
-    input.type = "hidden"
+  createHiddenPathInput () {
+    const input = document.createElement('input')
+    input.type = 'hidden'
     input.name = `work[attached_files_attributes][${this.count}][path]`
     input.value = this.source.dirPath ? `${this.source.dirPath}/${this.file.name}` : this.file.name
-    input.setAttribute("aria-label", "hidden path");
+    input.setAttribute('aria-label', 'hidden path')
     this.file.previewElement.appendChild(input)
   }
 
-  directUploadWillStoreFileWithXHR(xhr) {
-    this.bindProgressEvent(xhr);
-    this.emitDropzoneUploading();
+  directUploadWillStoreFileWithXHR (xhr) {
+    this.bindProgressEvent(xhr)
+    this.emitDropzoneUploading()
   }
 
-  bindProgressEvent(xhr) {
-    this.xhr = xhr;
-    this.xhr.upload.addEventListener("progress", event =>
+  bindProgressEvent (xhr) {
+    this.xhr = xhr
+    this.xhr.upload.addEventListener('progress', event =>
       this.uploadRequestDidProgress(event)
-    );
+    )
   }
 
-  uploadRequestDidProgress(event) {
-    const element = this.source.element;
-    const progress = (event.loaded / event.total) * 100;
+  uploadRequestDidProgress (event) {
+    const progress = (event.loaded / event.total) * 100
     findElement(
       this.file.previewTemplate,
-      ".dz-upload"
-    ).style.width = `${progress}%`;
+      '.dz-upload'
+    ).style.width = `${progress}%`
   }
 
-  emitDropzoneUploading() {
-    this.file.status = Dropzone.UPLOADING;
-    this.source.dropZone.emit("processing", this.file);
+  emitDropzoneUploading () {
+    this.file.status = Dropzone.UPLOADING
+    this.source.dropZone.emit('processing', this.file)
   }
 
-  emitDropzoneError(error) {
-    this.file.status = Dropzone.ERROR;
-    this.source.dropZone.emit("error", this.file, error);
-    this.source.dropZone.emit("complete", this.file);
+  emitDropzoneError (error) {
+    this.file.status = Dropzone.ERROR
+    this.source.dropZone.emit('error', this.file, error)
+    this.source.dropZone.emit('complete', this.file)
   }
 
-  emitDropzoneSuccess() {
-    this.file.status = Dropzone.SUCCESS;
-    this.source.dropZone.emit("success", this.file);
-    this.source.dropZone.emit("complete", this.file);
+  emitDropzoneSuccess () {
+    this.file.status = Dropzone.SUCCESS
+    this.source.dropZone.emit('success', this.file)
+    this.source.dropZone.emit('complete', this.file)
   }
 }
 
-function createDirectUploadController(source, file) {
-  return new DirectUploadController(source, file);
+function createDirectUploadController (source, file) {
+  return new DirectUploadController(source, file)
 }
 
-function createDirectUpload(file, url, controller) {
-  return new DirectUpload(file, url, controller);
+function createDirectUpload (file, url, controller) {
+  return new DirectUpload(file, url, controller)
 }
 
-function createDropZone(controller, template) {
+function createDropZone (controller, template) {
   return new Dropzone(controller.element, {
     url: controller.url,
     headers: controller.headers,
@@ -315,5 +313,5 @@ function createDropZone(controller, template) {
     thumbnailWidth: 34,
     clickable: controller.clickable,
     autoQueue: false
-  });
+  })
 }
