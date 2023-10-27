@@ -7,7 +7,13 @@ class WorkForm < BaseWorkForm
   validates :abstract, :access, :title, presence: true, allow_nil: false
   validates :keywords, length: {minimum: 1, message: "Please add at least one keyword."}
   validates :attached_files, length: {minimum: 1, message: "Please add at least one file."},
-    if: -> { %w[browser zip].include?(upload_type) }
+    if: -> do
+      if work.head
+        %w[browser zip].include?(upload_type) && work.head.attached_files.none?
+      else
+        %w[browser zip].include?(upload_type)
+      end
+    end
   validates :contact_emails, length: {minimum: 1, message: "Please add at least contact email."}
   validates :license, presence: true, inclusion: {in: License.license_list}
   validates :authors, length: {minimum: 1, message: "Please add at least one author."}
