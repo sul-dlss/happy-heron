@@ -25,16 +25,6 @@
     <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-    <script src="//js.honeybadger.io/v6.5/honeybadger.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-     Honeybadger.configure({
-       apiKey: <%= Honeybadger.config.get(:api_key).to_json.html_safe %>,
-       environment: <%= Honeybadger.config.get(:env).to_json.html_safe %>,
-       revision: <%= Honeybadger.config.get(:revision).to_json.html_safe %>,
-       debug: false,
-       onerror: true
-     });
-    </script>
   </head>
 
   <body data-controller="help-how">
