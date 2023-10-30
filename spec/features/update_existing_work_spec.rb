@@ -73,7 +73,11 @@ RSpec.describe "Update an existing work in a deposited collection", js: true do
       fill_in "Title of deposit", with: new_title
       fill_in "Abstract", with: "I did really cool stuff"
 
-      click_button "Save as draft"
+      click_button "Deposit"
+
+      expect(page).to have_content("You have successfully deposited your work")
+
+      visit work_path(work_version.work)
 
       # work detail page has new title
       expect(page).to have_content(new_title)
