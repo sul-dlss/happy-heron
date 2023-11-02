@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <th class="col-3">Additional terms of use</th>
-      <td><%= collection_custom_rights_summary %></td>
+      <td><%= simple_format collection_custom_rights_summary, class: "mb-3" %></td>
     </tr>
     <% if allow_custom_rights_statement? && custom_rights_statement_source_option == "entered_by_depositor" %>
       <tr>
