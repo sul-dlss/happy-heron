@@ -46,11 +46,10 @@
       <div class="col-sm-2"></div>
       <div class="col-sm-8">
         <% if collection.provided_custom_rights_statement %>
-          <p><%= collection.provided_custom_rights_statement %></p>
+          <%= simple_format collection.provided_custom_rights_statement %>
           <%= form.hidden_field :custom_rights, value: collection.provided_custom_rights_statement %>
         <% else %>
-          <%= form.text_area :custom_rights, class: "form-control",
-                data: {action: "no-newlines#change", no_newlines_target: "input", controller: "no-newlines"} %>
+          <%= form.text_area :custom_rights, class: "form-control", aria: {label: "Additional terms of use"} %>
         <% end %>
       </div>
     </div>
