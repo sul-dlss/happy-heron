@@ -22,7 +22,10 @@ class DepositCompleteJob
     ActiveRecord::Base.connection_pool.with_connection do
       object = Work.find_by(druid:) || Collection.find_by(druid:)
 
-      return ack! unless object
+      unless object
+        Rails.logger.info("Not completing deposit for #{druid} since not found")
+        return ack!
+      end
 
       Honeybadger.context(object: object.to_global_id.to_s)
       Rails.logger.info("Deposit complete on #{druid}")
