@@ -14,7 +14,7 @@ class WorkForm < BaseWorkForm
         %w[browser zip].include?(upload_type)
       end
     end
-  validates :contact_emails, length: {minimum: 1, message: "Please add at least contact email."}
+  validates :contact_emails, length: {minimum: 1, message: "Please add at least one contact email."}
   validates :license, presence: true, inclusion: {in: License.license_list}
   validates :authors, length: {minimum: 1, message: "Please add at least one author."}
   validates :created_edtf, created_in_past: true
