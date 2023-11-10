@@ -140,7 +140,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     chronic (0.10.2)
-    cocina-models (0.92.0)
+    cocina-models (0.93.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -210,9 +210,9 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.4.0)
-    dor-services-client (13.2.0)
+    dor-services-client (13.3.0)
       activesupport (>= 4.2, < 8)
-      cocina-models (~> 0.92.0)
+      cocina-models (~> 0.93.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -534,9 +534,9 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sdr-client (2.7.0)
+    sdr-client (2.8.0)
       activesupport
-      cocina-models (~> 0.92.0)
+      cocina-models (~> 0.93.0)
       config
       dry-monads
       faraday (>= 0.16)
