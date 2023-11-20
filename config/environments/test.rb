@@ -12,6 +12,9 @@ Rails.application.configure do
   require "test_shibboleth_headers"
   config.middleware.use TestShibbolethHeaders
 
+  # We want to generate known primary keys for some testing.
+  config.factory_bot.reject_primary_key_attributes = false
+
   # Raise when request includes unpermitted params to help find errors in
   # dev/test (default value is `nil`, which is used in production)
   config.action_controller.action_on_unpermitted_parameters = :raise
