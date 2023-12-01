@@ -31,6 +31,7 @@ class AssignPidJob
         Collection.find(unprefixed.delete_prefix("collection-"))
       end
 
+      Rails.logger.info("Assigning #{args[:druid]} to #{unprefixed}")
       object.update(args)
 
       return unless object.is_a? Work
