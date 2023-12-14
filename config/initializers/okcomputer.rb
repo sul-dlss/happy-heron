@@ -6,12 +6,37 @@ OkComputer.check_in_parallel = true
 # Required
 OkComputer::Registry.register "ruby_version", OkComputer::RubyVersionCheck.new
 OkComputer::Registry.register "redis", OkComputer::RedisCheck.new(url: ENV.fetch("REDIS_URL", Settings.redis_url))
-if Settings.rabbitmq.enabled
-  OkComputer::Registry.register "rabbit",
-    OkComputer::RabbitmqCheck.new(hostname: Settings.rabbitmq.hostname,
+
+class RabbitQueueExistsCheck < OkComputer::Check
+  attr_reader :queue_names, :conn
+
+  def initialize(queue_names)
+    @queue_names = Array(queue_names)
+    @conn = Bunny.new(hostname: Settings.rabbitmq.hostname,
       vhost: Settings.rabbitmq.vhost,
       username: Settings.rabbitmq.username,
       password: Settings.rabbitmq.password)
+  end
+
+  def check
+    conn.start
+    status = conn.status
+    missing_queue_names = queue_names.reject { |queue_name| conn.queue_exists?(queue_name) }
+    if missing_queue_names.empty?
+      mark_message "'#{queue_names.join(", ")}' exists, connection status: #{status}"
+    else
+      mark_message "'#{missing_queue_names.join(", ")}' does not exist"
+      mark_failure
+    end
+    conn.close
+  rescue => e
+    mark_message "Error: '#{e}'"
+    mark_failure
+  end
+end
+
+if Settings.rabbitmq.enabled
+  OkComputer::Registry.register "rabbit-queues", RabbitQueueExistsCheck.new(["h2.deposit_complete", "h2.druid_assigned", "h2.embargo_lifted"])
 end
 
 # Optional
