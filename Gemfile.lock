@@ -306,7 +306,7 @@ GEM
       faraday
       faraday-retry
       zeitwerk
-    hashdiff (1.0.1)
+    hashdiff (1.1.0)
     hashie (5.0.0)
     honeybadger (5.4.0)
     i18n (1.14.1)
@@ -360,7 +360,7 @@ GEM
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    net-imap (0.4.7)
+    net-imap (0.4.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -392,7 +392,7 @@ GEM
     openapi_parser (1.0.0)
     optimist (3.1.0)
     orm_adapter (0.5.0)
-    parallel (1.23.0)
+    parallel (1.24.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
@@ -620,7 +620,7 @@ GEM
       tty-cursor (~> 0.7)
       tty-screen (~> 0.8)
       unicode-display_width (>= 1.6, < 3.0)
-    tty-screen (0.8.1)
+    tty-screen (0.8.2)
     turbo-rails (1.5.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
