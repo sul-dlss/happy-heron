@@ -286,7 +286,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.12)
+    faraday (2.8.1)
       base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -308,7 +308,7 @@ GEM
       zeitwerk
     hashdiff (1.1.0)
     hashie (5.0.0)
-    honeybadger (5.4.0)
+    honeybadger (5.4.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -360,7 +360,7 @@ GEM
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    net-imap (0.4.8)
+    net-imap (0.4.9)
       date
       net-protocol
     net-pop (0.1.2)
@@ -371,7 +371,7 @@ GEM
       net-ssh (>= 2.6.5, < 8.0.0)
     net-smtp (0.4.0)
       net-protocol
-    net-ssh (7.2.0)
+    net-ssh (7.2.1)
     nio4r (2.7.0)
     nokogiri (1.15.5-x86_64-darwin)
       racc (~> 1.4)
@@ -454,7 +454,7 @@ GEM
       ffi (~> 1.0)
     rbtree (0.4.6)
     redis (4.8.1)
-    redis-client (0.19.0)
+    redis-client (0.19.1)
       connection_pool
     reform (2.5.0)
       disposable (>= 0.4.2, < 0.5.0)
@@ -529,7 +529,7 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-graphviz (1.2.5)
       rexml
-    ruby-next-core (0.15.3)
+    ruby-next-core (1.0.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -546,7 +546,7 @@ GEM
       websocket (~> 1.0)
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
-    set (1.0.4)
+    set (1.1.0)
     sidekiq (7.2.0)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
