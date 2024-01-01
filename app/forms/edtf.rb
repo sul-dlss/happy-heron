@@ -32,6 +32,6 @@ module Edtf
   end
 
   def deserialize!(params)
-    super EdtfParamsFilter.new.call(schema, params)
+    super(EdtfParamsFilter.new.call(schema, params))
   end
 end

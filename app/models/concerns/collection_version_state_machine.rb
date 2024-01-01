@@ -8,7 +8,7 @@ module CollectionVersionStateMachine
     state_machine initial: :new do
       before_transition do |collection_version, transition|
         event_params = collection_version.collection.event_context
-        collection_version.collection.events.create(event_params.merge(event_type: transition.event))
+        collection_version.collection.events.create!(event_params.merge(event_type: transition.event))
       end
 
       # rubocop:disable Rails/SkipsModelValidations

@@ -5,6 +5,11 @@ AllCops:
   Exclude:
     - bin/**
     - vendor/**/*
+    - db/migrate/2020*
+    - db/migrate/2021*
+    - db/migrate/2022*
+    - db/migrate/2023*
+
 
 # These exclusions are adapted from the team's developer playbook
 
@@ -103,3 +108,4 @@ RSpec/ReceiveMessages: # new in 2.23
   Enabled: true
 RSpec/Rails/NegationBeValid: # new in 2.23
   Enabled: true
+

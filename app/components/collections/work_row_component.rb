@@ -16,7 +16,7 @@ module Collections
       # Note: This direct SQL query avoids excessive queries for large objects,
       # Otherwise multiple queries to ActiveRecord are performed for each file
       # to get it's size.
-      number_to_human_size(AttachedFile.where(work_version_id: work_version.id) \
+      number_to_human_size(AttachedFile.where(work_version_id: work_version.id)
                            .joins("INNER JOIN active_storage_attachments on active_storage_attachments.record_id = attached_files.id")
                            .joins("INNER JOIN active_storage_blobs on active_storage_attachments.blob_id = active_storage_blobs.id")
                            .where("active_storage_attachments.record_type" => "AttachedFile")

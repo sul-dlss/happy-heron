@@ -126,7 +126,7 @@ class WorkVersion < ApplicationRecord
 
     # update the last time the terms of agreement was accepted for this depositor
     #  if it has not been accepted within the defined timeframe and the checkbox was checked
-    work.owner.update(last_work_terms_agreement: Time.zone.now)
+    work.owner.update!(last_work_terms_agreement: Time.zone.now)
   end
 
   # Ensure that EDTF dates get an EDTF serialization

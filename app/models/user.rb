@@ -29,9 +29,11 @@ class User < ApplicationRecord
     inverse_of: :creator,
     dependent: :destroy
 
+  # rubocop:disable Rails/HasAndBelongsToMany
   has_and_belongs_to_many :reviews_collections, class_name: "Collection", join_table: "reviewers"
   has_and_belongs_to_many :manages_collections, class_name: "Collection", join_table: "managers"
   has_and_belongs_to_many :deposits_into, class_name: "Collection", join_table: "depositors"
+  # rubocop:enable Rails/HasAndBelongsToMany
 
   devise :remote_user_authenticatable
 

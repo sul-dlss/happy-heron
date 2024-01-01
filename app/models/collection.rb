@@ -13,9 +13,11 @@ class Collection < ApplicationRecord
 
   belongs_to :creator, class_name: "User"
   belongs_to :head, class_name: "CollectionVersion", optional: true
+  # rubocop:disable Rails/HasAndBelongsToMany
   has_and_belongs_to_many :depositors, class_name: "User", join_table: "depositors"
   has_and_belongs_to_many :reviewed_by, class_name: "User", join_table: "reviewers"
   has_and_belongs_to_many :managed_by, class_name: "User", join_table: "managers"
+  # rubocop:enable Rails/HasAndBelongsToMany
 
   EMBARGO_RELEASE_DURATION_OPTIONS = {"6 months from date of deposit": "6 months",
                                       "1 year from date of deposit": "1 year",

@@ -19,6 +19,6 @@ module EmbargoDate
   end
 
   def deserialize!(params)
-    super EmbargoDateParamsFilter.new.call(schema, params)
+    super(EmbargoDateParamsFilter.new.call(schema, params))
   end
 end

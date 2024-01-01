@@ -137,7 +137,7 @@ class CollectionObserver
   private_class_method :send_participant_change_emails
 
   def self.fix_state(collection)
-    collection.works.joins(:head).where("state in ('pending_approval', 'rejected')").each do |work|
+    collection.works.joins(:head).where("state in ('pending_approval', 'rejected')").find_each do |work|
       work.head.no_review_workflow!
     end
   end

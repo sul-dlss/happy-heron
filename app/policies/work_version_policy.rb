@@ -24,7 +24,7 @@ class WorkVersionPolicy < ApplicationPolicy
     return false unless collection.head.accessioned?
     return true if administrator?
 
-    (collection.depositor_ids.include?(user.id) || manages_collection?(collection))
+    collection.depositor_ids.include?(user.id) || manages_collection?(collection)
   end
 
   def update_type?

@@ -83,11 +83,11 @@ module Works
     end
 
     def contributor_remove_label
-      "Remove #{contributor_name.blank? ? "blank #{model.class.name.downcase}" : contributor_name}"
+      "Remove #{contributor_name.presence || "blank #{model.class.name.downcase}"}"
     end
 
     def contributor_name
-      model.full_name.blank? ? "#{model.first_name} #{model.last_name}".strip : model.full_name
+      model.full_name.presence || "#{model.first_name} #{model.last_name}".strip
     end
 
     def html_options_for_delete
