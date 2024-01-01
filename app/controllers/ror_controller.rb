@@ -58,7 +58,7 @@ class RorController < ApplicationController
     [].tap do |names|
       names.concat(item["acronyms"])
       names.concat(item["aliases"])
-      names.concat(item["labels"].map { |label| label["label"] })
+      names.concat(item["labels"].pluck("label"))
     end.join(", ")
   end
 
