@@ -95,8 +95,8 @@ class WorksController < ObjectsController
     collection = work.collection
     authorize! work
     work.transaction do
-      work.update(head: nil)
-      work.destroy
+      work.update!(head: nil)
+      work.destroy!
     end
 
     redirect_path = request.referer.include?("dashboard") ? dashboard_path : collection_works_path(collection)

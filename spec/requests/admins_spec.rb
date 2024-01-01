@@ -14,10 +14,10 @@ RSpec.describe "Admin dashboard" do
     let(:work_version2) { create(:work_version, state: "first_draft", work: work2) }
 
     before do
-      collection.update(updated_at: "2020-12-02")
-      work1.update(head: work_version1)
-      work2.update(head: work_version2)
-      collection.update(head: collection_version)
+      collection.update!(updated_at: "2020-12-02")
+      work1.update!(head: work_version1)
+      work2.update!(head: work_version2)
+      collection.update!(head: collection_version)
 
       sign_in user, groups: ["dlss:hydrus-app-administrators"]
     end

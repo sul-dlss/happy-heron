@@ -13,7 +13,7 @@ class WorkOwnersController < ApplicationController
     authorize! :work_owner
 
     work = Work.find(params[:id])
-    new_owner = User.find_or_create_by(email: "#{params["sunetid"]}@stanford.edu")
+    new_owner = User.find_or_create_by!(email: "#{params["sunetid"]}@stanford.edu")
 
     if work.owner == new_owner
       flash[:error] = I18n.t("work.flash.owner_not_updated")

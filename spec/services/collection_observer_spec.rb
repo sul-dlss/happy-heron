@@ -183,7 +183,7 @@ RSpec.describe CollectionObserver do
       let(:collection_after) { collection }
 
       before do
-        collection.update(review_enabled: true)
+        collection.update!(review_enabled: true)
         collection.reload
       end
 

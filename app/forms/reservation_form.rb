@@ -42,7 +42,7 @@ class ReservationForm < Reform::Form
   def save_model
     Work.transaction do
       super
-      work.update(head: work_version)
+      work.update!(head: work_version)
     end
   end
 end

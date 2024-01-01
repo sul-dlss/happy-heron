@@ -9,7 +9,7 @@ RSpec.describe "Delete a draft collection", js: true do
   let(:user) { collection.managed_by.first }
 
   before do
-    collection.update(head: version2)
+    collection.update!(head: version2)
     sign_in user
   end
 

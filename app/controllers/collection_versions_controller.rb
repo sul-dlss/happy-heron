@@ -53,8 +53,8 @@ class CollectionVersionsController < ObjectsController
     version.transaction do
       # delete the head version and revert to previous version
       revert_to_version = version.version - 1
-      collection.update(head: collection.collection_versions.find_by(version: revert_to_version))
-      version.destroy
+      collection.update!(head: collection.collection_versions.find_by(version: revert_to_version))
+      version.destroy!
     end
 
     redirect_to dashboard_path

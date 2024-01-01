@@ -24,7 +24,7 @@ RSpec.describe "Works requests" do
     let(:work_version) { create(:work_version, :pending_approval, work:) }
 
     before do
-      work.update(head: work_version)
+      work.update!(head: work_version)
       create(:collection_version_with_collection, collection:)
 
       sign_in user

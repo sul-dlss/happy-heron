@@ -33,7 +33,7 @@ RSpec.describe GlobusSetupJob do
 
       context "when an integration test" do
         before do
-          work_version.update(state: "first_draft", title: "This is an Integration Test")
+          work_version.update!(state: "first_draft", title: "This is an Integration Test")
           allow(Settings.globus).to receive(:integration_mode).and_return(true)
         end
 
@@ -51,8 +51,8 @@ RSpec.describe GlobusSetupJob do
 
     context "when the work already has an endpoint created" do
       before do
-        work_version.update(globus_endpoint: "/uploads/something")
-        work_version.update(state: "first_draft")
+        work_version.update!(globus_endpoint: "/uploads/something")
+        work_version.update!(state: "first_draft")
       end
 
       it "does nothing" do
@@ -70,7 +70,7 @@ RSpec.describe GlobusSetupJob do
     before do
       allow(GlobusClient).to receive(:user_valid?).and_return(false)
       allow(GlobusClient).to receive(:mkdir)
-      work_version.update(state: "first_draft")
+      work_version.update!(state: "first_draft")
     end
 
     it "raises and stays in first_draft state" do

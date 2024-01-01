@@ -116,7 +116,7 @@ class DraftCollectionForm < Reform::Form
   def save_model
     Work.transaction do
       super
-      collection.update(head: model.fetch(:collection_version))
+      collection.update!(head: model.fetch(:collection_version))
     end
   end
 

@@ -54,7 +54,7 @@ class CollectionObserver
       description = CollectionEventDescriptionBuilder.build(change_set:, form:)
       params[:description] = description if description.present?
     end
-    collection.events.create(event_params)
+    collection.events.create!(event_params)
   end
   private_class_method :create_settings_updated_event
 

@@ -364,8 +364,8 @@ RSpec.describe CocinaGenerator::DROGenerator do
     end
 
     after do
-      blob.destroy
-      blob2.destroy
+      blob.destroy!
+      blob2.destroy!
     end
 
     context "without a cocina_obj" do

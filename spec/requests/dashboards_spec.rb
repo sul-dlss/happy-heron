@@ -14,8 +14,8 @@ RSpec.describe "Dashboard requests" do
 
     before do
       create(:collection_version_with_collection, collection:)
-      work1.update(head: work_version1)
-      work_version2.work.update(head: work_version2)
+      work1.update!(head: work_version1)
+      work_version2.work.update!(head: work_version2)
       sign_in user
     end
 
@@ -38,8 +38,8 @@ RSpec.describe "Dashboard requests" do
 
     before do
       create(:collection_version_with_collection, collection:)
-      work1.update(head: work_version1)
-      work_version2.work.update(head: work_version2)
+      work1.update!(head: work_version1)
+      work_version2.work.update!(head: work_version2)
       sign_in user
     end
 
@@ -60,7 +60,7 @@ RSpec.describe "Dashboard requests" do
     end
 
     before do
-      work.update(head: work_version)
+      work.update!(head: work_version)
       sign_in user
     end
 
@@ -95,13 +95,13 @@ RSpec.describe "Dashboard requests" do
     before do
       create(:collection_version_with_collection, collection:)
 
-      work1.update(head: work_version1)
-      work2.update(head: work_version2)
-      work3.update(head: work_version3)
-      work4.update(head: work_version4)
-      work5.update(head: work_version5)
-      work6.update(head: work_version6)
-      work7.update(head: work_version7)
+      work1.update!(head: work_version1)
+      work2.update!(head: work_version2)
+      work3.update!(head: work_version3)
+      work4.update!(head: work_version4)
+      work5.update!(head: work_version5)
+      work6.update!(head: work_version6)
+      work7.update!(head: work_version7)
 
       sign_in user
     end
@@ -152,7 +152,7 @@ RSpec.describe "Dashboard requests" do
     before do
       create(:collection_version_with_collection, collection:)
 
-      work.update(head: work_version)
+      work.update!(head: work_version)
       sign_in user
     end
 
@@ -196,9 +196,9 @@ RSpec.describe "Dashboard requests" do
 
     before do
       create(:collection_version_with_collection, collection:)
-      work1.update(head: work_version1)
-      work2.update(head: work_version2)
-      work3.update(head: work_version3)
+      work1.update!(head: work_version1)
+      work2.update!(head: work_version2)
+      work3.update!(head: work_version3)
       sign_in user
     end
 

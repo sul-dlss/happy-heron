@@ -43,8 +43,8 @@ class CollectionsController < ObjectsController
     authorize! collection
 
     collection.transaction do
-      collection.update(head: nil)
-      collection.destroy
+      collection.update!(head: nil)
+      collection.destroy!
     end
 
     redirect_to dashboard_path

@@ -19,8 +19,8 @@ RSpec.describe "Edit a draft work", js: true do
 
   context "when a user has previously accepted the terms of agreement less than 1 year ago" do
     before do
-      depositor.update(last_work_terms_agreement: Time.zone.now.days_ago(2))
-      work.update(head: work_version)
+      depositor.update!(last_work_terms_agreement: Time.zone.now.days_ago(2))
+      work.update!(head: work_version)
       create(:attached_file, :with_file, work_version:)
       work.collection.depositors = [depositor]
       sign_in depositor
@@ -129,8 +129,8 @@ RSpec.describe "Edit a draft work", js: true do
 
   context "when a user has never accepted the terms of agreement" do
     before do
-      depositor.update(last_work_terms_agreement: nil)
-      work.update(head: work_version)
+      depositor.update!(last_work_terms_agreement: nil)
+      work.update!(head: work_version)
       create(:attached_file, :with_file, work_version:)
       work.collection.depositors = [depositor]
       sign_in depositor
@@ -207,8 +207,8 @@ RSpec.describe "Edit a draft work", js: true do
 
   context "when a user has previously accepted the terms of agreement over 1 year ago" do
     before do
-      depositor.update(last_work_terms_agreement: Time.zone.now.years_ago(2))
-      work.update(head: work_version)
+      depositor.update!(last_work_terms_agreement: Time.zone.now.years_ago(2))
+      work.update!(head: work_version)
       create(:attached_file, :with_file, work_version:)
       work.collection.depositors = [depositor]
       sign_in depositor

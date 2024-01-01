@@ -20,7 +20,7 @@ task :sync_version, [:input_filename] => :environment do |_t, args|
     work = Work.find_by(druid:)
     cocina_obj = Repository.find(druid)
     if work && cocina_obj && work.head.version < cocina_obj.version
-      work.head.update(version: cocina_obj.version)
+      work.head.update!(version: cocina_obj.version)
       num_synced += 1
     end
   end

@@ -15,8 +15,8 @@ RSpec.describe Collections::WorksComponent, type: :component do
     let(:work_version2) { create(:work_version, work: work2) }
 
     before do
-      work1.update(head: work_version1)
-      work2.update(head: work_version2)
+      work1.update!(head: work_version1)
+      work2.update!(head: work_version2)
 
       allow(controller).to receive_messages(
         current_user: user,

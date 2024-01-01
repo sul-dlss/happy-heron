@@ -8,7 +8,7 @@ RSpec.describe "Delete a draft collection", js: true do
   let(:collection_version) { create(:collection_version, collection:) }
 
   before do
-    collection.update(head: collection_version)
+    collection.update!(head: collection_version)
     sign_in user, groups: ["dlss:hydrus-app-collection-creators"]
   end
 

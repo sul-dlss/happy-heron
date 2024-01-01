@@ -23,7 +23,7 @@ RSpec.describe "Download a zip file of all attached files" do
   context "with an attached file" do
     before do
       sign_in user
-      work.update(head: work_version)
+      work.update!(head: work_version)
       create(:attached_file, :with_file, work_version:)
     end
 
@@ -36,7 +36,7 @@ RSpec.describe "Download a zip file of all attached files" do
   context "with no files" do
     before do
       sign_in user
-      work.update(head: work_version)
+      work.update!(head: work_version)
     end
 
     it "does a not found error" do

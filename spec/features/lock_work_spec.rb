@@ -8,7 +8,7 @@ RSpec.describe "Lock and unlock a work", js: true do
   let(:collection_version) { create(:collection_version_with_collection) }
 
   before do
-    work.update(head: work_version)
+    work.update!(head: work_version)
     sign_in user, groups: ["dlss:hydrus-app-administrators"]
   end
 

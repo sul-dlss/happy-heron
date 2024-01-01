@@ -26,8 +26,8 @@ class WorkVersionsController < ObjectsController
 
   def destroy_work(work)
     work.transaction do
-      work.update(head: nil)
-      work.destroy
+      work.update!(head: nil)
+      work.destroy!
     end
   end
 
@@ -35,8 +35,8 @@ class WorkVersionsController < ObjectsController
     work = version.work
     version.transaction do
       # delete the head version and revert to previous version
-      work.update(head: work.work_versions.find_by(version: version.version - 1))
-      version.destroy
+      work.update!(head: work.work_versions.find_by(version: version.version - 1))
+      version.destroy!
     end
   end
 end

@@ -38,7 +38,7 @@ RSpec.describe "Searching for a DRUID", js: true do
 
     before do
       sign_in user, groups: ["dlss:hydrus-app-administrators"]
-      work.update(druid:)
+      work.update!(druid:)
     end
 
     it "redirects to work" do

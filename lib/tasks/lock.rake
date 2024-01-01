@@ -18,7 +18,7 @@ task :lock_works, [:input_filename] => :environment do |_t, args|
     puts "#{i} of #{num_druids} works : #{row}"
     work = Work.find_by(druid: prepend_druid(row))
     if work && !work.locked
-      work.update(locked: true)
+      work.update!(locked: true)
       num_locked += 1
     end
   end
@@ -48,7 +48,7 @@ task :lock_collections, [:input_filename] => :environment do |_t, args|
       works.each.with_index(1) do |work, j|
         puts "...#{j} of #{num_works} works : #{work.druid}"
         unless work.locked
-          work.update(locked: true)
+          work.update!(locked: true)
           num_locked += 1
         end
       end

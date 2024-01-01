@@ -7,7 +7,7 @@ RSpec.describe "Updating an existing work" do
 
   before do
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
-    work.update(head: work_version)
+    work.update!(head: work_version)
     allow(Repository).to receive(:valid_version?).and_return(true)
   end
 

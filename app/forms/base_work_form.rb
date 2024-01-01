@@ -207,7 +207,7 @@ class BaseWorkForm < Reform::Form
       dupe_attached_files
     end
     dedupe_keywords
-    work.update(head: work_version)
+    work.update!(head: work_version)
   end
 
   def dupe_attached_files

@@ -7,7 +7,7 @@ RSpec.describe "User return location" do
   let(:user) { create(:user) }
 
   before do
-    collection.update(head: create(:collection_version, :deposited, collection:))
+    collection.update!(head: create(:collection_version, :deposited, collection:))
     sign_in user, groups: ["dlss:hydrus-app-collection-creators"]
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end

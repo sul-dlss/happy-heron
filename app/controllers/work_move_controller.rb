@@ -33,7 +33,7 @@ class WorkMoveController < ApplicationController
         collection.depositors << work.owner unless collection.depositors.include?(work.owner)
         collection.save!
         work.update!(collection:)
-        work.events.create(user: current_user, event_type: "collection_moved",
+        work.events.create!(user: current_user, event_type: "collection_moved",
           description: "Moved to \"#{collection.head.description}\" collection")
       end
       flash[:success] = "Moved #{work.head.title} to #{collection.head.name}"

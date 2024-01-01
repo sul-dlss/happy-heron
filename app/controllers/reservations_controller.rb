@@ -35,7 +35,7 @@ class ReservationsController < ObjectsController
     end
 
     work_version.transaction do
-      work.events.create(user: current_user, event_type: "type_selected")
+      work.events.create!(user: current_user, event_type: "type_selected")
       work_version.update_metadata! # This causes a save
     end
 

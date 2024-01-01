@@ -22,7 +22,7 @@ class CollectionContributorPopulator < ApplicationPopulator
 
     # This must be "or create" because we could end up with an email conflict if
     # the user is added in two fields simultaneously.
-    user = User.find_or_create_by(email: "#{fragment["sunetid"]}@stanford.edu")
+    user = User.find_or_create_by!(email: "#{fragment["sunetid"]}@stanford.edu")
     form.public_send(as).append(user)
   end
 end

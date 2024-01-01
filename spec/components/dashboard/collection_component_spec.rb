@@ -82,7 +82,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
       4.times do
         work = create(:work, collection:, owner: user)
         version = create(:work_version, work:)
-        work.update(head: version)
+        work.update!(head: version)
       end
     end
 
@@ -100,7 +100,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
       5.times do
         work = create(:work, collection:, owner: user)
         version = create(:work_version, work:)
-        work.update(head: version)
+        work.update!(head: version)
       end
     end
 
@@ -116,7 +116,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
 
     before do
       version = create(:work_version, work:)
-      work.update(head: version)
+      work.update!(head: version)
     end
 
     it "renders a link to purl" do

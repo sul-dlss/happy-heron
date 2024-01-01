@@ -9,7 +9,7 @@ class WorkObserver
     # We don't want to log the description for that event twice, so clear it out.
     attributes = attributes.except(:description) if transition.event == :begin_deposit
 
-    work_version.work.events.create(attributes)
+    work_version.work.events.create!(attributes)
   end
 
   def self.after_transition(work_version, transition)
@@ -22,7 +22,7 @@ class WorkObserver
 
   def self.after_druid_assigned(work_version, transition)
     work = work_version.work
-    work.update(doi: Doi.for(work.druid)) if transition.to_name == :purl_reserved && work.assign_doi?
+    work.update!(doi: Doi.for(work.druid)) if transition.to_name == :purl_reserved && work.assign_doi?
     work_version.add_purl_to_citation
     work_version.add_doi_to_citation if work.doi
   end

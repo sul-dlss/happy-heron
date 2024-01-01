@@ -19,7 +19,7 @@ RSpec.describe "Show the collection work list page" do
     let(:attached_file) { build(:attached_file, :with_file) }
 
     before do
-      work_version1.update(attached_files: [attached_file])
+      work_version1.update!(attached_files: [attached_file])
       attached_file.save!
 
       sign_in user, groups: [Settings.authorization_workgroup_names.administrators]
@@ -36,7 +36,7 @@ RSpec.describe "Show the collection work list page" do
 
   context "with a manager" do
     before do
-      collection.update(managed_by: [user])
+      collection.update!(managed_by: [user])
       sign_in user
     end
 
@@ -50,7 +50,7 @@ RSpec.describe "Show the collection work list page" do
 
   context "with a reviewer" do
     before do
-      collection.update(reviewed_by: [user])
+      collection.update!(reviewed_by: [user])
       sign_in user
     end
 
@@ -64,7 +64,7 @@ RSpec.describe "Show the collection work list page" do
 
   context "with a depositor" do
     before do
-      collection.update(depositors: [user])
+      collection.update!(depositors: [user])
       sign_in user
     end
 

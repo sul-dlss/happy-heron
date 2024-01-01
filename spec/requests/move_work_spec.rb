@@ -13,8 +13,8 @@ RSpec.describe "Change collection of a work" do
 
   before do
     sign_in user, groups: ["dlss:hydrus-app-administrators"]
-    work.update(head: work_version)
-    collection.update(head: collection_version)
+    work.update!(head: work_version)
+    collection.update!(head: collection_version)
   end
 
   describe "GET /works/:id/move/edit" do

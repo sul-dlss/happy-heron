@@ -18,7 +18,7 @@ class UnzipJob < BaseDepositJob
         end
       end
     end
-    zip_attached_file.destroy
+    zip_attached_file.destroy!
     work_version.upload_type = "browser"
     work_version.unzip_complete!
   end

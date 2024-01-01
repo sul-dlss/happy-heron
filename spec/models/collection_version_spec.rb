@@ -40,7 +40,7 @@ RSpec.describe CollectionVersion do
     let(:manager2) { create(:user) }
 
     before do
-      collection.update(head: collection_version)
+      collection.update!(head: collection_version)
       collection.managed_by = [manager1, manager2]
     end
 

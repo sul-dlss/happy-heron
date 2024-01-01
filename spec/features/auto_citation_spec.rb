@@ -8,7 +8,7 @@ RSpec.describe "Automatically generate a citation", js: true do
   let(:collection_version) { create(:collection_version, :deposited, collection:) }
 
   before do
-    collection.update(head: collection_version)
+    collection.update!(head: collection_version)
     sign_in user, groups: ["dlss:hydrus-app-collection-creators"]
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end

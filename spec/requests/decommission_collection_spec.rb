@@ -9,7 +9,7 @@ RSpec.describe "Decommission a collection" do
   let(:user) { create(:user) }
 
   before do
-    collection.update(head: collection_version)
+    collection.update!(head: collection_version)
     sign_in user, groups:
   end
 

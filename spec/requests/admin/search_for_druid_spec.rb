@@ -11,8 +11,8 @@ RSpec.describe "Search for a DRUID" do
   let(:collection_version) { create(:collection_version, collection:) }
 
   before do
-    work.update(head: work_version)
-    collection.update(head: collection_version)
+    work.update!(head: work_version)
+    collection.update!(head: collection_version)
   end
 
   context "when user is an application admin" do

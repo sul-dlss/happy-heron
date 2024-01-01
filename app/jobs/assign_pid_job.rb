@@ -32,7 +32,7 @@ class AssignPidJob
       end
 
       Rails.logger.info("Assigning #{args[:druid]} to #{unprefixed}")
-      object.update(args)
+      object.update!(args)
 
       return unless object.is_a? Work
 

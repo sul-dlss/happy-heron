@@ -27,8 +27,8 @@ RSpec.describe DepositCompleteJob do
 
     before do
       allow(Repository).to receive(:valid_version?).and_return(true)
-      collection.update(head: collection_version)
-      work.update(head: work_version)
+      collection.update!(head: collection_version)
+      work.update!(head: work_version)
     end
 
     it "updates the work version" do

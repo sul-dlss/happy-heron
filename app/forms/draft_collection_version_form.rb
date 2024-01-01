@@ -30,7 +30,7 @@ class DraftCollectionVersionForm < Reform::Form
   def save_model
     Work.transaction do
       super
-      model.collection.update(head: model)
+      model.collection.update!(head: model)
     end
   end
 

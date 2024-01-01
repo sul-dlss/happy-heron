@@ -10,7 +10,7 @@ RSpec.describe "Delete a draft work", js: true do
   let(:user) { work.owner }
 
   before do
-    work.update(head: version2)
+    work.update!(head: version2)
     sign_in user
   end
 

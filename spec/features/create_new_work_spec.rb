@@ -10,7 +10,7 @@ RSpec.describe "Create a new work in a deposited collection", js: true do
   let(:second_email) { "second@example.com" }
 
   before do
-    collection.update(head: collection_version)
+    collection.update!(head: collection_version)
     sign_in user, groups: ["dlss:hydrus-app-collection-creators"]
     allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
   end

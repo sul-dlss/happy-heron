@@ -10,7 +10,7 @@ RSpec.describe "Decommission a work", js: true do
   let(:work) { create(:work, owner: orig_owner, collection: collection_version.collection) }
 
   before do
-    work.update(head: work_version)
+    work.update!(head: work_version)
     create(:attached_file, :with_file, work_version:)
     sign_in user, groups: ["dlss:hydrus-app-administrators"]
   end

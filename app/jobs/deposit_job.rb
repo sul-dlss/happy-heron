@@ -49,7 +49,7 @@ class DepositJob < BaseDepositJob
     filepath_map = filepath_map_for(work_version)
     upload_responses = perform_upload(blobs_map, filepath_map)
     # Update with any new externalIdentifiers assigned by SDR API during upload.
-    SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro:,
+    SdrClient::Deposit::UpdateDroWithFileIdentifiers.update!(request_dro:,
       upload_responses:)
   end
 

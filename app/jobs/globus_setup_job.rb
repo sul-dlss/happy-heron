@@ -42,7 +42,7 @@ class GlobusSetupJob < ApplicationJob
 
     raise "Error creating globus endpoint for work ID #{work.id}" unless success
 
-    work_version.update(globus_endpoint: endpoint_path)
+    work_version.update!(globus_endpoint: endpoint_path)
   end
 
   def endpoint_path_for(work_version, user)

@@ -30,13 +30,13 @@ RSpec.describe "Dashboard collection requests" do
     before do
       create(:collection_version_with_collection, collection:)
 
-      work1.update(head: work_version1)
-      work2.update(head: work_version2)
-      work3.update(head: work_version3)
-      work4.update(head: work_version4)
-      work5.update(head: work_version5)
-      work6.update(head: work_version6)
-      work7.update(head: work_version7)
+      work1.update!(head: work_version1)
+      work2.update!(head: work_version2)
+      work3.update!(head: work_version3)
+      work4.update!(head: work_version4)
+      work5.update!(head: work_version5)
+      work6.update!(head: work_version6)
+      work7.update!(head: work_version7)
     end
 
     context "when not admin" do

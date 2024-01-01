@@ -103,7 +103,7 @@ RSpec.describe CollectionEventDescriptionBuilder do
 
   context "when release duration has changed" do
     before do
-      collection.update(release_option: "delay", release_duration: "6 months")
+      collection.update!(release_option: "delay", release_duration: "6 months")
       form.validate(release_option: "delay", release_duration: "1 year")
     end
 
@@ -152,7 +152,7 @@ RSpec.describe CollectionEventDescriptionBuilder do
 
   context "when license options has changed" do
     before do
-      collection.update(default_license: "CC-BY-4.0")
+      collection.update!(default_license: "CC-BY-4.0")
       form.validate(license_option: "required", default_license: "Apache-2.0")
     end
 
@@ -161,7 +161,7 @@ RSpec.describe CollectionEventDescriptionBuilder do
 
   context "when license options has not changed" do
     before do
-      collection.update(default_license: "CC-BY-4.0")
+      collection.update!(default_license: "CC-BY-4.0")
       form.validate(license_option: "depositor-selects", default_license: "CC-BY-4.0")
     end
 
@@ -170,7 +170,7 @@ RSpec.describe CollectionEventDescriptionBuilder do
 
   context "when default license has changed" do
     before do
-      collection.update(default_license: "CC-BY-4.0")
+      collection.update!(default_license: "CC-BY-4.0")
       form.validate(license_option: "depositor-selects", default_license: "Apache-2.0")
     end
 
@@ -179,7 +179,7 @@ RSpec.describe CollectionEventDescriptionBuilder do
 
   context "when required license has changed" do
     before do
-      collection.update(license_option: "required", required_license: "CC-BY-4.0")
+      collection.update!(license_option: "required", required_license: "CC-BY-4.0")
       form.validate(license_option: "required", default_license: "Apache-2.0")
     end
 
