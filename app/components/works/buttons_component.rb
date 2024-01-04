@@ -10,7 +10,7 @@ module Works
     attr_reader :form
 
     def submit_button_label
-      work_in_reviewed_coll? ? "Submit for approval" : "Deposit"
+      work_in_reviewed_coll? ? 'Submit for approval' : 'Deposit'
     end
 
     private

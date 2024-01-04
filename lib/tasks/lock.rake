@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require "csv"
+require 'csv'
 
-desc "Lock specified works"
+desc 'Lock specified works'
 # specify a CSV file that contains work druids, one per row (no header), and each work will be locked
 #  (if not already locked)
 task :lock_works, [:input_filename] => :environment do |_t, args|
   input_filename = args[:input_filename]
-  abort "Input CSV file not found" unless File.exist? input_filename
+  abort 'Input CSV file not found' unless File.exist? input_filename
 
   rows = CSV.read(input_filename).flatten
   num_druids = rows.size
@@ -27,12 +27,12 @@ task :lock_works, [:input_filename] => :environment do |_t, args|
   puts "#{num_locked} works locked"
 end
 
-desc "Lock all works in specified collections"
+desc 'Lock all works in specified collections'
 # specify a CSV file that contains collection druids, one per row (no header), and each work
 #  in each collection will be locked (if not already locked)
 task :lock_collections, [:input_filename] => :environment do |_t, args|
   input_filename = args[:input_filename]
-  abort "Input CSV file not found" unless File.exist? input_filename
+  abort 'Input CSV file not found' unless File.exist? input_filename
 
   rows = CSV.read(input_filename).flatten
   num_druids = rows.size
@@ -43,7 +43,7 @@ task :lock_collections, [:input_filename] => :environment do |_t, args|
     puts "#{i} of #{num_druids} collections : #{row}"
     collection = Collection.find_by(druid: prepend_druid(row))
     if collection
-      works = collection.works.where("druid is not ?", nil) # only lock works in this collection with a druid
+      works = collection.works.where('druid is not ?', nil) # only lock works in this collection with a druid
       num_works = works.size
       works.each.with_index(1) do |work, j|
         puts "...#{j} of #{num_works} works : #{work.druid}"
@@ -60,5 +60,5 @@ task :lock_collections, [:input_filename] => :environment do |_t, args|
 end
 
 def prepend_druid(row)
-  row.starts_with?("druid:") ? row : row.prepend("druid:")
+  row.starts_with?('druid:') ? row : row.prepend('druid:')
 end

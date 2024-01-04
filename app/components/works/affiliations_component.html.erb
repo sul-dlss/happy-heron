@@ -1,6 +1,6 @@
 <div data-controller="nested-form" data-nested-form-selector-value=".plain-container">
   <template data-nested-form-target='template'>
-    <%= form.fields_for :affiliations, Affiliation.new, child_index: "TEMPLATE_RECORD" do |affiliation_form| %>
+    <%= form.fields_for :affiliations, Affiliation.new, child_index: 'TEMPLATE_RECORD' do |affiliation_form| %>
       <%= render Works::AffiliationsRowComponent.new(form: affiliation_form) %>
     <% end %>
   </template>
@@ -10,6 +10,6 @@
   <% end %>
 
   <div data-nested-form-target="add_item">
-    <%= button_tag "+ Add another affiliation", type: "button", class: "btn btn-outline-primary", data: {action: "nested-form#addAssociation"} %>
+    <%= button_tag '+ Add another affiliation', type: 'button', class: 'btn btn-outline-primary', data: { action: 'nested-form#addAssociation' } %>
   </div>
 </div>

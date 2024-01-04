@@ -10,14 +10,14 @@ module Works
     attr_reader :work_version
 
     def call
-      value = I18n.t(work_version.state, scope: "work.state")
+      value = I18n.t(work_version.state, scope: 'work.state')
       return value unless work_version.wait_state?
 
-      safe_join([value, spinner], " ")
+      safe_join([value, spinner], ' ')
     end
 
     def spinner
-      tag.span class: "fa-solid fa-spinner fa-pulse"
+      tag.span class: 'fa-solid fa-spinner fa-pulse'
     end
   end
 end

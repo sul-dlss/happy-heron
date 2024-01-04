@@ -4,21 +4,21 @@
      <legend class="visually-hidden">Title of deposit and contact information</legend>
     <div class="mb-3 row">
       <div class='col-sm-2'>
-        <%= form.label :title, "Title of deposit *", class: "col-form-label" %>
-        <%= render PopoverComponent.new key: "work.title" %>
+        <%= form.label :title, 'Title of deposit *', class: 'col-form-label' %>
+        <%= render PopoverComponent.new key: 'work.title' %>
       </div>
       <div class="col-sm-9">
-        <%= form.text_area :title, class: "form-control", required: true, rows: 1,
-              "aria-describedby": "popover-work.title",
-              data: {action: "no-newlines#change change->auto-citation#updateDisplay",
-                     auto_citation_target: "titleField",
-                     no_newlines_target: "input",
-                     controller: "no-newlines"} %>
+        <%= form.text_area :title, class: 'form-control', required: true, rows: 1,
+                                   'aria-describedby': 'popover-work.title',
+                                   data: { action: 'no-newlines#change change->auto-citation#updateDisplay',
+                                           auto_citation_target: 'titleField',
+                                           no_newlines_target: 'input',
+                                           controller: 'no-newlines' } %>
         <div class="invalid-feedback">You must provide a title</div>
       </div>
     </div>
 
-    <%= render Works::ContactEmailComponent.new(form: form, key: "work.contact_email") %>
+    <%= render Works::ContactEmailComponent.new(form:, key: 'work.contact_email') %>
     </legend>
   </fieldset>
  </section>

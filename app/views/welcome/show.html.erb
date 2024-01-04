@@ -1,5 +1,5 @@
 <main class="stanford-masthead" id="content"
-  style="background-image: url(<%= asset_path "splash.jpg" %>); background-position: center; ">
+  style="background-image: url(<%= asset_path 'splash.jpg' %>); background-position: center; ">
   <div class="container flex-wrap flex-md-nowrap">
     <div class="row">
       <div class="col-md-12">
@@ -10,7 +10,7 @@
     <div class="text-center text-md-left way-down">
       <h2>Go to the SDR Dashboard</h2>
       <h3 class="mb-4">to create or manage deposits</h3>
-      <%= link_to dashboard_path, class: "btn btn-primary btn-xl mb-3 mr-md-3" do %>
+      <%= link_to dashboard_path, class: 'btn btn-primary btn-xl mb-3 mr-md-3' do %>
         <span class="me-5">Enter here</span><span class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></span>
       <% end %>
       <%= render PageContentComponent.new(page_content: @page_content) %>
@@ -29,8 +29,8 @@
           <li>Choose a license and access settings.</li>
           <li>Click "Deposit" to submit.</li>
         </ol>
-        <%= link_to("Learn more about SDR Services", Settings.sdr_url,
-              class: "btn") %>
+        <%= link_to('Learn more about SDR Services', Settings.sdr_url,
+                    class: 'btn') %>
       </div>
       <div class="col-md-4">
         <h3>Small effort for large payoff</h3>
@@ -43,7 +43,7 @@
       <div class="col-md-4">
         <div class="card news">
           <div class="text-center">
-            <%= image_tag "home_news.jpg", height: 54, width: 185, alt: "News" %>
+            <%= image_tag 'home_news.jpg', height: 54, width: 185, alt: 'News' %>
 
             <h3 class="fs-5 mt-3">Latest SDR news</h3>
           </div>
@@ -74,16 +74,16 @@
   <div class="container p-4">
     <div class="row">
       <div class="col-md-3">
-        <%= image_tag "home_who.jpg", height: 80, width: 80, aria: {hidden: true}, alt: "Who" %>
+        <%= image_tag 'home_who.jpg', height: 80, width: 80, aria: { hidden: true }, alt: 'Who' %>
       </div>
       <div class="col-md-3">
-        <%= image_tag "home_what.jpg", height: 80, width: 80, aria: {hidden: true}, alt: "What" %>
+        <%= image_tag 'home_what.jpg', height: 80, width: 80, aria: { hidden: true }, alt: 'What' %>
       </div>
       <div class="col-md-3">
-        <%= image_tag "home_why.jpg", height: 88, width: 80, aria: {hidden: true}, alt: "Why" %>
+        <%= image_tag 'home_why.jpg', height: 88, width: 80, aria: { hidden: true }, alt: 'Why' %>
       </div>
       <div class="col-md-3">
-        <%= image_tag "home_when.jpg", height: 80, width: 80, aria: {hidden: true}, alt: "When" %>
+        <%= image_tag 'home_when.jpg', height: 80, width: 80, aria: { hidden: true }, alt: 'When' %>
       </div>
     </div>
 

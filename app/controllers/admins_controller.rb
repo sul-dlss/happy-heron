@@ -13,13 +13,13 @@ class AdminsController < ApplicationController
   def items_recent_activity
     authorize! :admin_dashboard
     @days_limit = params.fetch(:days, 7).to_i
-    @items = Work.joins(:head).where("work_versions.updated_at > ?",
-      @days_limit.days.ago).order("work_versions.updated_at DESC")
+    @items = Work.joins(:head).where('work_versions.updated_at > ?',
+                                     @days_limit.days.ago).order('work_versions.updated_at DESC')
   end
 
   def collections_recent_activity
     authorize! :admin_dashboard
     @days_limit = params.fetch(:days, 7).to_i
-    @collections = Collection.where("updated_at > ?", @days_limit.days.ago).order("updated_at DESC")
+    @collections = Collection.where('updated_at > ?', @days_limit.days.ago).order('updated_at DESC')
   end
 end

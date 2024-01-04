@@ -5,10 +5,11 @@ class DepositJob < BaseDepositJob
   queue_as :default
 
   # @raise [SdrClient::Find::Failed] if the (non-nil) druid cannot be found in SDR
+  # rubocop:disable Metrics/AbcSize
   def perform(work_version)
     druid = work_version.work.druid # may be nil
-    Honeybadger.context({work_version_id: work_version.id, druid:,
-                          work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid})
+    Honeybadger.context({ work_version_id: work_version.id, druid:,
+                          work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
 
     # NOTE: this login ensures `Repository.find` and various SdrClient::* calls below all have a valid token
     perform_login
@@ -26,6 +27,7 @@ class DepositJob < BaseDepositJob
       update(new_request_dro, work_version)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -50,29 +52,29 @@ class DepositJob < BaseDepositJob
     upload_responses = perform_upload(blobs_map, filepath_map)
     # Update with any new externalIdentifiers assigned by SDR API during upload.
     SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro:,
-      upload_responses:)
+                                                            upload_responses:)
   end
 
   def create(new_request_dro, work_version)
     SdrClient::Deposit::CreateResource.run(accession: true,
-      assign_doi: work_version.work.assign_doi?,
-      metadata: new_request_dro,
-      logger: Rails.logger,
-      connection:)
+                                           assign_doi: work_version.work.assign_doi?,
+                                           metadata: new_request_dro,
+                                           logger: Rails.logger,
+                                           connection:)
   end
 
   def update(new_request_dro, work_version)
     SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
-      logger: Rails.logger,
-      connection:,
-      version_description: work_version.version_description.presence)
+                                           logger: Rails.logger,
+                                           connection:,
+                                           version_description: work_version.version_description.presence)
   end
 
   def perform_upload(blobs_map, filepath_map)
     SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs_map),
-      filepath_map:,
-      logger: Rails.logger,
-      connection:)
+                                           filepath_map:,
+                                           logger: Rails.logger,
+                                           connection:)
   end
 
   def connection

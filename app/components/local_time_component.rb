@@ -8,8 +8,8 @@ class LocalTimeComponent < ApplicationComponent
   end
 
   def call
-    options = {datetime: @datetime.iso8601, month: "short", day: "numeric", year: "numeric"}
-    options.merge!(hour: "numeric", minute: "numeric", "time-zone-name": "short") if @show_time
+    options = { datetime: @datetime.iso8601, month: 'short', day: 'numeric', year: 'numeric' }
+    options.merge!(hour: 'numeric', minute: 'numeric', 'time-zone-name': 'short') if @show_time
     tag.local_time(**options)
   end
 end

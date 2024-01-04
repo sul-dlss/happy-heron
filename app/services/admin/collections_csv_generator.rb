@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "csv"
+require 'csv'
 
 module Admin
   # Converts a set of collections to CSV.
@@ -27,26 +27,26 @@ module Admin
     attr_reader :collections
 
     HEADERS = [
-      "collection title",
-      "collection id",
-      "collection druid",
-      "state",
-      "version number",
-      "creator",
-      "managers",
-      "date created",
-      "date last modified",
-      "release setting",
-      "release duration",
-      "visibility setting",
-      "license setting",
-      "required license",
-      "default license",
-      "custom rights allowed",
-      "custom rights provided",
-      "custom rights instructions",
-      "DOI yes/no",
-      "review workflow"
+      'collection title',
+      'collection id',
+      'collection druid',
+      'state',
+      'version number',
+      'creator',
+      'managers',
+      'date created',
+      'date last modified',
+      'release setting',
+      'release duration',
+      'visibility setting',
+      'license setting',
+      'required license',
+      'default license',
+      'custom rights allowed',
+      'custom rights provided',
+      'custom rights instructions',
+      'DOI yes/no',
+      'review workflow'
     ].freeze
 
     # rubocop:disable Metrics/AbcSize
@@ -59,7 +59,7 @@ module Admin
         collection_version.state,
         collection_version.version,
         collection.creator.sunetid,
-        collection.managed_by.map(&:sunetid).join("; "),
+        collection.managed_by.map(&:sunetid).join('; '),
         collection.created_at,
         collection_version.updated_at,
         collection.release_option,
@@ -68,9 +68,9 @@ module Admin
         collection.license_option,
         collection.required_license,
         collection.default_license,
-        collection.allow_custom_rights_statement ? "yes" : "no",
-        collection.provided_custom_rights_statement ? "yes" : "no",
-        collection.custom_rights_statement_custom_instructions ? "yes" : "no",
+        collection.allow_custom_rights_statement ? 'yes' : 'no',
+        collection.provided_custom_rights_statement ? 'yes' : 'no',
+        collection.custom_rights_statement_custom_instructions ? 'yes' : 'no',
         collection.doi_option,
         collection.review_enabled
       ]

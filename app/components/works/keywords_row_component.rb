@@ -10,7 +10,7 @@ module Works
     attr_reader :form
 
     def keyword_remove_label
-      "Remove #{form.object.label || "blank keyword"}"
+      "Remove #{form.object.label || 'blank keyword'}"
     end
 
     def error?

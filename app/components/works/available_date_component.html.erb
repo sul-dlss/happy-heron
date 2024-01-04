@@ -3,23 +3,23 @@
   <div data-controller="complex-radio available-date">
     <div class="mb-3 row">
       <div class="col-sm-10 release-option" data-complex-radio-target="selection">
-        <%= form.radio_button :release, "immediate", class: "form-check-input",
-              data: {
-                action: "complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#clearError"
-              } %>
-        <%= form.label :release_immediate, "Immediately once deposit is completed" %>
+        <%= form.radio_button :release, 'immediate', class: 'form-check-input',
+                                                     data: {
+                                                       action: 'complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#clearError'
+                                                     } %>
+        <%= form.label :release_immediate, 'Immediately once deposit is completed' %>
       </div>
     </div>
 
     <div class="embargo-date mb-5">
-      <div class="row<%= " is-invalid" if error? %>">
+      <div class="row<%= ' is-invalid' if error? %>">
         <div class="col-sm-10 release-option" data-complex-radio-target="selection">
-          <%= form.radio_button :release, "embargo", class: "form-check-input",
-                data: {
-                  action: "complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#validate",
-                  auto_citation_target: "embargo"
-                } %>
-          <%= form.label :release_embargo, "On this date" %>
+          <%= form.radio_button :release, 'embargo', class: 'form-check-input',
+                                                     data: {
+                                                       action: 'complex-radio#disableUnselectedInputs change->auto-citation#updateDisplay available-date#validate',
+                                                       auto_citation_target: 'embargo'
+                                                     } %>
+          <%= form.label :release_embargo, 'On this date' %>
 
           <div class="year">
             <label for="work_embargo_year" class="visually-hidden">Embargo year</label>

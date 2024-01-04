@@ -1,5 +1,5 @@
 <% content_for :breadcrumbs do %>
-  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [{title: "Search for user"}]) %>
+  <%= render BreadcrumbNavComponent.new(admin: true, breadcrumbs: [{ title: 'Search for user' }]) %>
 <% end %>
 <main id="content">
   <div class="container" id="dashboard">
@@ -7,10 +7,10 @@
 
     <%= render Admin::NavigationComponent.new %>
 
-    <%= form_with url: admin_users_path, method: :get, class: "col-md-4 mt-3" do |form| %>
-        <%= form.label :query, "Enter SUNet ID" %>
-        <%= form.search_field :query, class: "form-control" %>
-        <%= form.submit "Search", class: "btn btn-primary my-3" %>
+    <%= form_with url: admin_users_path, method: :get, class: 'col-md-4 mt-3' do |form| %>
+        <%= form.label :query, 'Enter SUNet ID' %>
+        <%= form.search_field :query, class: 'form-control' %>
+        <%= form.submit 'Search', class: 'btn btn-primary my-3' %>
     <% end %>
 
     <% if @result %>

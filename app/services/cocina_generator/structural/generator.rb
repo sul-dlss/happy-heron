@@ -69,7 +69,7 @@ module CocinaGenerator
           elsif work_version.work.druid
             # see https://github.com/sul-dlss/dor-services-app/blob/main/app/services/cocina/id_generator.rb
             new_fileset[:externalIdentifier] =
-              "#{ID_NAMESPACE}/fileSet/#{work_version.work.druid.delete_prefix("druid:")}-#{resource_id}"
+              "#{ID_NAMESPACE}/fileSet/#{work_version.work.druid.delete_prefix('druid:')}-#{resource_id}"
           end
         end
         # rubocop:enable Metrics/AbcSize

@@ -2,16 +2,16 @@
     <td class="file-level" style="--depth: <%= depth + 1 %>rem">
         <%= basename %>
         <% if can_download? %>
-            <%= link_to path, class: "ms-2", data: {turbo: false} do %>
+            <%= link_to path, class: 'ms-2', data: { turbo: false } do %>
                 <span class="fa-solid fa-download" aria-hidden="true" aria-label="Download"></span><span class="visually-hidden">Download</span>
             <% end %>
         <% end %>
         <% if can_share? %>
-            <%= link_to stacks_path, class: "ms-2", data: {turbo: false} do %>
+            <%= link_to stacks_path, class: 'ms-2', data: { turbo: false } do %>
                 <span class="fa-solid fa-link" aria-hidden="true" aria-label="Share"></span><span class="visually-hidden">Share</span>
             <% end %>
         <% end %>
     </td>
     <td><%= label %></td>
-    <td><%= hide? ? "Yes" : "No" %></td>
+    <td><%= hide? ? 'Yes' : 'No' %></td>
 </tr>

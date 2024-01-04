@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Change owner of a work" do
+RSpec.describe 'Change owner of a work' do
   let(:user) { create(:user) }
   let(:orig_owner) { create(:user) }
   let(:new_owner) { create(:user) }
@@ -17,22 +17,22 @@ RSpec.describe "Change owner of a work" do
 
   before do
     work.update(head: work_version)
-    sign_in user, groups: ["dlss:hydrus-app-administrators"]
+    sign_in user, groups: ['dlss:hydrus-app-administrators']
   end
 
-  context "when new owner is different than original owner" do
-    it "allows owner to be changed" do
-      expect { put owners_path(work), params: {sunetid: new_owner.sunetid} }
+  context 'when new owner is different than original owner' do
+    it 'allows owner to be changed' do
+      expect { put owners_path(work), params: { sunetid: new_owner.sunetid } }
         .to have_enqueued_job(ActionMailer::MailDeliveryJob).exactly(4).times
 
       follow_redirect!
       # Flash message
-      expect(response.body).to include "Owner updated"
+      expect(response.body).to include 'Owner updated'
       expect(work.collection.reload.depositors).to include new_owner
     end
   end
 
-  context "when new owner is already a depositor" do
+  context 'when new owner is already a depositor' do
     let(:collection) { collection_version.collection }
 
     before do
@@ -40,25 +40,25 @@ RSpec.describe "Change owner of a work" do
       collection.save!
     end
 
-    it "allows owner to be changed" do
+    it 'allows owner to be changed' do
       expect(collection.depositors).to include new_owner
-      put owners_path(work), params: {sunetid: new_owner.sunetid}
+      put owners_path(work), params: { sunetid: new_owner.sunetid }
 
       follow_redirect!
       # Flash message
-      expect(response.body).to include "Owner updated"
+      expect(response.body).to include 'Owner updated'
       expect(collection.reload.depositors).to include new_owner
     end
   end
 
-  context "when new owner is same as original owner" do
-    it "prevents owner from being changed" do
-      expect { put owners_path(work), params: {sunetid: orig_owner.sunetid} }
+  context 'when new owner is same as original owner' do
+    it 'prevents owner from being changed' do
+      expect { put owners_path(work), params: { sunetid: orig_owner.sunetid } }
         .not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
 
       follow_redirect!
       # Flash message
-      expect(response.body).to include "Cannot change owner to the same user"
+      expect(response.body).to include 'Cannot change owner to the same user'
       expect(work.collection.reload.depositors).not_to include new_owner
     end
   end

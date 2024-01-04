@@ -1,14 +1,14 @@
 <div class="inner-container">
   <div class="row mb-2">
-    <%= form.label :link_title, "Link text", class: "form-label col-md-2" %>
+    <%= form.label :link_title, 'Link text', class: 'form-label col-md-2' %>
 
     <div class="col-md-9">
-      <%= form.text_field :link_title, class: "form-control" %>
+      <%= form.text_field :link_title, class: 'form-control' %>
     </div>
 
     <div class="col-md-1">
-      <%= button_tag type: "button", class: "btn btn-sm float-end", aria: {label: "Remove related link #{link_title}"},
-            data: {action: "click->nested-form#removeAssociation"} do %>
+      <%= button_tag type: 'button', class: 'btn btn-sm float-end', aria: { label: "Remove related link #{link_title}" },
+                     data: { action: 'click->nested-form#removeAssociation' } do %>
         <span class="fa-regular fa-trash-alt"></span>
       <% end %>
       <%= form.hidden_field :_destroy %>
@@ -16,10 +16,10 @@
   </div>
 
   <div class="row">
-    <%= form.label :url, "URL", class: "form-label col-md-2" %>
+    <%= form.label :url, 'URL', class: 'form-label col-md-2' %>
 
     <div class="col-md-9">
-      <%= form.text_field :url, class: "form-control", pattern: "https?://.+" %>
+      <%= form.text_field :url, class: 'form-control', pattern: 'https?://.+' %>
       <div class="invalid-feedback">
         URLs must begin with "https://" or "http://".
       </div>

@@ -18,7 +18,7 @@ module Dashboard
     end
 
     def show_collection_link
-      truncated_collection_name = truncate(collection_name, length: 100, separator: " ")
+      truncated_collection_name = truncate(collection_name, length: 100, separator: ' ')
       link_to truncated_collection_name, collection, title: collection_name
     end
   end

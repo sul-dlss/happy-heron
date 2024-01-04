@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 # State machine specs are split into different file for clarity.
 RSpec.describe WorkVersion do
@@ -8,7 +8,7 @@ RSpec.describe WorkVersion do
     allow(work_version.work).to receive(:broadcast_update)
   end
 
-  describe "a begin_deposit event" do
+  describe 'a begin_deposit event' do
     let(:work_version) do
       build(:work_version, :with_authors, :with_related_links, :with_related_works)
     end
@@ -19,31 +19,31 @@ RSpec.describe WorkVersion do
       work_version.save!
     end
 
-    it "transitions from first_draft to depositing" do
+    it 'transitions from first_draft to depositing' do
       expect { work_version.begin_deposit! }
         .to change(work_version, :state)
-        .to("depositing")
+        .to('depositing')
         .and change(Event, :count).by(1)
       expect(DepositJob).to have_received(:perform_later).with(work_version)
       expect(work_version.reload.published_at).to be_a ActiveSupport::TimeWithZone
       expect(Repository).not_to have_received(:valid_version?)
     end
 
-    context "with pending_approval on a work" do
+    context 'with pending_approval on a work' do
       let(:work_version) { create(:work_version, :pending_approval) }
 
-      it "transitions to depositing" do
+      it 'transitions to depositing' do
         expect { work_version.begin_deposit! }
           .to change(work_version, :state)
-          .to("depositing")
+          .to('depositing')
           .and change(Event, :count).by(1)
         expect(DepositJob).to have_received(:perform_later).with(work_version)
       end
     end
 
-    context "when version_draft" do
+    context 'when version_draft' do
       let(:work_version) { create(:work_version, :version_draft) }
-      let(:druid) { "druid:bb652bq1296" }
+      let(:druid) { 'druid:bb652bq1296' }
       let(:cocina_obj) { instance_double(Cocina::Models::DRO, version: 1) }
 
       before do
@@ -51,11 +51,11 @@ RSpec.describe WorkVersion do
         allow(SdrClient::Find).to receive(:run).and_return(cocina_obj)
       end
 
-      context "when valid version" do
-        it "transitions from version_draft to depositing" do
+      context 'when valid version' do
+        it 'transitions from version_draft to depositing' do
           expect { work_version.begin_deposit! }
             .to change(work_version, :state)
-            .to("depositing")
+            .to('depositing')
             .and change(Event, :count).by(1)
           expect(DepositJob).to have_received(:perform_later).with(work_version)
           expect(work_version.reload.published_at).to be_a ActiveSupport::TimeWithZone
@@ -63,12 +63,12 @@ RSpec.describe WorkVersion do
         end
       end
 
-      context "when invalid version" do
+      context 'when invalid version' do
         before do
           allow(Repository).to receive(:valid_version?).and_return(false)
         end
 
-        it "does not transition" do
+        it 'does not transition' do
           expect { work_version.begin_deposit! }
             .to raise_error(StateMachines::InvalidTransition)
           expect(DepositJob).not_to have_received(:perform_later).with(work_version)
@@ -78,7 +78,7 @@ RSpec.describe WorkVersion do
     end
   end
 
-  describe "pid_assigned event" do
+  describe 'pid_assigned event' do
     let(:collection) { create(:collection, :with_managers) }
     let(:collection_version) { create(:collection_version_with_collection, collection:) }
     let(:work_version) { create(:work_version, :depositing) }
@@ -87,114 +87,114 @@ RSpec.describe WorkVersion do
     before do
       allow(DepositJob).to receive(:perform_later)
       allow(Repository).to receive(:valid_version?).and_return(true)
-      work_version.work.druid = "druid:bb652bq1296"
+      work_version.work.druid = 'druid:bb652bq1296'
     end
 
-    it "does not trigger the after_depositing hook" do
+    it 'does not trigger the after_depositing hook' do
       work_version.pid_assigned!
       expect(DepositJob).not_to have_received(:perform_later)
     end
   end
 
-  describe "an update_metadata event" do
+  describe 'an update_metadata event' do
     let(:collection) { create(:collection, :with_managers) }
     let(:collection_version) { create(:collection_version_with_collection, collection:) }
     let(:work_version) { create(:work_version, state:, work:, upload_type:) }
     let(:work) { create(:work, collection:, depositor: collection.managed_by.first) }
-    let(:upload_type) { "browser" }
+    let(:upload_type) { 'browser' }
 
-    context "when the state was new" do
-      let(:state) { "new" }
+    context 'when the state was new' do
+      let(:state) { 'new' }
 
-      it "transitions to version draft" do
+      it 'transitions to version draft' do
         expect { work_version.update_metadata! }
           .to change(work_version, :state)
-          .from("new").to("first_draft")
+          .from('new').to('first_draft')
           .and change(Event, :count).by(1)
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "CollectionsMailer", "first_draft_created", "deliver_now",
-            {params: {
-              user: collection.managed_by.last,
-              owner: work.owner,
-              work:,
-              collection_version:
-            }, args: []}
-          ))
+                 'CollectionsMailer', 'first_draft_created', 'deliver_now',
+                 { params: {
+                   user: collection.managed_by.last,
+                   owner: work.owner,
+                   work:,
+                   collection_version:
+                 }, args: [] }
+               ))
       end
     end
 
-    context "when the state is pending_approval" do
-      let(:state) { "pending_approval" }
+    context 'when the state is pending_approval' do
+      let(:state) { 'pending_approval' }
 
-      it "does not transition the state" do
+      it 'does not transition the state' do
         work_version.update_metadata!
-        expect(work_version.state).to eq "pending_approval"
+        expect(work_version.state).to eq 'pending_approval'
       end
     end
 
-    context "when the state is first_draft" do
-      let(:state) { "first_draft" }
+    context 'when the state is first_draft' do
+      let(:state) { 'first_draft' }
 
-      context "when upload type is browser" do
-        it "transitions back to first_draft" do
+      context 'when upload type is browser' do
+        it 'transitions back to first_draft' do
           work_version.update_metadata!
-          expect(work_version.state).to eq "first_draft"
+          expect(work_version.state).to eq 'first_draft'
         end
       end
 
-      context "when upload type is globus" do
-        let(:upload_type) { "globus" }
+      context 'when upload type is globus' do
+        let(:upload_type) { 'globus' }
 
-        it "allows the transition and retains the same state" do
+        it 'allows the transition and retains the same state' do
           work_version.update_metadata!
-          expect(work_version.state).to eq "first_draft"
+          expect(work_version.state).to eq 'first_draft'
         end
       end
     end
 
-    context "when the state is version_draft" do
-      let(:state) { "version_draft" }
+    context 'when the state is version_draft' do
+      let(:state) { 'version_draft' }
 
-      context "when upload type is browser" do
-        it "allows the transition and retains the same state" do
+      context 'when upload type is browser' do
+        it 'allows the transition and retains the same state' do
           work_version.update_metadata!
-          expect(work_version.state).to eq "version_draft"
+          expect(work_version.state).to eq 'version_draft'
         end
       end
 
-      context "when upload type is globus" do
-        let(:upload_type) { "globus" }
+      context 'when upload type is globus' do
+        let(:upload_type) { 'globus' }
 
-        it "allows the transition and retains the same state" do
+        it 'allows the transition and retains the same state' do
           work_version.update_metadata!
-          expect(work_version.state).to eq "version_draft"
+          expect(work_version.state).to eq 'version_draft'
         end
       end
     end
   end
 
-  describe "a deposit_complete event" do
+  describe 'a deposit_complete event' do
     let(:work_version) { build(:work_version, :depositing, work:) }
-    let(:work) { create(:work, collection:, druid: "druid:foo") }
+    let(:work) { create(:work, collection:, druid: 'druid:foo') }
 
-    context "when an initial deposit into a non-reviewed collection" do
+    context 'when an initial deposit into a non-reviewed collection' do
       let(:collection) { create(:collection) }
 
-      it "transitions to deposited" do
+      it 'transitions to deposited' do
         expect { work_version.deposit_complete! }
           .to change(work_version, :state)
-          .to("deposited")
+          .to('deposited')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "WorksMailer", "deposited_email", "deliver_now",
-            {params: {user: work.owner, work_version:}, args: []}
-          ))
+                 'WorksMailer', 'deposited_email', 'deliver_now',
+                 { params: { user: work.owner, work_version: }, args: [] }
+               ))
           .and change(Event, :count).by(1)
       end
     end
 
-    context "when a deposit with globus" do
+    context 'when a deposit with globus' do
       let(:work_version) do
-        build(:work_version, :depositing, work:, upload_type: "browser", globus_endpoint: "/some/globus/url")
+        build(:work_version, :depositing, work:, upload_type: 'browser', globus_endpoint: '/some/globus/url')
       end
       let(:collection) { create(:collection) }
 
@@ -203,195 +203,195 @@ RSpec.describe WorkVersion do
         allow(GlobusClient).to receive(:delete_access_rule).and_return(true)
       end
 
-      it "transitions to deposited" do
+      it 'transitions to deposited' do
         expect { work_version.deposit_complete! }
           .to change(work_version, :state)
-          .to("deposited")
+          .to('deposited')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "WorksMailer", "deposited_email", "deliver_now",
-            {params: {user: work.owner, work_version:}, args: []}
-          ))
+                 'WorksMailer', 'deposited_email', 'deliver_now',
+                 { params: { user: work.owner, work_version: }, args: [] }
+               ))
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "WorksMailer", "globus_deposited_email", "deliver_now",
-            {params: {user: work.owner, work_version:}, args: []}
-          ))
+                 'WorksMailer', 'globus_deposited_email', 'deliver_now',
+                 { params: { user: work.owner, work_version: }, args: [] }
+               ))
           .and change(Event, :count).by(1)
-        expect(GlobusClient).to have_received(:delete_access_rule).with(path: "/some/globus/url", user_id: nil)
+        expect(GlobusClient).to have_received(:delete_access_rule).with(path: '/some/globus/url', user_id: nil)
       end
     end
 
-    context "when an subsequent version deposit into a non-reviewed collection" do
+    context 'when an subsequent version deposit into a non-reviewed collection' do
       let(:collection) { create(:collection) }
       let(:work_version) { build(:work_version, :depositing, version: 2, work:) }
-      let(:work) { create(:work, collection:, druid: "druid:foo") }
+      let(:work) { create(:work, collection:, druid: 'druid:foo') }
 
-      it "transitions to deposited" do
+      it 'transitions to deposited' do
         expect { work_version.deposit_complete! }
           .to change(work_version, :state)
-          .to("deposited")
+          .to('deposited')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "WorksMailer", "new_version_deposited_email", "deliver_now",
-            {params: {user: work.owner, work_version:}, args: []}
-          ))
+                 'WorksMailer', 'new_version_deposited_email', 'deliver_now',
+                 { params: { user: work.owner, work_version: }, args: [] }
+               ))
           .and change(Event, :count).by(1)
       end
     end
 
-    context "when in a reviewed collection" do
+    context 'when in a reviewed collection' do
       let(:collection) { create(:collection, :with_reviewers) }
 
-      it "transitions to deposited" do
+      it 'transitions to deposited' do
         expect { work_version.deposit_complete! }
           .to change(work_version, :state)
-          .to("deposited")
+          .to('deposited')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "WorksMailer", "approved_email", "deliver_now",
-            {params: {user: work.owner, work_version:}, args: []}
-          ))
+                 'WorksMailer', 'approved_email', 'deliver_now',
+                 { params: { user: work.owner, work_version: }, args: [] }
+               ))
           .and change(Event, :count).by(1)
       end
     end
   end
 
-  describe "a submit_for_review event" do
+  describe 'a submit_for_review event' do
     let(:collection) { build(:collection, reviewed_by: [depositor, reviewer]) }
     let(:depositor) { build(:user) }
     let(:owner) { build(:user) }
     let(:reviewer) { build(:user) }
 
-    context "when work is first_draft" do
+    context 'when work is first_draft' do
       let(:work_version) { create(:work_version, :first_draft, work:) }
       let(:work) { create(:work, collection:, depositor:, owner:) }
 
-      it "transitions to pending_approval" do
+      it 'transitions to pending_approval' do
         expect { work_version.submit_for_review! }
           .to change(work_version, :state)
-          .to("pending_approval")
+          .to('pending_approval')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "ReviewersMailer", "submitted_email", "deliver_now",
-            {params: {user: reviewer, work_version:}, args: []}
-          ))
+                 'ReviewersMailer', 'submitted_email', 'deliver_now',
+                 { params: { user: reviewer, work_version: }, args: [] }
+               ))
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "WorksMailer", "submitted_email", "deliver_now",
-            {params: {user: owner, work_version:}, args: []}
-          ))
+                 'WorksMailer', 'submitted_email', 'deliver_now',
+                 { params: { user: owner, work_version: }, args: [] }
+               ))
           .and change(Event, :count).by(1)
       end
     end
 
-    context "when work was rejected" do
+    context 'when work was rejected' do
       let(:work_version) { create(:work_version, :rejected, work:) }
       let(:work) { create(:work, collection:, depositor:, owner:) }
 
-      it "transitions to pending_approval" do
+      it 'transitions to pending_approval' do
         expect { work_version.submit_for_review! }
           .to change(work_version, :state)
-          .to("pending_approval")
+          .to('pending_approval')
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "ReviewersMailer", "submitted_email", "deliver_now",
-            {params: {user: reviewer, work_version:}, args: []}
-          ))
+                 'ReviewersMailer', 'submitted_email', 'deliver_now',
+                 { params: { user: reviewer, work_version: }, args: [] }
+               ))
           .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-            "WorksMailer", "submitted_email", "deliver_now",
-            {params: {user: owner, work_version:}, args: []}
-          ))
+                 'WorksMailer', 'submitted_email', 'deliver_now',
+                 { params: { user: owner, work_version: }, args: [] }
+               ))
           .and change(Event, :count).by(1)
       end
     end
   end
 
-  describe "a reject event" do
+  describe 'a reject event' do
     let(:work_version) { create(:work_version, :pending_approval, work:) }
     let(:work) { create(:work) }
 
-    it "transitions to rejected" do
+    it 'transitions to rejected' do
       expect { work_version.reject! }
         .to change(work_version, :state)
-        .to("rejected")
+        .to('rejected')
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-          "WorksMailer", "reject_email", "deliver_now",
-          {params: {user: work.owner, work_version:}, args: []}
-        ))
+               'WorksMailer', 'reject_email', 'deliver_now',
+               { params: { user: work.owner, work_version: }, args: [] }
+             ))
     end
   end
 
-  describe "a decommission event" do
+  describe 'a decommission event' do
     let(:collection) { create(:collection, :with_managers) }
     let(:work) { create(:work, collection:) }
     let(:work_version) { create(:work_version, work:) }
 
-    it "transitions to decommissioned" do
+    it 'transitions to decommissioned' do
       expect { work_version.decommission! }
         .to change(work_version, :state)
-        .to("decommissioned")
+        .to('decommissioned')
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-          "WorksMailer", "decommission_owner_email", "deliver_now",
-          {params: {work_version:}, args: []}
-        ))
+               'WorksMailer', 'decommission_owner_email', 'deliver_now',
+               { params: { work_version: }, args: [] }
+             ))
         .and(have_enqueued_job(ActionMailer::MailDeliveryJob).with(
-          "WorksMailer", "decommission_manager_email", "deliver_now",
-          {params: {work_version:, user: collection.managed_by.first}, args: []}
-        ))
+               'WorksMailer', 'decommission_manager_email', 'deliver_now',
+               { params: { work_version:, user: collection.managed_by.first }, args: [] }
+             ))
     end
   end
 
-  describe "unzip event" do
+  describe 'unzip event' do
     let(:work_version) { create(:work_version) }
 
-    it "transitions to unzip_first_draft" do
+    it 'transitions to unzip_first_draft' do
       expect { work_version.unzip! }
         .to change(work_version, :state)
-        .to("unzip_first_draft")
+        .to('unzip_first_draft')
     end
   end
 
-  describe "unzip_and_submit_for_review event" do
-    let(:work_version) { create(:work_version, state: "pending_approval") }
+  describe 'unzip_and_submit_for_review event' do
+    let(:work_version) { create(:work_version, state: 'pending_approval') }
 
-    it "transitions to unzip_pending_approval" do
+    it 'transitions to unzip_pending_approval' do
       expect { work_version.unzip_and_submit_for_review! }
         .to change(work_version, :state)
-        .to("unzip_pending_approval")
+        .to('unzip_pending_approval')
     end
   end
 
-  describe "unzip_and_begin_deposit event" do
+  describe 'unzip_and_begin_deposit event' do
     let(:work_version) { create(:work_version) }
 
-    it "transitions to unzip_depositing" do
+    it 'transitions to unzip_depositing' do
       expect { work_version.unzip_and_begin_deposit! }
         .to change(work_version, :state)
-        .to("unzip_depositing")
+        .to('unzip_depositing')
     end
   end
 
-  describe "fetch globus event" do
+  describe 'fetch globus event' do
     let(:work_version) { create(:work_version) }
 
-    it "transitions to fetch_globus_first_draft" do
+    it 'transitions to fetch_globus_first_draft' do
       expect { work_version.fetch_globus! }
         .to change(work_version, :state)
-        .to("fetch_globus_first_draft")
+        .to('fetch_globus_first_draft')
     end
   end
 
-  describe "fetch_globus_and_submit_for_review event" do
-    let(:work_version) { create(:work_version, state: "pending_approval") }
+  describe 'fetch_globus_and_submit_for_review event' do
+    let(:work_version) { create(:work_version, state: 'pending_approval') }
 
-    it "transitions to fetch_globus_pending_approval" do
+    it 'transitions to fetch_globus_pending_approval' do
       expect { work_version.fetch_globus_and_submit_for_review! }
         .to change(work_version, :state)
-        .to("fetch_globus_pending_approval")
+        .to('fetch_globus_pending_approval')
     end
   end
 
-  describe "fetch_globus_and_begin_deposit event" do
+  describe 'fetch_globus_and_begin_deposit event' do
     let(:work_version) { create(:work_version) }
 
-    it "transitions to fetch_globus_depositing" do
+    it 'transitions to fetch_globus_depositing' do
       expect { work_version.fetch_globus_and_begin_deposit! }
         .to change(work_version, :state)
-        .to("fetch_globus_depositing")
+        .to('fetch_globus_depositing')
     end
   end
 end

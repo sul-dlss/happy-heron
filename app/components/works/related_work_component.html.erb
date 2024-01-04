@@ -1,12 +1,12 @@
 <fieldset class="mb-5">
   <legend class="h5" aria-describedby="popover-work.related_work">
     Related works
-    <%= render PopoverComponent.new key: "work.related_work" %>
+    <%= render PopoverComponent.new key: 'work.related_work' %>
   </legend>
 
   <div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".inner-container">
     <template data-nested-form-target='template'>
-      <%= form.fields_for :related_works, RelatedWork.new, child_index: "TEMPLATE_RECORD" do |contributor_form| %>
+      <%= form.fields_for :related_works, RelatedWork.new, child_index: 'TEMPLATE_RECORD' do |contributor_form| %>
         <%= render Works::RelatedWorkRowComponent.new(form: contributor_form) %>
       <% end %>
     </template>
@@ -16,7 +16,7 @@
     <% end %>
 
     <div data-nested-form-target="add_item">
-      <%= button_tag "+ Add another related work", type: "button", class: "btn btn-outline-primary", data: {action: "nested-form#addAssociation"} %>
+      <%= button_tag '+ Add another related work', type: 'button', class: 'btn btn-outline-primary', data: { action: 'nested-form#addAssociation' } %>
     </div>
   </div>
 </fieldset>

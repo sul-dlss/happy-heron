@@ -15,10 +15,10 @@ module Works
     end
 
     def bootstrap_classes
-      return "col-sm-10 col-xl-8" if form.object_name.start_with?("collection")
+      return 'col-sm-10 col-xl-8' if form.object_name.start_with?('collection')
 
       # Should be a work
-      "col-sm-9"
+      'col-sm-9'
     end
 
     def errors

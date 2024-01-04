@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require "reform/form/coercion"
+require 'reform/form/coercion'
 
 # The form for draft work creation and editing
+# rubocop:disable Metrics/ClassLength
 class BaseWorkForm < Reform::Form
   feature Edtf
   feature EmbargoDate
@@ -13,8 +14,8 @@ class BaseWorkForm < Reform::Form
   property :work_type, on: :work_version
   property :version_description, on: :work_version
   property :subtype, on: :work_version
-  property :title, on: :work_version, type: Dry::Types["params.nil"] | Dry::Types["string"]
-  property :abstract, on: :work_version, type: Dry::Types["params.nil"] | Dry::Types["string"]
+  property :title, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
+  property :abstract, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
   property :citation, on: :work_version
   property :default_citation, virtual: true, default: true
   property :citation_auto, virtual: true
@@ -24,23 +25,23 @@ class BaseWorkForm < Reform::Form
   property :custom_rights, on: :work_version
   property :agree_to_terms, on: :work_version
   property :created_type, virtual: true, prepopulator: (proc do |*|
-    self.created_type = created_edtf.is_a?(EDTF::Interval) ? "range" : "single" unless created_type
+    self.created_type = created_edtf.is_a?(EDTF::Interval) ? 'range' : 'single' unless created_type
   end)
   property :created_edtf, edtf: true, range: true, on: :work_version
   property :published_edtf, edtf: true, on: :work_version
   property :release, virtual: true, prepopulator: (proc do |*|
-    self.release = embargo_date.present? ? "embargo" : "immediate" if release.blank?
+    self.release = embargo_date.present? ? 'embargo' : 'immediate' if release.blank?
   end)
   property :embargo_date, embargo_date: true, on: :work_version
-  property :assign_doi, on: :work, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+  property :assign_doi, on: :work, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   property :upload_type, on: :work_version
   property :globus_origin, on: :work_version
-  property :fetch_globus_files, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+  property :fetch_globus_files, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
 
   validates_with EmbargoDateParts,
-    if: proc { |form| form.user_can_set_availability? && form.release == "embargo" }
+                 if: proc { |form| form.user_can_set_availability? && form.release == 'embargo' }
 
-  validates_with CreatedDateParts, if: proc { |form| form.created_type == "range" }
+  validates_with CreatedDateParts, if: proc { |form| form.created_type == 'range' }
 
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
@@ -51,8 +52,8 @@ class BaseWorkForm < Reform::Form
 
   def deserialize!(params)
     # Choose between using the user provided citation and the auto-generated citation
-    params["citation"] = params.delete("citation_auto") if params["default_citation"] == "true"
-    params["subtype"] = [] unless params["subtype"]
+    params['citation'] = params.delete('citation_auto') if params['default_citation'] == 'true'
+    params['subtype'] = [] unless params['subtype']
     deserialize_embargo(params)
     access_from_collection(params)
     deserialize_license(params)
@@ -60,28 +61,31 @@ class BaseWorkForm < Reform::Form
   end
 
   # Ensure the collection default overwrites whatever the user supplied
+  # rubocop:disable Metrics/AbcSize
   def deserialize_embargo(params)
     case collection.release_option
-    when "delay"
+    when 'delay'
       release_date = collection.release_date
-      params["embargo_date(1i)"] = release_date.year.to_s
-      params["embargo_date(2i)"] = release_date.month.to_s
-      params["embargo_date(3i)"] = release_date.day.to_s
-    when "immediate"
-      params["embargo_date(1i)"] = nil
-      params["embargo_date(2i)"] = nil
-      params["embargo_date(3i)"] = nil
+      params['embargo_date(1i)'] = release_date.year.to_s
+      params['embargo_date(2i)'] = release_date.month.to_s
+      params['embargo_date(3i)'] = release_date.day.to_s
+    when 'immediate'
+      params['embargo_date(1i)'] = nil
+      params['embargo_date(2i)'] = nil
+      params['embargo_date(3i)'] = nil
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   # ensure all attached files have a unique filename
   def unique_filenames
     filenames = attached_files.map { |file| file.model.path }
 
-    errors.add(:attached_files, "must all have a unique filename.") unless filenames.size == filenames.uniq.size
+    errors.add(:attached_files, 'must all have a unique filename.') unless filenames.size == filenames.uniq.size
   end
 
   # Ensure there is more than zero files if fetching from Globus
+  # rubocop:disable Metrics/AbcSize
   def globus_files_provided
     return if GlobusClient.has_files?(path: work_version.globus_endpoint, user_id: work.owner.email)
 
@@ -89,9 +93,9 @@ class BaseWorkForm < Reform::Form
       :attached_files,
       "must include at least one file uploaded to Globus at #{work_version.globus_endpoint_fullpath}"
     )
-  rescue => e
+  rescue StandardError => e
     Honeybadger.notify(
-      "Globus API Error",
+      'Globus API Error',
       context: {
         exception: e,
         work_owner: work.owner.email,
@@ -104,69 +108,70 @@ class BaseWorkForm < Reform::Form
       "encountered an error with the Globus API: #{e}"
     )
   end
+  # rubocop:enable Metrics/AbcSize
 
   def access_from_collection(params)
-    return if collection.access == "depositor-selects"
+    return if collection.access == 'depositor-selects'
 
-    params["access"] = collection.access
+    params['access'] = collection.access
   end
 
   # Ensure the collection's required license overwrites whatever the user supplied
   def deserialize_license(params)
     return unless collection.required_license
 
-    params["license"] = collection.required_license
+    params['license'] = collection.required_license
   end
 
   # has_contributors(validate: false)
 
   collection :attached_files,
-    populator: AttachedFilesPopulator.new(:attached_files, AttachedFile),
-    on: :work_version do
-    property :id, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
+             populator: AttachedFilesPopulator.new(:attached_files, AttachedFile),
+             on: :work_version do
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :label
     property :path
-    property :hide, type: Dry::Types["params.bool"]
+    property :hide, type: Dry::Types['params.bool']
     # The file property is only necessary if there is a server side validation error and we need to re-render the form.
     property :file, virtual: true
-    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :contact_emails, populator: ContactEmailsPopulator.new(:contact_emails, ContactEmail),
-    prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
-    on: :work_version do
-    property :id, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
+                              prepopulator: ->(*) { contact_emails << ContactEmail.new if contact_emails.blank? },
+                              on: :work_version do
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :email
-    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :keywords,
-    populator: KeywordsPopulator.new(:keywords, Keyword),
-    prepopulator: ->(*) { keywords << Keyword.new if keywords.blank? },
-    on: :work_version do
-    property :id, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
+             populator: KeywordsPopulator.new(:keywords, Keyword),
+             prepopulator: ->(*) { keywords << Keyword.new if keywords.blank? },
+             on: :work_version do
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :label
     property :uri
     property :cocina_type
-    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :related_works,
-    populator: RelatedWorksPopulator.new(:related_works, RelatedWork),
-    prepopulator: ->(*) { related_works << RelatedWork.new if related_works.blank? },
-    on: :work_version do
-    property :id, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
+             populator: RelatedWorksPopulator.new(:related_works, RelatedWork),
+             prepopulator: ->(*) { related_works << RelatedWork.new if related_works.blank? },
+             on: :work_version do
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :citation
-    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   collection :related_links, populator: RelatedLinksPopulator.new(:related_links, RelatedLink),
-    prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
-    on: :work_version do
-    property :id, type: Dry::Types["params.nil"] | Dry::Types["params.integer"]
+                             prepopulator: ->(*) { related_links << RelatedLink.new if related_links.blank? },
+                             on: :work_version do
+    property :id, type: Dry::Types['params.nil'] | Dry::Types['params.integer']
     property :link_title
     property :url
-    property :_destroy, virtual: true, type: Dry::Types["params.nil"] | Dry::Types["params.bool"]
+    property :_destroy, virtual: true, type: Dry::Types['params.nil'] | Dry::Types['params.bool']
   end
 
   delegate :collection, :persisted?, :to_param, to: :work
@@ -194,6 +199,7 @@ class BaseWorkForm < Reform::Form
   end
 
   # Ensure this work version is now head of the work versions for this work, and perform post save cleanup
+  # rubocop:disable Metrics/AbcSize
   def save_model
     super
     # For a zipfile, both the existing files and the zipfile will be attached. These will be removed during unzip.
@@ -203,12 +209,15 @@ class BaseWorkForm < Reform::Form
     # However, because of the number of files the user is not able to edit them via the UI and they are not provided
     # in the form, so they must be copied from the previous version.
     # Note that the octets of the files are not being copied, only the ActiveStorage references.
-    if work.head && work_version.upload_type == "browser" && work.head.attached_files.length > Settings.max_upload_files && work_version.attached_files.empty?
+    if work.head && work_version.upload_type == 'browser' \
+      && work.head.attached_files.length > Settings.max_upload_files \
+      && work_version.attached_files.empty?
       dupe_attached_files
     end
     dedupe_keywords
     work.update(head: work_version)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def dupe_attached_files
     work.head.attached_files.each do |existing_attached_file|
@@ -224,7 +233,7 @@ class BaseWorkForm < Reform::Form
   end
 
   def will_assign_doi?
-    (collection.doi_option == "depositor-selects" && assign_doi) || collection.doi_option == "yes"
+    (collection.doi_option == 'depositor-selects' && assign_doi) || collection.doi_option == 'yes'
   end
 
   # de-dupe keywords, prefer throwing away the free text entry duplicate(s) without a URI
@@ -241,3 +250,4 @@ class BaseWorkForm < Reform::Form
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

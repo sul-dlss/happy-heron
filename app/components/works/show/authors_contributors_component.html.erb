@@ -1,6 +1,6 @@
   <table id="<%= participant_type %>s" class="table table-sm caption-header">
     <caption><%= participant_type.titlecase %>
-      <%= helpers.turbo_frame_tag dom_id(work, "edit_author"), src: edit_button_work_path(work, tag: "author"), target: "_top" %>
+      <%= helpers.turbo_frame_tag dom_id(work, 'edit_author'), src: edit_button_work_path(work, tag: 'author'), target: '_top' %>
     </caption>
     <tbody>
     <% participants.each do |participant| %>
@@ -12,7 +12,7 @@
             <%= participant.full_name %>
           <% end %>
           <% if participant.affiliations.any? %>
-            (<%= participant.affiliations.map(&:to_s).join("; ") %>)
+            (<%= participant.affiliations.map(&:to_s).join('; ') %>)
           <% end %>
         </td>
         <td style="width: 25%"><%= render Works::Show::OrcidComponent.new(orcid: participant.orcid) %></td>

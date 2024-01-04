@@ -1,7 +1,7 @@
 <% content_for :breadcrumbs do %>
   <%= render BreadcrumbNavComponent.new(
-        breadcrumbs: [{title: CollectionTitlePresenter.show(@work.collection.head), link: collection_path(@work.collection)},
-          {title: WorkTitlePresenter.show(@work.head), link: work_path(@work)}]
+        breadcrumbs: [{ title: CollectionTitlePresenter.show(@work.collection.head), link: collection_path(@work.collection) },
+                      { title: WorkTitlePresenter.show(@work.head), link: work_path(@work) }]
       ) %>
 <% end %>
 
@@ -15,5 +15,5 @@
     <li>You may continue to use this application and create or edit other works
         while this deposit is in progress.</li>
   </ul>
-  <%= link_to "Return to dashboard", dashboard_path, class: "btn btn-primary" %>
+  <%= link_to 'Return to dashboard', dashboard_path, class: 'btn btn-primary' %>
 </div>

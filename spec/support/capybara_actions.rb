@@ -23,7 +23,7 @@ module CapybaraActions
   # An alias so our tests are less coupled to the aXe implementation
   def be_accessible(...)
     be_axe_clean(...).according_to(
-      :"best-practice",
+      :'best-practice',
       :wcag21a,
       :wcag21aa
     )

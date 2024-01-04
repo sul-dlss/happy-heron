@@ -18,7 +18,7 @@
     </thead>
     <tbody>
       <% stats.each do |collection, counts| %>
-        <%= render Admin::AllCollectionsRowComponent.new(collection: collection, counts: counts) %>
+        <%= render Admin::AllCollectionsRowComponent.new(collection:, counts:) %>
       <% end %>
     </tbody>
   </table>

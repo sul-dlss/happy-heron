@@ -1,5 +1,5 @@
   <section id="terms" aria-describedby="popover-collection.terms">
-    <header>Terms of use * <%= render PopoverComponent.new key: "collection.terms" %></header>
+    <header>Terms of use * <%= render PopoverComponent.new key: 'collection.terms' %></header>
 
     <p>
       In addition to the license chosen, the following Terms of Use will also be displayed on your PURL page:
@@ -29,23 +29,23 @@
 
       <div class="ms-2" data-controller="complex-radio">
         <div class="form-check">
-          <%= form.radio_button :custom_rights_statement_option, "none", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
-          <%= form.label :custom_rights_statement_option, "No, do not include a custom use statement", class: "form-check-label", for: :collection_custom_rights_statement_option_none %>
+          <%= form.radio_button :custom_rights_statement_option, 'none', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+          <%= form.label :custom_rights_statement_option, 'No, do not include a custom use statement', class: 'form-check-label', for: :collection_custom_rights_statement_option_none %>
         </div>
         <div class="form-check" data-complex-radio-target="selection">
-          <%= form.radio_button :custom_rights_statement_option, "custom", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
-          <%= form.label :custom_rights_statement_option, "Yes, include the following custom use statement for every deposit in this collection.", class: "form-check-label", for: :collection_custom_rights_statement_option_custom %>
+          <%= form.radio_button :custom_rights_statement_option, 'custom', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+          <%= form.label :custom_rights_statement_option, 'Yes, include the following custom use statement for every deposit in this collection.', class: 'form-check-label', for: :collection_custom_rights_statement_option_custom %>
           <div>
-            <%= form.text_area :provided_custom_rights_statement, cols: "55", rows: "1", aria: {label: "Enter terms here"}, class: "form-control",
-                  "aria-labelledby": "custom_rights_statement_option_custom_label", required: true, placeholder: "Enter custom use statement" %>
+            <%= form.text_area :provided_custom_rights_statement, cols: '55', rows: '1', aria: { label: 'Enter terms here' }, class: 'form-control',
+                                                                  'aria-labelledby': 'custom_rights_statement_option_custom_label', required: true, placeholder: 'Enter custom use statement' %>
           </div>
         </div>
         <div class="form-check" data-complex-radio-target="selection">
-          <%= form.radio_button :custom_rights_statement_option, "entered_by_depositor", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
-          <%= form.label :custom_rights_statement_option, "Yes, allow the depositor to enter their own custom use statement. The depositor will see either the default instructions or your custom instructions if provided below.", class: "form-check-label", for: :collection_custom_rights_statement_option_entered_by_depositor %>
+          <%= form.radio_button :custom_rights_statement_option, 'entered_by_depositor', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+          <%= form.label :custom_rights_statement_option, 'Yes, allow the depositor to enter their own custom use statement. The depositor will see either the default instructions or your custom instructions if provided below.', class: 'form-check-label', for: :collection_custom_rights_statement_option_entered_by_depositor %>
           <p>Default instructions: <span class="fst-italic">Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the PURL page.</span></p>
-          <%= form.text_area :custom_rights_statement_custom_instructions, cols: "55", rows: "1", aria: {label: "Enter instructions here"}, class: "form-control",
-                "aria-labelledby": "custom_rights_statement_option_entered_by_depositor", placeholder: "Enter custom instructions" %>
+          <%= form.text_area :custom_rights_statement_custom_instructions, cols: '55', rows: '1', aria: { label: 'Enter instructions here' }, class: 'form-control',
+                                                                           'aria-labelledby': 'custom_rights_statement_option_entered_by_depositor', placeholder: 'Enter custom instructions' %>
         </div>
       </div>
     </fieldset>

@@ -1,12 +1,12 @@
 <table class="table table-sm mb-5 caption-header">
   <caption>Links to related information
     <%= helpers.turbo_frame_tag dom_id(collection_version, :edit_links),
-          src: edit_link_collection_version_path(
-            collection_version,
-            ref: "links",
-            label: "Edit links to related information"
-          ),
-          target: "_top" %>
+                                src: edit_link_collection_version_path(
+                                  collection_version,
+                                  ref: 'links',
+                                  label: 'Edit links to related information'
+                                ),
+                                target: '_top' %>
 
   </caption>
   <tbody>

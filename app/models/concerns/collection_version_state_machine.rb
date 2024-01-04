@@ -18,20 +18,20 @@ module CollectionVersionStateMachine
       # rubocop:enable Rails/SkipsModelValidations
 
       after_transition on: :begin_deposit do |collection_version, transition|
-        if transition.from == "first_draft"
+        if transition.from == 'first_draft'
           collection_version.collection.depositors.each do |depositor|
             CollectionsMailer.with(collection_version:, user: depositor)
-              .invitation_to_deposit_email.deliver_later
+                             .invitation_to_deposit_email.deliver_later
           end
 
           collection_version.collection.reviewed_by.each do |reviewer|
             CollectionsMailer.with(collection_version:, user: reviewer)
-              .review_access_granted_email.deliver_later
+                             .review_access_granted_email.deliver_later
           end
 
           collection_version.collection.managed_by.each do |manager|
             CollectionsMailer.with(collection_version:, user: manager)
-              .manage_access_granted_email.deliver_later
+                             .manage_access_granted_email.deliver_later
           end
         end
         DepositCollectionJob.perform_later(collection_version)
@@ -40,7 +40,7 @@ module CollectionVersionStateMachine
       after_transition new: :first_draft do |collection_version|
         if Settings.notify_admin_list
           FirstDraftCollectionsMailer.with(collection_version:)
-            .first_draft_created.deliver_later
+                                     .first_draft_created.deliver_later
         end
       end
 

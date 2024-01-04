@@ -13,16 +13,16 @@ FactoryBot.define do
         "Last#{n}"
       end
 
-      contributor_type { "person" }
-      role { "Contributing author" }
+      contributor_type { 'person' }
+      role { 'Contributing author' }
     end
 
     factory :org_author do
       sequence :full_name do |n|
         "organization#{n}"
       end
-      contributor_type { "organization" }
-      role { "Sponsor" }
+      contributor_type { 'organization' }
+      role { 'Sponsor' }
     end
   end
 end

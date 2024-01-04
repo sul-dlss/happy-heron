@@ -3,74 +3,74 @@
     <header>Manage release of deposits for discovery and download *</header>
 
     <fieldset class="mb-5 release-option" data-controller="complex-radio">
-      <legend aria-describedby="popover-collection.release" class="h5">When will files on deposits to this collection be downloadable? * <%= render PopoverComponent.new key: "collection.release" %></legend>
-      <div class="form-check<%= " is-invalid" if release_option_errors? %>" data-complex-radio-target="selection">
-        <%= form.radio_button :release_option, "immediate", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
-        <%= form.label "release_option_immediate", t("options.collection.release.immediate"), class: "form-check-label" %>
+      <legend aria-describedby="popover-collection.release" class="h5">When will files on deposits to this collection be downloadable? * <%= render PopoverComponent.new key: 'collection.release' %></legend>
+      <div class="form-check<%= ' is-invalid' if release_option_errors? %>" data-complex-radio-target="selection">
+        <%= form.radio_button :release_option, 'immediate', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+        <%= form.label 'release_option_immediate', t('options.collection.release.immediate'), class: 'form-check-label' %>
       </div>
 
-      <div class="form-check<%= " is-invalid" if release_option_errors? %>" data-complex-radio-target="selection">
-        <%= form.radio_button :release_option, "delay", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
-        <%= form.label "release_option_delay", t("options.collection.release.delay"), class: "form-check-label" %>
-        <%= form.label :delay_release_duration, "until", class: "form-check-label" %>
+      <div class="form-check<%= ' is-invalid' if release_option_errors? %>" data-complex-radio-target="selection">
+        <%= form.radio_button :release_option, 'delay', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+        <%= form.label 'release_option_delay', t('options.collection.release.delay'), class: 'form-check-label' %>
+        <%= form.label :delay_release_duration, 'until', class: 'form-check-label' %>
         <%= form.select :release_duration,
-              options_for_select(embargo_release_duration_options, selected: release_duration),
-              {},
-              id: "collection_delay_release_duration",
-              class: "form-select" %>
+                        options_for_select(embargo_release_duration_options, selected: release_duration),
+                        {},
+                        id: 'collection_delay_release_duration',
+                        class: 'form-select' %>
       </div>
 
-      <div class="form-check<%= " is-invalid" if release_option_errors? %>" data-complex-radio-target="selection">
-        <%= form.radio_button :release_option, "depositor-selects", class: "form-check-input", data: {action: "complex-radio#disableUnselectedInputs"} %>
-        <%= form.label "release_option_depositor-selects", t("options.collection.release.depositor_selects"), class: "form-check-label" %>
-        <%= form.label :depositor_selects_release_duration, "between date of deposit and", class: "form-check-label" %>
+      <div class="form-check<%= ' is-invalid' if release_option_errors? %>" data-complex-radio-target="selection">
+        <%= form.radio_button :release_option, 'depositor-selects', class: 'form-check-input', data: { action: 'complex-radio#disableUnselectedInputs' } %>
+        <%= form.label 'release_option_depositor-selects', t('options.collection.release.depositor_selects'), class: 'form-check-label' %>
+        <%= form.label :depositor_selects_release_duration, 'between date of deposit and', class: 'form-check-label' %>
         <%= form.select :release_duration,
-              options_for_select(embargo_release_duration_options, selected: release_duration),
-              {},
-              id: "collection_depositor_selects_release_duration",
-              class: "form-select" %>
+                        options_for_select(embargo_release_duration_options, selected: release_duration),
+                        {},
+                        id: 'collection_depositor_selects_release_duration',
+                        class: 'form-select' %>
       </div>
 
       <div class="invalid-feedback"><%= release_option_error_message %></div>
     </fieldset>
 
     <fieldset class="mb-5">
-      <legend aria-describedby="popover-collection.access" class="h5">Who will have permission to download files for deposits to this collection? * <%= render PopoverComponent.new key: "collection.access" %></legend>
+      <legend aria-describedby="popover-collection.access" class="h5">Who will have permission to download files for deposits to this collection? * <%= render PopoverComponent.new key: 'collection.access' %></legend>
       <div class="form-check">
-        <%= form.radio_button :access, "world", class: "form-check-input" %>
-        <%= form.label "access_world", t("options.collection.access.world"), class: "form-check-label" %>
+        <%= form.radio_button :access, 'world', class: 'form-check-input' %>
+        <%= form.label 'access_world', t('options.collection.access.world'), class: 'form-check-label' %>
       </div>
       <div class="form-check">
-        <%= form.radio_button :access, "stanford", class: "form-check-input" %>
-        <%= form.label "access_stanford", t("options.collection.access.stanford"), class: "form-check-label" %>
+        <%= form.radio_button :access, 'stanford', class: 'form-check-input' %>
+        <%= form.label 'access_stanford', t('options.collection.access.stanford'), class: 'form-check-label' %>
       </div>
       <div class="form-check">
-        <%= form.radio_button :access, "depositor-selects", class: "form-check-input" %>
-        <%= form.label "access_depositor-selects", t("options.collection.access.depositor_selects"), class: "form-check-label" %>
+        <%= form.radio_button :access, 'depositor-selects', class: 'form-check-input' %>
+        <%= form.label 'access_depositor-selects', t('options.collection.access.depositor_selects'), class: 'form-check-label' %>
       </div>
     </fieldset>
 
     <fieldset class="mb-5">
-      <legend aria-describedby="popover-collection.doi" class="h5">Will a DOI be assigned to the deposits in this collection?* <%= render PopoverComponent.new key: "collection.doi" %>
-        <%= link_to "What is a DOI?", Settings.external_links.what_is_a_doi, target: "_blank" %>
+      <legend aria-describedby="popover-collection.doi" class="h5">Will a DOI be assigned to the deposits in this collection?* <%= render PopoverComponent.new key: 'collection.doi' %>
+        <%= link_to 'What is a DOI?', Settings.external_links.what_is_a_doi, target: '_blank' %>
       </legend>
       <div class="form-check">
-        <%= form.radio_button :doi_option, "yes", class: "form-check-input" %>
-        <%= form.label "doi_option_yes", t("options.collection.doi.yes"), class: "form-check-label" %>
+        <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>
+        <%= form.label 'doi_option_yes', t('options.collection.doi.yes'), class: 'form-check-label' %>
       </div>
       <div class="form-check">
-        <%= form.radio_button :doi_option, "no", class: "form-check-input" %>
-        <%= form.label "doi_option_no", t("options.collection.doi.no"), class: "form-check-label" %>
+        <%= form.radio_button :doi_option, 'no', class: 'form-check-input' %>
+        <%= form.label 'doi_option_no', t('options.collection.doi.no'), class: 'form-check-label' %>
       </div>
       <div class="form-check">
-        <%= form.radio_button :doi_option, "depositor-selects", class: "form-check-input" %>
-        <%= form.label "doi_option_depositor-selects", t("options.collection.doi.depositor_selects"), class: "form-check-label" %>
+        <%= form.radio_button :doi_option, 'depositor-selects', class: 'form-check-input' %>
+        <%= form.label 'doi_option_depositor-selects', t('options.collection.doi.depositor_selects'), class: 'form-check-label' %>
       </div>
     </fieldset>
   </section>
 
-  <%= render Collections::EditLicenseComponent.new(form: form) %>
-  <%= render Collections::EditTermsOfUseComponent.new(form: form) %>
+  <%= render Collections::EditLicenseComponent.new(form:) %>
+  <%= render Collections::EditTermsOfUseComponent.new(form:) %>
 
   <section id="participants">
     <header>Collection participants *</header>
@@ -78,24 +78,24 @@
       <p class="col-sm-12">Select the appropriate option below to add a manager or depositor. Enter one participant SUNet ID per box and then click "Add" to save the entry.</p>
     </div>
 
-    <%= render Collections::Update::ManagersComponent.new(form: form) %>
-    <%= render Collections::Update::DepositorsComponent.new(form: form) %>
+    <%= render Collections::Update::ManagersComponent.new(form:) %>
+    <%= render Collections::Update::DepositorsComponent.new(form:) %>
 
     <div class="mb-3 row">
       <div class="col-sm-10 col-xl-8 offset-sm-2">
-         <%= form.check_box :email_when_participants_changed, {class: "form-check-input"}, "true", "false" %>
+         <%= form.check_box :email_when_participants_changed, { class: 'form-check-input' }, 'true', 'false' %>
          <%= form.label :email_when_participants_changed,
-               "Send email to Collection Managers and Reviewers when participants are added/removed.",
-               class: "form-check-label" %>
+                        'Send email to Collection Managers and Reviewers when participants are added/removed.',
+                        class: 'form-check-label' %>
       </div>
     </div>
 
     <div class="mb-3 row">
       <div class="col-sm-10 col-xl-8 offset-sm-2">
-         <%= form.check_box :email_depositors_status_changed, {class: "form-check-input"}, "true", "false" %>
+         <%= form.check_box :email_depositors_status_changed, { class: 'form-check-input' }, 'true', 'false' %>
          <%= form.label :email_depositors_status_changed,
-               "Send email to Depositors whose status has changed.",
-               class: "form-check-label" %>
+                        'Send email to Depositors whose status has changed.',
+                        class: 'form-check-label' %>
       </div>
     </div>
   </section>
@@ -104,14 +104,14 @@
     <header>Review Workflow</header>
 
     <div class="mb-3 row">
-      <%= tag.span t("hints.collection.review_enabled"), class: "col-sm-10 col-xl-8 col-form-label" %>
+      <%= tag.span t('hints.collection.review_enabled'), class: 'col-sm-10 col-xl-8 col-form-label' %>
       <div class="col-sm-3">
         <div class="form-check form-switch">
-          <%= form.check_box :review_enabled, {class: "form-check-input", data: {action: "review-workflow#toggle", review_workflow_target: "enabled"}}, "true", "false" %>
-          <%= form.label :review_enabled, "Enable Review Workflow", class: "form-check-label" %>
+          <%= form.check_box :review_enabled, { class: 'form-check-input', data: { action: 'review-workflow#toggle', review_workflow_target: 'enabled' } }, 'true', 'false' %>
+          <%= form.label :review_enabled, 'Enable Review Workflow', class: 'form-check-label' %>
         </div>
       </div>
     </div>
 
-    <%= render Collections::Update::ReviewersComponent.new(form: form) %>
+    <%= render Collections::Update::ReviewersComponent.new(form:) %>
   </section>

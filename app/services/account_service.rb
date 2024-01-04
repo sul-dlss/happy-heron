@@ -9,11 +9,11 @@ class AccountService
   end
 
   def fetch(sunetid)
-    Rails.cache.fetch(sunetid, namespace: "account", expires_in: 1.month) do
+    Rails.cache.fetch(sunetid, namespace: 'account', expires_in: 1.month) do
       url = template.partial_expand(sunetid:).pattern
       response = connection.get(url)
       doc = response.body
-      doc.slice("name", "description")
+      doc.slice('name', 'description')
     end
   end
 
@@ -27,10 +27,10 @@ class AccountService
 
   def connection
     Faraday::Connection.new(ssl: {
-      client_cert: cert,
-      client_key: key,
-      verify: false
-    }) do |conn|
+                              client_cert: cert,
+                              client_key: key,
+                              verify: false
+                            }) do |conn|
       conn.response :json
     end
   end

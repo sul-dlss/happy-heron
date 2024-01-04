@@ -14,11 +14,11 @@ class ReviewsController < ApplicationController
   end
 
   def record_review(version)
-    if params[:state] == "approve"
-      version.work.event_context = {user: current_user}
+    if params[:state] == 'approve'
+      version.work.event_context = { user: current_user }
       version.begin_deposit!
     else
-      version.work.event_context = {description: params[:reason], user: current_user}
+      version.work.event_context = { description: params[:reason], user: current_user }
       version.reject!
     end
   end

@@ -1,7 +1,7 @@
 <div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".plain-container">
 
   <template data-nested-form-target='template'>
-    <%= form.fields_for :contact_emails, ContactEmail.new, child_index: "TEMPLATE_RECORD" do |email_form| %>
+    <%= form.fields_for :contact_emails, ContactEmail.new, child_index: 'TEMPLATE_RECORD' do |email_form| %>
       <%= row(email_form) %>
     <% end %>
   </template>
@@ -11,6 +11,6 @@
   <% end %>
 
   <div data-nested-form-target="add_item">
-    <%= button_tag "+ Add another email", type: "button", class: "col-sm-2 btn btn-outline-primary", data: {action: "nested-form#addAssociation"} %>
+    <%= button_tag '+ Add another email', type: 'button', class: 'col-sm-2 btn btn-outline-primary', data: { action: 'nested-form#addAssociation' } %>
   </div>
 </div>

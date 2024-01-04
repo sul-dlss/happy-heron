@@ -13,10 +13,10 @@ class WorkOwnersController < ApplicationController
     authorize! :work_owner
 
     work = Work.find(params[:id])
-    new_owner = User.find_or_create_by(email: "#{params["sunetid"]}@stanford.edu")
+    new_owner = User.find_or_create_by(email: "#{params['sunetid']}@stanford.edu")
 
     if work.owner == new_owner
-      flash[:error] = I18n.t("work.flash.owner_not_updated")
+      flash[:error] = I18n.t('work.flash.owner_not_updated')
     else
       update_owner(work, new_owner)
     end
@@ -28,7 +28,7 @@ class WorkOwnersController < ApplicationController
   def update_owner(work, new_owner)
     move_work_to_new_owner(work, new_owner)
     send_emails(work)
-    flash[:success] = I18n.t("work.flash.owner_updated")
+    flash[:success] = I18n.t('work.flash.owner_updated')
   end
 
   def send_emails(work)
@@ -39,10 +39,10 @@ class WorkOwnersController < ApplicationController
 
   def send_participant_change_emails(collection)
     (collection.managed_by + collection.reviewed_by).uniq.each do |user|
-      next if collection.opted_out_of_email?(user, "participant_changed")
+      next if collection.opted_out_of_email?(user, 'participant_changed')
 
       CollectionsMailer.with(collection_version: collection.head, user:)
-        .participants_changed_email.deliver_later
+                       .participants_changed_email.deliver_later
     end
   end
 
@@ -52,7 +52,7 @@ class WorkOwnersController < ApplicationController
 
   def send_collection_managers_email(work)
     work.collection.managed_by.each do |user|
-      next if work.collection.opted_out_of_email?(user, "assigned_new_owner")
+      next if work.collection.opted_out_of_email?(user, 'assigned_new_owner')
 
       WorksMailer.with(work:, user:).changed_owner_collection_manager_email.deliver_later
     end
@@ -79,7 +79,7 @@ class WorkOwnersController < ApplicationController
   end
 
   def create_event(work, new_owner, orig_owner)
-    work.events.create(work.event_context.merge(event_type: "update_owner",
-      description: "from #{orig_owner.sunetid} to #{new_owner.sunetid}"))
+    work.events.create(work.event_context.merge(event_type: 'update_owner',
+                                                description: "from #{orig_owner.sunetid} to #{new_owner.sunetid}"))
   end
 end

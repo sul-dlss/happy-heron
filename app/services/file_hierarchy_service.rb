@@ -29,7 +29,7 @@ class FileHierarchyService
   def initialize(work_version:)
     @work_version = work_version
     @index = 0
-    @root_directory = Directory.new("", "", [], [], 0, 0)
+    @root_directory = Directory.new('', '', [], [], 0, 0)
   end
 
   def to_hierarchy

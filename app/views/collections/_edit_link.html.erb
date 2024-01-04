@@ -1,9 +1,11 @@
-<%= turbo_frame_tag dom_id(collection, ["edit", anchor].compact.join("_")) do %>
+<%= turbo_frame_tag dom_id(collection, ['edit', anchor].compact.join('_')) do %>
   <% if allowed_to?(:update?, collection.head) %>
-    <% url = collection.head.first_draft? ?
-       edit_first_draft_collection_path(collection, anchor: anchor) :
-       edit_collection_path(collection, anchor: anchor) %>
-    <%= link_to tag.span(class: "fa-solid fa-pencil-alt edit"),
-          url, aria: {label: label} %>
+    <% url = if collection.head.first_draft?
+               edit_first_draft_collection_path(collection, anchor:)
+             else
+               edit_collection_path(collection, anchor:)
+             end %>
+    <%= link_to tag.span(class: 'fa-solid fa-pencil-alt edit'),
+                url, aria: { label: } %>
   <% end %>
 <% end %>

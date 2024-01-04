@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Fast Controller" do
+RSpec.describe 'Fast Controller' do
   let(:headers) do
     {
-      "Accept" => "application/xml",
-      "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-      "User-Agent" => "Stanford Self-Deposit (Happy Heron)"
+      'Accept' => 'application/xml',
+      'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      'User-Agent' => 'Stanford Self-Deposit (Happy Heron)'
     }
   end
 
-  let(:other_params) { "&rows=20&start=0&version=2.2&indent=on&fl=id,fullphrase,type&sort=usage+desc" }
+  let(:other_params) { '&rows=20&start=0&version=2.2&indent=on&fl=id,fullphrase,type&sort=usage+desc' }
 
-  context "when lookup is successful without wildcard" do
+  context 'when lookup is successful without wildcard' do
     let(:lookup_resp_body) do
       <<~XML
                 <?xml version="1.0" encoding="UTF-8"?>
                 <response>
-        #{"        "}
+        #{'        '}
                 <result name="response" numFound="299" start="0">
                   <doc>
                     <str name="id">fst00537796</str>
@@ -108,16 +108,16 @@ RSpec.describe "Fast Controller" do
     # returns the first ten deduplicated _authorized_ forms of FAST terms that match the entered letters.
     let(:suggestions) do
       [
-        {"Tea" => "http://id.worldcat.org/fast/1144120/::topic"},
-        {"Tea Party movement" => "http://id.worldcat.org/fast/1762507/::topic"},
-        {"Tea making paraphernalia" => "http://id.worldcat.org/fast/1144165/::topic"},
-        {"Tea tax (American colonies)" => "http://id.worldcat.org/fast/1144178/::topic"},
-        {"Tea trade" => "http://id.worldcat.org/fast/1144179/::topic"},
-        {"Tea--Health aspects" => "http://id.worldcat.org/fast/1144131/::topic"},
-        {"Tea--Social aspects" => "http://id.worldcat.org/fast/1144144/::topic"},
-        {"Tea--Therapeutic use" => "http://id.worldcat.org/fast/1144148/::topic"},
-        {"Tearooms" => "http://id.worldcat.org/fast/1144712/::topic"},
-        {"East India Company" => "http://id.worldcat.org/fast/537796/::organization"}
+        { 'Tea' => 'http://id.worldcat.org/fast/1144120/::topic' },
+        { 'Tea Party movement' => 'http://id.worldcat.org/fast/1762507/::topic' },
+        { 'Tea making paraphernalia' => 'http://id.worldcat.org/fast/1144165/::topic' },
+        { 'Tea tax (American colonies)' => 'http://id.worldcat.org/fast/1144178/::topic' },
+        { 'Tea trade' => 'http://id.worldcat.org/fast/1144179/::topic' },
+        { 'Tea--Health aspects' => 'http://id.worldcat.org/fast/1144131/::topic' },
+        { 'Tea--Social aspects' => 'http://id.worldcat.org/fast/1144144/::topic' },
+        { 'Tea--Therapeutic use' => 'http://id.worldcat.org/fast/1144148/::topic' },
+        { 'Tearooms' => 'http://id.worldcat.org/fast/1144712/::topic' },
+        { 'East India Company' => 'http://id.worldcat.org/fast/537796/::organization' }
       ]
     end
 
@@ -126,20 +126,20 @@ RSpec.describe "Fast Controller" do
       stub_request(:get, url).with(headers:).to_return(status: 200, body: lookup_resp_body, headers: {})
     end
 
-    it "returns status 200 and html with suggestions" do
-      get "/fast", params: {q: "tea"}
+    it 'returns status 200 and html with suggestions' do
+      get '/fast', params: { q: 'tea' }
       expect(response).to have_http_status :ok
 
       match_suggestions(suggestions, response)
     end
   end
 
-  context "when lookup is successful with wildcard" do
+  context 'when lookup is successful with wildcard' do
     let(:lookup_resp_body1) do
       <<~XML
                 <?xml version="1.0" encoding="UTF-8"?>
                 <response>
-        #{"        "}
+        #{'        '}
                 <result name="response" numFound="2" start="0">
                   <doc>
                     <str name="id">fst00911692</str>
@@ -158,7 +158,7 @@ RSpec.describe "Fast Controller" do
       <<~XML
                 <?xml version="1.0" encoding="UTF-8"?>
                 <response>
-        #{"        "}
+        #{'        '}
                 <lst name="responseHeader">
                   <int name="status">0</int>
                   <int name="QTime">0</int>
@@ -261,16 +261,16 @@ RSpec.describe "Fast Controller" do
     # returns the first ten deduplicated _authorized_ forms of FAST terms that match the entered letters.
     let(:suggestions) do
       [
-        {"Tesla (Musical group)" => "http://id.worldcat.org/fast/665529/::organization"},
-        {"Tesla Model S automobile" => "http://id.worldcat.org/fast/1983442/::topic"},
-        {"Tesla Motors" => "http://id.worldcat.org/fast/1917360/::organization"},
-        {"Tesla Power Project" => "http://id.worldcat.org/fast/790766/::organization"},
-        {"Tesla Roadster automobile" => "http://id.worldcat.org/fast/1742752/::topic"},
-        {"Tesla automobiles" => "http://id.worldcat.org/fast/1983485/::topic"},
-        {"Tesla coils" => "http://id.worldcat.org/fast/1148179/::topic"},
-        {"Tesla, Nikola, 1856-1943" => "http://id.worldcat.org/fast/28173/::person"},
-        {"Tesla, Nikola, 1856-1943 (Spirit)" => "http://id.worldcat.org/fast/483782/::person"},
-        {"Teslenko, Arkhyp I︠U︡khymovych, 1882-1911" => "http://id.worldcat.org/fast/81416/::person"}
+        { 'Tesla (Musical group)' => 'http://id.worldcat.org/fast/665529/::organization' },
+        { 'Tesla Model S automobile' => 'http://id.worldcat.org/fast/1983442/::topic' },
+        { 'Tesla Motors' => 'http://id.worldcat.org/fast/1917360/::organization' },
+        { 'Tesla Power Project' => 'http://id.worldcat.org/fast/790766/::organization' },
+        { 'Tesla Roadster automobile' => 'http://id.worldcat.org/fast/1742752/::topic' },
+        { 'Tesla automobiles' => 'http://id.worldcat.org/fast/1983485/::topic' },
+        { 'Tesla coils' => 'http://id.worldcat.org/fast/1148179/::topic' },
+        { 'Tesla, Nikola, 1856-1943' => 'http://id.worldcat.org/fast/28173/::person' },
+        { 'Tesla, Nikola, 1856-1943 (Spirit)' => 'http://id.worldcat.org/fast/483782/::person' },
+        { 'Teslenko, Arkhyp I︠U︡khymovych, 1882-1911' => 'http://id.worldcat.org/fast/81416/::person' }
       ]
     end
 
@@ -281,8 +281,8 @@ RSpec.describe "Fast Controller" do
       stub_request(:get, url2).with(headers:).to_return(status: 200, body: lookup_resp_body2, headers: {})
     end
 
-    it "returns status 200 and html with suggestions" do
-      get "/fast", params: {q: "tesl"}
+    it 'returns status 200 and html with suggestions' do
+      get '/fast', params: { q: 'tesl' }
       expect(response).to have_http_status :ok
 
       match_suggestions(suggestions, response)
@@ -300,20 +300,20 @@ RSpec.describe "Fast Controller" do
     end
   end
 
-  context "when error is received from the lookup server" do
+  context 'when error is received from the lookup server' do
     before do
       url = "#{Settings.autocomplete_lookup.url}?q=keywords:(tea)#{other_params}"
       stub_request(:get, url)
         .with(headers:)
-        .to_return(status: [404, "some error message"], body: "", headers: {})
+        .to_return(status: [404, 'some error message'], body: '', headers: {})
       allow(Rails.logger).to receive(:warn)
     end
 
-    it "returns status 500 and an empty body" do
-      get "/fast", params: {q: "tea"}
+    it 'returns status 500 and an empty body' do
+      get '/fast', params: { q: 'tea' }
       expect(response).to have_http_status :internal_server_error
-      expect(response.body).to eq ""
-      expect(Rails.logger).to have_received(:warn).with("Autocomplete results for tea returned 404")
+      expect(response.body).to eq ''
+      expect(Rails.logger).to have_received(:warn).with('Autocomplete results for tea returned 404')
     end
   end
 end

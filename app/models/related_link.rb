@@ -4,5 +4,5 @@
 class RelatedLink < ApplicationRecord
   belongs_to :linkable, polymorphic: true
   validates :url, presence: true
-  strip_attributes allow_empty: true, only: [:link_title, :url]
+  strip_attributes allow_empty: true, only: %i[link_title url]
 end

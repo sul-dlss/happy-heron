@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :role_term do
-    label { "Default Role" }
+    label { 'Default Role' }
   end
 end

@@ -5,19 +5,19 @@ class Work < ApplicationRecord
   include Eventable
 
   belongs_to :collection
-  belongs_to :depositor, class_name: "User"
+  belongs_to :depositor, class_name: 'User'
   # When created the owner is the depositor, but this can be changed so that someone else can manage the work.
-  belongs_to :owner, class_name: "User"
-  belongs_to :head, class_name: "WorkVersion", optional: true
+  belongs_to :owner, class_name: 'User'
+  belongs_to :head, class_name: 'WorkVersion', optional: true
 
   has_many :events, as: :eventable, dependent: :destroy
-  has_many :work_versions, -> { order version: :asc }, dependent: :destroy, inverse_of: "work"
+  has_many :work_versions, -> { order version: :asc }, dependent: :destroy, inverse_of: 'work'
 
   scope :locked, -> { where(locked: true) }
 
   def broadcast_update
     broadcast_replace_to self
-    broadcast_replace_to :summary_rows, partial: "dashboards/collection_summary_row"
+    broadcast_replace_to :summary_rows, partial: 'dashboards/collection_summary_row'
   end
 
   def purl
@@ -27,7 +27,7 @@ class Work < ApplicationRecord
   end
 
   def druid_without_namespace
-    druid&.delete_prefix("druid:")
+    druid&.delete_prefix('druid:')
   end
 
   # This ensures that action-policy doesn't think that every 'Work.new' is the same.
@@ -39,7 +39,7 @@ class Work < ApplicationRecord
   end
 
   def last_rejection_description
-    events.latest_by_type("reject")&.description
+    events.latest_by_type('reject')&.description
   end
 
   def collection_name
@@ -65,6 +65,6 @@ class Work < ApplicationRecord
   private
 
   def default_event_context
-    {user: depositor}
+    { user: depositor }
   end
 end

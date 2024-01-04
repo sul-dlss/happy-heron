@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # Looks for WorkVersion that are still in the depositing state, but accessioning is complete.
 # This happens when notification of the DepositCompleteJob fails.
 class DepositCompleteAuditor
-  ACCESSIONED_STATUS_DISPLAY = "Accessioned"
+  ACCESSIONED_STATUS_DISPLAY = 'Accessioned'
 
   def self.execute
     new.execute
@@ -11,7 +13,8 @@ class DepositCompleteAuditor
     depositing_objects.each do |object|
       next if object.druid.blank? || not_accessioned?(object)
 
-      Honeybadger.notify("Object is still in depositing state, but accessioning is complete", context: {druid: object.druid, version: object.head.version})
+      Honeybadger.notify('Object is still in depositing state, but accessioning is complete',
+                         context: { druid: object.druid, version: object.head.version })
       Rails.logger.info("Object is still in depositing state, but accessioning is complete: #{object.druid}")
       DepositCompleter.complete(object_version: object.head)
     end
@@ -20,8 +23,8 @@ class DepositCompleteAuditor
   private
 
   def depositing_objects
-    Work.all.joins(:head).where(head: {state: "depositing"}).to_a + \
-      Collection.all.joins(:head).where(head: {state: "depositing"}).to_a
+    Work.joins(:head).where(head: { state: 'depositing' }).to_a + \
+      Collection.joins(:head).where(head: { state: 'depositing' }).to_a
   end
 
   def workflow_client
@@ -29,6 +32,7 @@ class DepositCompleteAuditor
   end
 
   def not_accessioned?(object)
-    workflow_client.status(druid: object.druid, version: object.head.version.to_s).display_simplified != ACCESSIONED_STATUS_DISPLAY
+    workflow_client.status(druid: object.druid,
+                           version: object.head.version.to_s).display_simplified != ACCESSIONED_STATUS_DISPLAY
   end
 end

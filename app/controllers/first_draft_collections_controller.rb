@@ -36,10 +36,10 @@ class FirstDraftCollectionsController < ObjectsController
     @form = collection_form(collection_version)
 
     if @form.validate(create_params) && @form.save
-      collection_version.collection.event_context = {user: current_user, description: "Created"}
+      collection_version.collection.event_context = { user: current_user, description: 'Created' }
       collection_version.update_metadata!
       if deposit_button_pushed?
-        collection_version.collection.event_context = {user: current_user}
+        collection_version.collection.event_context = { user: current_user }
         collection_version.begin_deposit!
       end
       redirect_to collection_path(collection)
@@ -74,7 +74,7 @@ class FirstDraftCollectionsController < ObjectsController
   def collection_form(collection_version)
     if deposit_button_pushed?
       return CreateCollectionForm.new(collection_version:,
-        collection: collection_version.collection)
+                                      collection: collection_version.collection)
     end
 
     DraftCollectionForm.new(collection_version:, collection: collection_version.collection)
@@ -82,18 +82,18 @@ class FirstDraftCollectionsController < ObjectsController
 
   def create_params
     params.require(:collection).permit(:name, :description, :access,
-      :review_enabled, :license_option,
-      :required_license, :default_license,
-      :custom_rights_statement_option, :provided_custom_rights_statement,
-      :custom_rights_statement_custom_instructions,
-      :email_when_participants_changed,
-      :email_depositors_status_changed,
-      :release_option, :release_duration,
-      :doi_option,
-      related_links_attributes: %i[_destroy id link_title url],
-      contact_emails_attributes: %i[_destroy id email],
-      managed_by_attributes: %i[_destroy id sunetid],
-      reviewed_by_attributes: %i[_destroy id sunetid],
-      depositors_attributes: %i[_destroy id sunetid])
+                                       :review_enabled, :license_option,
+                                       :required_license, :default_license,
+                                       :custom_rights_statement_option, :provided_custom_rights_statement,
+                                       :custom_rights_statement_custom_instructions,
+                                       :email_when_participants_changed,
+                                       :email_depositors_status_changed,
+                                       :release_option, :release_duration,
+                                       :doi_option,
+                                       related_links_attributes: %i[_destroy id link_title url],
+                                       contact_emails_attributes: %i[_destroy id email],
+                                       managed_by_attributes: %i[_destroy id sunetid],
+                                       reviewed_by_attributes: %i[_destroy id sunetid],
+                                       depositors_attributes: %i[_destroy id sunetid])
   end
 end

@@ -9,6 +9,7 @@ RSpec::Matchers.define :be_valid_html do
   end
 
   failure_message do
-    "expected no HTML parsing errors and found #{@html_errors.count}:\n\t#{@html_errors.map(&:detailed_message).join("\n\t")}"
+    "expected no HTML parsing errors and found #{@html_errors.count}:\n\t" \
+      "#{@html_errors.map(&:detailed_message).join("\n\t")}"
   end
 end

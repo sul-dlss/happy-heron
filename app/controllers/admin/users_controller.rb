@@ -19,9 +19,9 @@ module Admin
       return Failure(:not_found) unless user
 
       presenter = Admin::UserPresenter.new(user:,
-        collections_created_by_user: user.created_collections,
-        collections: user.collections_with_access,
-        works: user.works_created_or_owned)
+                                           collections_created_by_user: user.created_collections,
+                                           collections: user.collections_with_access,
+                                           works: user.works_created_or_owned)
       Success(presenter)
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Finds contributors that have an orcid id and a Stanford affiliation, but do not have an orcid in MAIS.
 class OrcidStanfordUserService
   def self.execute
@@ -5,7 +7,11 @@ class OrcidStanfordUserService
   end
 
   def execute
-    orcid_ids = Affiliation.where("label ILIKE ?", "%Stanford University%").joins(:abstract_contributor).where.not(abstract_contributor: {orcid: nil}).pluck(:orcid).uniq
+    orcid_ids = Affiliation.where('label ILIKE ?',
+                                  '%Stanford University%')
+                           .joins(:abstract_contributor)
+                           .where.not(abstract_contributor: { orcid: nil })
+                           .pluck(:orcid).uniq
     contributors = orcid_ids.map { |orcid_id| AbstractContributor.find_by(orcid: orcid_id) }
     contributors.select do |contributor|
       mais_orcid_client.fetch_orcid_user(orcidid: contributor.orcid).nil?

@@ -8,27 +8,27 @@ class BreadcrumbNavComponent < ApplicationComponent
   end
 
   def full_title(breadcrumb)
-    breadcrumb.presence || I18n.t("deposit.no_title")
+    breadcrumb.presence || I18n.t('deposit.no_title')
   end
 
   def truncated_title(breadcrumb)
-    truncate(full_title(breadcrumb), length: 150, separator: " ")
+    truncate(full_title(breadcrumb), length: 150, separator: ' ')
   end
 
   def title_from_breadcrumbs
-    title_breadcrumbs = (orig_breadcrumbs.presence || [{title: "Dashboard"}]).reject do |breadcrumb|
+    title_breadcrumbs = (orig_breadcrumbs.presence || [{ title: 'Dashboard' }]).reject do |breadcrumb|
       breadcrumb[:omit_title]
     end
     title_breadcrumbs
       .pluck(:title)
       .compact
-      .unshift("SDR")
-      .join(" | ")
+      .unshift('SDR')
+      .join(' | ')
   end
 
   def breadcrumbs
-    dashboard = [{title: "Dashboard", link: "/dashboard"}]
-    dashboard << {title: "Admin Dashboard", link: "/admin"} if admin
+    dashboard = [{ title: 'Dashboard', link: '/dashboard' }]
+    dashboard << { title: 'Admin Dashboard', link: '/admin' } if admin
     dashboard + orig_breadcrumbs
   end
 

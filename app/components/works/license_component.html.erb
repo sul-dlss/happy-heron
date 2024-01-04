@@ -3,20 +3,20 @@
   <% if user_can_set_license? %>
     <div class="mb-3 row">
       <div class="col-sm-2">
-        <%= form.label :license, "License *", class: "col-form-label" %>
-        <%= render PopoverComponent.new key: "work.license" %>
+        <%= form.label :license, 'License *', class: 'col-form-label' %>
+        <%= render PopoverComponent.new key: 'work.license' %>
       </div>
       <div class="col-sm-5">
         <%= form.select :license,
-              grouped_options_for_select(License.grouped_options(license), license),
-              {}, class: "form-select", "aria-describedby": "popover-work.license",
-              data: {controller: "license", action: "change->license#validate"} %>
+                        grouped_options_for_select(License.grouped_options(license), license),
+                        {}, class: 'form-select', 'aria-describedby': 'popover-work.license',
+                            data: { controller: 'license', action: 'change->license#validate' } %>
         <div class="invalid-feedback">
           Please select a supported license.
         </div>
       </div>
       <div class="col-sm-5">
-        <%= link_to "Get help selecting a license", Settings.external_links.license_help, target: "_blank" %>
+        <%= link_to 'Get help selecting a license', Settings.external_links.license_help, target: '_blank' %>
       </div>
     </div>
   <% else %>
@@ -33,9 +33,9 @@
     <hr>
     <div class="row">
       <div class="col-sm-2">
-        <%= form.label :custom_rights, "Additional terms of use", class: "col-form-label" %>
+        <%= form.label :custom_rights, 'Additional terms of use', class: 'col-form-label' %>
         <% if custom_rights_statement_source_option == "entered_by_depositor" %>
-          <%= render PopoverComponent.new key: "work.custom_rights_from_depositor" %>
+          <%= render PopoverComponent.new key: 'work.custom_rights_from_depositor' %>
         <% end %>
       </div>
       <% if custom_rights_statement_source_option == "entered_by_depositor" %>
@@ -49,7 +49,7 @@
           <%= simple_format collection.provided_custom_rights_statement %>
           <%= form.hidden_field :custom_rights, value: collection.provided_custom_rights_statement %>
         <% else %>
-          <%= form.text_area :custom_rights, class: "form-control", aria: {label: "Additional terms of use"} %>
+          <%= form.text_area :custom_rights, class: 'form-control', aria: { label: 'Additional terms of use' } %>
         <% end %>
       </div>
     </div>

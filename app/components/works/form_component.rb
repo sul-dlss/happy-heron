@@ -13,10 +13,10 @@ module Works
       persisted? ? work_form : [work.collection, work_form]
     end
 
-    alias_method :collection_draft_works_path, :collection_works_path
+    alias collection_draft_works_path collection_works_path
 
     def page_title
-      work_version.title.presence || "Deposit your content"
+      work_version.title.presence || 'Deposit your content'
     end
 
     delegate :persisted?, to: :work_form
@@ -45,7 +45,7 @@ module Works
     end
 
     def data_controllers
-      "auto-citation unsaved-changes deposit-button"
+      'auto-citation unsaved-changes deposit-button'
     end
   end
 end

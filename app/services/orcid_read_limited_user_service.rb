@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Finds orcid ids for Stanford users that have only granted read permissions.
 class OrcidReadLimitedUserService
   def self.execute
@@ -6,13 +8,14 @@ class OrcidReadLimitedUserService
 
   # @return [Array<MaisOrcidClient::OrcidUser>] orcid users that have only granted read permissions
   def execute
-    orcid_ids.map do |orcid|
+    orcid_ids.filter_map do |orcid|
       next unless orcid
+
       orcid_user = mais_orcid_client.fetch_orcid_user(orcidid: orcid)
       next unless orcid_user
 
       orcid_user unless orcid_user.update?
-    end.compact
+    end
   end
 
   private

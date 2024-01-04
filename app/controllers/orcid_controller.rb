@@ -7,7 +7,7 @@ class OrcidController < ApplicationController
     result = OrcidService.lookup(orcid: params[:id])
 
     if result.success?
-      render json: {orcid: params[:id], first_name: result.value![0], last_name: result.value![1]}
+      render json: { orcid: params[:id], first_name: result.value![0], last_name: result.value![1] }
     else
       head result.failure
     end

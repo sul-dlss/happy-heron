@@ -1,27 +1,27 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe WorkVersionEventDescriptionBuilder do
   subject(:result) { described_class.build(form) }
 
   let(:collection) { build(:collection, :depositor_selects_access, :depositor_selects_release_date) }
   let(:work_version) do
-    create(:work_version, :with_no_subtype, :with_keywords, attached_files:, state:, version: 1, work: work)
+    create(:work_version, :with_no_subtype, :with_keywords, attached_files:, state:, version: 1, work:)
   end
-  let(:work) { build(:work, assign_doi: true, collection: collection) }
+  let(:work) { build(:work, assign_doi: true, collection:) }
   let(:form) { DraftWorkForm.new(work_version:, work:) }
   let(:attached_files) { [] }
-  let(:filename) { "xml.svg" }
+  let(:filename) { 'xml.svg' }
   let(:blob) { ActiveStorage::Blob.new(filename:) }
   let(:attached_file) { AttachedFile.new }
 
-  context "when work is created" do
-    let(:state) { "new" }
+  context 'when work is created' do
+    let(:state) { 'new' }
 
     before { form.validate(params) }
 
-    context "when nothing changed" do
+    context 'when nothing changed' do
       let(:params) do
         ActionController::Parameters.new(
           work_type: work_version.work_type,
@@ -29,40 +29,40 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         )
       end
 
-      it { is_expected.to eq "Created" }
+      it { is_expected.to eq 'Created' }
     end
 
-    context "when different license is select" do
+    context 'when different license is select' do
       let(:params) do
         ActionController::Parameters.new(
           work_type: work_version.work_type,
           subtype: work_version.subtype,
-          license: "Apache-2.0"
+          license: 'Apache-2.0'
         )
       end
 
-      it { is_expected.to eq "license modified" }
+      it { is_expected.to eq 'license modified' }
     end
 
-    context "when multiple fields are added" do
+    context 'when multiple fields are added' do
       let(:params) do
         ActionController::Parameters.new(
           work_type: work_version.work_type,
           subtype: work_version.subtype,
-          title: "A great work",
-          abstract: "This is really fundamental work.",
-          custom_rights: "Here are new terms of use."
+          title: 'A great work',
+          abstract: 'This is really fundamental work.',
+          custom_rights: 'Here are new terms of use.'
         )
       end
 
-      it { is_expected.to eq "title of deposit modified, abstract modified, custom terms modified" }
+      it { is_expected.to eq 'title of deposit modified, abstract modified, custom terms modified' }
     end
   end
 
-  context "when work is updated" do
-    let(:state) { "first_draft" }
+  context 'when work is updated' do
+    let(:state) { 'first_draft' }
 
-    context "when nothing has changed" do
+    context 'when nothing has changed' do
       let(:params) do
         ActionController::Parameters.new(
           # TODO: to make realistic, add ALL the params that get passed in from the form
@@ -84,86 +84,86 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
     # NOTE: there are other associations on the work_version that should behave identically to this
     # and use the same code to detect changes, but are not being tested right now.
     # These are: authors, contributors, related_links, related_works, contact_emails, subtype
-    context "when keywords changed" do
+    context 'when keywords changed' do
       let(:params) { ActionController::Parameters.new(keywords: keyword_params) }
 
       before do
         form.validate(params)
       end
 
-      context "when keyword added" do
+      context 'when keyword added' do
         let(:keyword_params) do
           [
-            {"_destroy" => "", "id" => form.keywords[0].id, "label" => form.keywords[0].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[1].id, "label" => form.keywords[1].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[2].id, "label" => form.keywords[2].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "label" => "This one added", "uri" => "http://example.org/uri", "cocina_type" => "test"}
+            { '_destroy' => '', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'label' => 'This one added', 'uri' => 'http://example.org/uri', 'cocina_type' => 'test' }
           ]
         end
 
-        it { is_expected.to eq "keywords modified" }
+        it { is_expected.to eq 'keywords modified' }
       end
 
-      context "when one keyword changed" do
+      context 'when one keyword changed' do
         let(:keyword_params) do
           [
-            {"_destroy" => "", "label" => "This one changed", "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[1].id, "label" => form.keywords[1].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[2].id, "label" => form.keywords[2].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"}
+            { '_destroy' => '', 'label' => 'This one changed', 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' }
           ]
         end
 
-        it { is_expected.to eq "keywords modified" }
+        it { is_expected.to eq 'keywords modified' }
       end
 
-      context "when one keyword removed and one keyword added" do
+      context 'when one keyword removed and one keyword added' do
         let(:keyword_params) do
           [
-            {"_destroy" => "1", "id" => form.keywords[0].id, "label" => form.keywords[0].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[1].id, "label" => form.keywords[1].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[2].id, "label" => form.keywords[2].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "label" => "This one added", "uri" => "http://example.org/uri",
-             "cocina_type" => "place"}
+            { '_destroy' => '1', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'label' => 'This one added', 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' }
           ]
         end
 
-        it { is_expected.to eq "keywords modified" }
+        it { is_expected.to eq 'keywords modified' }
       end
 
-      context "when keyword removed" do
+      context 'when keyword removed' do
         let(:keyword_params) do
           [
-            {"_destroy" => "1", "id" => form.keywords[0].id, "label" => form.keywords[0].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[1].id, "label" =>  form.keywords[1].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"},
-            {"_destroy" => "", "id" => form.keywords[2].id, "label" =>  form.keywords[2].label, "uri" => "http://example.org/uri",
-             "cocina_type" => "place"}
+            { '_destroy' => '1', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[1].id, 'label' =>  form.keywords[1].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' },
+            { '_destroy' => '', 'id' => form.keywords[2].id, 'label' =>  form.keywords[2].label, 'uri' => 'http://example.org/uri',
+              'cocina_type' => 'place' }
           ]
         end
 
-        it { is_expected.to eq "keywords modified" }
+        it { is_expected.to eq 'keywords modified' }
       end
     end
 
-    context "when keywords are the same" do
+    context 'when keywords are the same' do
       let(:keyword_params) do
         [
-          {"_destroy" => "", "id" => form.keywords[0].id, "label" => form.keywords[0].label, "uri" => "http://example.org/uri",
-           "cocina_type" => "place"},
-          {"_destroy" => "", "id" => form.keywords[1].id, "label" => form.keywords[1].label, "uri" => "http://example.org/uri",
-           "cocina_type" => "place"},
-          {"_destroy" => "", "id" => form.keywords[2].id, "label" => form.keywords[2].label, "uri" => "http://example.org/uri",
-           "cocina_type" => "place"}
+          { '_destroy' => '', 'id' => form.keywords[0].id, 'label' => form.keywords[0].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[1].id, 'label' => form.keywords[1].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' },
+          { '_destroy' => '', 'id' => form.keywords[2].id, 'label' => form.keywords[2].label, 'uri' => 'http://example.org/uri',
+            'cocina_type' => 'place' }
         ]
       end
       let(:params) { ActionController::Parameters.new(keywords: keyword_params) }
@@ -175,18 +175,18 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
       it { is_expected.to be_blank }
     end
 
-    context "when embargoed, then edited with no changes to embargo" do
+    context 'when embargoed, then edited with no changes to embargo' do
       let(:embargo_date) { 11.months.from_now }
       let(:work_version) do
         create(:work_version_with_work, :with_no_subtype, embargo_date:, collection:, state:)
       end
       let(:params) do
         ActionController::Parameters.new(
-          :title => "new title",
-          :release => "embargo",
-          "embargo_date(1i)" => embargo_date.year,
-          "embargo_date(2i)" => embargo_date.month,
-          "embargo_date(3i)" => embargo_date.day
+          :title => 'new title',
+          :release => 'embargo',
+          'embargo_date(1i)' => embargo_date.year,
+          'embargo_date(2i)' => embargo_date.month,
+          'embargo_date(3i)' => embargo_date.day
         )
       end
 
@@ -194,22 +194,22 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         form.validate(params)
       end
 
-      it "description does not show embargo modified" do
-        expect(result).to eq "title of deposit modified"
+      it 'description does not show embargo modified' do
+        expect(result).to eq 'title of deposit modified'
       end
     end
 
-    context "when embargoed, then changes to embargo date" do
+    context 'when embargoed, then changes to embargo date' do
       let(:embargo_date) { 10.months.from_now }
       let(:new_embargo_date) { 11.months.from_now }
       let(:work_version) { create(:work_version_with_work, :with_no_subtype, embargo_date:, collection:, state:) }
       let(:params) do
         ActionController::Parameters.new(
-          :title => "new title",
-          :release => "embargo",
-          "embargo_date(1i)" => new_embargo_date.year,
-          "embargo_date(2i)" => new_embargo_date.month,
-          "embargo_date(3i)" => new_embargo_date.day
+          :title => 'new title',
+          :release => 'embargo',
+          'embargo_date(1i)' => new_embargo_date.year,
+          'embargo_date(2i)' => new_embargo_date.month,
+          'embargo_date(3i)' => new_embargo_date.day
         )
       end
 
@@ -217,21 +217,21 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         form.validate(params)
       end
 
-      it "description does show embargo modified" do
-        expect(result).to eq "title of deposit modified, embargo modified"
+      it 'description does show embargo modified' do
+        expect(result).to eq 'title of deposit modified, embargo modified'
       end
     end
 
-    context "when not embargoed, then embargo set" do
+    context 'when not embargoed, then embargo set' do
       let(:new_embargo_date) { 11.months.from_now }
       let(:work_version) { create(:work_version_with_work, :with_no_subtype, collection:, state:) }
       let(:params) do
         ActionController::Parameters.new(
-          :title => "new title",
-          :release => "embargo",
-          "embargo_date(1i)" => new_embargo_date.year,
-          "embargo_date(2i)" => new_embargo_date.month,
-          "embargo_date(3i)" => new_embargo_date.day
+          :title => 'new title',
+          :release => 'embargo',
+          'embargo_date(1i)' => new_embargo_date.year,
+          'embargo_date(2i)' => new_embargo_date.month,
+          'embargo_date(3i)' => new_embargo_date.day
         )
       end
 
@@ -239,18 +239,18 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         form.validate(params)
       end
 
-      it "description does show embargo modified" do
-        expect(result).to eq "title of deposit modified, embargo modified"
+      it 'description does show embargo modified' do
+        expect(result).to eq 'title of deposit modified, embargo modified'
       end
     end
 
-    context "when embargoed, then embargo removed" do
+    context 'when embargoed, then embargo removed' do
       let(:embargo_date) { 10.months.from_now }
       let(:work_version) { create(:work_version_with_work, :with_no_subtype, embargo_date:, collection:, state:) }
       let(:params) do
         ActionController::Parameters.new(
-          title: "new title",
-          release: "immediate"
+          title: 'new title',
+          release: 'immediate'
         )
       end
 
@@ -258,58 +258,58 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         form.validate(params)
       end
 
-      it "description does show embargo modified" do
-        expect(result).to eq "title of deposit modified, embargo modified"
+      it 'description does show embargo modified' do
+        expect(result).to eq 'title of deposit modified, embargo modified'
       end
     end
 
-    context "when file visibility has changed" do
+    context 'when file visibility has changed' do
       before do
         allow(AttachedFile).to receive(:new).and_return(attached_file)
         allow(attached_file).to receive(:blob).and_return(blob)
 
         form.validate(
           attached_files: [
-            {"label" => filename, "hide" => true, "file" => "123782312abcdef"}
+            { 'label' => filename, 'hide' => true, 'file' => '123782312abcdef' }
           ]
         )
       end
 
-      it { is_expected.to include "file visibility changed" }
+      it { is_expected.to include 'file visibility changed' }
     end
 
-    context "when new file label is not blank" do
+    context 'when new file label is not blank' do
       before do
         allow(AttachedFile).to receive(:new).and_return(attached_file)
         allow(attached_file).to receive(:blob).and_return(blob)
 
         form.validate(
           attached_files: [
-            {"label" => "a new label!", "hide" => false, "file" => "123782312abcdef"}
+            { 'label' => 'a new label!', 'hide' => false, 'file' => '123782312abcdef' }
           ]
         )
       end
 
-      it { is_expected.to include "file description changed" }
+      it { is_expected.to include 'file description changed' }
     end
 
-    context "when new file label is blank" do
+    context 'when new file label is blank' do
       before do
         allow(AttachedFile).to receive(:new).and_return(attached_file)
         allow(attached_file).to receive(:blob).and_return(blob)
 
         form.validate(
           attached_files: [
-            {"label" => "", "hide" => false, "file" => "123782312abcdef"}
+            { 'label' => '', 'hide' => false, 'file' => '123782312abcdef' }
           ]
         )
       end
 
-      it { is_expected.not_to include "file description changed" }
+      it { is_expected.not_to include 'file description changed' }
     end
 
-    context "when existing file label remains blank" do
-      let(:blank_label_attached_file) { AttachedFile.new(label: "") }
+    context 'when existing file label remains blank' do
+      let(:blank_label_attached_file) { AttachedFile.new(label: '') }
       let(:attached_files) { [AttachedFile.new] }
 
       before do
@@ -318,17 +318,17 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
         form.validate(
           attached_files: [
-            {"label" => "", "hide" => false, "file" => "123782312abcdef"}
+            { 'label' => '', 'hide' => false, 'file' => '123782312abcdef' }
           ]
         )
       end
 
-      it { is_expected.not_to include "file description changed" }
+      it { is_expected.not_to include 'file description changed' }
     end
 
-    context "when existing file label is removed" do
+    context 'when existing file label is removed' do
       let(:attached_files) { [AttachedFile.new] }
-      let(:existing_label_attached_file) { AttachedFile.new(label: "something", hide: false) }
+      let(:existing_label_attached_file) { AttachedFile.new(label: 'something', hide: false) }
 
       before do
         allow(AttachedFile).to receive(:new).and_return(existing_label_attached_file)
@@ -336,54 +336,54 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
 
         form.validate(
           attached_files: [
-            {"label" => "", "hide" => false, "file" => "123782312abcdef"}
+            { 'label' => '', 'hide' => false, 'file' => '123782312abcdef' }
           ]
         )
       end
 
-      it { is_expected.to include "file description changed" }
+      it { is_expected.to include 'file description changed' }
     end
 
-    context "when title has changed" do
+    context 'when title has changed' do
       before do
-        form.validate(title: "new title")
+        form.validate(title: 'new title')
       end
 
-      it { is_expected.to eq "title of deposit modified" }
+      it { is_expected.to eq 'title of deposit modified' }
     end
 
-    context "when custom rights have changed" do
+    context 'when custom rights have changed' do
       before do
-        form.validate(custom_rights: "Free-for-all!")
+        form.validate(custom_rights: 'Free-for-all!')
       end
 
-      it { is_expected.to eq "custom terms modified" }
+      it { is_expected.to eq 'custom terms modified' }
     end
 
-    context "when many fields have changed" do
+    context 'when many fields have changed' do
       let(:params) do
         ActionController::Parameters.new(
-          :title => "new title",
-          :abstract => "foo",
-          :contact_emails => [{"email" => "foo@bar.io"}],
-          :authors => [{"role" => "Author", "first_name" => "Megan"}],
-          :contributors => [{"role" => "Author", "first_name" => "Sara"}],
-          :related_links => [{"link_title" => "Hey", "url" => "http://io.io"}],
-          :related_works => [{"citation" => "Hey"}],
-          "published(1i)" => "2020",
-          "created(1i)" => "2020",
-          :keywords => [{"label" => "Brown coal"}],
-          :release => "embargo",
-          "embargo_date(1i)" => "2021", "embargo_date(2i)" => "3", "embargo_date(3i)" => "3",
-          :license => "ODbL-1.0",
-          :access => "stanford",
-          :citation => "Lorem ipsum",
+          :title => 'new title',
+          :abstract => 'foo',
+          :contact_emails => [{ 'email' => 'foo@bar.io' }],
+          :authors => [{ 'role' => 'Author', 'first_name' => 'Megan' }],
+          :contributors => [{ 'role' => 'Author', 'first_name' => 'Sara' }],
+          :related_links => [{ 'link_title' => 'Hey', 'url' => 'http://io.io' }],
+          :related_works => [{ 'citation' => 'Hey' }],
+          'published(1i)' => '2020',
+          'created(1i)' => '2020',
+          :keywords => [{ 'label' => 'Brown coal' }],
+          :release => 'embargo',
+          'embargo_date(1i)' => '2021', 'embargo_date(2i)' => '3', 'embargo_date(3i)' => '3',
+          :license => 'ODbL-1.0',
+          :access => 'stanford',
+          :citation => 'Lorem ipsum',
           :subtype => %w[foo bar],
-          :assign_doi => "false",
-          :custom_rights => "Please do what you wish.",
-          :attached_files_attributes => {"0" =>
-                        {"label" => "a label", "_destroy" => "false", "hide" => "0",
-                         "file" => "eyJfcmFpbHMiOnsibWVzc2FnZS..."}}
+          :assign_doi => 'false',
+          :custom_rights => 'Please do what you wish.',
+          :attached_files_attributes => { '0' =>
+                        { 'label' => 'a label', '_destroy' => 'false', 'hide' => '0',
+                          'file' => 'eyJfcmFpbHMiOnsibWVzc2FnZS...' } }
         )
       end
 
@@ -394,89 +394,89 @@ RSpec.describe WorkVersionEventDescriptionBuilder do
         form.validate(params)
       end
 
-      it "has a complete description" do
-        expect(result).to eq "title of deposit modified, abstract modified, " \
-                             "contact email modified, authors modified, contributors modified, " \
-                             "related links modified, related works modified, " \
-                             "publication date modified, creation date modified, " \
-                             "keywords modified, work subtypes modified, " \
-                             "citation modified, embargo modified, " \
-                             "visibility modified, license modified, custom terms modified, " \
-                             "files added/removed, file description changed, assign DOI modified"
+      it 'has a complete description' do
+        expect(result).to eq 'title of deposit modified, abstract modified, ' \
+                             'contact email modified, authors modified, contributors modified, ' \
+                             'related links modified, related works modified, ' \
+                             'publication date modified, creation date modified, ' \
+                             'keywords modified, work subtypes modified, ' \
+                             'citation modified, embargo modified, ' \
+                             'visibility modified, license modified, custom terms modified, ' \
+                             'files added/removed, file description changed, assign DOI modified'
       end
     end
 
-    context "when a new work version" do
+    context 'when a new work version' do
       let(:user) { build(:user) }
-      let(:collection) { build(:collection, required_license: "CC0-1.0", release_option: "immediate", access: "world") }
+      let(:collection) { build(:collection, required_license: 'CC0-1.0', release_option: 'immediate', access: 'world') }
       let(:work) { Work.new(collection:, depositor: user, owner: user) }
       let(:work_version) { WorkVersion.new(work:, state:) }
 
-      context "when nothing has changed" do
+      context 'when nothing has changed' do
         before do
           form.validate(
             {
-              "title" => "",
-              "work_type" => "text",
-              "published(1i)" => "",
-              "published(2i)" => "",
-              "published(3i)" => "",
-              "created_type" => "single",
-              "created(1i)" => "",
-              "created(2i)" => "",
-              "created(3i)" => "",
-              "abstract" => "",
-              "citation_auto" => ", . (2022). . Stanford Digital Repository. Available at :link will be " \
-                                 "inserted here automatically when available:",
-              "citation" => "",
-              "default_citation" => "true",
-              "agree_to_terms" => "0",
-              "upload_type" => "browser",
-              "authors_attributes" => {
-                "0" => {
-                  "_destroy" => "",
-                  "full_name" => "",
-                  "first_name" => "",
-                  "last_name" => "",
-                  "role" => "Author",
-                  "weight" => "0",
-                  "orcid" => ""
+              'title' => '',
+              'work_type' => 'text',
+              'published(1i)' => '',
+              'published(2i)' => '',
+              'published(3i)' => '',
+              'created_type' => 'single',
+              'created(1i)' => '',
+              'created(2i)' => '',
+              'created(3i)' => '',
+              'abstract' => '',
+              'citation_auto' => ', . (2022). . Stanford Digital Repository. Available at :link will be ' \
+                                 'inserted here automatically when available:',
+              'citation' => '',
+              'default_citation' => 'true',
+              'agree_to_terms' => '0',
+              'upload_type' => 'browser',
+              'authors_attributes' => {
+                '0' => {
+                  '_destroy' => '',
+                  'full_name' => '',
+                  'first_name' => '',
+                  'last_name' => '',
+                  'role' => 'Author',
+                  'weight' => '0',
+                  'orcid' => ''
                 }
               },
-              "contributors_attributes" => {
-                "0" => {
-                  "_destroy" => "",
-                  "full_name" => "",
-                  "first_name" => "",
-                  "last_name" => "",
-                  "role" => "Author", "orcid" => ""
+              'contributors_attributes' => {
+                '0' => {
+                  '_destroy' => '',
+                  'full_name' => '',
+                  'first_name' => '',
+                  'last_name' => '',
+                  'role' => 'Author', 'orcid' => ''
                 }
               },
-              "contact_emails_attributes" => {
-                "0" => {
-                  "_destroy" => "",
-                  "email" => ""
+              'contact_emails_attributes' => {
+                '0' => {
+                  '_destroy' => '',
+                  'email' => ''
                 }
               },
-              "keywords_attributes" => {
-                "0" => {
-                  "_destroy" => "",
-                  "label" => "",
-                  "uri" => "",
-                  "cocina_type" => ""
+              'keywords_attributes' => {
+                '0' => {
+                  '_destroy' => '',
+                  'label' => '',
+                  'uri' => '',
+                  'cocina_type' => ''
                 }
               },
-              "related_works_attributes" => {
-                "0" => {
-                  "_destroy" => "",
-                  "citation" => ""
+              'related_works_attributes' => {
+                '0' => {
+                  '_destroy' => '',
+                  'citation' => ''
                 }
               },
-              "related_links_attributes" => {
-                "0" => {
-                  "_destroy" => "",
-                  "link_title" => "",
-                  "url" => ""
+              'related_links_attributes' => {
+                '0' => {
+                  '_destroy' => '',
+                  'link_title' => '',
+                  'url' => ''
                 }
               }
             }

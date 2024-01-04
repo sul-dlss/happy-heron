@@ -10,11 +10,11 @@ module Collections
     attr_reader :collection
 
     def review_workflow_status
-      collection.review_enabled? ? "On" : "Off"
+      collection.review_enabled? ? 'On' : 'Off'
     end
 
     def reviewers
-      collection.reviewed_by.map(&:sunetid).join(", ")
+      collection.reviewed_by.map(&:sunetid).join(', ')
     end
   end
 end

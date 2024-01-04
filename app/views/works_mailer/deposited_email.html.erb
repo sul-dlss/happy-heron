@@ -7,7 +7,7 @@
 <p>You selected the following options:<br>
 License: <%= @work_version.license %><br>
 Access level: <%= @work_version.access %><br>
-Release:  <%= @work_version.embargo_date.presence || "now available" %></p>
+Release:  <%= @work_version.embargo_date.presence || 'now available' %></p>
 
 <% if @work.doi %>
   <p>Your work was assigned this DOI: https://doi.org/<%= @work.doi %></p>
@@ -23,4 +23,4 @@ Release:  <%= @work_version.embargo_date.presence || "now available" %></p>
 
  <p>The Stanford Digital Repository Team</p>
 
-<p><%= link_to "Subscribe to the SDR newsletter", Settings.newsletter_url %> for feature updates, tips, and related news.</p>
+<p><%= link_to 'Subscribe to the SDR newsletter', Settings.newsletter_url %> for feature updates, tips, and related news.</p>

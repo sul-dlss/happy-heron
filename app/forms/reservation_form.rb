@@ -5,15 +5,15 @@ class ReservationForm < Reform::Form
   include Composition
 
   property :work_type, on: :work_version, default: WorkType.purl_reservation_type.id
-  property :abstract, on: :work_version, default: ""
-  property :license, on: :work_version, default: "none"
+  property :abstract, on: :work_version, default: ''
+  property :license, on: :work_version, default: 'none'
   property :title, on: :work_version
   property :assign_doi, on: :work
 
   validates :title, presence: true
 
   def deserialize!(params)
-    params["license"] = collection.default_license if collection.default_license
+    params['license'] = collection.default_license if collection.default_license
     deserialize_doi(params)
     super
   end
@@ -21,10 +21,10 @@ class ReservationForm < Reform::Form
   # Force assign_doi to match what the collection enforces
   def deserialize_doi(params)
     case model[:work].collection.doi_option
-    when "no"
-      params["assign_doi"] = "false"
-    when "yes"
-      params["assign_doi"] = "true"
+    when 'no'
+      params['assign_doi'] = 'false'
+    when 'yes'
+      params['assign_doi'] = 'true'
     end
   end
 

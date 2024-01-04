@@ -11,6 +11,5 @@ module Eventable
 
   private
 
-  def default_event_context
-  end
+  def default_event_context; end
 end

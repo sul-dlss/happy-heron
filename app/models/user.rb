@@ -6,32 +6,32 @@ class User < ApplicationRecord
     record.just_signed_in = true if warden.authenticated?(options[:scope])
   end
 
-  EMAIL_SUFFIX = "@stanford.edu"
+  EMAIL_SUFFIX = '@stanford.edu'
 
   attr_accessor :just_signed_in
 
   validates :email,
-    presence: true,
-    uniqueness: {case_sensitive: false},
-    format: {
-      with: URI::MailTo::EMAIL_REGEXP,
-      allow_blank: true # because the presence validation is the only error we want to show.
-    }
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            format: {
+              with: URI::MailTo::EMAIL_REGEXP,
+              allow_blank: true # because the presence validation is the only error we want to show.
+            }
 
   has_many :notifications, dependent: :destroy
-  has_many :owned_works, class_name: "Work",
-    foreign_key: "owner_id",
-    inverse_of: :owner,
-    dependent: :destroy
+  has_many :owned_works, class_name: 'Work',
+                         foreign_key: 'owner_id',
+                         inverse_of: :owner,
+                         dependent: :destroy
 
-  has_many :created_collections, class_name: "Collection",
-    foreign_key: "creator_id",
-    inverse_of: :creator,
-    dependent: :destroy
+  has_many :created_collections, class_name: 'Collection',
+                                 foreign_key: 'creator_id',
+                                 inverse_of: :creator,
+                                 dependent: :destroy
 
-  has_and_belongs_to_many :reviews_collections, class_name: "Collection", join_table: "reviewers"
-  has_and_belongs_to_many :manages_collections, class_name: "Collection", join_table: "managers"
-  has_and_belongs_to_many :deposits_into, class_name: "Collection", join_table: "depositors"
+  has_and_belongs_to_many :reviews_collections, class_name: 'Collection', join_table: 'reviewers'
+  has_and_belongs_to_many :manages_collections, class_name: 'Collection', join_table: 'managers'
+  has_and_belongs_to_many :deposits_into, class_name: 'Collection', join_table: 'depositors'
 
   devise :remote_user_authenticatable
 
@@ -49,7 +49,7 @@ class User < ApplicationRecord
   end
 
   def to_honeybadger_context
-    {user_id: id, user_email: email}
+    { user_id: id, user_email: email }
   end
 
   def agreed_to_terms_recently?
@@ -59,10 +59,10 @@ class User < ApplicationRecord
   end
 
   def collections_with_access(deposit: true)
-    query = "id in (SELECT collection_id FROM reviewers WHERE user_id = :user_id " \
-            "UNION SELECT collection_id FROM managers WHERE user_id = :user_id "
-    query += "UNION SELECT collection_id FROM depositors WHERE user_id = :user_id" if deposit
-    query += ")"
+    query = 'id in (SELECT collection_id FROM reviewers WHERE user_id = :user_id ' \
+            'UNION SELECT collection_id FROM managers WHERE user_id = :user_id '
+    query += 'UNION SELECT collection_id FROM depositors WHERE user_id = :user_id' if deposit
+    query += ')'
     Collection.where(query, user_id: id)
   end
 

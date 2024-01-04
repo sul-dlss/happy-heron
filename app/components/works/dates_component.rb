@@ -13,30 +13,30 @@ module Works
 
     def date_range_start_year
       number_field_tag "#{prefix}[created_range(1i)]", created_range_start_year,
-        data: {
-          date_validation_target: "year",
-          date_range_target: "startYear",
-          date_clear_target: "year",
-          action: "date-range#change clear->date-validation#clearValidations " \
-                  "validate->date-validation#validate"
-        },
-        id: "work_created_range_start_year",
-        placeholder: "year",
-        class: "form-control", min: min_year, max: max_year
+                       data: {
+                         date_validation_target: 'year',
+                         date_range_target: 'startYear',
+                         date_clear_target: 'year',
+                         action: 'date-range#change clear->date-validation#clearValidations ' \
+                                 'validate->date-validation#validate'
+                       },
+                       id: 'work_created_range_start_year',
+                       placeholder: 'year',
+                       class: 'form-control', min: min_year, max: max_year
     end
 
     def date_range_end_year
       number_field_tag "#{prefix}[created_range(4i)]", created_range_end_year,
-        data: {
-          date_validation_target: "year",
-          date_clear_target: "year",
-          date_range_target: "endYear",
-          action: "date-range#change clear->date-validation#clearValidations " \
-                  "validate->date-validation#validate"
-        },
-        id: "work_created_range_end_year",
-        placeholder: "year",
-        class: "form-control", min: min_year, max: max_year
+                       data: {
+                         date_validation_target: 'year',
+                         date_clear_target: 'year',
+                         date_range_target: 'endYear',
+                         action: 'date-range#change clear->date-validation#clearValidations ' \
+                                 'validate->date-validation#validate'
+                       },
+                       id: 'work_created_range_end_year',
+                       placeholder: 'year',
+                       class: 'form-control', min: min_year, max: max_year
     end
 
     def created_year
@@ -63,15 +63,15 @@ module Works
     # couldn't be created.
 
     def created_range_start_year
-      created_range_start&.year || reform.send(:"created_range(1i)").presence&.to_i
+      created_range_start&.year || reform.send(:'created_range(1i)').presence&.to_i
     end
 
     def created_range_start_month
-      resolve_month(created_range_start) || reform.send(:"created_range(2i)").presence&.to_i
+      resolve_month(created_range_start) || reform.send(:'created_range(2i)').presence&.to_i
     end
 
     def created_range_start_day
-      resolve_day(created_range_start) || reform.send(:"created_range(3i)").presence&.to_i
+      resolve_day(created_range_start) || reform.send(:'created_range(3i)').presence&.to_i
     end
 
     def created_range_start_approximate?
@@ -81,15 +81,15 @@ module Works
     end
 
     def created_range_end_year
-      created_range_end&.year || reform.send(:"created_range(4i)").presence&.to_i
+      created_range_end&.year || reform.send(:'created_range(4i)').presence&.to_i
     end
 
     def created_range_end_month
-      resolve_month(created_range_end) || reform.send(:"created_range(5i)").presence&.to_i
+      resolve_month(created_range_end) || reform.send(:'created_range(5i)').presence&.to_i
     end
 
     def created_range_end_day
-      resolve_day(created_range_end) || reform.send(:"created_range(6i)").presence&.to_i
+      resolve_day(created_range_end) || reform.send(:'created_range(6i)').presence&.to_i
     end
 
     def created_range_end_approximate?
@@ -129,7 +129,7 @@ module Works
     end
 
     def single?
-      reform.created_type == "single"
+      reform.created_type == 'single'
     end
 
     private

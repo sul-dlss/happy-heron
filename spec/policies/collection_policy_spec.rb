@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe CollectionPolicy do
   let(:user) { build_stubbed(:user) }
@@ -16,18 +16,18 @@ RSpec.describe CollectionPolicy do
   let(:groups) { [] }
 
   describe_rule :create? do
-    failed "when user is not a collection creator"
+    failed 'when user is not a collection creator'
 
-    succeed "when user is an admin" do
+    succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
 
-    succeed "when user is a collection creator" do
+    succeed 'when user is a collection creator' do
       let(:groups) { [Settings.authorization_workgroup_names.collection_creators] }
     end
   end
 
-  describe "scope" do
+  describe 'scope' do
     subject(:scope) { policy.apply_scope(Collection, type: :active_record_relation, name: :deposit) }
 
     let(:policy) { described_class.new(**context) }
@@ -38,23 +38,23 @@ RSpec.describe CollectionPolicy do
       collection.update(head: collection_version)
     end
 
-    context "when the user is not affiliated" do
+    context 'when the user is not affiliated' do
       it { is_expected.not_to include(collection) }
     end
 
-    context "when the user is a manager" do
+    context 'when the user is a manager' do
       let!(:collection) { create(:collection, managed_by: [user]) }
 
       it { is_expected.to include(collection) }
     end
 
-    context "when the user is a reviewer" do
+    context 'when the user is a reviewer' do
       let!(:collection) { create(:collection, reviewed_by: [user]) }
 
       it { is_expected.to include(collection) }
     end
 
-    context "when the user is a depositor" do
+    context 'when the user is a depositor' do
       let!(:collection) { create(:collection, depositors: [user]) }
 
       it { is_expected.to include(collection) }
@@ -62,21 +62,21 @@ RSpec.describe CollectionPolicy do
   end
 
   describe_rule :review? do
-    failed "when user is not a collection creator"
+    failed 'when user is not a collection creator'
 
-    succeed "when user is an admin" do
+    succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
 
-    failed "when user is depositor" do
+    failed 'when user is depositor' do
       let(:record) { build_stubbed(:collection, depositors: [user]) }
     end
 
-    succeed "when user is an reviewer" do
+    succeed 'when user is an reviewer' do
       let(:record) { build_stubbed(:collection, reviewed_by: [user]) }
     end
 
-    succeed "when user is a manager" do
+    succeed 'when user is a manager' do
       let(:record) { build_stubbed(:collection, managed_by: [user]) }
     end
   end

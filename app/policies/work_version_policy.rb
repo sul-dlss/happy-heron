@@ -10,7 +10,7 @@ class WorkVersionPolicy < ApplicationPolicy
     if administrator?
       scope
     else
-      scope.joins(:head).where.not(head: {state: "decommissioned"}).and(
+      scope.joins(:head).where.not(head: { state: 'decommissioned' }).and(
         scope.where(owner: user)
         .or(scope.where(collection_id: [user.manages_collection_ids + user.reviews_collection_ids]))
       )
@@ -24,7 +24,7 @@ class WorkVersionPolicy < ApplicationPolicy
     return false unless collection.head.accessioned?
     return true if administrator?
 
-    (collection.depositor_ids.include?(user.id) || manages_collection?(collection))
+    collection.depositor_ids.include?(user.id) || manages_collection?(collection)
   end
 
   def update_type?

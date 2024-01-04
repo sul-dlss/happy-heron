@@ -22,7 +22,7 @@ module Works
       end
 
       def spinner
-        tag.span class: "fa-solid fa-spinner fa-pulse fa-2xl my-5"
+        tag.span class: 'fa-solid fa-spinner fa-pulse fa-2xl my-5'
       end
     end
   end

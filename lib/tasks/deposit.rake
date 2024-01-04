@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-desc "Complete deposit of works and collections (only for development)"
+desc 'Complete deposit of works and collections (only for development)'
 task complete_deposits: :environment do
-  abort "ERROR: This task only runs in the development environment!" unless Rails.env.development?
+  abort 'ERROR: This task only runs in the development environment!' unless Rails.env.development?
 
   objects_awaiting_deposit.each do |object_version|
     deposit_completer = DepositCompleter.new(object_version:)
@@ -13,11 +13,11 @@ task complete_deposits: :environment do
   end
 end
 
-desc "Complete the assignment of a druid to purl reservation works that need one"
+desc 'Complete the assignment of a druid to purl reservation works that need one'
 task assign_pids: :environment do
-  abort "ERROR: This task only runs in the development environment!" unless Rails.env.development?
+  abort 'ERROR: This task only runs in the development environment!' unless Rails.env.development?
 
-  WorkVersion.with_state("reserving_purl").each do |object|
+  WorkVersion.with_state('reserving_purl').each do |object|
     druid = random_druid
     object.work.update(druid:)
     object.pid_assigned!
@@ -26,7 +26,7 @@ task assign_pids: :environment do
 end
 
 def objects_awaiting_deposit
-  CollectionVersion.with_state("depositing") + WorkVersion.with_state("depositing")
+  CollectionVersion.with_state('depositing') + WorkVersion.with_state('depositing')
 end
 
 def random_druid

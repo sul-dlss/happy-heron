@@ -11,11 +11,11 @@
       <%= render CitationModalComponent.new %>
     </div>
   </div>
-  <h1 class="header-text d-inline-block"><%= name %></h1><%= render Collections::DraftComponent.new(collection_version: collection_version) %>
+  <h1 class="header-text d-inline-block"><%= name %></h1><%= render Collections::DraftComponent.new(collection_version:) %>
   <% if collection.head&.decommissioned? %>
     <span class="state">Decommissioned</span>
   <% end %>
   <%= helpers.turbo_frame_tag dom_id(collection, :edit),
-        src: edit_link_collection_path(collection),
-        target: "_top" %>
+                              src: edit_link_collection_path(collection),
+                              target: '_top' %>
 </header>

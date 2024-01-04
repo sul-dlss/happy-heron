@@ -22,11 +22,11 @@ class License
     # If the current license is merely displayable, add the displayable licenses to the dropdown as disabled options
     options.append(
       [
-        "Creative Commons 3.0 (Unsupported)",
+        'Creative Commons 3.0 (Unsupported)',
         all.filter_map do |key, item|
           next if item.selectable
 
-          [item.label, key, {disabled: true}]
+          [item.label, key, { disabled: true }]
         end
       ]
     )
@@ -42,7 +42,7 @@ class License
 
   def self.all
     @all ||= begin
-      yaml = YAML.load_file("config/licenses.yml")
+      yaml = YAML.load_file('config/licenses.yml')
       yaml.transform_values do |value|
         Instance.new(value.symbolize_keys)
       end
@@ -53,46 +53,46 @@ class License
 
   GROUPINGS = [
     {
-      label: "Creative Commons",
+      label: 'Creative Commons',
       options: [
-        "CC0-1.0",
-        "CC-BY-4.0",
-        "CC-BY-SA-4.0",
-        "CC-BY-ND-4.0",
-        "CC-BY-NC-4.0",
-        "CC-BY-NC-SA-4.0",
-        "CC-BY-NC-ND-4.0"
+        'CC0-1.0',
+        'CC-BY-4.0',
+        'CC-BY-SA-4.0',
+        'CC-BY-ND-4.0',
+        'CC-BY-NC-4.0',
+        'CC-BY-NC-SA-4.0',
+        'CC-BY-NC-ND-4.0'
       ]
     },
     {
-      label: "Open Data Commons (ODC) licenses",
+      label: 'Open Data Commons (ODC) licenses',
       options: [
-        "PDDL-1.0",
-        "ODC-By-1.0",
-        "ODbL-1.0"
+        'PDDL-1.0',
+        'ODC-By-1.0',
+        'ODbL-1.0'
       ]
     },
     {
-      label: "Software Licenses",
+      label: 'Software Licenses',
       options: [
-        "AGPL-3.0-only",
-        "Apache-2.0",
-        "BSD-2-Clause",
-        "BSD-3-Clause",
-        "CDDL-1.1",
-        "EPL-2.0",
-        "GPL-3.0-only",
-        "ISC",
-        "LGPL-3.0-only",
-        "MIT",
-        "MPL-2.0"
+        'AGPL-3.0-only',
+        'Apache-2.0',
+        'BSD-2-Clause',
+        'BSD-3-Clause',
+        'CDDL-1.1',
+        'EPL-2.0',
+        'GPL-3.0-only',
+        'ISC',
+        'LGPL-3.0-only',
+        'MIT',
+        'MPL-2.0'
       ]
     },
     {
-      label: "Other",
+      label: 'Other',
       options: [
-        "none",
-        "PDM-1.0"
+        'none',
+        'PDM-1.0'
       ]
     }
   ].freeze

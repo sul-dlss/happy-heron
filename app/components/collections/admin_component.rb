@@ -15,10 +15,10 @@ module Collections
 
     def options
       opts = [
-        ["Select...", "select"]
+        ['Select...', 'select']
       ]
-      opts << ["Decommission collection", edit_collection_decommission_path(collection)] unless collection.head.decommissioned? # rubocop:disable Layout/LineLength
-      options_for_select(opts, "select")
+      opts << ['Decommission collection', edit_collection_decommission_path(collection)] unless collection.head.decommissioned? # rubocop:disable Layout/LineLength
+      options_for_select(opts, 'select')
     end
   end
 end

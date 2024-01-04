@@ -5,7 +5,7 @@ module ActiveStorage
     # This is a little bit different in that most services store the file at the key and the key is opaque,
     # however in this case the key is meaningful in that it stores the path.
     class GlobusService < Service
-      SERVICE_NAME = "globus"
+      SERVICE_NAME = 'globus'
 
       def download(key, &)
         raise NotImplementedError
@@ -27,7 +27,7 @@ module ActiveStorage
       end
 
       def self.encode_key(work_id, version, path)
-        [work_id, version, path].join("/")
+        [work_id, version, path].join('/')
       end
 
       # @return [Boolean] true if this blob is for the GlobusService

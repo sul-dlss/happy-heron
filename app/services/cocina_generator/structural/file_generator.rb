@@ -14,7 +14,7 @@ module CocinaGenerator
         @resource_id = resource_id
         @cocina_file = cocina_file
 
-        raise "Either resource_id or cocina_file should be provided." if resource_id.nil? && cocina_file.nil?
+        raise 'Either resource_id or cocina_file should be provided.' if resource_id.nil? && cocina_file.nil?
       end
 
       attr_reader :work_version, :attached_file, :resource_id, :cocina_file
@@ -73,8 +73,8 @@ module CocinaGenerator
         return cocina_file.hasMessageDigests if cocina_file
 
         [
-          {type: "md5", digest: base64_to_hexdigest(blob.checksum)},
-          {type: "sha1", digest: Digest::SHA1.file(file_path(blob.key)).hexdigest}
+          { type: 'md5', digest: base64_to_hexdigest(blob.checksum) },
+          { type: 'sha1', digest: Digest::SHA1.file(file_path(blob.key)).hexdigest }
         ]
       end
 
@@ -97,9 +97,9 @@ module CocinaGenerator
 
       def access
         if embargoed?
-          {view: "dark", download: "none"}
+          { view: 'dark', download: 'none' }
         else
-          {view: work_version.access, download: work_version.access}
+          { view: work_version.access, download: work_version.access }
         end
       end
 
@@ -108,7 +108,7 @@ module CocinaGenerator
       end
 
       def base64_to_hexdigest(base64)
-        Base64.decode64(base64).unpack1("H*")
+        Base64.decode64(base64).unpack1('H*')
       end
 
       def mime_type
