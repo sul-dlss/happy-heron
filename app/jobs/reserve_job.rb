@@ -10,9 +10,9 @@ class ReserveJob < BaseDepositJob
 
     request_dro = CocinaGenerator::DROGenerator.generate_model(work_version:)
     SdrClient::Deposit::CreateResource.run(accession: false,
-      metadata: request_dro,
-      logger: Rails.logger,
-      connection:)
+                                           metadata: request_dro,
+                                           logger: Rails.logger,
+                                           connection:)
   end
 
   def connection

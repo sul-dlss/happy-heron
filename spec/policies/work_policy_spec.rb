@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe WorkPolicy do
   let(:user) { build_stubbed(:user) }
@@ -24,68 +24,68 @@ RSpec.describe WorkPolicy do
   before { work.head = work_version }
 
   describe_rule :destroy? do
-    context "when persisted and deletable" do
-      failed "when user is not the owner, reviewer or manager for the collection"
+    context 'when persisted and deletable' do
+      failed 'when user is not the owner, reviewer or manager for the collection'
 
       # `succeed` is `context` + `specify`, which checks
       # that the result of application wasn't successful
-      succeed "when user is the owner" do
+      succeed 'when user is the owner' do
         before { record.owner = user }
       end
 
-      succeed "when user is a collection manager" do
+      succeed 'when user is a collection manager' do
         before { collection.managed_by = [user] }
       end
 
-      succeed "when user is a reviewer" do
+      succeed 'when user is a reviewer' do
         before { collection.reviewed_by = [user] }
       end
 
-      succeed "when user is an admin" do
+      succeed 'when user is an admin' do
         let(:groups) { [Settings.authorization_workgroup_names.administrators] }
       end
     end
 
-    context "when deposited (and thus not deletable)" do
-      before { work_version.state = "deposited" }
+    context 'when deposited (and thus not deletable)' do
+      before { work_version.state = 'deposited' }
 
-      failed "when user is neither the owner, reviewer or manager for the collection"
+      failed 'when user is neither the owner, reviewer or manager for the collection'
 
-      failed "when user is the owner" do
+      failed 'when user is the owner' do
         before { record.owner = user }
       end
 
-      failed "when user is a collection manager" do
+      failed 'when user is a collection manager' do
         before { collection.managed_by = [user] }
       end
 
-      failed "when user is a reviewer" do
+      failed 'when user is a reviewer' do
         before { collection.reviewed_by = [user] }
       end
 
-      failed "when user is an admin" do
+      failed 'when user is an admin' do
         let(:groups) { [Settings.authorization_workgroup_names.administrators] }
       end
     end
 
-    context "when not persisted" do
+    context 'when not persisted' do
       let(:work) { Work.new(attributes_for(:work).merge(collection:)) }
 
-      failed "when user is not the owner, reviewer or manager for the collection"
+      failed 'when user is not the owner, reviewer or manager for the collection'
 
-      failed "when user is the owner" do
+      failed 'when user is the owner' do
         before { record.owner = user }
       end
 
-      failed "when user is a collection manager" do
+      failed 'when user is a collection manager' do
         before { collection.managed_by = [user] }
       end
 
-      failed "when user is a reviewer" do
+      failed 'when user is a reviewer' do
         before { collection.reviewed_by = [user] }
       end
 
-      failed "when user is an admin" do
+      failed 'when user is an admin' do
         let(:groups) { [Settings.authorization_workgroup_names.administrators] }
       end
     end

@@ -4,8 +4,8 @@ module CocinaGenerator
   module Description
     # Maps work types and subtypes to Cocina
     class TypesGenerator
-      RESOURCE_TYPE_SOURCE_LABEL = "Stanford self-deposit resource types"
-      DATACITE_SOURCE_LABEL = "DataCite resource types"
+      RESOURCE_TYPE_SOURCE_LABEL = 'Stanford self-deposit resource types'
+      DATACITE_SOURCE_LABEL = 'DataCite resource types'
 
       def self.generate(work_version:)
         new(work_version:).generate
@@ -38,39 +38,39 @@ module CocinaGenerator
         [
           Cocina::Models::DescriptiveValue.new(
             structuredValue: structured_type_and_subtypes,
-            source: {value: RESOURCE_TYPE_SOURCE_LABEL},
-            type: "resource type"
+            source: { value: RESOURCE_TYPE_SOURCE_LABEL },
+            type: 'resource type'
           )
 
         ]
       end
 
       def datacite_type
-        value = types_to_resource_types.dig(work_type, "datacite_type")
+        value = types_to_resource_types.dig(work_type, 'datacite_type')
         return [] unless value
 
         [
           Cocina::Models::DescriptiveValue.new(
             value:,
-            source: {value: DATACITE_SOURCE_LABEL},
-            type: "resource type"
+            source: { value: DATACITE_SOURCE_LABEL },
+            type: 'resource type'
           )
         ]
       end
 
       def structured_type_and_subtypes
-        [Cocina::Models::DescriptiveValue.new(value: work_type, type: "type")].concat(
+        [Cocina::Models::DescriptiveValue.new(value: work_type, type: 'type')].concat(
           subtypes.map do |subtype|
-            Cocina::Models::DescriptiveValue.new(value: subtype, type: "subtype")
+            Cocina::Models::DescriptiveValue.new(value: subtype, type: 'subtype')
           end
         )
       end
 
       def build_genres
-        return [] if work_type == "Other"
+        return [] if work_type == 'Other'
 
         # add the top level genre mapping (i.e. top level work type with no subtype)
-        type_genres = types_to_genres.dig(work_type, "type") || []
+        type_genres = types_to_genres.dig(work_type, 'type') || []
 
         # NOTE: we should not add duplicate genres if the same one is coming from both the
         # top level mapping and then the sub-type. We will try and avoid duplicating
@@ -82,14 +82,14 @@ module CocinaGenerator
 
       def subtype_genres
         # it's possible there is no genre found
-        subtypes.flat_map { |subtype| types_to_genres.dig(work_type, "subtypes", subtype) }.compact
+        subtypes.flat_map { |subtype| types_to_genres.dig(work_type, 'subtypes', subtype) }.compact
       end
 
       def build_resource_types
-        return [] if work_type == "Other"
+        return [] if work_type == 'Other'
 
         # add the top level resource type mapping (i.e. top level work type with no subtype)
-        resource_types = Array(types_to_resource_types.dig(work_type, "type"))
+        resource_types = Array(types_to_resource_types.dig(work_type, 'type'))
 
         # uniq and compact the list of resource types, since multiple subtypes can map
         # to the same resource type but we only need them mapped once
@@ -99,18 +99,18 @@ module CocinaGenerator
 
       def subtype_resource_types
         subtypes.flat_map do |subtype|
-          Array(types_to_resource_types.dig(work_type, "subtypes", subtype)).map do |resource_type|
+          Array(types_to_resource_types.dig(work_type, 'subtypes', subtype)).map do |resource_type|
             resource_type
           end
         end
       end
 
       def types_to_genres
-        YAML.load_file(Rails.root.join("config/mappings/types_to_genres.yml"))
+        YAML.load_file(Rails.root.join('config/mappings/types_to_genres.yml'))
       end
 
       def types_to_resource_types
-        YAML.load_file(Rails.root.join("config/mappings/types_to_resource_types.yml"))
+        YAML.load_file(Rails.root.join('config/mappings/types_to_resource_types.yml'))
       end
     end
   end

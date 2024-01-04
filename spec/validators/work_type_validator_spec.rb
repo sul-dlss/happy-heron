@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe WorkTypeValidator do
   let(:work) { Work.new(owner: build_stubbed(:user)) }
   let(:record) { WorkForm.new(work:, work_version: WorkVersion.new(work:)) }
-  let(:validator) { described_class.new({attributes: ["stub"]}) }
+  let(:validator) { described_class.new({ attributes: ['stub'] }) }
 
   before do
     validator.validate_each(record, :work_type, value)
@@ -15,18 +15,18 @@ RSpec.describe WorkTypeValidator do
     context "with a valid type (#{work_type_id.inspect})" do
       let(:value) { work_type_id }
 
-      it "validates" do
+      it 'validates' do
         expect(record.errors).to be_empty
       end
     end
   end
 
-  ["map", "", nil].each do |work_type_id|
+  ['map', '', nil].each do |work_type_id|
     context "with an invalid type (#{work_type_id.inspect})" do
       let(:value) { work_type_id }
 
-      it "fails to validate" do
-        expect(record.errors.full_messages.first).to eq("Work type is not a valid work type")
+      it 'fails to validate' do
+        expect(record.errors.full_messages.first).to eq('Work type is not a valid work type')
       end
     end
   end

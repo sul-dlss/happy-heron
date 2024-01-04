@@ -1,10 +1,10 @@
 <table class="table table-sm mb-5 caption-header">
   <caption>Collection participants
     <%= helpers.turbo_frame_tag dom_id(collection, :edit_participants),
-          src: edit_link_collection_path(collection,
-            ref: "participants",
-            label: "Edit collection participants"),
-          target: "_top" %>
+                                src: edit_link_collection_path(collection,
+                                                               ref: 'participants',
+                                                               label: 'Edit collection participants'),
+                                target: '_top' %>
 
   </caption>
   <tbody>

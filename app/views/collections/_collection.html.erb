@@ -4,9 +4,9 @@
   <%= render Works::WorkTypeModalComponent.new %>
   <turbo-frame id="collectionAdminFrame" src="<%= admin_collection_path(collection) %>">
   </turbo-frame>
-  <%= render Collections::ReleaseComponent.new(collection: collection) %>
-  <%= render Collections::TermsOfUseComponent.new(collection: collection) %>
-  <%= render Collections::ParticipantsComponent.new(collection: collection) %>
-  <%= render Collections::WorkflowReviewComponent.new(collection: collection) %>
-  <%= render Collections::HistoryComponent.new(collection: collection) %>
+  <%= render Collections::ReleaseComponent.new(collection:) %>
+  <%= render Collections::TermsOfUseComponent.new(collection:) %>
+  <%= render Collections::ParticipantsComponent.new(collection:) %>
+  <%= render Collections::WorkflowReviewComponent.new(collection:) %>
+  <%= render Collections::HistoryComponent.new(collection:) %>
 </section>

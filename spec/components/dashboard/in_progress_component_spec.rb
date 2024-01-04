@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Dashboard::InProgressComponent, type: :component do
   let(:presenter) do
@@ -12,16 +12,16 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
     allow(controller).to receive(:allowed_to?).and_return(true)
   end
 
-  context "when presenter has zero in progress works" do
+  context 'when presenter has zero in progress works' do
     let(:work_versions) { WorkVersion.none }
 
-    it "renders the component with a header alone" do
-      expect(rendered.to_html).to include("Deposits in progress")
-      expect(rendered.to_html).not_to include("Test title")
+    it 'renders the component with a header alone' do
+      expect(rendered.to_html).to include('Deposits in progress')
+      expect(rendered.to_html).not_to include('Test title')
     end
   end
 
-  context "when presenter has one or more in progress works" do
+  context 'when presenter has one or more in progress works' do
     let(:work_versions) { WorkVersion.all }
 
     before do
@@ -31,8 +31,8 @@ RSpec.describe Dashboard::InProgressComponent, type: :component do
       create(:work_version, work: create(:work, collection:))
     end
 
-    it "renders the component with works" do
-      expect(rendered.to_html).to include("Deposits in progress")
+    it 'renders the component with works' do
+      expect(rendered.to_html).to include('Deposits in progress')
       work_versions.pluck(:title).each do |title|
         expect(rendered.to_html).to include(title)
       end

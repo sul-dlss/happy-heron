@@ -20,9 +20,9 @@ module CocinaGenerator
 
       def generate
         {
-          encoding: {code: "edtf"},
+          encoding: { code: 'edtf' },
           type:,
-          status: primary ? "primary" : nil
+          status: primary ? 'primary' : nil
         }.compact.merge(date_props)
       end
 
@@ -46,7 +46,7 @@ module CocinaGenerator
           structuredValue: interval_structured_values(interval_date)
         }.tap do |props|
           if interval_date.from&.approximate? || interval_date.to&.approximate?
-            props[:qualifier] = "approximate"
+            props[:qualifier] = 'approximate'
             props[:structuredValue].each { |struct_date_val| struct_date_val.delete(:qualifier) }
           end
         end.compact
@@ -54,22 +54,22 @@ module CocinaGenerator
 
       def interval_structured_values(interval_date)
         [].tap do |structured_values|
-          structured_values << edtf_date_props(interval_date.from, type: "start") if interval_date.from
-          structured_values << edtf_date_props(interval_date.to, type: "end") if interval_date.to
+          structured_values << edtf_date_props(interval_date.from, type: 'start') if interval_date.from
+          structured_values << edtf_date_props(interval_date.to, type: 'end') if interval_date.to
         end
       end
 
       def edtf_date_props(edtf_date, type: nil)
         {
-          qualifier: edtf_date.approximate? ? "approximate" : nil,
-          value: edtf_date.edtf.chomp("~"),
+          qualifier: edtf_date.approximate? ? 'approximate' : nil,
+          value: edtf_date.edtf.chomp('~'),
           type:
         }.compact
       end
 
       def time_with_zone_props(zone_date)
         {
-          value: zone_date.strftime("%Y-%m-%d")
+          value: zone_date.strftime('%Y-%m-%d')
         }
       end
     end

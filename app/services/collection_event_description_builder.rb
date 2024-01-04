@@ -15,7 +15,7 @@ class CollectionEventDescriptionBuilder
 
   def build
     [participants, release_settings, download_settings, doi_settings, license_settings, notification_settings,
-      review_settings, custom_rights_settings].compact.join(", ")
+     review_settings, custom_rights_settings].compact.join(', ')
   end
 
   private
@@ -25,34 +25,34 @@ class CollectionEventDescriptionBuilder
   end
 
   def custom_rights_settings
-    "custom terms of use modified" if form.changed?(:allow_custom_rights_statement) ||
-      form.changed?(:provided_custom_rights_statement) ||
-      form.changed?(:custom_rights_statement_custom_instructions) ||
-      form.changed?(:custom_rights_statement_option)
+    'custom terms of use modified' if form.changed?(:allow_custom_rights_statement) ||
+                                      form.changed?(:provided_custom_rights_statement) ||
+                                      form.changed?(:custom_rights_statement_custom_instructions) ||
+                                      form.changed?(:custom_rights_statement_option)
   end
 
   def release_settings
-    "release settings modified" if release_settings_changed?
+    'release settings modified' if release_settings_changed?
   end
 
   def download_settings
-    "download setting modified" if download_settings_changed?
+    'download setting modified' if download_settings_changed?
   end
 
   def doi_settings
-    "DOI setting modified" if doi_settings_changed?
+    'DOI setting modified' if doi_settings_changed?
   end
 
   def license_settings
-    "license settings modified" if license_settings_changed?
+    'license settings modified' if license_settings_changed?
   end
 
   def notification_settings
-    "notification settings modified" if notification_settings_changed?
+    'notification settings modified' if notification_settings_changed?
   end
 
   def review_settings
-    "review workflow settings modified" if review_settings_changed?
+    'review workflow settings modified' if review_settings_changed?
   end
 
   def release_settings_changed?

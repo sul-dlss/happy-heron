@@ -14,19 +14,19 @@ module Works
     end
 
     def other_type?
-      work_type == "other"
+      work_type == 'other'
     end
 
     def music_type?
-      work_type == "music"
+      work_type == 'music'
     end
 
     def mixed_material_type?
-      work_type == "mixed material"
+      work_type == 'mixed material'
     end
 
     def optional?
-      !work_type.in?(["mixed material", "music", "other"])
+      !work_type.in?(['mixed material', 'music', 'other'])
     end
 
     def subtypes
@@ -38,17 +38,17 @@ module Works
     end
 
     def tooltip
-      return if work_type == "other"
+      return if work_type == 'other'
 
-      key = "work.subtypes."
+      key = 'work.subtypes.'
       key += case work_type
-      when "music"
-        "music"
-      when "mixed material"
-        "mixed"
-      else
-        "default"
-      end
+             when 'music'
+               'music'
+             when 'mixed material'
+               'mixed'
+             else
+               'default'
+             end
       render PopoverComponent.new key:
     end
 

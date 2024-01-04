@@ -2,41 +2,41 @@
 
 FactoryBot.define do
   trait :pending_approval do
-    state { "pending_approval" }
+    state { 'pending_approval' }
   end
 
   trait :first_draft do
-    state { "first_draft" }
+    state { 'first_draft' }
   end
 
   trait :version_draft do
-    state { "version_draft" }
+    state { 'version_draft' }
   end
 
   trait :depositing do
-    state { "depositing" }
+    state { 'depositing' }
   end
 
   trait :deposited do
-    state { "deposited" }
+    state { 'deposited' }
     # druid { 'druid:bc123df4567' }
   end
 
   trait :rejected do
-    state { "rejected" }
+    state { 'rejected' }
 
     # events { [build(:event, event_type: 'reject', description: 'Add something to make it pop.')] }
   end
 
   trait :decommissioned do
-    state { "decommissioned" }
+    state { 'decommissioned' }
   end
 
   trait :new do
-    state { "new" }
+    state { 'new' }
   end
 
   trait :fetch_globus_first_draft do
-    state { "fetch_globus_first_draft" }
+    state { 'fetch_globus_first_draft' }
   end
 end

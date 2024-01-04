@@ -11,15 +11,15 @@
     <legend class="visually-hidden">Add or modify files</legend>
     <div class="form-check" data-complex-radio-target="selection">
       <% if browser_option? %>
-        <%= form.radio_button :upload_type, "browser", class: "form-check-input", "data-file-uploads-target": "browserRadioButton",
-              data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus"} %>
-        <%= form.label :upload_type_browser, "Upload fewer than #{max_upload_files} files (total less than 10 GB) to be displayed as a flat list of files.", class: "form-check-label fw-semibold" %>
+        <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton',
+                                                       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' } %>
+        <%= form.label :upload_type_browser, "Upload fewer than #{max_upload_files} files (total less than 10 GB) to be displayed as a flat list of files.", class: 'form-check-label fw-semibold' %>
         <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
           <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="<%= max_upload_files %>" data-dropzone-previews-container=".dropzone-files-previews">
             <fieldset>
               <div class="dropzone dropzone-default" data-dropzone-target="container">
-                <%= form.file_field :files, multiple: true, direct_upload: true, namespace: "flat_list", "aria-label": "Upload files",
-                      data: {dropzone_target: "input"} %>
+                <%= form.file_field :files, multiple: true, direct_upload: true, namespace: 'flat_list', 'aria-label': 'Upload files',
+                                            data: { dropzone_target: 'input' } %>
                 <div class="dz-message needsclick text-secondary">
                   <p>Drop files here</p>
                 </div>
@@ -34,7 +34,7 @@
             </fieldset>
 
             <template data-dropzone-target='template'>
-              <%= form.fields_for :attached_files, AttachedFile.new, child_index: "TEMPLATE_RECORD" do |file_form| %>
+              <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
                 <%= render Works::Edit::FileRowComponent.new(form: file_form) %>
               <% end %>
             </template>
@@ -49,9 +49,9 @@
       </p>
     <% end %>
     <div class="form-check pt-3" data-complex-radio-target="selection">
-      <%= form.radio_button :upload_type, "zipfile", class: "form-check-input",
-            data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus", file_uploads_target: "zipRadioButton"} %>
-      <%= form.label :upload_type_zipfile, "Upload a single zip file (containing fewer than 25,000 files and less than 10GB total), which will be unzipped, including any hierarchy.", class: "form-check-label fw-semibold" %>
+      <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
+                                                     data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton' } %>
+      <%= form.label :upload_type_zipfile, 'Upload a single zip file (containing fewer than 25,000 files and less than 10GB total), which will be unzipped, including any hierarchy.', class: 'form-check-label fw-semibold' %>
       <div id="zip-files-panel" data-file-uploads-target="zipUpload">
         <p>Viewers will see the file hierarchy and be able to download individual files. Unzipping may take several minutes if your zip file contains a large number of individual files.</p>
         <p><strong>Warning:</strong> this file upload option will automatically replace all existing files on your item with the content in the new zip file.</p>
@@ -60,8 +60,8 @@
             data-dropzone-previews-container=".dropzone-zip-previews">
           <fieldset>
             <div class="dropzone dropzone-default" data-dropzone-target="container">
-              <%= form.file_field :files, multiple: false, direct_upload: true, namespace: "zip", "aria-label": "Upload files",
-                    data: {dropzone_target: "input"} %>
+              <%= form.file_field :files, multiple: false, direct_upload: true, namespace: 'zip', 'aria-label': 'Upload files',
+                                          data: { dropzone_target: 'input' } %>
               <div class="dz-message needsclick text-secondary">
                 <p>Drop zip file here</p>
               </div>
@@ -73,7 +73,7 @@
           </fieldset>
 
           <template data-dropzone-target='template'>
-            <%= form.fields_for :attached_files, AttachedFile.new, child_index: "TEMPLATE_RECORD" do |file_form| %>
+            <%= form.fields_for :attached_files, AttachedFile.new, child_index: 'TEMPLATE_RECORD' do |file_form| %>
               <%= render Works::Edit::FileRowComponent.new(form: file_form, zip_template: true) %>
             <% end %>
           </template>
@@ -81,9 +81,9 @@
       </div>
     </div>
     <div class="form-check pt-3" data-complex-radio-target="selection">
-      <%= form.radio_button :upload_type, "globus", class: "form-check-input", "data-file-uploads-target": "globusRadioButton", "data-deposit-button-target": "globusRadioButton",
-            data: {action: "complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus"} %>
-      <%= form.label :upload_type_globus, "Upload one or more files via Globus (fewer than 25,000 files and less than 4TB total) which will be displayed as uploaded, including any file hierarchy.", class: "form-check-label fw-semibold" %>
+      <%= form.radio_button :upload_type, 'globus', class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton', 'data-deposit-button-target': 'globusRadioButton',
+                                                    data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' } %>
+      <%= form.label :upload_type_globus, 'Upload one or more files via Globus (fewer than 25,000 files and less than 4TB total) which will be displayed as uploaded, including any file hierarchy.', class: 'form-check-label fw-semibold' %>
 
       <div data-file-uploads-target="globusUpload">
         <p>Please notify us at <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> if you are uploading 1TB or more of content.</p>
@@ -93,7 +93,7 @@
               <div class="border border-dark h-100 p-2 bg-light">
                 <p>STEP 1</p>
                 <p>If your files are located on Stanford Google Drive, Oak, or Sherlock, select where they are located below.</p>
-                <%= form.select :globus_origin, origin_options, {}, {class: "form-select", "aria-label": "Origin for Globus deposit"} %>
+                <%= form.select :globus_origin, origin_options, {}, { class: 'form-select', 'aria-label': 'Origin for Globus deposit' } %>
               </div>
             </li>
             <li class="col">
@@ -106,7 +106,7 @@
             <li class="col">
               <div class="border border-dark h-100 p-2 bg-light">
                 <p>STEP 3</p>
-                <p>Follow our <%= link_to "instructions", Settings.globus.help_doc_url.to_s, target: :blank %> to set up Globus (may require software installation).</p>
+                <p>Follow our <%= link_to 'instructions', Settings.globus.help_doc_url.to_s, target: :blank %> to set up Globus (may require software installation).</p>
                 <p>Transfer your files to the location you'll see on your item page once you've saved this form.</p>
               </div>
             </li>
@@ -124,10 +124,10 @@
           <div class="row">
             <div class="col">
               <div class="border border-dark h-100 p-2 ps-5 bg-light">
-                <%= form.check_box :fetch_globus_files, {class: "form-check-input form-check-input-lg", data: {deposit_button_target: "globusCheckbox", action: "deposit-button#updateDepositButtonStatus"}}, "true", "false" %>
+                <%= form.check_box :fetch_globus_files, { class: 'form-check-input form-check-input-lg', data: { deposit_button_target: 'globusCheckbox', action: 'deposit-button#updateDepositButtonStatus' } }, 'true', 'false' %>
                 <%= form.label :fetch_globus_files,
-                      "Check this box once all your files have completed uploading to Globus.",
-                      class: "form-check-label form-check-label-lg" %>
+                               'Check this box once all your files have completed uploading to Globus.',
+                               class: 'form-check-label form-check-label-lg' %>
               </div>
             </div>
           </div>

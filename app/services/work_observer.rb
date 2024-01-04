@@ -32,21 +32,23 @@ class WorkObserver
     DepositJob.perform_later(work_version)
   end
 
+  # rubocop:disable Metrics/AbcSize
   def self.after_deposit_complete(work_version, _transition)
     work_version.switch_to_preserved_items!
     mailer = work_mailer(work_version)
     job = if work_version.work.collection.review_enabled?
-      mailer.approved_email
-    elsif work_version.version > 1
-      mailer.new_version_deposited_email
-    else
-      mailer.deposited_email
-    end
+            mailer.approved_email
+          elsif work_version.version > 1
+            mailer.new_version_deposited_email
+          else
+            mailer.deposited_email
+          end
     job.deliver_later
     mailer.globus_deposited_email.deliver_later if work_version.globus_endpoint && Settings.notify_admin_list
 
     delete_access_rule(work_version) if work_version.globus_endpoint
   end
+  # rubocop:enable Metrics/AbcSize
 
   def self.after_rejected(work_version, _transition)
     work_mailer(work_version).reject_email.deliver_later
@@ -55,7 +57,7 @@ class WorkObserver
   def self.after_submit_for_review(work_version, _transition)
     collection = work_version.work.collection
     (collection.reviewed_by + collection.managed_by - [work_version.work.owner]).each do |recipient|
-      next if collection.opted_out_of_email?(recipient, "submit_for_review")
+      next if collection.opted_out_of_email?(recipient, 'submit_for_review')
 
       ReviewersMailer.with(user: recipient, work_version:).submitted_email.deliver_later
     end
@@ -66,7 +68,7 @@ class WorkObserver
     WorksMailer.with(work_version:).decommission_owner_email.deliver_later
     collection = work_version.work.collection
     collection.managed_by.each do |recipient|
-      next if collection.opted_out_of_email?(recipient, "item_deleted")
+      next if collection.opted_out_of_email?(recipient, 'item_deleted')
 
       WorksMailer.with(user: recipient, work_version:).decommission_manager_email.deliver_later
     end

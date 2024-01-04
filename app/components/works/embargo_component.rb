@@ -17,7 +17,7 @@ module Works
 
     # The access level is specified by the collection
     def user_can_set_access?
-      return true if access_from_collection == "depositor-selects"
+      return true if access_from_collection == 'depositor-selects'
 
       false
     end
@@ -30,11 +30,11 @@ module Works
 
     def availability_from_collection
       if already_immediately_released?
-        "This item was released immediately upon deposit."
+        'This item was released immediately upon deposit.'
       elsif already_embargo_released?
-        "This item has been released from embargo."
-      elsif collection.release_option == "immediate"
-        "Immediately upon deposit."
+        'This item has been released from embargo.'
+      elsif collection.release_option == 'immediate'
+        'Immediately upon deposit.'
       else
         "Starting on #{collection.release_date.to_fs(:long)}."
       end
@@ -45,7 +45,7 @@ module Works
     end
 
     def when_available_statement
-      return "your deposit is approved" if collection.review_enabled?
+      return 'your deposit is approved' if collection.review_enabled?
 
       'you click "Deposit" at the bottom of this page'
     end

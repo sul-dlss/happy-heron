@@ -15,6 +15,7 @@ class NewVersionService
     @new_version = old_version.dup
   end
 
+  # rubocop:disable Metrics/AbcSize
   def dup(increment_version: false, save: false, version_description: nil, state: nil)
     dup_attached_files
     associations_to_filter.each do |relation|
@@ -29,6 +30,7 @@ class NewVersionService
 
     new_version
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 

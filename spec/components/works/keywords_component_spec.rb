@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Works::KeywordsComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
@@ -9,8 +9,8 @@ RSpec.describe Works::KeywordsComponent do
   let(:work_form) { WorkForm.new(work_version:, work:) }
   let(:rendered) { render_inline(described_class.new(form:)) }
 
-  it "renders the component" do
-    expect(rendered.to_html).to include("Keyword")
-    expect(rendered.to_html).to include("+ Add another keyword")
+  it 'renders the component' do
+    expect(rendered.to_html).to include('Keyword')
+    expect(rendered.to_html).to include('+ Add another keyword')
   end
 end

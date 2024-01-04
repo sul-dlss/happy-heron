@@ -19,11 +19,11 @@ class NewVersionParameterFilter
     return if clean_params[:attached_files_attributes].blank?
 
     old_version.attached_files.each do |existing|
-      existing_params = clean_params[:attached_files_attributes].values.find { |hash| hash["id"] == existing.id.to_s }
+      existing_params = clean_params[:attached_files_attributes].values.find { |hash| hash['id'] == existing.id.to_s }
       next if existing_params.blank?
 
-      existing_params["file"] = existing.file_attachment.blob.signed_id
-      existing_params.delete("id")
+      existing_params['file'] = existing.file_attachment.blob.signed_id
+      existing_params.delete('id')
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -31,10 +31,10 @@ class NewVersionParameterFilter
 
   def self.filter_relation_params(clean_params, old_version, relation)
     old_version.public_send(relation).each do |existing|
-      existing_params = clean_params["#{relation}_attributes"].values.find { |hash| hash["id"] == existing.id.to_s }
+      existing_params = clean_params["#{relation}_attributes"].values.find { |hash| hash['id'] == existing.id.to_s }
       next if existing_params.blank?
 
-      existing_params.delete("id")
+      existing_params.delete('id')
     end
   end
   private_class_method :filter_relation_params

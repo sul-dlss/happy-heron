@@ -1,13 +1,13 @@
-<%= turbo_frame_tag dom_id(work, "files_list") do %>
+<%= turbo_frame_tag dom_id(work, 'files_list') do %>
 <div class="files-list mb-5">
   <table class="table table-sm" id="filesTable">
     <thead class="files-list-header table-light">
     <tr>
       <th scope="col" class="table-title">Files
         <span class="ms-3">
-          <%= turbo_frame_tag dom_id(work, "edit_file"), src: edit_button_work_path(work, tag: "file"), target: "_top" %>
+          <%= turbo_frame_tag dom_id(work, 'edit_file'), src: edit_button_work_path(work, tag: 'file'), target: '_top' %>
         </span>
-        <%= link_to work_zip_path(work), class: "ms-4", data: {turbo: false} do %>
+        <%= link_to work_zip_path(work), class: 'ms-4', data: { turbo: false } do %>
           <span class="fa-solid fa-download" aria-hidden="true"></span><span class="visually-hidden">Download All Files</span>
         <% end %>
       </th>

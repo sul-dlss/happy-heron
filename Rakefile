@@ -3,12 +3,12 @@
 # Add your own tasks in files placed in lib/tasks ending in .rake,
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-require_relative "config/application"
-require "sneakers/tasks"
+require_relative 'config/application'
+require 'sneakers/tasks'
 
 Rails.application.load_tasks
 
-desc "Run Continuous Integration Suite (linters and tests)"
+desc 'Run Continuous Integration Suite (linters and tests)'
 task ci: %i[lint spec]
 
 # clear the default task injected by rspec

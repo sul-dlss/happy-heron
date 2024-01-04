@@ -6,12 +6,12 @@ class RelatedLinksPopulator < ApplicationPopulator
   # find out if incoming file is already added.
   def call(form, args)
     fragment = args.fetch(:fragment)
-    item = existing_record(form:, id: fragment["id"])
+    item = existing_record(form:, id: fragment['id'])
 
-    if fragment["_destroy"] == "1"
+    if fragment['_destroy'] == '1'
       form.related_links.delete(item)
       return skip!
-    elsif fragment["url"].blank?
+    elsif fragment['url'].blank?
       return skip!
     end
     item || form.related_links.append(RelatedLink.new)

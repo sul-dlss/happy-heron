@@ -10,7 +10,7 @@
   <% end %>
 
   <table class="table table-striped">
-    <%= render "dashboards/collection_header", collection: collection %>
+    <%= render 'dashboards/collection_header', collection: %>
     <thead class="table-light">
       <tr>
         <th>Deposits in collection</th>
@@ -25,7 +25,7 @@
     <tbody>
       <% if visible_deposits.any? %>
         <% visible_deposits.take(MAX_DEPOSITS_TO_SHOW).each do |work| %>
-          <%= render "dashboards/collection_summary_row", work: work %>
+          <%= render 'dashboards/collection_summary_row', work: %>
         <% end %>
       <% else %>
         <tr>
@@ -36,7 +36,7 @@
   </table>
 
   <% if visible_deposits.count > MAX_DEPOSITS_TO_SHOW %>
-    <div class="mb-3"><%= link_to "See all deposits", collection_works_path(collection) %></div>
+    <div class="mb-3"><%= link_to 'See all deposits', collection_works_path(collection) %></div>
   <% end %>
 
   <%= helpers.turbo_frame_tag dom_id(collection, :deposit), src: deposit_button_collection_path(collection) %>

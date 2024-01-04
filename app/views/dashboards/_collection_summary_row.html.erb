@@ -1,15 +1,15 @@
 <tr id="<%= dom_id(work) %>">
   <%= render Works::LinkToShowComponent.new(work_version: work.head) %>
   <td>
-    <%= turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: "_top" %>
-    <%= turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work), target: "_top" %>
+    <%= turbo_frame_tag dom_id(work, :edit), src: edit_button_work_path(work), target: '_top' %>
+    <%= turbo_frame_tag dom_id(work, :delete), src: delete_button_work_path(work), target: '_top' %>
   </td>
   <td><%= render Works::StateDisplayComponent.new(work_version: work.head) %></td>
   <td class="visible-to-reviewer-<%= work.collection.id %>"><%= work.owner.sunetid %></td>
   <td><%= render LocalTimeComponent.new(datetime: work.updated_at, show_time: false) %></td>
   <td>
     <% if work.purl %>
-      <%= link_to work.purl, work.purl, "aria-label": "Persistent link to #{WorkTitlePresenter.show(work.head)}" %>
+      <%= link_to work.purl, work.purl, 'aria-label': "Persistent link to #{WorkTitlePresenter.show(work.head)}" %>
       <a class="copy-button" data-controller="copy" data-copy-clip-value="<%= work.purl %>" data-action="copy#copy" aria-label="Copy persistent link to <%= WorkTitlePresenter.show(work.head) %>" href="<%= work.purl %>"><span class="fa-solid fa-copy"></span></a>
     <% end %>
   </td>

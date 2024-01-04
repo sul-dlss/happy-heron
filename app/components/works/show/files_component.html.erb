@@ -1,5 +1,5 @@
 <% if work_version.browser? %>
-  <turbo-frame id="<%= dom_id(work, "files_list") %>" src="<%= files_list_work_path(work) %>" loading="lazy">
+  <turbo-frame id="<%= dom_id(work, 'files_list') %>" src="<%= files_list_work_path(work) %>" loading="lazy">
     <table class="table table-sm mb-5" id="filesTable">
       <thead class="table-light">
       <tr>

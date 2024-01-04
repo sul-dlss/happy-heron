@@ -26,14 +26,14 @@ class AttachedFile < ApplicationRecord
 
   def create_preservation_active_storage_key
     ActiveStorage::Service::SdrService.encode_key(work_version.work.druid,
-      work_version.version,
-      path)
+                                                  work_version.version,
+                                                  path)
   end
 
   def create_globus_active_storage_key
     ActiveStorage::Service::GlobusService.encode_key(work_version.work.id,
-      work_version.version,
-      path)
+                                                     work_version.version,
+                                                     path)
   end
 
   # Is the most recently uploaded copy of this file in preservation?

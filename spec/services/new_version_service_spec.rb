@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe NewVersionService do
   let(:new_version) do
-    described_class.dup(existing_version, increment_version: true, save: true, version_description: "A dup",
-      state: :version_draft)
+    described_class.dup(existing_version, increment_version: true, save: true, version_description: 'A dup',
+                                          state: :version_draft)
   end
 
   let(:existing_version) { create(:work_version_with_work_and_collection) }
@@ -16,11 +16,11 @@ RSpec.describe NewVersionService do
     existing_version.update(attached_files: [attached_file])
   end
 
-  it "duplicates the version" do
+  it 'duplicates the version' do
     expect(new_version).to be_a WorkVersion
     expect(new_version.persisted?).to be true
     expect(new_version.version).to be 2
-    expect(new_version.version_description).to eq "A dup"
+    expect(new_version.version_description).to eq 'A dup'
     expect(new_version.version_draft?).to be true
     existing_version.reload
     expect(new_version.title).to eq existing_version.title

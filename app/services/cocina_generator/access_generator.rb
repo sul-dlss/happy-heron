@@ -30,9 +30,9 @@ module CocinaGenerator
 
     def embargoed_access
       {
-        view: "citation-only",
-        download: "none",
-        embargo: regular_access.merge({releaseDate: work_version.embargo_date.iso8601})
+        view: 'citation-only',
+        download: 'none',
+        embargo: regular_access.merge({ releaseDate: work_version.embargo_date.iso8601 })
       }
     end
 

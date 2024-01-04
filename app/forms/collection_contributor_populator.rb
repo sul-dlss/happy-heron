@@ -8,8 +8,8 @@ class CollectionContributorPopulator < ApplicationPopulator
     fragment = args.fetch(:fragment)
     as = args.fetch(:as)
 
-    item = existing_record(form:, id: fragment["id"])
-    if fragment["_destroy"] == "1"
+    item = existing_record(form:, id: fragment['id'])
+    if fragment['_destroy'] == '1'
       # Remove contributor
       form.public_send(as).delete(item) if item
       return skip!
@@ -17,12 +17,12 @@ class CollectionContributorPopulator < ApplicationPopulator
 
     # Prevent duplicates
     collection = args.fetch(:collection)
-    return skip! if collection.map(&:sunetid).include?(fragment["sunetid"])
+    return skip! if collection.map(&:sunetid).include?(fragment['sunetid'])
     return item if item
 
     # This must be "or create" because we could end up with an email conflict if
     # the user is added in two fields simultaneously.
-    user = User.find_or_create_by(email: "#{fragment["sunetid"]}@stanford.edu")
+    user = User.find_or_create_by(email: "#{fragment['sunetid']}@stanford.edu")
     form.public_send(as).append(user)
   end
 end

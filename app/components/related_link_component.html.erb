@@ -3,7 +3,7 @@
 
   <div class="mb-3" data-controller="nested-form" data-nested-form-selector-value=".inner-container">
     <template data-nested-form-target='template'>
-      <%= form.fields_for :related_links, RelatedLink.new, child_index: "TEMPLATE_RECORD" do |link_form| %>
+      <%= form.fields_for :related_links, RelatedLink.new, child_index: 'TEMPLATE_RECORD' do |link_form| %>
         <%= render RelatedLinkRowComponent.new(form: link_form) %>
       <% end %>
     </template>
@@ -13,7 +13,7 @@
     <% end %>
 
     <div data-nested-form-target="add_item">
-      <%= button_tag "+ Add another link", type: "button", class: "btn btn-outline-primary", data: {action: "nested-form#addAssociation"} %>
+      <%= button_tag '+ Add another link', type: 'button', class: 'btn btn-outline-primary', data: { action: 'nested-form#addAssociation' } %>
     </div>
   </div>
 </fieldset>

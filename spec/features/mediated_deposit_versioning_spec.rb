@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Edit a new version of a work in a collection using mediated deposit", js: true do
+RSpec.describe 'Edit a new version of a work in a collection using mediated deposit', :js do
   let(:collection_version) do
     create(:collection_version_with_collection, reviewed_by: [reviewer], depositors: [depositor], review_enabled: true)
   end
-  let(:new_work_title) { "I Appear To Have Changed" }
-  let(:rejection_reason) { "I do not like the color" }
-  let(:newest_work_title) { "Indigo is preferred" }
+  let(:new_work_title) { 'I Appear To Have Changed' }
+  let(:rejection_reason) { 'I do not like the color' }
+  let(:newest_work_title) { 'Indigo is preferred' }
   let(:depositor) { create(:user) }
   let(:reviewer) { create(:user) }
 
   # Work, WorkVersion, and Collection need to exist before user hits dashboard
   let!(:work_version) { create(:valid_deposited_work_version, work:) }
   let(:work) do
-    create(:work, druid: "druid:bc123df4567", owner: depositor, collection: collection_version.collection)
+    create(:work, druid: 'druid:bc123df4567', owner: depositor, collection: collection_version.collection)
   end
 
   before do
@@ -24,29 +24,29 @@ RSpec.describe "Edit a new version of a work in a collection using mediated depo
     allow(Repository).to receive(:valid_version?).and_return(true)
   end
 
-  context "when reviewer rejects, then approves work" do
+  context 'when reviewer rejects, then approves work' do
     # TODO: Figure out why this is so flaky in CI
-    it "works as expected", skip: ENV["CI"].present? do
+    it 'works as expected', skip: ENV['CI'].present? do
       sign_in depositor
       visit dashboard_path
       find("a[aria-label='Edit #{work_version.title}']").click
 
-      fill_in "What's changing?", with: "Fixing title per request"
+      fill_in "What's changing?", with: 'Fixing title per request'
 
-      fill_in "Title of deposit", with: new_work_title
+      fill_in 'Title of deposit', with: new_work_title
 
-      click_button "Submit for approval"
+      click_link_or_button 'Submit for approval'
 
-      expect(page).to have_content "You have successfully submitted your deposit"
+      expect(page).to have_content 'You have successfully submitted your deposit'
 
-      click_link "Return to dashboard"
+      click_link_or_button 'Return to dashboard'
       sleep(2)
-      click_link new_work_title
+      click_link_or_button new_work_title
 
-      expect(page).to have_text "Your deposit has been sent for approval."
+      expect(page).to have_text 'Your deposit has been sent for approval.'
 
       # A work submitted for approval should not be editable.
-      expect(page).not_to have_css("a[aria-label='Edit #{new_work_title}']", wait: 0)
+      expect(page).to have_no_css("a[aria-label='Edit #{new_work_title}']", wait: 0)
       sign_out
       # To address flakiness. Without sleep, sometimes the following are performed by the depositor, not the reviewer.
       sleep(1)
@@ -54,39 +54,39 @@ RSpec.describe "Edit a new version of a work in a collection using mediated depo
       # Now acting as the collection reviewer
       sign_in reviewer
       visit dashboard_path
-      within_table("Items that are waiting to be reviewed") do
-        click_link(new_work_title)
+      within_table('Items that are waiting to be reviewed') do
+        click_link_or_button(new_work_title)
       end
-      expect(page).to have_content("Review all details below, then approve or return this deposit")
-      find("label", text: "Return").click
-      fill_in "reason", with: rejection_reason
-      click_button("Submit")
+      expect(page).to have_content('Review all details below, then approve or return this deposit')
+      find('label', text: 'Return').click
+      fill_in 'reason', with: rejection_reason
+      click_link_or_button('Submit')
 
       visit dashboard_path
-      within(".collections") do
-        click_link new_work_title
+      within('.collections') do
+        click_link_or_button new_work_title
       end
       expect(page).to have_content(rejection_reason)
 
       find("a[aria-label='Edit #{new_work_title}']").click
-      fill_in "Title of deposit", with: newest_work_title
-      click_button "Submit for approval"
+      fill_in 'Title of deposit', with: newest_work_title
+      click_link_or_button 'Submit for approval'
 
-      expect(page).to have_content "You have successfully submitted your deposit"
-      click_link "Return to dashboard"
+      expect(page).to have_content 'You have successfully submitted your deposit'
+      click_link_or_button 'Return to dashboard'
 
-      within_table("Items that are waiting to be reviewed") do
-        click_link(newest_work_title)
+      within_table('Items that are waiting to be reviewed') do
+        click_link_or_button(newest_work_title)
       end
-      expect(page).to have_content("Review all details below, then approve or return this deposit")
-      find("label", text: "Approve and deposit").click
-      click_button "Submit"
+      expect(page).to have_content('Review all details below, then approve or return this deposit')
+      find('label', text: 'Approve and deposit').click
+      click_link_or_button 'Submit'
 
       within_table(collection_version.name) do
         expect(page).to have_link(newest_work_title)
-        click_link(newest_work_title)
+        click_link_or_button(newest_work_title)
       end
-      expect(page).to have_content("Deposit in progress")
+      expect(page).to have_content('Deposit in progress')
     end
   end
 end

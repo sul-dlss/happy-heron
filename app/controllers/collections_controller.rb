@@ -30,7 +30,7 @@ class CollectionsController < ObjectsController
     @form = CollectionSettingsForm.new(collection)
     if @form.validate(update_params) && @form.save
       CollectionObserver.settings_updated(collection, change_set: point1.diff(collection), user: current_user,
-        form: @form)
+                                                      form: @form)
 
       redirect_to collection_path(collection)
     else
@@ -54,21 +54,21 @@ class CollectionsController < ObjectsController
   # The access can vary depending on the user and the state of the collection.
   def dashboard
     collection = Collection.find(params[:id])
-    render partial: "collections/dashboard", locals: {collection:}
+    render partial: 'collections/dashboard', locals: { collection: }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.
   def deposit_button
     collection = Collection.find(params[:id])
-    render partial: "collections/deposit_button", locals: {collection:}
+    render partial: 'collections/deposit_button', locals: { collection: }
   end
 
   # We render this button lazily because it requires doing a query to see if the user has access.
   # The access can vary depending on the user and the state of the collection.
   def delete_button
     collection = Collection.find(params[:id])
-    render partial: "collections/delete_button", locals: {collection:}
+    render partial: 'collections/delete_button', locals: { collection: }
   end
 
   # We render this link lazily because it requires doing a query to see if the user has access.
@@ -78,7 +78,7 @@ class CollectionsController < ObjectsController
   def edit_link
     collection = Collection.find(params[:id])
     label = params.fetch(:label) { "Edit #{collection.head.name}" }
-    render partial: "edit_link", locals: {
+    render partial: 'edit_link', locals: {
       collection:,
       label:,
       anchor: params[:ref]
@@ -93,15 +93,15 @@ class CollectionsController < ObjectsController
 
   def update_params
     params.require(:collection).permit(:access, :doi_option,
-      :review_enabled, :license_option,
-      :required_license, :default_license,
-      :custom_rights_statement_option, :provided_custom_rights_statement,
-      :custom_rights_statement_custom_instructions,
-      :email_when_participants_changed,
-      :email_depositors_status_changed,
-      :release_option, :release_duration,
-      managed_by_attributes: %i[_destroy id sunetid],
-      reviewed_by_attributes: %i[_destroy id sunetid],
-      depositors_attributes: %i[_destroy id sunetid])
+                                       :review_enabled, :license_option,
+                                       :required_license, :default_license,
+                                       :custom_rights_statement_option, :provided_custom_rights_statement,
+                                       :custom_rights_statement_custom_instructions,
+                                       :email_when_participants_changed,
+                                       :email_depositors_status_changed,
+                                       :release_option, :release_duration,
+                                       managed_by_attributes: %i[_destroy id sunetid],
+                                       reviewed_by_attributes: %i[_destroy id sunetid],
+                                       depositors_attributes: %i[_destroy id sunetid])
   end
 end

@@ -1,6 +1,6 @@
 <p>Dear <%= @user.first_name %>,</p>
 
-<p>The Depositor <%= @owner.name %> has submitted a <%= link_to "deposit", work_url(@work) %> in the <%= @collection_version.name %> collection.</p>
+<p>The Depositor <%= @owner.name %> has submitted a <%= link_to 'deposit', work_url(@work) %> in the <%= @collection_version.name %> collection.</p>
 
 <% if @work.head.custom_rights.present? %>
   <p>This item has a custom rights statement:</p>

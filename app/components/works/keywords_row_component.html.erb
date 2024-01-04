@@ -2,21 +2,21 @@
   <div class="col-sm-6">
     <% unique_field_id = "work_keywords_attributes_#{form.options[:child_index]}" %>
     <div data-controller="keywords autocomplete autocomplete-edit" data-autocomplete-url-value="/fast" data-autocomplete-min-length-value="3" aria-label="autocomplete group" class="dropdown" role="combobox" aria-expanded="false">
-      <%= form.label :label, "Keyword", for: unique_field_id, class: "col-form-label visually-hidden" %>
-      <%= form.text_field :label, {class: "form-control#{"is-invalid" if error?}", required: true, id: unique_field_id, "data-autocomplete-target": "input", "data-autocomplete-edit-target": "input",
-                "data-keywords-target": "input"} %>
+      <%= form.label :label, 'Keyword', for: unique_field_id, class: 'col-form-label visually-hidden' %>
+      <%= form.text_field :label, { class: "form-control#{'is-invalid' if error?}", required: true, id: unique_field_id, 'data-autocomplete-target': 'input', 'data-autocomplete-edit-target': 'input',
+                                    'data-keywords-target': 'input' } %>
       <!-- This input is populated by autocomplete controller.-->
       <!-- That triggers the autocomplete-edit controller, which populates the uri and cocina type inputs. -->
       <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-edit-target="value" data-action="autocomplete-edit#change" aria-label="autocomplete">
-      <%= form.hidden_field :uri, {required: true, "aria-label": "#{unique_field_id}_uri", "data-autocomplete-edit-target": "uri"} %>
-      <%= form.hidden_field :cocina_type, {required: true, "aria-label": "#{unique_field_id}_cocina_type", "data-autocomplete-edit-target": "type"} %>
+      <%= form.hidden_field :uri, { required: true, 'aria-label': "#{unique_field_id}_uri", 'data-autocomplete-edit-target': 'uri' } %>
+      <%= form.hidden_field :cocina_type, { required: true, 'aria-label': "#{unique_field_id}_cocina_type", 'data-autocomplete-edit-target': 'type' } %>
       <ul class="list-group" data-autocomplete-target="results"></ul>
       <div class="invalid-feedback">At least one keyword is required. Each keyword must be unique.</div>
     </div>
   </div>
   <div class="col-sm-1">
-    <%= button_tag type: "button", class: "btn btn-sm", aria: {label: keyword_remove_label},
-          data: {action: "click->nested-form#removeAssociation"} do %>
+    <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: keyword_remove_label },
+                   data: { action: 'click->nested-form#removeAssociation' } do %>
       <span class="fa-regular fa-trash-alt"></span>
     <% end %>
     <%= form.hidden_field :_destroy %>

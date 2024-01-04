@@ -7,9 +7,9 @@ class EdtfParamsFilter
     schema.each do |dfn|
       next unless dfn[:edtf]
 
-      name = dfn[:name].delete_suffix("_edtf")
+      name = dfn[:name].delete_suffix('_edtf')
 
-      date_attributes[dfn[:name]] = deserialize(params, name, dfn[:range] && params["#{name}_type"] == "range")
+      date_attributes[dfn[:name]] = deserialize(params, name, dfn[:range] && params["#{name}_type"] == 'range')
     end
     params.merge(date_attributes)
   end
@@ -34,7 +34,7 @@ class EdtfParamsFilter
     return unless start && finish
 
     # Slash is the range separator in EDTF
-    [start, finish].join("/")
+    [start, finish].join('/')
   end
 
   def deserialize_edtf_date(year, month, day, approximate)
@@ -42,10 +42,10 @@ class EdtfParamsFilter
 
     date = year.dup
     if month.present?
-      date += "-#{format("%<month>02d", month:)}"
-      date += "-#{format("%<day>02d", day:)}" if day.present?
+      date += "-#{format('%<month>02d', month:)}"
+      date += "-#{format('%<day>02d', day:)}" if day.present?
     end
-    date += "~" if approximate
+    date += '~' if approximate
     date
   end
 end

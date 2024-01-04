@@ -28,7 +28,7 @@ module Works
     end
 
     def hidden_method?
-      [:get, :post].exclude?(method)
+      %i[get post].exclude?(method)
     end
   end
 end

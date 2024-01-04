@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Ror Controller" do
+RSpec.describe 'Ror Controller' do
   let(:headers) do
     {
-      "Accept" => "application/json",
-      "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-      "User-Agent" => "Stanford Self-Deposit (Happy Heron)"
+      'Accept' => 'application/json',
+      'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      'User-Agent' => 'Stanford Self-Deposit (Happy Heron)'
     }
   end
 
-  context "when lookup is successful" do
+  context 'when lookup is successful' do
     let(:lookup_resp_body) do
       <<~JSON
         {
@@ -202,12 +202,14 @@ RSpec.describe "Ror Controller" do
       stub_request(:get, url).with(headers:).to_return(status: 200, body: lookup_resp_body, headers: {})
     end
 
-    it "returns status 200 and html with suggestions" do
-      get "/ror", params: {q: "stanford"}
+    it 'returns status 200 and html with suggestions' do
+      get '/ror', params: { q: 'stanford' }
       expect(response).to have_http_status :ok
 
-      match_suggestion("https://ror.org/03mtd9a03", "Stanford Medicine", "United States", "Stanford University Medical Center", response)
-      match_suggestion("https://ror.org/00f54p054", "Stanford University", "Stanford, United States", "SU, Leland Stanford Junior University, Universidad Stanford", response)
+      match_suggestion('https://ror.org/03mtd9a03', 'Stanford Medicine', 'United States',
+                       'Stanford University Medical Center', response)
+      match_suggestion('https://ror.org/00f54p054', 'Stanford University', 'Stanford, United States',
+                       'SU, Leland Stanford Junior University, Universidad Stanford', response)
     end
 
     def match_suggestion(uri, label, location, other_names, response)
@@ -220,20 +222,20 @@ RSpec.describe "Ror Controller" do
     end
   end
 
-  context "when error is received from the lookup server" do
+  context 'when error is received from the lookup server' do
     before do
       url = "#{Settings.ror_lookup.url}?query=stanford"
       stub_request(:get, url)
         .with(headers:)
-        .to_return(status: [404, "some error message"], body: "", headers: {})
+        .to_return(status: [404, 'some error message'], body: '', headers: {})
       allow(Rails.logger).to receive(:warn)
     end
 
-    it "returns status 500 and an empty body" do
-      get "/ror", params: {q: "stanford"}
+    it 'returns status 500 and an empty body' do
+      get '/ror', params: { q: 'stanford' }
       expect(response).to have_http_status :internal_server_error
-      expect(response.body).to eq ""
-      expect(Rails.logger).to have_received(:warn).with("Autocomplete results for stanford returned 404")
+      expect(response.body).to eq ''
+      expect(Rails.logger).to have_received(:warn).with('Autocomplete results for stanford returned 404')
     end
   end
 end

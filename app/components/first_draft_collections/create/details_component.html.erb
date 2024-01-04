@@ -2,28 +2,28 @@
   <header>Details *</header>
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <%= form.label :name, "Collection name *", class: "col-form-label" %>
-      <%= render PopoverComponent.new key: "collection.name" %>
+      <%= form.label :name, 'Collection name *', class: 'col-form-label' %>
+      <%= render PopoverComponent.new key: 'collection.name' %>
     </div>
     <div class="col-sm-10 col-xl-8">
-      <%= form.text_field :name, class: "form-control", required: true, "aria-describedby": "popover-collection.name" %>
+      <%= form.text_field :name, class: 'form-control', required: true, 'aria-describedby': 'popover-collection.name' %>
       <div class="invalid-feedback">You must provide a name</div>
     </div>
   </div>
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <%= form.label :description, "Description *", class: "col-form-label" %>
-      <%= render PopoverComponent.new key: "collection.description" %>
+      <%= form.label :description, 'Description *', class: 'col-form-label' %>
+      <%= render PopoverComponent.new key: 'collection.description' %>
     </div>
     <div class="col-sm-10 col-xl-8">
-      <%= form.text_area :description, class: "form-control", required: true, "aria-describedby": "popover-collection.description" %>
+      <%= form.text_area :description, class: 'form-control', required: true, 'aria-describedby': 'popover-collection.description' %>
       <div class="invalid-feedback">You must provide a description</div>
     </div>
   </div>
 
-  <%= render Works::ContactEmailComponent.new(form: form, key: "collection.contact_email") %>
+  <%= render Works::ContactEmailComponent.new(form:, key: 'collection.contact_email') %>
 </section>
 
 <section id="links">
-  <%= render RelatedLinkComponent.new(form: form, key: "collection.related_link") %>
+  <%= render RelatedLinkComponent.new(form:, key: 'collection.related_link') %>
 </section>

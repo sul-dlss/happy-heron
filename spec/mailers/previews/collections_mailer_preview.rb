@@ -4,8 +4,8 @@
 # Preview these emails at http://localhost:3000/rails/mailers/collections_mailer
 class CollectionsMailerPreview < ActionMailer::Preview
   delegate :invitation_to_deposit_email, :deposit_access_removed_email,
-    :review_access_granted_email, :participants_changed_email,
-    to: :mailer_with_collection
+           :review_access_granted_email, :participants_changed_email,
+           to: :mailer_with_collection
 
   private
 

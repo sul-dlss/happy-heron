@@ -3,6 +3,6 @@
 # Utility functions for DOIs
 class Doi
   def self.for(druid)
-    "#{Settings.datacite.prefix}/#{druid.delete_prefix("druid:")}"
+    "#{Settings.datacite.prefix}/#{druid.delete_prefix('druid:')}"
   end
 end

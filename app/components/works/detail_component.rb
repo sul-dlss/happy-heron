@@ -14,25 +14,25 @@ module Works
     delegate :doi_option, to: :collection, prefix: true
 
     delegate :abstract, :attached_files, :authors, :citation, :contact_emails, :contributors,
-      :created_edtf, :custom_rights, :first_draft?, :published_edtf, :rejected?, :related_links,
-      :related_works, :version_description, :work, :work_type, to: :work_version
+             :created_edtf, :custom_rights, :first_draft?, :published_edtf, :rejected?, :related_links,
+             :related_works, :version_description, :work, :work_type, to: :work_version
 
     def version
-      return "1 - initial version" if first_draft?
+      return '1 - initial version' if first_draft?
 
       "#{work_version.version} - #{version_description}"
     end
 
     def doi_setting
-      return "DOI assigned (see above)" if doi
+      return 'DOI assigned (see above)' if doi
 
       case collection_doi_option
-      when "depositor-selects"
-        assign_doi ? "DOI not assigned" : "Opted out of receiving a DOI"
-      when "yes"
-        "DOI not assigned"
+      when 'depositor-selects'
+        assign_doi ? 'DOI not assigned' : 'Opted out of receiving a DOI'
+      when 'yes'
+        'DOI not assigned'
       else # 'no'
-        "DOI will not be assigned"
+        'DOI will not be assigned'
       end
     end
 
@@ -77,11 +77,11 @@ module Works
     end
 
     def embargo_date
-      work_version.embargo_date ? work_version.embargo_date.to_fs(:long) : "Immediately"
+      work_version.embargo_date ? work_version.embargo_date.to_fs(:long) : 'Immediately'
     end
 
     def access
-      (work_version.access == "stanford") ? "Stanford Community" : "Everyone"
+      work_version.access == 'stanford' ? 'Stanford Community' : 'Everyone'
     end
 
     def license
@@ -89,7 +89,7 @@ module Works
     end
 
     def subtypes
-      Array(work_version.subtype).join(", ")
+      Array(work_version.subtype).join(', ')
     end
 
     def work_type_label
@@ -114,7 +114,7 @@ module Works
       return if edtf.nil?
 
       # For example, "2020?/2021?" to "ca. 2020 - ca. 2021"
-      edtf.sub(%r{/}, " - ").gsub(/(\S+)\?/, 'ca. \1')
+      edtf.sub(%r{/}, ' - ').gsub(/(\S+)\?/, 'ca. \1')
     end
   end
 end

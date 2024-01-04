@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe CollectionDecommissionPolicy do
   let(:user) { build_stubbed(:user) }
@@ -16,9 +16,9 @@ RSpec.describe CollectionDecommissionPolicy do
   let(:groups) { [] }
 
   describe_rule :update? do
-    failed "when user is not an adminstrator"
+    failed 'when user is not an adminstrator'
 
-    succeed "when user is an admin" do
+    succeed 'when user is an admin' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
     end
   end

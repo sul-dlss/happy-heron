@@ -1,4 +1,4 @@
 <%# This is a fragment that is rendered by turbo-rails for all users when the collection is updated.
  This partial causes the web-browser to call back to the server and get the summary, with the user
  so that the server can compute how this should look given the access of the current user %>
-<%= turbo_frame_tag dom_id(collection, :summary), src: dashboard_collection_path(collection), target: "_top" %>
+<%= turbo_frame_tag dom_id(collection, :summary), src: dashboard_collection_path(collection), target: '_top' %>

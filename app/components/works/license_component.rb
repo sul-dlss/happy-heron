@@ -21,7 +21,8 @@ module Works
       reform.model.fetch(:work_version).license || collection.default_license
     end
 
-    delegate :custom_rights_statement_source_option, :effective_custom_rights_instructions, :user_can_set_license?, to: :collection
+    delegate :custom_rights_statement_source_option, :effective_custom_rights_instructions, :user_can_set_license?,
+             to: :collection
 
     def license_from_collection
       License.label_for(collection.required_license)

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Collections::WorksComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(collection:)) }
 
-  context "when displaying a collections works" do
+  context 'when displaying a collections works' do
     let(:collection) { create(:collection) }
     let(:user_with_groups) { UserWithGroups.new(user:, groups:) }
     let(:user) { create(:user) }
@@ -24,19 +24,19 @@ RSpec.describe Collections::WorksComponent, type: :component do
       )
     end
 
-    context "when administrator" do
+    context 'when administrator' do
       let(:groups) { [Settings.authorization_workgroup_names.administrators] }
 
-      it "renders the works detail table component" do
-        expect(rendered.css("table").to_html).to include("Test title").exactly(8).times
+      it 'renders the works detail table component' do
+        expect(rendered.css('table').to_html).to include('Test title').exactly(8).times
         expect(rendered.to_html).to include('data-datatable-works-hide-depositor-value="false"')
       end
     end
 
-    context "when depositor" do
+    context 'when depositor' do
       let(:groups) { [] }
 
-      it "renders the works detail table component" do
+      it 'renders the works detail table component' do
         expect(rendered.to_html).to include('data-datatable-works-hide-depositor-value="true"')
       end
     end

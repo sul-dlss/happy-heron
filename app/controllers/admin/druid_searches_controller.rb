@@ -22,7 +22,7 @@ module Admin
     private
 
     def lookup_druid(druid)
-      druid = "druid:#{druid}" unless druid.start_with?("druid:")
+      druid = "druid:#{druid}" unless druid.start_with?('druid:')
       item = Collection.find_by(druid:) || Work.find_by(druid:)
       return Failure(:not_found) unless item
 

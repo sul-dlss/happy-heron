@@ -13,18 +13,18 @@
       </script>
     <% end %>
 
-    <title><%= content_for?(:title) ? yield(:title) : "SDR | Stanford Digital Repository" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : 'SDR | Stanford Digital Repository' %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= action_cable_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <%= stylesheet_link_tag "https://www-media.stanford.edu/su-identity/css/su-identity.css" %>
-    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" %>
-    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/simple-datatables@2.1.13/dist/style.css" %>
-    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= stylesheet_link_tag 'https://www-media.stanford.edu/su-identity/css/su-identity.css' %>
+    <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' %>
+    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/simple-datatables@2.1.13/dist/style.css' %>
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css' %>
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
   </head>
 
   <body data-controller="help-how">
@@ -39,7 +39,7 @@
         <nav class="navbar navbar-expand-md navbar-dark stanford-navbar" aria-label="Site navigation">
           <div class="container">
             <a class="navbar-brand me-auto" href="https://library.stanford.edu" aria-label="Stanford Libraries">
-              <%= image_tag("StanfordLibraries-logo-whitetext.svg", height: 32, alt: "Stanford Digital Repository") %>
+              <%= image_tag('StanfordLibraries-logo-whitetext.svg', height: 32, alt: 'Stanford Digital Repository') %>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,31 +51,31 @@
                   <li class="nav-item">Globus test mode user valid: <%= Settings.globus.test_user_valid %></li>
                 <% end %>
                 <li class="nav-item">
-                  <%= link_to("Help", "#contactUsModal",
-                        class: "nav-link",
-                        data: {
-                          bs_toggle: "modal",
-                          bs_target: "#contactUsModal",
-                          controller: "contact-us"
-                        }) %>
+                  <%= link_to('Help', '#contactUsModal',
+                              class: 'nav-link',
+                              data: {
+                                bs_toggle: 'modal',
+                                bs_target: '#contactUsModal',
+                                controller: 'contact-us'
+                              }) %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to("SDR Services", Settings.sdr_url,
-                        class: "nav-link") %>
+                  <%= link_to('SDR Services', Settings.sdr_url,
+                              class: 'nav-link') %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to("Terms of Deposit", "#termsOfDepositModal",
-                        class: "nav-link",
-                        data: {
-                          bs_toggle: "modal",
-                          bs_target: "#termsOfDepositModal"
-                        }) %>
+                  <%= link_to('Terms of Deposit', '#termsOfDepositModal',
+                              class: 'nav-link',
+                              data: {
+                                bs_toggle: 'modal',
+                                bs_target: '#termsOfDepositModal'
+                              }) %>
                 </li>
                 <li class="nav-item">
                   <% if current_user %>
-                    <%= link_to("Logout", destroy_user_session_path, class: "nav-link") %>
+                    <%= link_to('Logout', destroy_user_session_path, class: 'nav-link') %>
                   <% else %>
-                    <%= link_to("Login", new_user_session_path, class: "nav-link") %>
+                    <%= link_to('Login', new_user_session_path, class: 'nav-link') %>
                   <% end %>
                 </li>
               </ul>
@@ -86,7 +86,7 @@
           <header class="background-holder">
             <div class="sdr-header">
               <div class="container-xxl">
-                <%= link_to "/", "aria-label": "Stanford Digital Repository"  do %>
+                <%= link_to '/', 'aria-label': 'Stanford Digital Repository'  do %>
                   <span class="stanford">Stanford</span> <span class="digital-repo">Digital Repository</span>
                 <% end %>
               </div>
@@ -95,9 +95,9 @@
           </header>
         <% end %>
 
-        <%= render "shared/flashes" %>
-        <%= render "shared/terms_of_deposit" %>
-        <%= render "shared/help_modal" %>
+        <%= render 'shared/flashes' %>
+        <%= render 'shared/terms_of_deposit' %>
+        <%= render 'shared/help_modal' %>
         <%= yield %>
       </div>
     </div>
@@ -106,8 +106,8 @@
       <div id="sul-footer-container">
         <div id="sul-footer">
           <div id="sul-footer-img" class="span2">
-            <%= link_to "https://library.stanford.edu" do %>
-              <%= image_tag "sul-logo-stacked.svg", alt: "Stanford Libraries", height: 45 %>
+            <%= link_to 'https://library.stanford.edu' do %>
+              <%= image_tag 'sul-logo-stacked.svg', alt: 'Stanford Libraries', height: 45 %>
             <% end %>
           </div>
           <div id="sul-footer-links" class="span2">

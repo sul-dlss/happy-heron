@@ -1,6 +1,6 @@
 <div class="mb-3 row">
   <div class="col-sm-12 h5">
-    Work subtypes <%= "*" unless optional? %>
+    Work subtypes <%= '*' unless optional? %>
     <%= tooltip %>
   </div>
 </div>
@@ -11,12 +11,12 @@
     <div class="mb-4 subtype-container">
       <div class="col-sm-2">
         <div class="col-form-label">
-          <%= form.label :subtype, 'Specify "Other" type', "aria-describedby": "popover-work.subtypes.other" %> <%= render PopoverComponent.new key: "work.subtypes.other" %>
+          <%= form.label :subtype, 'Specify "Other" type', 'aria-describedby': 'popover-work.subtypes.other' %> <%= render PopoverComponent.new key: 'work.subtypes.other' %>
         </div>
       </div>
 
       <div class="col-sm-10">
-        <%= form.text_field :subtype, class: "form-control", required: true, multiple: true %>
+        <%= form.text_field :subtype, class: 'form-control', required: true, multiple: true %>
         <div class="invalid-feedback">You must provide a subtype for works of type 'Other'</div>
       </div>
     </div>
@@ -31,8 +31,8 @@
     <% subtypes.each do |subtype| %>
       <div class="subtype-item">
         <div class="form-check">
-          <%= form.check_box :subtype, {multiple: true, class: "form-check-input"}, subtype, nil %>
-          <%= form.label "subtype_#{sanitized_value(subtype)}", subtype, class: "form-check-label" %>
+          <%= form.check_box :subtype, { multiple: true, class: 'form-check-input' }, subtype, nil %>
+          <%= form.label "subtype_#{sanitized_value(subtype)}", subtype, class: 'form-check-label' %>
         </div>
       </div>
     <% end %>
@@ -48,8 +48,8 @@
       <% more_types.each do |more_type| %>
         <div class="subtype-item">
           <div class="form-check">
-            <%= form.check_box :subtype, {multiple: true, class: "form-check-input"}, more_type, nil %>
-            <%= form.label "subtype_#{sanitized_value(more_type)}", more_type, class: "form-check-label" %>
+            <%= form.check_box :subtype, { multiple: true, class: 'form-check-input' }, more_type, nil %>
+            <%= form.label "subtype_#{sanitized_value(more_type)}", more_type, class: 'form-check-label' %>
           </div>
         </div>
       <% end %>

@@ -20,14 +20,14 @@ module Collections
       end
 
       def spinner
-        tag.span class: "fa-solid fa-spinner fa-pulse"
+        tag.span class: 'fa-solid fa-spinner fa-pulse'
       end
 
       def edit_button
         return unless draft?
 
-        link_to "Edit or Deposit", edit_collection_path(collection),
-          class: "btn btn-outline-primary me-2"
+        link_to 'Edit or Deposit', edit_collection_path(collection),
+                class: 'btn btn-outline-primary me-2'
       end
     end
   end

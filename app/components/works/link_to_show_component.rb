@@ -8,7 +8,7 @@ module Works
     end
 
     def link
-      link_to truncate(title, length: 150, separator: " "), work, title:, class: "work-link"
+      link_to truncate(title, length: 150, separator: ' '), work, title:, class: 'work-link'
     end
 
     def title

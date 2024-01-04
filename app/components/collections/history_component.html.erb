@@ -10,7 +10,7 @@
   <tbody>
     <% events.each do |event| %>
       <tr>
-        <td><%= I18n.t event.event_type, scope: "event.type" %></td>
+        <td><%= I18n.t event.event_type, scope: 'event.type' %></td>
         <td><%= event.user.sunetid %></td>
         <td><%= render LocalTimeComponent.new(datetime: event.created_at) %></td>
         <td><%= simple_format(event.description) %></td>

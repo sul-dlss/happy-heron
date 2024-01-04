@@ -8,11 +8,11 @@ class EmbargoDateParamsFilter
       next unless dfn[:embargo_date]
 
       name = dfn[:name]
-      date_attributes[name] = if params.slice(*release_params).values.include?("immediate") # rubocop:disable Performance/InefficientHashSearch
-        nil # Do not attempt to deserialize date if release is immediate
-      else
-        deserialize(params, name)
-      end
+      date_attributes[name] = if params.slice(*release_params).values.include?('immediate') # rubocop:disable Performance/InefficientHashSearch
+                                nil # Do not attempt to deserialize date if release is immediate
+                              else
+                                deserialize(params, name)
+                              end
     end
 
     params.merge(date_attributes)

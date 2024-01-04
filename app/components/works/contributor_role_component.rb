@@ -16,7 +16,8 @@ module Works
 
     def call
       grouped_collection_select :role, grouped_options(contributor_type), :roles, :label, :key, :label,
-        {}, disabled: !visible, hidden: !visible, class: "form-select", data: @data_options, "aria-describedby": "popover-work.role_term"
+                                {}, disabled: !visible, hidden: !visible, class: 'form-select',
+                                    data: @data_options, 'aria-describedby': 'popover-work.role_term'
     end
 
     # Represents the type of contributor top level option for the role select
@@ -29,12 +30,12 @@ module Works
       attr_reader :key, :citable
 
       def label
-        I18n.t(key, scope: "contributor.roles")
+        I18n.t(key, scope: 'contributor.roles')
       end
 
       def roles
         AbstractContributor.grouped_roles(citable:)
-          .fetch(key).map { |label| Role.new(label:) }
+                           .fetch(key).map { |label| Role.new(label:) }
       end
     end
 

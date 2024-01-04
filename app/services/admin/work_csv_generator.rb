@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "csv"
+require 'csv'
 
 module Admin
   # Converts a set of works to CSV.
@@ -27,24 +27,24 @@ module Admin
     attr_reader :relation
 
     HEADERS = [
-      "item title",
-      "work id",
-      "druid",
-      "state",
-      "version number",
-      "depositor",
-      "owner",
-      "date created",
-      "date last modified",
-      "date last deposited",
-      "release",
-      "visibility",
-      "license",
-      "custom rights",
-      "DOI",
-      "collection title",
-      "collection id",
-      "collection druid"
+      'item title',
+      'work id',
+      'druid',
+      'state',
+      'version number',
+      'depositor',
+      'owner',
+      'date created',
+      'date last modified',
+      'date last deposited',
+      'release',
+      'visibility',
+      'license',
+      'custom rights',
+      'DOI',
+      'collection title',
+      'collection id',
+      'collection druid'
     ].freeze
 
     # rubocop:disable Metrics/AbcSize
@@ -63,10 +63,10 @@ module Admin
         work.created_at,
         version.updated_at,
         version.published_at,
-        version.embargo_date || "immediate",
+        version.embargo_date || 'immediate',
         version.access,
         version.license,
-        version.custom_rights ? "yes" : "no",
+        version.custom_rights ? 'yes' : 'no',
         work.doi,
         collection.head.name,
         collection.id,

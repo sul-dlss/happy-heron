@@ -16,12 +16,12 @@ class AccountsController < ApplicationController
   def lookup
     return AccountService.new.fetch(params[:id]) if Rails.env.production?
 
-    user = User.where("email like ?", "#{params[:id]}%").first
+    user = User.where('email like ?', "#{params[:id]}%").first
     return {} unless user
 
     {
-      "name" => user.name || user.sunetid,
-      "description" => "Digital Library Systems and Services, Digital Library Software Engineer - Web & Infrastructure"
+      'name' => user.name || user.sunetid,
+      'description' => 'Digital Library Systems and Services, Digital Library Software Engineer - Web & Infrastructure'
     }
   end
 end

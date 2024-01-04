@@ -2,7 +2,7 @@
 
 # Sends email notifications about first_draft_collections
 class FirstDraftCollectionsMailer < ApplicationMailer
-  NEW_COLLECTION_SUBJECT = "A new collection has been created"
+  NEW_COLLECTION_SUBJECT = 'A new collection has been created'
 
   def first_draft_created
     @collection_version = params[:collection_version]

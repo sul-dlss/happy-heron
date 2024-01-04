@@ -8,66 +8,65 @@ class RorController < ApplicationController
     result = lookup(params.require(:q))
     @suggestions = result.value_or([])
     if result.success?
-      return render status: :no_content, html: "" if @suggestions.empty?
+      return render status: :no_content if @suggestions.empty?
 
       render status: :ok, layout: false
     else
       logger.warn(result.failure)
-      render status: :internal_server_error, html: ""
+      render status: :internal_server_error, html: ''
     end
   end
 
   private
 
-  # rubocop:disable Metrics/AbcSize
   def lookup(query)
     resp = lookup_connection.get do |req|
-      req.params["query"] = query
+      req.params['query'] = query
     end
 
     return Failure("Autocomplete results for #{query} returned #{resp.status}") unless resp.success?
 
     Success(parse(resp.body))
   end
-  # rubocop:enable Metrics/AbcSize
 
   def parse(body)
-    JSON.parse(body)["items"].map do |item|
-      [item["id"], item["name"], details(item)]
+    JSON.parse(body)['items'].map do |item|
+      [item['id'], item['name'], details(item)]
     end
   end
 
   def details(item)
     [
-      item["name"],
+      item['name'],
       location_detail(item),
       other_name_details(item)
     ].compact
   end
 
   def location_detail(item)
-    city = item.dig("addresses", 0, "city")
-    country = item.dig("country", "country_name")
+    city = item.dig('addresses', 0, 'city')
+    country = item.dig('country', 'country_name')
 
     return "#{city}, #{country}" if city && country
     return country if country
+
     nil
   end
 
   def other_name_details(item)
     [].tap do |names|
-      names.concat(item["acronyms"])
-      names.concat(item["aliases"])
-      names.concat(item["labels"].map { |label| label["label"] })
-    end.join(", ")
+      names.concat(item['acronyms'])
+      names.concat(item['aliases'])
+      names.concat(item['labels'].pluck('label'))
+    end.join(', ')
   end
 
   def lookup_connection
     @lookup_connection ||= Faraday.new(
       url: Settings.ror_lookup.url,
       headers: {
-        "Accept" => "application/json",
-        "User-Agent" => "Stanford Self-Deposit (Happy Heron)"
+        'Accept' => 'application/json',
+        'User-Agent' => 'Stanford Self-Deposit (Happy Heron)'
       }
     )
   end

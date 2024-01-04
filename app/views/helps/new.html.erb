@@ -1,72 +1,72 @@
-<turbo-frame id="<%= params.fetch(:id, "help") %>">
-  <%= form_with(url: help_path(id: params[:id]), data: {controller: "help"}, namespace: params[:id]) do |form| %>
+<turbo-frame id="<%= params.fetch(:id, 'help') %>">
+  <%= form_with(url: help_path(id: params[:id]), data: { controller: 'help' }, namespace: params[:id]) do |form| %>
     <strong><sup>*</sup>Required fields</strong>
     <div class="container-fluid">
       <div class="row">
          <div class="col-md-9">
            <div class="form-group">
-             <%= form.label(:name, "What is your name?") %>
-             <%= form.text_field(:name, autocomplete: "name", class: "form-control", value: @name) %>
+             <%= form.label(:name, 'What is your name?') %>
+             <%= form.text_field(:name, autocomplete: 'name', class: 'form-control', value: @name) %>
            </div>
          </div>
       </div>
       <div class="row">
          <div class="col-md-9">
            <div class="form-group">
-             <%= form.label(:email, "What is your email address?*") %>
-             <%= form.text_field(:email, autocomplete: "email", value: @email, class: "form-control", required: true) %>
+             <%= form.label(:email, 'What is your email address?*') %>
+             <%= form.text_field(:email, autocomplete: 'email', value: @email, class: 'form-control', required: true) %>
            </div>
          </div>
       </div>
       <div class="row">
          <div class="col-md-9">
            <div class="form-group">
-             <%= form.label(:affiliation, "What is your Stanford affiliation/department?") %>
-             <%= form.text_field(:affiliation, class: "form-control", placeholder: "(ex: Student)") %>
+             <%= form.label(:affiliation, 'What is your Stanford affiliation/department?') %>
+             <%= form.text_field(:affiliation, class: 'form-control', placeholder: '(ex: Student)') %>
            </div>
          </div>
       </div>
       <div class="row">
          <div class="col-md-9">
            <div class="form-group">
-             <%= form.label(:help_how, "How can we help you?*") %>
+             <%= form.label(:help_how, 'How can we help you?*') %>
              <%= form.select(:help_how,
-                   options_for_select(["I want to become an SDR depositor",
-                     "I want to report a problem",
-                     "I want to ask a question",
-                     "I want to provide feedback",
-                     "Request access to another collection"],
-                     @help_how_value),
-                   {include_blank: "Select..."},
-                   class: "form-select",
-                   data: {action: "help#changeHelpHow", "help-target": "helpHow"},
-                   required: true) %>
+                             options_for_select(['I want to become an SDR depositor',
+                                                 'I want to report a problem',
+                                                 'I want to ask a question',
+                                                 'I want to provide feedback',
+                                                 'Request access to another collection'],
+                                                @help_how_value),
+                             { include_blank: 'Select...' },
+                             class: 'form-select',
+                             data: { action: 'help#changeHelpHow', 'help-target': 'helpHow' },
+                             required: true) %>
            </div>
          </div>
       </div>
       <div class="row my-2" data-help-target="collections">
         <div class="col">
-          <%= render HelpCollectionComponent.new(form: form, key: "faculty_student_staff_publications") %>
-          <%= render HelpCollectionComponent.new(form: form, key: "stanford_research_data") %>
-          <%= render HelpCollectionComponent.new(form: form, key: "stanford_theses_dissertations") %>
-          <%= render HelpCollectionComponent.new(form: form, key: "sul_staff_publications_research") %>
-          <%= render HelpCollectionComponent.new(form: form, key: "stanford_open_access_articles") %>
-          <%= render HelpCollectionComponent.new(form: form, key: "marc") %>
-          <%= render HelpCollectionComponent.new(form: form, key: "no_collection") %>
+          <%= render HelpCollectionComponent.new(form:, key: 'faculty_student_staff_publications') %>
+          <%= render HelpCollectionComponent.new(form:, key: 'stanford_research_data') %>
+          <%= render HelpCollectionComponent.new(form:, key: 'stanford_theses_dissertations') %>
+          <%= render HelpCollectionComponent.new(form:, key: 'sul_staff_publications_research') %>
+          <%= render HelpCollectionComponent.new(form:, key: 'stanford_open_access_articles') %>
+          <%= render HelpCollectionComponent.new(form:, key: 'marc') %>
+          <%= render HelpCollectionComponent.new(form:, key: 'no_collection') %>
         </div>
       </div>
       <div class="row">
          <div class="col-md-12">
            <div class="form-group">
-             <%= form.label(:why_contact, "Describe your issue, question, or what you would like to deposit") %><sup>*</sup>
-             <%= form.text_area(:why_contact, class: "form-control", required: true) %>
+             <%= form.label(:why_contact, 'Describe your issue, question, or what you would like to deposit') %><sup>*</sup>
+             <%= form.text_area(:why_contact, class: 'form-control', required: true) %>
            </div>
          </div>
       </div>
       <div class="row">
          <div class="col-md-5 offset-md-7 mt-2">
-           <%= button_tag "Cancel", class: "btn btn-default", data: {bs_dismiss: "modal"} %>
-           <%= button_tag "Submit", class: "btn btn-primary", data: {action: "help#checkCollections"} %>
+           <%= button_tag 'Cancel', class: 'btn btn-default', data: { bs_dismiss: 'modal' } %>
+           <%= button_tag 'Submit', class: 'btn btn-primary', data: { action: 'help#checkCollections' } %>
          </div>
       </div>
     </div>

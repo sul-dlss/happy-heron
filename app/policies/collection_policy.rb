@@ -15,7 +15,7 @@ class CollectionPolicy < ApplicationPolicy
     )
     return new_relation if administrator?
 
-    relation.joins(:head).where.not(head: {state: "decommissioned"}).and(new_relation)
+    relation.joins(:head).where.not(head: { state: 'decommissioned' }).and(new_relation)
   end
 
   def update?

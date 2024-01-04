@@ -14,7 +14,7 @@ module Admin
       # As of April 2023, we only have one page in the database that can be edited, so just
       # shortcut to that edit view.  If we create more pages in the future, remove
       # this redirect, and this index page showing all available pages will be shown.
-      redirect_to edit_admin_page_content_path(PageContent.find_by(page: "home"))
+      redirect_to edit_admin_page_content_path(PageContent.find_by(page: 'home'))
 
       @page_contents = PageContent.all
     end
@@ -31,10 +31,10 @@ module Admin
       @page_content = PageContent.find(params[:id])
 
       if @page_content.update(page_content_params.merge(user: current_user))
-        flash[:success] = I18n.t("admin.page_content.success")
+        flash[:success] = I18n.t('admin.page_content.success')
         redirect_to admin_page_content_index_path
       else
-        render action: "edit", status: :unprocessable_entity
+        render action: 'edit', status: :unprocessable_entity
       end
     end
 

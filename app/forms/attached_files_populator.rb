@@ -6,9 +6,9 @@ class AttachedFilesPopulator < ApplicationPopulator
   # find out if incoming file is already added.
   def call(form, args)
     fragment = args.fetch(:fragment)
-    item = existing_record(form:, id: fragment["id"])
+    item = existing_record(form:, id: fragment['id'])
 
-    if fragment["_destroy"] == "1"
+    if fragment['_destroy'] == '1'
       # Remove AttachedFile and associated ActiveStorage objects
       form.attached_files.delete(item) if item
       return skip!
@@ -16,8 +16,8 @@ class AttachedFilesPopulator < ApplicationPopulator
     return item if item
 
     # When in the ValidationController, sometimes fragment['file'] is an empty string. Avoid trying to load that.
-    return skip! if fragment["file"].blank?
+    return skip! if fragment['file'].blank?
 
-    form.attached_files.append(AttachedFile.new(file: fragment["file"]))
+    form.attached_files.append(AttachedFile.new(file: fragment['file']))
   end
 end

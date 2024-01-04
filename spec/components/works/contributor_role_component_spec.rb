@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Works::ContributorRoleComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
 
-  context "when person" do
-    let(:rendered) { render_inline(described_class.new(form:, visible: true, contributor_type: "person", data_options: {contributors_target: "role"})) }
+  context 'when person' do
+    let(:rendered) do
+      render_inline(described_class.new(form:, visible: true, contributor_type: 'person',
+                                        data_options: { contributors_target: 'role' }))
+    end
 
-    it "makes select list for individuals" do
+    it 'makes select list for individuals' do
       expected = <<~HTML
         <select class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role" id="role"><optgroup label="Individual">
         <option value="Author">Author</option>
@@ -38,10 +41,13 @@ RSpec.describe Works::ContributorRoleComponent do
     end
   end
 
-  context "when hidden person" do
-    let(:rendered) { render_inline(described_class.new(form:, visible: false, contributor_type: "person", data_options: {contributors_target: "role"})) }
+  context 'when hidden person' do
+    let(:rendered) do
+      render_inline(described_class.new(form:, visible: false, contributor_type: 'person',
+                                        data_options: { contributors_target: 'role' }))
+    end
 
-    it "makes select list for individuals" do
+    it 'makes select list for individuals' do
       expected = <<~HTML
         <select disabled hidden="hidden" class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role" id="role"><optgroup label="Individual">
         <option value="Author">Author</option>
@@ -71,10 +77,13 @@ RSpec.describe Works::ContributorRoleComponent do
     end
   end
 
-  context "when organization" do
-    let(:rendered) { render_inline(described_class.new(form:, visible: true, contributor_type: "organization", data_options: {contributors_target: "role"})) }
+  context 'when organization' do
+    let(:rendered) do
+      render_inline(described_class.new(form:, visible: true, contributor_type: 'organization',
+                                        data_options: { contributors_target: 'role' }))
+    end
 
-    it "makes select list for organizations" do
+    it 'makes select list for organizations' do
       expected = <<~HTML
         <select class="form-select" data-contributors-target="role" aria-describedby="popover-work.role_term" name="role" id="role"><optgroup label="Organization">
         <option value="Author">Author</option>

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Works::AgreementComponent do
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
@@ -9,9 +9,9 @@ RSpec.describe Works::AgreementComponent do
   let(:work_version) { build(:work_version, work:) }
   let(:work_form) { WorkForm.new(work_version:, work:) }
 
-  it "renders the component" do
+  it 'renders the component' do
     expect(rendered.to_html)
-      .to include("SDR Terms of Deposit")
-    expect(rendered.css("h2").text).to eq "Terms of Deposit *"
+      .to include('SDR Terms of Deposit')
+    expect(rendered.css('h2').text).to eq 'Terms of Deposit *'
   end
 end

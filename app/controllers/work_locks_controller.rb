@@ -18,7 +18,7 @@ class WorkLocksController < ApplicationController
     change_state(work, change_lock_status)
     create_event(work, change_lock_status)
 
-    flash[:success] = (change_lock_status ? I18n.t("work.flash.work_locked") : I18n.t("work.flash.work_unlocked"))
+    flash[:success] = (change_lock_status ? I18n.t('work.flash.work_locked') : I18n.t('work.flash.work_unlocked'))
     redirect_to work_path(work)
   end
 
@@ -30,7 +30,7 @@ class WorkLocksController < ApplicationController
   end
 
   def create_event(work, lock_state)
-    event_type = lock_state ? "lock_work" : "unlock_work"
+    event_type = lock_state ? 'lock_work' : 'unlock_work'
     work.events.create(work.event_context.merge(event_type:))
   end
 

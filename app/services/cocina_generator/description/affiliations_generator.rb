@@ -24,20 +24,20 @@ module CocinaGenerator
 
       def generate_affiliation(affiliation)
         params = if affiliation.department.present?
-          {
-            type: "affiliation",
-            structuredValue: [
-              generate_descriptive_value_by_label(affiliation),
-              {
-                value: affiliation.department
-              }
-            ]
-          }
-        else
-          {
-            type: "affiliation"
-          }.merge(generate_descriptive_value_by_label(affiliation))
-        end
+                   {
+                     type: 'affiliation',
+                     structuredValue: [
+                       generate_descriptive_value_by_label(affiliation),
+                       {
+                         value: affiliation.department
+                       }
+                     ]
+                   }
+                 else
+                   {
+                     type: 'affiliation'
+                   }.merge(generate_descriptive_value_by_label(affiliation))
+                 end
         Cocina::Models::DescriptiveValue.new(params)
       end
 
@@ -50,12 +50,13 @@ module CocinaGenerator
 
       def generate_identifier(affiliation)
         return nil if affiliation.uri.blank?
+
         [
           {
             uri: affiliation.uri,
-            type: "ROR",
+            type: 'ROR',
             source: {
-              code: "ror"
+              code: 'ror'
             }
           }
         ]

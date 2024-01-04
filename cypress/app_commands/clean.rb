@@ -13,4 +13,4 @@ CypressOnRails::SmartFactoryWrapper.reload
 #   WebMock.disable! if defined?(WebMock)
 # end
 
-Rails.logger.info "APPCLEANED" # used by log_fail.rb
+Rails.logger.info 'APPCLEANED' # used by log_fail.rb

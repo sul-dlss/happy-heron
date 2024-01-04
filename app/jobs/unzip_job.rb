@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "zip"
+require 'zip'
 
 # Change work version from a zipfile type to a browser type by unzipping the attached zip file.
 class UnzipJob < BaseDepositJob
@@ -19,7 +19,7 @@ class UnzipJob < BaseDepositJob
       end
     end
     zip_attached_file.destroy
-    work_version.upload_type = "browser"
+    work_version.upload_type = 'browser'
     work_version.unzip_complete!
   end
 

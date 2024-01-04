@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe EmbargoDateParts do
   let(:validator) { described_class.new }
@@ -8,25 +8,25 @@ RSpec.describe EmbargoDateParts do
   let(:work_version) { build(:work_version) }
   let(:record) { WorkForm.new(work_version:, work:) }
 
-  context "when a valid date is provided" do
+  context 'when a valid date is provided' do
     before do
       record.embargo_date = Date.new
       validator.validate(record)
     end
 
-    it "does not have errors" do
+    it 'does not have errors' do
       expect(record.errors).to be_empty
     end
   end
 
-  context "when month or day is not provided" do
+  context 'when month or day is not provided' do
     before do
-      record.release = "embargo"
+      record.release = 'embargo'
       validator.validate(record)
     end
 
-    it "has errors" do
-      expect(record.errors.full_messages).to eq ["Embargo date must provide all date parts and must be a valid date"]
+    it 'has errors' do
+      expect(record.errors.full_messages).to eq ['Embargo date must provide all date parts and must be a valid date']
     end
   end
 end

@@ -7,8 +7,8 @@ module Collections
       def edit_button
         return unless draft?
 
-        link_to "Edit or Deposit", edit_collection_version_path(collection_version),
-          class: "btn btn-outline-primary me-2"
+        link_to 'Edit or Deposit', edit_collection_version_path(collection_version),
+                class: 'btn btn-outline-primary me-2'
       end
     end
   end

@@ -1,12 +1,12 @@
 <tr>
   <td>
     <%= work_link %>
-    <%= helpers.turbo_frame_tag dom_id(work, :edit_in_progress), src: edit_button_work_path(work, tag: "in_progress"), target: "_top" %>
-    <%= helpers.turbo_frame_tag dom_id(work, :delete_in_progress), src: delete_button_work_path(work, tag: "in_progress"), target: "_top" %>
+    <%= helpers.turbo_frame_tag dom_id(work, :edit_in_progress), src: edit_button_work_path(work, tag: 'in_progress'), target: '_top' %>
+    <%= helpers.turbo_frame_tag dom_id(work, :delete_in_progress), src: delete_button_work_path(work, tag: 'in_progress'), target: '_top' %>
   </td>
   <td><%= show_collection_link %></td>
   <td>
-    <%= render Works::StateDisplayComponent.new(work_version: work_version) %>
+    <%= render Works::StateDisplayComponent.new(work_version:) %>
   </td>
   <td><%= render LocalTimeComponent.new(datetime: work_version.updated_at, show_time: false) %></td>
 </tr>

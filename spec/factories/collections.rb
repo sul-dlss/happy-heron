@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :collection do
-    release_option { "immediate" }
-    access { "world" }
-    license_option { "depositor-selects" }
+    release_option { 'immediate' }
+    access { 'world' }
+    license_option { 'depositor-selects' }
     email_when_participants_changed { false }
     email_depositors_status_changed { false }
     review_enabled { false }
@@ -13,12 +13,12 @@ FactoryBot.define do
   end
 
   trait :with_required_license do
-    required_license { "CC-BY-4.0" }
-    license_option { "required" }
+    required_license { 'CC-BY-4.0' }
+    license_option { 'required' }
   end
 
   trait :with_default_license do
-    default_license { "CC-BY-4.0" }
+    default_license { 'CC-BY-4.0' }
   end
 
   trait :with_works do
@@ -71,21 +71,21 @@ FactoryBot.define do
   end
 
   trait :depositor_selects_access do
-    access { "depositor-selects" }
+    access { 'depositor-selects' }
   end
 
   trait :depositor_selects_release_date do
-    release_option { "depositor-selects" }
-    release_duration { "3 years" }
+    release_option { 'depositor-selects' }
+    release_duration { '3 years' }
   end
 
   trait :with_collection_druid do
-    druid { "druid:dc224fz4940" }
+    druid { 'druid:dc224fz4940' }
   end
 
   trait :with_custom_rights_from_collection do
     allow_custom_rights_statement { true }
-    provided_custom_rights_statement { "An addendum to the built in terms of use" }
+    provided_custom_rights_statement { 'An addendum to the built in terms of use' }
   end
 
   trait :with_custom_rights_from_depositor do
@@ -96,6 +96,8 @@ FactoryBot.define do
   trait :with_custom_rights_instructions_from_collection do
     allow_custom_rights_statement { true }
     provided_custom_rights_statement { nil }
-    custom_rights_statement_custom_instructions { "Instructions you should follow about the terms you're allowed to enter" }
+    custom_rights_statement_custom_instructions do
+      "Instructions you should follow about the terms you're allowed to enter"
+    end
   end
 end
