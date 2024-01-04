@@ -17,7 +17,7 @@
                 </ul>
             </div>
         <% end %>
-        <p>Last edited: <em><%= @page_content.updated_at.to_formatted_s(:long) %></em></p>
+        <p>Last edited: <em><%= @page_content.updated_at.to_fs(:long) %></em></p>
         <p>Edited by: <em><%= @page_content.user %></em></p>
         <div class="form-check">
             <%= form.check_box :visible %>

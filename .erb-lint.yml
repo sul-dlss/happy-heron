@@ -20,6 +20,8 @@ linters:
         Enabled: false
       Rails/OutputSafety: # Already covered by ErbSafety linter
         Enabled: false
+      Rails/LinkToBlank:
+        Enabled: false
   ErbSafety:
     enabled: true
   PartialInstanceVariable:
