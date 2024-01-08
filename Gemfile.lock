@@ -671,7 +671,7 @@ DEPENDENCIES
   capistrano-rails
   capybara (~> 3.34)
   capybara-screenshot
-  config (~> 2.2)
+  config
   cssbundling-rails (~> 0.2.4)
   cuprite
   cypress-on-rails (~> 1.0)
