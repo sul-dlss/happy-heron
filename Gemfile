@@ -57,7 +57,7 @@ gem 'action_policy', '~> 0.6.5'
 gem 'addressable', '~> 2.8.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bunny', '~> 2.17' # RabbitMQ library
-gem 'config', '~> 2.2'
+gem 'config'
 gem 'cssbundling-rails', '~> 0.2.4'
 gem 'devise', '~> 4.7'
 gem 'devise-remote-user', '~> 1.0'
