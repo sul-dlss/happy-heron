@@ -22,7 +22,7 @@ module Works
         when 'yes'
           doi_later
         when 'no'
-          'A DOI will not be assigned.'
+          'A DOI will not be assigned.'.html_safe
         when 'depositor-selects'
           assign_doi ? doi_later : doi_opt_out
         end
@@ -35,12 +35,12 @@ module Works
 
         # This is a version draft, the collection must have been changed to "yes"
         # after this item was deposited.
-        'DOI will become available once a new version is deposited.'
+        'DOI will become available once a new version is deposited.'.html_safe
       end
 
       def doi_opt_out
         'A DOI has not been assigned to this item. You may edit this item and select ' \
-          '"Yes" for the DOI option if you would like to receive a DOI.'
+        '"Yes" for the DOI option if you would like to receive a DOI.'.html_safe # rubocop:disable Rails/OutputSafety
       end
 
       def doi_link

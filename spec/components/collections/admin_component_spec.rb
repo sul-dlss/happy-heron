@@ -12,7 +12,7 @@ RSpec.describe Collections::AdminComponent, type: :component do
   let(:user_with_groups) { UserWithGroups.new(user:, groups:) }
 
   before do
-    allow(controller).to receive_messages(
+    allow(vc_test_controller).to receive_messages(
       current_user: user,
       user_with_groups:
     )

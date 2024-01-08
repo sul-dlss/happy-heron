@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::VersionDescriptionComponent do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+RSpec.describe Works::VersionDescriptionComponent, type: :component do
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:rendered) { render_inline(described_class.new(form:)) }
   let(:work) { build(:work) }
   let(:work_form) { WorkForm.new(work_version:, work:) }

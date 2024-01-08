@@ -90,6 +90,6 @@ gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'
 gem 'strip_attributes'
 gem 'turbo-rails', '~> 1.0'
-gem 'view_component', '~> 2.56.2' # https://github.com/github/view_component/issues/1390
+gem 'view_component'
 gem 'whenever', require: false # Work around https://github.com/javan/whenever/issues/831
 gem 'zipline', '~> 1.4'

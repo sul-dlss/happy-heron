@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::KeywordsRowComponent do
+RSpec.describe Works::KeywordsRowComponent, type: :component do
   subject(:rendered) { render_inline(described_class.new(form: form_builder)) }
 
   let(:work) { work_version.work }
@@ -13,7 +13,7 @@ RSpec.describe Works::KeywordsRowComponent do
     work_form.keywords.first
   end
   let(:form_builder) do
-    ActionView::Helpers::FormBuilder.new('work', keyword_form, controller.view_context, {})
+    ActionView::Helpers::FormBuilder.new('work', keyword_form, vc_test_controller.view_context, {})
   end
 
   it 'renders the component' do

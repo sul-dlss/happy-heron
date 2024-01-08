@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::TitleComponent do
+RSpec.describe Works::TitleComponent, type: :component do
   let(:form) do
     instance_double(ActionView::Helpers::FormBuilder,
                     label: nil,

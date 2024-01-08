@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe RelatedLinkComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, model_form, controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, model_form, vc_test_controller.view_context, {}) }
   let(:related_links) do
     [
       build_stubbed(:related_link, link_title: 'First Link'),

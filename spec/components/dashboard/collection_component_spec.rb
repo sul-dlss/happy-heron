@@ -11,7 +11,7 @@ RSpec.describe Dashboard::CollectionComponent, type: :component do
   let(:work_path) { Rails.application.routes.url_helpers.work_path(user.owned_works.first) }
 
   before do
-    allow(controller).to receive_messages(
+    allow(vc_test_controller).to receive_messages(
       allowed_to?: false,
       current_user: user,
       user_with_groups:

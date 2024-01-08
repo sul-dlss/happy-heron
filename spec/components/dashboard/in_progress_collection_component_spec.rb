@@ -11,7 +11,7 @@ RSpec.describe Dashboard::InProgressCollectionComponent, type: :component do
   let(:rendered) { render_inline(described_class.new(presenter:)) }
 
   before do
-    allow(controller).to receive_messages(
+    allow(vc_test_controller).to receive_messages(
       current_user: user,
       user_with_groups:
     )

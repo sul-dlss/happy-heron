@@ -14,7 +14,7 @@ RSpec.describe Works::ContactEmailRowComponent, type: :component do
     parent_form.contact_emails.first
   end
   let(:form_builder) do
-    ActionView::Helpers::FormBuilder.new('collection', email_form, controller.view_context, {})
+    ActionView::Helpers::FormBuilder.new('collection', email_form, vc_test_controller.view_context, {})
   end
 
   context 'when valid' do

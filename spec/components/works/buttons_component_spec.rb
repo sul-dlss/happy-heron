@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::ButtonsComponent do
+RSpec.describe Works::ButtonsComponent, type: :component do
   let(:component) { described_class.new(form:) }
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:work_form) { WorkForm.new(work_version:, work:) }
   let(:rendered) { render_inline(component) }
 
   before do
-    allow(controller).to receive(:allowed_to?).and_return(true)
+    allow(vc_test_controller).to receive(:allowed_to?).and_return(true)
   end
 
   context 'when work is not persisted' do

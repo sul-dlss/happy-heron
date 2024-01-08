@@ -8,7 +8,7 @@ RSpec.describe Works::ApprovalComponent, type: :component do
 
   context 'when not needing approval' do
     before do
-      allow(controller).to receive(:allowed_to?).and_return(false)
+      allow(vc_test_controller).to receive(:allowed_to?).and_return(false)
     end
 
     it 'renders nothing' do
@@ -18,7 +18,7 @@ RSpec.describe Works::ApprovalComponent, type: :component do
 
   context 'when needing approval' do
     before do
-      allow(controller).to receive(:allowed_to?).and_return(true)
+      allow(vc_test_controller).to receive(:allowed_to?).and_return(true)
     end
 
     it 'renders the widget' do

@@ -9,7 +9,7 @@ RSpec.describe Collections::EditLicenseComponent, type: :component do
   let(:collection_version) { build(:collection_version, collection:) }
 
   let(:collection_form) { CreateCollectionForm.new(collection:, collection_version:) }
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, vc_test_controller.view_context, {}) }
 
   context 'with no license selected' do
     it 'renders the prompt for the required license' do

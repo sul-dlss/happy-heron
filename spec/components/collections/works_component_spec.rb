@@ -18,7 +18,7 @@ RSpec.describe Collections::WorksComponent, type: :component do
       work1.update(head: work_version1)
       work2.update(head: work_version2)
 
-      allow(controller).to receive_messages(
+      allow(vc_test_controller).to receive_messages(
         current_user: user,
         user_with_groups:
       )
