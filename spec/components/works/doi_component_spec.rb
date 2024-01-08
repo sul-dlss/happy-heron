@@ -3,8 +3,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::DoiComponent do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+RSpec.describe Works::DoiComponent, type: :component do
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:collection) { build(:collection, doi_option:) }
   let(:doi_option) { 'yes' }
   let(:work) { build(:work, collection:, doi:) }

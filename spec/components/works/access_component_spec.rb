@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::AccessComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:collection) { build(:collection, release_option: 'immediate') }
   let(:work) { build(:work, collection:) }
   let(:work_version) { build(:work_version, work:) }

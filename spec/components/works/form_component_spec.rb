@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::FormComponent do
+RSpec.describe Works::FormComponent, type: :component do
   let(:component) { described_class.new(work_form:) }
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:work) { build_stubbed(:work, collection:) }
   let(:work_version) { build_stubbed(:work_version, work:) }
   let(:work_form) { WorkForm.new(work_version:, work:) }
   let(:rendered) { render_inline(component) }
 
   before do
-    allow(controller).to receive(:allowed_to?).and_return(true)
+    allow(vc_test_controller).to receive(:allowed_to?).and_return(true)
   end
 
   context 'when the collection does not allow a custom rights statement' do

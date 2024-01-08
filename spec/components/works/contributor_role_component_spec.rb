@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::ContributorRoleComponent do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, controller.view_context, {}) }
+RSpec.describe Works::ContributorRoleComponent, type: :component do
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, nil, vc_test_controller.view_context, {}) }
 
   context 'when person' do
     let(:rendered) do

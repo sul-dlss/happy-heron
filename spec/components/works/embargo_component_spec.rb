@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::EmbargoComponent do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+RSpec.describe Works::EmbargoComponent, type: :component do
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:collection) { build(:collection, :depositor_selects_access, release_option: 'immediate') }
   let(:work) { build(:work, collection:) }
   let(:work_version) { build(:work_version, work:) }

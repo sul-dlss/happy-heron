@@ -11,7 +11,7 @@ module Works
 
     def call
       value = I18n.t(work_version.state, scope: 'work.state')
-      return value unless work_version.wait_state?
+      return value.html_safe unless work_version.wait_state? # rubocop:disable Rails/OutputSafety
 
       safe_join([value, spinner], ' ')
     end

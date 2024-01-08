@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::DatesComponent do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+RSpec.describe Works::DatesComponent, type: :component do
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:work) { work_version.work }
   let(:work_version) { build(:work_version) }
   let(:work_form) { WorkForm.new(work_version:, work:) }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::RelatedWorkComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:related_works) do
     [
       build_stubbed(:related_work, citation: 'First Citation'),

@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Works::ContributorRowComponent do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, author, controller.view_context, {}) }
+RSpec.describe Works::ContributorRowComponent, type: :component do
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, author, vc_test_controller.view_context, {}) }
   let(:component) { described_class.new(form:, is_author:) }
   let(:rendered) { render_inline(component) }
   let(:author) { build_stubbed(:person_author, orcid:) }

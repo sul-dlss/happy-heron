@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Collections::VersionDescriptionComponent do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, controller.view_context, {}) }
+RSpec.describe Collections::VersionDescriptionComponent, type: :component do
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, vc_test_controller.view_context, {}) }
   let(:rendered) { render_inline(described_class.new(form:)) }
   let(:collection) { build_stubbed(:collection, head: collection_version) }
   let(:collection_form) { DraftCollectionVersionForm.new(collection_version) }
