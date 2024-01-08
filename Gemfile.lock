@@ -162,7 +162,7 @@ GEM
       descendants_tracker (~> 0.0.1)
     commonmarker (0.23.10)
     concurrent-ruby (1.2.2)
-    config (2.2.3)
+    config (5.1.0)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
     connection_pool (2.4.1)
