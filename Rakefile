@@ -8,11 +8,9 @@ require 'sneakers/tasks'
 
 Rails.application.load_tasks
 
-desc 'Run Continuous Integration Suite (linters and tests)'
-task ci: %i[lint spec]
+unless Rails.env.production?
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+end
 
-# clear the default task injected by rspec
-task(:default).clear
-
-# and replace it with our own
-task default: :ci
+task default: ['test:prepare', :spec, :rubocop]

@@ -20,6 +20,9 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
+          name: Install javascript dependencies and build assets
+          command: bin/rake test:prepare
+      - run:
           command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
           name: Wait for DB
       - run:
@@ -70,6 +73,9 @@ workflows:
           name: test
           install-chrome: true
           before-test:
+            - run:
+                name: Install javascript dependencies and build assets
+                command: bin/rake test:prepare
             - run:
                   name: install seeds
                   command: bundle exec rails db:seed
