@@ -140,7 +140,7 @@ GEM
       capybara (>= 1.0, < 4)
       launchy
     chronic (0.10.2)
-    cocina-models (0.93.1)
+    cocina-models (0.94.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -210,9 +210,9 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.4.0)
-    dor-services-client (13.4.0)
+    dor-services-client (14.1.0)
       activesupport (>= 4.2, < 8)
-      cocina-models (~> 0.93.0)
+      cocina-models (~> 0.94.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -537,9 +537,9 @@ GEM
     ruby-next-core (1.0.0)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    sdr-client (2.8.0)
+    sdr-client (2.9.0)
       activesupport
-      cocina-models (~> 0.93.0)
+      cocina-models (~> 0.94.0)
       config
       dry-monads
       faraday (>= 0.16)
@@ -685,7 +685,7 @@ DEPENDENCIES
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
   dlss-capistrano
-  dor-services-client (~> 13.0)
+  dor-services-client (~> 14.0)
   dor-workflow-client
   druid-tools
   dry-types
@@ -721,7 +721,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubyzip (~> 2.3)
-  sdr-client (~> 2.0)
+  sdr-client (~> 2.9)
   selenium-webdriver
   sidekiq (~> 7.0)
   simplecov
