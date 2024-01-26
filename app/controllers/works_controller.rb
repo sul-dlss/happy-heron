@@ -182,6 +182,7 @@ class WorksController < ObjectsController
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def after_save(form:, event_context:)
     work_version = form.model[:work_version]
     work = form.model[:work]
@@ -192,8 +193,11 @@ class WorksController < ObjectsController
     state_event = state_event_for(work_version)
     if state_event
       work_version.send(state_event)
-      FetchGlobusJob.perform_later(work_version) if state_event.starts_with?('fetch_globus')
-      UnzipJob.perform_later(work_version) if state_event.starts_with?('unzip')
+      if state_event.starts_with?('fetch_globus')
+        FetchGlobusJob.perform_later(work_version)
+      elsif state_event.starts_with?('unzip')
+        UnzipJob.perform_later(work_version)
+      end
     end
 
     return redirect_to next_step_review_work_path(work) if deposit_button_pushed? && work.collection.review_enabled?
@@ -202,6 +206,7 @@ class WorksController < ObjectsController
     redirect_to work
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def state_event_for(work_version)
     event_parts = [file_event_part(work_version), workflow_event_part(work_version.work)].compact
