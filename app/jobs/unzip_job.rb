@@ -8,22 +8,34 @@ class UnzipJob < BaseDepositJob
 
   def perform(work_version)
     zip_attached_file = work_version.attached_files.last
-    destroy_attached_files_except(zip_attached_file, work_version)
-    Zip::File.open(filepath_for(zip_attached_file)) do |zip_file|
-      Dir.mktmpdir do |temp_dir|
-        zip_file.each do |entry|
-          next if ignore?(entry)
+    # Ensure the last file uploaded is actually a ZIP file.
+    # This guards against a user selecting the zip option after having previously uploaded non-zip files
+    # but then not actually uploading a zip file.  Previously this would have resulted in
+    # this job getting stuck.  See https://github.com/sul-dlss/happy-heron/issues/3454
+    # Instead, we want to just revert back to the browser upload style
+    # without doing anything else.
+    if zip_mime_types.include? zip_attached_file.content_type
+      destroy_attached_files_except(zip_attached_file, work_version)
+      Zip::File.open(filepath_for(zip_attached_file)) do |zip_file|
+        Dir.mktmpdir do |temp_dir|
+          zip_file.each do |entry|
+            next if ignore?(entry)
 
-          attach_file(entry:, temp_dir:, work_version:)
+            attach_file(entry:, temp_dir:, work_version:)
+          end
         end
       end
+      zip_attached_file.destroy
     end
-    zip_attached_file.destroy
     work_version.upload_type = 'browser'
     work_version.unzip_complete!
   end
 
   private
+
+  def zip_mime_types
+    ['application/zip', 'application/x-zip-compressed', 'application/x-zip', 'multipart/x-zip']
+  end
 
   def destroy_attached_files_except(except_attached_file, work_version)
     work_version.attached_files.excluding(except_attached_file).destroy_all
