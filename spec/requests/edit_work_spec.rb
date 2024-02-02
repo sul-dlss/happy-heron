@@ -203,7 +203,22 @@ RSpec.describe 'Updating an existing work' do
           let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
           let(:upload_type) { 'zipfile' }
 
-          context 'when saving draft' do
+          context 'when saving draft with no zip file added' do
+            it 'does not validate' do
+              patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
+              expect(response).to have_http_status :unprocessable_entity # did not validate
+              expect(UnzipJob).not_to have_received(:perform_later).with(work_version)
+            end
+          end
+
+          context 'when saving draft with a zip file added' do
+            # now mimic the user attaching a new zip file
+            before do
+              work_params['attached_files_attributes'] =
+                { '0' =>
+                  { '_destroy' => 'false', 'file' => 'eyJfcmFpbHMiOnsibWVzc2FnZS...', 'path' => 'Archive.zip' } }
+            end
+
             it 'redirects to the work page and starts unzipping the file' do
               patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
               expect(work.reload.head).to be_unzip_version_draft

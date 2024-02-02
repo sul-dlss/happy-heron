@@ -47,6 +47,10 @@ class AttachedFile < ApplicationRecord
     ActiveStorage::Service::GlobusService.accessible?(file.blob)
   end
 
+  def zip?
+    zip_mime_types.include?(content_type)
+  end
+
   # an array of directorie(s) that contain this file; e.g. ['folder','sub-folder']
   # if there are no containing directories, it will be an empty array; eg []
   def paths
@@ -59,6 +63,10 @@ class AttachedFile < ApplicationRecord
   end
 
   private
+
+  def zip_mime_types
+    ['application/zip', 'application/x-zip-compressed', 'application/x-zip', 'multipart/x-zip']
+  end
 
   def changed_in_this_version?
     previous_version = work_version.previous_version

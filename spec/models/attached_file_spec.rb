@@ -17,6 +17,10 @@ RSpec.describe AttachedFile do
     expect(attached_file.file).to be_attached
   end
 
+  it 'indicates if it is a zip file' do
+    expect(attached_file.zip?).to be false
+  end
+
   it 'delegates to its blob' do
     expect(attached_file.filename).to eq(attached_file.file.attachment.blob.filename)
     expect(attached_file.content_type).to eq(attached_file.file.attachment.blob.content_type)

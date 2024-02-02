@@ -47,6 +47,7 @@ class BaseWorkForm < Reform::Form
   validates :work_type, presence: true, work_type: true
   validate :unique_filenames
   validate :globus_files_provided, if: proc { |form| form.fetch_globus_files }
+  validate :zip_file_provided, if: proc { |form| form.upload_type == 'zipfile' }
 
   delegate :user_can_set_availability?, to: :collection
 
@@ -109,6 +110,19 @@ class BaseWorkForm < Reform::Form
     )
   end
   # rubocop:enable Metrics/AbcSize
+
+  # Ensure there is a new zip file attached to the form if the user selected the zip option
+  # We basically want to prevent the user from unexpectedly unzipping a previously uploaded ZIP file
+  # and having all of their files replaced.
+  # see https://github.com/sul-dlss/happy-heron/issues/3459
+  def zip_file_provided
+    return if attached_files.size.positive? && attached_files.last.model.zip? && !attached_files.last.model.persisted?
+
+    errors.add(
+      :base,
+      'You must provide a single zip file when selecting the zip file upload option.'
+    )
+  end
 
   def access_from_collection(params)
     return if collection.access == 'depositor-selects'
