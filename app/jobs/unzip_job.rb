@@ -8,13 +8,14 @@ class UnzipJob < BaseDepositJob
 
   def perform(work_version)
     zip_attached_file = work_version.attached_files.last
-    # Ensure the last file uploaded is actually a ZIP file.
+    # Ensure the last file uploaded is actually a ZIP file and is not only in globus.
     # This guards against a user selecting the zip option after having previously uploaded non-zip files
-    # but then not actually uploading a zip file.  Previously this would have resulted in
-    # this job getting stuck.  See https://github.com/sul-dlss/happy-heron/issues/3454
+    # but then not actually uploading a zip file OR having a ZIP file but only in globus.
+    # Previously this would have resulted im the job getting stuck.
+    # See https://github.com/sul-dlss/happy-heron/issues/3454
     # Instead, we want to just revert back to the browser upload style
     # without doing anything else.
-    if zip_mime_types.include? zip_attached_file.content_type
+    if unzip_file?(zip_attached_file)
       destroy_attached_files_except(zip_attached_file, work_version)
       Zip::File.open(filepath_for(zip_attached_file)) do |zip_file|
         Dir.mktmpdir do |temp_dir|
@@ -32,6 +33,11 @@ class UnzipJob < BaseDepositJob
   end
 
   private
+
+  # determines if we should actually unzip this file, based on it not being in globus and being a zip file
+  def unzip_file?(zip_attached_file)
+    !zip_attached_file.in_globus? && zip_mime_types.include?(zip_attached_file.content_type)
+  end
 
   def zip_mime_types
     ['application/zip', 'application/x-zip-compressed', 'application/x-zip', 'multipart/x-zip']
