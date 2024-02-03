@@ -250,6 +250,94 @@ RSpec.describe 'Create a new work in a deposited collection', :js do
                                        "#{WorkVersion::DOI_TEXT}"
         end
       end
+
+      context 'with a change from browser to zip upload' do
+        it 'deposits and renders work show page only if user adds a zip' do
+          visit dashboard_path
+
+          click_link_or_button '+ Deposit to this collection' # , match: :first
+
+          find('label', text: 'Other').click
+          find('label', text: 'Sound').click
+
+          check 'Podcast'
+          click_link_or_button 'See more options'
+          check 'Poetry reading'
+          click_link_or_button 'See fewer options'
+
+          click_link_or_button 'Continue'
+
+          fill_in 'Publication year', with: '2049'
+          fill_in 'Created year', with: '2000'
+
+          # upload a file
+          choose 'work_upload_type_browser'
+          page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
+            click_link_or_button('Choose files')
+          end
+          expect(page).to have_css('div.dz-success-mark')
+
+          fill_in 'Title of deposit', with: 'My Title'
+          fill_in 'Contact email', with: user.email
+
+          within_section 'Authors to include in citation' do
+            # Switch to an organization
+            choose 'work_authors_attributes_0_contributor_type_organization'
+            select 'Publisher', from: 'Role term'
+            fill_in 'Name', with: 'Best Publisher'
+          end
+
+          within_section 'Additional contributors' do
+            fill_in 'First name', with: 'Contributor First Name'
+            fill_in 'Last name', with: 'Contributor Last Name'
+          end
+
+          fill_in 'Publication year', with: '2020'
+          select 'February', from: 'Publication month'
+
+          check 'Enter a date range'
+
+          fill_in 'Created range start year', with: '2020'
+          select 'March', from: 'Created range start month'
+          select '6', from: 'Created range start day'
+          fill_in 'Created range end year', with: '2020'
+          select 'October', from: 'Created range end month'
+          select '30', from: 'Created range end day'
+          select 'Everyone', from: 'Who can download the files?'
+
+          fill_in 'Abstract', with: 'User provided abstract'
+          check 'Oral history'
+          fill_in 'Keyword', with: 'Springs'
+
+          find('label.switch').click # Use auto-generated citation
+          fill_in 'Provided citation', with: 'Citation from user input'
+
+          click_link_or_button 'Save as draft'
+
+          expect(page).to have_content 'Draft - Not deposited'
+
+          click_link_or_button 'Edit or Deposit'
+
+          # now select zip upload but do not upload a new file
+          # even though we previously added a zip file via browser upload,
+          # we should get a validation error, since we are supposed to provide a new one
+          choose 'work_upload_type_zipfile'
+          click_link_or_button 'Save as draft'
+          expect(page).to have_content 'You must provide a single zip file when selecting the zip file upload option.'
+          expect(page).to have_current_path edit_work_path(Work.last), ignore_query: true # still on the edit page
+
+          # now upload a zip file
+          page.attach_file(Rails.root.join('spec/fixtures/files/folder3.zip')) do
+            click_link_or_button('Choose file')
+          end
+          expect(page).to have_css('div.dz-success-mark')
+          click_link_or_button 'Save as draft'
+
+          # should save and unzip the file
+          expect(page).to have_content 'Unzipping in progress'
+          expect(page).to have_current_path work_path(Work.last), ignore_query: true # now on the show page
+        end
+      end
     end
 
     context 'when unsuccessful' do
