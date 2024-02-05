@@ -61,6 +61,9 @@ en:
       fetch_globus_version_draft: Fetching files from Globus
       fetch_globus_pending_approval: Fetching files from Globus
       fetch_globus_depositing: Fetching files from Globus
+    zip_upload_option_validation: Because you already have files saved, you can only select the zip file upload option if you
+                                  upload a zip file, which will replace all of your other files. If you don't want to upload a
+                                  zip file, you must choose the first file upload option to save or deposit.
 
     edit_links:
       title: 'Edit title and contact'

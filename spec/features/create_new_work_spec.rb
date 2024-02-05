@@ -323,7 +323,7 @@ RSpec.describe 'Create a new work in a deposited collection', :js do
           # we should get a validation error, since we are supposed to provide a new one
           choose 'work_upload_type_zipfile'
           click_link_or_button 'Save as draft'
-          expect(page).to have_content 'Because you already have files saved, you can only select this option if you'
+          expect(page).to have_content 'Because you already have files saved, you can only select the zip file upload'
           expect(page).to have_current_path edit_work_path(Work.last), ignore_query: true # still on the edit page
 
           # now upload a zip file

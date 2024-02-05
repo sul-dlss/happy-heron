@@ -125,12 +125,7 @@ class BaseWorkForm < Reform::Form
     # validation passes if the last file uploaded is a zip file
     return if last_file_uploaded_is_zip?
 
-    errors.add(
-      :base,
-      'Because you already have files saved, you can only select this option if you upload ' \
-      "a zip file, which will replace all of your other files. If you don't want to upload a " \
-      'zip file, you must choose the first file upload option to save or deposit.'
-    )
+    errors.add(:base, I18n.t('work.zip_upload_option_validation'))
   end
 
   def last_file_uploaded_is_zip?
