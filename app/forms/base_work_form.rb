@@ -47,7 +47,7 @@ class BaseWorkForm < Reform::Form
   validates :work_type, presence: true, work_type: true
   validate :unique_filenames
   validate :globus_files_provided, if: proc { |form| form.fetch_globus_files }
-  validate :zip_file_provided, if: proc { |form| form.upload_type == 'zipfile' }
+  validate :zip_file_provided_on_save, if: proc { |form| form.upload_type == 'zipfile' }
 
   delegate :user_can_set_availability?, to: :collection
 
@@ -112,16 +112,29 @@ class BaseWorkForm < Reform::Form
   # rubocop:enable Metrics/AbcSize
 
   # Ensure there is a new zip file attached to the form if the user selected the zip option
-  # We basically want to prevent the user from unexpectedly unzipping a previously uploaded ZIP file
-  # and having all of their files replaced.
+  # AND it previously had uploaded files, even when saving as a draft.
+  # This is in addition to the overall file validation, which still requires at least one file
+  # to be uploaded when depositing (as opposed to saving a draft).
+  # We basically want to prevent the user from selecting the ZIP upload option, and then
+  # unexpectedly unzipping a previously uploaded ZIP file and having all of their files replaced.
   # see https://github.com/sul-dlss/happy-heron/issues/3459
-  def zip_file_provided
-    return if attached_files.size.positive? && attached_files.last.model.zip? && !attached_files.last.model.persisted?
+  def zip_file_provided_on_save
+    # no need to validate this if there aren't already uploaded files in the object
+    return if attached_files.empty? || work.head&.attached_files&.empty?
+
+    # validation passes if the last file uploaded is a zip file
+    return if last_file_uploaded_is_zip?
 
     errors.add(
       :base,
-      'You must provide a single zip file when selecting the zip file upload option.'
+      'Because you already have files saved, you can only select this option if you upload ' \
+      "a zip file, which will replace all of your other files. If you don't want to upload a " \
+      'zip file, you must choose the first file upload option to save or deposit.'
     )
+  end
+
+  def last_file_uploaded_is_zip?
+    attached_files.size.positive? && attached_files.last.model.zip? && !attached_files.last.model.persisted?
   end
 
   def access_from_collection(params)
