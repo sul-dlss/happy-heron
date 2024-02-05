@@ -34,7 +34,7 @@ class WorkMoveController < ApplicationController
         collection.save!
         work.update!(collection:)
         work.events.create(user: current_user, event_type: 'collection_moved',
-                           description: "Moved to \"#{collection.head.description}\" collection")
+                           description: "Moved to \"#{collection.head.name}\" collection")
       end
       flash[:success] = "Moved #{work.head.title} to #{collection.head.name}"
     end
