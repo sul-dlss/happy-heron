@@ -26,7 +26,7 @@ en:
       unlock_work: Work unlocked
       decommission: Decommissioned
       no_review_workflow: Review no longer required
-      collection_moved: ''
+      collection_moved: Changed collection
       unzip: Starting unzip
       unzip_and_submit_for_review: Starting unzip
       unzip_and_begin_deposit: Starting unzip
