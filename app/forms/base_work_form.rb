@@ -47,7 +47,7 @@ class BaseWorkForm < Reform::Form
   validates :work_type, presence: true, work_type: true
   validate :unique_filenames
   validate :globus_files_provided, if: proc { |form| form.fetch_globus_files }
-  validate :zip_file_provided_on_save, if: proc { |form| form.upload_type == 'zipfile' }
+  validate :zip_file_provided_on_save, if: proc { |form| form.needs_zipfile_validation? }
 
   delegate :user_can_set_availability?, to: :collection
 
@@ -118,10 +118,11 @@ class BaseWorkForm < Reform::Form
   # We basically want to prevent the user from selecting the ZIP upload option, and then
   # unexpectedly unzipping a previously uploaded ZIP file and having all of their files replaced.
   # see https://github.com/sul-dlss/happy-heron/issues/3459
-  def zip_file_provided_on_save
-    # no need to validate this if there aren't already uploaded files in the object
-    return if attached_files.empty? || work.head&.attached_files&.empty?
+  def needs_zipfile_validation?
+    upload_type == 'zipfile' && (attached_files.any? || work.head&.attached_files&.any?)
+  end
 
+  def zip_file_provided_on_save
     # validation passes if the last file uploaded is a zip file
     return if last_file_uploaded_is_zip?
 
