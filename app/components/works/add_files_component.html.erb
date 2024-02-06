@@ -41,13 +41,18 @@
           </div>
         </div>
       </div>
-    <% else %>
-      <p style="color: var(--stanford-warning);">
-        <strong>
-          You have more than <%= max_upload_files %> files in your deposit. We can not display all of your files here, but if you need to make changes, select one of the two options below.
-        </strong>
-      </p>
-    <% end %>
+      <% else %>
+      <div class="form-check pt-3" data-complex-radio-target="selection">
+        <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton',
+                                                       data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' } %>
+        <%= form.label :upload_type_browser, "Keep the more than #{max_upload_files} files uploaded.", class: 'form-check-label fw-semibold' %>
+        <p style="color: var(--stanford-warning);">
+          <strong>
+            You have more than <%= max_upload_files %> files in your deposit. We can not display all of your files here, but if you need to make changes, select one of the two options below.
+          </strong>
+        </p>
+      </div>
+      <% end %>
     <div class="form-check pt-3" data-complex-radio-target="selection">
       <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
                                                      data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton' } %>
