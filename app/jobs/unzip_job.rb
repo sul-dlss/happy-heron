@@ -36,11 +36,7 @@ class UnzipJob < BaseDepositJob
 
   # determines if we should actually unzip this file, based on it not being in globus and being a zip file
   def unzip_file?(zip_attached_file)
-    !zip_attached_file.in_globus? && zip_mime_types.include?(zip_attached_file.content_type)
-  end
-
-  def zip_mime_types
-    ['application/zip', 'application/x-zip-compressed', 'application/x-zip', 'multipart/x-zip']
+    !zip_attached_file.in_globus? && zip_attached_file.zip?
   end
 
   def destroy_attached_files_except(except_attached_file, work_version)

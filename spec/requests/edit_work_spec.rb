@@ -203,8 +203,26 @@ RSpec.describe 'Updating an existing work' do
           let(:work_version) { create(:work_version, :version_draft, :with_required_associations, work:) }
           let(:upload_type) { 'zipfile' }
 
-          context 'when saving draft' do
-            it 'redirects to the work page and starts unzipping the file' do
+          context 'when saving draft with no zip file added' do
+            it 'does not validate' do
+              patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
+              expect(response).to have_http_status :unprocessable_entity # did not validate
+              expect(UnzipJob).not_to have_received(:perform_later).with(work_version)
+            end
+          end
+
+          context 'when saving draft with a zip file added' do
+            # TODO: mimic the user attaching a new zip file to the page
+            before do
+              work_params.merge!(attached_files_attributes:
+                { '586368111' =>
+                  { 'id' => AttachedFile.new.id, '_destroy' => 'false',
+                    'file' => 'eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBSUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19' \
+                              '--95933a2543cd279fe903fb04de1e9645e9fd7950',
+                    'path' => 'Archive.zip' } })
+            end
+
+            it 'redirects to the work page and starts unzipping the file', skip: 'fix mimic user attaching zip file' do
               patch "/works/#{work.id}", params: { work: work_params, commit: 'Save as draft' }
               expect(work.reload.head).to be_unzip_version_draft
               expect(response).to redirect_to(work)

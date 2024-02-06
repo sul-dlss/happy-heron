@@ -47,6 +47,7 @@ class BaseWorkForm < Reform::Form
   validates :work_type, presence: true, work_type: true
   validate :unique_filenames
   validate :globus_files_provided, if: proc { |form| form.fetch_globus_files }
+  validate :zip_file_provided_on_save, if: proc { |form| form.needs_zipfile_validation? }
 
   delegate :user_can_set_availability?, to: :collection
 
@@ -109,6 +110,28 @@ class BaseWorkForm < Reform::Form
     )
   end
   # rubocop:enable Metrics/AbcSize
+
+  # Ensure there is a new zip file attached to the form if the user selected the zip option
+  # AND it previously had uploaded files, even when saving as a draft.
+  # This is in addition to the overall file validation, which still requires at least one file
+  # to be uploaded when depositing (as opposed to saving a draft).
+  # We basically want to prevent the user from selecting the ZIP upload option, and then
+  # unexpectedly unzipping a previously uploaded ZIP file and having all of their files replaced.
+  # see https://github.com/sul-dlss/happy-heron/issues/3459
+  def needs_zipfile_validation?
+    upload_type == 'zipfile' && (attached_files.any? || work.head&.attached_files&.any?)
+  end
+
+  def zip_file_provided_on_save
+    # validation passes if the last file uploaded is a zip file
+    return if last_file_uploaded_is_zip?
+
+    errors.add(:base, I18n.t('work.zip_upload_option_validation'))
+  end
+
+  def last_file_uploaded_is_zip?
+    attached_files.size.positive? && attached_files.last.model.zip? && !attached_files.last.model.persisted?
+  end
 
   def access_from_collection(params)
     return if collection.access == 'depositor-selects'
