@@ -20,6 +20,7 @@ class WorkMoveController < ApplicationController
   end
 
   # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def update
     work = Work.find(params[:id])
     authorize! work, to: :move_collection?
@@ -30,11 +31,12 @@ class WorkMoveController < ApplicationController
       flash[:error] = I18n.t('work.flash.work_not_moved')
     else
       Work.transaction do
+        current_collection = work.collection
         collection.depositors << work.owner unless collection.depositors.include?(work.owner)
         collection.save!
         work.update!(collection:)
-        work.events.create(user: current_user, event_type: 'collection_moved',
-                           description: "Moved to \"#{collection.head.name}\" collection")
+        description = "Moved from \"#{current_collection.head.name}\" to \"#{collection.head.name}\" collection"
+        work.events.create(user: current_user, event_type: 'collection_moved', description:)
       end
       flash[:success] = "Moved #{work.head.title} to #{collection.head.name}"
     end
@@ -42,6 +44,7 @@ class WorkMoveController < ApplicationController
     redirect_to work_path(work), status: :see_other
   end
   # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   private
 
