@@ -75,10 +75,10 @@ GEM
     amq-protocol (2.3.2)
     ast (2.4.2)
     attr_extras (7.1.0)
-    axe-core-api (4.8.1)
+    axe-core-api (4.8.2)
       dumb_delegator
       virtus
-    axe-core-rspec (4.8.1)
+    axe-core-rspec (4.8.2)
       axe-core-api
       dumb_delegator
       virtus
@@ -178,7 +178,7 @@ GEM
       ferrum (~> 0.14.0)
     cypress-on-rails (1.17.0)
       rack
-    cypress-rails (0.6.1)
+    cypress-rails (0.7.0)
       puma (>= 3.8.0)
       railties (>= 5.2.0)
     date (3.3.4)
@@ -310,7 +310,7 @@ GEM
       zeitwerk
     hashdiff (1.1.0)
     hashie (5.0.0)
-    honeybadger (5.4.1)
+    honeybadger (5.5.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -322,7 +322,8 @@ GEM
     json (2.7.1)
     jsonpath (1.1.5)
       multi_json
-    jwt (2.7.1)
+    jwt (2.8.0)
+      base64
     language_server-protocol (3.17.0.3)
     launchy (2.5.2)
       addressable (~> 2.8)
@@ -404,7 +405,7 @@ GEM
       racc
     patience_diff (1.2.0)
       optimist (~> 3.0)
-    pg (1.5.4)
+    pg (1.5.5)
     preservation-client (6.2.0)
       activesupport (>= 4.2, < 8)
       faraday (~> 2.0)
@@ -460,7 +461,7 @@ GEM
       ffi (~> 1.0)
     rbtree (0.4.6)
     redis (4.8.1)
-    redis-client (0.19.1)
+    redis-client (0.20.0)
       connection_pool
     reform (2.5.0)
       disposable (>= 0.4.2, < 0.5.0)
@@ -554,7 +555,7 @@ GEM
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.1.0)
-    sidekiq (7.2.1)
+    sidekiq (7.2.2)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
