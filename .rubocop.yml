@@ -324,6 +324,7 @@ Performance/RedundantSplitRegexpArgument: # (new in 1.10)
   Enabled: true
 Rails/EnvironmentVariableAccess: # (new in 2.10)
   Enabled: true
+  AllowReads: true
 Rails/TimeZoneAssignment: # (new in 2.10)
   Enabled: true
 
