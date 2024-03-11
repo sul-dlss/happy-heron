@@ -142,7 +142,7 @@ GEM
       launchy
     childprocess (5.0.0)
     chronic (0.10.2)
-    cocina-models (0.95.0)
+    cocina-models (0.95.1)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -212,9 +212,9 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.4.0)
-    dor-services-client (14.2.0)
+    dor-services-client (14.2.1)
       activesupport (>= 4.2, < 8)
-      cocina-models (~> 0.95.0)
+      cocina-models (~> 0.95.1)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -523,9 +523,9 @@ GEM
     ruby-next-core (1.0.2)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    sdr-client (2.10.0)
+    sdr-client (2.10.1)
       activesupport
-      cocina-models (~> 0.95.0)
+      cocina-models (~> 0.95.1)
       config
       dry-monads
       faraday (>= 0.16)
