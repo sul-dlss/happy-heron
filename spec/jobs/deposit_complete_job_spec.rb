@@ -11,8 +11,15 @@ RSpec.describe DepositCompleteJob do
     # An intentionally invalid druid so it does not collide with any test objects
     let(:message) { '{"druid":"druid:aa11ii1111"}' }
 
+    before do
+      allow(Work).to receive(:find_by).and_call_original
+      allow(Collection).to receive(:find_by!).and_call_original
+    end
+
     it 'acks the message (and does not raise)' do
       expect(run).to eq(:ack)
+      expect(Work).to have_received(:find_by).with(druid: 'druid:aa11ii1111').exactly(10).times
+      expect(Collection).to have_received(:find_by!).with(druid: 'druid:aa11ii1111').exactly(10).times
     end
   end
 
