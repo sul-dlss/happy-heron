@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   ruby-rails: sul-dlss/ruby-rails@4.1.0
-  browser-tools: circleci/browser-tools@1.4.0
+  browser-tools: circleci/browser-tools@1.4.8
   node: circleci/node@5.0.0
   ruby: circleci/ruby@1.8.0
   cypress: cypress-io/cypress@2.2.0
@@ -16,7 +16,10 @@ jobs:
           post-install:
             - run: sudo apt-get update
             - run: sudo apt-get install --fix-missing libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-      - browser-tools/install-firefox
+      - browser-tools/install-firefox:
+          # Fixing the version of firefox since cypress won't run correctly with the latest.
+          # This can probably be removed once cypress is updated.
+          version: 115.9.0esr
       - node/install-packages:
           pkg-manager: yarn
       - run:

@@ -13,6 +13,9 @@ class DepositCompleteJob
   # these messages in addition to those that result from depositing in h2.
   from_queue 'h2.deposit_complete', env: nil
 
+  FIND_TRIES = 10
+  FIND_SLEEP = 1
+
   # rubocop:disable Metrics/AbcSize
   def work(msg)
     druid = parse_message(msg)
@@ -21,7 +24,7 @@ class DepositCompleteJob
 
     # Without this, the database connection pool gets exhausted
     ActiveRecord::Base.connection_pool.with_connection do
-      object = Work.find_by(druid:) || Collection.find_by(druid:)
+      object = find_object(druid)
 
       unless object
         Rails.logger.info("Not completing deposit for #{druid} since not found")
@@ -44,5 +47,22 @@ class DepositCompleteJob
     return druid if druid.present?
 
     raise "Unable to find required field 'druid' in payload:\n\t#{json}"
+  end
+
+  def find_object(druid)
+    # There is a race condition whereby the druid may not yet have been assigned to the work / collection.
+    # Retries gives time for the druid to be assigned.
+    # See https://github.com/sul-dlss/happy-heron/issues/3297
+    object = nil
+    begin
+      tries ||= 1
+      object = Work.find_by(druid:) || Collection.find_by!(druid:)
+    rescue ActiveRecord::RecordNotFound
+      if (tries += 1) <= FIND_TRIES
+        sleep(FIND_SLEEP)
+        retry
+      end
+    end
+    object
   end
 end
