@@ -21,6 +21,7 @@ RSpec.describe FetchGlobusJob do
         '/uploads/jstanford/work333/version1/dir1/file2.txt',
         '/uploads/jstanford/work333/version1/__MACOSX/dir1/._file2.txt',
         '/uploads/jstanford/work333/version1/dir2/.DS_Store',
+        "/uploads/jstanford/work333/version1/dir2/.Icon\r",
         '/uploads/jstanford/work333/version1/__MACOSX/dir2/._.DS_Store'
       ]
     )
