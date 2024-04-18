@@ -41,7 +41,7 @@ end
 def tty_progress_bar(files)
   TTY::ProgressBar.new(
     "Generating [:bar] (:percent (:current/:total), rate: :rate/s, mean rate: :mean_rate/s, :elapsed total, ETA: :eta_time)",
-    bar_format: :crate,
+    bar_format: :box,
     total: files
   )
 end
