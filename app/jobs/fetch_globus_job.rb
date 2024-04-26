@@ -4,7 +4,7 @@ require 'zip'
 
 # Change work version from a globus type to a browser type by fetching file names
 # from Globus and creating Attached Files.
-class FetchGlobusJob < BaseDepositJob
+class FetchGlobusJob < ApplicationJob
   queue_as :default
 
   def perform(work_version)

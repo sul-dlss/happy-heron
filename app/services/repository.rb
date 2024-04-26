@@ -4,10 +4,8 @@
 class Repository
   # @return [Cocina::Models::DRO]
   def self.find(druid)
-    ensure_logged_in!
-    cocina_str = SdrClient::Find.run(druid, url: Settings.sdr_api.url, logger: Rails.logger)
-    cocina_json = JSON.parse(cocina_str)
-    Cocina::Models.build(cocina_json)
+    cocina_hash = SdrClient::RedesignedClient.find(object_id: druid)
+    Cocina::Models.build(cocina_hash)
   end
 
   # @return [boolean] true if H2 version is one greater than SDR version.
@@ -18,9 +16,4 @@ class Repository
     allowed_versions = [cocina_obj.version, cocina_obj.version + 1]
     allowed_versions.include?(h2_version)
   end
-
-  def self.ensure_logged_in!
-    SdrClientAuthenticator.login
-  end
-  private_class_method :ensure_logged_in!
 end

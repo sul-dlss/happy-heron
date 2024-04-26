@@ -23,17 +23,10 @@ RSpec.describe Repository do
         structural: {}
       }
     end
-
     let(:cocina_version) { 1 }
 
     before do
-      allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
-      allow(SdrClientAuthenticator).to receive(:login)
-    end
-
-    it 'ensures the SDR client is authenticated' do
-      described_class.find(druid)
-      expect(SdrClientAuthenticator).to have_received(:login).once
+      allow(SdrClient::RedesignedClient).to receive(:find).and_return(cocina.to_json)
     end
 
     it 'returns a cocina object instance' do

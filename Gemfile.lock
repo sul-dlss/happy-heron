@@ -1,3 +1,17 @@
+GIT
+  remote: https://github.com/sul-dlss/sdr-client.git
+  revision: b881f8ea49b74c75816438e25b7d26625f84884c
+  branch: allow-collection-deposits
+  specs:
+    sdr-client (2.17.0)
+      activesupport
+      cocina-models (~> 0.99.0)
+      config
+      dry-monads
+      faraday (>= 0.16)
+      launchy
+      zeitwerk
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -546,14 +560,6 @@ GEM
     ruby-next-core (1.0.3)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    sdr-client (2.17.0)
-      activesupport
-      cocina-models (~> 0.99.0)
-      config
-      dry-monads
-      faraday (>= 0.16)
-      launchy
-      zeitwerk
     selenium-webdriver (4.23.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -736,7 +742,7 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   rubyzip (~> 2.3)
-  sdr-client (~> 2.14)
+  sdr-client!
   selenium-webdriver
   sidekiq (~> 7.0)
   simplecov
