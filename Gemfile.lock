@@ -215,7 +215,7 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.0)
-    dor-services-client (14.6.1)
+    dor-services-client (14.7.0)
       activesupport (>= 4.2, < 8)
       cocina-models (~> 0.96.0)
       deprecation
@@ -300,7 +300,7 @@ GEM
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
-    jbuilder (2.11.5)
+    jbuilder (2.12.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jsbundling-rails (1.3.0)
@@ -387,7 +387,7 @@ GEM
     optimist (3.1.0)
     orm_adapter (0.5.0)
     parallel (1.24.0)
-    parser (3.3.0.5)
+    parser (3.3.1.0)
       ast (~> 2.4.1)
       racc
     patience_diff (1.2.0)
@@ -493,7 +493,7 @@ GEM
       rspec-core (>= 2, < 4, != 2.12.0)
     rss (0.3.0)
       rexml
-    rubocop (1.63.2)
+    rubocop (1.63.4)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -530,7 +530,7 @@ GEM
     ruby-next-core (1.0.3)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    sdr-client (2.12.0)
+    sdr-client (2.13.2)
       activesupport
       cocina-models (~> 0.96.0)
       config
@@ -538,7 +538,7 @@ GEM
       faraday (>= 0.16)
       launchy
       zeitwerk
-    selenium-webdriver (4.19.0)
+    selenium-webdriver (4.20.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -546,7 +546,7 @@ GEM
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.1.0)
-    sidekiq (7.2.2)
+    sidekiq (7.2.4)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
@@ -594,7 +594,7 @@ GEM
     strings-ansi (0.2.0)
     strip_attributes (1.13.0)
       activemodel (>= 3.0, < 8.0)
-    super_diff (0.11.0)
+    super_diff (0.12.1)
       attr_extras (>= 6.2.4)
       diff-lcs
       patience_diff
