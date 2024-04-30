@@ -18,6 +18,9 @@ class DepositJob < ApplicationJob
 
     case request_dro
     when Cocina::Models::RequestDRO
+      Rails.logger.info("WorkVersion (#{work_version.id}) staged files: #{work_version.staged_files}")
+      Rails.logger.info("WorkVersion (#{work_version.id}) staged local files: #{work_version.staged_local_files}")
+      Rails.logger.info("WorkVersion (#{work_version.id}) preserved files: #{work_version.preserved_files}")
       SdrClient::RedesignedClient.deposit_model(
         accession: true,
         assign_doi: work_version.work.assign_doi?,
