@@ -8,7 +8,7 @@ class ReservationsController < ObjectsController
 
   def create
     work = Work.new(collection_id: params[:collection_id], depositor: current_user, owner: current_user)
-    work_version = WorkVersion.new(work:)
+    work_version = WorkVersion.new(work:, user_version: 1)
 
     authorize! work_version
 

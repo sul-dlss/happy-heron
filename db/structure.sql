@@ -288,13 +288,13 @@ CREATE TABLE public.collections (
     access character varying,
     required_license character varying,
     default_license character varying,
-    email_when_participants_changed boolean,
+    email_when_participants_changed boolean DEFAULT true NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
     druid character varying,
-    email_depositors_status_changed boolean,
-    review_enabled boolean DEFAULT false,
+    email_depositors_status_changed boolean DEFAULT true NOT NULL,
+    review_enabled boolean DEFAULT false NOT NULL,
     license_option character varying DEFAULT 'required'::character varying NOT NULL,
     head_id bigint,
     doi_option character varying DEFAULT 'yes'::character varying,
@@ -487,8 +487,8 @@ CREATE TABLE public.page_contents (
     id bigint NOT NULL,
     page character varying NOT NULL,
     value text DEFAULT ''::text,
-    visible boolean DEFAULT false,
-    link_visible boolean DEFAULT false,
+    visible boolean DEFAULT false NOT NULL,
+    link_visible boolean DEFAULT false NOT NULL,
     link_text character varying DEFAULT ''::character varying,
     link_url character varying DEFAULT ''::character varying,
     "user" character varying,
@@ -665,7 +665,8 @@ CREATE TABLE public.work_versions (
     upload_type character varying,
     globus_endpoint character varying,
     globus_origin character varying,
-    custom_rights character varying
+    custom_rights character varying,
+    user_version integer
 );
 
 
@@ -1216,6 +1217,13 @@ CREATE INDEX index_work_versions_on_work_id ON public.work_versions USING btree 
 
 
 --
+-- Name: index_work_versions_on_work_id_and_user_version; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_work_versions_on_work_id_and_user_version ON public.work_versions USING btree (work_id, user_version);
+
+
+--
 -- Name: index_works_on_collection_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1480,6 +1488,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230627053607'),
 ('20230629154913'),
 ('20230705222153'),
-('20230726172521');
+('20230726172521'),
+('20240501135224');
 
 
