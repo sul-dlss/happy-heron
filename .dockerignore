@@ -1,6 +1,5 @@
 .git
 .dockerignore
-.byebug_history
 Gemfile.local
 Gemfile.local.lock
 log
