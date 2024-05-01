@@ -367,6 +367,8 @@ GEM
       net-protocol
     net-ssh (7.2.3)
     nio4r (2.7.1)
+    nokogiri (1.16.4-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.16.4-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.4-x86_64-linux)
@@ -654,10 +656,10 @@ GEM
       zip_tricks (>= 4.2.1, < 6.0)
 
 PLATFORMS
+  arm64-darwin-23
   x86_64-darwin-19
   x86_64-darwin-20
   x86_64-darwin-21
-  x86_64-darwin-22
   x86_64-darwin-22
   x86_64-linux
 
@@ -737,4 +739,4 @@ DEPENDENCIES
   zipline (~> 1.4)
 
 BUNDLED WITH
-   2.4.14
+   2.5.9
