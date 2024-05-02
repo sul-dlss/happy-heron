@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+--
 -- Name: work_access; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -288,12 +295,12 @@ CREATE TABLE public.collections (
     access character varying,
     required_license character varying,
     default_license character varying,
-    email_when_participants_changed boolean DEFAULT true NOT NULL,
+    email_when_participants_changed boolean DEFAULT true,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
     druid character varying,
-    email_depositors_status_changed boolean DEFAULT true NOT NULL,
+    email_depositors_status_changed boolean DEFAULT true,
     review_enabled boolean DEFAULT false NOT NULL,
     license_option character varying DEFAULT 'required'::character varying NOT NULL,
     head_id bigint,
