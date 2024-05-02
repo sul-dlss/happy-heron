@@ -7,6 +7,7 @@ class AddNotNullConstraintsToBooleans < ActiveRecord::Migration[7.0]
       change_column_null :page_contents, :visible, false
       change_column_null :page_contents, :link_visible, false
   
+      change_column_default :collections, :email_when_participants_changed, true
+      change_column_default :collections, :email_depositors_status_changed, true
     end
   end
-  
