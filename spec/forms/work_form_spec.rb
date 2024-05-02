@@ -362,4 +362,39 @@ RSpec.describe WorkForm do
       expect(messages).to be_empty
     end
   end
+
+  describe 'user version description feature flag' do
+    subject(:deserialized) { form.deserialize!(params) }
+
+    let(:new_user_version) { 'yes' }
+    let(:new_user_version_description) { 'User version description' }
+    let(:params) do
+      { 'new_user_version' => new_user_version,
+        'new_user_version_description' => new_user_version_description,
+        'version_description' => nil }
+    end
+
+    before do
+      allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+    end
+
+    context 'when Yes is selected' do
+      it 'uses the user version description' do
+        expect(deserialized['version_description']).to eq 'User version description'
+      end
+    end
+
+    context 'when No is selected' do
+      let(:new_user_version) { 'no' }
+      let(:params) do
+        { 'new_user_version' => new_user_version,
+          'current_version_description' => 'Current version description',
+          'version_description' => nil }
+      end
+
+      it 'uses the current version description box' do
+        expect(deserialized['version_description']).to eq 'Current version description'
+      end
+    end
+  end
 end

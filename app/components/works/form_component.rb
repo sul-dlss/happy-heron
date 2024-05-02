@@ -45,6 +45,8 @@ module Works
     end
 
     def data_controllers
+      return 'auto-citation unsaved-changes deposit-button new-user-version' if Settings.user_versions_ui_enabled
+
       'auto-citation unsaved-changes deposit-button'
     end
   end
