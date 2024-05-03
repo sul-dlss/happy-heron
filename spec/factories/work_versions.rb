@@ -16,6 +16,7 @@ FactoryBot.define do
     published_at { Time.zone.parse('2019-01-01') }
     upload_type { 'browser' }
     globus_origin { nil }
+    user_version { 1 }
     work
 
     factory :valid_work_version do

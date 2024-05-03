@@ -72,7 +72,9 @@ class WorksController < ObjectsController
     clean_params = orig_clean_params.deep_dup
 
     if work_version.deposited?
+      # Here we are moving the user_version from the previous WorkVersion to the head WorkVersion.
       work_version = create_new_version(work_version)
+      orig_work_version.update(user_version: nil)
       NewVersionParameterFilter.call(clean_params, work.head)
     end
 

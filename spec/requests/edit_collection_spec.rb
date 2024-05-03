@@ -194,12 +194,12 @@ RSpec.describe 'Updating an existing collection' do
 
           before do
             create(:collection_version_with_collection, collection:)
-            create(:work_version_with_work, :embargoed, collection:, work:)
+            create(:work_version_with_work, :embargoed, collection:, work:, user_version: nil)
           end
 
           context 'when works with embargoes would be orphaned' do
             before do
-              create(:work_version_with_work, :embargoed, collection:, work:)
+              create(:work_version_with_work, :embargoed, collection:, work:, user_version: 1)
             end
 
             it 'does not allow the change' do
@@ -211,7 +211,7 @@ RSpec.describe 'Updating an existing collection' do
 
           context 'when works with embargoes would not be orphaned' do
             before do
-              create(:work_version_with_work, :expired_embargo, collection:, work:)
+              create(:work_version_with_work, :expired_embargo, collection:, work:, user_version: 1)
             end
 
             it 'allows the change' do

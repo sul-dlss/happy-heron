@@ -24,7 +24,7 @@ RSpec.describe 'Dashboard collection requests' do
     end
     let(:work7) { create(:work, owner: user, collection:) }
     let(:work_version7) do
-      create(:work_version, state: 'decommissioned', title: 'I am decommissioned', work: work6)
+      create(:work_version, state: 'decommissioned', title: 'I am decommissioned', work: work7)
     end
 
     before do

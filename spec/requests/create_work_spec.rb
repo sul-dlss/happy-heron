@@ -194,7 +194,7 @@ RSpec.describe 'Create a new work' do
 
         let(:work_params) do
           attributes_for(:work_version)
-            .except(:published_at, :state) # Unpermitted params
+            .except(:user_version, :published_at, :state) # Unpermitted params
             .merge(:authors_attributes => authors,
                    :attached_files_attributes => files,
                    :contact_emails_attributes => contact_emails,
