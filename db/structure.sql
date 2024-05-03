@@ -295,12 +295,12 @@ CREATE TABLE public.collections (
     access character varying,
     required_license character varying,
     default_license character varying,
-    email_when_participants_changed boolean NOT NULL,
+    email_when_participants_changed boolean DEFAULT true NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
     druid character varying,
-    email_depositors_status_changed boolean NOT NULL,
+    email_depositors_status_changed boolean DEFAULT true NOT NULL,
     review_enabled boolean DEFAULT false NOT NULL,
     license_option character varying DEFAULT 'required'::character varying NOT NULL,
     head_id bigint,
@@ -1497,6 +1497,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230705222153'),
 ('20230726172521'),
 ('20240501135224'),
-('20240502142444');
+('20240502142444'),
+('20240503114446');
 
 
