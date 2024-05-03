@@ -25,6 +25,7 @@ class NewVersionService
     new_version.version = old_version.version + 1 if increment_version
     new_version.version_description = version_description if version_description
     new_version.state = state if state
+    old_version.user_version = nil # Ensure user version is unique across all versions of the work
     yield new_version if block_given?
     perform_save if save
 
@@ -62,8 +63,9 @@ class NewVersionService
   def perform_save
     work = old_version.work
     work.transaction do
-      new_version.save!
-      work.update!(head_id: new_version.id)
+      old_version.save!
+      work.head = new_version
+      work.save!
     end
   end
 end

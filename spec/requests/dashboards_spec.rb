@@ -90,7 +90,7 @@ RSpec.describe 'Dashboard requests' do
       create(:work_version, state: 'pending_approval', title: 'I am a pending approval', work: work6)
     end
     let(:work7) { create(:work, owner: user, collection:) }
-    let(:work_version7) { create(:work_version, state: 'purl_reserved', title: 'I am reserved purl', work: work6) }
+    let(:work_version7) { create(:work_version, state: 'purl_reserved', title: 'I am reserved purl', work: work7) }
 
     before do
       create(:collection_version_with_collection, collection:)
