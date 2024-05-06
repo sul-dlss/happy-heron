@@ -76,7 +76,7 @@ RSpec.describe WorksMailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to have_content('“twee retro man braid”')
+      expect(mail.body.encoded).to have_content('“twee retro man braid,”')
       expect(mail.body.encoded).to have_content('listicle fam ramps flannel')
       expect(mail.body.encoded).to have_content('https://doi.org/10.001/bc123df4567')
     end
