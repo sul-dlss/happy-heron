@@ -33,10 +33,12 @@ class WorkVersionsController < ObjectsController
 
   def revert_head_version(version)
     work = version.work
+    user_version = version.user_version
     version.transaction do
       # delete the head version and revert to previous version
       work.update(head: work.work_versions.find_by(version: version.version - 1))
       version.destroy
+      work.head.update(user_version:) unless work.head.user_version
     end
   end
 end
