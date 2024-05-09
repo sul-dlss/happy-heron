@@ -250,6 +250,7 @@ class WorksController < ObjectsController
     context_form
   end
 
+  # rubocop:disable Metrics/MethodLength
   def work_params
     params
       .require(:work)
@@ -265,19 +266,21 @@ class WorksController < ObjectsController
               :access, :license, :custom_rights, :version_description,
               :release, 'embargo_date(1i)', 'embargo_date(2i)', 'embargo_date(3i)',
               :agree_to_terms, :assign_doi, :upload_type, :globus, :fetch_globus_files,
-              :globus_origin, subtype: [], files: [],
-                              attached_files_attributes: %i[_destroy id label hide file path],
-                              authors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name,
-                                                   :contributor_type, :role, :weight, :orcid, :with_orcid,
-                                                   { affiliations_attributes: affiliation_attributes }],
-                              contributors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name,
-                                                        :contributor_type, :role, :weight, :orcid, :with_orcid,
-                                                        { affiliations_attributes: affiliation_attributes }],
-                              contact_emails_attributes: %i[_destroy id email],
-                              keywords_attributes: %i[_destroy id label uri cocina_type],
-                              related_works_attributes: %i[_destroy id citation],
-                              related_links_attributes: %i[_destroy id link_title url])
+              :globus_origin, :new_user_version, :new_user_version_description, :current_version_description,
+              subtype: [], files: [],
+              attached_files_attributes: %i[_destroy id label hide file path],
+              authors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name,
+                                   :contributor_type, :role, :weight, :orcid, :with_orcid,
+                                   { affiliations_attributes: affiliation_attributes }],
+              contributors_attributes: [:_destroy, :id, :full_name, :first_name, :last_name,
+                                        :contributor_type, :role, :weight, :orcid, :with_orcid,
+                                        { affiliations_attributes: affiliation_attributes }],
+              contact_emails_attributes: %i[_destroy id email],
+              keywords_attributes: %i[_destroy id label uri cocina_type],
+              related_works_attributes: %i[_destroy id citation],
+              related_links_attributes: %i[_destroy id link_title url])
   end
+  # rubocop:enable Metrics/MethodLength
 
   def affiliation_attributes
     %i[_destroy id label department uri]

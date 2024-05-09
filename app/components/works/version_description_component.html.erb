@@ -1,10 +1,47 @@
-<section class="version">
-   <header>Version your work *</header>
-   <div class="mb-3 row">
-     <%= form.label :version_description, "What's changing?", class: 'col-sm-2 col-form-label' %>
-     <div class="col-sm-10">
-       <%= form.text_field :version_description, class: 'form-control', required: true %>
-       <div class="invalid-feedback">You must describe your changes.</div>
-     </div>
-   </div>
- </section>
+<% if Settings.user_versions_ui_enabled %>
+  <section class='version'>
+    <header>Do you want to create a new version of this deposit? *</header>
+    <div>
+      <div class='invalid-feedback' data-new-user-version-target='versionDescriptionError'></div>
+      <%= form.hidden_field :version_description, value: work_version.version_description, 'data-new-user-version-target': 'versionDescription' %>
+      <div class='mb-3 row'>
+        <div class='col-sm-10 form-check'>
+          <%= form.radio_button :new_user_version, 'yes', data: { action: 'click->new-user-version#displayVersionDescription' }, 'data-new-user-version-target': 'userVersionYes', class: 'form-check-input' %>
+          <%= form.label :new_user_version_yes, 'Yes', class: 'form-check-label fw-semibold' %>
+          <ul>
+            <li>Edit files and any or all form fields.</li>
+            <li>A new version of this deposit will be created. For example, if you are editing version 1, choosing this option will create a version 2 once you click “Deposit.”</li>
+            <li>The new version and any older versions will be accessible from the PURL page.</li>
+            <li>If this deposit has a DOI, the DOI will be the same for all versions of the item.</li>
+          </ul>
+          <%= form.label :new_user_version_description, "What's changing?", class: 'col-form-label' %>
+          <%= form.text_field :new_user_version_description, 'data-new-user-version-target': 'versionDescriptionYes', class: 'form-control' %>
+        </div>
+      </div>
+      <div class='mb-3 row'>
+        <div class='col-sm-10 form-check'>
+          <%= form.radio_button :new_user_version, 'no', data: { action: 'click->new-user-version#displayVersionDescription' }, 'data-new-user-version-target': 'userVersionNo', class: 'form-check-input' %>
+          <%= form.label :new_user_version_no, 'No', class: 'form-check-label fw-semibold' %>
+          <ul>
+            <li>Edit form fields only. Files may not be changed.</li>
+            <li>The version number of this deposit will not change.</li>
+            <li>Changes you make to this item will appear as updates to the current version on the PURL page.</li>
+          </ul>
+          <%= form.label :current_version_description, "What's changing?", class: 'col-form-label' %>
+          <%= form.text_field :current_version_description, 'data-new-user-version-target': 'versionDescriptionNo', class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+  </section>
+<% else %>
+  <section class='version'>
+    <header>Version your work *</header>
+    <div class='mb-3 row'>
+      <%= form.label :version_description, "What's changing?", class: 'col-sm-2 col-form-label' %>
+      <div class='col-sm-10'>
+        <%= form.text_field :version_description, class: 'form-control', required: true %>
+        <div class='invalid-feedback'>You must describe your changes.</div>
+      </div>
+    </div>
+  </section>
+<% end %>

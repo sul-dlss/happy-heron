@@ -23,4 +23,17 @@ RSpec.describe Works::VersionDescriptionComponent, type: :component do
       expect(rendered.to_html).to include('Version your work')
     end
   end
+
+  context 'when user version feature flag is on' do
+    let(:work_version) { build(:work_version, work:, state: 'deposited') }
+
+    before do
+      allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+    end
+
+    it 'renders the user version selection' do
+      expect(rendered.to_html).to include('Do you want to create a new version of this deposit?')
+      expect(rendered.to_html).not_to include('Version your work')
+    end
+  end
 end

@@ -46,5 +46,12 @@ module Works
         collection_works_path(collection)
       end
     end
+
+    def validate_user_version?
+      return false unless Settings.user_versions_ui_enabled
+      return true if %w[deposited rejected version_draft].include? work_version.state
+
+      false
+    end
   end
 end

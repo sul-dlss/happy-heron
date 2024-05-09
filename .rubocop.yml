@@ -339,7 +339,7 @@ Style/QuotedSymbols: # (new in 1.16)
 
 RSpec/IdenticalEqualityAssertion: # (new in 2.4)
   Enabled: true
-RSpec/Rails/AvoidSetupHook: # (new in 2.4)
+RSpecRails/AvoidSetupHook: # (new in 2.4)
   Enabled: true
 
 Layout/LineEndStringConcatenationIndentation: # (new in 1.18)
@@ -477,7 +477,7 @@ Rails/ToFormattedS: # new in 2.15
   Enabled: true
 Capybara/SpecificMatcher: # new in 2.12
   Enabled: true
-RSpec/Rails/HaveHttpStatus: # new in 2.12
+RSpecRails/HaveHttpStatus: # new in 2.12
   Enabled: true
 
 Style/MagicCommentFormat: # new in 1.35
@@ -526,7 +526,7 @@ Capybara/SpecificActions: # new in 2.14
   Enabled: true
 FactoryBot/ConsistentParenthesesStyle: # new in 2.14
   Enabled: true
-RSpec/Rails/InferredSpecType: # new in 2.14
+RSpecRails/InferredSpecType: # new in 2.14
   Enabled: true
 
 Style/ArrayIntersect: # new in 1.40
@@ -558,7 +558,7 @@ Style/ComparableClamp: # new in 1.44
   Enabled: true
 Capybara/MatchStyle: # new in <<next>>
   Enabled: true
-RSpec/Rails/MinitestAssertions: # new in 2.17
+RSpecRails/MinitestAssertions: # new in 2.17
   Enabled: true
 Lint/DuplicateMatchPattern: # new in 1.50
   Enabled: true
@@ -590,7 +590,7 @@ RSpec/RedundantAround: # new in 2.19
   Enabled: true
 RSpec/SkipBlockInsideExample: # new in 2.19
   Enabled: true
-RSpec/Rails/TravelAround: # new in 2.19
+RSpecRails/TravelAround: # new in 2.19
   Enabled: true
 
 Style/ExactRegexpMatch: # new in 1.51
@@ -652,7 +652,7 @@ RSpec/SpecFilePathFormat: # new in 2.24
   Enabled: true
 RSpec/SpecFilePathSuffix: # new in 2.24
   Enabled: true
-RSpec/Rails/NegationBeValid: # new in 2.23
+RSpecRails/NegationBeValid: # new in 2.23
   Enabled: true
 
 Lint/ItWithoutArgumentsInBlock: # new in 1.59

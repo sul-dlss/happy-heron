@@ -19,8 +19,8 @@
     </div>
   <% end %>
   <%= f.hidden_field :work_type %>
+  <div class="form-instructions"><h2 class="h4">* Required fields</h2></div>
   <%= render Works::VersionDescriptionComponent.new(form: f) %>
-  <p class="form-instructions"><h2 class="h4">* REQUIRED FIELDS</h2></p>
   <%= render Works::AddFilesComponent.new(form: f) %>
   <%= render Works::TitleComponent.new(form: f) %>
   <%= render Works::AuthorsAndContributorsComponent.new(form: f) %>

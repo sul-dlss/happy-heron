@@ -13,6 +13,9 @@ class BaseWorkForm < Reform::Form
 
   property :work_type, on: :work_version
   property :version_description, on: :work_version
+  property :new_user_version, virtual: true # in the future, will need to be persisted to the work_version for drafts
+  property :new_user_version_description, virtual: true
+  property :current_version_description, virtual: true
   property :subtype, on: :work_version
   property :title, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
   property :abstract, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
@@ -58,6 +61,8 @@ class BaseWorkForm < Reform::Form
     deserialize_embargo(params)
     access_from_collection(params)
     deserialize_license(params)
+    # determine which version description field to use
+    select_version_description(params)
     super(params)
   end
 
@@ -144,6 +149,16 @@ class BaseWorkForm < Reform::Form
     return unless collection.required_license
 
     params['license'] = collection.required_license
+  end
+
+  def select_version_description(params)
+    return unless Settings.user_versions_ui_enabled
+
+    if params['new_user_version'] == 'yes'
+      params['version_description'] = params['new_user_version_description']
+    elsif params['new_user_version'] == 'no'
+      params['version_description'] = params['current_version_description']
+    end
   end
 
   # has_contributors(validate: false)
