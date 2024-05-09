@@ -61,7 +61,6 @@ class BaseWorkForm < Reform::Form
     deserialize_embargo(params)
     access_from_collection(params)
     deserialize_license(params)
-    # determine which version description field to use
     select_version_description(params)
     super(params)
   end
@@ -151,6 +150,7 @@ class BaseWorkForm < Reform::Form
     params['license'] = collection.required_license
   end
 
+  # Determine which version description field to use
   def select_version_description(params)
     return unless Settings.user_versions_ui_enabled
 
