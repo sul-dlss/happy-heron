@@ -48,10 +48,7 @@ module Works
     end
 
     def validate_user_version?
-      return false unless Settings.user_versions_ui_enabled
-      return true if %w[deposited rejected version_draft].include? work_version.state
-
-      false
+      Settings.user_versions_ui_enabled && %w[deposited rejected version_draft].include?(work_version.state)
     end
   end
 end
