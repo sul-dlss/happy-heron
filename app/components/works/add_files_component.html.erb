@@ -1,4 +1,4 @@
-<section data-controller="complex-radio file-uploads" id="file">
+<section data-controller="complex-radio file-uploads" id="file" data-new-user-version-target="fileSection">
   <h2 class="h5 fw-bold">
     <% if has_attached_files? %>
       Modify your files *
@@ -7,7 +7,7 @@
     <% end %>
   </h2>
 
-  <fieldset>
+  <fieldset data-new-user-version-target="fileUploadsFieldset" id="file-uploads-fieldset">
     <legend class="visually-hidden">Add or modify files</legend>
     <div class="form-check" data-complex-radio-target="selection">
       <% if browser_option? %>

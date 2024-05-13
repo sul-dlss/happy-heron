@@ -88,4 +88,24 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
       expect(page).to have_content('sul.svg')
     end
   end
+
+  context 'when user versions ui feature flag is enabled' do
+    let(:work_version) { create(:work_version_with_work, :deposited, collection:, owner: user, title: original_title) }
+
+    before do
+      allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+    end
+
+    it 'disables the files section for metadata-only changes' do
+      visit work_path(work_version.work)
+
+      click_link_or_button "Edit #{original_title}"
+      expect(page).to have_content('Do you want to create a new version of this deposit?')
+
+      choose('No')
+      expect(find_by_id('file-uploads-fieldset')).to be_disabled
+      choose('Yes')
+      expect(find_by_id('file-uploads-fieldset')).not_to be_disabled
+    end
+  end
 end

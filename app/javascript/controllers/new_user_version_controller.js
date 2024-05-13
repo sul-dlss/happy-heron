@@ -1,20 +1,25 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['versionDescription', 'userVersionYes', 'userVersionNo', 'versionDescriptionYes', 'versionDescriptionNo', 'versionDescriptionError']
+  static targets = ['versionDescription', 'userVersionYes', 'userVersionNo', 'versionDescriptionYes', 'versionDescriptionNo', 'versionDescriptionError',
+    'fileUploadsFieldset', 'fileSection']
 
   connect () {
     if (!this.hasUserVersionYesTarget || !this.hasUserVersionNoTarget) return
 
     if (this.userVersionYesTarget.checked === true) {
       this.versionDescriptionNoTarget.disabled = true
+      this.versionDescriptionNoTarget.value = ''
       this.versionDescriptionYesTarget.required = true
       this.versionDescriptionYesTarget.value = this.versionDescriptionTarget.value
     }
     if (this.userVersionNoTarget.checked === true) {
       this.versionDescriptionYesTarget.disabled = true
+      this.versionDescriptionYesTarget.value = ''
       this.versionDescriptionNoTarget.required = true
       this.versionDescriptionNoTarget.value = this.versionDescriptionTarget.value
+      this.fileUploadsFieldsetTarget.disabled = true
+      this.fileSectionTarget.style.opacity = 0.5
     }
   }
 
@@ -30,6 +35,16 @@ export default class extends Controller {
       this.versionDescriptionNoTarget.required = true
       this.versionDescriptionYesTarget.disabled = true
       this.versionDescriptionYesTarget.required = false
+    }
+  }
+
+  allowFileUploads (event) {
+    if (event.currentTarget === this.userVersionYesTarget) {
+      this.fileUploadsFieldsetTarget.disabled = false
+      this.fileSectionTarget.style.opacity = 1.0
+    } else if (event.currentTarget === this.userVersionNoTarget) {
+      this.fileUploadsFieldsetTarget.disabled = true
+      this.fileSectionTarget.style.opacity = 0.5
     }
   }
 
