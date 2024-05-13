@@ -47,6 +47,6 @@
     </section>
   <% end %>
 <% end %>
-<% if show_hidden? %>
+<% if hidden_user_version? %>
   <%= form.hidden_field :new_user_version, value: 'no' %>
 <% end %>

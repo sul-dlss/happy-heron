@@ -32,12 +32,22 @@ RSpec.describe Works::DetailComponent, type: :component do
 
   context 'when deposited' do
     let(:work_version) do
-      build_stubbed(:work_version, :deposited, version: 2, version_description: 'changed the title')
+      build_stubbed(:work_version, :deposited, version: 2, version_description: 'changed the title', user_version: 3)
     end
 
     it 'renders the draft title' do
       expect(rendered.css('.state').to_html).not_to include('Not deposited')
       expect(rendered.to_html).to include '2 - changed the title'
+    end
+
+    context 'when user_versions_ui_enabled enabled' do
+      before do
+        allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+      end
+
+      it 'renders the user_version' do
+        expect(rendered.to_html).to include '3 - changed the title'
+      end
     end
   end
 
