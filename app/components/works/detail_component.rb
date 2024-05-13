@@ -72,10 +72,6 @@ module Works
       render LocalTimeComponent.new(datetime: work_version.work.created_at)
     end
 
-    def updated_at
-      render LocalTimeComponent.new(datetime: work_version.updated_at)
-    end
-
     def embargo_date
       work_version.embargo_date ? work_version.embargo_date.to_fs(:long) : 'Immediately'
     end
