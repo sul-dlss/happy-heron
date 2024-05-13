@@ -31,17 +31,9 @@
 
   <div class="col-auto">
     <%= link_to 'Cancel', cancel_link_location, class: 'btn btn-link' %>
-    <% if validate_user_version? %>
-        <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button',
-                                         data: { action: 'unsaved-changes#allowFormSubmission new-user-version#validateUserVersionSelection' } %>
-        <%= form.submit submit_button_label, class: 'btn btn-primary',
-                                             disabled: false,
-                                             data: { action: 'unsaved-changes#allowFormSubmission new-user-version#validateUserVersionSelection', deposit_button_target: 'depositButton' } %>
-    <% else %>
-      <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button',
-                                       data: { action: 'unsaved-changes#allowFormSubmission' } %>
-      <%= form.submit submit_button_label, class: 'btn btn-primary', disabled: false,
-                                           data: { action: 'unsaved-changes#allowFormSubmission', deposit_button_target: 'depositButton' } %>
-   <% end %>
+    <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button',
+                                     data: { action: 'unsaved-changes#allowFormSubmission' } %>
+    <%= form.submit submit_button_label, class: 'btn btn-primary', disabled: false,
+                                         data: { action: 'unsaved-changes#allowFormSubmission', deposit_button_target: 'depositButton' } %>
   </div>
 </div>

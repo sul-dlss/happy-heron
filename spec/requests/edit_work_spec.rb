@@ -66,7 +66,8 @@ RSpec.describe 'Updating an existing work' do
             authors_attributes: {},
             contact_emails_attributes: {},
             license: 'CC0-1.0',
-            release: 'immediate'
+            release: 'immediate',
+            new_user_version: 'no'
           }.tap do |param|
             # Keywords aren't changing.
             work_version.keywords.each_with_object(param[:keywords_attributes]).with_index do |(keyword, attrs), index|
@@ -103,6 +104,7 @@ RSpec.describe 'Updating an existing work' do
             expect(CollectionObserver).to have_received(:version_draft_created)
             expect(WorkVersion.where(work:).count).to eq 2
             expect(work.reload.head).to be_version_draft
+            expect(work.head.user_version).to eq 1
             expect(work.head.subtype).to eq []
             # Only changed fields are recorded in event.
             expect(work.events.first.description).to eq('title of deposit modified, contact email modified, ' \

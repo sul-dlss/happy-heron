@@ -25,7 +25,6 @@ class NewVersionService
     new_version.version = old_version.version + 1 if increment_version
     new_version.version_description = version_description if version_description
     new_version.state = state if state
-    old_version.user_version = nil # Ensure user version is unique across all versions of the work
     yield new_version if block_given?
     perform_save if save
 

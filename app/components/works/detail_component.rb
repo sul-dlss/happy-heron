@@ -20,7 +20,7 @@ module Works
     def version
       return '1 - initial version' if first_draft?
 
-      "#{work_version.version} - #{version_description}"
+      "#{version_number} - #{version_description}"
     end
 
     def doi_setting
@@ -111,6 +111,12 @@ module Works
 
       # For example, "2020?/2021?" to "ca. 2020 - ca. 2021"
       edtf.sub(%r{/}, ' - ').gsub(/(\S+)\?/, 'ca. \1')
+    end
+
+    def version_number
+      return work_version.user_version if Settings.user_versions_ui_enabled
+
+      work_version.version
     end
   end
 end

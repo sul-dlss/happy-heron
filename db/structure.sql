@@ -10,13 +10,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: -
---
-
--- *not* creating schema, since initdb creates it
-
-
---
 -- Name: work_access; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -1224,13 +1217,6 @@ CREATE INDEX index_work_versions_on_work_id ON public.work_versions USING btree 
 
 
 --
--- Name: index_work_versions_on_work_id_and_user_version; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_work_versions_on_work_id_and_user_version ON public.work_versions USING btree (work_id, user_version);
-
-
---
 -- Name: index_works_on_collection_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1498,6 +1484,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230726172521'),
 ('20240501135224'),
 ('20240502142444'),
-('20240503114446');
+('20240503114446'),
+('20240510172252');
 
 

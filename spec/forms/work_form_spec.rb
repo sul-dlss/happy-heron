@@ -6,7 +6,11 @@ RSpec.describe WorkForm do
   subject(:form) { described_class.new(work_version:, work:) }
 
   let(:work) { work_version.work }
-  let(:work_version) { build(:work_version) }
+  let(:work_version) { create(:work_version, version: 2, user_version: 2) }
+
+  before do
+    create(:work_version, version: 1, user_version: 1, work:)
+  end
 
   describe 'populator on files' do
     let!(:blob) do
@@ -366,12 +370,10 @@ RSpec.describe WorkForm do
   describe 'user version description feature flag' do
     subject(:deserialized) { form.deserialize!(params) }
 
-    let(:new_user_version) { 'yes' }
-    let(:new_user_version_description) { 'User version description' }
+    let(:version_description) { 'User version description' }
     let(:params) do
       { 'new_user_version' => new_user_version,
-        'new_user_version_description' => new_user_version_description,
-        'version_description' => nil }
+        'version_description' => version_description }
     end
 
     before do
@@ -379,8 +381,11 @@ RSpec.describe WorkForm do
     end
 
     context 'when Yes is selected' do
+      let(:new_user_version) { 'yes' }
+
       it 'uses the user version description' do
-        expect(deserialized['version_description']).to eq 'User version description'
+        expect(deserialized['version_description']).to eq version_description
+        expect(deserialized['user_version']).to eq 2
       end
     end
 
@@ -388,12 +393,12 @@ RSpec.describe WorkForm do
       let(:new_user_version) { 'no' }
       let(:params) do
         { 'new_user_version' => new_user_version,
-          'current_version_description' => 'Current version description',
           'version_description' => nil }
       end
 
       it 'uses the current version description box' do
-        expect(deserialized['version_description']).to eq 'Current version description'
+        expect(deserialized['version_description']).to be_nil
+        expect(deserialized['user_version']).to eq 1
       end
     end
   end

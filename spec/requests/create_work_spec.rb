@@ -211,7 +211,8 @@ RSpec.describe 'Create a new work' do
                    'created_range(4i)' => '2020', 'created_range(5i)' => '10', 'created_range(6i)' => '31',
                    'release' => 'embargo',
                    'embargo_date(1i)' => embargo_year, 'embargo_date(2i)' => '4', 'embargo_date(3i)' => '4',
-                   :access => 'stanford') # an access selection that will be overwritten
+                   :access => 'stanford', # an access selection that will be overwritten
+                   :new_user_version => 'no')
         end
 
         before { create(:collection_version_with_collection, collection:) }
@@ -243,6 +244,7 @@ RSpec.describe 'Create a new work' do
           expect(DepositJob).to have_received(:perform_later).with(work_version)
           expect(work_version.state).to eq 'depositing'
           expect(work_version.access).to eq 'world' # shows that `stanford` was overwritten
+          expect(work_version.user_version).to eq 1
         end
       end
 
@@ -313,7 +315,8 @@ RSpec.describe 'Create a new work' do
             'commit' => 'Save as draft',
             'controller' => 'works',
             'action' => 'create',
-            'collection_id' => collection.id
+            'collection_id' => collection,
+            'new_user_version' => 'no'
           }
         end
 
@@ -346,7 +349,8 @@ RSpec.describe 'Create a new work' do
             license: 'CC0-1.0',
             upload_type: 'browser',
             release: 'immediate',
-            access: 'stanford'
+            access: 'stanford',
+            new_user_version: 'no'
           }
         end
 
@@ -582,7 +586,8 @@ RSpec.describe 'Create a new work' do
             },
             license: 'CC0-1.0',
             upload_type: 'browser',
-            release: 'immediate'
+            release: 'immediate',
+            new_user_version: 'no'
           }
         end
 
@@ -661,7 +666,8 @@ RSpec.describe 'Create a new work' do
             release: 'embargo',
             'embargo_date(1i)': '2030',
             'embargo_date(2i)': '09',
-            'embargo_date(3i)': '01'
+            'embargo_date(3i)': '01',
+            new_user_version: 'no'
           }
         end
 
@@ -729,7 +735,8 @@ RSpec.describe 'Create a new work' do
             },
             license: 'CC0-1.0',
             upload_type: 'browser',
-            release: 'embargo'
+            release: 'embargo',
+            new_user_version: 'no'
           }
         end
 
@@ -795,7 +802,8 @@ RSpec.describe 'Create a new work' do
               '0' => { '_destroy' => 'false', 'label' => 'Feminism', 'uri' => 'http://id.worldcat.org/fast/922671' }
             },
             license: 'CC0-1.0',
-            upload_type: 'browser'
+            upload_type: 'browser',
+            new_user_version: 'no'
           }
         end
 

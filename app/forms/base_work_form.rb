@@ -13,9 +13,16 @@ class BaseWorkForm < Reform::Form
 
   property :work_type, on: :work_version
   property :version_description, on: :work_version
-  property :new_user_version, virtual: true # in the future, will need to be persisted to the work_version for drafts
-  property :new_user_version_description, virtual: true
-  property :current_version_description, virtual: true
+  property :new_user_version, virtual: true, prepopulator: (proc do |*|
+    # If this is first version, then nil.
+    # If this is a new work version, then nil.
+    # If this is an existing work version, then "yes" if the user_version is different from the previous version.
+    # If this is an existing work version, then "no" if the user_version is same as from the previous version.
+    if work_version.version != 1 && work_version.user_version && !work_version.deposited?
+      self.new_user_version = work_version.user_version == work_version.previous_version.user_version ? 'no' : 'yes'
+    end
+  end)
+  property :user_version, on: :work_version
   property :subtype, on: :work_version
   property :title, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
   property :abstract, on: :work_version, type: Dry::Types['params.nil'] | Dry::Types['string']
@@ -61,7 +68,7 @@ class BaseWorkForm < Reform::Form
     deserialize_embargo(params)
     access_from_collection(params)
     deserialize_license(params)
-    select_version_description(params)
+    select_user_version(params)
     super(params)
   end
 
@@ -150,18 +157,14 @@ class BaseWorkForm < Reform::Form
     params['license'] = collection.required_license
   end
 
-  # Determine which version description field to use
-  def select_version_description(params)
-    return unless Settings.user_versions_ui_enabled
-
-    if params['new_user_version'] == 'yes'
-      params['version_description'] = params['new_user_version_description']
-    elsif params['new_user_version'] == 'no'
-      params['version_description'] = params['current_version_description']
-    end
+  def select_user_version(params)
+    params['user_version'] = case params['new_user_version']
+                             when 'yes'
+                               work_version.previous_version.user_version + 1
+                             when 'no'
+                               work_version&.previous_version&.user_version || 1
+                             end
   end
-
-  # has_contributors(validate: false)
 
   collection :attached_files,
              populator: AttachedFilesPopulator.new(:attached_files, AttachedFile),
