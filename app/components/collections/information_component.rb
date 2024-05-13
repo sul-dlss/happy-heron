@@ -16,10 +16,6 @@ module Collections
       render LocalTimeComponent.new(datetime: collection.created_at)
     end
 
-    def last_saved
-      render LocalTimeComponent.new(datetime: collection_version.updated_at)
-    end
-
     def version
       return '1 - initial version' if collection_version.version == 1
 
