@@ -25,6 +25,8 @@ class WorkForm < BaseWorkForm
   validates :embargo_date, embargo_date: true, if: :availability_component_present?
   validates :agree_to_terms, presence: true
   validates :upload_type, presence: true
+  validates :new_user_version, presence: true, if: :not_first_version?
+  validates :user_version, presence: true
 
   has_contributors(validate: true)
 
@@ -69,5 +71,9 @@ class WorkForm < BaseWorkForm
     return false if already_embargo_released?
 
     collection.user_can_set_availability?
+  end
+
+  def not_first_version?
+    work_version.version != 1
   end
 end

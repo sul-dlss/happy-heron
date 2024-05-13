@@ -4,20 +4,30 @@ export default class extends Controller {
   static targets = ['versionDescription', 'userVersionYes', 'userVersionNo', 'versionDescriptionYes', 'versionDescriptionNo', 'versionDescriptionError']
 
   connect () {
-    this.versionDescriptionYesTarget.disabled = true
-    this.versionDescriptionNoTarget.disabled = true
-    this.versionDescriptionYesTarget.value = this.versionDescriptionTarget.value
-    this.versionDescriptionNoTarget.value = this.versionDescriptionTarget.value
+    if (this.userVersionYesTarget.checked === true) {
+      this.versionDescriptionNoTarget.disabled = true
+      this.versionDescriptionYesTarget.required = true
+      this.versionDescriptionYesTarget.value = this.versionDescriptionTarget.value
+    }
+    if (this.userVersionNoTarget.checked === true) {
+      this.versionDescriptionYesTarget.disabled = true
+      this.versionDescriptionNoTarget.required = true
+      this.versionDescriptionNoTarget.value = this.versionDescriptionTarget.value
+    }
   }
 
   displayVersionDescription (event) {
     // Version description input enabled when radio selected
     if (event.currentTarget === this.userVersionYesTarget) {
       this.versionDescriptionYesTarget.disabled = false
+      this.versionDescriptionYesTarget.required = true
       this.versionDescriptionNoTarget.disabled = true
+      this.versionDescriptionNoTarget.required = false
     } else if (event.currentTarget === this.userVersionNoTarget) {
       this.versionDescriptionNoTarget.disabled = false
+      this.versionDescriptionNoTarget.required = true
       this.versionDescriptionYesTarget.disabled = true
+      this.versionDescriptionYesTarget.required = false
     }
   }
 

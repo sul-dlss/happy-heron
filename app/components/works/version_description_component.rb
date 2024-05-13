@@ -13,8 +13,12 @@ module Works
       form.object.model.fetch(:work_version)
     end
 
-    def render?
+    def show?
       %w[deposited rejected version_draft].include? work_version.state
+    end
+
+    def show_hidden?
+      !Settings.user_versions_ui_enabled || !show?
     end
   end
 end
