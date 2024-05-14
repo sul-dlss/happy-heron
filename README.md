@@ -117,6 +117,25 @@ TO run cypress tests headlessly:
 bin/cypress run
 ```
 
+### Linting
+
+Ruby:
+```shell
+bundle exec rubocop -a
+```
+
+ERB:
+```shell
+bundle exec erblint --lint-all -a
+```
+
+Javascript:
+```shell
+yarn run lint --fix
+```
+
+See also `linters.rake`.
+
 ## Deployment
 
 H2 is deployed via Capistrano to servers running the Passenger server in standalone mode (as a systemd service rather than as an Apache module).
