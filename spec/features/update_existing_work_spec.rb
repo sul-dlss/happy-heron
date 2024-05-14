@@ -90,22 +90,67 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
   end
 
   context 'when user versions ui feature flag is enabled' do
-    let(:work_version) { create(:work_version_with_work, :deposited, collection:, owner: user, title: original_title) }
+    let(:test_title) { 'Test title' }
+    let(:work) { create(:work, collection:, owner: user) }
+    let!(:work_version) do
+      create(:work_version, :with_files, :deposited, :with_required_associations,
+             work:, version: 1, user_version: 1, title: test_title)
+    end
+    let(:version2) do
+      create(:work_version, :with_files, :deposited, :with_required_associations,
+             work:, version: 2, user_version: 2, title: test_title)
+    end
 
     before do
       allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+      work.update(head: work_version)
     end
 
-    it 'disables the files section for metadata-only changes' do
+    it 'disables the files section for metadata-only changes and keeps files' do
       visit work_path(work_version.work)
+      click_link_or_button "Edit #{test_title}"
 
-      click_link_or_button "Edit #{original_title}"
       expect(page).to have_content('Do you want to create a new version of this deposit?')
 
       choose('No')
       expect(find_by_id('file-uploads-fieldset')).to be_disabled
+
+      fill_in "What's changing?", with: 'Nothing really'
+      click_link_or_button 'Deposit'
+      expect(page).to have_content('You have successfully deposited your work')
+
+      version2 = work.reload.head
+      expect(version2.reload.version).to eq(2)
+      expect(version2.reload.user_version).to eq(1)
+      expect(version2.reload.version_description).to eq('Nothing really')
+      expect(version2.reload.attached_files.count).to eq(2)
+    end
+
+    it 'enables the files section for new user versions and updates files' do
+      visit work_path(work)
+      click_link_or_button "Edit #{test_title}"
+      expect(page).to have_content('Do you want to create a new version of this deposit?')
+
       choose('Yes')
       expect(find_by_id('file-uploads-fieldset')).not_to be_disabled
+
+      fill_in "What's changing?", with: 'Adding a file'
+      # upload a new file
+      choose 'work_upload_type_browser'
+      page.attach_file(Rails.root.join('spec/fixtures/files/test-data.txt')) do
+        click_link_or_button('Choose files')
+      end
+      sleep 1 # pause to ensure file upload completes before we proceed
+      expect(page).to have_content('test-data.txt')
+
+      click_link_or_button 'Deposit'
+      expect(page).to have_content('You have successfully deposited your work')
+
+      version2 = work.reload.head
+      expect(version2.reload.version).to eq(2)
+      expect(version2.reload.user_version).to eq(2)
+      expect(version2.reload.version_description).to eq('Adding a file')
+      expect(version2.reload.attached_files.count).to eq(3)
     end
   end
 end

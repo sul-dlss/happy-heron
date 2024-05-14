@@ -11,11 +11,13 @@ export default class extends Controller {
       this.versionDescriptionNoTarget.disabled = true
       this.versionDescriptionNoTarget.value = ''
       this.versionDescriptionYesTarget.required = true
+      this.versionDescriptionYesTarget.disabled = false
       this.versionDescriptionYesTarget.value = this.versionDescriptionTarget.value
     }
     if (this.userVersionNoTarget.checked === true) {
       this.versionDescriptionYesTarget.disabled = true
       this.versionDescriptionYesTarget.value = ''
+      this.versionDescriptionNoTarget.disabled = false
       this.versionDescriptionNoTarget.required = true
       this.versionDescriptionNoTarget.value = this.versionDescriptionTarget.value
       this.fileUploadsFieldsetTarget.disabled = true
