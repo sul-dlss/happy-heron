@@ -1,6 +1,7 @@
+---
 version: 2.1
 orbs:
-  ruby-rails: sul-dlss/ruby-rails@4.1.0
+  ruby-rails: sul-dlss/ruby-rails@4.2.0
   browser-tools: circleci/browser-tools@1.4.8
   node: circleci/node@5.0.0
   ruby: circleci/ruby@1.8.0
@@ -15,10 +16,10 @@ jobs:
           yarn: true
           post-install:
             - run: sudo apt-get update
-            - run: sudo apt-get install --fix-missing libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+            - run: sudo apt-get install --fix-missing libgtk2.0-0 libgtk-3-0 libgbm-dev
+                libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6
+                xauth xvfb
       - browser-tools/install-firefox:
-          # Fixing the version of firefox since cypress won't run correctly with the latest.
-          # This can probably be removed once cypress is updated.
           version: 115.9.0esr
       - node/install-packages:
           pkg-manager: yarn
@@ -26,28 +27,11 @@ jobs:
           name: Install javascript dependencies and build assets
           command: bin/rake test:prepare
       - run:
-          command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
           name: Wait for DB
       - run:
-          command: 'bundle exec bin/cypress run'
+          command: bundle exec bin/cypress run
           name: Test
-  erblint:
-    executor: ruby-rails/ruby
-    steps:
-      - checkout
-      - ruby/install-deps
-      - run:
-          name: Lint ERBs
-          command: 'bundle exec erblint --lint-all --format compact'
-  eslint:
-    executor: node/default
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          name: Lint JavaScript
-          command: yarn run lint
   accessibility-features:
     executor: ruby-rails/ruby-postgres
     steps:
@@ -55,19 +39,19 @@ jobs:
       - ruby/install-deps
       - browser-tools/install-chrome
       - run:
-          command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
           name: Wait for DB
       - run:
           command: bin/rails db:prepare
           name: Set up DB
       - run:
           name: Run accessibility feature tests
-          command: 'bundle exec rspec --tag accessibility'
+          command: bundle exec rspec --tag accessibility
 workflows:
   build:
     jobs:
-      - eslint
-      - erblint
+      - ruby-rails/lint-erb
+      - ruby-rails/lint-js
       - cypress
       - accessibility-features
       - ruby-rails/lint:
@@ -80,5 +64,5 @@ workflows:
                 name: Install javascript dependencies and build assets
                 command: bin/rake test:prepare
             - run:
-                  name: install seeds
-                  command: bundle exec rails db:seed
+                name: install seeds
+                command: bundle exec rails db:seed
