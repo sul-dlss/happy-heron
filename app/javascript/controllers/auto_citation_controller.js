@@ -39,6 +39,10 @@ export default class extends Controller {
   }
 
   get citation () {
+    if (this.doi === '') {
+      return `${this.authorAsSentence} (${this.date}). ${this.title}. Stanford Digital Repository. Available at ${this.purl}.`
+    }
+
     return `${this.authorAsSentence} (${this.date}). ${this.title}. Stanford Digital Repository. Available at ${this.purl}. ${this.doi}`
   }
 
