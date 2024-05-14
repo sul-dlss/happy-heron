@@ -4,6 +4,8 @@ export default class extends Controller {
   static targets = ['versionDescription', 'userVersionYes', 'userVersionNo', 'versionDescriptionYes', 'versionDescriptionNo', 'versionDescriptionError']
 
   connect () {
+    if (!this.hasUserVersionYesTarget || !this.hasUserVersionNoTarget) return
+
     if (this.userVersionYesTarget.checked === true) {
       this.versionDescriptionNoTarget.disabled = true
       this.versionDescriptionYesTarget.required = true

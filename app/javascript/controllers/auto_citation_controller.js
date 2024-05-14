@@ -6,7 +6,12 @@ const DOI_PLACE_HOLDER = ':DOI will be inserted here automatically when availabl
 export default class extends Controller {
   static targets = ['titleField', 'manual', 'auto', 'switch',
     'contributorFirst', 'contributorLast', 'contributorRole', 'contributorOrg',
-    'embargoYear', 'embargo']
+    'embargoYear', 'embargo', 'userVersionYes']
+
+  static values = {
+    userVersion: Number,
+    userVersionsUiEnabled: Boolean
+  }
 
   connect () {
     this.purl = this.data.get('purl') || PURL_PLACE_HOLDER // Use a real purl on a persisted item or a placeholder
@@ -39,11 +44,7 @@ export default class extends Controller {
   }
 
   get citation () {
-    if (this.doi === '') {
-      return `${this.authorAsSentence} (${this.date}). ${this.title}. Stanford Digital Repository. Available at ${this.purl}.`
-    }
-
-    return `${this.authorAsSentence} (${this.date}). ${this.title}. Stanford Digital Repository. Available at ${this.purl}. ${this.doi}`
+    return `${this.authorAsSentence} (${this.date}). ${this.title}.${this.versionClause} Stanford Digital Repository. Available at ${this.purl}${this.purlVersion}.${this.doiClause}`
   }
 
   get authorAsSentence () {
@@ -82,6 +83,34 @@ export default class extends Controller {
 
   get contributorLasts () {
     return this.contributorLastTargets.filter(elem => elem.disabled === false)
+  }
+
+  get version () {
+    if (this.hasUserVersionYesTarget && this.userVersionYesTarget.checked) {
+      return this.userVersionValue + 1
+    }
+    return this.userVersionValue
+  }
+
+  get purlVersion () {
+    if (!this.userVersionsUiEnabledValue) {
+      return ''
+    }
+    return `/v${this.version}`
+  }
+
+  get versionClause () {
+    if (!this.userVersionsUiEnabledValue) {
+      return ''
+    }
+    return ` Version ${this.version}.`
+  }
+
+  get doiClause () {
+    if (this.doi === '') {
+      return ''
+    }
+    return ` ${this.doi}`
   }
 
   // Triggered when the switch is toggled
