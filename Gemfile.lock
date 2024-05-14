@@ -107,7 +107,6 @@ GEM
     bunny (2.22.0)
       amq-protocol (~> 2.3, >= 2.3.1)
       sorted_set (~> 1, >= 1.0.2)
-    byebug (11.1.3)
     capistrano (3.18.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -183,6 +182,9 @@ GEM
       puma (>= 3.8.0)
       railties (>= 5.2.0)
     date (3.3.4)
+    debug (1.9.2)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     declarative (0.0.20)
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
@@ -300,6 +302,10 @@ GEM
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    io-console (0.7.2)
+    irb (1.13.1)
+      rdoc (>= 4.0.0)
+      reline (>= 0.4.2)
     jbuilder (2.12.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -370,8 +376,6 @@ GEM
     nio4r (2.7.3)
     nokogiri (1.16.5-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.5-x86_64-darwin)
-      racc (~> 1.4)
     nokogiri (1.16.5-x86_64-linux)
       racc (~> 1.4)
     nokogiri-happymapper (0.10.0)
@@ -409,6 +413,8 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    psych (5.1.2)
+      stringio
     public_suffix (5.0.5)
     puma (5.6.8)
       nio4r (~> 2.0)
@@ -450,6 +456,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rbtree (0.4.6)
+    rdoc (6.6.3.1)
+      psych (>= 4.0.0)
     redis (4.8.1)
     redis-client (0.22.1)
       connection_pool
@@ -461,6 +469,8 @@ GEM
       activemodel (>= 5.0)
       reform (>= 2.3.1, < 3.0.0)
     regexp_parser (2.9.1)
+    reline (0.5.7)
+      io-console (~> 0.5)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -594,6 +604,7 @@ GEM
     state_machines-graphviz (0.0.2)
       ruby-graphviz
       state_machines
+    stringio (3.1.0)
     strings-ansi (0.2.0)
     strip_attributes (1.13.0)
       activemodel (>= 3.0, < 8.0)
@@ -658,10 +669,6 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
-  x86_64-darwin-19
-  x86_64-darwin-20
-  x86_64-darwin-21
-  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -670,7 +677,6 @@ DEPENDENCIES
   axe-core-rspec
   bootsnap (>= 1.4.2)
   bunny (~> 2.17)
-  byebug
   capistrano-maintenance (~> 1.2)
   capistrano-passenger
   capistrano-rails
@@ -681,6 +687,7 @@ DEPENDENCIES
   cuprite
   cypress-on-rails (~> 1.0)
   cypress-rails
+  debug
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
   dlss-capistrano

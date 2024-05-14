@@ -7,9 +7,9 @@ gem 'rails', '~> 7.0.1'
 
 group :development, :test do
   gem 'axe-core-rspec'
-  gem 'byebug'
   gem 'cypress-on-rails', '~> 1.0'
   gem 'cypress-rails'
+  gem 'debug'
   gem 'erb_lint', require: false
   # NOTE: factory_bot_rails >= 6.3.0 requires env/test.rb to have
   # config.factory_bot.reject_primary_key_attributes = false
