@@ -18,7 +18,7 @@ class DepositCompleter
 
     parent.event_context = {
       user: sdr_user,
-      description: "What changed: #{what_changed}"
+      description:
     }
 
     object_version.deposit_complete!
@@ -37,6 +37,15 @@ class DepositCompleter
   end
 
   def what_changed
-    object_version.version_description.presence || 'not specified'
+    "What changed: #{object_version.version_description.presence || 'not specified'}"
+  end
+
+  def description
+    return what_changed unless object_version.is_a?(WorkVersion)
+    return what_changed unless Settings.user_versions_ui_enabled
+
+    return what_changed unless object_version.new_user_version?
+
+    "Version #{object_version.user_version} created. #{what_changed}"
   end
 end
