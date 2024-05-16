@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Models the deposit of an single version of a digital repository object
+# rubocop:disable Metrics/ClassLength
 class WorkVersion < ApplicationRecord
   include AggregateAssociations
 
@@ -212,6 +213,12 @@ class WorkVersion < ApplicationRecord
     )
   end
 
+  # @return [Boolean] true if the user_version is different from the previous version's user_version
+  # or this is the first version
+  def new_user_version?
+    user_version != previous_version&.user_version
+  end
+
   private
 
   def locally_cached_file_for(blob)
@@ -220,3 +227,4 @@ class WorkVersion < ApplicationRecord
     blob.service.path_for(blob.key)
   end
 end
+# rubocop:enable Metrics/ClassLength

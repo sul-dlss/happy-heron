@@ -19,7 +19,7 @@ class BaseWorkForm < Reform::Form
     # If this is an existing work version, then "yes" if the user_version is different from the previous version.
     # If this is an existing work version, then "no" if the user_version is same as from the previous version.
     if work_version.version != 1 && work_version.user_version && !work_version.deposited?
-      self.new_user_version = work_version.user_version == work_version.previous_version.user_version ? 'no' : 'yes'
+      self.new_user_version = work_version.new_user_version? ? 'yes' : 'no'
     end
   end)
   property :user_version, on: :work_version

@@ -7,10 +7,11 @@ RSpec.describe DepositCompleter do
 
   let(:work) { create(:work, :with_druid) }
   let(:object_version) do
-    build(:work_version, state, work:, version_description:)
+    build(:work_version, state, work:, version_description:, user_version:, version: 2)
   end
   let(:state) { :depositing }
   let(:version_description) { 'Fixing the title' }
+  let(:user_version) { 1 }
 
   describe '.complete' do
     let(:instance) { described_class.new(object_version:) }
@@ -67,6 +68,41 @@ RSpec.describe DepositCompleter do
       expect { deposit_completer.complete }.to change(Event, :count).by(1)
       expect(Event.last.description).to eq("What changed: #{version_description}")
       expect(Event.last.user.email).to eq('sdr@stanford.edu')
+    end
+
+    context 'when user_versions_ui_enabled' do
+      before { allow(Settings).to receive(:user_versions_ui_enabled).and_return(true) }
+
+      context 'when there is no previous work version' do
+        it 'logs an event that includes user version' do
+          expect { deposit_completer.complete }.to change(Event, :count).by(1)
+          expect(Event.last.description).to eq("Version #{user_version} created. What changed: #{version_description}")
+        end
+      end
+
+      context 'when there is a previous work version with different user version' do
+        let(:user_version) { 2 }
+
+        before do
+          create(:work_version, work:, user_version: 1, version: 1)
+        end
+
+        it 'logs an event that includes user version' do
+          expect { deposit_completer.complete }.to change(Event, :count).by(1)
+          expect(Event.last.description).to eq("Version #{user_version} created. What changed: #{version_description}")
+        end
+      end
+
+      context 'when there is a previous work version with same user version' do
+        before do
+          create(:work_version, work:, user_version: 1, version: 1)
+        end
+
+        it 'logs an event that excludes user version' do
+          expect { deposit_completer.complete }.to change(Event, :count).by(1)
+          expect(Event.last.description).to eq("What changed: #{version_description}")
+        end
+      end
     end
   end
 end
