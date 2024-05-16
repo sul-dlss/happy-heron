@@ -69,7 +69,7 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @user = UserPresenter.new(user: params[:user])
 
-    subject = "Reminder: New version of your #{@collection_version.name} collection in the SDR is still in progress"
+    subject = "Reminder: Updates to your #{@collection_version.name} collection in the SDR is still in progress"
 
     mail(to: @user.email, subject:)
   end
@@ -89,7 +89,7 @@ class CollectionsMailer < ApplicationMailer
     @owner = params[:owner]
     @work = params[:work]
 
-    mail(to: @user.email, subject: "New version created in the #{@collection_version.name} collection")
+    mail(to: @user.email, subject: "New draft created in the #{@collection_version.name} collection")
   end
 
   def participants_changed_email

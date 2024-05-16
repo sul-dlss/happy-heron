@@ -27,7 +27,7 @@ class WorksMailer < ApplicationMailer
     @work = params[:work_version].work
     @user = UserPresenter.new(user: @work.owner)
 
-    subject = "Reminder: New version of a deposit to the #{@work.collection_name} collection in the SDR is in progress"
+    subject = "Reminder: Updates to your deposit in the #{@work.collection_name} collection in the SDR is in progress"
 
     mail(to: @user.email, subject:)
   end
@@ -36,7 +36,7 @@ class WorksMailer < ApplicationMailer
     @user = UserPresenter.new(user: params[:user])
     @work_version = params[:work_version]
     @work = @work_version.work
-    mail(to: @user.email, subject: "A new version of #{@work_version.title} has been deposited in the SDR")
+    mail(to: @user.email, subject: "Updates to #{@work_version.title} has been deposited in the SDR")
   end
 
   def reject_email
