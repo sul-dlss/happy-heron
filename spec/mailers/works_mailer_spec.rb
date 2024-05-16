@@ -70,7 +70,7 @@ RSpec.describe WorksMailer do
     let(:collection_version) { build_stubbed(:collection_version, name: 'listicle fam ramps flannel') }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq 'A new version of twee retro man braid has been deposited in the SDR'
+      expect(mail.subject).to eq 'Updates to twee retro man braid has been deposited in the SDR'
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
@@ -173,7 +173,7 @@ RSpec.describe WorksMailer do
     let(:collection_version) { build_stubbed(:collection_version) }
 
     it 'renders the headers' do
-      exp_subj = "Reminder: New version of a deposit to the #{work.collection_name} " \
+      exp_subj = "Reminder: Updates to your deposit in the #{work.collection_name} " \
                  'collection in the SDR is in progress'
       expect(mail.subject).to eq exp_subj
       expect(mail.to).to eq [work.owner.email]

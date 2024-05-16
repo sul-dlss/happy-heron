@@ -213,7 +213,7 @@ RSpec.describe CollectionsMailer do
     let(:collection_version) { build_stubbed(:collection_version) }
 
     it 'renders the mail' do
-      exp_subj = "Reminder: New version of your #{collection_version.name} " \
+      exp_subj = "Reminder: Updates to your #{collection_version.name} " \
                  'collection in the SDR is still in progress'
       expect(mail.subject).to eq exp_subj
       expect(mail.to).to eq [a_user.email]
@@ -274,7 +274,7 @@ RSpec.describe CollectionsMailer do
     let(:collection) { build(:collection) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq "New version created in the #{collection_name} collection"
+      expect(mail.subject).to eq "New draft created in the #{collection_name} collection"
       expect(mail.to).to eq [user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
     end
