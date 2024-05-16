@@ -60,14 +60,16 @@ class DepositJob < BaseDepositJob
                                            assign_doi: work_version.work.assign_doi?,
                                            metadata: new_request_dro,
                                            logger: Rails.logger,
-                                           connection:)
+                                           connection:,
+                                           user_versions: user_versions_param(work_version))
   end
 
   def update(new_request_dro, work_version)
     SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
                                            logger: Rails.logger,
                                            connection:,
-                                           version_description: work_version.version_description.presence)
+                                           version_description: work_version.version_description.presence,
+                                           user_versions: user_versions_param(work_version))
   end
 
   def perform_upload(blobs_map, filepath_map)
@@ -120,5 +122,11 @@ class DepositJob < BaseDepositJob
 
   def integration_endpoint
     Settings.globus.integration_endpoint
+  end
+
+  def user_versions_param(work_version)
+    return 'none' unless Settings.user_versions_ui_enabled
+
+    work_version.new_user_version? ? 'new' : 'update'
   end
 end

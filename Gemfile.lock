@@ -543,7 +543,7 @@ GEM
     ruby-next-core (1.0.3)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    sdr-client (2.13.2)
+    sdr-client (2.14.0)
       activesupport
       cocina-models (~> 0.96.0)
       config
@@ -727,7 +727,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubyzip (~> 2.3)
-  sdr-client (~> 2.9)
+  sdr-client (~> 2.14)
   selenium-webdriver
   sidekiq (~> 7.0)
   simplecov

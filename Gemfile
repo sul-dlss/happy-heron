@@ -84,7 +84,7 @@ gem 'dor-workflow-client'
 gem 'reform', '~> 2.5.0'
 gem 'reform-rails'
 gem 'rubyzip', '~> 2.3'
-gem 'sdr-client', '~> 2.9'
+gem 'sdr-client', '~> 2.14'
 gem 'sidekiq', '~> 7.0'
 gem 'sneakers', '~> 2.11' # rabbitMQ background processing
 gem 'state_machines-activerecord'

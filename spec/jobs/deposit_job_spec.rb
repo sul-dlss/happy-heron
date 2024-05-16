@@ -49,13 +49,25 @@ RSpec.describe DepositJob do
     it 'uploads files and calls CreateResource.run' do
       described_class.perform_now(first_work_version)
       expect(SdrClient::Deposit::CreateResource).to have_received(:run)
-        .with(a_hash_including(accession: true)) do |params|
+        .with(a_hash_including(accession: true, user_versions: 'none')) do |params|
         file = params[:metadata].structural.contains.first.structural.contains.first
         expect(file.externalIdentifier).to eq('9999999')
         expect(file.filename).to eq('sul.svg')
       end
       expect(SdrClient::Deposit::UploadFiles).to have_received(:upload) do |args|
         expect(args[:file_metadata].values.first.to_h).to eq(upload_request.to_h)
+      end
+    end
+
+    context 'when user versions is enabled' do
+      before do
+        allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+      end
+
+      it 'uploads files and calls CreateResource.run' do
+        described_class.perform_now(first_work_version)
+        expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+          .with(a_hash_including(accession: true, user_versions: 'new'))
       end
     end
 
@@ -301,6 +313,26 @@ RSpec.describe DepositJob do
           expect(has_mime_type).to eq('image/svg+xml')
         end
         expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
+      end
+    end
+
+    context 'when user versions is enabled' do
+      # The attached files for this version are the same as the previous version.
+      let(:second_work_version_metadata_only) do
+        build(:work_version, work:, attached_files: [attached_file], version: 2,
+                             version_description: 'Updated metadata')
+      end
+
+      before do
+        work.work_versions = [first_work_version, second_work_version_metadata_only]
+        allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+      end
+
+      it 'calls UpdateResource.run' do
+        described_class.perform_now(second_work_version_metadata_only)
+
+        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+          .with(a_hash_including(version_description: 'Updated metadata', user_versions: 'update'))
       end
     end
   end
