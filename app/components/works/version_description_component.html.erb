@@ -7,7 +7,7 @@
         <%= form.hidden_field :version_description, value: work_version.version_description, data: { new_user_version_target: 'versionDescription' } %>
         <div class='mb-3 row'>
           <div class='col-sm-10 form-check'>
-            <%= form.radio_button :new_user_version, 'yes', required: true, data: { action: 'click->new-user-version#displayVersionDescription', new_user_version_target: 'userVersionYes' }, class: 'form-check-input' %>
+            <%= form.radio_button :new_user_version, 'yes', required: true, data: { action: 'new-user-version#displayVersionDescription auto-citation#updateDisplay', new_user_version_target: 'userVersionYes', auto_citation_target: 'userVersionYes' }, class: 'form-check-input' %>
             <%= form.label :new_user_version, 'Yes', value: 'yes', class: 'form-check-label fw-semibold' %>
             <ul>
               <li>Edit files and any or all form fields.</li>
@@ -21,7 +21,7 @@
         </div>
         <div class='mb-3 row'>
           <div class='col-sm-10 form-check'>
-            <%= form.radio_button :new_user_version, 'no', required: true, data: { action: 'click->new-user-version#displayVersionDescription', new_user_version_target: 'userVersionNo' }, class: 'form-check-input' %>
+            <%= form.radio_button :new_user_version, 'no', required: true, data: { action: 'new-user-version#displayVersionDescription auto-citation#updateDisplay', new_user_version_target: 'userVersionNo' }, class: 'form-check-input' %>
             <%= form.label :new_user_version, 'No', value: 'no', class: 'form-check-label fw-semibold' %>
             <ul>
               <li>Edit form fields only. Files may not be changed.</li>

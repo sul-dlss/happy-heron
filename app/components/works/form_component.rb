@@ -33,6 +33,12 @@ module Works
       work_form.model.fetch(:work_version)
     end
 
+    delegate :user_version, to: :work_version
+
+    def user_versions_ui_enabled?
+      Settings.user_versions_ui_enabled
+    end
+
     def doi_field
       return "https://doi.org/#{doi}." if doi
 
@@ -45,7 +51,7 @@ module Works
     end
 
     def data_controllers
-      return 'auto-citation unsaved-changes deposit-button new-user-version' if Settings.user_versions_ui_enabled
+      return 'auto-citation unsaved-changes deposit-button new-user-version' if user_versions_ui_enabled?
 
       'auto-citation unsaved-changes deposit-button'
     end
