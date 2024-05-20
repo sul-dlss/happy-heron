@@ -64,6 +64,7 @@ class WorksController < ObjectsController
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # Note the work_form will be validated twice with updates: once to identify changes and then as a new work_version
   def update
     work = Work.find(params[:id])
     work_version = work.head

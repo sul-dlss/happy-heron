@@ -157,7 +157,11 @@ class BaseWorkForm < Reform::Form
     params['license'] = collection.required_license
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def select_user_version(params)
+    # handle building event context on original work_version before new work_version validated
+    return if params['new_user_version'] == 'yes' && work_version.previous_version.nil?
+
     params['user_version'] = case params['new_user_version']
                              when 'yes'
                                work_version.previous_version.user_version + 1
@@ -165,6 +169,7 @@ class BaseWorkForm < Reform::Form
                                work_version&.previous_version&.user_version || 1
                              end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   collection :attached_files,
              populator: AttachedFilesPopulator.new(:attached_files, AttachedFile),
