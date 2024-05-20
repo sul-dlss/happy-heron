@@ -281,7 +281,7 @@ RSpec.describe CollectionsMailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match "The Depositor #{owner.name} has created a"
-      expect(mail.body.encoded).to match "<a href=\"#{work_url(work)}\">new version</a>"
+      expect(mail.body.encoded).to match "<a href=\"#{work_url(work)}\">new draft</a>"
       expect(mail.body.encoded).to match "in the #{collection_name} collection"
     end
 
