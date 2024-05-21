@@ -214,7 +214,7 @@ RSpec.describe CollectionsMailer do
 
     it 'renders the mail' do
       exp_subj = "Reminder: Updates to your #{collection_version.name} " \
-                 'collection in the SDR is still in progress'
+                 'collection in the SDR are still in progress'
       expect(mail.subject).to eq exp_subj
       expect(mail.to).to eq [a_user.email]
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']

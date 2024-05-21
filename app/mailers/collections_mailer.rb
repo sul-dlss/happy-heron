@@ -69,7 +69,7 @@ class CollectionsMailer < ApplicationMailer
     @collection_version = params[:collection_version]
     @user = UserPresenter.new(user: params[:user])
 
-    subject = "Reminder: Updates to your #{@collection_version.name} collection in the SDR is still in progress"
+    subject = "Reminder: Updates to your #{@collection_version.name} collection in the SDR are still in progress"
 
     mail(to: @user.email, subject:)
   end
