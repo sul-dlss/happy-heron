@@ -5,16 +5,16 @@
         <span class="fa-regular fa-file" aria-hidden="true"></span> <%= basename %>
     </td>
     <td>
-        <%= file_form.text_field :label, class: 'form-control' %>
+        <%= file_form.text_field :label, class: 'form-control', data: { attached_files_target: 'fileDescription'} %>
     </td>
     <td style="vertical-align: middle">
-        <%= file_form.check_box :hide %>
+        <%= file_form.check_box :hide, data: { attached_files_target: 'hideFileCheckbox' } %>
     </td>
     <td>
         <%= button_tag type: 'button',
                        class: 'dz-remove pull-right btn remove-file',
                        'aria-label': 'Remove file',
-                       data: { action: 'click->dropzone#removeAssociation' } do %>
+                       data: { action: 'click->dropzone#removeAssociation', attached_files_target: 'removeFileButton' } do %>
         <span class="fa-regular fa-trash-alt"></span>
         <% end %>
         <%= file_form.hidden_field :_destroy %>

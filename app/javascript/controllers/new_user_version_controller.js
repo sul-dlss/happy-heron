@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['versionDescription', 'userVersionYes', 'userVersionNo', 'versionDescriptionYes', 'versionDescriptionNo', 'versionDescriptionError',
-    'fileUploadsFieldset', 'fileSection']
+    'fileSection', 'browserRadioButton', 'zipRadioButton', 'globusRadioButton', 'chooseFilesButton', 'fileDescription', 'removeFileButton', 'hideFileCheckbox']
 
   connect () {
     if (!this.hasUserVersionYesTarget || !this.hasUserVersionNoTarget) return
@@ -20,7 +20,6 @@ export default class extends Controller {
       this.versionDescriptionNoTarget.disabled = false
       this.versionDescriptionNoTarget.required = true
       this.versionDescriptionNoTarget.value = this.versionDescriptionTarget.value
-      this.fileUploadsFieldsetTarget.disabled = true
       this.fileSectionTarget.style.opacity = 0.5
     }
   }
@@ -40,13 +39,22 @@ export default class extends Controller {
     }
   }
 
-  allowFileUploads (event) {
-    if (event.currentTarget === this.userVersionYesTarget) {
-      this.fileUploadsFieldsetTarget.disabled = false
-      this.fileSectionTarget.style.opacity = 1.0
-    } else if (event.currentTarget === this.userVersionNoTarget) {
-      this.fileUploadsFieldsetTarget.disabled = true
+  disableFileUploads (event) {
+    if (event.currentTarget === this.userVersionNoTarget) {
+      //this.fileUploadsFieldsetTarget.disabled = true
+      this.browserRadioButtonTarget.hidden = true
+      this.zipRadioButtonTarget.disabled = true
+      this.globusRadioButtonTarget.disabled = true
+      this.chooseFilesButtonTarget.disabled = true
       this.fileSectionTarget.style.opacity = 0.5
+    }
+    else if (event.currentTarget === this.userVersionYesTarget) {
+      //this.fileUploadsFieldsetTarget.disabled = false
+      this.browserRadioButtonTarget.hidden = false
+      this.zipRadioButtonTarget.disabled = false
+      this.globusRadioButtonTarget.disabled = false
+      this.chooseFilesButtonTarget.disabled = false
+      this.fileSectionTarget.style.opacity = 1.0
     }
   }
 

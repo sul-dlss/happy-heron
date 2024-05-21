@@ -260,7 +260,6 @@ class BaseWorkForm < Reform::Form
       && work_version.attached_files.empty?
       dupe_attached_files
     end
-    keep_attached_files
     dedupe_keywords
     work.update(head: work_version)
   end
@@ -272,16 +271,6 @@ class BaseWorkForm < Reform::Form
       new_attached_file.file.attach(existing_attached_file.file.blob.signed_id)
       work_version.attached_files << new_attached_file
     end
-  end
-
-  # If the user is only updating metadata (thus file uploads/edits are disabled),
-  # get the attached files from the previous version
-  def keep_attached_files
-    return unless Settings.user_versions_ui_enabled
-
-    return unless new_user_version == 'no' && work.head != work_version && work_version.attached_files.empty?
-
-    dupe_attached_files
   end
 
   # Override reform so that this looks just like a Work

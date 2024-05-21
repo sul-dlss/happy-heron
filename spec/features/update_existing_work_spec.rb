@@ -113,7 +113,9 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
       expect(page).to have_content('Do you want to create a new version of this deposit?')
 
       choose('No')
-      expect(find_by_id('file-uploads-fieldset')).to be_disabled
+      expect(find_by_id('work_upload_type_zipfile')).to be_disabled
+      expect(find_by_id('work_upload_type_globus')).to be_disabled
+      expect(find_by_id('work_upload_type_browser', visible: :all)).not_to be_visible
 
       fill_in "What's changing?", with: 'Nothing really'
       click_link_or_button 'Deposit'
@@ -132,7 +134,9 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
       expect(page).to have_content('Do you want to create a new version of this deposit?')
 
       choose('Yes')
-      expect(find_by_id('file-uploads-fieldset')).not_to be_disabled
+      expect(find_by_id('work_upload_type_zipfile')).not_to be_disabled
+      expect(find_by_id('work_upload_type_globus')).not_to be_disabled
+      expect(find_by_id('work_upload_type_browser')).to be_visible
 
       fill_in "What's changing?", with: 'Adding a file'
       # upload a new file
