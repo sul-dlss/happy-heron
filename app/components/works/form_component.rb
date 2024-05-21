@@ -51,7 +51,7 @@ module Works
     end
 
     def data_controllers
-      return 'auto-citation unsaved-changes deposit-button new-user-version attached-files' if user_versions_ui_enabled?
+      return 'auto-citation unsaved-changes deposit-button new-user-version' if user_versions_ui_enabled?
 
       'auto-citation unsaved-changes deposit-button'
     end

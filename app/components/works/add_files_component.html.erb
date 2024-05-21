@@ -17,7 +17,7 @@
         <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
           <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="<%= max_upload_files %>" data-dropzone-previews-container=".dropzone-files-previews">
             <fieldset>
-              <div class="dropzone dropzone-default" data-dropzone-target="container" data-attached-files-target="dropzoneContainer">
+              <div class="dropzone dropzone-default" data-dropzone-target="container" data-new-user-version-target="dropzoneContainer">
                 <%= form.file_field :files, multiple: true, direct_upload: true, namespace: 'flat_list', 'aria-label': 'Upload files',
                                             data: { dropzone_target: 'input' } %>
                 <div class="dz-message needsclick text-secondary">
@@ -56,7 +56,7 @@
     <div class="form-check pt-3" data-complex-radio-target="selection">
       <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
                                                      data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton',
-                                                             new_user_version_target: 'zipRadioButton'} %>
+                                                             new_user_version_target: 'zipRadioButton' } %>
       <%= form.label :upload_type_zipfile, 'Upload a single zip file (containing fewer than 25,000 files and less than 10GB total), which will be unzipped, including any hierarchy.', class: 'form-check-label fw-semibold' %>
       <div id="zip-files-panel" data-file-uploads-target="zipUpload">
         <p>Viewers will see the file hierarchy and be able to download individual files. Unzipping may take several minutes if your zip file contains a large number of individual files.</p>
