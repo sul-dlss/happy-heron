@@ -55,15 +55,7 @@ export default class extends Controller {
 
   validateUserVersionSelection (event) {
     if (this.userVersionYesTarget.checked === false && this.userVersionNoTarget.checked === false) {
-      this.showError('Please select a version option')
-      event.preventDefault()
-    }
-    if (this.userVersionYesTarget.checked === true && this.versionDescriptionYesTarget.value === '') {
-      this.showError('Please enter a version description')
-      event.preventDefault()
-    }
-    if (this.userVersionNoTarget.checked === true && this.versionDescriptionNoTarget.value === '') {
-      this.showError('Please enter a version description')
+      this.showError('Select a version option')
       event.preventDefault()
     }
   }
@@ -72,6 +64,8 @@ export default class extends Controller {
     if (err) {
       this.versionDescriptionErrorTarget.innerHTML = err
       this.versionDescriptionErrorTarget.style.display = 'block'
+      const y = this.versionDescriptionErrorTarget.getBoundingClientRect().top
+      window.scrollTo({ top: y, behavior: 'smooth' })
     } else {
       this.hideError()
     }
