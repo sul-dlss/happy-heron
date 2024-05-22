@@ -7,24 +7,24 @@
     <% end %>
   </h2>
 
-  <fieldset>
+  <fieldset data-new-user-version-target="fileUploadsFieldset">
     <legend class="visually-hidden">Add or modify files</legend>
     <div class="form-check" data-complex-radio-target="selection">
       <% if browser_option? %>
-        <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton', 'data-new-user-version-target': 'browserRadioButton',
+        <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton',
                                                        data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' } %>
         <%= form.label :upload_type_browser, "Upload fewer than #{max_upload_files} files (total less than 10 GB) to be displayed as a flat list of files.", class: 'form-check-label fw-semibold' %>
         <div id="uploaded-files-panel" data-file-uploads-target="fileUploads">
           <div data-controller="dropzone" data-dropzone-max-file-size="10000" data-dropzone-max-files="<%= max_upload_files %>" data-dropzone-previews-container=".dropzone-files-previews">
             <fieldset>
-              <div class="dropzone dropzone-default" data-dropzone-target="container" data-new-user-version-target="dropzoneContainer">
+              <div class="dropzone dropzone-default" data-dropzone-target="container">
                 <%= form.file_field :files, multiple: true, direct_upload: true, namespace: 'flat_list', 'aria-label': 'Upload files',
                                             data: { dropzone_target: 'input' } %>
                 <div class="dz-message needsclick text-secondary">
                   <p>Drop files here</p>
                 </div>
               </div>
-              <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary" data-new-user-version-target='chooseFilesButton'>Choose files</button>
+              <span style="margin: .7rem">or</span> <button type="button" class="dz-clickable btn btn-outline-primary">Choose files</button>
               <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
               <div class="dropzone-previews dropzone-files-previews" data-dropzone-target="previewsContainer">
               </div>
@@ -43,7 +43,7 @@
       </div>
       <% else %>
       <div class="form-check pt-3" data-complex-radio-target="selection">
-        <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton', 'data-new-user-version-target': 'browserRadioButton',
+        <%= form.radio_button :upload_type, 'browser', class: 'form-check-input', 'data-file-uploads-target': 'browserRadioButton',
                                                        data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' } %>
         <%= form.label :upload_type_browser, "Keep the more than #{max_upload_files} files uploaded.", class: 'form-check-label fw-semibold' %>
         <p style="color: var(--stanford-warning);">
@@ -55,8 +55,7 @@
       <% end %>
     <div class="form-check pt-3" data-complex-radio-target="selection">
       <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
-                                                     data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton',
-                                                             new_user_version_target: 'zipRadioButton' } %>
+                                                     data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton' } %>
       <%= form.label :upload_type_zipfile, 'Upload a single zip file (containing fewer than 25,000 files and less than 10GB total), which will be unzipped, including any hierarchy.', class: 'form-check-label fw-semibold' %>
       <div id="zip-files-panel" data-file-uploads-target="zipUpload">
         <p>Viewers will see the file hierarchy and be able to download individual files. Unzipping may take several minutes if your zip file contains a large number of individual files.</p>
@@ -72,7 +71,7 @@
                 <p>Drop zip file here</p>
               </div>
             </div>
-            <span style="margin: .7rem">or</span> <button type="button" class="dz-zip-clickable btn btn-outline-primary" data-new-user-version-target="chooseFilesButton">Choose file</button>
+            <span style="margin: .7rem">or</span> <button type="button" class="dz-zip-clickable btn btn-outline-primary">Choose file</button>
             <div class="invalid-feedback" data-dropzone-target="feedback">You must attach a file<%= error_message %></div>
             <div class="dropzone-previews dropzone-zip-previews" data-dropzone-target="previewsContainer">
             </div>
@@ -88,7 +87,6 @@
     </div>
     <div class="form-check pt-3" data-complex-radio-target="selection">
       <%= form.radio_button :upload_type, 'globus', class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton', 'data-deposit-button-target': 'globusRadioButton',
-                                                    'data-new-user-version-target': 'globusRadioButton',
                                                     data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' } %>
       <%= form.label :upload_type_globus, 'Upload one or more files via Globus (fewer than 25,000 files and less than 4TB total) which will be displayed as uploaded, including any file hierarchy.', class: 'form-check-label fw-semibold' %>
 

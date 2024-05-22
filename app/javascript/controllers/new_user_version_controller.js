@@ -1,8 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['versionDescription', 'userVersionYes', 'userVersionNo', 'versionDescriptionYes', 'versionDescriptionNo', 'versionDescriptionError',
-    'fileSection', 'browserRadioButton', 'zipRadioButton', 'globusRadioButton', 'chooseFilesButton', 'fileDescription', 'removeFileButton', 'hideFileCheckbox', 'dropzoneContainer']
+  static targets = ['versionDescription', 'userVersionYes', 'userVersionNo', 'versionDescriptionYes', 'versionDescriptionNo', 'versionDescriptionError', 'fileSection', 'fileUploadsFieldset']
 
   connect () {
     if (!this.hasUserVersionYesTarget || !this.hasUserVersionNoTarget) return
@@ -13,9 +12,9 @@ export default class extends Controller {
       this.versionDescriptionYesTarget.required = true
       this.versionDescriptionYesTarget.disabled = false
       this.versionDescriptionYesTarget.value = this.versionDescriptionTarget.value
-      this.fileDescriptionTargets.readOnly = false
-      this.removeFileButtonTargets.disabled = false
-      this.hideFileCheckboxTargets.disabled = false
+      // disable the file upload section
+      this.fileUploadsFieldsetTarget.disabled = true
+      this.fileSectionTarget.style.opacity = 0.5
     }
     if (this.userVersionNoTarget.checked === true) {
       this.versionDescriptionYesTarget.disabled = true
@@ -23,10 +22,8 @@ export default class extends Controller {
       this.versionDescriptionNoTarget.disabled = false
       this.versionDescriptionNoTarget.required = true
       this.versionDescriptionNoTarget.value = this.versionDescriptionTarget.value
-      this.dropzoneContainerTarget.hidden = true
-      this.fileDescriptionTargets.map(attachedFile => (attachedFile.readOnly = true))
-      this.removeFileButtonTargets.map(removeButton => (removeButton.disabled = true))
-      this.hideFileCheckboxTargets.map(hideFile => (hideFile.disabled = true))
+      // disable the file upload section
+      this.fileUploadsFieldsetTarget.disabled = true
       this.fileSectionTarget.style.opacity = 0.5
     }
   }
@@ -48,29 +45,11 @@ export default class extends Controller {
 
   disableFileUploads (event) {
     if (event.currentTarget === this.userVersionNoTarget) {
-      // create appearance of disabled file upload section while leaving files attached and able to be submitted with form
-      this.browserRadioButtonTarget.hidden = true
-      this.zipRadioButtonTarget.disabled = true
-      this.globusRadioButtonTarget.disabled = true
-      this.chooseFilesButtonTarget.disabled = true
+      this.fileUploadsFieldsetTarget.disabled = true
       this.fileSectionTarget.style.opacity = 0.5
-      // make attached file form fields read-only and disable buttons
-      this.dropzoneContainerTarget.hidden = true
-      this.fileDescriptionTargets.map(attachedFile => (attachedFile.readOnly = true))
-      this.removeFileButtonTargets.map(removeButton => (removeButton.disabled = true))
-      this.hideFileCheckboxTargets.map(hideFile => (hideFile.disabled = true))
     } else if (event.currentTarget === this.userVersionYesTarget) {
-      // enable upload radio buttons
-      this.browserRadioButtonTarget.hidden = false
-      this.zipRadioButtonTarget.disabled = false
-      this.globusRadioButtonTarget.disabled = false
-      this.chooseFilesButtonTarget.disabled = false
+      this.fileUploadsFieldsetTarget.disabled = false
       this.fileSectionTarget.style.opacity = 1.0
-      // enable the attached files buttons and dropzone
-      this.dropzoneContainerTarget.hidden = false
-      this.fileDescriptionTargets.map(attachedFile => (attachedFile.readOnly = false))
-      this.removeFileButtonTargets.map(removeButton => (removeButton.disabled = false))
-      this.hideFileCheckboxTargets.map(hideFile => (hideFile.disabled = false))
     }
   }
 
