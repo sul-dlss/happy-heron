@@ -12,9 +12,9 @@ export default class extends Controller {
       this.versionDescriptionYesTarget.required = true
       this.versionDescriptionYesTarget.disabled = false
       this.versionDescriptionYesTarget.value = this.versionDescriptionTarget.value
-      // disable the file upload section
-      this.fileUploadsFieldsetTarget.disabled = true
-      this.fileSectionTarget.style.opacity = 0.5
+      // enable the file upload section
+      this.fileUploadsFieldsetTarget.disabled = false
+      this.fileSectionTarget.style.opacity = 1.0
     }
     if (this.userVersionNoTarget.checked === true) {
       this.versionDescriptionYesTarget.disabled = true
