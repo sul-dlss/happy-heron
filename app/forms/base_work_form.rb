@@ -17,7 +17,7 @@ class BaseWorkForm < Reform::Form
     # If this is first version, then nil.
     # If this is a new work version, then nil.
     # If this is an existing work version, then "yes" if the user_version is different from the previous version.
-    # If this is an existing work version, then "no" if the user_version is same as from the previous version.
+    # If this is an existing work version, then "no" if the user_version is same as the previous version.
     if work_version.version != 1 && work_version.user_version && !work_version.deposited?
       self.new_user_version = work_version.new_user_version? ? 'yes' : 'no'
     end
@@ -260,6 +260,7 @@ class BaseWorkForm < Reform::Form
       && work_version.attached_files.empty?
       dupe_attached_files
     end
+    use_previous_attached_files
     dedupe_keywords
     work.update(head: work_version)
   end
@@ -272,6 +273,24 @@ class BaseWorkForm < Reform::Form
       work_version.attached_files << new_attached_file
     end
   end
+
+  # If the user is only updating metadata (thus file uploads/edits are disabled),
+  # get the attached files from the previous version
+  # rubocop:disable Metrics/AbcSize
+  def use_previous_attached_files
+    return unless Settings.user_versions_ui_enabled && new_user_version == 'no' && work_version.previous_version
+
+    # if files have been added earlier in this draft's life, remove them
+    work_version.attached_files.destroy_all
+
+    # copy the files from the previous version
+    work_version.previous_version.attached_files.each do |existing_attached_file|
+      new_attached_file = existing_attached_file.dup
+      new_attached_file.file.attach(existing_attached_file.file.blob.signed_id)
+      work_version.attached_files << new_attached_file
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
 
   # Override reform so that this looks just like a Work
   def model_name

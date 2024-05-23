@@ -32,7 +32,7 @@
   <div class="col-auto">
     <%= link_to 'Cancel', cancel_link_location, class: 'btn btn-link' %>
     <%= form.submit 'Save as draft', class: 'btn btn-primary', id: 'save-draft-button',
-                                     data: { action: 'unsaved-changes#allowFormSubmission' } %>
+                                     data: { action: draft_button_actions } %>
     <%= form.submit submit_button_label, class: 'btn btn-primary', disabled: false,
                                          data: { action: 'unsaved-changes#allowFormSubmission', deposit_button_target: 'depositButton' } %>
   </div>

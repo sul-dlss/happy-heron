@@ -46,5 +46,13 @@ module Works
         collection_works_path(collection)
       end
     end
+
+    def draft_button_actions
+      if Settings.user_versions_ui_enabled
+        'unsaved-changes#allowFormSubmission new-user-version#validateUserVersionSelection'
+      else
+        'unsaved-changes#allowFormSubmission'
+      end
+    end
   end
 end

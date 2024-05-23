@@ -7,7 +7,7 @@
         <%= form.hidden_field :version_description, value: work_version.version_description, data: { new_user_version_target: 'versionDescription' } %>
         <div class='mb-3 row'>
           <div class='col-sm-10 form-check'>
-            <%= form.radio_button :new_user_version, 'yes', required: true, data: { action: 'new-user-version#displayVersionDescription auto-citation#updateDisplay', new_user_version_target: 'userVersionYes', auto_citation_target: 'userVersionYes' }, class: 'form-check-input' %>
+            <%= form.radio_button :new_user_version, 'yes', required: true, data: { action: 'new-user-version#displayVersionDescription new-user-version#disable-file-uploads new-user-version#disableFileUploads auto-citation#updateDisplay', new_user_version_target: 'userVersionYes', auto_citation_target: 'userVersionYes' }, class: 'form-check-input' %>
             <%= form.label :new_user_version, 'Yes', value: 'yes', class: 'form-check-label fw-semibold' %>
             <ul>
               <li>Edit files and any or all form fields.</li>
@@ -16,12 +16,12 @@
               <li>If this deposit has a DOI, the DOI will be the same for all versions of the item.</li>
             </ul>
             <%= form.label :version_description, "What's changing?", class: 'col-form-label' %>
-            <%= form.text_field :version_description, data: { new_user_version_target: 'versionDescriptionYes' }, class: 'form-control' %>
+            <%= form.text_field :version_description, data: { new_user_version_target: 'versionDescriptionYes' }, class: 'form-control', disabled: true %>
           </div>
         </div>
         <div class='mb-3 row'>
           <div class='col-sm-10 form-check'>
-            <%= form.radio_button :new_user_version, 'no', required: true, data: { action: 'new-user-version#displayVersionDescription auto-citation#updateDisplay', new_user_version_target: 'userVersionNo' }, class: 'form-check-input' %>
+            <%= form.radio_button :new_user_version, 'no', required: true, data: { action: 'new-user-version#displayVersionDescription new-user-version#disableFileUploads auto-citation#updateDisplay', new_user_version_target: 'userVersionNo' }, class: 'form-check-input' %>
             <%= form.label :new_user_version, 'No', value: 'no', class: 'form-check-label fw-semibold' %>
             <ul>
               <li>Edit form fields only. Files may not be changed.</li>
@@ -29,7 +29,7 @@
               <li>Changes you make to this item will appear as updates to the current version on the PURL page.</li>
             </ul>
             <%= form.label :version_description, "What's changing?", class: 'col-form-label' %>
-            <%= form.text_field :version_description, data: { new_user_version_target: 'versionDescriptionNo' }, class: 'form-control' %>
+            <%= form.text_field :version_description, data: { new_user_version_target: 'versionDescriptionNo' }, class: 'form-control', disabled: true %>
           </div>
         </div>
       </div>
