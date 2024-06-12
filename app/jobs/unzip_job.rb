@@ -3,7 +3,7 @@
 require 'zip'
 
 # Change work version from a zipfile type to a browser type by unzipping the attached zip file.
-class UnzipJob < BaseDepositJob
+class UnzipJob < ApplicationJob
   queue_as :default
 
   def perform(work_version)

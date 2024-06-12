@@ -48,7 +48,7 @@ RSpec.describe WorkVersion do
 
       before do
         work_version.work.druid = druid
-        allow(SdrClient::Find).to receive(:run).and_return(cocina_obj)
+        allow(SdrClient::RedesignedClient).to receive(:find).and_return(cocina_obj)
       end
 
       context 'when valid version' do
