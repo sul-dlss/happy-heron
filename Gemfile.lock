@@ -143,7 +143,7 @@ GEM
       launchy
     childprocess (5.0.0)
     chronic (0.10.2)
-    cocina-models (0.97.0)
+    cocina-models (0.98.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -218,9 +218,9 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.0)
-    dor-services-client (14.12.0)
+    dor-services-client (14.13.0)
       activesupport (>= 4.2, < 8)
-      cocina-models (~> 0.97.0)
+      cocina-models (~> 0.98.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -376,9 +376,9 @@ GEM
       net-protocol
     net-ssh (7.2.3)
     nio4r (2.7.3)
-    nokogiri (1.16.5-arm64-darwin)
+    nokogiri (1.16.6-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.5-x86_64-linux)
+    nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
     nokogiri-happymapper (0.10.0)
       nokogiri (~> 1.5)
@@ -544,9 +544,9 @@ GEM
     ruby-next-core (1.0.3)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
-    sdr-client (2.15.0)
+    sdr-client (2.16.0)
       activesupport
-      cocina-models (~> 0.97.0)
+      cocina-models (~> 0.98.0)
       config
       dry-monads
       faraday (>= 0.16)
