@@ -121,8 +121,6 @@ GEM
       capistrano (~> 3.1)
     capistrano-maintenance (1.2.1)
       capistrano (>= 3.0)
-    capistrano-one_time_key (0.1.0)
-      capistrano (~> 3.0)
     capistrano-passenger (0.2.1)
       capistrano (~> 3.0)
     capistrano-rails (1.6.3)
@@ -174,9 +172,9 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
-    cuprite (0.15)
+    cuprite (0.15.1)
       capybara (~> 3.0)
-      ferrum (~> 0.14.0)
+      ferrum (~> 0.15.0)
     cypress-on-rails (1.17.0)
       rack
     cypress-rails (0.7.0)
@@ -210,13 +208,13 @@ GEM
       declarative-option (< 0.2.0)
       representable (>= 2.4.0, <= 3.1.0)
       uber (< 0.2.0)
-    dlss-capistrano (4.4.1)
+    dlss-capistrano (5.0.0)
       bcrypt_pbkdf
       capistrano (~> 3.0)
       capistrano-bundle_audit (>= 0.3.0)
-      capistrano-one_time_key
       capistrano-shared_configs
       ed25519
+      net-ssh-krb
     docile (1.4.0)
     dor-services-client (14.13.0)
       activesupport (>= 4.2, < 8)
@@ -270,7 +268,7 @@ GEM
       rainbow
       rubocop
       smart_properties
-    erubi (1.12.0)
+    erubi (1.13.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -284,11 +282,11 @@ GEM
       net-http
     faraday-retry (2.2.1)
       faraday (~> 2.0)
-    ferrum (0.14)
+    ferrum (0.15)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
-      websocket-driver (>= 0.6, < 0.8)
+      websocket-driver (~> 0.7)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
@@ -298,14 +296,16 @@ GEM
       faraday
       faraday-retry
       zeitwerk
+    gssapi (1.3.1)
+      ffi (>= 1.0.1)
     hashdiff (1.1.0)
     hashie (5.0.0)
-    honeybadger (5.11.1)
+    honeybadger (5.11.2)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     io-console (0.7.2)
-    irb (1.13.1)
+    irb (1.13.2)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jbuilder (2.12.0)
@@ -361,7 +361,7 @@ GEM
     mutex_m (0.2.0)
     net-http (0.4.1)
       uri
-    net-imap (0.4.12)
+    net-imap (0.4.13)
       date
       net-protocol
     net-pop (0.1.2)
@@ -375,6 +375,9 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     net-ssh (7.2.3)
+    net-ssh-krb (0.5.1)
+      gssapi (~> 1.3.0)
+      net-ssh (>= 2.0)
     nio4r (2.7.3)
     nokogiri (1.16.6-arm64-darwin)
       racc (~> 1.4)
@@ -396,7 +399,7 @@ GEM
     optimist (3.1.0)
     orm_adapter (0.5.0)
     parallel (1.25.1)
-    parser (3.3.2.0)
+    parser (3.3.3.0)
       ast (~> 2.4.1)
       racc
     patience_diff (1.2.0)
@@ -417,7 +420,7 @@ GEM
       method_source (~> 1.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.5)
+    public_suffix (5.1.1)
     puma (5.6.8)
       nio4r (~> 2.0)
     racc (1.8.0)
@@ -471,7 +474,7 @@ GEM
       activemodel (>= 5.0)
       reform (>= 2.3.1, < 3.0.0)
     regexp_parser (2.9.2)
-    reline (0.5.8)
+    reline (0.5.9)
       io-console (~> 0.5)
     representable (3.0.4)
       declarative (< 0.1.0)
@@ -482,7 +485,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.2.9)
+    rexml (3.3.0)
       strscan
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -490,7 +493,7 @@ GEM
       rspec-mocks (~> 3.13.0)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.0)
+    rspec-expectations (3.13.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-mocks (3.13.1)
@@ -522,9 +525,7 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-capybara (2.21.0)
       rubocop (~> 1.41)
-    rubocop-factory_bot (2.26.0)
-      rubocop (~> 1.41)
-    rubocop-performance (1.21.0)
+    rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rails (2.25.0)
@@ -532,13 +533,8 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rspec (2.31.0)
-      rubocop (~> 1.40)
-      rubocop-capybara (~> 2.17)
-      rubocop-factory_bot (~> 2.22)
-      rubocop-rspec_rails (~> 2.28)
-    rubocop-rspec_rails (2.29.0)
-      rubocop (~> 1.40)
+    rubocop-rspec (3.0.1)
+      rubocop (~> 1.61)
     ruby-graphviz (1.2.5)
       rexml
     ruby-next-core (1.0.3)
@@ -605,7 +601,7 @@ GEM
     state_machines-graphviz (0.0.2)
       ruby-graphviz
       state_machines
-    stringio (3.1.0)
+    stringio (3.1.1)
     strings-ansi (0.2.0)
     strip_attributes (1.13.0)
       activemodel (>= 3.0, < 8.0)
@@ -662,7 +658,7 @@ GEM
       chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.15)
+    zeitwerk (2.6.16)
     zip_tricks (5.6.0)
     zipline (1.5.0)
       actionpack (>= 6.0, < 8.0)
