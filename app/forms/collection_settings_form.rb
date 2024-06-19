@@ -106,7 +106,7 @@ class CollectionSettingsForm < Reform::Form
       params['custom_rights_statement_custom_instructions'] = nil
     end
 
-    super(params)
+    super
   end
   # rubocop:enable Metrics/MethodLength
 end

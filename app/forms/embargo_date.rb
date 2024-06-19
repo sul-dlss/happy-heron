@@ -10,7 +10,7 @@ module EmbargoDate
         property "#{prop_name}(2i)", virtual: true
         property "#{prop_name}(3i)", virtual: true
       end
-      super(prop_name, options, &)
+      super
     end
   end
 
