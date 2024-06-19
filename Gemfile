@@ -7,6 +7,7 @@ gem 'rails', '~> 7.0.1'
 
 group :development, :test do
   gem 'axe-core-rspec'
+  gem 'csv'
   gem 'cypress-on-rails', '~> 1.0'
   gem 'cypress-rails'
   gem 'debug'

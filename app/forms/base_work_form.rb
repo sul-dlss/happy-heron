@@ -69,7 +69,7 @@ class BaseWorkForm < Reform::Form
     access_from_collection(params)
     deserialize_license(params)
     select_user_version(params)
-    super(params)
+    super
   end
 
   # Ensure the collection default overwrites whatever the user supplied

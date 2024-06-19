@@ -14,7 +14,7 @@ module Edtf
 
         create_range(prop_name) if options[:range]
       end
-      super(name, options, &)
+      super
     end
 
     def create_range(prop_name)
