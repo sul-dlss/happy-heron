@@ -7,7 +7,6 @@ gem 'rails', '~> 7.0.1'
 
 group :development, :test do
   gem 'axe-core-rspec'
-  gem 'csv'
   gem 'cypress-on-rails', '~> 1.0'
   gem 'cypress-rails'
   gem 'debug'
@@ -62,6 +61,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'bunny', '~> 2.17' # RabbitMQ library
 gem 'config'
 gem 'cssbundling-rails'
+gem 'csv'
 gem 'devise', '~> 4.7'
 gem 'devise-remote-user', '~> 1.0'
 gem 'dor-services-client', '~> 14.0'
