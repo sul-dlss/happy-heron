@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 module Admin
   # Converts a set of works to CSV.
   class WorkCsvGenerator

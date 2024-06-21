@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 desc 'Lock specified works'
 # specify a CSV file that contains work druids, one per row (no header), and each work will be locked
 #  (if not already locked)
