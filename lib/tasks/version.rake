@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 desc 'Sync work versions with SDR'
 # specify a CSV file that contains work druids, one per row (no header),
 # and the current work version's version will be synced.
