@@ -360,6 +360,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
+    mutex_m (0.2.0)
     net-http (0.4.1)
       uri
     net-imap (0.4.14)
@@ -710,6 +711,7 @@ DEPENDENCIES
   lograge (~> 0.11.2)
   mais_orcid_client
   multi_json
+  mutex_m
   okcomputer
   pg
   preservation-client (~> 6.0)
