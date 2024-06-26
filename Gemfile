@@ -75,7 +75,7 @@ gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'lograge', '~> 0.11.2'
 gem 'mais_orcid_client'
-gem 'mutex_m'
+gem 'mutex_m' # This can be removed when H2 is upgraded to Rails 7.1
 gem 'okcomputer'
 gem 'pg'
 gem 'preservation-client', '~> 6.0'
