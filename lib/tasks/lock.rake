@@ -57,6 +57,21 @@ task :lock_collections, [:input_filename] => :environment do |_t, args|
   puts "#{num_locked} works locked across #{num_druids} collections"
 end
 
+desc 'Provide a report of all locked works'
+# Output a CSV file with a report of all locked works, including the druid, collection druid, and lock event details
+task lock_report: :environment do
+  CSV.open('locked_works_report.csv', 'wb') do |csv|
+    csv << %w[druid collection_druid owner locked_at locked_by title collection]
+    Work.where(locked: true).find_each do |work|
+      lock_event = work.events.where(event_type: 'lock_work').order(created_at: :desc).first
+      csv << [work.druid, work.collection.druid, work.owner.email, lock_event.created_at,
+              lock_event.user.email, work.head.title, work.collection.head.description]
+      puts [work.druid, work.collection.druid, work.owner.email, lock_event.created_at,
+            lock_event.user.email, work.head.title, work.collection.head.description].join(',')
+    end
+  end
+end
+
 def prepend_druid(row)
   row.starts_with?('druid:') ? row : row.prepend('druid:')
 end
