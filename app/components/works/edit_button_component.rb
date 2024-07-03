@@ -16,19 +16,7 @@ module Works
     end
 
     def call
-     if work_version.purl_reservation?
-        link_to 'Choose Type and Edit', '#', class: 'btn btn-outline-primary float-end',
-                  data: {
-                    destination: reservation_path(work),
-                    form_method: 'patch',
-                    bs_toggle: 'modal',
-                    bs_target: '#workTypeModal',
-                    action: 'work-type#setCollection'
-                  },
-                  aria: { label: 'Choose Type and Edit' }
-      else
-        link_to 'Edit or Deposit', edit_work_path(work), class: 'btn btn-outline-primary float-end', target: '_top'
-      end
+      link_to 'Edit or Deposit', edit_work_path(work), class: 'btn btn-outline-primary float-end', target: '_top'
     end
   end
 end

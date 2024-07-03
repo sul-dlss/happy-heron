@@ -81,7 +81,7 @@ en:
       decommissioned: "Decommissioned"
       work_not_moved: "Unable to move the work because the collection or work changed. Please try again."
       cannot_edit: Your item can not currently be modified. Please contact SDR staff at sdr-contact@lists.stanford.edu or via the help link above for assistance.
-      cannot_edit_purl_reservation: You must set the work type to continue your deposit.  Please click the "Choose Type and Edit" button to define a work type.
+      cannot_edit_purl_reservation: You must set the work type to continue your deposit.  Please click the pencil icon to define a work type.
   terms_of_use: User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to additional license and use restrictions applied by the depositor.
   collection:
     actions: Actions
