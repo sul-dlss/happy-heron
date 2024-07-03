@@ -42,6 +42,13 @@ class WorksController < ObjectsController
       return redirect_back(fallback_location: dashboard_path), status: :see_other
     end
 
+    # we should not be on the edit page until a work type has been selected via the modal
+    # see https://github.com/sul-dlss/happy-heron/issues/3570
+    if work_version.purl_reservation?
+      flash[:error] = I18n.t('work.flash.cannot_edit_purl_reservation')
+      redirect_to work, status: :see_other
+    end
+
     @form = WorkForm.new(work_version:, work: work_version.work)
     @form.prepopulate!
   end

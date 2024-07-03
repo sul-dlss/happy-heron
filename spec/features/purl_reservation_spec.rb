@@ -93,6 +93,8 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', :js do
 
       expect(work_version.reload.work_type).to eq 'music'
       expect(work_version.subtype.sort).to eq %w[Image Sound]
+      expect(page).to have_content work_version.title
+      expect(page).to have_current_path edit_work_path(work_version.work), ignore_query: true
     end
 
     it 'from the collection works list' do
@@ -106,6 +108,8 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', :js do
 
       expect(work_version.reload.work_type).to eq 'music'
       expect(work_version.subtype.sort).to eq %w[Image Sound]
+      expect(page).to have_content work_version.title
+      expect(page).to have_current_path edit_work_path(work_version.work), ignore_query: true
     end
 
     it 'from the work show page' do
@@ -119,6 +123,17 @@ RSpec.describe 'Reserve a PURL for a work in a deposited collection', :js do
 
       expect(work_version.reload.work_type).to eq 'music'
       expect(work_version.subtype.sort).to eq %w[Image Sound]
+      # TODO: This currently fails because of https://github.com/sul-dlss/happy-heron/issues/3572
+      # Uncomment to verify the fix that ticket is worked on
+      # expect(page).to have_content work_version.title
+      # expect(current_path).to eq edit_work_path(work_version.work)
+    end
+
+    it 'does not allow the user to visit the edit work page directly without a work type' do
+      visit edit_work_path(work_version.work)
+
+      expect(page).to have_content 'You must set the work type to continue your deposit.'
+      expect(page).to have_current_path work_path(work_version.work), ignore_query: true
     end
   end
 

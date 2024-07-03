@@ -61,6 +61,12 @@ To enable interactive debugging, invoke `bin/dev` as follows:
 bin/dev
 ```
 
+Setup a remote debugger in a separate terminal and add `debugger` statements where needed in the code:
+
+```
+rdbg -A
+```
+
 Start up dependencies with `docker compose up db` (with `-d` to run in background)
 
 Create and migrate the database with `bin/rails db:prepare` and seed the test database with `RAILS_ENV=test bin/rails db:seed`
