@@ -1,7 +1,7 @@
 ---
 version: 2.1
 orbs:
-  ruby-rails: sul-dlss/ruby-rails@4.2.1
+  ruby-rails: sul-dlss/ruby-rails@4.2.2
   browser-tools: circleci/browser-tools@1.4.8
   node: circleci/node@5.0.0
   ruby: circleci/ruby@1.8.0
