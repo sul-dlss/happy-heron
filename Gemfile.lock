@@ -108,7 +108,7 @@ GEM
     bunny (2.23.0)
       amq-protocol (~> 2.3, >= 2.3.1)
       sorted_set (~> 1, >= 1.0.2)
-    capistrano (3.19.0)
+    capistrano (3.19.1)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
@@ -219,7 +219,7 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.0)
-    dor-services-client (14.14.0)
+    dor-services-client (14.15.0)
       activesupport (>= 4.2, < 8)
       cocina-models (~> 0.98.0)
       deprecation
@@ -237,7 +237,7 @@ GEM
     dry-core (1.0.1)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
-    dry-inflector (1.0.0)
+    dry-inflector (1.1.0)
     dry-logic (1.5.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
@@ -279,8 +279,9 @@ GEM
       railties (>= 5.0.0)
     faker (3.4.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.9.2)
+    faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
+      logger
     faraday-net_http (3.1.0)
       net-http
     faraday-retry (2.2.1)
@@ -301,12 +302,12 @@ GEM
       zeitwerk
     hashdiff (1.1.0)
     hashie (5.0.0)
-    honeybadger (5.13.0)
+    honeybadger (5.13.2)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     io-console (0.7.2)
-    irb (1.13.2)
+    irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jbuilder (2.12.0)
@@ -534,7 +535,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rspec (3.0.1)
+    rubocop-rspec (3.0.2)
       rubocop (~> 1.61)
     rubocop-rspec_rails (2.30.0)
       rubocop (~> 1.61)
@@ -561,11 +562,12 @@ GEM
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.1.0)
-    sidekiq (7.2.4)
+    sidekiq (7.3.0)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
+      logger
       rack (>= 2.2.4)
-      redis-client (>= 0.19.0)
+      redis-client (>= 0.22.2)
     sigdump (0.2.5)
     simplecov (0.22.0)
       docile (~> 1.1)
