@@ -64,9 +64,21 @@
         </tr>
       <% end %>
       <tr>
-        <th class="col-3" scope="row">Version details</th>
+        <% if Settings.user_versions_ui_enabled %>
+          <th class="col-3" scope="row">Current version</th>
+        <% else %>
+          <th class="col-3" scope="row">Version details</th>
+        <% end %>
         <td><%= version %></td>
       </tr>
+      <% if previous_user_versions? %>
+        <tr>
+          <th class="col-3" scope="row">Previous version(s)</th>
+          <td>
+            <%= safe_join(previous_user_versions.map { |version| link_to(version, version_purl(version)) }, ', ') %>
+          </td>
+        </tr>
+      <% end %>
       <tr>
         <th class="col-3" scope="row">Deposit created</th>
         <td><%= created_at %></td>

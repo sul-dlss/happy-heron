@@ -104,6 +104,22 @@ module Works
       work.last_rejection_description
     end
 
+    def previous_user_versions?
+      return false unless Settings.user_versions_ui_enabled
+
+      return true if work_version.user_version > 1
+
+      false
+    end
+
+    def previous_user_versions
+      (1..work_version.user_version - 1).to_a.reverse
+    end
+
+    def version_purl(version)
+      purl + "/v/#{version}"
+    end
+
     private
 
     def format_edtf(edtf)
