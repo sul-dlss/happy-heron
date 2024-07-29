@@ -68,7 +68,7 @@ RSpec.describe Works::DetailComponent, type: :component do
 
       it 'renders links to previous user versions' do
         expect(rendered.to_html).to include 'Previous version(s)'
-        expect(rendered.to_html).to include 'https://purl.stanford.edu/bc123df4567/v/2'
+        expect(rendered.to_html).to include 'https://purl.stanford.edu/bc123df4567/v2'
       end
     end
 

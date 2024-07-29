@@ -115,7 +115,7 @@ module Works
     end
 
     def version_purl(version)
-      purl + "/v/#{version}"
+      purl + "/v#{version}"
     end
 
     private
