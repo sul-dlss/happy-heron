@@ -76,10 +76,10 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-6.6.0.tgz#0e984f0f2344ee513c185d87d77defac4c0c8224"
   integrity sha512-60G28ke/sXdtS9KZCpZSHHkCbdsOGEhIUGlwq6yhY74UpTiToIh8np7A8yphhM4BWsvNFtIvLpi4co+h9Mr9Ow==
 
-"@github/time-elements@^3.1.2":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@github/time-elements/-/time-elements-3.6.0.tgz#c61cbab56e9defd3faa3f24bd87afac00deeccd4"
-  integrity sha512-MRt9TJztej6idLMvmuZbWc75TJrpl+1kgxWPFzCti4Md7kFtOFTRjXSGKmpc4vFT1NR3SgjHqTfI2Cnr9dJ7Wg==
+"@github/relative-time-element@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@github/relative-time-element/-/relative-time-element-4.4.2.tgz#7c4bccc7cea8fd8cd82530ae8303ea969d3c86b5"
+  integrity sha512-wTXunu3hmuGljA5CHaaoUIKV0oI35wno0FKJl2yqKplTRnsCA5bPNj4bDeVIubkuskql6jwionWLlGM1Y6QLaw==
 
 "@hotwired/stimulus@^3.2.1":
   version "3.2.2"
@@ -708,7 +708,7 @@ data-view-byte-offset@^1.0.0:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
-dayjs@^1.10.4, dayjs@^1.11.4:
+dayjs@^1.10.4, dayjs@^1.11.10:
   version "1.11.12"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.12.tgz#5245226cc7f40a15bf52e0b99fd2a04669ccac1d"
   integrity sha512-Rt2g+nTbLlDWZTwwrIXjy9MeiZmSDI375FvZs72ngxx8PDC6YXOeR3q5LAuPzjZQxhiWdRKac7RKV+YyQYfYIg==
@@ -754,6 +754,11 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
+
+diff-dom@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/diff-dom/-/diff-dom-5.1.3.tgz#1a00ac023bdc9b7a6de702a51fd6566a34b8d9a4"
+  integrity sha512-cIQQSQywwn98yIEt1B7BhRRRH+M3tDEbJeV+j7NY0nSM4o3LdP7D3r/kRZDzT2tINX5r9Dpzvk7+RkeSMhzjhA==
 
 doctrine@^2.1.0:
   version "2.1.0"
@@ -2711,12 +2716,13 @@ signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-simple-datatables@^3.0.0:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/simple-datatables/-/simple-datatables-3.2.2.tgz#e5e3aa5ad48eef8da9958b7bc1550b411d693086"
-  integrity sha512-h/6qziHj7We7NzKJoP3n2JcUTmuxINygIZPLCibUGqqMZxRCtzJiDuBluCCwmSLo+aLi2qxUg2F3UAlIonsS5Q==
+simple-datatables@^9.0.0:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/simple-datatables/-/simple-datatables-9.0.4.tgz#20cc51ff268216ed0e7b45ccad17c49f912f7db3"
+  integrity sha512-x3oujWxjdruM8w3WVHs/oitaxA/bIRa5woJdwXHJFAIOlWUVnjdXoGc9P8NQZvXOde81fLzm36m8L7Tl1qDQiw==
   dependencies:
-    dayjs "^1.11.4"
+    dayjs "^1.11.10"
+    diff-dom "^5.1.3"
 
 slice-ansi@^3.0.0:
   version "3.0.0"

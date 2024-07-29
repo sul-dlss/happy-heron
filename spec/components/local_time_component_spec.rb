@@ -8,6 +8,6 @@ RSpec.describe LocalTimeComponent, type: :component do
   end
 
   it 'renders custom element' do
-    expect(rendered.css('local-time')).to be_present
+    expect(rendered.css('relative-time')).to be_present
   end
 end

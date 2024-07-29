@@ -20,13 +20,13 @@ export default class extends Controller {
 
     // This scrolls the top of the table into view when paging.
     dt.on('datatable.page', () => {
-      dt.table.scrollIntoView()
+      dt.dom.scrollIntoView()
     })
 
     // This removes the pagination list and if it is empty, and adds an aria
     // label for its parent nav, which is done to improve accessibility.
     dt.on('datatable.init', () => {
-      const paginationList = document.querySelector('ul.dataTable-pagination-list')
+      const paginationList = document.querySelector('ul.datatable-pagination-list')
       if (paginationList === null) return
 
       paginationList.parentNode.setAttribute('aria-label', 'Pagination Controls for Deposits')
@@ -36,7 +36,7 @@ export default class extends Controller {
 
     // This adds a label for the datatables search input, which is done to improve accessibility.
     dt.on('datatable.init', () => {
-      const searchInput = document.querySelector('input.dataTable-input')
+      const searchInput = document.querySelector('input.datatable-input')
       searchInput.setAttribute('id', 'dataTable-search')
       searchInput.insertAdjacentHTML('afterend', '<label for="dataTable-search" class="visually-hidden">Search for works</label>')
     })
@@ -51,7 +51,7 @@ export default class extends Controller {
     })
 
     dt.on('datatable.sort', function (column, direction) {
-      const searchColHeader = document.querySelector('table.dataTable-table > thead > tr')
+      const searchColHeader = document.querySelector('table.datatable-table > thead > tr')
 
       for (let i = 0; i < searchColHeader.cells.length; i++) {
         const dir = direction === 'asc' ? 'ascending' : 'descending'
@@ -63,7 +63,7 @@ export default class extends Controller {
       }
 
       // Make sure the table maintains focus when interacting with sort
-      const tableElement = document.querySelector('table.dataTable-table')
+      const tableElement = document.querySelector('table.datatable-table')
       tableElement.focus()
     })
   }
