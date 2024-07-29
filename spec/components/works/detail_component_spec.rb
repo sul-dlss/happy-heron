@@ -31,8 +31,10 @@ RSpec.describe Works::DetailComponent, type: :component do
   end
 
   context 'when deposited' do
+    let(:work) { create(:work, :with_druid) }
     let(:work_version) do
-      build_stubbed(:work_version, :deposited, version: 2, version_description: 'changed the title', user_version: 3)
+      build_stubbed(:work_version, :deposited, version: 2, version_description: 'changed the title', user_version: 3,
+                                               work:)
     end
 
     it 'renders the draft title' do
@@ -47,6 +49,36 @@ RSpec.describe Works::DetailComponent, type: :component do
 
       it 'renders the user_version' do
         expect(rendered.to_html).to include '3 - changed the title'
+      end
+    end
+  end
+
+  context 'when user_versions_ui_enabled' do
+    let(:work) { create(:work, :with_druid) }
+
+    before do
+      allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+    end
+
+    context 'with multiple user versions' do
+      let(:work_version) do
+        build_stubbed(:work_version, :deposited, version: 4, version_description: 'changed the files', user_version: 3,
+                                                 work:)
+      end
+
+      it 'renders links to previous user versions' do
+        expect(rendered.to_html).to include 'Previous version(s)'
+        expect(rendered.to_html).to include 'https://purl.stanford.edu/bc123df4567/v2'
+      end
+    end
+
+    context 'when no previous user versions' do
+      let(:work_version) do
+        build_stubbed(:work_version, :deposited, version: 1, user_version: 1, work:)
+      end
+
+      it 'does not render previous versions' do
+        expect(rendered.to_html).not_to include 'Previous version(s)'
       end
     end
   end
