@@ -218,8 +218,8 @@ GEM
       capistrano-one_time_key (>= 0.2.0)
       capistrano-shared_configs
       ed25519
-    docile (1.4.0)
-    dor-services-client (14.16.0)
+    docile (1.4.1)
+    dor-services-client (14.17.0)
       activesupport (>= 4.2, < 8)
       cocina-models (~> 0.98.0)
       deprecation
@@ -282,7 +282,7 @@ GEM
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
       logger
-    faraday-net_http (3.1.0)
+    faraday-net_http (3.1.1)
       net-http
     faraday-retry (2.2.1)
       faraday (~> 2.0)
@@ -302,7 +302,7 @@ GEM
       zeitwerk
     hashdiff (1.1.0)
     hashie (5.0.0)
-    honeybadger (5.15.0)
+    honeybadger (5.15.3)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -379,9 +379,9 @@ GEM
       net-protocol
     net-ssh (7.2.3)
     nio4r (2.7.3)
-    nokogiri (1.16.6-arm64-darwin)
+    nokogiri (1.16.7-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.6-x86_64-linux)
+    nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     nokogiri-happymapper (0.10.0)
       nokogiri (~> 1.5)
@@ -404,7 +404,7 @@ GEM
       racc
     patience_diff (1.2.0)
       optimist (~> 3.0)
-    pg (1.5.6)
+    pg (1.5.7)
     preservation-client (6.2.0)
       activesupport (>= 4.2, < 8)
       faraday (~> 2.0)
@@ -420,7 +420,7 @@ GEM
       method_source (~> 1.0)
     psych (5.1.2)
       stringio
-    public_suffix (6.0.0)
+    public_suffix (6.0.1)
     puma (5.6.8)
       nio4r (~> 2.0)
     racc (1.8.0)
