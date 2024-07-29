@@ -71,6 +71,8 @@ Start up dependencies with `docker compose up db` (with `-d` to run in backgroun
 
 Create and migrate the database with `bin/rails db:prepare` and seed the test database with `RAILS_ENV=test bin/rails db:seed`
 
+Install JavaScript dependencies and build assets with `bin/rake test:prepare`. 
+
 Then run tests with `bundle exec rspec`. (**NOTE**: This does not run accessibility tests, which are slow. To run these, use `bundle exec rspec --tag accessibility`.)
 
 If you also want to do style checks & linting of Ruby code and ERBs, run `bin/rake`.
