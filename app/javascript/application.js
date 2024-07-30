@@ -1,5 +1,5 @@
 // Entry point for the build script in your package.json
-import '@github/time-elements'
+import '@github/relative-time-element'
 import './controllers'
 import '@hotwired/turbo-rails'
 import '@fortawesome/fontawesome-free/js/fontawesome'
