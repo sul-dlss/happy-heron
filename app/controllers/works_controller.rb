@@ -102,6 +102,7 @@ class WorksController < ObjectsController
   def details
     @work = Work.find(params[:id])
     authorize! @work.head
+    @form_authenticity_token = form_authenticity_token
   end
 
   def destroy

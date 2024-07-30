@@ -18,7 +18,13 @@ export default class extends Controller {
     // icon, target is the span and currentTarget is the anchor.
     this.formTarget.action = event.currentTarget.dataset.destination
     if (event.currentTarget.dataset.formMethod) {
-      this.formTarget.method = event.currentTarget.dataset.formMethod
+      if (this.formTarget.dataset.turbo === 'false') {
+        // If this is a non-Turbo form, we need to set the method using a hidden input
+        this.formTarget.method = 'post'
+        this.formTarget.elements._method.value = event.currentTarget.dataset.formMethod
+      } else {
+        this.formTarget.method = event.currentTarget.dataset.formMethod
+      }
     } else {
       // reset to default in case prior caller popped used model with non-default
       this.formTarget.method = 'get'
