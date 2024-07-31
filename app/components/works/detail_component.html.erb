@@ -238,5 +238,5 @@
       <% end %>
     </tbody>
   </table>
-  <%= render Works::WorkTypeModalComponent.new %>
+  <%= render Works::WorkTypeModalComponent.new(turbo: false, method: :patch, form_authenticity_token:) %>
 </section>

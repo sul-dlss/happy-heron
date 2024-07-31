@@ -3,11 +3,12 @@
 module Works
   # Renders the details about the work (show page)
   class DetailComponent < ApplicationComponent
-    def initialize(work_version:)
+    def initialize(work_version:, form_authenticity_token: nil)
       @work_version = work_version
+      @form_authenticity_token = form_authenticity_token
     end
 
-    attr_reader :work_version
+    attr_reader :work_version, :form_authenticity_token
 
     delegate :purl, :collection, :events, :doi, :assign_doi, :druid, to: :work
 
