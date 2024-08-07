@@ -108,7 +108,7 @@ module Works
     def previous_user_versions?
       return false unless Settings.user_versions_ui_enabled
 
-      work_version.user_version > 1
+      work_version.user_version.present? && work_version.user_version > 1
     end
 
     def previous_user_versions

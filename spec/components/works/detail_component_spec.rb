@@ -81,6 +81,16 @@ RSpec.describe Works::DetailComponent, type: :component do
         expect(rendered.to_html).not_to include 'Previous version(s)'
       end
     end
+
+    context 'when null user version' do
+      let(:work_version) do
+        build_stubbed(:work_version, :deposited, version: 1, user_version: nil, work:)
+      end
+
+      it 'does not render previous versions' do
+        expect(rendered.to_html).not_to include 'Previous version(s)'
+      end
+    end
   end
 
   context 'when pending approval' do
