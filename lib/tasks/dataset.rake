@@ -8,11 +8,23 @@ task dataset: :environment do
   # * Acquisitions Serials (3)
   # * Hopkins Marine Station Collection (5)
   # * Stanford Rare Books and Early Manuscripts (6)
+  # * Dept. of Special Collections, Manuscripts Collections - Supplemental Materials (7)
   # * Archive of Recorded Sound/Music Library - Supplemental Materials (8)
+  # * Water in the West Reports and Working Papers (40)
+  # * Stanford Center for Ocean Solutions Reports and Working Papers (55)
+  # * Undergraduate Theses, Department of Physics (70)
+  # * Oakland Police Department Race Relations (81)
   # * John A. Blume Earthquake Engineering Center Technical Report Series (82)
+  # * Undergraduate Honors Theses, Graduate School of Education (102)
+  # * Boothe Prize Winners, Stanford University (116)
+  # * Stanford Iran 2040 Project (125)
+  # * Electronic Acquisitions (143)
+  # * The Korea Program Prize for Writing in Korean Studies (145)
   # * Free EEMs (144)
   # * Rigler and Deutsch Record Index project at Stanford, revisited (155)
+  # *	Stanford Research Data (168)
   # * Publications and flyers by the Red Guard and mass organizations in Guangdong and other cities (218)
+  # * Xu Liangying papers (293)
 
   sql = <<~SQL.squish
     SELECT pdf_blobs.id
@@ -25,7 +37,7 @@ task dataset: :environment do
     INNER JOIN active_storage_attachments ON active_storage_attachments.record_id=attached_files.id
     INNER JOIN active_storage_blobs ON active_storage_attachments.blob_id=active_storage_blobs.id
     WHERE active_storage_blobs.content_type = 'application/pdf'
-    AND works.collection_id NOT IN (2,3,5,6,8,82,144,155,218)
+    AND works.collection_id NOT IN (2,3,5,6,7,8,40,55,70,81,82,102,116,125,143,144,145,155,168,218,293)
     AND work_versions.work_type='text'
     AND work_versions.subtype='{Article}'
     GROUP BY works.id
@@ -50,8 +62,9 @@ task dataset: :environment do
   FileUtils.rm_rf('dataset')
   FileUtils.mkdir_p('dataset')
 
+  rows = nil
   File.open('dataset/metadata.jsonl', 'w') do |metadata_file|
-    work_ids.each do |work_id|
+    rows = work_ids.map do |work_id|
       puts work_id
       work = Work.find(work_id)
       work_version = work.head
@@ -70,7 +83,13 @@ task dataset: :environment do
         keywords: work_version.keywords.map(&:label)
       }
       metadata_file.write("#{metadata.to_json}\n")
+      [work_id, work.druid, pdf_filename, work_version.title, work.collection.head.name]
     end
+  end
+
+  CSV.open('dataset/dataset.csv', 'w') do |csv|
+    csv << ['Work ID', 'Druid', 'PDF Filename', 'Title', 'Collection']
+    rows.shuffle.each { |row| csv << row }
   end
 end
 
