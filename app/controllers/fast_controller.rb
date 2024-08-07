@@ -48,9 +48,10 @@ class FastController < ApplicationController
       req.params['sort'] = 'usage desc'
     end
 
-    return Failure("Autocomplete results for #{query} returned #{resp.status}") unless resp.success?
+    return Success(parse(resp.body)) if resp.success?
 
-    Success(parse(resp.body))
+    Honeybadger.notify('FAST API Error', context: { params: params.to_unsafe_h, response: resp })
+    Failure("Autocomplete results for #{query} returned #{resp.status}")
   end
   # rubocop:enable Metrics/AbcSize
 
