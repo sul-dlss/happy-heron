@@ -20,31 +20,21 @@ class FastController < ApplicationController
   private
 
   def lookups(query)
-    # Try first without wildcard.
     result = lookup(query)
     return result if result.failure?
 
-    suggestions = result.value!
-    if suggestions.size < num_records
-      # If not enough results then add wildcard.
-      wildcard_result = lookup(query, wildcard: true)
-      wildcard_suggestions = wildcard_result.value_or([])
-    end
-
-    Success(merge_suggestions(suggestions, wildcard_suggestions, query))
+    Success(result.value!)
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def lookup(query, wildcard: false)
+  def lookup(query) # rubocop:disable Metrics/AbcSize
     resp = lookup_connection.get do |req|
-      req.params['q'] = wildcard ? "keywords:(#{query}*)" : "keywords:(#{query})"
+      req.params['query'] = query
+      req.params['queryIndex'] = 'suggestall'
+      req.params['queryReturn'] = 'idroot,suggestall,tag'
+      req.params['suggest'] = 'autoSubject'
       # Requesting extra records to try to increase the likelihood that get left anchored matches
       # since results are sorted by usage.
       req.params['rows'] = num_records * 2
-      req.params['start'] = 0
-      req.params['version'] = '2.2'
-      req.params['indent'] = 'on'
-      req.params['fl'] = 'id,fullphrase,type'
       req.params['sort'] = 'usage desc'
     end
 
@@ -52,15 +42,10 @@ class FastController < ApplicationController
 
     Success(parse(resp.body))
   end
-  # rubocop:enable Metrics/AbcSize
 
   def parse(body)
-    ng = Nokogiri::XML(body)
-    ng.root.xpath('/response/result/doc').map do |doc_node|
-      id = doc_node.at_xpath('str[@name="id"]').content
-      label = doc_node.at_xpath('str[@name="fullphrase"]').content
-      type = doc_node.at_xpath('str[@name="type"]').content
-      { label => key(id, type) }
+    JSON.parse(body).dig('response', 'docs').map do |result|
+      { result['suggestall'].first => key(result['idroot'].first, result['tag']) }
     end
   end
 
@@ -68,7 +53,7 @@ class FastController < ApplicationController
     @lookup_connection ||= Faraday.new(
       url: Settings.autocomplete_lookup.url,
       headers: {
-        'Accept' => 'application/xml',
+        'Accept' => 'application/json',
         'User-Agent' => 'Stanford Self-Deposit (Happy Heron)'
       }
     )
@@ -78,49 +63,25 @@ class FastController < ApplicationController
     Settings.autocomplete_lookup.num_records
   end
 
-  # Split into left-anchored matches to query and other matches.
-  def partition_suggestions(suggestions, query)
-    Array(suggestions).partition { |suggestion| suggestion.keys.first.downcase.start_with?(query.downcase) }
-  end
-
-  def merge_suggestions(suggestions1, suggestions2, query)
-    left_match_suggestions1, other_suggestions1 = partition_suggestions(suggestions1, query)
-    left_match_suggestions2, other_suggestions2 = partition_suggestions(suggestions2, query)
-
-    # Order is left match (non-wildcard) alpha, left match (wildcard) alpha, other matches alpha
-    left_match_suggestions = (sort_suggestions(left_match_suggestions1) + sort_suggestions(left_match_suggestions2))
-                             .take(num_records)
-    num_other_suggestions = num_records - left_match_suggestions.size
-    other_suggestions = (other_suggestions1 + other_suggestions2)
-                        .uniq
-                        .take(num_other_suggestions)
-
-    left_match_suggestions + sort_suggestions(other_suggestions)
-  end
-
-  def sort_suggestions(suggestions)
-    suggestions.sort { |suggestion1, suggestion2| suggestion1.keys.first <=> suggestion2.keys.first }
-  end
-
   URI_PREFIX = 'http://id.worldcat.org/fast/'
 
   def key(idroot, type)
     "#{URI_PREFIX}#{idroot.delete_prefix('fst').to_i}/::#{cocina_type(type)}"
   end
 
-  # Map of FAST types to Cocina types.
-  SUBJECT_TYPES = {
-    'person' => 'person',
-    'corporate' => 'organization',
-    'event' => 'event',
-    'geographic' => 'place',
-    'title' => 'title',
-    'form' => 'genre',
-    'meeting' => 'conference',
-    'chronological' => 'time'
+  # Map of FAST tag types to Cocina types.
+  TAG_TYPES = {
+    100 => 'person',
+    110 => 'organization',
+    111 => 'conference',
+    130 => 'title',
+    147 => 'event',
+    148 => 'time',
+    151 => 'place',
+    155 => 'genre'
   }.freeze
 
   def cocina_type(type)
-    SUBJECT_TYPES.fetch(type, 'topic')
+    TAG_TYPES.fetch(type, 'topic')
   end
 end
