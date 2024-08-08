@@ -21,7 +21,9 @@ module Works
     def version
       return '1 - initial version' if first_draft?
 
-      "#{version_number} - #{version_description}"
+      return "#{version_number} - #{version_description}" if version_description.present?
+
+      version_number
     end
 
     def doi_setting
