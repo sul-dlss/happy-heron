@@ -96,7 +96,7 @@ export default class extends Controller {
     if (!this.userVersionsUiEnabledValue) {
       return ''
     }
-    return `/v${this.version}`
+    return `/version/${this.version}`
   }
 
   get versionClause () {
