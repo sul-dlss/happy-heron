@@ -74,11 +74,14 @@ RSpec.describe Works::DetailComponent, type: :component do
 
     context 'when no previous user versions' do
       let(:work_version) do
-        build_stubbed(:work_version, :deposited, version: 1, user_version: 1, work:)
+        build_stubbed(:work_version, :deposited, version: 1, user_version: 1, version_description: nil, work:)
       end
 
       it 'does not render previous versions' do
         expect(rendered.to_html).not_to include 'Previous version(s)'
+        expect(rendered.to_html).to include 'Current version'
+        expect(rendered.css('td').to_html).not_to include '1 -'
+        expect(rendered.css('td').to_html).to include '1'
       end
     end
 
