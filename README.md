@@ -103,7 +103,7 @@ Spin up all docker compose services for local development and in-browser testing
 $ docker compose up # use -d to run in background
 ```
 
-This will spin up the H2 web application, its background workers, and all service dependencies declared in docker-compose.yml.
+This will spin up the H2 web application, its background workers, and all service dependencies declared in compose.yml.
 
 ### Cypress
 
