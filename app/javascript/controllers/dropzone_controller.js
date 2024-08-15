@@ -31,6 +31,12 @@ export default class extends Controller {
     }
   }
 
+  isVisible (elem) {
+    // cobbled together from a combo of Jeremy's solution in https://github.com/sul-dlss/happy-heron/pull/1582 (commit 27c81bc2a) and
+    // this stack overflow discussion, particularly this thread: https://stackoverflow.com/a/33456469
+    return !!(elem.offsetParent || elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length) && window.getComputedStyle(elem).visibility !== 'hidden'
+  }
+
   checkForDuplicates (fileName) {
     // Extract all filenames that are visible
     // Unfortunately, the filename targets are not contained in the scope of the controller.
@@ -39,6 +45,10 @@ export default class extends Controller {
     const fileNameNodes = Array.from(document.querySelectorAll('[data-dropzone-path]'))
 
     const filepaths = fileNameNodes.map(fileNameNode => {
+      // If it's not visible (e.g. the parent element style is set to 'display: none'), that implies that the user has removed it from
+      // the list of files to upload or keep, so we don't need to worry about a name collision.
+      if (!this.isVisible(fileNameNode)) return null
+
       const path = fileNameNode.getAttribute('data-dropzone-path')
       const filename = fileNameNode.innerText.trim()
 

@@ -87,16 +87,30 @@ RSpec.describe 'Create a new work in a deposited collection', :js do
             click_link_or_button('Choose files')
           end
           expect(page).to have_css('div.dz-success-mark')
+
           page.attach_file(Rails.root.join('spec/fixtures/files/sul.svg')) do
             click_link_or_button('Choose files')
           end
-
           expect(page).to have_content('Duplicate file')
+
           # remove the file which has the 'duplicate' error
           within('div.dz-error', visible: true) do
             find('.remove-file').click
           end
           expect(page).to have_no_content('Duplicate file')
+
+          # it should be possible to add back a file that's been removed
+          choose 'work_upload_type_browser'
+          page.attach_file(Rails.root.join('spec/fixtures/files/test-data.txt')) do
+            click_link_or_button('Choose files')
+          end
+          expect(page).to have_css('div.dz-success-mark')
+          find('input[value="test-data.txt"]', visible: false).find(:xpath, './/..').click_link_or_button('Remove file')
+          page.attach_file(Rails.root.join('spec/fixtures/files/test-data.txt')) do
+            click_link_or_button('Choose files')
+          end
+          expect(page).to have_no_content('Duplicate file')
+          expect(page).to have_css('div.dz-success-mark', count: 2)
           # End of client-side validation testing
 
           choose 'work_upload_type_browser'
