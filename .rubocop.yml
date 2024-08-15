@@ -684,3 +684,6 @@ Style/SuperArguments: # new in 1.64
   Enabled: true
 Rails/WhereRange: # new in 2.25
   Enabled: false
+
+Gemspec/AddRuntimeDependency: # new in 1.65
+  Enabled: true

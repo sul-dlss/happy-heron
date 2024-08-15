@@ -32,9 +32,13 @@ export default class extends Controller {
   }
 
   isVisible (elem) {
-    // cobbled together from a combo of Jeremy's solution in https://github.com/sul-dlss/happy-heron/pull/1582 (commit 27c81bc2a) and
-    // this stack overflow discussion, particularly this thread: https://stackoverflow.com/a/33456469
-    return !!(elem.offsetParent || elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length) && window.getComputedStyle(elem).visibility !== 'hidden'
+    // courtesy mjgiarlo and https://stackoverflow.com/a/72717388/24039837
+    // see also https://drafts.csswg.org/cssom-view-1/#dom-element-checkvisibility
+    return elem.checkVisibility({
+      checkOpacity: true, // if elem, or an ancestor of elem in the flat tree, has a computed opacity value of 0, return false.
+      checkVisibilityCSS: true, // if elem is invisible, return false.
+      contentVisibilityAuto: true // if an ancestor of elem in the flat tree skips its contents due to content-visibility: auto, return false.
+    })
   }
 
   checkForDuplicates (fileName) {
