@@ -24,6 +24,22 @@ RSpec.describe Works::VersionDescriptionComponent, type: :component do
     end
   end
 
+  context 'with a rejected work' do
+    let(:work_version) { build(:work_version, work:, state: 'rejected') }
+
+    it 'does not render the component' do
+      expect(rendered.to_html).not_to include('Version your work')
+    end
+  end
+
+  context 'with a rejected work that has been accessioned' do
+    let(:work_version) { build(:work_version, work:, version: 2, state: 'rejected') }
+
+    it 'renders the component' do
+      expect(rendered.to_html).to include('Version your work')
+    end
+  end
+
   context 'when user version feature flag is on' do
     let(:work_version) { build(:work_version, work:, state: 'deposited') }
 
