@@ -14,7 +14,7 @@ module Works
     end
 
     def show?
-      %w[deposited rejected version_draft].include? work_version.state
+      (%w[deposited version_draft].include? work_version.state) || (work_version.rejected? && work_version.version > 1)
     end
 
     def hidden_user_version?
