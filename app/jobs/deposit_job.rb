@@ -1,114 +1,76 @@
 # frozen_string_literal: true
 
 # Deposits a Work into SDR API.
-class DepositJob < BaseDepositJob
+class DepositJob < ApplicationJob
   queue_as :default
 
-  # @raise [SdrClient::Find::Failed] if the (non-nil) druid cannot be found in SDR
+  # @raise [RuntimeError] if the (non-nil) druid cannot be found in SDR
   # rubocop:disable Metrics/AbcSize
   def perform(work_version)
     druid = work_version.work.druid # may be nil
     Honeybadger.context({ work_version_id: work_version.id, druid:,
                           work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
 
-    # NOTE: this login ensures `Repository.find` and various SdrClient::* calls below all have a valid token
-    perform_login
-
-    disallow_writes(work_version) if work_version.globus_endpoint.present?
+    disallow_writes!(work_version)
 
     cocina_obj = Repository.find(druid) if druid
     request_dro = CocinaGenerator::DROGenerator.generate_model(work_version:, cocina_obj:)
-    new_request_dro = update_dro_with_file_identifiers(request_dro, work_version)
 
-    case new_request_dro
+    case request_dro
     when Cocina::Models::RequestDRO
-      create(new_request_dro, work_version)
+      Rails.logger.info("logging files: work version #{work_version.id}")
+      Rails.logger.info("files: #{work_version.staged_local_files.map(&:path)}")
+      Rails.logger.info("basepath for files: #{basepath_for(work_version.attached_files.first.file.blob)}")
+      Rails.logger.info("filepath_map for files: #{filepath_map_for(work_version)}")
+      SdrClient::RedesignedClient.deposit_model(
+        accession: true,
+        assign_doi: work_version.work.assign_doi?,
+        model: request_dro,
+        basepath: basepath_for(work_version.attached_files.first.file.blob),
+        files: work_version.staged_local_files.map(&:path),
+        filepath_map: filepath_map_for(work_version),
+        user_versions: user_versions_param(work_version)
+      )
     when Cocina::Models::DRO
-      update(new_request_dro, work_version)
+      Rails.logger.info("not a requestDRO")
+      # basepath: basepath_for(work_version.attached_files.first.file.blob),
+      # files: work_version.staged_local_files.map(&:path),
+      # filepath_map: filepath_map_for(work_version),
+      SdrClient::RedesignedClient.update_model(
+        model: request_dro,
+        version_description: work_version.version_description.presence,
+        user_versions: user_versions_param(work_version)
+      )
     end
   end
   # rubocop:enable Metrics/AbcSize
 
   private
 
-  def perform_login
-    login_result = login
-    raise login_result.failure unless login_result.success?
-  end
-
-  def disallow_writes(work_version)
-    return true if test_mode?
-    return true if integration_test_mode? && work_version.globus_endpoint == integration_endpoint
-
-    # user_id nil because unneeded for permission update operations
-    GlobusClient.disallow_writes(path: work_version.globus_endpoint, user_id: nil)
-  end
-
-  def update_dro_with_file_identifiers(request_dro, work_version)
-    # Only uploading new or changed files.
-    # blobs_map is a map of relative filepath to blob
-    blobs_map = staged_blobs(work_version)
-    filepath_map = filepath_map_for(work_version)
-    upload_responses = perform_upload(blobs_map, filepath_map)
-    # Update with any new externalIdentifiers assigned by SDR API during upload.
-    SdrClient::Deposit::UpdateDroWithFileIdentifiers.update(request_dro:,
-                                                            upload_responses:)
-  end
-
-  def create(new_request_dro, work_version)
-    SdrClient::Deposit::CreateResource.run(accession: true,
-                                           assign_doi: work_version.work.assign_doi?,
-                                           metadata: new_request_dro,
-                                           logger: Rails.logger,
-                                           connection:,
-                                           user_versions: user_versions_param(work_version))
-  end
-
-  def update(new_request_dro, work_version)
-    SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
-                                           logger: Rails.logger,
-                                           connection:,
-                                           version_description: work_version.version_description.presence,
-                                           user_versions: user_versions_param(work_version))
-  end
-
-  def perform_upload(blobs_map, filepath_map)
-    SdrClient::Deposit::UploadFiles.upload(file_metadata: build_file_metadata(blobs_map),
-                                           filepath_map:,
-                                           logger: Rails.logger,
-                                           connection:)
-  end
-
-  def connection
-    @connection ||= SdrClient::Connection.new(url: Settings.sdr_api.url, read_timeout: 1800)
-  end
-
-  def build_file_metadata(blobs_map)
-    blobs_map.transform_values do |blob|
-      SdrClient::Deposit::Files::DirectUploadRequest.new(
-        checksum: blob.checksum,
-        byte_size: blob.byte_size,
-        content_type: blob.content_type,
-        filename: blob.filename.to_s
-      )
+  def filepath_map_for(work_version)
+    # attached_file.path contains the cocina filename (e.g. 'dir1/file1.txt')
+    work_version.staged_local_files.to_h do |attached_file|
+      [attached_file.path, blob_filepath_for(attached_file.file.blob)]
     end
+  end
+
+  def basepath_for(blob)
+    File.dirname(
+      blob_filepath_for(blob)
+    )
   end
 
   def blob_filepath_for(blob)
     ActiveStorage::Blob.service.path_for(blob.key)
   end
 
-  def staged_blobs(work_version)
-    work_version.staged_local_files.to_h do |attached_file|
-      [attached_file.path, attached_file.blob]
-    end
-  end
+  def disallow_writes!(work_version)
+    return if work_version.globus_endpoint.blank? ||
+              test_mode? ||
+              (integration_test_mode? && work_version.globus_endpoint == integration_endpoint)
 
-  def filepath_map_for(work_version)
-    # attached_file.path contains the cocina filename (e.g. 'dir1/file1.txt')
-    work_version.staged_local_files.to_h do |attached_file|
-      [attached_file.path, blob_filepath_for(attached_file.file.blob)]
-    end
+    # user_id nil because unneeded for permission update operations
+    GlobusClient.disallow_writes(path: work_version.globus_endpoint, user_id: nil)
   end
 
   # simulate globus calls in development if settings indicate we should for testing

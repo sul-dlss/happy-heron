@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe DepositJob do
   include Dry::Monads[:result]
 
-  let(:conn) { instance_double(SdrClient::Connection) }
   let!(:blob) do
     ActiveStorage::Blob.create_and_upload!(
       io: Rails.root.join('spec/fixtures/files/sul.svg').open,
@@ -18,12 +17,9 @@ RSpec.describe DepositJob do
   let(:first_work_version) do
     build(:work_version, work:, attached_files: [attached_file], version: 1)
   end
-
   let(:collection) { build(:collection, druid: 'druid:bc123df4567', doi_option: 'depositor-selects') }
 
   before do
-    allow(SdrClient::Login).to receive(:run).and_return(Success())
-    allow(SdrClient::Connection).to receive(:new).and_return(conn)
     allow(Honeybadger).to receive(:notify)
     allow(attached_file).to receive_message_chain(:file, :blob).and_return(blob) # rubocop:disable RSpec/MessageChain
   end
@@ -34,28 +30,17 @@ RSpec.describe DepositJob do
 
   context 'when creating a new deposit is successful' do
     before do
-      allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
-      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg',
-                                                                         signed_id: '9999999')])
+      allow(SdrClient::RedesignedClient).to receive(:deposit_model).and_return(1234)
     end
 
-    let(:upload_request) do
-      SdrClient::Deposit::Files::DirectUploadRequest.new(
-        checksum: '9e/54o8VT3n3oRJhvA1LMA==', byte_size: 17_675, content_type: 'image/svg+xml', filename: 'sul.svg'
-      )
-    end
-
-    it 'uploads files and calls CreateResource.run' do
+    it 'deposits the work via sdr-client' do
       described_class.perform_now(first_work_version)
-      expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+      expect(SdrClient::RedesignedClient).to have_received(:deposit_model)
         .with(a_hash_including(accession: true, user_versions: 'none')) do |params|
-        file = params[:metadata].structural.contains.first.structural.contains.first
-        expect(file.externalIdentifier).to eq('9999999')
+        file = params[:model].structural.contains.first.structural.contains.first
+        expect(file.hasMimeType).to eq('image/svg+xml')
+        expect(file.size).to eq(17_675)
         expect(file.filename).to eq('sul.svg')
-      end
-      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload) do |args|
-        expect(args[:file_metadata].values.first.to_h).to eq(upload_request.to_h)
       end
     end
 
@@ -66,7 +51,7 @@ RSpec.describe DepositJob do
 
       it 'uploads files and calls CreateResource.run' do
         described_class.perform_now(first_work_version)
-        expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+        expect(SdrClient::RedesignedClient).to have_received(:deposit_model)
           .with(a_hash_including(accession: true, user_versions: 'new'))
       end
     end
@@ -74,9 +59,9 @@ RSpec.describe DepositJob do
     context 'when the deposit wants a doi' do
       let(:work) { build(:work, collection:, assign_doi: true) }
 
-      it 'calls CreateResource.run with true for the assign_doi param' do
+      it 'deposits the work via sdr-client with the assign_doi param' do
         described_class.perform_now(first_work_version)
-        expect(SdrClient::Deposit::CreateResource).to have_received(:run)
+        expect(SdrClient::RedesignedClient).to have_received(:deposit_model)
           .with(a_hash_including(accession: true, assign_doi: true))
       end
     end
@@ -146,15 +131,12 @@ RSpec.describe DepositJob do
     end
 
     before do
-      allow(SdrClient::Deposit::UpdateResource).to receive(:run).and_return(1234)
-      allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
+      allow(SdrClient::RedesignedClient).to receive_messages(update_model: 1234, find: cocina.to_json)
 
       # This emulates the behavior of the DepositCompleteJob:
       blob.update!(service_name: ActiveStorage::Service::SdrService::SERVICE_NAME)
 
-      # rubocop:disable RSpec/MessageChain
-      allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2)
-      # rubocop:enable RSpec/MessageChain
+      allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2) # rubocop:disable RSpec/MessageChain
     end
 
     context 'when files have not changed' do
@@ -173,9 +155,9 @@ RSpec.describe DepositJob do
 
         # Notice that UpdateResource.run is called but UploadFiles.upload is not.
         # This makes this a "metadata only" update.
-        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+        expect(SdrClient::RedesignedClient).to have_received(:update_model)
           .with(a_hash_including(version_description: 'Updated metadata')) do |params|
-          external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
+          external_identifier = params[:model].structural.contains.first.structural.contains.first.externalIdentifier
           expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/bk123gh4567-123456/sul.svg')
         end
       end
@@ -197,13 +179,13 @@ RSpec.describe DepositJob do
 
           # Notice that UpdateResource.run is called but UploadFiles.upload is not.
           # This makes this a "metadata only" update.
-          expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+          expect(SdrClient::RedesignedClient).to have_received(:update_model)
             .with(a_hash_including(version_description: 'Updated metadata')) do |params|
             external_identifier =
-              params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
-            label = params[:metadata].structural.contains.first.structural.contains.first.label
-            size = params[:metadata].structural.contains.first.structural.contains.first.size
-            has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
+              params[:model].structural.contains.first.structural.contains.first.externalIdentifier
+            label = params[:model].structural.contains.first.structural.contains.first.label
+            size = params[:model].structural.contains.first.structural.contains.first.size
+            has_mime_type = params[:model].structural.contains.first.structural.contains.first.hasMimeType
             expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/bk123gh4567-123456/sul.svg')
             expect(label).to eq('My changed label')
             expect(size).to eq(123)
@@ -215,23 +197,20 @@ RSpec.describe DepositJob do
 
     context 'when files have changed' do
       before do
-        allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul2.svg',
-                                                                           signed_id: '9999999')])
+        allow(blob2).to receive(:signed_id).and_return('9999999')
       end
 
       it 'uploads files and calls UpdateResource.run' do
         described_class.perform_now(second_work_version)
-        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+        expect(SdrClient::RedesignedClient).to have_received(:update_model)
           .with(a_hash_including(version_description: 'Changed files')) do |params|
-          external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
-          size = params[:metadata].structural.contains.first.structural.contains.first.size
-          has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
+          external_identifier = params[:model].structural.contains.first.structural.contains.first.externalIdentifier
+          size = params[:model].structural.contains.first.structural.contains.first.size
+          has_mime_type = params[:model].structural.contains.first.structural.contains.first.hasMimeType
           expect(external_identifier).to eq('9999999')
           expect(size).to eq(17_675)
           expect(has_mime_type).to eq('image/svg+xml')
         end
-        expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       end
     end
 
@@ -243,33 +222,30 @@ RSpec.describe DepositJob do
 
       before do
         work.work_versions = [first_work_version, second_work_version]
-        allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
-        allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul2.svg',
-                                                                           signed_id: '9999999')])
+        allow(SdrClient::RedesignedClient).to receive(:find).and_return(cocina.to_json)
+        allow(blob2).to receive(:signed_id).and_return('9999999')
       end
 
       it 'uploads files and calls UpdateResource.run' do
         described_class.perform_now(second_work_version)
-        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+        expect(SdrClient::RedesignedClient).to have_received(:update_model)
           .with(a_hash_including(version_description: 'Added file')) do |params|
           # file from version1
-          external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
-          size = params[:metadata].structural.contains.first.structural.contains.first.size
-          has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
+          external_identifier = params[:model].structural.contains.first.structural.contains.first.externalIdentifier
+          size = params[:model].structural.contains.first.structural.contains.first.size
+          has_mime_type = params[:model].structural.contains.first.structural.contains.first.hasMimeType
           expect(external_identifier).to eq('https://cocina.sul.stanford.edu/file/bk123gh4567-123456/sul.svg')
           expect(size).to eq(123)
           expect(has_mime_type).to eq('text/html')
           # new file
           external_identifier2 =
-            params[:metadata].structural.contains.second.structural.contains.first.externalIdentifier
-          size2 = params[:metadata].structural.contains.second.structural.contains.first.size
-          has_mime_type2 = params[:metadata].structural.contains.second.structural.contains.first.hasMimeType
+            params[:model].structural.contains.second.structural.contains.first.externalIdentifier
+          size2 = params[:model].structural.contains.second.structural.contains.first.size
+          has_mime_type2 = params[:model].structural.contains.second.structural.contains.first.hasMimeType
           expect(external_identifier2).to eq('9999999')
           expect(size2).to eq(17_675)
           expect(has_mime_type2).to eq('image/svg+xml')
         end
-        expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       end
     end
 
@@ -289,30 +265,25 @@ RSpec.describe DepositJob do
 
       before do
         work.work_versions = [first_work_version, second_work_version]
-        allow(SdrClient::Find).to receive(:run).and_return(cocina.to_json)
-        allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-          .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg',
-                                                                           signed_id: '9999999')])
-
+        allow(SdrClient::RedesignedClient).to receive(:find).and_return(cocina.to_json)
+        allow(blob2).to receive(:signed_id).and_return('9999999')
         blob.update!(service_name: ActiveStorage::Service::SdrService::SERVICE_NAME)
-        # rubocop:disable RSpec/MessageChain
-        allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2)
-        # rubocop:enable RSpec/MessageChain
+
+        allow(attached_file2).to receive_message_chain(:file, :blob).and_return(blob2) # rubocop:disable RSpec/MessageChain
       end
 
       it 'uploads the replaced file and calls UpdateResource.run' do
         described_class.perform_now(second_work_version)
-        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+        expect(SdrClient::RedesignedClient).to have_received(:update_model)
           .with(a_hash_including(version_description: 'Replaced file')) do |params|
           # should use blob metadata not retrieved cocina
-          external_identifier = params[:metadata].structural.contains.first.structural.contains.first.externalIdentifier
-          size = params[:metadata].structural.contains.first.structural.contains.first.size
-          has_mime_type = params[:metadata].structural.contains.first.structural.contains.first.hasMimeType
+          external_identifier = params[:model].structural.contains.first.structural.contains.first.externalIdentifier
+          size = params[:model].structural.contains.first.structural.contains.first.size
+          has_mime_type = params[:model].structural.contains.first.structural.contains.first.hasMimeType
           expect(external_identifier).to eq('9999999')
           expect(size).to eq(17_675)
           expect(has_mime_type).to eq('image/svg+xml')
         end
-        expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
       end
     end
 
@@ -331,7 +302,7 @@ RSpec.describe DepositJob do
       it 'calls UpdateResource.run' do
         described_class.perform_now(second_work_version_metadata_only)
 
-        expect(SdrClient::Deposit::UpdateResource).to have_received(:run)
+        expect(SdrClient::RedesignedClient).to have_received(:update_model)
           .with(a_hash_including(version_description: 'Updated metadata', user_versions: 'update'))
       end
     end
@@ -339,10 +310,7 @@ RSpec.describe DepositJob do
 
   context 'when the deposit is a globus deposit' do
     before do
-      allow(SdrClient::Deposit::CreateResource).to receive(:run).and_return(1234)
-      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg',
-                                                                         signed_id: '9999999')])
+      allow(SdrClient::RedesignedClient).to receive(:deposit_model).and_return(1234)
       allow(GlobusClient).to receive(:disallow_writes).and_return(true)
     end
 
@@ -358,14 +326,11 @@ RSpec.describe DepositJob do
 
   context 'when the deposit request is not successful' do
     before do
-      allow(SdrClient::Deposit::CreateResource).to receive(:run).and_raise('Deposit failed.')
-      allow(SdrClient::Deposit::UploadFiles).to receive(:upload)
-        .and_return([SdrClient::Deposit::Files::DirectUploadResponse.new(filename: 'sul.svg', signed_id: '9999999')])
+      allow(SdrClient::RedesignedClient).to receive(:deposit_model).and_raise('Deposit failed.')
     end
 
     it 'notifies' do
       expect { described_class.perform_now(first_work_version) }.to raise_error(RuntimeError, 'Deposit failed.')
-      expect(SdrClient::Deposit::UploadFiles).to have_received(:upload)
     end
   end
 end
