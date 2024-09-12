@@ -9,7 +9,7 @@ export default class extends Controller {
     // when first loading page, neither version radio is selected
     if (this.userVersionYesTarget.checked === false && this.userVersionNoTarget.checked === false) {
       this.fileUploadsFieldsetTarget.disabled = true
-      this.fileSectionTarget.style.opacity = 0.5
+      this.fileSectionTarget.classList.add('opacity-50')
     }
     if (this.userVersionYesTarget.checked === true) {
       this.versionDescriptionNoTarget.disabled = true
@@ -19,7 +19,8 @@ export default class extends Controller {
       this.versionDescriptionYesTarget.value = this.versionDescriptionTarget.value
       // enable the file upload section
       this.fileUploadsFieldsetTarget.disabled = false
-      this.fileSectionTarget.style.opacity = 1.0
+      this.fileSectionTarget.classList.add('opacity-100')
+      this.fileSectionTarget.classList.remove('opacity-50')
     }
     if (this.userVersionNoTarget.checked === true) {
       this.versionDescriptionYesTarget.disabled = true
@@ -29,7 +30,8 @@ export default class extends Controller {
       this.versionDescriptionNoTarget.value = this.versionDescriptionTarget.value
       // disable the file upload section
       this.fileUploadsFieldsetTarget.disabled = true
-      this.fileSectionTarget.style.opacity = 0.5
+      this.fileSectionTarget.classList.add('opacity-50')
+      this.fileSectionTarget.classList.remove('opacity-100')
     }
   }
 
@@ -51,10 +53,12 @@ export default class extends Controller {
   disableFileUploads (event) {
     if (event.currentTarget === this.userVersionNoTarget) {
       this.fileUploadsFieldsetTarget.disabled = true
-      this.fileSectionTarget.style.opacity = 0.5
+      this.fileSectionTarget.classList.add('opacity-50')
+      this.fileSectionTarget.classList.remove('opacity-100')
     } else if (event.currentTarget === this.userVersionYesTarget) {
       this.fileUploadsFieldsetTarget.disabled = false
-      this.fileSectionTarget.style.opacity = 1.0
+      this.fileSectionTarget.classList.add('opacity-100')
+      this.fileSectionTarget.classList.remove('opacity-50')
     }
   }
 
