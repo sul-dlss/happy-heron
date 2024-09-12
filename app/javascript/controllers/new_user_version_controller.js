@@ -6,6 +6,11 @@ export default class extends Controller {
   connect () {
     if (!this.hasUserVersionYesTarget || !this.hasUserVersionNoTarget) return
 
+    // when first loading page, neither version radio is selected
+    if (this.userVersionYesTarget.checked === false && this.userVersionNoTarget.checked === false) {
+      this.fileUploadsFieldsetTarget.disabled = true
+      this.fileSectionTarget.style.opacity = 0.5
+    }
     if (this.userVersionYesTarget.checked === true) {
       this.versionDescriptionNoTarget.disabled = true
       this.versionDescriptionNoTarget.value = ''

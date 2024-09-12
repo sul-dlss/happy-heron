@@ -111,9 +111,10 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
       click_link_or_button "Edit #{test_title}"
 
       expect(page).to have_content('Do you want to create a new version of this deposit?')
+      expect(find_by_id('work_upload_type_browser')).to be_disabled
 
       choose('No')
-
+      expect(find_by_id('work_upload_type_browser')).to be_disabled
       fill_in "What's changing?", with: 'Nothing really'
       click_link_or_button 'Deposit'
       expect(page).to have_content('You have successfully deposited your work')
@@ -129,6 +130,7 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
       visit work_path(work)
       click_link_or_button "Edit #{test_title}"
       expect(page).to have_content('Do you want to create a new version of this deposit?')
+      expect(find_by_id('work_upload_type_browser')).to be_disabled
 
       choose('Yes')
       expect(find_by_id('work_upload_type_zipfile')).not_to be_disabled
