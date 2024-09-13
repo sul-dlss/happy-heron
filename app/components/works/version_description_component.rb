@@ -14,11 +14,15 @@ module Works
     end
 
     def show?
-      (%w[deposited version_draft].include? work_version.state) || (work_version.rejected? && work_version.version > 1)
+      (%w[deposited version_draft].include? work_version.state) || version_review_state?
     end
 
     def hidden_user_version?
       !Settings.user_versions_ui_enabled || !show?
+    end
+
+    def version_review_state?
+      (work_version.rejected? || work_version.pending_approval?) && work_version.version > 1
     end
   end
 end
