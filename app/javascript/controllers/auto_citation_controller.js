@@ -16,7 +16,6 @@ export default class extends Controller {
   }
 
   connect () {
-    console.log("this.workVersionStateValue is", this.workVersionStateValue)
     this.purl = this.data.get('purl') || PURL_PLACE_HOLDER // Use a real purl on a persisted item or a placeholder
     this.doi = this.data.get('doi') || ''
     
@@ -30,18 +29,15 @@ export default class extends Controller {
     const showAuto = this.enableAutoCitation()
     this.switchTarget.checked = showAuto
     this.displayDefault(showAuto)
-    console.log("showAuto in connect is", showAuto)
   }
 
   populateDisplay() { // initial state before selections
     // Keep manualTarget in sync with autoTarget if manualTarget has not been manually changed.
-    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
-    console.log("manualValue is", manualValue)
+    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
     if (manualValue === this.citation) {
       this.manualTarget.value = this.citation
     }
     // initial citation value reflects current user version value because no selection made yet
-    console.log("here", this.citation)
     this.autoTarget.value = this.citation
   }
 
@@ -49,7 +45,7 @@ export default class extends Controller {
   updateDisplay () {
     if ((this.workVersionStateValue === "deposited") || (this.workVersionStateValue === "new")) { // this is a new version draft  
       this.autoTarget.value = this.citation
-      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
+      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
       if (manualValue === this.citation) {
         this.manualTarget.value = this.citation
       }
@@ -62,13 +58,12 @@ export default class extends Controller {
     }
   }
 
+  // Update non-version information in the citation and keep manual citation in sync
   updateCitationInfo() {
-    // Update non-version information in the citation and keep manual citation in sync
-    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
+    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
     if (manualValue === this.autoTarget.value) {
       this.manualTarget.value = this.updatedCitation
     }
-    console.log("this.updatedCitation is", this.updatedCitation)
     this.autoTarget.value = this.updatedCitation
 
   }
@@ -77,7 +72,7 @@ export default class extends Controller {
     if (this.manualTarget.value === '') { // The initial value
       return true
     } else {
-      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
+      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
       if (manualValue === this.autoTarget.value) { // The user hasn't changed the manual citation
         return true
       }
@@ -86,7 +81,6 @@ export default class extends Controller {
   }
 
   get citation () {
-    console.log("using citation")
     return `${this.authorAsSentence} (${this.date}). ${this.title}.${this.versionClause} Stanford Digital Repository. Available at ${this.purl}${this.purlVersion}.${this.doiClause}`
   }
 
@@ -104,7 +98,6 @@ export default class extends Controller {
   }
 
   get increaseUserVersion () { // Yes was checked
-    console.log("this.updatedUserVersionValue is", this.updatedUserVersionValue)  
     if (this.updatedUserVersionValue > 0) { // the incoming userVersionValue is no longer valid because version selections have changed
       this.updatedUserVersionValue = this.updatedUserVersionValue + 1
     } else {
@@ -114,19 +107,15 @@ export default class extends Controller {
   }
 
   get decreaseUserVersion () { // No selected
-    console.log("this.updatedUserVersionValue is", this.updatedUserVersionValue)
     if (this.updatedUserVersionValue > 0) {
       this.updatedUserVersionValue = this.updatedUserVersionValue - 1
-      console.log("this.updatedUserVersionValue is now further changed to", this.updatedUserVersionValue)  
     } else {
       this.updatedUserVersionValue = this.userVersionValue - 1
-          console.log("this.updatedUserVersionValue is now", this.updatedUserVersionValue)  
     }
     return this.updatedVersionCitation
   }
 
   get currentUserVersion () {
-    console.log("using currentUserVersion")
     return `${this.authorAsSentence} (${this.date}). ${this.title}. Version ${this.userVersionValue}. Stanford Digital Repository. Available at ${this.purl}/version/${this.userVersionValue}.${this.doiClause}`
   }
 
