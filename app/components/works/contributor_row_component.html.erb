@@ -109,7 +109,7 @@
       <div>
         <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move up' },
                        data: {
-                         action: 'click->ordered-nested-form#moveUp auto-citation#updateDisplay',
+                         action: 'click->ordered-nested-form#moveUp auto-citation#updateCitationInfo',
                          ordered_nested_form_target: 'upButton'
                        } do %>
           <span class="fa-solid fa-arrow-up"></span>
@@ -118,7 +118,7 @@
       <div>
         <%= button_tag type: 'button', class: 'btn btn-sm', aria: { label: 'Move down' },
                        data: {
-                         action: 'click->ordered-nested-form#moveDown auto-citation#updateDisplay',
+                         action: 'click->ordered-nested-form#moveDown auto-citation#updateCitationInfo',
                          ordered_nested_form_target: 'downButton'
                        } do %>
           <span class="fa-solid fa-arrow-down"></span>

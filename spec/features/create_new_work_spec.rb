@@ -12,7 +12,7 @@ RSpec.describe 'Create a new work in a deposited collection', :js do
   before do
     collection.update(head: collection_version)
     sign_in user, groups: ['dlss:hydrus-app-collection-creators']
-    allow(Settings).to receive(:allow_sdr_content_changes).and_return(true)
+    allow(Settings).to receive_messages(allow_sdr_content_changes: true, user_versions_ui_enabled: true)
   end
 
   context 'when a user has previously accepted the terms of agreement less than 1 year ago' do
@@ -259,7 +259,7 @@ RSpec.describe 'Create a new work in a deposited collection', :js do
           expect(page).to have_content('Deposit to this collection')
           click_link_or_button 'My Title'
 
-          expect(page).to have_content "Keller, M. (#{Time.zone.today.year}). My Title. " \
+          expect(page).to have_content "Keller, M. (#{Time.zone.today.year}). My Title. Version 1. " \
                                        "Stanford Digital Repository. Available at #{WorkVersion::LINK_TEXT}. " \
                                        "#{WorkVersion::DOI_TEXT}"
         end

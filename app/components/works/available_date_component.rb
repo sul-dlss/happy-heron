@@ -41,7 +41,7 @@ module Works
                   data: {
                     auto_citation_target: 'embargoYear',
                     available_date_target: 'year',
-                    action: 'change->auto-citation#updateDisplay available-date#validate'
+                    action: 'change->auto-citation#updateCitationInfo available-date#validate'
                   },
                   id: 'work_embargo_year',
                   required: true,

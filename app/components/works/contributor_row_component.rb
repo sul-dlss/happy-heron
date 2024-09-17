@@ -35,7 +35,7 @@ module Works
           contributors_target:
         }.tap do |data|
           if author?
-            data[:action] = 'change->auto-citation#updateDisplay'
+            data[:action] = 'change->auto-citation#updateCitationInfo'
             data[:auto_citation_target] = auto_citation_target
           end
         end.compact,
@@ -99,7 +99,7 @@ module Works
         aria: { label: contributor_remove_label },
         data: {}.tap do |data|
           actions = ["contributors#remove #{form_controller}#removeAssociation"]
-          actions << 'auto-citation#updateDisplay' if author?
+          actions << 'auto-citation#updateCitationInfo' if author?
           data[:action] = actions.join(' ')
         end
       }
@@ -111,7 +111,7 @@ module Works
         class: 'form-check-input',
         data: {}.tap do |data|
           actions = ['contributors#personChanged']
-          actions << 'auto-citation#updateDisplay' if author?
+          actions << 'auto-citation#updateCitationInfo' if author?
           data[:action] = actions.join(' ')
           data[:contributors_target] = 'personNameSelect' if is_name
         end,
@@ -136,7 +136,7 @@ module Works
         contributors_target: "select#{contributor_type.titlecase}Role"
       }.tap do |opts|
         if author?
-          opts[:action] = 'change->auto-citation#updateDisplay'
+          opts[:action] = 'change->auto-citation#updateCitationInfo'
           opts[:auto_citation_target] = 'contributorRole'
         end
       end
