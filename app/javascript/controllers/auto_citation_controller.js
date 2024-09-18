@@ -9,10 +9,9 @@ export default class extends Controller {
     'embargoYear', 'embargo', 'userVersionYes']
 
   static values = {
-    userVersion: Number,
-    userVersionsUiEnabled: Boolean,
-    workVersionState: String,
-    updatedUserVersion: Number // used for tracking user version changes during draft editing
+    userVersion: Number, // user version stored in the work version record
+    workVersionState: String, // work version state needed for handling the initial draft of a version differently from a saved draft where the user has previously made a version selection
+    updatedUserVersion: Number // used for tracking user version changes during draft editing and avoiding over-incrementing the user version value
   }
 
   connect () {
@@ -167,16 +166,10 @@ export default class extends Controller {
   }
 
   get purlVersion () {
-    if (!this.userVersionsUiEnabledValue) {
-      return ''
-    }
     return `/version/${this.version}`
   }
 
   get versionClause () {
-    if (!this.userVersionsUiEnabledValue) {
-      return ''
-    }
     return ` Version ${this.version}.`
   }
 
