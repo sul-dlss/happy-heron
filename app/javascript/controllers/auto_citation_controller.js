@@ -18,9 +18,10 @@ export default class extends Controller {
   connect () {
     this.purl = this.data.get('purl') || PURL_PLACE_HOLDER // Use a real purl on a persisted item or a placeholder
     this.doi = this.data.get('doi') || ''
-
     if ((this.workVersionStateValue === 'deposited') || (this.workVersionStateValue === 'new')) { // initial draft version
       this.populateDisplay()
+    } else if (this.version === 1) {
+      this.autoTarget.value = this.citation // in review workflow before first deposit
     } else {
       this.autoTarget.value = this.currentUserVersion // use the incoming user version value as previously selected
     }
