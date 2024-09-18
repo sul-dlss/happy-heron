@@ -112,9 +112,11 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
 
       expect(page).to have_content('Do you want to create a new version of this deposit?')
       expect(find_by_id('work_upload_type_browser')).to be_disabled
+      expect(find_by_id('work_citation')).to have_content('test citation')
 
       choose('No')
       expect(find_by_id('work_upload_type_browser')).to be_disabled
+      expect(find_by_id('work_citation')).to be_visible
       fill_in "What's changing?", with: 'Nothing really'
       click_link_or_button 'Deposit'
       expect(page).to have_content('You have successfully deposited your work')
@@ -154,6 +156,47 @@ RSpec.describe 'Update an existing work in a deposited collection', :js do
       expect(version2.reload.user_version).to eq(2)
       expect(version2.reload.version_description).to eq('Adding a file')
       expect(version2.reload.attached_files.count).to eq(3)
+    end
+  end
+
+  context 'when a new user version' do
+    let(:test_title) { 'Test title' }
+    let(:work) { create(:work, collection:, owner: user) }
+    let!(:work_version) do
+      create(:work_version, :with_files, :deposited, :with_required_associations,
+             work:, version: 1, user_version: 1, title: test_title, citation: '')
+    end
+
+    before do
+      allow(Settings).to receive(:user_versions_ui_enabled).and_return(true)
+      work.update(head: work_version)
+    end
+
+    it 'show the auto-generated citation appropriately' do
+      visit work_path(work_version.work)
+      click_link_or_button "Edit #{test_title}"
+
+      expect(page).to have_content('Do you want to create a new version of this deposit?')
+      expect(find_by_id('work_upload_type_browser')).to be_disabled
+      expect(find_by_id('work_citation_auto')).to be_visible
+      elem = page.find(id: 'work_citation_auto')
+      expect(elem.value).to have_content('Version 1')
+
+      choose('No')
+      expect(find_by_id('work_upload_type_browser')).to be_disabled
+      expect(find_by_id('work_citation_auto')).to be_visible
+      elem = page.find(id: 'work_citation_auto')
+      expect(elem.value).to have_content('Version 1')
+      fill_in "What's changing?", with: 'Nothing really'
+
+      choose('Yes')
+      expect(find_by_id('work_citation_auto')).to be_visible
+      elem = page.find(id: 'work_citation_auto')
+      expect(elem.value).to have_content('Version 2')
+      fill_in "What's changing?", with: 'Making a new version'
+
+      click_link_or_button 'Deposit'
+      expect(page).to have_content('You have successfully deposited your work')
     end
   end
 end

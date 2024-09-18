@@ -25,7 +25,7 @@ RSpec.describe Works::ContributorRowComponent, type: :component do
     end
 
     it 'updates citation' do
-      expect(rendered.to_html).to include('auto-citation#updateDisplay')
+      expect(rendered.to_html).to include('auto-citation#updateCitationInfo')
     end
   end
 
@@ -37,7 +37,7 @@ RSpec.describe Works::ContributorRowComponent, type: :component do
     end
 
     it 'does not update citation' do
-      expect(rendered.to_html).not_to include('auto-citation#updateDisplay')
+      expect(rendered.to_html).not_to include('auto-citation#updateCitationInfo')
     end
   end
 
