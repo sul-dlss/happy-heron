@@ -34,7 +34,7 @@ export default class extends Controller {
 
   populateDisplay () { // initial state before selections
     // Keep manualTarget in sync with autoTarget if manualTarget has not been manually changed.
-    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
+    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
     if (manualValue === this.citation) {
       this.manualTarget.value = this.citation
     }
@@ -46,7 +46,7 @@ export default class extends Controller {
   updateDisplay () {
     if ((this.workVersionStateValue === 'deposited') || (this.workVersionStateValue === 'new')) { // this is a new version draft with initial user version value
       this.autoTarget.value = this.citation
-      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
+      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
       if (manualValue === this.citation) {
         this.manualTarget.value = this.citation
       }
@@ -61,7 +61,7 @@ export default class extends Controller {
 
   // Update non-version information in the citation and keep manual citation in sync
   updateCitationInfo () {
-    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
+    const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
     if (manualValue === this.autoTarget.value) {
       this.manualTarget.value = this.updatedCitation
     }
@@ -72,7 +72,7 @@ export default class extends Controller {
     if (this.manualTarget.value === '') { // The initial value
       return true
     } else {
-      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, `${this.purl}${this.purlVersion}`).replace(DOI_PLACE_HOLDER, this.doi)
+      const manualValue = this.manualTarget.value.replace(PURL_PLACE_HOLDER, this.purl).replace(DOI_PLACE_HOLDER, this.doi)
       if (manualValue === this.autoTarget.value) { // The user hasn't changed the manual citation
         return true
       }
@@ -168,8 +168,6 @@ export default class extends Controller {
 
   get purlVersion () {
     if (!this.userVersionsUiEnabledValue) {
-      return ''
-    } else if (this.purl === PURL_PLACE_HOLDER) {
       return ''
     }
     return `/version/${this.version}`
