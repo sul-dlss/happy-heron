@@ -14,15 +14,15 @@ class EmbargoDateValidator < ActiveModel::EachValidator
   private
 
   def valid_embargo_collection(collection, record, attribute, value)
-    year_match = collection.release_duration.match(/(\d+)/)
-    year_label = year_match[0].to_i < 2 ? 'year' : 'years'
-    future_date = current_date + year_match[0].to_i.years
-    error_message = "must be less than #{year_match[0]} #{year_label} in the future"
-    if value > future_date
-      record.errors.add attribute, error_message
-      return false
-    end
-    true
+    number, span = collection.release_duration
+                             .match(/(?<number>\d+) (?<span>\w+)/)
+                             .named_captures
+                             .values_at('number', 'span')
+    embargo_date = current_date + number.to_i.public_send(span)
+    return true if value <= embargo_date
+
+    record.errors.add(attribute, "must be less than #{number} #{span} in the future")
+    false
   end
 
   def valid_embargo_value(record, attribute, value)

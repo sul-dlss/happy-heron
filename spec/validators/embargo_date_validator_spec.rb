@@ -60,13 +60,23 @@ RSpec.describe EmbargoDateValidator do
     end
   end
 
-  context 'with a date more than the collection release_duration' do
+  context 'with a date more than the collection release duration of one year' do
     let(:collection) { create(:collection, release_option: 'depositor-selects', release_duration: '1 year') }
     let(:attribute) { :embargo_date }
     let(:value) { current_date + 2.years }
 
     it 'has errors' do
       expect(record.errors.full_messages).to eq ['Embargo date must be less than 1 year in the future']
+    end
+  end
+
+  context 'with a date more than the collection release duration of six months' do
+    let(:collection) { create(:collection, release_option: 'depositor-selects', release_duration: '6 months') }
+    let(:attribute) { :embargo_date }
+    let(:value) { current_date + 2.years }
+
+    it 'has errors' do
+      expect(record.errors.full_messages).to eq ['Embargo date must be less than 6 months in the future']
     end
   end
 end
