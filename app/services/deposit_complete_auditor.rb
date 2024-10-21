@@ -23,7 +23,7 @@ class DepositCompleteAuditor
   private
 
   def depositing_objects
-    Work.joins(:head).where(head: { state: 'depositing' }).to_a + \
+    Work.joins(:head).where(head: { state: 'depositing' }).to_a +
       Collection.joins(:head).where(head: { state: 'depositing' }).to_a
   end
 
