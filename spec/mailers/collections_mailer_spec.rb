@@ -9,7 +9,7 @@ RSpec.describe CollectionsMailer do
   let(:work) { build_stubbed(:work, collection:) }
   let(:work_version) { build_stubbed(:work_version, work:) }
   let(:a_user) { build_stubbed(:user, name: 'Al Dente', first_name: 'Fred') }
-  let(:mailer_host) { 'www.example.com' }
+  let(:mailer_host) { Settings.host }
 
   before { work.head = work_version }
 

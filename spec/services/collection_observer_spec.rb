@@ -138,6 +138,9 @@ RSpec.describe CollectionObserver do
           'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
           { params: { user: manager, collection_version: }, args: [] }
         )
+      end
+
+      it 'does not send participant change notification to manager' do
         expect { action }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'participants_changed_email', anything, anything
         )

@@ -6,7 +6,7 @@ RSpec.describe WorksMailer do
   let(:work_depositor) { build_stubbed(:user, email: work.depositor.email, name: 'Al Dente', first_name: 'Fred') }
   let(:a_user) { build(:user, name: 'Al Dente', first_name: 'Fred') }
   let(:b_user) { build(:user, name: 'Overcooked', first_name: 'Fred') }
-  let(:mailer_host) { 'www.example.com' }
+  let(:mailer_host) { Settings.host }
 
   describe 'reject_email' do
     let(:user) { work_depositor }

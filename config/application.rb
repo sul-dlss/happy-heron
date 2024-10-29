@@ -2,7 +2,6 @@
 
 require_relative 'boot'
 
-require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
 require 'active_job/railtie'
@@ -21,6 +20,7 @@ require 'rails/test_unit/railtie'
 Bundler.require(*Rails.groups)
 
 module HappyHeron
+  # The applications configuration
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
@@ -29,6 +29,22 @@ module HappyHeron
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+
+    # Don't bother running AS analyzers since we handle technical metadata elsewhere
+    config.active_storage.analyzers = []
+
+    # Use SQL schema format so we can have nice things like Postgres enums
+    config.active_record.schema_format = :sql
+
+    # Mount the ActionCable server at a known path
+    config.action_cable.mount_path = '/cable'
+
+    config.action_mailer.default_url_options = { host: Settings.host }
+    config.action_mailer.perform_deliveries = Settings.perform_deliveries
+
+    # Override the default (5.minutes), so that large files have enough time to upload
+    # Currently 90 minutes is based on most 10G uploads on slow connections taking just under 1.5 hours
+    config.active_storage.service_urls_expire_in = 90.minutes
 
     # Configuration for the application, engines, and railties goes here.
     #

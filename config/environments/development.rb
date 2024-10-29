@@ -5,6 +5,10 @@ require 'active_support/core_ext/integer/time'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Raise when request includes unpermitted params to help find errors in
+  # dev/test (default value is `nil`, which is used in production)
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

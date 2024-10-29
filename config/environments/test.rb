@@ -15,6 +15,13 @@ Rails.application.configure do
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
+  # We want to generate known primary keys for some testing.
+  config.factory_bot.reject_primary_key_attributes = false
+
+  # Raise when request includes unpermitted params to help find errors in
+  # dev/test (default value is `nil`, which is used in production)
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
   # Eager loading loads your entire application. When running a single test locally,
   # this is usually not necessary, and can slow down your test suite. However, it's
   # recommended that you enable it in continuous integration systems to ensure eager
@@ -49,7 +56,7 @@ Rails.application.configure do
 
   # Unlike controllers, the mailer instance doesn't have any context about the
   # incoming request so you'll need to provide the :host parameter yourself.
-  config.action_mailer.default_url_options = { host: 'www.example.com' }
+  config.action_mailer.default_url_options = { host: Settings.host }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

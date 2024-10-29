@@ -30,6 +30,7 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
     - config/routes.rb
+    - config/environments/*.rb
     - lib/tasks/**/*.rake
   AllowedMethods:
     - state_machine
@@ -696,5 +697,7 @@ Style/RedundantInterpolationUnfreeze: # new in 1.66
   Enabled: true
 Rails/EnumSyntax: # new in 2.26
   Enabled: true
+  Exclude:
+    - app/models/work_version.rb
 RSpec/StringAsInstanceDoubleConstant: # new in 3.1
   Enabled: true

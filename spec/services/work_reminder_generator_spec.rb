@@ -74,11 +74,6 @@ RSpec.describe WorkReminderGenerator do
       expect { described_class.send_draft_reminders }
         .to not_have_enqueued_job(ActionMailer::MailDeliveryJob)
     end
-
-    it "does not queue notifications for drafts that aren't on a reminder interval day relative to creation" do
-      expect { described_class.send_draft_reminders }
-        .to not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-    end
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
