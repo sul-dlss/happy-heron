@@ -77,25 +77,6 @@ RSpec.describe CollectionReminderGenerator do
       it 'does not queue notifications' do
         expect { described_class.send_draft_reminders }
           .to not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-          .with(
-            'CollectionsMailer', 'first_draft_reminder_email', anything,
-            { params: { collection_version: collection_depositing, user: }, args: anything }
-          )
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-              .with(
-                'CollectionsMailer', 'first_draft_reminder_email', anything,
-                { params: { collection_version: collection_deposited, user: }, args: anything }
-              ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-            .with(
-              'CollectionsMailer', 'new_version_reminder_email', anything,
-              { params: { collection_version: collection_deposited, user: }, args: anything }
-            ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-            .with(
-              'CollectionsMailer', 'new_version_reminder_email', anything,
-              { params: { collection_version: collection_deposited, user: }, args: anything }
-            ))
       end
     end
 
@@ -127,55 +108,6 @@ RSpec.describe CollectionReminderGenerator do
       it 'does not queue notifications' do
         expect { described_class.send_draft_reminders }
           .to not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-          .with(
-            'CollectionsMailer', 'first_draft_reminder_email', anything,
-            { params: { collection_version: first_draft1, user: }, args: anything }
-          )
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'first_draft_reminder_email', anything,
-        { params: { collection_version: first_draft2, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'first_draft_reminder_email', anything,
-        { params: { collection_version: first_draft3, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'first_draft_reminder_email', anything,
-        { params: { collection_version: first_draft5, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'first_draft_reminder_email', anything,
-        { params: { collection_version: first_draft7, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'new_version_reminder_email', anything,
-        { params: { collection_version: version_draft1, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'new_version_reminder_email', anything,
-        { params: { collection_version: version_draft2, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'new_version_reminder_email', anything,
-        { params: { collection_version: version_draft3, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'new_version_reminder_email', anything,
-        { params: { collection_version: version_draft5, user: }, args: anything }
-      ))
-          .and(not_have_enqueued_job(ActionMailer::MailDeliveryJob)
-      .with(
-        'CollectionsMailer', 'new_version_reminder_email', anything,
-        { params: { collection_version: version_draft7, user: }, args: anything }
-      ))
       end
     end
   end

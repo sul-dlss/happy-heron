@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 7.0.1'
+gem 'rails', '~> 7.2.0'
 
 group :development, :test do
   gem 'axe-core-rspec'
@@ -33,7 +33,7 @@ group :development do
   gem 'faker'
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false
-  gem 'puma', '~> 5.6', '>= 5.6.4'
+  gem 'puma'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'state_machines-graphviz'

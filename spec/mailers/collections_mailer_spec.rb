@@ -9,6 +9,7 @@ RSpec.describe CollectionsMailer do
   let(:work) { build_stubbed(:work, collection:) }
   let(:work_version) { build_stubbed(:work_version, work:) }
   let(:a_user) { build_stubbed(:user, name: 'Al Dente', first_name: 'Fred') }
+  let(:mailer_host) { 'www.example.com' }
 
   before { work.head = work_version }
 
@@ -203,7 +204,7 @@ RSpec.describe CollectionsMailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
 
       expect(mail.body).to include("Dear #{a_user.first_name},")
-      expect(mail.body).to match("http://#{Settings.host}/collection_versions/#{collection_version.id}")
+      expect(mail.body).to match("http://#{mailer_host}/collection_versions/#{collection_version.id}")
     end
   end
 
@@ -220,7 +221,7 @@ RSpec.describe CollectionsMailer do
       expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
 
       expect(mail.body).to include("Dear #{a_user.first_name},")
-      expect(mail.body).to match("http://#{Settings.host}/collection_versions/#{collection_version.id}/edit")
+      expect(mail.body).to match("http://#{mailer_host}/collection_versions/#{collection_version.id}/edit")
     end
   end
 

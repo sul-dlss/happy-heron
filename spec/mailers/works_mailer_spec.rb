@@ -6,6 +6,7 @@ RSpec.describe WorksMailer do
   let(:work_depositor) { build_stubbed(:user, email: work.depositor.email, name: 'Al Dente', first_name: 'Fred') }
   let(:a_user) { build(:user, name: 'Al Dente', first_name: 'Fred') }
   let(:b_user) { build(:user, name: 'Overcooked', first_name: 'Fred') }
+  let(:mailer_host) { 'www.example.com' }
 
   describe 'reject_email' do
     let(:user) { work_depositor }
@@ -156,7 +157,7 @@ RSpec.describe WorksMailer do
     end
 
     it 'renders a link to edit the draft in the body' do
-      expect(mail.body).to match("http://#{Settings.host}/works/#{work.id}/edit")
+      expect(mail.body).to match("http://#{mailer_host}/works/#{work.id}/edit")
     end
 
     it 'salutation uses work.owner.first_name' do
@@ -186,7 +187,7 @@ RSpec.describe WorksMailer do
     end
 
     it 'renders a link to edit the draft in the body' do
-      expect(mail.body).to match("http://#{Settings.host}/works/#{work.id}/edit")
+      expect(mail.body).to match("http://#{mailer_host}/works/#{work.id}/edit")
     end
   end
 
@@ -210,7 +211,7 @@ RSpec.describe WorksMailer do
 
     it 'renders body' do
       expect(mail.body).to include "You are now the owner of the item \"#{work_version.title}\""
-      expect(mail.body).to match("http://#{Settings.host}/works/#{work.id}")
+      expect(mail.body).to match("http://#{mailer_host}/works/#{work.id}")
       expect(mail.body.encoded).to match('Subscribe to the SDR newsletter</a> for feature updates')
     end
   end
@@ -235,7 +236,7 @@ RSpec.describe WorksMailer do
 
     it 'renders body' do
       expect(mail.body).to include "Ownership of the item \"#{work_version.title}\""
-      expect(mail.body).to match("http://#{Settings.host}/works/#{work.id}")
+      expect(mail.body).to match("http://#{mailer_host}/works/#{work.id}")
     end
   end
 
@@ -254,8 +255,8 @@ RSpec.describe WorksMailer do
 
     it 'renders body' do
       expect(mail.body).to include 'The following item has been deposited'
-      expect(mail.body).to match("http://#{Settings.host}/works/#{work.id}")
-      expect(mail.body).to match("http://#{Settings.host}/collections/#{collection.id}")
+      expect(mail.body).to match("http://#{mailer_host}/works/#{work.id}")
+      expect(mail.body).to match("http://#{mailer_host}/collections/#{collection.id}")
       expect(mail.body).to include a_user.name
     end
   end

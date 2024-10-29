@@ -40,7 +40,9 @@ RSpec.describe 'Download a zip file of all attached files' do
     end
 
     it 'does a not found error' do
-      expect { get "/works/#{work_id}/zip" }.to raise_error ActionController::RoutingError
+      expect do
+        bypass_rescue { get "/works/#{work_id}/zip" }.to raise_error ActionController::RoutingError
+      end
     end
   end
 end

@@ -137,7 +137,8 @@ RSpec.describe CollectionObserver do
         expect { action }.to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'review_access_granted_email', 'deliver_now',
           { params: { user: manager, collection_version: }, args: [] }
-        ).and not_to_have_enqueued_job(ActionMailer::MailDeliveryJob).with(
+        )
+        expect { action }.not_to have_enqueued_job(ActionMailer::MailDeliveryJob).with(
           'CollectionsMailer', 'participants_changed_email', anything, anything
         )
       end
