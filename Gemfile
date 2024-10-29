@@ -8,7 +8,7 @@ gem 'rails', '~> 7.2.0'
 group :development, :test do
   gem 'axe-core-rspec'
   gem 'cypress-on-rails', '~> 1.0'
-  gem 'cypress-rails'
+  gem 'cypress-rails', '0.8.0.rc1' # Pinned until https://github.com/testdouble/cypress-rails/issues/164 is resolved
   gem 'debug'
   gem 'erb_lint', require: false
   # NOTE: factory_bot_rails >= 6.3.0 requires env/test.rb to have

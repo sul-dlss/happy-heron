@@ -189,7 +189,7 @@ GEM
       ferrum (~> 0.15.0)
     cypress-on-rails (1.17.0)
       rack
-    cypress-rails (0.7.1)
+    cypress-rails (0.8.0.rc1)
       puma (>= 3.8.0)
       railties (>= 5.2.0)
     date (3.3.4)
@@ -709,7 +709,7 @@ DEPENDENCIES
   csv
   cuprite
   cypress-on-rails (~> 1.0)
-  cypress-rails
+  cypress-rails (= 0.8.0.rc1)
   debug
   devise (~> 4.7)
   devise-remote-user (~> 1.0)
