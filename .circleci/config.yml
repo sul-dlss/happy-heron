@@ -45,6 +45,9 @@ jobs:
           command: bin/rails db:prepare
           name: Set up DB
       - run:
+          name: Install javascript dependencies and build assets
+          command: bin/rake test:prepare
+      - run:
           name: Run accessibility feature tests
           command: bundle exec rspec --tag accessibility
 workflows:
