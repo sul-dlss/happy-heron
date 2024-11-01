@@ -73,11 +73,11 @@ RSpec.describe 'Accessibility:', :accessibility do
       expect(page).to be_accessible
     end
 
-    # Commented out because the error page is not accessible HTML
-    # it 'audits an error page' do
-    #   visit '/foobar' # No turbo frames need to load
-    #   expect(page).to be_accessible
-    # end
+    # Pending because the error page is not accessible HTML
+    xit 'audits an error page', 'the error page is not accessible HTML' do # rubocop:disable RSpec/PendingWithoutReason
+      visit '/foobar' # No turbo frames need to load
+      expect(page).to be_accessible
+    end
   end
 
   describe 'HTML validator' do
@@ -135,10 +135,10 @@ RSpec.describe 'Accessibility:', :accessibility do
       expect(page.body).to be_valid_html
     end
 
-    # Commented out because the error page is not accessible HTML
-    # it 'validates an error page' do
-    #   visit '/foobar'
-    #   expect(page.body).to be_valid_html
-    # end
+    # Pending because the error page is not accessible HTML
+    xit 'validates an error page', 'the error page is not accessible HTML' do # rubocop:disable RSpec/PendingWithoutReason
+      visit '/foobar'
+      expect(page.body).to be_valid_html
+    end
   end
 end

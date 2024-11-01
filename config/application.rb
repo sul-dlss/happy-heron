@@ -53,5 +53,11 @@ module HappyHeron
     #
     # config.time_zone = 'Central Time (US & Canada)'
     # config.eager_load_paths << Rails.root.join('extras')
+
+    console do
+      Honeybadger.configure do |config|
+        config.report_data = false
+      end
+    end
   end
 end
