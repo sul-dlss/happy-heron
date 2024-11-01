@@ -41,8 +41,8 @@ RSpec.describe 'Create a work report', :js do
       click_link_or_button 'Submit'
 
       click_link_or_button 'Download'
-      expect(page.response_headers['Content-Type']).to match 'text/csv'
-      expect(page.response_headers['Content-Disposition']).to match(/attachment; filename="item_report.csv"/)
+      expect(page.response_headers['content-type']).to match 'text/csv'
+      expect(page.response_headers['content-disposition']).to match(/attachment; filename="item_report.csv"/)
     end
   end
 end

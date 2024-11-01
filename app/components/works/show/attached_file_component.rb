@@ -18,7 +18,8 @@ module Works
       def path
         return preservation_path(attached_file) if in_preservation?
 
-        rails_blob_path(file, disposition: 'attachment')
+        file.save unless file.persisted?
+        rails_blob_path(file.blob, disposition: 'attachment')
       end
 
       def stacks_path

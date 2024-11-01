@@ -15,7 +15,7 @@ class FetchGlobusJob < BaseDepositJob
     # deposits we need to ensure that we still have an active database connection
     # before trying to use it again or else we can get an error:
     # PG::UnableToSend: SSL SYSCALL error: EOF detected
-    ActiveRecord::Base.clear_active_connections!
+    ActiveRecord::ConnectionAdapters::ConnectionHandler.new.clear_active_connections!
 
     filepaths.each do |path|
       next if IgnoreFileService.ignore?(path)

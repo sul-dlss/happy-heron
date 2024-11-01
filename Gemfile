@@ -3,12 +3,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 7.0.1'
+gem 'rails', '~> 7.2.0'
 
 group :development, :test do
   gem 'axe-core-rspec'
   gem 'cypress-on-rails', '~> 1.0'
-  gem 'cypress-rails'
+  gem 'cypress-rails', '0.8.0.rc1' # Pinned until https://github.com/testdouble/cypress-rails/issues/164 is resolved
   gem 'debug'
   gem 'erb_lint', require: false
   # NOTE: factory_bot_rails >= 6.3.0 requires env/test.rb to have
@@ -33,7 +33,7 @@ group :development do
   gem 'faker'
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false
-  gem 'puma', '~> 5.6', '>= 5.6.4'
+  gem 'puma'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'state_machines-graphviz'

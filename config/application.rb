@@ -2,15 +2,17 @@
 
 require_relative 'boot'
 
-require 'action_cable/engine'
-require 'action_controller/railtie'
-# require 'action_mailbox/engine'
-require 'action_mailer/railtie'
-# require 'action_text/engine'
-require 'action_view/railtie'
+# Pick the frameworks you want:
+require 'active_model/railtie'
 require 'active_job/railtie'
 require 'active_record/railtie'
 require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+# require 'action_mailbox/engine'
+# require 'action_text/engine'
+require 'action_view/railtie'
+require 'action_cable/engine'
 require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
@@ -21,12 +23,12 @@ module HappyHeron
   # The applications configuration
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.2
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Don't bother running AS analyzers since we handle technical metadata elsewhere
     config.active_storage.analyzers = []
@@ -43,6 +45,14 @@ module HappyHeron
     # Override the default (5.minutes), so that large files have enough time to upload
     # Currently 90 minutes is based on most 10G uploads on slow connections taking just under 1.5 hours
     config.active_storage.service_urls_expire_in = 90.minutes
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = 'Central Time (US & Canada)'
+    # config.eager_load_paths << Rails.root.join('extras')
 
     console do
       Honeybadger.configure do |config|

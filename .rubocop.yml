@@ -30,6 +30,7 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
     - config/routes.rb
+    - config/environments/*.rb
     - lib/tasks/**/*.rake
   AllowedMethods:
     - state_machine
@@ -686,4 +687,17 @@ Rails/WhereRange: # new in 2.25
   Enabled: false
 
 Gemspec/AddRuntimeDependency: # new in 1.65
+  Enabled: true
+
+Lint/DuplicateSetElement: # new in 1.67
+  Enabled: true
+Lint/UselessNumericOperation: # new in 1.66
+  Enabled: true
+Style/RedundantInterpolationUnfreeze: # new in 1.66
+  Enabled: true
+Rails/EnumSyntax: # new in 2.26
+  Enabled: true
+  Exclude:
+    - app/models/work_version.rb
+RSpec/StringAsInstanceDoubleConstant: # new in 3.1
   Enabled: true
