@@ -30,6 +30,7 @@ class WorkVersion < ApplicationRecord
   validates :license, inclusion: { in: License.license_list(include_displayable: true) }
   validates :subtype, work_subtype: true
   validates :work_type, presence: true, work_type: true
+  validate :number_of_files
 
   strip_attributes allow_empty: true, only: %i[title abstract citation]
 
@@ -220,6 +221,25 @@ class WorkVersion < ApplicationRecord
   end
 
   private
+
+  # if the user selects browser or zip upload types, prevent them from depositing an object with more
+  # than the allowed number of files which could cause problems with the deposit process in accessioning
+  def number_of_files
+    return if globus?
+
+    return if attached_files.empty?
+
+    max_files_allowed = if browser?
+                          Settings.max_upload_files
+                        else
+                          Settings.max_files_in_zip
+                        end
+    return unless attached_files.length > max_files_allowed
+
+    error_msg = "You cannot add more than #{max_files_allowed} files via #{upload_type} upload. "
+    error_msg += 'Please select a different method.'
+    errors.add(:base, error_msg)
+  end
 
   def locally_cached_file_for(blob)
     return unless blob.service.instance_of?(ActiveStorage::Service::DiskService)
