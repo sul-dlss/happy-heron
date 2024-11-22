@@ -56,7 +56,7 @@
     <div class="form-check pt-3" data-complex-radio-target="selection">
       <%= form.radio_button :upload_type, 'zipfile', class: 'form-check-input',
                                                      data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus', file_uploads_target: 'zipRadioButton' } %>
-      <%= form.label :upload_type_zipfile, "Upload a single zip file (containing fewer than #{number_with_delimiter(Settings.max_files_in_zip)} files and less than 10GB total), which will be unzipped, including any hierarchy.", class: 'form-check-label fw-semibold' %>
+      <%= form.label :upload_type_zipfile, "Upload a single zip file (containing fewer than #{number_with_delimiter(Settings.max_files_in_object)} files and less than 10GB total), which will be unzipped, including any hierarchy.", class: 'form-check-label fw-semibold' %>
       <div id="zip-files-panel" data-file-uploads-target="zipUpload">
         <p>Viewers will see the file hierarchy and be able to download individual files. Unzipping may take several minutes if your zip file contains a large number of individual files.</p>
         <p><strong>Warning:</strong> this file upload option will automatically replace all existing files on your item with the content in the new zip file.</p>
@@ -88,7 +88,7 @@
     <div class="form-check pt-3" data-complex-radio-target="selection">
       <%= form.radio_button :upload_type, 'globus', class: 'form-check-input', 'data-file-uploads-target': 'globusRadioButton', 'data-deposit-button-target': 'globusRadioButton',
                                                     data: { action: 'complex-radio#disableUnselectedInputs file-uploads#updatePanelVisibility deposit-button#updateDepositButtonStatus' } %>
-      <%= form.label :upload_type_globus, "Upload one or more files via Globus (fewer than #{number_with_delimiter(Settings.max_files_in_zip)} files and less than 4TB total) which will be displayed as uploaded, including any file hierarchy.", class: 'form-check-label fw-semibold' %>
+      <%= form.label :upload_type_globus, "Upload one or more files via Globus (fewer than #{number_with_delimiter(Settings.max_files_in_object)} files and less than 4TB total) which will be displayed as uploaded, including any file hierarchy.", class: 'form-check-label fw-semibold' %>
 
       <div data-file-uploads-target="globusUpload">
         <p>Please notify us at <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> if you are uploading 1TB or more of content.</p>

@@ -128,4 +128,4 @@ dor_services:
 workflow_url: 'https://workflow.example.com/workflow'
 
 max_upload_files: 250
-max_files_in_zip: 3
+max_files_in_object: 25000
