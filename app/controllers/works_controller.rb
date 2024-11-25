@@ -192,6 +192,8 @@ class WorksController < ObjectsController
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def after_save(form:, event_context:)
     work_version = form.model[:work_version]
     work = form.model[:work]
@@ -201,7 +203,14 @@ class WorksController < ObjectsController
     # Instead of crazy conditional logic, constructing the event name and sending
     state_event = state_event_for(work_version)
     if state_event
-      work_version.send(state_event)
+      begin
+        work_version.send(state_event)
+      rescue StateMachines::InvalidTransition
+        error_message = work.head.errors.full_messages.join("\n")
+        Honeybadger.notify(error_message, context: { work_version_id: work_version.id, state_event: })
+        flash[:error] = error_message
+        return redirect_to edit_work_path(work)
+      end
       if state_event.starts_with?('fetch_globus')
         FetchGlobusJob.perform_later(work_version)
       elsif state_event.starts_with?('unzip')
@@ -216,6 +225,8 @@ class WorksController < ObjectsController
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def state_event_for(work_version)
     event_parts = [file_event_part(work_version), workflow_event_part(work_version.work)].compact
