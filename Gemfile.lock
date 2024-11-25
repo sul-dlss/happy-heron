@@ -316,7 +316,7 @@ GEM
       zeitwerk
     hashdiff (1.1.2)
     hashie (5.0.0)
-    honeybadger (5.22.0)
+    honeybadger (5.24.0)
       logger
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
@@ -366,7 +366,7 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
-    minitest (5.25.1)
+    minitest (5.25.2)
     moab-versioning (6.1.0)
       druid-tools (>= 1.0.0)
       json
@@ -376,7 +376,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
-    mutex_m (0.2.0)
+    mutex_m (0.3.0)
     net-http (0.5.0)
       uri
     net-imap (0.5.1)
@@ -437,7 +437,7 @@ GEM
     psych (5.2.0)
       stringio
     public_suffix (6.0.1)
-    puma (6.4.3)
+    puma (6.5.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.8)
@@ -482,7 +482,7 @@ GEM
     rb-inotify (0.11.1)
       ffi (~> 1.0)
     rbtree (0.4.6)
-    rdoc (6.7.0)
+    rdoc (6.8.1)
       psych (>= 4.0.0)
     redis (4.8.1)
     redis-client (0.22.2)
@@ -582,7 +582,7 @@ GEM
     serverengine (2.1.1)
       sigdump (~> 0.2.2)
     set (1.1.0)
-    sidekiq (7.3.5)
+    sidekiq (7.3.6)
       connection_pool (>= 2.3.0)
       logger
       rack (>= 2.2.4)
