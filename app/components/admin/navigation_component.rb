@@ -16,6 +16,7 @@ module Admin
                                     ['Search for user', admin_users_path],
                                     ['Generate collection report', new_admin_collection_report_path],
                                     ['Generate item report', new_admin_work_report_path],
+                                    ['Generate SUNETID report for druids', new_admin_sunetid_report_path],
                                     ['Edit page content', admin_page_content_index_path]],
                                    selected || request.env['PATH_INFO'])
       select_tag 'path', options, class: 'form-select', onchange: 'window.location.href = this.value'
