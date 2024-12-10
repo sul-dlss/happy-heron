@@ -40,6 +40,8 @@ module Admin
       'license',
       'custom rights',
       'DOI',
+      'work type',
+      'work subtypes',
       'collection title',
       'collection id',
       'collection druid'
@@ -66,6 +68,8 @@ module Admin
         version.license,
         version.custom_rights ? 'yes' : 'no',
         work.doi,
+        version.work_type,
+        version.subtype&.join('; '),
         collection.head.name,
         collection.id,
         collection.druid_without_namespace
