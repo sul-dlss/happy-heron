@@ -33,8 +33,8 @@ RSpec.describe Admin::WorkCsvGenerator do
 
     it 'generates a CSV' do
       expect(csv).to eq <<~CSV
-        item title,work id,druid,state,version number,depositor,owner,date created,date last modified,date last deposited,release,visibility,license,custom rights,DOI,collection title,collection id,collection druid
-        Test title 1,1,cn748wq9511,deposited,1,user1,user2,2007-02-10 15:30:45 UTC,2019-01-01 00:00:00 UTC,2019-01-01 00:00:00 UTC,immediate,world,CC0-1.0,yes,10.25740/bc123df4567,Test collection,2,bb000bb0000
+        item title,work id,druid,state,version number,depositor,owner,date created,date last modified,date last deposited,release,visibility,license,custom rights,DOI,work type,work subtypes,collection title,collection id,collection druid
+        Test title 1,1,cn748wq9511,deposited,1,user1,user2,2007-02-10 15:30:45 UTC,2019-01-01 00:00:00 UTC,2019-01-01 00:00:00 UTC,immediate,world,CC0-1.0,yes,10.25740/bc123df4567,text,Code; Oral history,Test collection,2,bb000bb0000
       CSV
     end
   end
@@ -52,8 +52,8 @@ RSpec.describe Admin::WorkCsvGenerator do
 
     it 'generates a CSV' do
       expect(csv).to eq <<~CSV
-        item title,work id,druid,state,version number,depositor,owner,date created,date last modified,date last deposited,release,visibility,license,custom rights,DOI,collection title,collection id,collection druid
-        Test title 1,1,cn748wq9511,deposited,1,user1,user2,2007-02-10 15:30:45 UTC,2019-01-01 00:00:00 UTC,2019-01-01 00:00:00 UTC,immediate,world,CC0-1.0,no,10.25740/bc123df4567,Test collection,2,bb000bb0000
+        item title,work id,druid,state,version number,depositor,owner,date created,date last modified,date last deposited,release,visibility,license,custom rights,DOI,work type,work subtypes,collection title,collection id,collection druid
+        Test title 1,1,cn748wq9511,deposited,1,user1,user2,2007-02-10 15:30:45 UTC,2019-01-01 00:00:00 UTC,2019-01-01 00:00:00 UTC,immediate,world,CC0-1.0,no,10.25740/bc123df4567,text,Code; Oral history,Test collection,2,bb000bb0000
       CSV
     end
   end
