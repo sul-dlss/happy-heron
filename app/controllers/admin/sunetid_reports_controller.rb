@@ -3,8 +3,6 @@
 module Admin
   # Produce a report of SUNETIDs associated with the provided list of druids
   class SunetidReportsController < ApplicationController
-    include Dry::Monads[:result]
-
     before_action :authenticate_user!
     verify_authorized
 
@@ -35,7 +33,7 @@ module Admin
     end
 
     def generate_csv
-      Admin::SunetCsvGenerator.generate(@results)
+      Admin::SunetidCsvGenerator.generate(@results)
     end
 
     def report_params
