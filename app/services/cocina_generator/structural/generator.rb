@@ -54,7 +54,8 @@ module CocinaGenerator
       # rubocop:disable Metrics/AbcSize
       def build_fileset(attached_file:, fileset: nil)
         # h2 only has one file per fileset
-        cocina_file = fileset&.structural&.contains&.first
+        structural = fileset&.structural
+        cocina_file = structural&.contains&.first
         resource_id = SecureRandom.uuid if cocina_file.blank?
         {
           type: Cocina::Models::FileSetType.file,
