@@ -11,18 +11,17 @@ module Admin
 
     def initialize(report)
       @report = report
+      report.druids.map! { |druid| druid.start_with?('druid:') ? druid : "druid:#{druid}" }
     end
 
     def generate
-      self.query = Work.where(druid: report.druids)
-                       .joins(:head, :owner)
-      query.order('users.email ASC')
+      self.query = Work.where(druid: report.druids).joins(:depositor)
+      query.order('users.email ASC, works.druid ASC')
     end
 
     private
 
     attr_reader :report
     attr_accessor :query
-
   end
 end
