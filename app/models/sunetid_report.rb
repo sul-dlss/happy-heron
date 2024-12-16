@@ -5,5 +5,5 @@ class SunetidReport
   include ActiveModel::API
   include ActiveModel::Attributes
 
-  attribute :druids, array: true, default: -> { [] }
+  attribute :druids
 end

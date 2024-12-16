@@ -12,7 +12,7 @@ RSpec.describe Admin::SunetidReportQuery do
   let!(:work2) { create(:work, collection:, druid: druid2, depositor: user, owner: user) }
 
   context 'with two prefixed druids' do
-    let(:report) { SunetidReport.new(druids: [work1.druid, work2.druid]) }
+    let(:report) { SunetidReport.new(druids: [work1.druid, work2.druid].join("\n")) }
 
     it 'returns all works sorted by email' do
       expect(request.to_a).to eq [work1, work2]
@@ -20,7 +20,9 @@ RSpec.describe Admin::SunetidReportQuery do
   end
 
   context 'with two unprefixed druids' do
-    let(:report) { SunetidReport.new(druids: [work1.druid_without_namespace, work2.druid_without_namespace]) }
+    let(:report) do
+      SunetidReport.new(druids: [work1.druid_without_namespace, work2.druid_without_namespace].join("\n"))
+    end
 
     it 'returns all works sorted by email' do
       expect(request.to_a).to eq [work1, work2]
