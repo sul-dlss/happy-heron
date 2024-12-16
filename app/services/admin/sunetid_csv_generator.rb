@@ -26,19 +26,14 @@ module Admin
 
     HEADERS = [
       'druid',
-      'depositor'
+      'depositor sunetid'
     ].freeze
 
-    # rubocop:disable Metrics/AbcSize
     def row(work)
-      version = work.head
-      collection = work.collection
-
       [
-        work.druid_without_namespace,
+        work.druid,
         work.depositor.sunetid
       ]
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end
