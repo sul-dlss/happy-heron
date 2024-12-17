@@ -9,6 +9,7 @@ RSpec.describe Admin::SunetidCsvGenerator do
   let!(:user) { create(:user, email: 'user1@stanford.edu') }
   let(:druid1) { 'druid:bc123df4567' }
   let(:druid2) { 'druid:bc123df4568' }
+  let(:druid3) { 'druid:bc123df4569' }
   let!(:work1) { create(:work, collection:, druid: druid1, depositor: user, owner: user) }
   let!(:work2) { create(:work, collection:, druid: druid2, depositor: user, owner: user) }
 
@@ -43,6 +44,19 @@ RSpec.describe Admin::SunetidCsvGenerator do
         druid,depositor sunetid
         druid:bc123df4567,user1
         druid:bc123df4569,user2
+      CSV
+    end
+  end
+
+  context 'when a work is not found' do
+    let(:relation) { [work1, work2, druid3] }
+
+    it 'generates a CSV including the missing druid' do
+      expect(csv).to eq <<~CSV
+        druid,depositor sunetid
+        druid:bc123df4567,user1
+        druid:bc123df4568,user1
+        druid:bc123df4569,sunetid not found
       CSV
     end
   end

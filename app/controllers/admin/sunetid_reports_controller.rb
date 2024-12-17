@@ -26,18 +26,29 @@ module Admin
     end
 
     private
-
+  
     def generate_report
-      @report = SunetidReport.new(druids: report_params[:druids])
+      @druids = druids_with_prefix(report_params[:druids])
+      @report = SunetidReport.new(druids: @druids)
       @results = Admin::SunetidReportQuery.generate(@report)
     end
 
     def generate_csv
-      Admin::SunetidCsvGenerator.generate(@results)
+      Admin::SunetidCsvGenerator.generate([@results.to_a, missing_druids].flatten)
     end
 
     def report_params
       params.require(:sunetid_report).permit(:druids)
+    end
+
+    def druids_with_prefix(druids)
+      return [] if druids.blank?
+
+      druids.split("\n").map { |druid| druid.start_with?('druid:') ? druid : "druid:#{druid}" }.map(&:strip)
+    end
+
+    def missing_druids
+      @missing_druids ||= @druids - @results.pluck(:druid)
     end
   end
 end

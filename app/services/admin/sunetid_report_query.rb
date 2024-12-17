@@ -11,23 +11,17 @@ module Admin
 
     def initialize(report)
       @report = report
-      @druids = prefixed_druids(report.druids)
     end
 
     def generate
-      self.query = Work.where(druid: druids).joins(:depositor)
-      query.order('users.email ASC, works.druid ASC')
+      self.query = Work.where(druid: report.druids).joins(:depositor)
+      # self.query.to_a.append(druids - query.pluck(:druid))
+      # debugger
     end
 
     private
 
     attr_reader :report, :druids
     attr_accessor :query
-
-    def prefixed_druids(druids)
-      return [] if druids.blank?
-
-      druids.split("\n").map { |druid| druid.start_with?('druid:') ? druid : "druid:#{druid}" }.map(&:strip)
-    end
   end
 end
