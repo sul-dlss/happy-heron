@@ -3,18 +3,18 @@
 module Admin
   # Converts a set of works to CSV.
   class SunetidCsvGenerator
-    def self.generate(relation)
-      new(relation).generate
+    def self.generate(works)
+      new(works).generate
     end
 
-    def initialize(relation)
-      @relation = relation
+    def initialize(works)
+      @works = works
     end
 
     def generate
       CSV.generate do |csv|
         csv << HEADERS
-        relation.each do |work|
+        works.each do |work|
           csv << row(work)
         end
       end
@@ -22,7 +22,7 @@ module Admin
 
     private
 
-    attr_reader :relation
+    attr_reader :works
 
     HEADERS = [
       'druid',
@@ -30,6 +30,8 @@ module Admin
     ].freeze
 
     def row(work)
+      return [work, 'sunetid not found'] unless work.is_a?(Work)
+
       [
         work.druid,
         work.depositor.sunetid
