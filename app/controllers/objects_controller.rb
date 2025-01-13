@@ -5,6 +5,6 @@ class ObjectsController < ApplicationController
   protected
 
   def deposit_button_pushed?
-    params[:commit] == 'Deposit' || params[:commit] == 'Submit for approval'
+    ['Deposit', 'Submit for approval'].include?(params[:commit])
   end
 end
