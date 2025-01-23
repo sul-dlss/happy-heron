@@ -55,7 +55,7 @@ set :sneakers_systemd_use_hooks, true
 namespace :rabbitmq do
   desc 'Runs rake rabbitmq:setup'
   task setup: ['deploy:set_rails_env'] do
-    on roles(:worker) do
+    on roles(fetch(:sneakers_systemd_role)) do
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute :rake, 'rabbitmq:setup'
