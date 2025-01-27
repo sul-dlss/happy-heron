@@ -15,8 +15,6 @@ happy-heron, or H2 (from "Hydrus 2.0"), is a Rails web application enabling user
 
 Ruby dependencies can be installed with `bundle install`, JavaScript dependencies are installed via `yarn install`.
 
-NOTE: H2 uses Ruby 3.3.1
-
 ## Development
 
 Start up dependencies with `docker compose up db redis` (with `-d` to run in background).

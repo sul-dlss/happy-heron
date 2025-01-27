@@ -1,7 +1,7 @@
 # This Dockerfile is optimized for running in development. That means it trades
 # build speed for size. If we were using this for production, we might instead
 # optimize for a smaller size at the cost of a slower build.
-FROM ruby:3.3.1-bookworm
+FROM ruby:3.4.1-bookworm
 
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
 
