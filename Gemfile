@@ -34,8 +34,6 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'multi_json', require: false
   gem 'puma'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'state_machines-graphviz'
   gem 'tty-progressbar'
   gem 'web-console', '>= 3.3.0'
@@ -75,7 +73,6 @@ gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'lograge', '~> 0.11.2'
 gem 'mais_orcid_client'
-gem 'mutex_m' # This can be removed when H2 is upgraded to Rails 7.1
 gem 'okcomputer'
 gem 'pg'
 gem 'preservation-client'
