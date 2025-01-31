@@ -1,6 +1,5 @@
 [![CircleCI](https://circleci.com/gh/sul-dlss/happy-heron.svg?style=svg)](https://circleci.com/gh/sul-dlss/happy-heron)
-[![Maintainability](https://api.codeclimate.com/v1/badges/3dbc6311e79b7045bed4/maintainability)](https://codeclimate.com/github/sul-dlss/happy-heron/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/3dbc6311e79b7045bed4/test_coverage)](https://codeclimate.com/github/sul-dlss/happy-heron/test_coverage)
+[![codecov](https://codecov.io/github/sul-dlss/happy-heron/graph/badge.svg?token=OHTL8OTMX8)](https://codecov.io/github/sul-dlss/happy-heron)
 
 # Self-Deposit for the Stanford Digital Repository (SDR)
 
@@ -69,7 +68,7 @@ Start up dependencies with `docker compose up db` (with `-d` to run in backgroun
 
 Create and migrate the database with `bin/rails db:prepare` and seed the test database with `RAILS_ENV=test bin/rails db:seed`
 
-Install JavaScript dependencies and build assets with `bin/rake test:prepare`. 
+Install JavaScript dependencies and build assets with `bin/rake test:prepare`.
 
 Then run tests with `bundle exec rspec`. (**NOTE**: This does not run accessibility tests, which are slow. To run these, use `bundle exec rspec --tag accessibility`.)
 
