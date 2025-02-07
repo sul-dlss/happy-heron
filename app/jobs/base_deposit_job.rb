@@ -2,7 +2,7 @@
 
 # Base class for Deposit jobs.
 class BaseDepositJob < ApplicationJob
-  protected
+  private
 
   def login
     SdrClientAuthenticator.login
