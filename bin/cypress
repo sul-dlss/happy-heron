@@ -3,7 +3,6 @@
 ENV["RAILS_ENV"] ||= "test"
 ENV["REMOTE_USER"] ||= "auser@stanford.edu"
 ENV["ROLES"] ||= "dlss:hydrus-app-administrators"
-ENV["CYPRESS_RAILS_CYPRESS_OPTS"] ||= '--browser firefox'
 require "pathname"
 require "cypress-rails"
 require Pathname.new(CypressRails::Config.new.rails_dir).join("config/environment")

@@ -21,7 +21,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "cypress": "^13.8.1",
+    "cypress": "^14.0.2",
     "eslint": "^8.0.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.25.2",
@@ -29,7 +29,9 @@
     "eslint-plugin-promise": "^6.0.0",
     "standard": "^17.1.0"
   },
-  "browserslist": ["defaults"],
+  "browserslist": [
+    "defaults"
+  ],
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "build": "./esbuild.config.js",

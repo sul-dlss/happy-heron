@@ -1,11 +1,10 @@
 ---
 version: 2.1
 orbs:
-  ruby-rails: sul-dlss/ruby-rails@4.4.0
-  browser-tools: circleci/browser-tools@1.5.0
-  node: circleci/node@7.0.0
-  ruby: circleci/ruby@2.3.1
-  cypress: cypress-io/cypress@2.2.0
+  ruby-rails: sul-dlss/ruby-rails@4.5.0
+  browser-tools: circleci/browser-tools@1.5.2
+  ruby: circleci/ruby@2.4.0
+  cypress: cypress-io/cypress@3.4.3
 jobs:
   cypress:
     executor: ruby-rails/ruby-postgres
@@ -13,25 +12,14 @@ jobs:
       - checkout
       - ruby/install-deps
       - cypress/install:
-          yarn: true
-          post-install:
-            - run: sudo apt-get update
-            - run: sudo apt-get install --fix-missing libgtk2.0-0 libgtk-3-0 libgbm-dev
-                libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6
-                xauth xvfb
-      - browser-tools/install-firefox:
-          version: 115.9.0esr
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          name: Install javascript dependencies and build assets
-          command: bin/rake test:prepare
-      - run:
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-          name: Wait for DB
-      - run:
-          command: bundle exec bin/cypress run
-          name: Test
+          package-manager: yarn
+          post-install: |
+            sudo apt-get update
+            sudo apt-get install xvfb libnss3-dev libatk1.0-0 libatk-bridge2.0-0 libcups2-dev libgtk-3-dev
+      - cypress/run-tests:
+          cypress-command: |
+            bin/rake test:prepare
+            bin/bundle exec bin/cypress run
   accessibility-features:
     executor: ruby-rails/ruby-postgres
     steps:
@@ -42,11 +30,8 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
           name: Wait for DB
       - run:
-          command: bin/rails db:prepare
-          name: Set up DB
-      - run:
-          name: Install javascript dependencies and build assets
-          command: bin/rake test:prepare
+          name: Set up DB & tests
+          command: bin/rake db:prepare test:prepare
       - run:
           name: Run accessibility feature tests
           command: bundle exec rspec --tag accessibility
@@ -66,8 +51,5 @@ workflows:
           use-codecov: true
           before-test:
             - run:
-                name: Install javascript dependencies and build assets
-                command: bin/rake test:prepare
-            - run:
-                name: install seeds
-                command: bundle exec rails db:seed
+                name: Set up DB & tests
+                command: bin/rake db:prepare db:seed test:prepare

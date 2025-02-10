@@ -42,19 +42,19 @@ class WorkVersion < ApplicationRecord
       .distinct
   }
 
-  enum access: {
+  enum :access, {
     stanford: 'stanford',
     world: 'world'
   }
 
   # provides helper method to infer upload type... e.g. work_version.globus?
-  enum upload_type: {
+  enum :upload_type, {
     browser: 'browser',
     globus: 'globus',
     zipfile: 'zipfile'
   }
 
-  enum globus_origin: {
+  enum :globus_origin, {
     stanford_gdrive: 'stanford_gdrive',
     oak: 'oak',
     sherlock: 'sherlock'
