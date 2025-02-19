@@ -293,9 +293,7 @@ class BaseWorkForm < Reform::Form
   # rubocop:enable Metrics/AbcSize
 
   # Override reform so that this looks just like a Work
-  def model_name
-    Work.model_name
-  end
+  delegate :model_name, to: :Work
 
   def will_assign_doi?
     (collection.doi_option == 'depositor-selects' && assign_doi) || collection.doi_option == 'yes'

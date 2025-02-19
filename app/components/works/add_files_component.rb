@@ -3,15 +3,13 @@
 module Works
   # The widget that uploads files to active storage and attaches them to the work.
   class AddFilesComponent < ApplicationComponent
+    delegate :max_upload_files, to: :Settings
+
     def initialize(form:)
       @form = form
     end
 
     attr_reader :form
-
-    def max_upload_files
-      Settings.max_upload_files
-    end
 
     def has_attached_files?
       form.object.attached_files.any?

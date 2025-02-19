@@ -1,10 +1,12 @@
 require:
   - rubocop-capybara
   - rubocop-factory_bot
+  - rubocop-rspec_rails
+
+plugins:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-rspec_rails
 
 #### Local Settings
 
@@ -731,4 +733,21 @@ Lint/ConstantReassignment: # new in 1.70
 Lint/SharedMutableDefault: # new in 1.70
   Enabled: true
 Style/ItAssignment: # new in 1.70
+  Enabled: true
+
+Lint/ArrayLiteralInRegexp: # new in 1.71
+  Enabled: true
+Lint/CopDirectiveSyntax: # new in 1.72
+  Enabled: true
+Lint/SuppressedExceptionInNumberConversion: # new in 1.72
+  Enabled: true
+Style/HashSlice: # new in 1.71
+  Enabled: true
+Style/RedundantFormat: # new in 1.72
+  Enabled: true
+Performance/ZipWithoutBlock: # new in 1.24
+  Enabled: true
+Rails/MultipleRoutePaths: # new in 2.29
+  Enabled: true
+Rails/StrongParametersExpect: # new in 2.29
   Enabled: true

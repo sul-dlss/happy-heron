@@ -12,6 +12,7 @@ jobs:
       - checkout
       - ruby/install-deps
       - cypress/install:
+          node-cache-version: v2 # Invalidate earlier caches to pick up latest Cypress version
           package-manager: yarn
           post-install: |
             sudo apt-get update
