@@ -161,6 +161,7 @@ module CocinaGenerator
         'Research group' => 'res',
         'Sponsor' => 'spn'
       }.freeze
+      private_constant :ROLE_TO_MARC_RELATOR_CODE
 
       MARC_RELATOR_CODE_TO_VALUE = {
         'aut' => 'author',
@@ -189,6 +190,7 @@ module CocinaGenerator
         'spn' => 'sponsor',
         'ths' => 'thesis advisor'
       }.freeze
+      private_constant :MARC_RELATOR_CODE_TO_VALUE
 
       def identifiers(contributor)
         return unless contributor.orcid

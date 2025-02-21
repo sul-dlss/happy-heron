@@ -46,6 +46,7 @@ module Admin
       'DOI yes/no',
       'review workflow'
     ].freeze
+    private_constant :HEADERS
 
     # rubocop:disable Metrics/AbcSize
     def row(collection)

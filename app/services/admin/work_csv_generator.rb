@@ -46,6 +46,7 @@ module Admin
       'collection id',
       'collection druid'
     ].freeze
+    private_constant :HEADERS
 
     # rubocop:disable Metrics/AbcSize
     def row(work)

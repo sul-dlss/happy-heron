@@ -76,6 +76,7 @@ class ApplicationController < ActionController::Base
   end
 
   MAX_LOCATION_SIZE = ActionDispatch::Cookies::MAX_COOKIE_SIZE / 3
+  private_constant :MAX_LOCATION_SIZE
 
   # This overrides devise so that we always check that we have enough space in the cookie
   # to store the full location.
