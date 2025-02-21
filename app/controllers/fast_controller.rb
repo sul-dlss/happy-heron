@@ -65,6 +65,7 @@ class FastController < ApplicationController
   end
 
   URI_PREFIX = 'http://id.worldcat.org/fast/'
+  private_constant :URI_PREFIX
 
   def key(idroot, type)
     "#{URI_PREFIX}#{idroot.delete_prefix('fst').to_i}/::#{cocina_type(type)}"
@@ -81,6 +82,7 @@ class FastController < ApplicationController
     151 => 'place',
     155 => 'genre'
   }.freeze
+  private_constant :TAG_TYPES
 
   def cocina_type(type)
     TAG_TYPES.fetch(type, 'topic')

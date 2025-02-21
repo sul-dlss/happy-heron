@@ -751,3 +751,8 @@ Rails/MultipleRoutePaths: # new in 2.29
   Enabled: true
 Rails/StrongParametersExpect: # new in 2.29
   Enabled: true
+
+Lint/RedundantTypeConversion: # new in 1.72
+  Enabled: true
+Lint/UselessConstantScoping: # new in 1.72
+  Enabled: true
