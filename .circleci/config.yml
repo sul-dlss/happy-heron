@@ -17,6 +17,9 @@ jobs:
           post-install: |
             sudo apt-get update
             sudo apt-get install xvfb libnss3-dev libatk1.0-0 libatk-bridge2.0-0 libcups2-dev libgtk-3-dev
+      - run:
+          name: Update browserslist
+          command: npx update-browserslist-db@latest
       - cypress/run-tests:
           cypress-command: |
             bin/rake test:prepare
