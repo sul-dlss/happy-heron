@@ -30,6 +30,11 @@ module HappyHeron
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # Add timestamps to all loggers (both Rack-based ones and e.g. Sidekiq's)
+    config.log_formatter = proc do |severity, datetime, _progname, msg|
+      "[#{datetime.to_fs(:iso8601)}] [#{severity}] #{msg}\n"
+    end
+
     # Don't bother running AS analyzers since we handle technical metadata elsewhere
     config.active_storage.analyzers = []
 
