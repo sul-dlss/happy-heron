@@ -24,7 +24,8 @@ class OrcidStanfordUserService
     @mais_orcid_client ||= MaisOrcidClient.configure(
       client_id: Settings.mais_orcid.client_id,
       client_secret: Settings.mais_orcid.client_secret,
-      base_url: Settings.mais_orcid.base_url
+      base_url: Settings.mais_orcid.base_url,
+      token_url: Settings.mais_orcid.token_url
     )
   end
 end
