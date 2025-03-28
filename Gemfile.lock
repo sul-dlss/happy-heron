@@ -357,11 +357,12 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mais_orcid_client (0.4.0)
+    mais_orcid_client (1.0.0)
       activesupport (>= 4.2)
       faraday
       faraday-retry
       oauth2
+      ostruct
       zeitwerk
     marcel (1.0.4)
     matrix (0.4.2)
@@ -741,7 +742,11 @@ DEPENDENCIES
   jsbundling-rails
   listen (~> 3.2)
   lograge (~> 0.11.2)
+<<<<<<< HEAD
   mais_orcid_client (< 1)
+=======
+  mais_orcid_client (>= 1.0)
+>>>>>>> b5a75e5c (use latest mais-orcid-client gem)
   multi_json
   okcomputer
   pg
