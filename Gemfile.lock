@@ -741,7 +741,7 @@ DEPENDENCIES
   jsbundling-rails
   listen (~> 3.2)
   lograge (~> 0.11.2)
-  mais_orcid_client
+  mais_orcid_client (< 1)
   multi_json
   okcomputer
   pg
