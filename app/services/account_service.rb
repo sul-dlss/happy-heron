@@ -19,20 +19,20 @@ class AccountService
       # The account service frequently returns 500 errors. Retry the connection five times in rapid succession.
       begin
         tries ||= 1
-        response_body = connection.get(url).body
-        Honeybadger.context(sunetid:, response_body:)
+        response = connection.get(url)
+        Honeybadger.context(sunetid:, response:)
         # Raise and retry if the response is an HTTP 500.
         #
         # If, on the other hand, a bogus sunetid is provided, the `status` of the response will be 404, and then we:
         #
         # 1. Do *not* want to retry; but
         # 2. *Do* want to cache the empty document
-        raise AccountServiceHiccough if response_body['status'] == 500
+        raise AccountServiceHiccough if response.status == 500
 
         # Write the user's name and description to the cache, *or* write an
         # empty document to the cache if the response is a 404, as that response
         # has no `name` and `description` keys.
-        response_body.slice('name', 'description')
+        response.body.slice('name', 'description')
       rescue AccountServiceHiccough
         retry if (tries += 1) <= 5
 
