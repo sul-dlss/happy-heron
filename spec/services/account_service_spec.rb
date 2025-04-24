@@ -53,5 +53,49 @@ RSpec.describe AccountService do
         expect(fetch).to eq({})
       end
     end
+
+    context 'when API returns a 404 response' do
+      let(:body) do
+        <<~JSON
+          {
+            "status":404,
+            "message":"Account [foobarbaz] not found",
+            "url":"https://accountws-uat.stanford.edu/accounts/foobarbaz"
+          }
+        JSON
+      end
+      let(:sunetid) { 'foobarbaz' }
+
+      before do
+        stub_request(:get, 'https://accountws-uat.stanford.edu/accounts/foobarbaz')
+          .to_return(status: 404, body:, headers: { 'Content-Type' => 'application/json' })
+      end
+
+      it 'returns an empty response' do
+        expect(fetch).to eq({})
+      end
+    end
+
+    context 'when API returns a 500 response' do
+      let(:body) do
+        <<~JSON
+          {
+            "status":500,
+            "message":"Internal Error - Failed to find account due to Could not open JPA EntityManager for transaction; nested exception is org.hibernate.exception.JDBCConnectionException: Could not open connection",
+            "url":"https://accountws-uat.stanford.edu/accounts/foobarbaz"
+          }
+        JSON
+      end
+      let(:sunetid) { 'foobarbaz' }
+
+      before do
+        stub_request(:get, 'https://accountws-uat.stanford.edu/accounts/foobarbaz')
+          .to_return(status: 500, body:, headers: { 'Content-Type' => 'application/json' })
+      end
+
+      it 'retries up to five times' do
+        expect(fetch).to be_nil
+      end
+    end
   end
 end
