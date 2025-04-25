@@ -164,8 +164,39 @@ RSpec.describe 'Fast Controller' do
       get '/fast', params: { q: 'tea' }
       expect(response).to have_http_status :internal_server_error
       expect(response.body).to eq ''
-      expect(Rails.logger).to have_received(:warn).with('Autocomplete results for tea returned 404')
-      expect(Honeybadger).to have_received(:notify).with('FAST API Error', context: hash_including(:params, :response))
+      expect(Rails.logger).to have_received(:warn).with('Autocomplete results for tea returned HTTP 404')
+      expect(Honeybadger).to have_received(:notify)
+        .with('FAST API Error', context: hash_including(:params, :response)).once
+    end
+  end
+
+  context 'when malformed JSON is received from the lookup server' do
+    let(:body) do
+      <<~MALFORMED_JSON
+        Status: 400
+        Reason: Bad Request
+      MALFORMED_JSON
+    end
+
+    before do
+      url = "#{Settings.autocomplete_lookup.url}?query=tea#{other_params}"
+      stub_request(:get, url)
+        .with(headers:)
+        .to_return(status: 200, body:, headers: {})
+      allow(Rails.logger).to receive(:warn)
+      allow(Honeybadger).to receive(:notify)
+    end
+
+    it 'returns status 500 and an empty body' do
+      get '/fast', params: { q: 'tea' }
+      expect(response).to have_http_status :internal_server_error
+      expect(response.body).to eq ''
+      expect(Rails.logger).to have_received(:warn)
+        .with("Autocomplete results for tea returned unexpected response 'Status: 400\n" \
+              "Reason: Bad Request\n" \
+              "'")
+      expect(Honeybadger).to have_received(:notify)
+        .with('Unexpected response from FAST API', context: hash_including(:params, :response, :exception)).once
     end
   end
 end
