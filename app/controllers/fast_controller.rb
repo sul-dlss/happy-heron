@@ -40,11 +40,11 @@ class FastController < ApplicationController
 
     return Success(parse(response.body)) if response.success?
 
-    Honeybadger.notify('FAST API Error', context: { response:, params: params.to_unsafe_h })
+    Honeybadger.notify('FAST API Error', context: { response: response.to_hash, params: params.to_unsafe_h })
     Failure("Autocomplete results for #{query} returned HTTP #{response.status}")
   rescue JSON::ParserError => e
     Honeybadger.notify('Unexpected response from FAST API',
-                       context: { response:, params: params.to_unsafe_h, exception: e })
+                       context: { response: response.to_hash, params: params.to_unsafe_h, exception: e })
     Failure("Autocomplete results for #{query} returned unexpected response '#{response.body}'")
   end
 
