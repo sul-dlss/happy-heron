@@ -27,7 +27,7 @@ class FastController < ApplicationController
   end
 
   def lookup(query) # rubocop:disable Metrics/AbcSize
-    resp = lookup_connection.get do |req|
+    response = lookup_connection.get do |req|
       req.params['query'] = query
       req.params['queryIndex'] = 'suggestall'
       req.params['queryReturn'] = 'idroot,suggestall,tag'
@@ -38,10 +38,14 @@ class FastController < ApplicationController
       req.params['sort'] = 'usage desc'
     end
 
-    return Success(parse(resp.body)) if resp.success?
+    return Success(parse(response.body)) if response.success?
 
-    Honeybadger.notify('FAST API Error', context: { params: params.to_unsafe_h, response: resp })
-    Failure("Autocomplete results for #{query} returned #{resp.status}")
+    Honeybadger.notify('FAST API Error', context: { response:, params: params.to_unsafe_h })
+    Failure("Autocomplete results for #{query} returned HTTP #{response.status}")
+  rescue JSON::ParserError => e
+    Honeybadger.notify('Unexpected response from FAST API',
+                       context: { response:, params: params.to_unsafe_h, exception: e })
+    Failure("Autocomplete results for #{query} returned unexpected response '#{response.body}'")
   end
 
   def parse(body)
