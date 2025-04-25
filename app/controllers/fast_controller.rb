@@ -28,7 +28,7 @@ class FastController < ApplicationController
 
   def lookup(query) # rubocop:disable Metrics/AbcSize
     response = lookup_connection.get do |req|
-      req.params['query'] = query
+      req.params['query'] = ERB::Util.url_encode(query)
       req.params['queryIndex'] = 'suggestall'
       req.params['queryReturn'] = 'idroot,suggestall,tag'
       req.params['suggest'] = 'autoSubject'
