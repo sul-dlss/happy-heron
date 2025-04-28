@@ -20,7 +20,7 @@ class AccountService
       begin
         tries ||= 1
         response = connection.get(url)
-        Honeybadger.context(sunetid:, response:)
+        Honeybadger.context(sunetid:, response: response.to_hash)
         # Raise and retry if the response is an HTTP 500.
         #
         # If, on the other hand, a bogus sunetid is provided, the `status` of the response will be 404, and then we:
