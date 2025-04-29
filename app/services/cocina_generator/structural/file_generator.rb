@@ -73,7 +73,7 @@ module CocinaGenerator
         return cocina_file.hasMessageDigests if cocina_file
 
         [
-          { type: 'md5', digest: base64_to_hexdigest(blob.checksum) },
+          { type: 'md5', digest: attached_file.md5 },
           { type: 'sha1', digest: Digest::SHA1.file(file_path(blob.key)).hexdigest }
         ]
       end
@@ -105,10 +105,6 @@ module CocinaGenerator
 
       def file_path(key)
         ActiveStorage::Blob.service.path_for(key)
-      end
-
-      def base64_to_hexdigest(base64)
-        Base64.decode64(base64).unpack1('H*')
       end
 
       def mime_type
