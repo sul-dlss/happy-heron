@@ -492,7 +492,51 @@ RSpec.describe CocinaGenerator::DROGenerator do
       end
       let(:work) { build(:work, id: 7, druid: 'druid:bk123gh4567', collection:) }
       let(:cocina_obj) do
-        Cocina::RSpec::Factories.build(:dro_with_metadata, id: 'druid:bk123gh4567')
+        Cocina::RSpec::Factories.build(:dro_with_metadata, id: 'druid:bk123gh4567').new(
+          access: {
+            view: 'world',
+            download: 'world'
+          },
+          structural: {
+            contains: [
+              # This has the same filename but different label and md5.
+              {
+                label: 'Original MyString',
+                structural: {
+                  contains: [
+                    {
+                      access: {
+                        view: 'world', download: 'world'
+                      },
+                      administrative: {
+                        publish: true, sdrPreserve: true, shelve: true
+                      },
+                      filename: 'sul.svg',
+                      hasMessageDigests: [
+                        {
+                          digest: 'g6eff9e28f154f79f7a11261bc0d4b41', type: 'md5'
+                        },
+                        {
+                          digest: '2046f6584c2f0f5e9c0df7e8070d14d1ec65f382', type: 'sha1'
+                        }
+                      ],
+                      hasMimeType: 'image/svg+xml',
+                      label: 'MyString',
+                      size: 17_675,
+                      type: Cocina::Models::ObjectType.file,
+                      externalIdentifier: '9999999',
+                      version: 1
+                    }
+                  ]
+                },
+                type: Cocina::Models::FileSetType.file,
+                externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/bk123gh4567-123456',
+                version: 1
+              }
+            ],
+            isMemberOf: [collection.druid]
+          }
+        )
       end
       let(:expected_model) do
         Cocina::Models::DRO.new(

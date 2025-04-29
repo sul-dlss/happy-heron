@@ -10,7 +10,7 @@ class AttachedFile < ApplicationRecord
   end
 
   delegate :blob, to: :file
-  delegate :filename, :content_type, :byte_size, to: :blob
+  delegate :filename, :content_type, :byte_size, :checksum, to: :blob
 
   # This is a temporary method that makes the blobs that haven't yet been updated
   # appear to be from preservation, but it only changes the blob in memory.
@@ -60,6 +60,13 @@ class AttachedFile < ApplicationRecord
   # a string containing the base filename, removing any containing directories if they exist; e.g. 'test.pdf'
   def basename
     path.split(File::SEPARATOR).last
+  end
+
+  # @return [String nil] the MD5 checksum in hexadecimal format or nil if in globus
+  def md5
+    return if in_globus?
+
+    Base64.decode64(checksum).unpack1('H*')
   end
 
   private
