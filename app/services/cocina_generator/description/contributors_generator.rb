@@ -143,13 +143,13 @@ module CocinaGenerator
         'Interviewer' => 'ivr',
         'Performer' => 'prf',
         'Photographer' => 'pht',
-        'Primary thesis advisor' => 'ths',
+        'Primary thesis advisor' => 'dgs',
         'Principal investigator' => 'rth',
         'Producer' => 'pro',
         'Researcher' => 'res',
         'Software developer' => 'prg',
         'Speaker' => 'spk',
-        'Thesis advisor' => 'ths',
+        'Thesis advisor' => 'dgc',
         # organization (when not already listed above)
         # 'Conference' => '', # not a marcrelator role
         'Degree granting institution' => 'dgg',
@@ -171,6 +171,8 @@ module CocinaGenerator
         'cre' => 'creator',
         'ctb' => 'contributor',
         'dgg' => 'degree granting institution',
+        'dgc' => 'degree committee member',
+        'dgs' => 'degree supervisor',
         'dtc' => 'data contributor',
         'edt' => 'editor',
         'fnd' => 'funder',
@@ -187,8 +189,7 @@ module CocinaGenerator
         'res' => 'researcher',
         'rth' => 'research team head',
         'spk' => 'speaker',
-        'spn' => 'sponsor',
-        'ths' => 'thesis advisor'
+        'spn' => 'sponsor'
       }.freeze
       private_constant :MARC_RELATOR_CODE_TO_VALUE
 
