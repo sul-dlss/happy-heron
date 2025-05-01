@@ -32,18 +32,12 @@ module CocinaGenerator
       def deposit_events
         return [] if deposit_versions.blank?
 
-        Array(deposit_publication_event) + deposit_modification_events
+        Array(deposit_publication_event)
       end
 
       def deposit_publication_event
         event_for_work_version(work_version: deposit_publication_version, event_type: 'deposit',
                                date_type: 'publication')
-      end
-
-      def deposit_modification_events
-        deposit_modification_versions.map do |deposit_version|
-          event_for_work_version(work_version: deposit_version, event_type: 'deposit', date_type: 'modification')
-        end
       end
 
       def deposit_versions
@@ -55,10 +49,6 @@ module CocinaGenerator
 
       def deposit_publication_version
         deposit_versions.first
-      end
-
-      def deposit_modification_versions
-        deposit_versions.slice(1..-1)
       end
 
       def event_for_date(date:, event_type:, date_type:, primary: false)
