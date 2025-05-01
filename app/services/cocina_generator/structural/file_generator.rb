@@ -70,7 +70,7 @@ module CocinaGenerator
 
       def message_digests
         return [] if attached_file.in_globus?
-        return cocina_file.hasMessageDigests if cocina_file
+        return message_digests_from(cocina_file) if cocina_file
 
         [
           { type: 'md5', digest: attached_file.md5 },
@@ -112,6 +112,11 @@ module CocinaGenerator
         return cocina_file.hasMimeType if cocina_file
 
         blob.content_type
+      end
+
+      def message_digests_from(cocina_file)
+        # This returns the message digests in a consistent order.
+        cocina_file.hasMessageDigests.to_a.sort_by { |digest| digest[:type] }
       end
     end
   end
