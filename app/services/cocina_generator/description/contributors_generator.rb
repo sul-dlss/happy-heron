@@ -4,14 +4,9 @@ module CocinaGenerator
   module Description
     # generates Cocina::Models::Contributors to be used by DescriptionGenerator
     # (ultimately in a Cocina::Models::RequestDRO)
-    # rubocop:disable Metrics/ClassLength
     class ContributorsGenerator
       def self.generate(work_version:)
         new(work_version:).generate
-      end
-
-      def self.events_from_publisher_contributors(work_version:, pub_date: nil)
-        new(work_version:).publication_event_values(pub_date)
       end
 
       def initialize(work_version:)
@@ -31,18 +26,6 @@ module CocinaGenerator
         end
       end
 
-      def publication_event_values(pub_date)
-        (work_version.authors + work_version.contributors).select { |c| c.role == 'Publisher' }.map do |publisher|
-          event = {
-            type: 'publication',
-            contributor: [publication_contributor(publisher)]
-          }
-          event[:date] = pub_date.date if pub_date
-
-          Cocina::Models::Event.new(event)
-        end
-      end
-
       private
 
       attr_reader :work_version
@@ -57,15 +40,6 @@ module CocinaGenerator
         }.compact
 
         contrib_hash[:status] = 'primary' if primary
-        Cocina::Models::Contributor.new(contrib_hash)
-      end
-
-      def publication_contributor(contributor)
-        contrib_hash = {
-          name: name_descriptive_value(contributor),
-          role: [marcrelator_role(contributor.role)],
-          type: contributor_type(contributor)
-        }
         Cocina::Models::Contributor.new(contrib_hash)
       end
 
@@ -204,7 +178,6 @@ module CocinaGenerator
           Cocina::Models::DescriptiveValue.new(type: 'ORCID', value:, source: { uri: source })
         ]
       end
-      # rubocop:enable Metrics/ClassLength
     end
   end
 end

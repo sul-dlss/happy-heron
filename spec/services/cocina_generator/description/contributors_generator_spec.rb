@@ -43,122 +43,6 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
     ]
   end
 
-  describe '.events_from_publisher_contributors' do
-    context 'with no pub_date' do
-      context 'with no publisher' do
-        let(:contributor) { build(:person_contributor) }
-        let(:work_version) { build(:work_version, contributors: [contributor]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version:) }
-
-        it 'returns empty Array' do
-          expect(cocina_model).to eq []
-        end
-      end
-
-      context 'with multiple publishers' do
-        let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
-        let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
-        let(:work_version) { build(:work_version, contributors: [org_contrib1, org_contrib2]) }
-        let(:cocina_model) { described_class.events_from_publisher_contributors(work_version:) }
-
-        it 'returns Array of populated cocina model events, one for each publisher' do
-          expect(cocina_props).to eq(
-            [
-              Cocina::Models::Event.new({
-                                          type: 'publication',
-                                          contributor: [
-                                            {
-                                              name: [{ value: org_contrib1.full_name }],
-                                              role: publisher_roles,
-                                              type: 'organization'
-                                            }
-                                          ]
-                                        }).to_h,
-              Cocina::Models::Event.new({
-                                          type: 'publication',
-                                          contributor: [
-                                            {
-                                              name: [{ value: org_contrib2.full_name }],
-                                              role: publisher_roles,
-                                              type: 'organization'
-                                            }
-                                          ]
-                                        }).to_h
-            ]
-          )
-        end
-      end
-    end
-
-    context 'with a pub date' do
-      let(:pub_date_value) do
-        [
-          {
-            value: work_version.published_edtf,
-            encoding: { code: 'edtf' },
-            type: 'publication'
-          }
-        ]
-      end
-      let(:pub_date) do
-        Cocina::Models::Event.new(
-          type: 'publication',
-          date: pub_date_value
-        )
-      end
-
-      context 'with no publisher' do
-        let(:contributor) { build(:person_contributor) }
-        let(:work_version) { build(:work_version, contributors: [contributor]) }
-        let(:cocina_model) do
-          described_class.events_from_publisher_contributors(work_version:, pub_date:)
-        end
-
-        it 'returns empty Array' do
-          expect(cocina_model).to eq []
-        end
-      end
-
-      context 'with multiple publishers' do
-        let(:org_contrib1) { build(:org_contributor, role: 'Publisher') }
-        let(:org_contrib2) { build(:org_contributor, role: 'Publisher') }
-        let(:work_version) { build(:work_version, contributors: [org_contrib1, org_contrib2]) }
-        let(:cocina_model) do
-          described_class.events_from_publisher_contributors(work_version:, pub_date:)
-        end
-
-        it 'returns Array of populated cocina model events, one for each publisher' do
-          expect(cocina_props).to eq(
-            [
-              Cocina::Models::Event.new({
-                                          type: 'publication',
-                                          date: pub_date_value,
-                                          contributor: [
-                                            {
-                                              name: [{ value: org_contrib1.full_name }],
-                                              role: publisher_roles,
-                                              type: 'organization'
-                                            }
-                                          ]
-                                        }).to_h,
-              Cocina::Models::Event.new({
-                                          type: 'publication',
-                                          date: pub_date_value,
-                                          contributor: [
-                                            {
-                                              name: [{ value: org_contrib2.full_name }],
-                                              role: publisher_roles,
-                                              type: 'organization'
-                                            }
-                                          ]
-                                        }).to_h
-            ]
-          )
-        end
-      end
-    end
-  end
-
   context 'without marcrelator mapping' do
     let(:contributor) { build(:org_contributor, role: 'Conference') }
     let(:work_version) { build(:work_version, contributors: [contributor]) }
@@ -219,9 +103,7 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
   describe 'h2 mapping specification examples' do
     let(:cocina_props) do
       {
-        contributor: cocina_model.map(&:to_h),
-        event: described_class.events_from_publisher_contributors(work_version:,
-                                                                  pub_date:).map(&:to_h)
+        contributor: cocina_model.map(&:to_h)
       }.compact_blank
     end
 
@@ -961,32 +843,6 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                                                   }
                                                 ]
                                               }).to_h
-            ],
-            event: [
-              Cocina::Models::Event.new({
-                                          type: 'publication',
-                                          contributor: [
-                                            {
-                                              name: [
-                                                {
-                                                  value: 'Stanford University Press'
-                                                }
-                                              ],
-                                              type: 'organization',
-                                              role: [
-                                                {
-                                                  value: 'publisher',
-                                                  code: 'pbl',
-                                                  uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-                                                  source: {
-                                                    code: 'marcrelator',
-                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
-                                                  }
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }).to_h
             ]
           }
         )
@@ -1031,32 +887,6 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                                                   }
                                                 ]
                                               }).to_h
-            ],
-            event: [
-              Cocina::Models::Event.new({
-                                          type: 'publication',
-                                          contributor: [
-                                            {
-                                              name: [
-                                                {
-                                                  value: 'Stanford University Press'
-                                                }
-                                              ],
-                                              type: 'organization',
-                                              role: [
-                                                {
-                                                  value: 'publisher',
-                                                  code: 'pbl',
-                                                  uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-                                                  source: {
-                                                    code: 'marcrelator',
-                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
-                                                  }
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }).to_h
             ]
           }
         )
