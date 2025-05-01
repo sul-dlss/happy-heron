@@ -73,26 +73,6 @@ RSpec.describe CocinaGenerator::Description::EventsGenerator do
                                                     encoding: { code: 'edtf' }
                                                   }
                                                 ]
-                                              },
-                                              {
-                                                type: 'deposit',
-                                                date: [
-                                                  {
-                                                    type: 'modification',
-                                                    value: '2018-01-01',
-                                                    encoding: { code: 'edtf' }
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                type: 'deposit',
-                                                date: [
-                                                  {
-                                                    type: 'modification',
-                                                    value: '2019-01-01',
-                                                    encoding: { code: 'edtf' }
-                                                  }
-                                                ]
                                               }
                                             ]))
     end
