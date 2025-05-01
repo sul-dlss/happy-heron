@@ -13,19 +13,12 @@ module CocinaGenerator
       end
 
       def generate
-        events = deposit_events + Array(created_date_event)
-        events += publisher_events.presence || Array(published_date_event)
-        events
+        deposit_events + Array(created_date_event) + Array(published_date_event)
       end
 
       private
 
       attr_reader :work_version
-
-      def publisher_events
-        @publisher_events ||= ContributorsGenerator.events_from_publisher_contributors(work_version:,
-                                                                                       pub_date: published_date_event)
-      end
 
       def published_date_event
         event_for_date(date: work_version.published_edtf, event_type: 'publication', date_type: 'publication',

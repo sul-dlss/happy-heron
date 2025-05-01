@@ -113,46 +113,12 @@ RSpec.describe CocinaGenerator::Description::EventsGenerator do
                                               deposit_publication_event,
                                               {
                                                 type: 'publication',
-                                                contributor: [
-                                                  {
-                                                    name: [{ value: contributor.full_name }],
-                                                    role: publisher_roles,
-                                                    type: 'organization'
-                                                  }
-                                                ],
                                                 date: [
                                                   {
                                                     encoding: { code: 'edtf' },
                                                     value: '2020-02-14',
                                                     type: 'publication',
                                                     status: 'primary'
-                                                  }
-                                                ]
-                                              }
-                                            ]))
-    end
-  end
-
-  # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
-  #   example 13
-  #   Note:  no top level contributor -- publisher is under event
-  context 'when publisher entered by user, no publication date' do
-    let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work_version) do
-      build(:work_version, :with_work, :with_contact_emails,
-            contributors: [contributor], title: 'Test title')
-    end
-
-    it 'creates event of type publication without date' do
-      expect(events).to eq(normalize_events([
-                                              deposit_publication_event,
-                                              {
-                                                type: 'publication',
-                                                contributor: [
-                                                  {
-                                                    name: [{ value: contributor.full_name }],
-                                                    role: publisher_roles,
-                                                    type: 'organization'
                                                   }
                                                 ]
                                               }
@@ -175,13 +141,6 @@ RSpec.describe CocinaGenerator::Description::EventsGenerator do
                                deposit_publication_event,
                                {
                                  type: 'publication',
-                                 contributor: [
-                                   {
-                                     name: [{ value: pub_contrib.full_name }],
-                                     role: publisher_roles,
-                                     type: 'organization'
-                                   }
-                                 ],
                                  date: [
                                    {
                                      encoding: { code: 'edtf' },
