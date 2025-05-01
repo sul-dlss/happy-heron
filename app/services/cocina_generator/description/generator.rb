@@ -95,7 +95,7 @@ module CocinaGenerator
       def access_contacts
         return if work_version.contact_emails.empty?
 
-        work_version.contact_emails.map do |email|
+        work_version.contact_emails.uniq(&:email).map do |email|
           {
             value: email.email,
             type: 'email',
