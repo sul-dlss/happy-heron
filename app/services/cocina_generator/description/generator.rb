@@ -48,7 +48,7 @@ module CocinaGenerator
       end
 
       def keywords
-        work_version.keywords.map do |keyword|
+        work_version.keywords.uniq(&:label).map do |keyword|
           props = {
             value: keyword.label, type: keyword.cocina_type.presence || 'topic'
           }
