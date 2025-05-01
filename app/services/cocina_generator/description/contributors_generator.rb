@@ -153,6 +153,7 @@ module CocinaGenerator
         # organization (when not already listed above)
         # 'Conference' => '', # not a marcrelator role
         'Degree granting institution' => 'dgg',
+        'Distributor' => 'prv',
         # 'Event' => '', # not a marcrelator role
         'Funder' => 'fnd',
         'Host institution' => 'his',
@@ -186,6 +187,7 @@ module CocinaGenerator
         'prf' => 'performer',
         'prg' => 'programmer',
         'pro' => 'producer',
+        'prv' => 'provider',
         'res' => 'researcher',
         'rth' => 'research team head',
         'spk' => 'speaker',
