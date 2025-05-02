@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
-  subject(:cocina_model) { described_class.generate(work_version:) }
+  subject(:cocina_model) { described_class.generate(work_version:, merge_stanford_and_organization:) }
+
+  let(:merge_stanford_and_organization) { false }
 
   let(:cocina_props) { cocina_model.map(&:to_h) }
 
@@ -987,6 +989,211 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                                           }).to_h
         ]
       )
+    end
+  end
+
+  context 'when merge_stanford_and_organization is enabled' do
+    let(:merge_stanford_and_organization) { true }
+
+    context 'when there is a Stanford contributor with a degree granting institution role' do
+      let(:author1) { build(:org_author, full_name: 'Stanford University', role: 'Degree granting institution') }
+      let(:author2) { build(:org_author, full_name: 'Department of English', role: 'Department') }
+      let(:work_version) { build(:work_version, authors: [author1, author2]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq([
+                                     Cocina::Models::Contributor.new({
+                                                                       name: [
+                                                                         {
+                                                                           structuredValue: [
+                                                                             {
+                                                                               value: 'Stanford University',
+                                                                               identifier: [
+                                                                                 {
+                                                                                   uri: 'https://ror.org/00f54p054',
+                                                                                   type: 'ROR',
+                                                                                   source: {
+                                                                                     code: 'ror'
+                                                                                   }
+                                                                                 }
+                                                                               ]
+                                                                             },
+                                                                             { value: 'Department of English' }
+                                                                           ]
+                                                                         }
+                                                                       ],
+                                                                       type: 'organization',
+                                                                       status: 'primary',
+                                                                       role: [
+                                                                         {
+                                                                           value: 'degree granting institution',
+                                                                           code: 'dgg',
+                                                                           uri: 'http://id.loc.gov/vocabulary/relators/dgg',
+                                                                           source: {
+                                                                             code: 'marcrelator',
+                                                                             uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                                           }
+                                                                         }
+                                                                       ]
+                                                                     }).to_h
+
+                                   ])
+      end
+    end
+
+    context 'when there is a department without a Stanford contributor' do
+      let(:author) { build(:org_author, full_name: 'Department of English', role: 'Department') }
+      let(:work_version) { build(:work_version, authors: [author]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          [
+            Cocina::Models::Contributor.new({
+                                              name: [
+                                                {
+                                                  structuredValue: [
+                                                    {
+                                                      value: 'Stanford University',
+                                                      identifier: [
+                                                        {
+                                                          uri: 'https://ror.org/00f54p054',
+                                                          type: 'ROR',
+                                                          source: {
+                                                            code: 'ror'
+                                                          }
+                                                        }
+                                                      ]
+                                                    },
+                                                    { value: 'Department of English' }
+                                                  ]
+                                                }
+                                              ],
+                                              type: 'organization',
+                                              status: 'primary',
+                                              role: [
+                                                {
+                                                  value: 'degree granting institution',
+                                                  code: 'dgg',
+                                                  uri: 'http://id.loc.gov/vocabulary/relators/dgg',
+                                                  source: {
+                                                    code: 'marcrelator',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                  }
+                                                }
+                                              ]
+                                            }).to_h
+
+          ]
+        )
+      end
+    end
+
+    context 'when there is a Stanford contributor with a different role' do
+      let(:author1) { build(:org_author, full_name: 'Stanford University', role: 'Host institution') }
+      let(:author2) { build(:org_author, full_name: 'Department of English', role: 'Department') }
+      let(:work_version) { build(:work_version, authors: [author1, author2]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          [
+            Cocina::Models::Contributor.new({
+                                              name: [
+                                                {
+                                                  value: 'Stanford University'
+                                                }
+                                              ],
+                                              type: 'organization',
+                                              status: 'primary',
+                                              role: [
+                                                {
+                                                  value: 'host institution',
+                                                  code: 'his',
+                                                  uri: 'http://id.loc.gov/vocabulary/relators/his',
+                                                  source: {
+                                                    code: 'marcrelator',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                  }
+                                                }
+                                              ]
+                                            }).to_h,
+            Cocina::Models::Contributor.new({
+                                              name: [
+                                                {
+                                                  structuredValue: [
+                                                    {
+                                                      value: 'Stanford University',
+                                                      identifier: [
+                                                        {
+                                                          uri: 'https://ror.org/00f54p054',
+                                                          type: 'ROR',
+                                                          source: {
+                                                            code: 'ror'
+                                                          }
+                                                        }
+                                                      ]
+                                                    },
+                                                    { value: 'Department of English' }
+                                                  ]
+                                                }
+                                              ],
+                                              type: 'organization',
+                                              role: [
+                                                {
+                                                  value: 'degree granting institution',
+                                                  code: 'dgg',
+                                                  uri: 'http://id.loc.gov/vocabulary/relators/dgg',
+                                                  source: {
+                                                    code: 'marcrelator',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                  }
+                                                }
+                                              ]
+                                            }).to_h
+          ]
+        )
+      end
+    end
+
+    context 'when there is a Stanford contributor with a degree granting institution role but no department' do
+      let(:author) { build(:org_author, full_name: 'Stanford University', role: 'Degree granting institution') }
+      let(:work_version) { build(:work_version, authors: [author]) }
+
+      it 'creates Cocina::Models::Contributor props' do
+        expect(cocina_props).to eq(
+          [
+            Cocina::Models::Contributor.new({
+                                              name: [
+                                                {
+                                                  value: 'Stanford University'
+                                                }
+                                              ],
+                                              identifier: [
+                                                {
+                                                  uri: 'https://ror.org/00f54p054',
+                                                  type: 'ROR',
+                                                  source: {
+                                                    code: 'ror'
+                                                  }
+                                                }
+                                              ],
+                                              type: 'organization',
+                                              status: 'primary',
+                                              role: [
+                                                {
+                                                  value: 'degree granting institution',
+                                                  code: 'dgg',
+                                                  uri: 'http://id.loc.gov/vocabulary/relators/dgg',
+                                                  source: {
+                                                    code: 'marcrelator',
+                                                    uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                  }
+                                                }
+                                              ]
+                                            }).to_h
+
+          ]
+        )
+      end
     end
   end
 end
