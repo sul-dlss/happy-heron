@@ -4,49 +4,76 @@ module CocinaGenerator
   module Description
     # generates Cocina::Models::Contributors to be used by DescriptionGenerator
     # (ultimately in a Cocina::Models::RequestDRO)
-    class ContributorsGenerator
-      def self.generate(work_version:)
-        new(work_version:).generate
+    class ContributorsGenerator # rubocop:disable Metrics/ClassLength
+      STANFORD_UNIVERSITY = 'Stanford University'
+      DEGREE_GRANTING_INSTITUTION = 'Degree granting institution'
+
+      def self.generate(...)
+        new(...).generate
       end
 
-      def initialize(work_version:)
+      def initialize(work_version:, merge_stanford_and_organization: Settings.merge_stanford_and_organization)
         @work_version = work_version
+        # When true, this uses the same stategy as H3 for Stanford (degree granting institution) and organizations.
+        @merge_stanford_and_organization = merge_stanford_and_organization
       end
 
       # H2 Publisher becomes a Cocina::Models::Event, not a Contributor.  See events_from_publisher_contributors.
 
       def generate
-        count = 0
-        (work_version.authors + work_version.contributors.reject { |c| c.role == 'Publisher' })
-          .map do |work_form_contributor|
-          count += 1
+        work_form_contributors.map.with_index do |work_form_contributor, index|
           # First entered contributor is always status: "primary" (except for Publisher)
-          primary = count == 1
-          contributor(work_form_contributor, primary)
+          contributor(work_form_contributor, index.zero?)
         end
       end
 
       private
 
-      attr_reader :work_version
+      attr_reader :work_version, :merge_stanford_and_organization
 
-      def contributor(contributor, primary)
-        contrib_hash = {
-          name: name_descriptive_value(contributor),
-          type: contributor_type(contributor),
-          role: cocina_roles(contributor),
-          note: notes(contributor),
-          identifier: identifiers(contributor)
-        }.compact
+      def work_form_contributors
+        contributors = (work_version.authors + work_version.contributors.reject { |c| c.role == 'Publisher' })
+        return contributors unless merge_stanford_and_organization
 
-        contrib_hash[:status] = 'primary' if primary
-        Cocina::Models::Contributor.new(contrib_hash)
+        # If there are any departments, then remove Stanford degree granting institution contributors
+        has_departments = contributors.any? { |c| c.role == 'Department' }
+        contributors = contributors.reject { |c| stanford_degree_granting_institution?(c) } if has_departments
+        contributors
       end
 
-      def name_descriptive_value(contributor)
+      def contributor(contributor, primary) # rubocop:disable Metrics/AbcSize
+        Cocina::Models::Contributor.new({
+          type: contributor_type(contributor),
+          note: notes(contributor),
+          identifier: identifiers(contributor)
+        }.compact.tap do |contrib_hash|
+          contrib_hash[:status] = 'primary' if primary
+          if merge_stanford_and_organization && contributor.role == 'Department'
+            contrib_hash[:name] = stanford_degree_granting_institution_name_values(contributor)
+            contrib_hash[:role] = cocina_roles(DEGREE_GRANTING_INSTITUTION)
+          else
+            contrib_hash[:name] = name_descriptive_values(contributor)
+            contrib_hash[:role] = cocina_roles(contributor.role)
+          end
+        end)
+      end
+
+      def name_descriptive_values(contributor)
         return [Cocina::Models::DescriptiveValue.new(value: full_name(contributor))] unless contributor.person?
 
         [Cocina::Models::DescriptiveValue.new(structuredValue: structured_name(contributor))]
+      end
+
+      def stanford_degree_granting_institution_name_values(contributor)
+        [
+          Cocina::Models::DescriptiveValue.new(structuredValue: [
+                                                 {
+                                                   value: STANFORD_UNIVERSITY,
+                                                   identifier: stanford_identifiers
+                                                 },
+                                                 { value: contributor.full_name }
+                                               ])
+        ]
       end
 
       def structured_name(contributor)
@@ -69,11 +96,9 @@ module CocinaGenerator
         contributor.contributor_type
       end
 
-      def cocina_roles(contributor)
-        roles = []
-        roles << (marcrelator_role(contributor.role) ||
-          Cocina::Models::DescriptiveValue.new(value: contributor.role.downcase))
-        roles
+      def cocina_roles(role)
+        [marcrelator_role(role) ||
+          Cocina::Models::DescriptiveValue.new(value: role.downcase)]
       end
 
       def notes(contributor)
@@ -170,13 +195,20 @@ module CocinaGenerator
       private_constant :MARC_RELATOR_CODE_TO_VALUE
 
       def identifiers(contributor)
-        return unless contributor.orcid
+        if contributor.orcid
+          source, value = Orcid.split(contributor.orcid)
+          [Cocina::Models::DescriptiveValue.new(type: 'ORCID', value:, source: { uri: source })]
+        elsif merge_stanford_and_organization && stanford_degree_granting_institution?(contributor)
+          stanford_identifiers
+        end
+      end
 
-        source, value = Orcid.split(contributor.orcid)
+      def stanford_identifiers
+        [Cocina::Models::DescriptiveValue.new(uri: 'https://ror.org/00f54p054', type: 'ROR', source: { code: 'ror' })]
+      end
 
-        [
-          Cocina::Models::DescriptiveValue.new(type: 'ORCID', value:, source: { uri: source })
-        ]
+      def stanford_degree_granting_institution?(contributor)
+        contributor.full_name == STANFORD_UNIVERSITY && contributor.role == DEGREE_GRANTING_INSTITUTION
       end
     end
   end
