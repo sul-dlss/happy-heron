@@ -40,9 +40,9 @@
     lodash.once "^4.1.1"
 
 "@eslint-community/eslint-utils@^4.1.2", "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.6.1.tgz#e4c58fdcf0696e7a5f19c30201ed43123ab15abc"
-  integrity sha512-KTsJMmobmbrFLe3LDh0PC2FXpcSYJt/MLjlkh/9LEnmKYLSYmT/0EW9JWANjeoemiuZrmogti0tW5Ch+qNUYDw==
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.7.0.tgz#607084630c6c033992a082de6e6fbc1a8b52175a"
+  integrity sha512-dyybb3AcajC7uha6CvhdVRJqaKyn7w2YKqKyAN37NKYgZT36w+iRb0Dymmc5qEJ549c/S31cMMSFd75bteCpCw==
   dependencies:
     eslint-visitor-keys "^3.4.3"
 
@@ -77,9 +77,9 @@
   integrity sha512-JUOtgFW6k9u4Y+xeIaEiLr3+cjoUPiAuLXoyKOJSia6Duzb7pq+A76P9ZdPDoAoxHdHzq6gE9/jKBGXlZT8FbA==
 
 "@github/relative-time-element@^4.4.2":
-  version "4.4.5"
-  resolved "https://registry.yarnpkg.com/@github/relative-time-element/-/relative-time-element-4.4.5.tgz#07ea0b9e4af7841a9b6ff99dab817f1c1bda25ef"
-  integrity sha512-9ejPtayBDIJfEU8x1fg/w2o5mahHkkp1SC6uObDtoKs4Gn+2a1vNK8XIiNDD8rMeEfpvDjydgSZZ+uk+7N0VsQ==
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@github/relative-time-element/-/relative-time-element-4.4.6.tgz#25a452176b861df03132b78cca8c24f3a7bde5eb"
+  integrity sha512-KgrkxVWb/qcBBSDumGhRzieqtSzGJyyEF4D5to+OVJf/nTExU5sSlPKiNEzN8Nh6Kj0SGlq8UdIJjEgPxZzUhQ==
 
 "@hotwired/stimulus@^3.2.1":
   version "3.2.2"
