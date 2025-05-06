@@ -72,7 +72,7 @@ gem 'honeybadger'
 gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'lograge', '~> 0.11.2'
-gem 'mais_orcid_client', '< 1' # MAIS ORCID Client will have breaking changes in v1.0, see https://github.com/sul-dlss/mais_orcid_client/issues/108
+gem 'mais_orcid_client', '>= 1.0'
 gem 'okcomputer'
 gem 'pg'
 gem 'preservation-client'
