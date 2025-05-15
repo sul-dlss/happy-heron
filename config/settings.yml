@@ -66,7 +66,7 @@ authorization_workgroup_names:
 
 # See https://www.oclc.org/developer/develop/web-services/fast-api/assign-fast.en.html for more information
 autocomplete_lookup:
-  url: http://fast.oclc.org/searchfast/fastsuggest
+  url: https://fast.oclc.org/searchfast/fastsuggest
   num_records: 10
 
 ror_lookup:
