@@ -12,7 +12,7 @@ module CocinaGenerator
     end
 
     def generate
-      access = work_version.embargo_date ? embargoed_access : regular_access
+      access = embargo? ? embargoed_access : regular_access
 
       base_access.merge(access)
     end
@@ -20,6 +20,10 @@ module CocinaGenerator
     private
 
     attr_reader :work_version
+
+    def embargo?
+      work_version.embargo_date.present? && work_version.embargo_date > Time.zone.today
+    end
 
     def regular_access
       {

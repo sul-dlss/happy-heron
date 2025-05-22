@@ -51,6 +51,17 @@ RSpec.describe CocinaGenerator::AccessGenerator do
     end
   end
 
+  context 'when expired embargoed' do
+    let(:work_version) { build(:work_version, :expired_embargo, access: 'world') }
+
+    it 'generates the model' do
+      expect(model).to eq(view: 'world',
+                          download: 'world',
+                          license: license_uri,
+                          useAndReproductionStatement: Settings.access.use_and_reproduction_statement)
+    end
+  end
+
   context 'when embargoed for stanford release' do
     let(:work_version) { build(:work_version, :embargoed, access: 'stanford') }
 
