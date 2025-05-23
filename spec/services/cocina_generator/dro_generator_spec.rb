@@ -620,5 +620,85 @@ RSpec.describe CocinaGenerator::DROGenerator do
         expect(model.to_h).to eq expected_model.to_h
       end
     end
+
+    context 'when a document' do
+      let(:work_version) do
+        build(:work_version, version: 1, attached_files: [attached_file3],
+                             title: 'Test title', work:, globus_endpoint: 'jstanford/work333/version1')
+      end
+      let(:work) { build(:work, id: 7, collection:) }
+
+      let(:expected_model) do
+        Cocina::Models::RequestDRO.new(
+          {
+            type: Cocina::Models::ObjectType.document,
+            label: 'Test title',
+            version: 1,
+            access: {
+              view: 'world',
+              download: 'world',
+              license: license_uri,
+              useAndReproductionStatement: Settings.access.use_and_reproduction_statement
+            },
+            administrative: {
+              hasAdminPolicy: 'druid:zx485kb6348',
+              partOfProject: project_tag
+            },
+            description: {
+              title: [
+                {
+                  value: 'Test title'
+                }
+              ],
+              note: [
+                {
+                  value: 'test abstract',
+                  type: 'abstract'
+                },
+                {
+                  value: 'test citation',
+                  type: 'preferred citation'
+                }
+              ],
+              form: types_form,
+              adminMetadata: admin_metadata
+            },
+            identification: {
+              sourceId: "hydrus:object-#{work_version.work.id}"
+            },
+            structural: {
+              contains: [
+                {
+                  label: 'MyString',
+                  structural: { contains: [
+                    {
+                      access: { view: 'world', download: 'world' },
+                      administrative: { publish: true, sdrPreserve: true, shelve: true },
+                      filename: 'globus.pdf',
+                      hasMessageDigests: [],
+                      label: 'MyString',
+                      type: Cocina::Models::ObjectType.file,
+                      version: 1,
+                      externalIdentifier: 'globus://jstanford/work333/version1/globus.pdf'
+                    }
+                  ] },
+                  type: Cocina::Models::FileSetType.document,
+                  version: 1
+                }
+              ],
+              isMemberOf: [collection.druid]
+            }
+          }
+        )
+      end
+
+      before do
+        allow(Settings).to receive(:document_type).and_return(true)
+      end
+
+      it 'generates the model' do
+        expect(model.to_h).to eq expected_model.to_h
+      end
+    end
   end
 end

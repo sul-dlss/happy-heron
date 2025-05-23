@@ -55,11 +55,26 @@ module CocinaGenerator
     delegate :doi, to: :work
 
     def cocina_type
-      WorkType.find(work_version.work_type).cocina_type
+      document? ? Cocina::Models::ObjectType.document : Cocina::Models::ObjectType.object
+    end
+
+    def document? # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      # All shown (not hidden) files must be PDFs and not be in a hierarchy
+      # in order to be considered a document type
+      @document ||= begin
+        cocina_structural = Structural::Generator.generate(work_version:, cocina_obj:, document: false)
+        shown_files = cocina_structural.contains.flat_map do |fileset|
+          fileset.structural.contains.select { |cocina_file| cocina_file.administrative.publish }
+        end
+        Settings.document_type &&
+          shown_files.present? &&
+          shown_files.all? { |cocina_file| Structural::PdfSupport.pdf?(cocina_file:) } &&
+          shown_files.none? { |cocina_file| cocina_file.filename.include?('/') }
+      end
     end
 
     def structural
-      Structural::Generator.generate(work_version:, cocina_obj:)
+      Structural::Generator.generate(work_version:, cocina_obj:, document: document?)
     end
   end
 end
