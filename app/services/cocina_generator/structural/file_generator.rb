@@ -91,12 +91,8 @@ module CocinaGenerator
         attached_file.hide?
       end
 
-      def embargoed?
-        work_version.embargo_date
-      end
-
       def access
-        if embargoed?
+        if work_version.embargoed?
           { view: 'dark', download: 'none' }
         else
           { view: work_version.access, download: work_version.access }

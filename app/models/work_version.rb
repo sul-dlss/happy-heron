@@ -219,6 +219,10 @@ class WorkVersion < ApplicationRecord
     user_version != previous_version&.user_version
   end
 
+  def embargoed?
+    embargo_date.present? && embargo_date > Time.zone.today
+  end
+
   private
 
   def locally_cached_file_for(blob)
