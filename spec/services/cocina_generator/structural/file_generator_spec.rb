@@ -37,6 +37,13 @@ RSpec.describe CocinaGenerator::Structural::FileGenerator do
 
       it { is_expected.to eq Cocina::Models::FileAccess.new(view: 'dark', download: 'none') }
     end
+
+    context 'when embargo is expired' do
+      let(:work_version) { build(:work_version, :expired_embargo) }
+      let(:attached_file) { create(:attached_file, :with_file, work_version:, hide: true) }
+
+      it { is_expected.to eq Cocina::Models::FileAccess.new(view: 'world', download: 'world') }
+    end
   end
 
   describe '#initialize' do
