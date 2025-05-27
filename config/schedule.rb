@@ -6,6 +6,8 @@ require 'config'
 
 Config.load_and_set_settings(Config.setting_files('config', 'production'))
 
+env 'RAILS_LOG_LEVEL', 'warn'
+
 # These define jobs that checkin with Honeybadger.
 # If changing the schedule of one of these jobs, also update at https://app.honeybadger.io/projects/77112/check_ins
 
