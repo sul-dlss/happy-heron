@@ -23,8 +23,11 @@ module Works
       end
 
       def stacks_path
-        "#{Settings.stacks_file_url}/#{attached_file.work_version.work.druid}/" \
-          "#{ERB::Util.url_encode(attached_file.path)}"
+        "#{Settings.stacks_file_url}/#{attached_file.work_version.work.druid}/#{attached_file_path}"
+      end
+
+      def attached_file_path
+        attached_file.path.split('/').map { |part| ERB::Util.url_encode(part) }.join('/')
       end
 
       # the user can get a download link unless the file is in globus (in which case, no download link is available)

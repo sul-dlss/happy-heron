@@ -23,4 +23,17 @@ RSpec.describe Works::Show::AttachedFileComponent, type: :component do
       expect(rendered.css('a').last['href']).to start_with 'https://stacks-test.stanford.edu/file'
     end
   end
+
+  context 'with a hierarchical deposit' do
+    let(:rendered) { render_inline(described_class.new(attached_file:, depth: 2)) }
+    let(:attached_file) { build(:attached_file, :with_preserved_file, path: 'dir1/file1.pdf') }
+    let(:work_version) { create(:work_version, state: 'deposited', attached_files: [attached_file]) }
+
+    it 'shows the share and download links' do
+      expect(work_version.first_draft?).to be false
+      expect(work_version.purl_reserved?).to be false
+      expect(rendered.css('a')[-2]['href']).to start_with '/preservation'
+      expect(rendered.css('a').last['href']).to end_with '/dir1/file1.pdf'
+    end
+  end
 end
