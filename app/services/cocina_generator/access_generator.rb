@@ -44,7 +44,8 @@ module CocinaGenerator
     end
 
     def rights_statement
-      [work_version.custom_rights.presence, Settings.access.use_and_reproduction_statement].compact.join("\n\n")
+      [work_version.custom_rights&.strip.presence,
+       Settings.access.use_and_reproduction_statement].compact.join("\r\n\r\n")
     end
   end
 end
