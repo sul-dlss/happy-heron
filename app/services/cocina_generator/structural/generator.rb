@@ -4,13 +4,14 @@ module CocinaGenerator
   module Structural
     # This generates a DROStructural for a work
     class Generator
-      def self.generate(work_version:, cocina_obj:)
-        new(work_version:, cocina_obj:).generate
+      def self.generate(work_version:, cocina_obj:, document:)
+        new(work_version:, cocina_obj:, document:).generate
       end
 
-      def initialize(work_version:, cocina_obj:)
+      def initialize(work_version:, cocina_obj:, document:)
         @work_version = work_version
         @cocina_obj = cocina_obj
+        @document = document
       end
 
       attr_reader :work_version, :cocina_obj
@@ -56,18 +57,18 @@ module CocinaGenerator
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
-      def build_fileset(attached_file:, fileset: nil)
+      def build_fileset(attached_file:, fileset: nil) # rubocop:disable Metrics/AbcSize
         # h2 only has one file per fileset
         structural = fileset&.structural
         cocina_file = structural&.contains&.first
         resource_id = SecureRandom.uuid if cocina_file.blank?
+        file = FileGenerator.generate(work_version:, attached_file:, resource_id:, cocina_file:)
         {
-          type: Cocina::Models::FileSetType.file,
+          type: fileset_type(file),
           version: work_version.version,
           label: attached_file.label,
           structural: {
-            contains: [FileGenerator.generate(work_version:, attached_file:, resource_id:, cocina_file:)]
+            contains: [file]
           }
         }.tap do |new_fileset|
           if fileset
@@ -78,7 +79,18 @@ module CocinaGenerator
               "#{ID_NAMESPACE}/fileSet/#{work_version.work.druid.delete_prefix('druid:')}-#{resource_id}"
           end
         end
-        # rubocop:enable Metrics/AbcSize
+      end
+
+      def fileset_type(file)
+        document? && document_file?(file) ? Cocina::Models::FileSetType.document : Cocina::Models::FileSetType.file
+      end
+
+      def document_file?(file)
+        PdfSupport.pdf?(cocina_file: file) && file.administrative.publish
+      end
+
+      def document?
+        @document
       end
     end
   end
