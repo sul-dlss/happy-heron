@@ -287,21 +287,6 @@ RSpec.describe CocinaGenerator::Description::Generator do
     end
   end
 
-  # see https://github.com/sul-dlss-labs/cocina-descriptive-metadata/blob/master/h2_cocina_mappings/h2_to_cocina_contributor.txt
-  #   example 13
-  #   Note:  no top level contributor -- publisher is under event
-  context 'when publisher entered by user, no publication date' do
-    let(:contributor) { build(:org_contributor, role: 'Publisher') }
-    let(:work_version) do
-      build(:work_version, :with_work, :with_contact_emails,
-            contributors: [contributor], title: 'Test title')
-    end
-
-    it 'creates no top level contributor' do
-      expect(model[:contributor]).to be_empty
-    end
-  end
-
   context 'with blank abstract and citation' do
     let(:work_version) do
       build(:work_version, :with_work, abstract: '', citation: '')

@@ -888,7 +888,33 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                                                     }
                                                   }
                                                 ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University Press'
+
+                                                  }
+                                                ],
+                                                type: 'organization', role: [
+                                                                        {
+                                                                          value: 'publisher',
+                                                                          code: 'pbl',
+                                                                          uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                                                                          source: {
+                                                                            code: 'marcrelator',
+                                                                            uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                                          }
+                                                                        }
+                                                                      ],
+                                                note: [
+                                                  {
+                                                    value: 'false',
+                                                    type: 'citation status'
+                                                  }
+                                                ]
                                               }).to_h
+
             ]
           }
         )
