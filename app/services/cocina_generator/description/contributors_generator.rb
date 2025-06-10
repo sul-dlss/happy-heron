@@ -103,7 +103,7 @@ module CocinaGenerator
 
       def notes(contributor)
         notes = []
-        if contributor.type == 'Contributor'
+        if contributor.type == 'Contributor' && !Settings.no_citation_status_note
           notes << Cocina::Models::DescriptiveValue.new(type: 'citation status',
                                                         value: 'false')
         end
