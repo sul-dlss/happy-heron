@@ -8,6 +8,7 @@ module WorkVersionStateMachine
     state_machine initial: :new do
       state :depositing do
         validate :correct_version
+        validate :number_of_files
       end
 
       before_transition WorkObserver.method(:before_transition)
@@ -139,6 +140,16 @@ module WorkVersionStateMachine
       return if Repository.valid_version?(druid: work.druid, h2_version: version)
 
       errors.add(:version, 'must be one greater than or equal to the version in SDR')
+    end
+
+    # prevent them from depositing an object with more than the allowed number of files
+    # which could cause problems with the deposit process in accessioning
+    def number_of_files
+      return unless work.head
+
+      return if work.head.attached_files.length < Settings.max_files_in_object
+
+      errors.add(:base, "You cannot add more than #{Settings.max_files_in_object} files to an object.")
     end
   end
 end
