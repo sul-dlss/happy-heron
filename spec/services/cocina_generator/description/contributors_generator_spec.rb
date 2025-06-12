@@ -888,7 +888,33 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
                                                     }
                                                   }
                                                 ]
+                                              }).to_h,
+              Cocina::Models::Contributor.new({
+                                                name: [
+                                                  {
+                                                    value: 'Stanford University Press'
+
+                                                  }
+                                                ],
+                                                type: 'organization', role: [
+                                                                        {
+                                                                          value: 'publisher',
+                                                                          code: 'pbl',
+                                                                          uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+                                                                          source: {
+                                                                            code: 'marcrelator',
+                                                                            uri: 'http://id.loc.gov/vocabulary/relators/'
+                                                                          }
+                                                                        }
+                                                                      ],
+                                                note: [
+                                                  {
+                                                    value: 'false',
+                                                    type: 'citation status'
+                                                  }
+                                                ]
                                               }).to_h
+
             ]
           }
         )
@@ -1194,6 +1220,32 @@ RSpec.describe CocinaGenerator::Description::ContributorsGenerator do
           ]
         )
       end
+    end
+  end
+
+  context 'when no_citation_status_note is enabled' do
+    let(:contributor) { build(:org_contributor, role: 'Conference') }
+    let(:work_version) { build(:work_version, contributors: [contributor]) }
+
+    before do
+      allow(Settings).to receive(:no_citation_status_note).and_return(true)
+    end
+
+    it 'creates Cocina::Models::Contributor without citation status note' do
+      expect(cocina_props).to eq(
+        [
+          Cocina::Models::Contributor.new({
+                                            name: [{ value: contributor.full_name }],
+                                            type: 'conference',
+                                            status: 'primary',
+                                            role: [
+                                              {
+                                                value: 'conference'
+                                              }
+                                            ]
+                                          }).to_h
+        ]
+      )
     end
   end
 end

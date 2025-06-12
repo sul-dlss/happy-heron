@@ -32,7 +32,7 @@ module CocinaGenerator
       attr_reader :work_version, :merge_stanford_and_organization
 
       def work_form_contributors
-        contributors = (work_version.authors + work_version.contributors.reject { |c| c.role == 'Publisher' })
+        contributors = (work_version.authors + work_version.contributors)
         return contributors unless merge_stanford_and_organization
 
         # If there are any departments, then remove Stanford degree granting institution contributors
@@ -103,7 +103,7 @@ module CocinaGenerator
 
       def notes(contributor)
         notes = []
-        if contributor.type == 'Contributor'
+        if contributor.type == 'Contributor' && !Settings.no_citation_status_note
           notes << Cocina::Models::DescriptiveValue.new(type: 'citation status',
                                                         value: 'false')
         end
