@@ -30,6 +30,9 @@ module HappyHeron
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # Sanitize malformed characters in requests to prevent alerts like https://app.honeybadger.io/projects/77112/faults/118640601
+    config.middleware.insert 0, Rack::Sanitizer
+
     # Add timestamps to all loggers (both Rack-based ones and e.g. Sidekiq's)
     config.log_formatter = proc do |severity, datetime, _progname, msg|
       "[#{datetime.to_fs(:iso8601)}] [#{severity}] #{msg}\n"
