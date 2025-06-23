@@ -21,7 +21,7 @@ class MailPreference < ApplicationRecord
   default_scope do
     first_letters = MANAGER_TYPES.map(&:first).join
     a_byte = 'a'.bytes.first
-    replace_with = (a_byte..a_byte + MANAGER_TYPES.size - 1).to_a.pack('c*')
+    replace_with = (a_byte..a_byte + MANAGER_TYPES.size - 1).to_a.pack('c*') # rubocop:disable Lint/AmbiguousRange
     order(Arel.sql("translate(email, '#{first_letters}', '#{replace_with}')"))
   end
   belongs_to :user
