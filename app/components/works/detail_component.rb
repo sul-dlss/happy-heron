@@ -114,7 +114,7 @@ module Works
     end
 
     def previous_user_versions
-      (1..work_version.user_version - 1).to_a.reverse
+      (1..work_version.user_version - 1).to_a.reverse # rubocop:disable Lint/AmbiguousRange
     end
 
     def version_purl(version)

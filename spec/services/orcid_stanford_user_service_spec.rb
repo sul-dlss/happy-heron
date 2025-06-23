@@ -19,7 +19,9 @@ RSpec.describe OrcidStanfordUserService do
     # Contributor with stanford affiliation and orcid, found in MAIS
     contributor1 = create(:person_author, orcid: 'https://sandbox.orcid.org/0000-0003-3437-1234')
     create(:affiliation, label: 'Stanford University', abstract_contributor: contributor1)
-    allow(client).to receive(:fetch_orcid_user).with(orcidid: 'https://sandbox.orcid.org/0000-0003-3437-1234').and_return(instance_double(MaisOrcidClient::OrcidUser))
+    allow(client).to receive(:fetch_orcid_user)
+      .with(orcidid: 'https://sandbox.orcid.org/0000-0003-3437-1234')
+      .and_return(instance_double(MaisOrcidClient::OrcidUser))
 
     # Contributor with stanford affiliation, no orcid
     contributor2 = create(:person_author)
