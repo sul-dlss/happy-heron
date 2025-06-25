@@ -42,19 +42,14 @@ module CocinaGenerator
           .structural
           .contains
           .filter_map do |fileset|
-          cocina_file = fileset.structural.contains.first
-          next unless (preserved_file = get_preserved_file(cocina_file))
+          next unless (preserved_file = get_preserved_file(fileset.structural.contains.first.filename))
 
           build_fileset(attached_file: preserved_file, fileset:)
         end
       end
 
-      def get_preserved_file(cocina_file)
-        # Match on path and md5 (when possible)
-        work_version.preserved_files.find do |attached_file|
-          md5 = cocina_file.hasMessageDigests&.find { |digest| digest.type == 'md5' }&.digest
-          (attached_file.path == cocina_file.filename) && (attached_file.in_globus? || md5 == attached_file.md5)
-        end
+      def get_preserved_file(filename)
+        work_version.preserved_files.find { |attached_file| attached_file.path == filename }
       end
 
       def build_fileset(attached_file:, fileset: nil) # rubocop:disable Metrics/AbcSize
