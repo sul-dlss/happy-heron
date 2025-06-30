@@ -56,6 +56,7 @@ user_versions_ui_enabled: false
 merge_stanford_and_organization: false
 document_type: false
 no_citation_status_note: false
+map_related_links_to_resources: false
 
 authorization_group_header: HTTP_X_GROUPS
 first_name_header: HTTP_X_PERSON_NAME
