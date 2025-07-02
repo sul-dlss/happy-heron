@@ -758,6 +758,7 @@ DEPENDENCIES
   mais_orcid_client (>= 1.0)
   multi_json
   okcomputer
+  parallel
   pg
   preservation-client
   propshaft

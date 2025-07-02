@@ -75,6 +75,7 @@ gem 'jsbundling-rails'
 gem 'lograge', '~> 0.11.2'
 gem 'mais_orcid_client', '>= 1.0'
 gem 'okcomputer'
+gem 'parallel' # Used for migration to H3.
 gem 'pg'
 gem 'preservation-client'
 gem 'propshaft'
