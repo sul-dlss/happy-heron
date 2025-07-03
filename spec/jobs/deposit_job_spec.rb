@@ -354,6 +354,16 @@ RSpec.describe DepositJob do
       described_class.perform_now(first_work_version)
       expect(GlobusClient).to have_received(:disallow_writes).with(path: 'userid/workid/version1', user_id: nil)
     end
+
+    context 'when access rule is not found' do
+      before do
+        allow(GlobusClient).to receive(:disallow_writes).and_raise(GlobusClient::Errors::AccessRuleNotFound)
+      end
+
+      it 'ignores the error' do
+        expect { described_class.perform_now(first_work_version) }.not_to raise_error
+      end
+    end
   end
 
   context 'when the deposit request is not successful' do
