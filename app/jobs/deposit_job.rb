@@ -42,6 +42,8 @@ class DepositJob < BaseDepositJob
 
     # user_id nil because unneeded for permission update operations
     GlobusClient.disallow_writes(path: work_version.globus_endpoint, user_id: nil)
+  rescue GlobusClient::Errors::AccessRuleNotFound
+    true
   end
 
   def update_dro_with_file_identifiers(request_dro, work_version)
