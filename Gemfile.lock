@@ -226,7 +226,7 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.1)
-    dor-services-client (15.15.0)
+    dor-services-client (15.15.1)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.104.1)
       deprecation
@@ -289,9 +289,9 @@ GEM
     factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faker (3.5.1)
+    faker (3.5.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.13.1)
+    faraday (2.13.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -317,7 +317,7 @@ GEM
       zeitwerk
     hashdiff (1.2.0)
     hashie (5.0.0)
-    honeybadger (5.28.0)
+    honeybadger (5.29.1)
       logger
       ostruct
     i18n (1.14.7)
@@ -496,7 +496,7 @@ GEM
     rb-inotify (0.11.1)
       ffi (~> 1.0)
     rbtree (0.4.6)
-    rdoc (6.14.1)
+    rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
     redis (4.8.1)
@@ -642,8 +642,8 @@ GEM
     state_machines-activemodel (0.31.0)
       activemodel (>= 7.1)
       state_machines (>= 0.31.0)
-    state_machines-activerecord (0.31.0)
-      activerecord (>= 7.1)
+    state_machines-activerecord (0.40.0)
+      activerecord (>= 7.2)
       state_machines-activemodel (>= 0.10.0)
     state_machines-graphviz (0.0.2)
       ruby-graphviz
