@@ -39,7 +39,7 @@ module CocinaGenerator
       end
 
       # For H3 compatibility where related links are mapped to related resources
-      def build_related_resources(rel_link)
+      def build_related_resources(rel_link) # rubocop:disable Metrics/AbcSize
         return purl_link(rel_link) if purl?(rel_link.url)
 
         resource_attrs = if uri_type_for(rel_link.url).present?
@@ -54,6 +54,12 @@ module CocinaGenerator
                              )
                            }
                          end
+        # only include title attributes for collections
+        if object.is_a?(CollectionVersion)
+
+          title = rel_link.link_title || rel_link.url
+          resource_attrs[:title] = [{ value: title }]
+        end
 
         Cocina::Models::RelatedResource.new(resource_attrs)
       end
