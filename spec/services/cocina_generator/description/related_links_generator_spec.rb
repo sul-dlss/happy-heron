@@ -145,5 +145,39 @@ RSpec.describe CocinaGenerator::Description::RelatedLinksGenerator do
                             ])
       end
     end
+
+    context 'with a collection version' do
+      subject(:model) { described_class.generate(object: collection_version).map(&:to_h) }
+
+      let(:collection_version) do
+        build(:collection_version, related_links: [build(:related_link), build(:related_link, :untitled)])
+      end
+      let(:collection) { build(:collection, purl: 'https://purl.stanford.edu/abc123') }
+
+      before do
+        allow(Settings).to receive(:map_related_links_to_resources).and_return(true)
+      end
+
+      it 'creates related links' do
+        expect(model).to eq([
+                              Cocina::Models::RelatedResource.new({
+                                                                    title: [
+                                                                      { value: 'My Awesome Research' }
+                                                                    ],
+                                                                    access: { url: [
+                                                                      { value: 'http://my.awesome.research.io' }
+                                                                    ] }
+                                                                  }).to_h,
+                              Cocina::Models::RelatedResource.new({
+                                                                    title: [
+                                                                      { value: 'https://your.awesome.research.ai' }
+                                                                    ],
+                                                                    access: { url: [
+                                                                      { value: 'https://your.awesome.research.ai' }
+                                                                    ] }
+                                                                  }).to_h
+                            ])
+      end
+    end
   end
 end
