@@ -6,7 +6,7 @@ class DepositJob < BaseDepositJob
 
   # @raise [SdrClient::Find::Failed] if the (non-nil) druid cannot be found in SDR
   # rubocop:disable Metrics/AbcSize
-  def perform(work_version)
+  def perform(work_version, accession: true)
     druid = work_version.work.druid # may be nil
     Honeybadger.context({ work_version_id: work_version.id, druid:,
                           work_id: work_version.work.id, depositor_sunet: work_version.work.depositor.sunetid })
@@ -22,9 +22,9 @@ class DepositJob < BaseDepositJob
 
     case new_request_dro
     when Cocina::Models::RequestDRO
-      create(new_request_dro, work_version)
+      create(new_request_dro, work_version, accession)
     when Cocina::Models::DRO
-      update(new_request_dro, work_version)
+      update(new_request_dro, work_version, accession)
     end
   end
   # rubocop:enable Metrics/AbcSize
@@ -57,8 +57,8 @@ class DepositJob < BaseDepositJob
                                                             upload_responses:)
   end
 
-  def create(new_request_dro, work_version)
-    SdrClient::Deposit::CreateResource.run(accession: true,
+  def create(new_request_dro, work_version, accession)
+    SdrClient::Deposit::CreateResource.run(accession: accession,
                                            assign_doi: work_version.work.assign_doi?,
                                            metadata: new_request_dro,
                                            logger: Rails.logger,
@@ -66,12 +66,13 @@ class DepositJob < BaseDepositJob
                                            user_versions: user_versions_param(work_version))
   end
 
-  def update(new_request_dro, work_version)
+  def update(new_request_dro, work_version, accession)
     SdrClient::Deposit::UpdateResource.run(metadata: new_request_dro,
                                            logger: Rails.logger,
                                            connection:,
                                            version_description: work_version.version_description.presence,
-                                           user_versions: user_versions_param(work_version))
+                                           user_versions: user_versions_param(work_version),
+                                           accession: accession)
   end
 
   def perform_upload(blobs_map, filepath_map)
