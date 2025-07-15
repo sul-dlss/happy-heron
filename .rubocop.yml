@@ -51,7 +51,7 @@ Metrics/ModuleLength:
   Exclude:
     - app/models/concerns/work_version_state_machine.rb
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   NamePrefix:
     - is_
   ForbiddenPrefixes:
