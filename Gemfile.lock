@@ -234,13 +234,6 @@ GEM
       faraday-retry
       nokogiri
       zeitwerk (~> 2.1)
-    dor-workflow-client (7.8.0)
-      activesupport (>= 7.0.0)
-      deprecation (>= 0.99.0)
-      faraday (~> 2.0)
-      faraday-retry (~> 2.0)
-      nokogiri (~> 1.6)
-      zeitwerk (~> 2.1)
     drb (2.2.3)
     druid-tools (3.0.0)
     dry-core (1.1.0)
@@ -740,7 +733,6 @@ DEPENDENCIES
   devise-remote-user (~> 1.0)
   dlss-capistrano
   dor-services-client
-  dor-workflow-client
   druid-tools
   dry-types
   edtf

@@ -27,12 +27,11 @@ class DepositCompleteAuditor
       Collection.joins(:head).where(head: { state: 'depositing' }).to_a
   end
 
-  def workflow_client
-    @workflow_client ||= Dor::Workflow::Client.new(url: Settings.workflow_url)
+  def object_version(druid)
+    @object_version ||= Dor::Services::Client.object(druid).version
   end
 
   def not_accessioned?(object)
-    workflow_client.status(druid: object.druid,
-                           version: object.head.version.to_s).display_simplified != ACCESSIONED_STATUS_DISPLAY
+    object_version(object.druid).status.accessioning?
   end
 end
