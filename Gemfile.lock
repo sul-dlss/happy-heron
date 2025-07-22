@@ -226,7 +226,7 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.1)
-    dor-services-client (15.19.0)
+    dor-services-client (15.19.2)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.105.0)
       deprecation
@@ -291,7 +291,7 @@ GEM
       railties (>= 6.1.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.13.2)
+    faraday (2.13.3)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
